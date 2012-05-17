@@ -364,15 +364,30 @@
             <key>name</key>
             <string>HTML: Tags</string>
             <key>scope</key>
-            <string>entity.name.tag</string>
+            <string>text.html.markdown entity.name.tag,text.html.markdown punctuation.definition.tag.html</string>
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#F4FAFF</string>
+                <string>#DDDDDD00</string>
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#2F6F9F</string>
+                <string>#AAAAAA</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>HTML: Tags</string>
+            <key>scope</key>
+            <string>meta.disable-markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#DDDDDD00</string>
+                <key>fontStyle</key>
+                <string></string>
+                <key>foreground</key>
+                <string>#999999</string>
             </dict>
         </dict>
         <dict>
