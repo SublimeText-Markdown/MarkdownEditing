@@ -554,11 +554,26 @@
             <key>name</key>
             <string>Markdown: Punctuation</string>
             <key>scope</key>
-            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.heading.markdown,keyword.other.multimarkdown,string.unquoted.multimarkdown,punctuation.separator.key-value.multimarkdown   </string>
+            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.heading.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
                 <string>#AAAAAA</string>
+                <key>background</key>
+                <string>#EEEEEE00</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markdown: Punctuation</string>
+            <key>scope</key>
+            <string>markup.list.unnumbered.markdown meta.paragraph.list.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#666666</string>
+                <key>background</key>
+                <string>#EEEEEE00</string>
             </dict>
         </dict>
         <dict>
@@ -706,6 +721,32 @@
                 <string>#DDFFDD</string>
                 <key>foreground</key>
                 <string>#434343</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markdown Meta</string>
+            <key>scope</key>
+            <string>meta.header.multimarkdown,keyword.other.multimarkdown,string.unquoted.multimarkdown,punctuation.separator.key-value.multimarkdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#DDDDDD</string>
+                <key>foreground</key>
+                <string>#BBBBBB</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markdown separator</string>
+            <key>scope</key>
+            <string>meta.separator.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#BBBBBB11</string>
+                <key>foreground</key>
+                <string>#AAAAAA</string>
             </dict>
         </dict>
     </array>

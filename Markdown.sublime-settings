@@ -9,9 +9,11 @@
 	"trim_trailing_white_space_on_save": false,
 	"font_face": "Menlo",
 	"font_size": 15,
-	// "color_scheme": "Packages/User/Tubster.tmTheme",
+	// "color_scheme": "Packages/User/Byworded Light.tmTheme",
 	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
 	"translate_tabs_to_spaces": true,
-	"wrap_width": 60,
-	"draw_centered": true
+	"wrap_width": 70,
+	"draw_centered": true,
+	"auto_match_enabled": true,
+	"line_padding_top": 5
 }
