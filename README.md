@@ -14,3 +14,5 @@ This package will make MarkdownEditor your default theme for Markdown/MultiMarkd
 * ⌘⌥R will paste the contents of the clipboard as a reference link
 * ⌘K inserts a standard inline link, ⌘⇧K inserts an inline image
 * ⌘B and ⌘I are bound to bold and italics (Markdown). *If you don't like losing your default shortcut for "Build", modify the sublime-keymap file.*
+
+There's a long way to go and I have a lot of Python to learn.
