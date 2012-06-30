@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>name</key>
-    <string>BrettWord</string>
+    <string>MarkdownEditing</string>
     <key>settings</key>
     <array>
         <dict>
@@ -12,13 +12,13 @@
                 <key>background</key>
                 <string>#ECECEC</string>
                 <key>caret</key>
-                <string>#000000</string>
+                <string>#00bdff</string>
                 <key>foreground</key>
                 <string>#555555</string>
                 <key>invisibles</key>
                 <string>#E0E0E0</string>
                 <key>lineHighlight</key>
-                <string>#E6E6E6</string>
+                <string>#e6e6e6</string>
                 <key>selection</key>
                 <string>#C2E8FF</string>
                 <key>selectionBorder</key>
@@ -571,7 +571,7 @@
             <key>name</key>
             <string>Markdown: Punctuation</string>
             <key>scope</key>
-            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.heading.markdown, punctuation.definition.blockquote.markdown</string>
+            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.heading.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
@@ -593,21 +593,6 @@
                 <string>#EEEEEE00</string>
             </dict>
         </dict>
-        <dict>
-            <key>name</key>
-            <string>Markdown: Quote</string>
-            <key>scope</key>
-            <string>markup.quote.markdown</string>
-            <key>settings</key>
-            <dict>
-                <key>foreground</key>
-                <string>#666666</string>
-                <key>background</key>
-                <string>#EEEEEE00</string>
-                <key>fontStyle</key>
-                <string>italic</string>
-            </dict>
-        </dict> 
         <dict>
             <key>name</key>
             <string>Markup: Error</string>
