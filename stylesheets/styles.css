@@ -596,7 +596,7 @@ a small {
 }
 
 ul {
-  list-style-image: url("../images/bullet.png");
+  list-style: square;
 }
 
 strong {
@@ -634,6 +634,7 @@ code {
   -ms-border-radius: 2px;
   -khtml-border-radius: 2px;
   border-radius: 2px;
+  background: #42423a;
 }
 
 pre {
@@ -815,10 +816,15 @@ section #title .credits {
 }
 section #title .credits.left {
   float: left;
+  color: #ccc;
 }
 section #title .credits.right {
   float: right;
 }
+section #title .credits.right, section #title .credits.right a {
+  color: rgb(68, 68, 65);
+}
+
 
 @media print, screen and (max-width: 720px) {
   #title .credits {
