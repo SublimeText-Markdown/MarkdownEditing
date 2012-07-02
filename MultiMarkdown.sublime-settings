@@ -17,6 +17,6 @@
 	"draw_centered": true,
 	"auto_match_enabled": true,
 	"line_padding_top": 5,
-	"caret_style": "wide"
+	"caret_style": "wide",
+	"highlight_line": true
 }
-
