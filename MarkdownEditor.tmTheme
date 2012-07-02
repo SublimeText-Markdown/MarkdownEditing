@@ -379,7 +379,18 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#999999</string>
+                <string>#AAAAAA</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>HTML: Embedded</string>
+            <key>scope</key>
+            <string>source.smarty.embedded.html</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#AAAAAA</string>
             </dict>
         </dict>
         <dict>
