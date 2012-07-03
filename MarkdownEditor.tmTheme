@@ -430,13 +430,13 @@
             <key>name</key>
             <string>HTML: Attribute Names</string>
             <key>scope</key>
-            <string>entity.other.attribute-name</string>
+            <string>entity.other.attribute-name, text.html.markdown meta.disable-markdown meta.tag.block.any.html string.quoted.double.html, text.html.markdown meta.disable-markdown meta.tag.block.any.html string.quoted.double.html punctuation.definition</string>
             <key>settings</key>
             <dict>
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#6d98cf</string>
+                <string>#999999</string>
             </dict>
         </dict>
         <dict>
@@ -761,7 +761,7 @@
         </dict>
         <dict>
             <key>name</key>
-            <string>Markdown separator</string>
+            <string>Blockquote</string>
             <key>scope</key>
             <string>markup.quote.markdown</string>
             <key>settings</key>
@@ -772,7 +772,7 @@
         </dict>
         <dict>
             <key>name</key>
-            <string>Markdown separator</string>
+            <string>Blockquote punctuation</string>
             <key>scope</key>
             <string>punctuation.definition.blockquote.markdown</string>
             <key>settings</key>
