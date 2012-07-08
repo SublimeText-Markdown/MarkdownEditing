@@ -182,5 +182,21 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    // Headline command by Gabe Weatherhead
+    { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0:$SELECTION}#"}, "context":
+       [
+           { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+           { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+           { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+       ]
+    },
+    // selection pairing with SPACE by Gabe Weatherhead
+    { "keys": ["super+shift+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "}, "context":
+       [
+           { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+           { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+           { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+       ]
     }
 ]
