@@ -182,5 +182,25 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    { "keys": ["super+alt+g"], "command": "gather_missing_link_markers", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+alt+G"], "command": "gather_missing_footnotes", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+6"], "command": "insert_footnote", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+ctrl+6"], "command": "switch_to_from_footnote", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
     }
 ]
