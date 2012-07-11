@@ -51,6 +51,12 @@ def is_footnote_definition(view):
     return re.match(DEFINITION_REGEX, line)
 
 
+def strip_trailing_whitespace(view, edit):
+    tws = view.find('\s+\Z', 0)
+    if tws:
+        view.erase(edit, tws)
+
+
 class MarkFootnotes(sublime_plugin.EventListener):
     def update_footnote_data(self, view):
         view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
@@ -141,3 +147,41 @@ class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
             self.view.run_command('go_to_footnote_reference')
         else:
             self.view.run_command('go_to_footnote_definition')
+
+    def is_enabled(self):
+        return self.view.sel()
+
+
+class SortFootnotesCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        edit = self.view.begin_edit()
+        strip_trailing_whitespace(self.view, edit)
+        self.view.end_edit(edit)
+        edit = self.view.begin_edit()
+        defs = get_footnote_definition_markers(self.view)
+        notes = {}
+        erase = []
+        keyorder = map(lambda x: self.view.substr(x)[2:-1], self.view.get_regions(REFERENCE_KEY))
+        keys = []
+        [keys.append(r) for r in keyorder if not r in keys]
+
+        for (key, item) in defs.items():
+            fnend = self.view.find('(\s*\Z|\n\s*\n(?!\ {4,}))', item.end())
+            fnreg = sublime.Region(item.begin(), fnend.end())
+            notes[key] = self.view.substr(fnreg).strip()
+            erase.append(fnreg)
+        erase.sort()
+        erase.reverse()
+        [self.view.erase(edit, reg) for reg in erase]
+        self.view.end_edit(edit)
+
+        import pprint
+        pprint.pprint(notes)
+        pprint.pprint(keys)
+        edit = self.view.begin_edit()
+        for key in keys:
+            self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])
+        self.view.end_edit(edit)
+
+    def is_enabled(self):
+        return self.view.sel()

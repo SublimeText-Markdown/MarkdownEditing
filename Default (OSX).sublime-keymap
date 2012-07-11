@@ -202,5 +202,10 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    { "keys": ["super+ctrl+s"], "command": "sort_footnotes", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
     }
 ]
