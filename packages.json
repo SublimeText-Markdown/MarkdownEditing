@@ -6,12 +6,12 @@
             "description": "The beginnings of a Markdown editing bundle for Sublime Text 2",
             "author": "Brett Terpstra (@ttscoff)",
             "homepage": "https://github.com/ttscoff/MarkdownEditing",
-            "last_modified": "2012-07-06 07:31:00",
+            "last_modified": "2012-07-18 05:31:00",
             "platforms": {
                 "osx": [
                     {
                         "version": "1.0",
-                        "url": "https://github.com/ttscoff/MarkdownEditing/zipball/master"
+                        "url": "https://nodeload.github.com/ttscoff/MarkdownEditing/zipball/master"
                     }
                 ]
             }
