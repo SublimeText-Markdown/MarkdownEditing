@@ -2,10 +2,11 @@ import sublime, sublime_plugin
 
 class PasteAsLinkCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		edit = self.view.begin_edit()
+		view = self.view
+		sel = view.sel()[0]
+		text = view.substr(sel)
 		contents = sublime.get_clipboard()
-		self.view.replace(edit,self.view.sel()[0],"["+self.view.substr(self.view.sel()[0])+"]("+contents+")")
-		self.view.end_edit(edit)
+		view.replace(edit,sel,"["+text+"]("+contents+")")
 
 	def is_enabled(self):
 		return self.view.sel()
