@@ -784,6 +784,30 @@
                 <string>#AAAAAA</string>
             </dict>
         </dict>
+        <dict>
+            <key>name</key>
+            <string>Block Cursor</string>
+            <key>scope</key>
+            <string>block_cursor</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#212121</string>
+                <key>background</key>
+                <string>#00bdff77</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Brackets</string>
+            <key>scope</key>
+            <string>entity.name.class</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#d5f6ff88</string>
+            </dict>
+        </dict>
     </array>
     <key>uuid</key>
     <string>BF4E1964-0DB9-4E88-8142-E8F52D7EDEEC</string>

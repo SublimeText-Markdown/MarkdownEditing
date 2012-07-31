@@ -17,3 +17,4 @@ This package will make MarkdownEditor your default theme for Markdown/MultiMarkd
 * Typing "#" when there's a selection will surroung it with "#" to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Finish with Ctrl-Opt-Space to add padding around the selection. (Contributed by [Gabe](http://www.macdrifter.com))
 
 There's a long way to go and I have a lot of Python to learn.
+
