@@ -92,7 +92,7 @@
         ]
     },
     // Bold on ⌘B
-    { "keys": ["super+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -102,7 +102,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+b"], "command": "insert_snippet", "args": {"contents": "${0:**$SELECTION**}"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${0:**$SELECTION**}"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -110,7 +110,7 @@
         ]
     },
     // italics on ⌘I
-    { "keys": ["super+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
+    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -120,7 +120,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+i"], "command": "insert_snippet", "args": {"contents": "${0:*$SELECTION*}"}, "context":
+    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "${0:*$SELECTION*}"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -128,7 +128,7 @@
         ]
     },
     // inline link insertion
-    { "keys": ["super+k"], "command": "insert_snippet", "args": {"contents": "[$1]($0)"}, "context":
+    { "keys": ["super+alt+k"], "command": "insert_snippet", "args": {"contents": "[$1]($0)"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -138,7 +138,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+k"], "command": "insert_snippet", "args": {"contents": "[$SELECTION]($0)"}, "context":
+    { "keys": ["super+alt+k"], "command": "insert_snippet", "args": {"contents": "[$SELECTION]($0)"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -192,7 +192,7 @@
        ]
     },
     // selection pairing with SPACE by Gabe Weatherhead
-    { "keys": ["super+shift+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "}, "context":
+    { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "}, "context":
        [
            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
