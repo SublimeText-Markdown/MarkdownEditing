@@ -193,12 +193,12 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+6"], "command": "insert_footnote", "context":
+    { "keys": ["ctrl+6"], "command": "magic_footnotes", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+ctrl+6"], "command": "switch_to_from_footnote", "context":
+    { "keys": ["super+ctrl+6"], "command": "insert_footnote", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]

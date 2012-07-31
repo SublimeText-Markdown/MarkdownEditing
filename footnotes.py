@@ -51,6 +51,14 @@ def is_footnote_definition(view):
     return re.match(DEFINITION_REGEX, line)
 
 
+def is_footnote_reference(view):
+    refs = view.get_regions(REFERENCE_KEY)
+    for ref in refs:
+        if ref.contains(view.sel()[0]):
+            return True
+    return False
+
+
 def strip_trailing_whitespace(view, edit):
     tws = view.find('\s+\Z', 0)
     if tws:
@@ -136,6 +144,20 @@ class GoToFootnoteReferenceCommand(sublime_plugin.TextCommand):
             target = match.groups()[0]
             self.view.sel().clear()
             [self.view.sel().add(a) for a in refs[target]]
+            self.view.show(refs[target][0])
+
+    def is_enabled(self):
+        return self.view.sel()
+
+
+class MagicFootnotesCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        if (is_footnote_definition(self.view)):
+            self.view.run_command('go_to_footnote_reference')
+        elif (is_footnote_reference(self.view)):
+            self.view.run_command('go_to_footnote_definition')
+        else:
+            self.view.run_command('insert_footnote')
 
     def is_enabled(self):
         return self.view.sel()
