@@ -198,5 +198,30 @@
            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
        ]
+    },
+    { "keys": ["alt+shift+g"], "command": "gather_missing_link_markers", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["alt+shift+f"], "command": "gather_missing_footnotes", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+shift+6"], "command": "magic_footnotes", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["alt+shift+6"], "command": "insert_footnote", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+ctrl+s"], "command": "sort_footnotes", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
     }
 ]
