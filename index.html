@@ -4,45 +4,33 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Markdownediting by ttscoff</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/ttscoff/MarkdownEditing">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/ttscoff/MarkdownEditing/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/ttscoff/MarkdownEditing/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
+      <header>
+        <h1>Markdownediting</h1>
+        <p>Better Markdown editing for Sublime Text 2</p>
 
+        <p class="view"><a href="https://github.com/ttscoff/MarkdownEditing">View the Project on GitHub <small>ttscoff/MarkdownEditing</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ttscoff/MarkdownEditing/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ttscoff/MarkdownEditing/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ttscoff/MarkdownEditing">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
       <section>
-        <div id="title">
-          <h1>MarkdownEditing</h1>
-          <p>Better Markdown editing for Sublime Text 2</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="http://brettterpstra.com">Brett Terpstra</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
-
         <h1>MarkdownEditing</h1>
 
 <h3>Better Markdown Editing features for Sublime Text 2</h3>
-
-<p><img src="http://cdn2.brettterpstra.com/wp-content/uploads/2012/05/sublime_markdown_editor_shot.jpg" alt="Yes, I stole it all from Byword." /></p>
 
 <p>This package will make MarkdownEditor your default theme for Markdown/MultiMarkdown files. Adjust it to your liking or remove the line from the .sublime-settings files</p>
 
@@ -54,18 +42,33 @@
 <li>Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a <code>[]</code> or <code>()</code> pair for a link</li>
 <li>⌘⌥V will paste the contents of the clipboard as an inline link on selected text</li>
 <li>⌘⌥R will paste the contents of the clipboard as a reference link</li>
-<li>⌘K inserts a standard inline link, ⌘⇧K inserts an inline image</li>
-<li>⌘B and ⌘I are bound to bold and italics (Markdown). <em>If you don't like losing your default shortcut for "Build", modify the sublime-keymap file.</em>
-</li>
-</ul>
+<li>⌘⌥K inserts a standard inline link, ⌘⇧K inserts an inline image</li>
+<li>⌘⌥B and ⌘⌥I are bound to bold and italics (Markdown).</li>
+<li>Typing "#" when there's a selection will surroung it with "#" to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press.</li>
+<li>Typing return at the end of a line that begins with hasmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can comment out that command in the Default (OSX).sublime-keymap file if needed. I'll turn that into a plugin and add an option for it eventually.</li>
+<li>⌘⇧6 will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.</li>
+<li>⌥⇧F will locate footnote markers without definitions and insert the marker for the definition</li>
+<li>⌥⇧G will do the same for missing reference links</li>
+</ul><p>Footnote commands submitted by <a href="https://github.com/jngeist">J. Nicholas Geist</a> and originated at <a href="http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness">geekabouttown</a></p>
 
-<p><img src="http://cdn2.brettterpstra.com/wp-content/uploads/2012/06/bluecursormdest2.jpg" alt="More Cowbell" /></p>
-
-<p>There's a long way to go and I have a lot of Python to learn. Also, I promise to get this into Package Control soon.</p>
+<p>There's a long way to go and I have a lot of Python to learn.</p>
       </section>
-
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ttscoff">ttscoff</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
-    
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-34296025-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
