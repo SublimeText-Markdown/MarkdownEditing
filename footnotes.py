@@ -98,7 +98,11 @@ class InsertFootnoteCommand(sublime_plugin.TextCommand):
         edit = self.view.begin_edit()
         startloc = self.view.sel()[-1].end()
         markernum = get_next_footnote_marker(self.view)
-        self.view.insert(edit, self.view.find('\s', startloc).begin(), '[^%s]' % markernum)
+        if bool(self.view.size()):
+            targetloc = self.view.find('(\s|$)', startloc).begin()
+        else:
+            targetloc = 0
+        self.view.insert(edit, targetloc, '[^%s]' % markernum)
         self.view.insert(edit, self.view.size(), '\n [^%s]: ' % markernum)
         self.view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
         if self.view.settings().get('command_mode'):
