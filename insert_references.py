@@ -79,12 +79,20 @@ class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
 
         else:
             self.view.window().show_input_panel(
-                'Name for reference:',
-                '',
+                'Name for reference:', '',
                 lambda newref: self.insert_link(linkurl, newref),
                 None, None)
 
     def insert_link(self, linkurl, newref, actually_insert=True):
+        # Check if title is already present as reference
+        if self.view.find(r'^\s{0,3}\[' + re.escape(newref) + '\]:[ \t]+', 0):
+            sublime.error_message('A reference named "' + newref + '" already exists.')
+            self.view.window().show_input_panel(
+                'Name for reference:', '',
+                lambda newref: self.insert_link(linkurl, newref),
+                None, None)
+            return
+
         edit = self.view.begin_edit()
 
         try:
