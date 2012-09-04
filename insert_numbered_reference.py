@@ -33,21 +33,31 @@ class InsertNumberedReferenceCommand(sublime_plugin.TextCommand):
         edit = view.begin_edit()
 
         try:
-            # Find the next reference number
-            reflinks = view.find_all(r'(?<=^\[)(\d+)(?=\]: )')
-            if len(reflinks) == 0:
-                newref = 1
-            else:
-                newref = max(int(view.substr(reg)) for reg in reflinks) + 1
+            linkurl = linkurl.strip()
 
-            # Detect if file ends with \n
-            if view.substr(view.size() - 1) == '\n':
-                nl = ''
-            else:
-                nl = '\n'
+            linktitles = []
+            # Check if URL is already present as reference link
+            view.find_all(r'^\s{0,3}\[([^^\]]+)\]:[ \t]+' + re.escape(linkurl) + '$', 0, '$1', linktitles)
 
-            # Append the new reference link to the end of the file
-            view.insert(edit, view.size(), '{0}[{1}]: {2}\n'.format(nl, newref, linkurl))
+            if linktitles:
+                # Link already exists, reuse existing reference
+                newref = linktitles[0]
+            else:
+                # Find the next reference number
+                reflinks = view.find_all(r'(?<=^\[)(\d+)(?=\]: )')
+                if len(reflinks) == 0:
+                    newref = 1
+                else:
+                    newref = max(int(view.substr(reg)) for reg in reflinks) + 1
+
+                # Detect if file ends with \n
+                if view.substr(view.size() - 1) == '\n':
+                    nl = ''
+                else:
+                    nl = '\n'
+
+                # Append the new reference link to the end of the file
+                view.insert(edit, view.size(), '{0}[{1}]: {2}\n'.format(nl, newref, linkurl))
 
             # Now, add a reference to that link at the current cursor or around the current selection(s)
             sels = view.sel()

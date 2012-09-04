@@ -29,25 +29,38 @@ class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
             None, None)
 
     def receive_link(self, linkurl):
-        self.view.window().show_input_panel(
-            'Name for reference:',
-            '',
-            lambda newref: self.insert_link(linkurl, newref),
-            None, None)
+        linkurl = linkurl.strip()
 
-    def insert_link(self, linkurl, newref):
+        linktitles = []
+        # Check if URL is already present as reference link
+        self.view.find_all(r'^\s{0,3}\[([^^\]]+)\]:[ \t]+' + re.escape(linkurl) + '$', 0, '$1', linktitles)
+
+        if linktitles:
+            # Link already exists, reuse existing reference
+            newref = linktitles[0]
+            self.insert_link(linkurl, newref, False)
+
+        else:
+            self.view.window().show_input_panel(
+                'Name for reference:',
+                '',
+                lambda newref: self.insert_link(linkurl, newref),
+                None, None)
+
+    def insert_link(self, linkurl, newref, actually_insert=True):
         view = self.view
         edit = view.begin_edit()
 
         try:
-            # Detect if file ends with \n
-            if view.substr(view.size() - 1) == '\n':
-                nl = ''
-            else:
-                nl = '\n'
+            if actually_insert:
+                # Detect if file ends with \n
+                if view.substr(view.size() - 1) == '\n':
+                    nl = ''
+                else:
+                    nl = '\n'
 
-            # Append the new reference link to the end of the file
-            view.insert(edit, view.size(), '{0}[{1}]: {2}\n'.format(nl, newref, linkurl))
+                # Append the new reference link to the end of the file
+                view.insert(edit, view.size(), '{0}[{1}]: {2}\n'.format(nl, newref, linkurl))
 
             # Now, add a reference to that link at the current cursor or around the current selection(s)
             sels = view.sel()
