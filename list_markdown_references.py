@@ -10,7 +10,7 @@ import re
 class ListMarkdownReferencesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.markers = []
-        self.view.find_all(r'^\s*(\[[^^\]]+\]):[ \t]+(.+)$', 0, '$1: $2', self.markers)
+        self.view.find_all(r'^\s{0,3}(\[[^^\]]+\]):[ \t]+(.+)$', 0, '$1: $2', self.markers)
         self.view.window().show_quick_panel(self.markers, self.insert_link, sublime.MONOSPACE_FONT)
 
     def insert_link(self, choice):
