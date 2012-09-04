@@ -198,6 +198,11 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+    { "keys": ["super+ctrl+shift+l"], "command": "goto_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
     { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g} }#"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
