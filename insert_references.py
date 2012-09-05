@@ -13,6 +13,13 @@ def get_clipboard_if_url():
     return m.group() if m else ''
 
 
+def mangle_url(url):
+    url = url.strip()
+    if re.match(r'^([a-z0-9-]+\.)+\w{2,4}', url, re.IGNORECASE):
+        url = 'http://' + url
+    return url
+
+
 def check_for_link(view, url):
     titles = []
     # Check if URL is already present as reference link
@@ -70,7 +77,7 @@ class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
             None, None)
 
     def receive_link(self, linkurl):
-        linkurl = linkurl.strip()
+        linkurl = mangle_url(linkurl)
 
         newref = check_for_link(self.view, linkurl)
         if newref:
@@ -85,7 +92,7 @@ class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
 
     def insert_link(self, linkurl, newref, actually_insert=True):
         # Check if title is already present as reference
-        if self.view.find(r'^\s{0,3}\[' + re.escape(newref) + '\]:[ \t]+', 0):
+        if actually_insert and self.view.find(r'^\s{0,3}\[' + re.escape(newref) + '\]:[ \t]+', 0):
             sublime.error_message('A reference named "' + newref + '" already exists.')
             self.view.window().show_input_panel(
                 'Name for reference:', '',
@@ -128,7 +135,7 @@ class InsertNumberedReferenceCommand(sublime_plugin.TextCommand):
         edit = self.view.begin_edit()
 
         try:
-            linkurl = linkurl.strip()
+            linkurl = mangle_url(linkurl)
             newref = check_for_link(self.view, linkurl)
             if not newref:
                 # Find the next reference number
