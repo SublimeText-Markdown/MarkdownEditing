@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Fix Underlined Markdown Headers",
+        "command": "fix_all_underlined_headers"
+    }
+]
