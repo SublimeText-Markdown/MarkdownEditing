@@ -35,7 +35,7 @@ def get_footnote_identifiers(view):
 
 
 def get_last_footnote_marker(view):
-    ids = [a for a in get_footnote_identifiers(view) if a.isdigit()]
+    ids = sorted([int(a) for a in get_footnote_identifiers(view) if a.isdigit()])
     if len(ids):
         return int(ids[-1])
     else:
