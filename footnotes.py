@@ -87,7 +87,7 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
             self.view.insert(edit, self.view.size(), "\n")
             for note in missingnotes:
                 self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
-            self.view.end_edit(edit)
+        self.view.end_edit(edit)
 
     def is_enabled(self):
         return self.view.sel()
@@ -201,9 +201,6 @@ class SortFootnotesCommand(sublime_plugin.TextCommand):
         [self.view.erase(edit, reg) for reg in erase]
         self.view.end_edit(edit)
 
-        import pprint
-        pprint.pprint(notes)
-        pprint.pprint(keys)
         edit = self.view.begin_edit()
         for key in keys:
             self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])
