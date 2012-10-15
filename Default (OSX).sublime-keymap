@@ -183,6 +183,26 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+    { "keys": ["super+ctrl+r"], "command": "insert_named_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+ctrl+shift+r"], "command": "insert_numbered_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+ctrl+alt+l"], "command": "list_markdown_references", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+ctrl+shift+l"], "command": "goto_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
     { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g} }#"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -202,6 +222,22 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "^#+\\s+[^#]", "match_all": true },
+            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true }
+        ]
+    },
+    // Extend lists
+    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-]|\\d\\.)(\\s+)).*/\n$2$3/}"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-]|\\d\\.)\\s+)\\S.*", "match_all": true }
+            // { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true }
+        ]
+    },
+    // Remove empty list item
+    { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Remove Empty List Item.sublime-macro"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-]|\\d\\.)\\s+)$", "match_all": true },
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true }
         ]
     },
