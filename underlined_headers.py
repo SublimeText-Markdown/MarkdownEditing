@@ -19,12 +19,19 @@ header text, this command will re-align the underline dashes with the new text l
 import sublime, sublime_plugin
 import re, itertools
 
-# A run of ---- or ==== underline characters.
-SETEXT_DASHES_RE = re.compile( r'[-=]+', re.X )
+SETEXT_DASHES_RE = re.compile( r'''
+	(?: =+ | -+ ) # A run of ---- or ==== underline characters.
+	\s*           # Optional trailing whitespace.
+	$             # Must fill the while line. Don't match "- list items"
+	''', re.X )
 
 def fix_dashes(view, edit, text_region, dash_region):
 	"""Replaces the underlined "dash" region of a setext header with a run of
 	dashes or equal-signs that match the length of the header text."""
+
+	if len(view.substr(text_region).strip()) == 0:
+		# Ignore dashes not under text. They are HRs.
+		return
 
 	old_dashes = view.substr(dash_region)
 	first_dash = old_dashes[0]
