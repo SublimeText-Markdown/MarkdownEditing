@@ -24,3 +24,11 @@ Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) a
 
 There's a long way to go and I have a lot of Python to learn.
 
+### Installation
+
+1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text 2 Packages directory for your platform:
+    * Mac: `git clone https://github.com/ttscoff/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
+    * Windows: `git clone https://github.com/ttscoff/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
+    * Linux: `git clone https://github.com/ttscoff/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
+2. Restart Sublime Text 2 to be sure the new package is available.
+3. Open a Markdown file and this custom theme. The features listed above should now be available.
