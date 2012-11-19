@@ -266,5 +266,16 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    { "keys": ["super+shift+."], "command": "indent_quote", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+shift+,"], "command": "deindent_quote", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
+        ]
     }
 ]
