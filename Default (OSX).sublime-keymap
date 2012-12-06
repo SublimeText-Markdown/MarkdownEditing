@@ -207,7 +207,16 @@
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#{6}", "match_all": true }
+            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#{6}", "match_all": true },
+            { "key": "setting.match_header_hashes", "operator": "equal", "operand": true }
+        ]
+    },
+    { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g}}"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#{6}", "match_all": true },
+            { "key": "setting.match_header_hashes", "operator": "equal", "operand": false }
         ]
     },
     { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Padded Headline.sublime-macro"}, "context":
@@ -215,7 +224,16 @@
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "#{6}", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "#+", "match_all": true }
+            { "key": "following_text", "operator": "regex_contains", "operand": "#+", "match_all": true },
+            { "key": "setting.match_header_hashes", "operator": "equal", "operand": true }
+        ]
+    },
+    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Padded Headline.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "#{6}", "match_all": true },
+            { "key": "setting.match_header_hashes", "operator": "equal", "operand": false }
         ]
     },
     { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/(#+?)[^#].*$/$1\n/}"}, "context":
@@ -223,7 +241,8 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "^#+\\s+[^#]", "match_all": true },
             { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#+$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true }
+            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+            { "key": "setting.match_header_hashes", "operator": "equal", "operand": true }
         ]
     },
     // Extend lists
