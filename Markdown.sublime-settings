@@ -20,5 +20,6 @@
 	"line_padding_top": 5,
 	"caret_style": "wide",
 	"highlight_line": true,
+	// add trailing #'s to headlines
 	"match_header_hashes": false
 }
