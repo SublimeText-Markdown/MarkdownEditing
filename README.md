@@ -14,8 +14,10 @@ This package will make MarkdownEditor your default theme for Markdown/MultiMarkd
 * ⌘⌥R will paste the contents of the clipboard as a reference link
 * ⌘⌥K inserts a standard inline link, ⌘⇧K inserts an inline image
 * ⌘⌥B and ⌘⌥I are bound to bold and italics (Markdown).
+* `~` triggers HTML `<del></del>` tags (strikethrough) to selected text
 * Typing "#" when there's a selection will surround it with "#" to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `match_header_hashes" option in your settings to disable.
+* ⌘^1 through ⌘^6 will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text. in tandem with the above headline tools.
 * ⌘⇧6 will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
 * ⌥⇧F will locate footnote markers without definitions and insert the marker for the definition
 * ⌥⇧G will do the same for missing reference links
