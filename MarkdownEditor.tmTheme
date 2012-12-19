@@ -29,6 +29,10 @@
                 <string>#FFE792</string>
                 <key>findHighlightForeground</key>
                 <string>#000000</string>
+                <key>shadow</key>
+                <string>#808080</string>
+                <key>shadowWidth</key>
+                <string>6</string>
             </dict>
         </dict>
         <dict>

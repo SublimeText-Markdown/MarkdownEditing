@@ -41,7 +41,8 @@
                                 "command": "open_file",
                                 "args": {"file": "${packages}/User/MultiMarkdown.sublime-settings"},
                                 "caption": "MultiMarkdown Settings – User"
-                            }
+                            },
+                            { "caption": "-" }
                         ]
                     }
                 ]
