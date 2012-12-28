@@ -378,11 +378,18 @@
         ]
     },
     // Extend lists
-    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-]|\\d\\.)(\\s+)).*/\n$2$3/}"}, "context":
+    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-])(\\s+)).*/\n$2$3/}"}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-]|\\d\\.)\\s+)\\S.*", "match_all": true }
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-])\\s+)\\S.*", "match_all": true }
             // { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true }
+        ]
+    },
+	// Extend Numbered Lists
+    { "keys": ["enter"], "command": "number_list", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d\\.)\\s+)\\S.*", "match_all": true }
         ]
     },
     // Remove empty list item
