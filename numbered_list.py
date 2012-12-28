@@ -14,6 +14,5 @@ class NumberListCommand(sublime_plugin.TextCommand):
 		else:
 			view.insert(edit, sel.end(), "\n%s%d. " % (text[:num], int(text[num:dot]) + 1))
 
-
 	def is_enabled(self):
 		return True
