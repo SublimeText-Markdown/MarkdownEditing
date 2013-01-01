@@ -53,7 +53,19 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
 			text_line = self.view.line(dashes_line.begin() - 1)
 			if text_line.begin() < 0: continue
 
+			text = self.view.substr(text_line)
 			dashes = self.view.substr(dashes_line)
+
+			# ignore, text_line is a list item
+			if text.lstrip().startswith("-") and len(dashes.strip()) < 2:
+				settings = self.view.settings()
+				use_spaces = bool(settings.get('translate_tabs_to_spaces'))
+				tab_size = int(settings.get('tab_size', 8))
+				indent_characters = '\t'  
+				if use_spaces:  
+					    indent_characters = ' ' * tab_size
+				self.view.insert(edit, dashes_line.begin(), indent_characters)
+
 			m = SETEXT_DASHES_RE.match(dashes)
 			if m:
 				fix_dashes(self.view, edit, text_line, dashes_line)
