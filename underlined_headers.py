@@ -61,8 +61,8 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
 				settings = self.view.settings()
 				use_spaces = bool(settings.get('translate_tabs_to_spaces'))
 				tab_size = int(settings.get('tab_size', 8))
-				indent_characters = '\t'  
-				if use_spaces:  
+				indent_characters = '\t'
+				if use_spaces:
 					    indent_characters = ' ' * tab_size
 				self.view.insert(edit, dashes_line.begin(), indent_characters)
 
@@ -74,7 +74,7 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
 class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 	"""Searches for all setext headings resize them to match the preceding
 	header text."""
-	
+
 	def description(self):
 		# Used as the name for Undo.
 		return 'Fix Underlined Markdown Headers'
