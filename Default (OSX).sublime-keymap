@@ -120,7 +120,7 @@
         ]
     },
     // Bold on ⌘B
-    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$1**"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -130,7 +130,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${0:**$SELECTION**}"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${1:**$SELECTION**}"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
