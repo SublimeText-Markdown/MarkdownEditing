@@ -6,7 +6,7 @@
             "description": "The beginnings of a Markdown editing bundle for Sublime Text 2",
             "author": "Brett Terpstra (@ttscoff)",
             "homepage": "https://github.com/ttscoff/MarkdownEditing",
-            "last_modified": "2012-09-04 09:38:00",
+            "last_modified": "2013-03-09 09:38:00",
             "platforms": {
                 "*": [
                     {
