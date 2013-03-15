@@ -29,6 +29,10 @@
                 <string>#FFE792</string>
                 <key>findHighlightForeground</key>
                 <string>#000000</string>
+                <key>shadow</key>
+                <string>#808080</string>
+                <key>shadowWidth</key>
+                <string>6</string>
             </dict>
         </dict>
         <dict>
@@ -577,7 +581,7 @@
             <key>name</key>
             <string>Markdown: Punctuation</string>
             <key>scope</key>
-            <string>markup.list.unnumbered.markdown meta.paragraph.list.markdown</string>
+            <string>markup.list.unnumbered.markdown meta.paragraph.list.markdown, markup.list.unnumbered.markdown punctuation.definition.list_item.markdown, markup.list.numbered.markdown, markup.list.numbered.markdown meta.paragraph.list.markdown, markup.list.numbered.markdown punctuation.definition.list_item.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>

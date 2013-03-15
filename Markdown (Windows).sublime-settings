@@ -1,0 +1,10 @@
+{
+	"extensions":
+	[
+		"md",
+		"mdown",
+		"mmd",
+		"txt"
+	],
+	"font_face": "Consolas"
+}

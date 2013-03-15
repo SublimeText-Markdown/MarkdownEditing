@@ -1,0 +1,20 @@
+[
+    {
+        "caption": "Fix Underlined Markdown Headers",
+        "command": "fix_all_underlined_headers"
+    },
+    {
+        "caption": "Preferences: MarkdownEditing Settings – Default",
+        "command": "open_file", "args":
+        {
+            "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
+        }
+    },
+    {
+        "caption": "Preferences: MarkdownEditing Settings – User",
+        "command": "open_file", "args":
+        {
+            "file": "${packages}/User/Markdown.sublime-settings"
+        }
+    }
+]

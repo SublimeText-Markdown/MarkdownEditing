@@ -1,0 +1,7 @@
+[
+    // {"command": "expand_selection", "args": {"to": "line"} },
+    // {"command": "left_delete"}
+    {"command": "run_macro_file", "args": {"file": "Packages/Default/Delete line.sublime-macro"}},
+    {"command": "insert", "args": {"characters": "\n"}},
+    {"command": "move", "args": {"by": "characters", "forward": false}}
+]
