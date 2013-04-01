@@ -634,7 +634,7 @@
 					<key>name</key>
 					<string>string.other.link.description.markdown</string>
 				</dict>
-				<key>3</key>
+				<key>4</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.string.end.markdown</string>
