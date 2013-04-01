@@ -65,6 +65,7 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
 				if use_spaces:
 					    indent_characters = ' ' * tab_size
 				self.view.insert(edit, dashes_line.begin(), indent_characters)
+				break
 
 			m = SETEXT_DASHES_RE.match(dashes)
 			if m:
