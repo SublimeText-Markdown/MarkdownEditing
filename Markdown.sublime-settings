@@ -21,7 +21,5 @@
 	"caret_style": "wide",
 	"highlight_line": true,
 	// add trailing #'s to headlines
-	"match_header_hashes": false,
-	"spell_check": true,
-	"dictionary": "Packages/Language - English/en_US.dic"
+	"match_header_hashes": false
 }
