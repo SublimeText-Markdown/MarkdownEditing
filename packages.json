@@ -10,7 +10,7 @@
             "platforms": {
                 "*": [
                     {
-                        "version": "1.2.2",
+                        "version": "1.2.3",
                         "url": "https://nodeload.github.com/ttscoff/MarkdownEditing/zipball/master"
                     }
                 ]
