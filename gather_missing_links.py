@@ -15,4 +15,4 @@ class GatherMissingLinkMarkersCommand(sublime_plugin.TextCommand):
         self.view.end_edit(edit)
 
     def is_enabled(self):
-        return self.view.sel()
+        return True
