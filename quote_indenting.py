@@ -35,7 +35,7 @@ class IndentQuote(sublime_plugin.TextCommand):
             selections.add(selection)
 
     def is_enabled(self):
-        return self.view.sel()
+        return True
 
 
 class DeindentQuote(sublime_plugin.TextCommand):
@@ -70,4 +70,4 @@ class DeindentQuote(sublime_plugin.TextCommand):
             selections.add(selection)
 
     def is_enabled(self):
-        return self.view.sel()
+        return True
