@@ -22,6 +22,15 @@ This package will make MarkdownEditor your default theme for Markdown/MultiMarkd
 * ⌥⇧F will locate footnote markers without definitions and insert the marker for the definition
 * ⌥⇧G will do the same for missing reference links
 
+Keymap for Windows. Most of them are similar with the keymap on Mac OS X. If you can't find some missing keymaps, it will be the same as on Mac.
+
+* Ctrl + Win + V will paste the contents of the clipboard as an inline link on selected text
+* Ctrl + Win + R will paste the contents of the clipboard as a reference link
+* Ctrl + Win + K inserts a standard inline link, Shift + Win + K inserts an inline image
+* Alt + Win + B and Alt + Win + I are bound to bold and italics (Markdown).
+* Ctrl + 1 through Ctrl + 6 will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the "match\_header\_hashes" preference setting.
+* Ctrl + ⇧6 will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
+
 Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) and originated at [geekabouttown](http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness)
 
 There's a long way to go and I have a lot of Python to learn.
