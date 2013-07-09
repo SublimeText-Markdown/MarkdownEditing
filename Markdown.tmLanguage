@@ -127,13 +127,6 @@
 			<string>(\1$\n)</string>
 			<key>name</key>
 			<string>markup.raw.block.markdown</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -146,13 +139,6 @@
 			<string>(?&lt;=^&lt;/\1&gt;$\n)</string>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -163,13 +149,6 @@
 			<string>$\n?</string>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
 		</dict>
 		<dict>
 			<key>captures</key>
