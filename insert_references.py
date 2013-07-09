@@ -112,7 +112,7 @@ class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
             self.view.end_edit(edit)
 
     def is_enabled(self):
-        return self.view.sel()
+        return True
 
 
 # Inspired by http://www.leancrew.com/all-this/2012/08/markdown-reference-links-in-bbedit/
@@ -153,4 +153,4 @@ class InsertNumberedReferenceCommand(sublime_plugin.TextCommand):
             self.view.end_edit(edit)
 
     def is_enabled(self):
-        return self.view.sel()
+        return True
