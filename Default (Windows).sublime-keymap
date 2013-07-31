@@ -226,7 +226,7 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+shift+l"], "command": "goto_reference", "context":
+    { "keys": ["ctrl+alt+g"], "command": "goto_reference", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
