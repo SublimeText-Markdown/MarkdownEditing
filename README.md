@@ -22,7 +22,7 @@ This package will make MarkdownEditor your default theme for Markdown/MultiMarkd
 * ⌥⇧F will locate footnote markers without definitions and insert the marker for the definition
 * ⌥⇧G will do the same for missing reference links
 
-Keymap for Windows. Most of them are similar with the keymap on Mac OS X. If you can't find some missing keymaps, it will be the same as on Mac.
+Keymap for Windows. Most of them are similar with the keymap on Mac OS X.
 
 * Ctrl + Win + V will paste the contents of the clipboard as an inline link on selected text
 * Ctrl + Win + R will paste the contents of the clipboard as a reference link
