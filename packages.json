@@ -7,11 +7,10 @@
             "author": "Brett Terpstra (@ttscoff)",
             "homepage": "https://github.com/ttscoff/MarkdownEditing",
             "last_modified": "2013-06-30 10:27:00",
-            "sublime_text": "*",
             "platforms": {
                 "*": [
                     {
-                        "version": "1.2.7",
+                        "version": "1.2.8",
                         "url": "https://github.com/ttscoff/MarkdownEditing/zipball/master"
                     }
                 ]
