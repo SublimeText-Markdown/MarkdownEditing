@@ -1,20 +1,19 @@
 {
-    "schema_version": "1.2",
-    "packages": [
+    "schema_version": "2.0",
+    "packages":
+    [
         {
             "name": "MarkdownEditing",
-            "description": "The beginnings of a Markdown editing bundle for Sublime Text 2",
             "author": "Brett Terpstra (@ttscoff)",
-            "homepage": "https://github.com/ttscoff/MarkdownEditing",
-            "last_modified": "2013-06-30 10:27:00",
-            "platforms": {
-                "*": [
-                    {
-                        "version": "1.2.8",
-                        "url": "https://github.com/ttscoff/MarkdownEditing/zipball/master"
-                    }
-                ]
-            }
+            "details": "https://github.com/ttscoff/MarkdownEditing",
+            "labels": [ "markdown" ],
+            "readme": "https://raw.github.com/ttscoff/MarkdownEditing/master/README.md",
+            "releases": [
+                {
+                    "sublime_text": "*",
+                    "details": "https://github.com/ttscoff/MarkdownEditing/tags"
+                }
+            ]
         }
     ]
 }
