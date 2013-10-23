@@ -1149,6 +1149,11 @@
 					<key>name</key>
 					<string>punctuation.definition.raw.markdown</string>
 				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>markup.raw.inline.content.markdown</string>
+				</dict>
 				<key>3</key>
 				<dict>
 					<key>name</key>
@@ -1156,7 +1161,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(`+)([^`]|(?!(?&lt;!`)\1(?!`))`)*+(\1)</string>
+			<string>(`+)((?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+)(\1)</string>
 			<key>name</key>
 			<string>markup.raw.inline.markdown</string>
 		</dict>
