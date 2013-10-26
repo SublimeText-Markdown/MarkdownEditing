@@ -368,22 +368,32 @@
             <key>name</key>
             <string>HTML: Tags</string>
             <key>scope</key>
-            <string>text.html.markdown entity.name.tag,text.html.markdown punctuation.definition.tag.html</string>
+            <string>
+                , text.html.markdown meta.disable-markdown entity.name.tag,
+                , text.html.markdown meta.disable-markdown meta.tag,
+                , text.html.markdown meta.disable-markdown meta.tag punctuation.definition.tag,
+                , text.html.markdown meta.disable-markdown meta.tag string.quoted meta.string-contents,
+                , text.html.markdown meta.disable-markdown meta.tag string.quoted punctuation.definition.string,
+                , text.html.markdown meta.disable-markdown meta.tag entity.other.attribute-name,
+                , text.html.markdown meta.paragraph.markdown entity.name.tag,
+                , text.html.markdown meta.paragraph.markdown meta.tag,
+                , text.html.markdown meta.paragraph.markdown meta.tag punctuation.definition.tag,
+                , text.html.markdown meta.paragraph.markdown meta.tag string.quoted meta.string-contents,
+                , text.html.markdown meta.paragraph.markdown meta.tag string.quoted punctuation.definition.string,
+                , text.html.markdown meta.paragraph.markdown meta.tag entity.other.attribute-name,
+                , text.html.markdown markup.list entity.name.tag,
+                , text.html.markdown markup.list meta.tag,
+                , text.html.markdown markup.list meta.tag punctuation.definition.tag,
+                , text.html.markdown markup.list meta.tag string.quoted meta.string-contents,
+                , text.html.markdown markup.list meta.tag string.quoted punctuation.definition.string,
+                , text.html.markdown markup.list meta.tag entity.other.attribute-name,
+            </string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
                 <string>#AAAAAA</string>
-            </dict>
-        </dict>
-        <dict>
-            <key>name</key>
-            <string>HTML: Tags</string>
-            <key>scope</key>
-            <string>meta.disable-markdown</string>
-            <key>settings</key>
-            <dict>
-                <key>foreground</key>
-                <string>#AAAAAA</string>
+                <key>background</key>
+                <string>#ECECEC</string>
             </dict>
         </dict>
         <dict>
