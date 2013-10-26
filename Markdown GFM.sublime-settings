@@ -1,0 +1,24 @@
+{
+	"extensions":
+	[
+		"md",
+		"mdown",
+		"mmd",
+		"txt"
+	],
+	"trim_trailing_white_space_on_save": false,
+	"font_face": "Menlo",
+	"font_options": [ "subpixel_antialias", "no_round", "directwrite"],
+	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
+	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme",
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true,
+	"wrap_width": 70,
+	"draw_centered": true,
+	"auto_match_enabled": true,
+	"line_padding_top": 5,
+	"caret_style": "wide",
+	"highlight_line": true,
+	// add trailing #'s to headlines
+	"match_header_hashes": false
+}
