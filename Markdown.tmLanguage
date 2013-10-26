@@ -137,6 +137,13 @@
 			</string>
 			<key>end</key>
 			<string>(?&lt;=^&lt;/\1&gt;$\n)</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
+			</array>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
 		</dict>
@@ -147,6 +154,13 @@
 			<string>Same rule but for one line disables.</string>
 			<key>end</key>
 			<string>$\n?</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
+			</array>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
 		</dict>
