@@ -118,18 +118,6 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^([`~]{3,})(\w+)?</string>
-			<key>comment</key>
-			<string>
-				Fenced code blocks.
-			</string>
-			<key>end</key>
-			<string>(\1$\n)</string>
-			<key>name</key>
-			<string>markup.raw.block.markdown</string>
-		</dict>
-		<dict>
-			<key>begin</key>
 			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^&gt;]*&gt;)(?!.*?&lt;/\1&gt;)</string>
 			<key>comment</key>
 			<string>
