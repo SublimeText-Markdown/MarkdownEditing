@@ -130,7 +130,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b)(?!.*?&lt;/\1&gt;)</string>
+			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^&gt;]*&gt;)(?!.*?&lt;/\1&gt;)</string>
 			<key>comment</key>
 			<string>
 				Markdown formatting is disabled inside block-level tags.
@@ -142,7 +142,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b)</string>
+			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^&gt;]*&gt;)</string>
 			<key>comment</key>
 			<string>Same rule but for one line disables.</string>
 			<key>end</key>
