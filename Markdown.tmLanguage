@@ -118,35 +118,37 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^([`~]{3,})(\w+)?</string>
-			<key>comment</key>
-			<string>
-				Fenced code blocks.
-			</string>
-			<key>end</key>
-			<string>(\1$\n)</string>
-			<key>name</key>
-			<string>markup.raw.block.markdown</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b)(?!.*?&lt;/\1&gt;)</string>
+			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^&gt;]*&gt;)(?!.*?&lt;/\1&gt;)</string>
 			<key>comment</key>
 			<string>
 				Markdown formatting is disabled inside block-level tags.
 			</string>
 			<key>end</key>
 			<string>(?&lt;=^&lt;/\1&gt;$\n)</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
+			</array>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b)</string>
+			<string>^(?=&lt;(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^&gt;]*&gt;)</string>
 			<key>comment</key>
 			<string>Same rule but for one line disables.</string>
 			<key>end</key>
 			<string>$\n?</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
+			</array>
 			<key>name</key>
 			<string>meta.disable-markdown</string>
 		</dict>
@@ -1134,6 +1136,10 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>text.html.basic</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#inline</string>
 						</dict>
 					</array>
@@ -1176,6 +1182,6 @@
 	<key>scopeName</key>
 	<string>text.html.markdown</string>
 	<key>uuid</key>
-	<string>0A1D9874-B448-11D9-BD50-000D93B6E43C</string>
+	<string>075E6FC0-3E42-11E3-AA6E-0800200C9A66</string>
 </dict>
 </plist>
