@@ -811,6 +811,17 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Markdown separator</string>
+            <key>scope</key>
+            <string>markup.raw.inline.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#212121</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>Block Cursor</string>
             <key>scope</key>
             <string>block_cursor</string>
