@@ -34,6 +34,17 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
+                                "args": {"file": "${packages}/MarkdownEditing/Markdown GFM.sublime-settings"},
+                                "caption": "Markdown GFM Settings – Default"
+                            },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/User/Markdown GFM.sublime-settings"},
+                                "caption": "Markdown GFM Settings – User"
+                            },
+                            { "caption": "-" },
+                            {
+                                "command": "open_file",
                                 "args": {"file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings"},
                                 "caption": "MultiMarkdown Settings – Default"
                             },
