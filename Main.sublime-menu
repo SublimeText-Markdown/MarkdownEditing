@@ -24,23 +24,23 @@
                             {
                                 "command": "open_file",
                                 "args": {"file": "${packages}/MarkdownEditing/Markdown.sublime-settings"},
-                                "caption": "Markdown Settings – Default"
-                            },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/Markdown.sublime-settings"},
-                                "caption": "Markdown Settings – User"
-                            },
-                            { "caption": "-" },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/Markdown GFM.sublime-settings"},
                                 "caption": "Markdown GFM Settings – Default"
                             },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/Markdown GFM.sublime-settings"},
+                                "args": {"file": "${packages}/User/Markdown.sublime-settings"},
                                 "caption": "Markdown GFM Settings – User"
+                            },
+                            { "caption": "-" },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings"},
+                                "caption": "Markdown (Standard) Settings – Default"
+                            },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/User/Markdown (Standard).sublime-settings"},
+                                "caption": "Markdown (Standard) Settings – User"
                             },
                             { "caption": "-" },
                             {
