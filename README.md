@@ -47,13 +47,17 @@ Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) a
 
 ## GFM Spesific features
 
-Strikethrough is supported:
+Underscores in words doesn't mess with bold or italic style:
 
-![strikethrough](screenshots/strikethrough.png)
+![underscore-in-words](screenshots/underscore-in-words.png)
 
 Fenced code blocks gets syntax highlighting inside:
 
 ![fenced-code-block](screenshots/fenced-code-block.png)
+
+Strikethrough is supported:
+
+![strikethrough](screenshots/strikethrough.png)
 
 ## Commands
 
