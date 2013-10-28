@@ -13,6 +13,13 @@ _There may be ~~strikethroughed text~~ inside italic text._
 multiple lines. Just keep in mind
 not to put any space in the beginning or end.~~
 
+# Underscore In Words
+
+The word `complicated` must be neither bold nor italic below:
+
+perform_complicated_task
+perform__complicated__task
+
 # Fenced Code Blocks
 
 ## In / Near List Items
