@@ -1,8 +1,17 @@
 # Strikethrough
 
-Below text should be parsed as _strikethroughed_.
+~~This text should be parsed as _strikethroughed_.~~
 
-~~ Mistaken text. ~~
+~~There may be __bold__ or _italic_ text inside strikethroughed text.~~
+
+__There may be ~~strikethroughed text~~ inside bold text.__
+_There may be ~~strikethroughed text~~ inside italic text._
+
+~~ If there is a space in the beginning or end, it won't work as per the [GFM][GFM] docs ~~
+
+~~Strikethrough can be applied to
+multiple lines. Just keep in mind
+not to put any space in the beginning or end.~~
 
 # Fenced Code Blocks
 

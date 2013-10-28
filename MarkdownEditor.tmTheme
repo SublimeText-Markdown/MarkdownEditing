@@ -578,7 +578,7 @@
             <key>name</key>
             <string>Markdown: Punctuation</string>
             <key>scope</key>
-            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.heading.markdown</string>
+            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.strikethrough.markdown, punctuation.definition.heading.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
@@ -675,6 +675,44 @@
                 <string>bold</string>
                 <key>foreground</key>
                 <string>#555555</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Strikethrough</string>
+            <key>scope</key>
+            <string>
+                , markup.strikethrough,
+                , markup.strikethrough.markdown,
+                , markup.strikethrough constant.other.reference.link.markdown,
+                , markup.strikethrough entity.name.tag.inline,
+                , markup.strikethrough markup.bold,
+                , markup.strikethrough markup.bold.markdown,
+                , markup.strikethrough markup.italic,
+                , markup.strikethrough markup.italic.markdown,
+                , markup.strikethrough markup.raw.inline.markdown,
+                , markup.strikethrough markup.underline.link.image.markdown,
+                , markup.strikethrough markup.underline.link.markdown,
+                , markup.strikethrough punctuation.definition.bold.markdown,
+                , markup.strikethrough punctuation.definition.italic.markdown,
+                , markup.strikethrough punctuation.definition.constant.begin.markdown,
+                , markup.strikethrough punctuation.definition.constant.end.markdown,
+                , markup.strikethrough punctuation.definition.constant.markdown,
+                , markup.strikethrough punctuation.definition.metadata.markdown,
+                , markup.strikethrough punctuation.definition.raw.markdown,
+                , markup.strikethrough punctuation.definition.strikethrough.markdown,
+                , markup.strikethrough punctuation.definition.string.begin.markdown,
+                , markup.strikethrough punctuation.definition.string.end.markdown,
+                , markup.strikethrough string.other.link.description.markdown,
+                , markup.strikethrough string.other.link.description.title.markdown,
+                , markup.strikethrough string.other.link.title.markdown,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#CECECE</string>
+                <key>background</key>
+                <string>#ECECEC</string>
             </dict>
         </dict>
         <dict>

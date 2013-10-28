@@ -505,6 +505,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#strikethrough</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#image-inline</string>
 				</dict>
 				<dict>
@@ -537,7 +541,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(\*\*|__)(?=\S)								# Open
+						(~~)(?=[^\s~])								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -574,7 +578,6 @@
 							  | (?!(?&lt;=\S)\1).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1								# Close
 						)
 					</string>
 			<key>captures</key>
@@ -582,13 +585,13 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.bold.markdown</string>
+					<string>punctuation.definition.strikethrough.markdown</string>
 				</dict>
 			</dict>
 			<key>end</key>
 			<string>(?&lt;=\S)(\1)</string>
 			<key>name</key>
-			<string>markup.bold.markdown</string>
+			<string>markup.strikethrough.markdown</string>
 			<key>patterns</key>
 			<array>
 				<dict>
@@ -621,6 +624,10 @@
 				<dict>
 					<key>include</key>
 					<string>#raw</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#bold</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -870,6 +877,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#strikethrough</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#line-break</string>
 				</dict>
 				<dict>
@@ -995,6 +1006,10 @@
 				<dict>
 					<key>include</key>
 					<string>#bold</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#strikethrough</string>
 				</dict>
 				<dict>
 					<key>include</key>

@@ -112,7 +112,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["~"], "command": "insert_snippet", "args": {"contents": "<del>${0:$SELECTION}</del>"}, "context":
+    { "keys": ["~"], "command": "insert_snippet", "args": {"contents": "~~${0:$SELECTION}~~"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
