@@ -1,10 +1,7 @@
 {
 	"extensions":
 	[
-		"md",
-		"mdown",
-		"mmd",
-		"txt"
+		"mmd"
 	],
 
 	"font_face": "Menlo",
