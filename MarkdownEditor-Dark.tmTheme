@@ -841,8 +841,10 @@
             <string>punctuation.definition.blockquote.markdown</string>
             <key>settings</key>
             <dict>
+                <key>background</key>
+                <string>#3E3E3E</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#3E3E3E</string>
             </dict>
         </dict>
         <dict>
