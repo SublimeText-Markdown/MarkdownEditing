@@ -741,6 +741,17 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Markup: Naked Link</string>
+            <key>scope</key>
+            <string>markup.underline.link.naked.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#555555</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>-----------------------------------</string>
             <key>settings</key>
             <dict/>
