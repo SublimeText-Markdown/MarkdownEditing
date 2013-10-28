@@ -1,6 +1,6 @@
 # MarkdownEditing
 
-Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more robust syntax highlighting and useful Markdown editing features for Sublime Text.
+Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more robust syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, GitHub flavored Markdown, MultiMarkdown.
 
 ![MarkdownEditing](screenshots/light.png)
 
@@ -9,6 +9,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 ## Overview
 
 * [Features](#Features)
+* [GFM Spesific features](#gfm-spesific-features)
 * [Commands](#Commands)
 * [Installation](#Installation)
 * [Configuration](#Configuration)
@@ -44,7 +45,15 @@ Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS
 
 Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) and originated at [geekabouttown](http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness)
 
-There's a long way to go and I have a lot of Python to learn.
+## GFM Spesific features
+
+Strikethrough is supported:
+
+![strikethrough](screenshots/strikethrough.png)
+
+Fenced code blocks gets syntax highlighting inside:
+
+![fenced-code-block](screenshots/fenced-code-block.png)
 
 ## Commands
 
@@ -74,13 +83,13 @@ The preferred method of installation is via [Sublime Package Control](http://wbo
 
 ## Configuration
 
-The plugin contains 3 different Markdown flavors: Markdown, MultiMarkdown, GitHub flavored Markdown. Default is Markdown. If you want to set another one as default, open a Markdown file and select your flavor from the menu: `View > Syntax > Open all with current extension as`. You're done.
+The plugin contains 3 different Markdown flavors: Standard Markdown, GitHub flavored Markdown, MultiMarkdown. Default is GitHub flavored Markdown. If you want to set another one as default, open a Markdown file and select your flavor from the menu: `View > Syntax > Open all with current extension as`. You're done.
 
 You may want to have a look at the default settings files. They are located at:
 
+    Packages/MarkdownEditing/Markdown.sublime-settings [GitHub flavored Markdown]
+    Packages/MarkdownEditing/Markdown (Standard).sublime-settings
     Packages/MarkdownEditing/MultiMarkdown.sublime-settings
-    Packages/MarkdownEditing/Markdown GFM.sublime-settings
-    Packages/MarkdownEditing/Markdown.sublime-settings
 
 In order to activate the dark theme, put this line to your user settings file of the flavor:
 
