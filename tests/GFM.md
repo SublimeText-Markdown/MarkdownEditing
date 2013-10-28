@@ -20,6 +20,11 @@ The word `complicated` must be neither bold nor italic below:
 perform_complicated_task
 perform__complicated__task
 
+But the first part below is italic and bold respectively:
+
+_perform_complicated_task
+__perform__complicated__task
+
 # Fenced Code Blocks
 
 ## In / Near List Items

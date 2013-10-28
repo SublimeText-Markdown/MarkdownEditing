@@ -419,7 +419,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						\b(\*\*|__)(?=\S)								# Open
+						(?&lt;!\w)(\*\*|__)(?=\S)								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -456,7 +456,7 @@
 							  | (?!(?&lt;=\S)\1).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1\b								# Close
+							(?&lt;=\S)\1								# Close
 						)
 					</string>
 			<key>captures</key>
@@ -546,7 +546,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(~~)(?=[^\s~])								# Open
+						(?&lt;!\w)(~~)(?=[^\s~])								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -926,7 +926,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						\b(\*|_)(?=\S)								# Open
+						(?&lt;!\w)(\*|_)(?=\S)								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -964,7 +964,7 @@
 							  | (?!(?&lt;=\S)\1).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1\b								# Close
+							(?&lt;=\S)\1								# Close
 						)
 					</string>
 			<key>captures</key>
