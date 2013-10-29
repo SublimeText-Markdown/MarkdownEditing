@@ -4,16 +4,19 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 ![MarkdownEditing](screenshots/light.png)
 
-![MarkdownEditing](screenshots/dark.png)
+[Dark theme](screenshots/dark.png) available.
 
 ## Overview
 
-* [Features](#Features)
+* [Features](#features)
 * [GFM Spesific features](#gfm-spesific-features)
-* [Commands](#Commands)
-* [Installation](#Installation)
-* [Configuration](#Configuration)
-* [License](#License)
+* [Commands](#commands)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Tips](#tips)
+* [Similar Plugins](#similar-plugins)
+* [Credits](#credits)
+* [License](#license)
 
 ## Features
 
@@ -107,6 +110,33 @@ When you decide to live with MarkdownEditing plugin, you may want to disable the
 
 A simple reminder: Sublime Text has a _Distraction Free_ mode that's great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
 
+## Tips
+
+* If you work with Markdown tables too often, you may want to have a look at another plugin named [TableEditor][]. It brings huge improvements for table editing. Several table formats are supported.
+
+## Similar Plugins
+
+###  [Knockdown][]
+
+Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
+
+###  [Sublime Markdown Extended][]
+
+[TODO]
+
+###  [SmartMarkdown][]
+
+[TODO]
+
+## Credits
+
+This plugin contains portions of code from [Knockdown][].
+
 ## License
 
 MarkdownEditing is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+
+[TableEditor]:                 https://github.com/vkocubinsky/SublimeTableEditor
+[Knockdown]:                   https://github.com/aziz/knockdown/
+[Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
+[SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
