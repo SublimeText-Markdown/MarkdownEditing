@@ -1295,11 +1295,11 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>text.html.basic</string>
+							<string>#inline</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#inline</string>
+							<string>text.html.basic</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1762,6 +1762,8 @@
 		</dict>
 		<key>plain-uri</key>
 		<dict>
+			<key>name</key>
+			<string>meta.link.inet.markdown markup.underline.link.naked.markdown</string>
 			<key>match</key>
 			<string>(?xi)
 	\b
@@ -1790,8 +1792,6 @@
     [^\s`!()\[\]{};:'".,&lt;&gt;?«»“”‘’]        # not a space or one of these punct chars
   )
 )</string>
-			<key>name</key>
-			<string>meta.link.inet.markdown markup.underline.link.naked.markdown</string>
 		</dict>
 	</dict>
 	<key>scopeName</key>
