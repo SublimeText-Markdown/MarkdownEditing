@@ -717,6 +717,35 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Markup: Strikethrough (Keyboard Shortcut)</string>
+            <key>scope</key>
+            <string>
+                , markup.strikethrough markup.kbd.content,
+                , markup.strikethrough markup.kbd.content.markdown,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#484848</string>
+                <key>background</key>
+                <string>#222222</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Keyboard Shortcut</string>
+            <key>scope</key>
+            <string>markup.kbd.content.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#2C2C2C</string>
+                <key>foreground</key>
+                <string>#ECECEC</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>Markup: Traceback</string>
             <key>scope</key>
             <string>markup.traceback</string>

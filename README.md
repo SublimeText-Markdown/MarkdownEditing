@@ -58,6 +58,10 @@ Fenced code blocks gets syntax highlighting inside:
 
 ![fenced-code-block](screenshots/fenced-code-block.png)
 
+Keyboard shortcuts gets highlighted like in GitHub:
+
+![keyboard-shortcut](screenshots/keyboard-shortcut.png)
+
 Strikethrough is supported:
 
 ![strikethrough](screenshots/strikethrough.png)

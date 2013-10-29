@@ -4,6 +4,8 @@
 
 ~~There may be __bold__ or _italic_ text inside strikethroughed text.~~
 
+~~There may be a keyboard shortcut like <kbd>Enter</kbd> inside strikethroughed text.~~
+
 __There may be ~~strikethroughed text~~ inside bold text.__
 _There may be ~~strikethroughed text~~ inside italic text._
 
@@ -24,6 +26,27 @@ But the first part below is italic and bold respectively:
 
 _perform_complicated_task
 __perform__complicated__task
+
+# Keyboard Shortcuts
+
+Keyboard shortcuts below should be highlighted:
+
+---
+
+A keyboard shortcut <kbd>Enter</kbd> can be in paragraph.
+
+* A keyboard shortcut <kbd>Enter</kbd> can be in list.
+
+_A keyboard shortcut <kbd>Enter</kbd> can be in italic._
+__A keyboard shortcut <kbd>Enter</kbd> can be in bold.__
+
+~~A keyboard shortcut <kbd>Enter</kbd> can be in deleted text.~~
+
+<p>A keyboard shortcut <kbd>Enter</kbd> can be in HTML.</p>
+
+<div>
+    A keyboard shortcut <kbd>Enter</kbd> can be in block level tags.
+</div>
 
 # Fenced Code Blocks
 

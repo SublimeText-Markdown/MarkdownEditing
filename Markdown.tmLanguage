@@ -146,6 +146,10 @@
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#tag-kbd</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>text.html.basic</string>
 				</dict>
 			</array>
@@ -161,6 +165,10 @@
 			<string>$\n?</string>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#tag-kbd</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>text.html.basic</string>
@@ -484,6 +492,10 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#tag-kbd</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>text.html.basic</string>
 						</dict>
 					</array>
@@ -608,6 +620,10 @@
 					<string>(?&lt;=&gt;)</string>
 					<key>patterns</key>
 					<array>
+						<dict>
+							<key>include</key>
+							<string>#tag-kbd</string>
+						</dict>
 						<dict>
 							<key>include</key>
 							<string>text.html.basic</string>
@@ -920,6 +936,10 @@
 					<key>include</key>
 					<string>#plain-uri</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#tag-kbd</string>
+				</dict>
 			</array>
 		</dict>
 		<key>italic</key>
@@ -990,6 +1010,10 @@
 					<string>(?&lt;=&gt;)</string>
 					<key>patterns</key>
 					<array>
+						<dict>
+							<key>include</key>
+							<string>#tag-kbd</string>
+						</dict>
 						<dict>
 							<key>include</key>
 							<string>text.html.basic</string>
@@ -1792,6 +1816,61 @@
     [^\s`!()\[\]{};:'".,&lt;&gt;?«»“”‘’]        # not a space or one of these punct chars
   )
 )</string>
+		</dict>
+		<key>tag-kbd</key>
+		<dict>
+			<key>name</key>
+			<string>markup.kbd.markdown</string>
+			<key>match</key>
+			<string>((&lt;)(kbd)(&gt;))([^&lt;]+)((&lt;/)(kbd)(&gt;))</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>meta.tag.other.html</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.tag.begin.html</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.tag.other.html</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.tag.end.html</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>markup.kbd.content.markdown</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>meta.tag.other.html</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.tag.begin.html</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.tag.other.html</string>
+				</dict>
+				<key>9</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.tag.end.html</string>
+				</dict>
+			</dict>
 		</dict>
 	</dict>
 	<key>scopeName</key>
