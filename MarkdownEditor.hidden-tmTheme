@@ -895,6 +895,34 @@
                 <string>#d5f6ff88</string>
             </dict>
         </dict>
+
+        <!-- Below definitions belong to thirdparty plugins. -->
+        <dict>
+            <key>name</key>
+            <string>WordHighlight</string>
+            <key>scope</key>
+            <string>wordhighlight</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#212121</string>
+                <key>background</key>
+                <string>#00bdff77</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>BracketHighlighter</string>
+            <key>scope</key>
+            <string>brackethighlighter.default</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#212121</string>
+                <key>background</key>
+                <string>#00bdff77</string>
+            </dict>
+        </dict>
     </array>
     <key>uuid</key>
     <string>BF4E1964-0DB9-4E88-8142-E8F52D7EDEEC</string>
