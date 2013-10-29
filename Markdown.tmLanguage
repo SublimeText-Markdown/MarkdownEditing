@@ -249,7 +249,7 @@
 					  ((\().+?(\)))		# Match title in quotes…
 					| ((").+?("))		# or in parens.
 				)?						# Title is optional
-				\s*						# Optional whitespace
+				[ \t]*						# Optional whitespace
 				$
 			)</string>
 			<key>name</key>
