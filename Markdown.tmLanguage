@@ -1672,7 +1672,7 @@
 		<key>fenced-python</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(python)\s*$</string>
+		    <string>^(\s*[`~]{3,})(py|python)\s*$</string>
 		    <key>end</key>
 		    <string>(\1)\n</string>
 		    <key>name</key>
@@ -1688,7 +1688,7 @@
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(.*?)\s*$</string>
+		    <string>^(\s*(`{3,}|~{3,}))(.*?)\s*$</string>
 		    <key>end</key>
 		    <string>(\1)\n</string>
 		    <key>name</key>
