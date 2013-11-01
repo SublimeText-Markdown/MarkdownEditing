@@ -30,5 +30,14 @@
 	"auto_match_enabled": true,
 
 	// add trailing #'s to headlines
-	"match_header_hashes": false
+	"match_header_hashes": false,
+
+	// Allways keep current line vertically centered.
+	"me_keep_centered": false,
+
+	// Distraction free mode improvements. In order these to work, you have to install
+	// FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
+	"me_distraction_free_mode": {
+		"me_keep_centered": true
+	}
 }
