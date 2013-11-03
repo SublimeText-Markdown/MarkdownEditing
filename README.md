@@ -48,7 +48,7 @@ Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS
 
 Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) and originated at [geekabouttown](http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness)
 
-## GFM Spesific features
+## GFM Spesific Features
 
 Underscores in words doesn't mess with bold or italic style:
 
@@ -112,11 +112,15 @@ When you decide to live with MarkdownEditing plugin, you may want to disable the
 
     "ignored_packages": [..., "Markdown"],
 
-A simple reminder: Sublime Text has a _Distraction Free_ mode that's great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
-
 ## Tips
 
+* Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
+
 * If you work with Markdown tables too often, you may want to have a look at another plugin named [TableEditor][]. It brings huge improvements for table editing. Several table formats are supported.
+
+* There is a plugin named [Typewriter][] which provides a typewriter like writing environment. Excerpt from its homepage:
+
+    > __Typewriter Typing__ disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.
 
 ## Similar Plugins
 
@@ -144,3 +148,4 @@ MarkdownEditing is released under the [MIT License](http://www.opensource.org/li
 [Knockdown]:                   https://github.com/aziz/knockdown/
 [Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
 [SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
+[Typewriter]:                  https://github.com/alehandrof/Typewriter
