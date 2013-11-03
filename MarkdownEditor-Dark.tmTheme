@@ -867,6 +867,53 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Blockquote (Tags)</string>
+            <key>scope</key>
+            <string>
+                , text.html.markdown markup.quote.markdown entity.name.tag,
+                , text.html.markdown markup.quote.markdown meta.tag,
+                , text.html.markdown markup.quote.markdown meta.tag punctuation.definition.tag,
+                , text.html.markdown markup.quote.markdown meta.tag string.quoted meta.string-contents,
+                , text.html.markdown markup.quote.markdown meta.tag string.quoted punctuation.definition.string,
+                , text.html.markdown markup.quote.markdown meta.tag entity.other.attribute-name,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#313131</string>
+                <key>background</key>
+                <string>#131313</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Blockquote (Keyboard Shortcut)</string>
+            <key>scope</key>
+            <string>text.html.markdown markup.quote.markdown markup.kbd.content.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#1a1a1a</string>
+                <key>foreground</key>
+                <string>#8e8e8e</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Blockquote (Bold)</string>
+            <key>scope</key>
+            <string>
+                , text.html.markdown markup.quote.markdown markup.bold,
+                , text.html.markdown markup.quote.markdown markup.bold.markdown,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#666666</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>Blockquote punctuation</string>
             <key>scope</key>
             <string>punctuation.definition.blockquote.markdown</string>
