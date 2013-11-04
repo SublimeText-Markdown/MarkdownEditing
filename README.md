@@ -107,10 +107,6 @@ In order to activate the dark theme, put this line to your user settings file of
 
 If you want to go with your already existing theme, you can reenable it with the same method as dark theme. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
 
-When you decide to live with MarkdownEditing plugin, you may want to disable the native Markdown plugin. It's not a requirement but will remove the clutter in your language selection list at bottom right of Sublime Text. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
-
-    "ignored_packages": [..., "Markdown"],
-
 ## Tips
 
 * Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
