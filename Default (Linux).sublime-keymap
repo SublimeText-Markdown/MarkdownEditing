@@ -128,7 +128,13 @@
         ]
     },
     // Bold on ⌘B
-    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$1**"}, "context":
+    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Bold.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "__$1__"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -138,7 +144,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${1:**$SELECTION**}"}, "context":
+    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION}__"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -146,7 +152,13 @@
         ]
     },
     // italics on ⌘I
-    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
+    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Italic.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -156,7 +168,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "${0:*$SELECTION*}"}, "context":
+    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION}_"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
