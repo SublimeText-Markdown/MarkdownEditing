@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>Symbol List: Heading</string>
 	<key>scope</key>
-	<string>text.html.markdown markup.heading, text.html.markdown meta.link.reference.def.markdown</string>
+	<string>text.html.markdown markup.heading</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
