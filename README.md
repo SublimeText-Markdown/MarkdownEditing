@@ -117,6 +117,8 @@ If you want to go with your already existing theme, you can reenable it with the
 
     > __Typewriter Typing__ disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.
 
+* Markdown files usually contains URLs. If you want to open URLs under the cursor with a keybinding, you may want to install [OpenUrl][] plugin. It will work on other file types, too.
+
 ## Similar Plugins
 
 ###  [Knockdown][]
@@ -144,3 +146,4 @@ MarkdownEditing is released under the [MIT License](http://www.opensource.org/li
 [Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
 [SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
 [Typewriter]:                  https://github.com/alehandrof/Typewriter
+[OpenUrl]:                     https://github.com/noahcoad/open-url
