@@ -21,8 +21,12 @@ Feedback is always welcome. MarkdownEditing is hosted on https://github.com/ttsc
     - Shows underlined headers, too
 * Grey out only tag parts in XML/HTML tags, not the whole content.
 * Many syntax improvements and bug fixes.
+* More powerful bolding/italicizing.
+    - If there is no selection, it will apply it to the word under the cursor.
+    - It won't re-apply bold/italic if it already is.
+    - It will convert to _italic_ with <kbd>Ctrl</kbd> <kbd>I</kbd> even if it is __bold__ at that moment and vice versa.
 
-## GitHub flavored Markdown Spesific Features
+## GitHub flavored Markdown Specific Features
 
 * Syntax highlighting in fenced code blocks.
 * GitHub style strikethrough (`~~`).
@@ -32,3 +36,4 @@ Feedback is always welcome. MarkdownEditing is hosted on https://github.com/ttsc
 ## Changes
 
 * _Bold_ and _italic_ keybindings are changed to <kbd>Ctrl+B</kbd> and <kbd>Ctrl+I</kbd> respectively. This won't affect your other commands assigned to these keybindings for other scopes.
+* `_` is used instead of `*` for bold/italic. In a future version, it is planned to be configurable.
