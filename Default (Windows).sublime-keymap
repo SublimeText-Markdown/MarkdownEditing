@@ -127,7 +127,7 @@
             { "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true }
         ]
     },
-    // Bold on ⌘B
+    // Bold on Ctrl + B
     { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Bold.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -144,14 +144,14 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION}__"}, "context":
+    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION/(^[\\*_]*|[\\*_]*$)//g}__"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    // italics on ⌘I
+    // italics on Ctrl + I
     { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Italic.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -168,7 +168,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION}_"}, "context":
+    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION/(^[\\*_]*|[\\*_]*$)//g}_"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
