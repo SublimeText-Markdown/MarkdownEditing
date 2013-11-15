@@ -4,7 +4,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 ![MarkdownEditing](screenshots/light.png)
 
-[Dark theme](screenshots/dark.png) available.
+[Dark](screenshots/dark.png) and [yellow](screenshots/yellow.png) theme available.
 
 ## Overview
 
@@ -101,9 +101,10 @@ You may want to have a look at the default settings files. They are located at:
     Packages/MarkdownEditing/Markdown (Standard).sublime-settings
     Packages/MarkdownEditing/MultiMarkdown.sublime-settings
 
-In order to activate the dark theme, put this line to your user settings file of the flavor:
+In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor:
 
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
 
 If you want to go with your already existing theme, you can reenable it with the same method as dark theme. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
 

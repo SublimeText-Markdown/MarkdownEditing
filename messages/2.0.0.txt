@@ -12,8 +12,9 @@ Feedback is always welcome. MarkdownEditing is hosted on https://github.com/ttsc
 
 ## Notable Features
 
-* Dark theme added. In order to enable it, put this line in `Packages\User\Markdown.sublime-settings`:
+* Dark and yellow themes added. In order to enable them, put one of these lines in `Packages\User\Markdown.sublime-settings`:
     `"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme"`
+    `"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme"`
 * Option to keep current line centered as writing goes on. Check `Packages\MarkdownEditing\Markdown.sublime-settings` file to see how to enable it.
 * Better highlighting for blockquotes.
 * Improved symbol list (Ctrl+R).
