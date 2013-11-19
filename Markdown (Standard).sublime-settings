@@ -1,11 +1,4 @@
 {
-	"extensions":
-	[
-		"md",
-		"mdown",
-		"txt"
-	],
-
 	"font_face": "Menlo",
 	"font_options": [ "subpixel_antialias", "no_round", "directwrite"],
 
