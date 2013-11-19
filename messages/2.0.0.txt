@@ -4,7 +4,7 @@ This is a major release for MarkdownEditing. In this document, you will find inf
 
 This release adds a syntax file for __GitHub flavored Markdown__ and makes it default for Markdown extensions (md, txt).
 
-Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss.
+Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable/remove MarkdownEditing, you have to reenable the native one manually (if you want).
 
 It's suggested you take a look at `Packages\MarkdownEditing\README.md` file.
 

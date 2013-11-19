@@ -73,6 +73,8 @@ Strikethrough is supported:
 
 ## Installation
 
+_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
+
 #### [Package Control](http://wbond.net/sublime_packages/package_control)
 
 The preferred method of installation is via [Sublime Package Control](http://wbond.net/sublime_packages/package_control).
