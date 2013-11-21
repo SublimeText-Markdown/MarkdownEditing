@@ -10,7 +10,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["*"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Skip Closing Character.sublime-macro"}, "context":
+    { "keys": ["*"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
      [
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
          { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true },
@@ -32,7 +32,7 @@
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
         ]
     },
-    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Start List Item.sublime-macro"}, "context":
+    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -40,7 +40,7 @@
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
         ]
     },
-    { "keys": ["tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Start List Item Tab.sublime-macro"}, "context":
+    { "keys": ["tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item Tab.sublime-macro"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -65,7 +65,7 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["_"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Skip Closing Character.sublime-macro"}, "context":
+    { "keys": ["_"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
      [
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
          { "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true },
@@ -80,7 +80,7 @@
             { "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true }
         ]
     },
-    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Start List Item.sublime-macro"}, "context":
+    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -105,7 +105,7 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["`"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Skip Closing Character.sublime-macro"}, "context":
+    { "keys": ["`"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
      [
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
          { "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true },
@@ -128,7 +128,7 @@
         ]
     },
     // Bold on Ctrl + B
-    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Bold.sublime-macro"}, "context":
+    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Make Word Bold.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
@@ -152,7 +152,7 @@
         ]
     },
     // italics on Ctrl + I
-    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Make Word Italic.sublime-macro"}, "context":
+    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Make Word Italic.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
@@ -192,7 +192,7 @@
             { "key": "setting.match_header_hashes", "operator": "equal", "operand": false }
         ]
     },
-    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Padded Headline.sublime-macro"}, "context":
+    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Padded Headline.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -201,7 +201,7 @@
             { "key": "setting.match_header_hashes", "operator": "equal", "operand": true }
         ]
     },
-    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Padded Headline.sublime-macro"}, "context":
+    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Padded Headline.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -236,7 +236,7 @@
         ]
     },
     // Remove empty list item
-    { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/Remove Empty List Item.sublime-macro"}, "context":
+    { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-]|\\d\\.)\\s+)$", "match_all": true },
