@@ -21,6 +21,12 @@
 			s/^#{1}/       /g;
 			s/^(-+)\s*$/       $1/
 		</string>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
+		<key>symbolIndexTransformation</key>
+		<string>
+			s/\s*#+\s*$//g;
+		</string>
 	</dict>
 	<key>uuid</key>
 	<string>C02A37C1-E770-472F-A13E-358FF0C6AD89</string>
