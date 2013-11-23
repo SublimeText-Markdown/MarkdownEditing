@@ -175,6 +175,25 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+
+    // Unbold on Ctrl + B if already bold
+    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "text", "operator": "regex_match", "operand": "^[*_]{2}.*[*_]{2}$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+
+    // Unitalicize on Ctrl + I if already italic
+    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]|[\\*_]$)//g}"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "text", "operator": "regex_match", "operand": "^[*_].*[*_]$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+
     // Headers
     { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g} }#"}, "context":
         [

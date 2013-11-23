@@ -29,7 +29,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text
 * <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link
 * <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>K</kbd> inserts an inline image
-* <kbd>Ctrl</kbd> <kbd>B</kbd> and <kbd>Ctrl</kbd> <kbd>I</kbd> are bound to bold and italics (Markdown). They work both with and without selections. If there is no selection, they will just transform the word under the cursor.
+* <kbd>Ctrl</kbd> <kbd>B</kbd> and <kbd>Ctrl</kbd> <kbd>I</kbd> are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
 * <kbd>~</kbd> surrounds selected text with `~~` (strikethrough).
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `match_header_hashes` option in your settings to disable.
