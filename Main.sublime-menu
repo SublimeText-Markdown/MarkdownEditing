@@ -23,6 +23,17 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
+                                "args": {"file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences"},
+                                "caption": "Bold and Italic Settings – Default"
+                            },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/User/Bold and Italic Markers.tmPreferences"},
+                                "caption": "Bold and Italic Settings – User"
+                            },
+                            { "caption": "-" },
+                            {
+                                "command": "open_file",
                                 "args": {"file": "${packages}/MarkdownEditing/Markdown.sublime-settings"},
                                 "caption": "Markdown GFM Settings – Default"
                             },

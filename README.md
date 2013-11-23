@@ -104,6 +104,8 @@ You may want to have a look at the default settings files. They are located at:
     Packages/MarkdownEditing/Markdown (Standard).sublime-settings
     Packages/MarkdownEditing/MultiMarkdown.sublime-settings
 
+Bold and italic markers are configurable through ST shell variables. You can use `Preferences > Package Settings > Markdown Editing` menu to see the default settings file. In order to override it, copy & paste its content into the user settings file (`Bold and Italic Markers.tmPreferences`) from the menu and make your edits. It is pretty straightforward.
+
 In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor:
 
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
