@@ -15,6 +15,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * [Configuration](#configuration)
 * [Tips](#tips)
 * [Similar Plugins](#similar-plugins)
+* [Contributing](#contributing)
 * [Credits](#credits)
 * [License](#license)
 
@@ -133,9 +134,15 @@ If you want to go with your already existing theme, you can reenable it with the
 * [Sublime Markdown Extended][]
 * [SmartMarkdown][]
 
+## Contributing
+
+See `CONTRIBUTING.md` file.
+
 ## Credits
 
-This plugin contains portions of code from [Knockdown][]. MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][github 9].
+MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][github 9].
+
+This plugin contains portions of code from [Knockdown][].
 
 Footnote commands were submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown].
 
