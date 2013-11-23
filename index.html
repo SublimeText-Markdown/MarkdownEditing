@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Markdownediting by ttscoff</title>
+    <title>Markdownediting by SublimeText-Markdown</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -18,21 +18,40 @@
         <h1>Markdownediting</h1>
         <p>Better Markdown editing for Sublime Text 2</p>
 
-        <p class="view"><a href="https://github.com/ttscoff/MarkdownEditing">View the Project on GitHub <small>ttscoff/MarkdownEditing</small></a></p>
+        <p class="view"><a href="https://github.com/SublimeText-Markdown/MarkdownEditing">View the Project on GitHub <small>SublimeText-Markdown/MarkdownEditing</small></a></p>
 
 
         <ul>
-          <li><a href="https://github.com/ttscoff/MarkdownEditing/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ttscoff/MarkdownEditing/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ttscoff/MarkdownEditing">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/SublimeText-Markdown/MarkdownEditing/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/SublimeText-Markdown/MarkdownEditing/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/SublimeText-Markdown/MarkdownEditing">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
-        <h1>MarkdownEditing</h1>
+        <h1>
+<a name="markdownediting" class="anchor" href="#markdownediting"><span class="octicon octicon-link"></span></a>MarkdownEditing</h1>
 
-<h3>Better Markdown Editing features for Sublime Text 2</h3>
+<p>Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more <strong>robust</strong> syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, <strong>GitHub flavored Markdown</strong>, MultiMarkdown.</p>
 
-<p>This package will make MarkdownEditor your default theme for Markdown/MultiMarkdown files. Adjust it to your liking or remove the line from the .sublime-settings files</p>
+<p><img src="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png" alt="MarkdownEditing"></p>
+
+<p><a href="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png">Dark</a> and <a href="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png">yellow</a> theme available.</p>
+
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#gfm-spesific-features">GFM Spesific features</a></li>
+<li><a href="#commands">Commands</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#tips">Tips</a></li>
+<li><a href="#similar-plugins">Similar Plugins</a></li>
+<li><a href="#credits">Credits</a></li>
+<li><a href="#license">License</a></li>
+</ul><h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>Asterisks and underscores are autopaired and will wrap selected text</li>
@@ -40,21 +59,161 @@
 <li>If you start an empty pair and hit space, the right element is deleted</li>
 <li>backticks are paired</li>
 <li>Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a <code>[]</code> or <code>()</code> pair for a link</li>
-<li>⌘⌥V will paste the contents of the clipboard as an inline link on selected text</li>
-<li>⌘⌥R will paste the contents of the clipboard as a reference link</li>
-<li>⌘⌥K inserts a standard inline link, ⌘⇧K inserts an inline image</li>
-<li>⌘⌥B and ⌘⌥I are bound to bold and italics (Markdown).</li>
-<li>Typing "#" when there's a selection will surroung it with "#" to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press.</li>
-<li>Typing return at the end of a line that begins with hasmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can comment out that command in the Default (OSX).sublime-keymap file if needed. I'll turn that into a plugin and add an option for it eventually.</li>
-<li>⌘⇧6 will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.</li>
-<li>⌥⇧F will locate footnote markers without definitions and insert the marker for the definition</li>
-<li>⌥⇧G will do the same for missing reference links</li>
+<li>Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with <code>#</code>, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of <code>#</code>.</li>
+<li>
+<kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text</li>
+<li>
+<kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link</li>
+<li>
+<kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>K</kbd> inserts an inline image</li>
+<li>
+<kbd>Ctrl</kbd> <kbd>B</kbd> and <kbd>Ctrl</kbd> <kbd>I</kbd> are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.</li>
+<li>
+<kbd>~</kbd> surrounds selected text with <code>~~</code> (strikethrough).</li>
+<li>Typing <code>#</code> when there's a selection will surround it with <code>#</code> to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The <code>match_header_hashes</code> will determine if the <code>#</code> are mirrored on both sides or just at the beginning of the line.</li>
+<li>Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the <code>match_header_hashes</code> option in your settings to disable.</li>
+<li>
+<kbd>⌘</kbd> <kbd>^</kbd> <kbd>1</kbd>  through <kbd>⌘</kbd> <kbd>^</kbd> <kbd>6</kbd>  will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the <code>match_header_hashes</code> preference setting.</li>
+<li>
+<kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.</li>
+<li>
+<kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>F</kbd> will locate footnote markers without definitions and insert the marker for the definition</li>
+<li>
+<kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>G</kbd> will do the same for missing reference links</li>
+</ul><p>Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS X.</p>
+
+<ul>
+<li>
+<kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text</li>
+<li>
+<kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link</li>
+<li>
+<kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>Shift</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts an inline image</li>
+<li>
+<kbd>Ctrl</kbd> <kbd>1</kbd> through <kbd>Ctrl</kbd> <kbd>6</kbd> will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the <code>match_header_hashes</code> preference setting.</li>
+<li>
+<kbd>Ctrl</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.</li>
 </ul><p>Footnote commands submitted by <a href="https://github.com/jngeist">J. Nicholas Geist</a> and originated at <a href="http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness">geekabouttown</a></p>
 
-<p>There's a long way to go and I have a lot of Python to learn.</p>
+<h2>
+<a name="gfm-spesific-features" class="anchor" href="#gfm-spesific-features"><span class="octicon octicon-link"></span></a>GFM Spesific Features</h2>
+
+<p>Underscores in words doesn't mess with bold or italic style:</p>
+
+<p><img src="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png" alt="underscore-in-words"></p>
+
+<p>Fenced code blocks gets syntax highlighting inside:</p>
+
+<p><img src="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png" alt="fenced-code-block"></p>
+
+<p>Keyboard shortcuts gets highlighted like in GitHub:</p>
+
+<p><img src="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png" alt="keyboard-shortcut"></p>
+
+<p>Strikethrough is supported:</p>
+
+<p><img src="https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png" alt="strikethrough"></p>
+
+<h2>
+<a name="commands" class="anchor" href="#commands"><span class="octicon octicon-link"></span></a>Commands</h2>
+
+<h4>
+<a name="fix-underlined-markdown-headers" class="anchor" href="#fix-underlined-markdown-headers"><span class="octicon octicon-link"></span></a>Fix Underlined Markdown Headers</h4>
+
+<p>[TODO]</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><em>Note</em>: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).</p>
+
+<h4>
+<a name="package-control" class="anchor" href="#package-control"><span class="octicon octicon-link"></span></a><a href="http://wbond.net/sublime_packages/package_control">Package Control</a>
+</h4>
+
+<p>The preferred method of installation is via <a href="http://wbond.net/sublime_packages/package_control">Sublime Package Control</a>.</p>
+
+<ol>
+<li><a href="http://wbond.net/sublime_packages/package_control/installation">Install Sublime Package Control</a></li>
+<li>From inside Sublime Text 2, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.</li>
+<li>Type <code>install package</code> and hit Return. A list of available packages will be displayed.</li>
+<li>Type <code>MarkdownEditing</code> and hit Return. The package will be downloaded to the appropriate directory.</li>
+<li>Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.</li>
+</ol><h4>
+<a name="manual-installation" class="anchor" href="#manual-installation"><span class="octicon octicon-link"></span></a>Manual Installation</h4>
+
+<ol>
+<li>Download or clone this repository to a directory <code>MarkdownEditing</code> in the Sublime Text 2 Packages directory for your platform:
+
+<ul>
+<li>Mac: <code>git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing</code>
+</li>
+<li>Windows: <code>git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing</code>
+</li>
+<li>Linux: <code>git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing</code>
+</li>
+</ul>
+</li>
+<li>Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.</li>
+</ol><h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>The plugin contains 3 different Markdown flavors: Standard Markdown, GitHub flavored Markdown, MultiMarkdown. Default is GitHub flavored Markdown. If you want to set another one as default, open a Markdown file and select your flavor from the menu: <code>View &gt; Syntax &gt; Open all with current extension as</code>. You're done.</p>
+
+<p>You may want to have a look at the default settings files. They are located at:</p>
+
+<pre><code>Packages/MarkdownEditing/Markdown.sublime-settings [GitHub flavored Markdown]
+Packages/MarkdownEditing/Markdown (Standard).sublime-settings
+Packages/MarkdownEditing/MultiMarkdown.sublime-settings
+</code></pre>
+
+<p>Bold and italic markers are configurable through ST shell variables. You can use <code>Preferences &gt; Package Settings &gt; Markdown Editing</code> menu to see the default settings file. In order to override it, copy &amp; paste its content into the user settings file (<code>Bold and Italic Markers.tmPreferences</code>) from the menu and make your edits. It is pretty straightforward.</p>
+
+<p>In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor:</p>
+
+<pre><code>"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
+"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
+</code></pre>
+
+<p>If you want to go with your already existing theme, you can reenable it with the same method as dark theme. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.</p>
+
+<h2>
+<a name="tips" class="anchor" href="#tips"><span class="octicon octicon-link"></span></a>Tips</h2>
+
+<ul>
+<li><p>Sublime Text has a <em>Distraction Free</em> mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.</p></li>
+<li><p>If you work with Markdown tables too often, you may want to have a look at another plugin named <a href="https://github.com/vkocubinsky/SublimeTableEditor">TableEditor</a>. It brings huge improvements for table editing. Several table formats are supported.</p></li>
+<li>
+<p>There is a plugin named <a href="https://github.com/alehandrof/Typewriter">Typewriter</a> which provides a typewriter like writing environment. Excerpt from its homepage:</p>
+
+<blockquote>
+<p><strong>Typewriter Typing</strong> disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.</p>
+</blockquote>
+</li>
+<li><p>Markdown files usually contains URLs. If you want to open URLs under the cursor with a keybinding, you may want to install <a href="https://github.com/noahcoad/open-url">OpenUrl</a> plugin. It will work on other file types, too.</p></li>
+</ul><h2>
+<a name="similar-plugins" class="anchor" href="#similar-plugins"><span class="octicon octicon-link"></span></a>Similar Plugins</h2>
+
+<ul>
+<li>
+<p><a href="https://github.com/aziz/knockdown/">Knockdown</a></p>
+
+<p>Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.</p>
+</li>
+<li><a href="https://github.com/jonschlinkert/sublime-markdown-extended">Sublime Markdown Extended</a></li>
+<li><a href="https://github.com/demon386/SmartMarkdown">SmartMarkdown</a></li>
+</ul><h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>This plugin contains portions of code from <a href="https://github.com/aziz/knockdown/">Knockdown</a>. MarkdownEditing was originally created by <a href="http://brettterpstra.com">Brett Terpstra</a> and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by <a href="https://github.com/maliayas">Ali Ayas</a>.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MarkdownEditing is released under the <a href="http://www.opensource.org/licenses/MIT">MIT License</a>.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/ttscoff">ttscoff</a></p>
+        <p>This project is maintained by <a href="https://github.com/SublimeText-Markdown">SublimeText-Markdown</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
