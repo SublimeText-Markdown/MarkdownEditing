@@ -2,9 +2,9 @@
 
 Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more __robust__ syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, __GitHub flavored Markdown__, MultiMarkdown.
 
-![MarkdownEditing](screenshots/light.png)
+![MarkdownEditing][github]
 
-[Dark](screenshots/dark.png) and [yellow](screenshots/yellow.png) theme available.
+[Dark][github 2] and [yellow][github 3] theme available.
 
 ## Overview
 
@@ -46,25 +46,25 @@ Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS
 * <kbd>Ctrl</kbd> <kbd>1</kbd> through <kbd>Ctrl</kbd> <kbd>6</kbd> will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `match_header_hashes` preference setting.
 * <kbd>Ctrl</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
 
-Footnote commands submitted by [J. Nicholas Geist](https://github.com/jngeist) and originated at [geekabouttown](http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness)
+Footnote commands submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown]
 
 ## GFM Spesific Features
 
 Underscores in words doesn't mess with bold or italic style:
 
-![underscore-in-words](screenshots/underscore-in-words.png)
+![underscore-in-words][github 5]
 
 Fenced code blocks gets syntax highlighting inside:
 
-![fenced-code-block](screenshots/fenced-code-block.png)
+![fenced-code-block][github 6]
 
 Keyboard shortcuts gets highlighted like in GitHub:
 
-![keyboard-shortcut](screenshots/keyboard-shortcut.png)
+![keyboard-shortcut][github 7]
 
 Strikethrough is supported:
 
-![strikethrough](screenshots/strikethrough.png)
+![strikethrough][github 8]
 
 ## Commands
 
@@ -76,11 +76,11 @@ Strikethrough is supported:
 
 _Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
 
-#### [Package Control](http://wbond.net/sublime_packages/package_control)
+#### [Package Control][wbond]
 
-The preferred method of installation is via [Sublime Package Control](http://wbond.net/sublime_packages/package_control).
+The preferred method of installation is via [Sublime Package Control][wbond].
 
-1. [Install Sublime Package Control](http://wbond.net/sublime_packages/package_control/installation)
+1. [Install Sublime Package Control][wbond 2]
 2. From inside Sublime Text 2, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
@@ -127,25 +127,21 @@ If you want to go with your already existing theme, you can reenable it with the
 
 ## Similar Plugins
 
-###  [Knockdown][]
+* [Knockdown][]
 
-Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
-
-###  [Sublime Markdown Extended][]
-
-[TODO]
-
-###  [SmartMarkdown][]
-
-[TODO]
+     Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
+* [Sublime Markdown Extended][]
+* [SmartMarkdown][]
 
 ## Credits
 
-This plugin contains portions of code from [Knockdown][].
+This plugin contains portions of code from [Knockdown][]. MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][github 9].
+
+Footnote commands were submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown].
 
 ## License
 
-MarkdownEditing is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+MarkdownEditing is released under the [MIT License][opensource].
 
 [TableEditor]:                 https://github.com/vkocubinsky/SublimeTableEditor
 [Knockdown]:                   https://github.com/aziz/knockdown/
@@ -153,3 +149,17 @@ MarkdownEditing is released under the [MIT License](http://www.opensource.org/li
 [SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
 [Typewriter]:                  https://github.com/alehandrof/Typewriter
 [OpenUrl]:                     https://github.com/noahcoad/open-url
+[brettterpstra]: http://brettterpstra.com
+[geekabouttown]: http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness
+[github]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
+[github 2]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
+[github 3]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png
+[github 4]: https://github.com/jngeist
+[github 5]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png
+[github 6]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png
+[github 7]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png
+[github 8]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png
+[github 9]: https://github.com/maliayas
+[opensource]: http://www.opensource.org/licenses/MIT
+[wbond]: http://wbond.net/sublime_packages/package_control
+[wbond 2]: http://wbond.net/sublime_packages/package_control/installation
