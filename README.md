@@ -34,6 +34,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * <kbd>~</kbd> surrounds selected text with `~~` (strikethrough).
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde_match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde_match_header_hashes` option in your settings to disable.
+* Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
 * <kbd>⌘</kbd> <kbd>^</kbd> <kbd>1</kbd>  through <kbd>⌘</kbd> <kbd>^</kbd> <kbd>6</kbd>  will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `mde_match_header_hashes` preference setting.
 * <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
 * <kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>F</kbd> will locate footnote markers without definitions and insert the marker for the definition
@@ -71,7 +72,9 @@ Strikethrough is supported:
 
 #### Fix Underlined Markdown Headers
 
-[TODO]
+Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
+
+Only available through the Command Palette.
 
 ## Installation
 
