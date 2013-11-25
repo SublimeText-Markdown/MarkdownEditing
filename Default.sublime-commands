@@ -1,7 +1,11 @@
 [
     {
-        "caption": "Fix Underlined Markdown Headers",
+        "caption": "MarkdownEditing: Fix Underlined Headers",
         "command": "fix_all_underlined_headers"
+    },
+    {
+        "caption": "MarkdownEditing: Add Missing Link Labels",
+        "command": "gather_missing_link_markers"
     },
     {
         "caption": "Preferences: MarkdownEditing Settings – Default",
