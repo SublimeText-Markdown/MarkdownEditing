@@ -94,7 +94,7 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 		prev_lines, lines = itertools.tee(lines)
 		next(prev_lines)
 
-		for text_line, dashes_line in itertools.izip(prev_lines, lines):
+		for text_line, dashes_line in zip(prev_lines, lines):
 			dashes_text = self.view.substr(dashes_line)
 			m = SETEXT_DASHES_RE.match(dashes_text)
 			if m:
