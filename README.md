@@ -115,11 +115,19 @@ In order to activate the dark or the yellow theme, put one of these lines to you
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
 
-If you want to go with your already existing theme, you can reenable it with the same method as dark theme. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
+If you want to go with your already existing theme, you can reenable it with the same method as above. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
+
+By default, when you install the plugin, files with these extensions will be assigned to Markdown syntax: "md", "txt", "mdown", "markdown", "markdn". If you want to prevent any of these extensions to be opened as Markdown, follow these steps:
+
+1. Click on the language menu at bottom right
+2. Select "Open all with current extension as"
+3. Choose your preferred syntax for that extension
 
 ## Tips
 
 * Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
+
+* If you install [FullScreenStatus][] plugin, MarkdownEditing will provide an extra functionality for Distraction Free mode. When you switch to Distraction Free mode, your current line will always be vertically centered as you edit. You can enable this functionality for normal mode, too, via settings.
 
 * If you work with Markdown tables too often, you may want to have a look at another plugin named [TableEditor][]. It brings huge improvements for table editing. Several table formats are supported.
 
@@ -173,3 +181,4 @@ MarkdownEditing is released under the [MIT License][opensource].
 [opensource]: http://www.opensource.org/licenses/MIT
 [wbond]: http://wbond.net/sublime_packages/package_control
 [wbond 2]: http://wbond.net/sublime_packages/package_control/installation
+[FullScreenStatus]: https://github.com/maliayas/SublimeText_FullScreenStatus
