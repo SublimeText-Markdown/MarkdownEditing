@@ -10,7 +10,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 * [Features](#features)
 * [GFM Spesific features](#gfm-spesific-features)
-* [Commands](#commands)
+* [Commands for Command Palette](#commands-for-command-palette)
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Tips](#tips)
@@ -68,17 +68,23 @@ Strikethrough is supported:
 
 ![strikethrough][github 8]
 
-## Commands
+## Commands for Command Palette
 
-### Fix Underlined Markdown Headers
+### Fix Underlined Headers
 
 Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
 
-Only available through the Command Palette.
+### Add Missing Link Labels
+
+Scans your document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
 
 ## Installation
 
 _Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
+
+If you are using Sublime Text 2, you have to disable the native package _manually_. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
+
+    "ignored_packages": [..., "Markdown"],
 
 ### [Package Control][wbond]
 
