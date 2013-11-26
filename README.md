@@ -70,7 +70,7 @@ Strikethrough is supported:
 
 ## Commands
 
-#### Fix Underlined Markdown Headers
+### Fix Underlined Markdown Headers
 
 Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
 
@@ -80,7 +80,7 @@ Only available through the Command Palette.
 
 _Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
 
-#### [Package Control][wbond]
+### [Package Control][wbond]
 
 The preferred method of installation is via [Sublime Package Control][wbond].
 
@@ -90,7 +90,7 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
 5. Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
-#### Manual Installation
+### Manual Installation
 
 1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text 2 Packages directory for your platform:
     * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
@@ -152,6 +152,10 @@ See `CONTRIBUTING.md` file.
 ## Credits
 
 MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][github 9].
+
+Related blog posts from Brett:
+* http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
+* http://brettterpstra.com/2013/11/23/markdownediting-for-sublime-text-updates/
 
 This plugin contains portions of code from [Knockdown][].
 
