@@ -1374,7 +1374,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(html|html5)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1390,7 +1390,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(xml)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1406,7 +1406,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(diff)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1422,7 +1422,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(perl)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1438,7 +1438,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(php)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1454,7 +1454,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(css)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1470,7 +1470,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(less)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1486,7 +1486,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(java)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1502,7 +1502,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(c)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1518,7 +1518,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(c\+\+|cpp)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1534,7 +1534,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(yaml)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1550,7 +1550,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(sql)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1566,7 +1566,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(sh|shell)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1582,7 +1582,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(sass|scss)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1598,7 +1598,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(scala)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1614,7 +1614,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(objective-c)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1630,7 +1630,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(coffee)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1646,7 +1646,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(js|json|javascript)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1662,7 +1662,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(ruby)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1678,7 +1678,7 @@
 		    <key>begin</key>
 		    <string>^(\s*[`~]{3,})(py|python)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		    <key>patterns</key>
@@ -1694,7 +1694,7 @@
 		    <key>begin</key>
 		    <string>^(\s*(`{3,}|~{3,}))(.*?)\s*$</string>
 		    <key>end</key>
-		    <string>(\1)\n</string>
+		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		</dict>
