@@ -1,0 +1,4 @@
+[
+    {"command": "custom_find_under_expand"},
+    {"command": "insert_snippet", "args": {"contents": "${SELECTION/(^[*_]*|[*_]*$)//g}"}}
+]

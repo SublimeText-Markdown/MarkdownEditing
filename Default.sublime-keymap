@@ -184,12 +184,38 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b__+\\S+__+$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
 
     // Unitalicize on Ctrl + I if already italic
     { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]|[\\*_]$)//g}"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "text", "operator": "regex_match", "operand": "^[*_].*[*_]$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b_(?!_)\\S+_$", "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
