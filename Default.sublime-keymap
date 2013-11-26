@@ -128,7 +128,7 @@
         ]
     },
     // Bold on Ctrl + B
-    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Make Word Bold.sublime-macro"}, "context":
+    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
@@ -152,7 +152,7 @@
         ]
     },
     // italics on Ctrl + I
-    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Make Word Italic.sublime-macro"}, "context":
+    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
