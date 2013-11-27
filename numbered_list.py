@@ -1,4 +1,3 @@
-import sublime
 import sublime_plugin
 import re
 
@@ -15,4 +14,4 @@ class NumberListCommand(sublime_plugin.TextCommand):
 			view.insert(edit, sel.end(), "\n%s%d. " % (text[:num], int(text[num:dot]) + 1))
 
 	def is_enabled(self):
-		return True
+		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

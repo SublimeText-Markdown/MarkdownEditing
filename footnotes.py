@@ -90,7 +90,7 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
         self.view.end_edit(edit)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class InsertFootnoteCommand(sublime_plugin.TextCommand):
@@ -110,7 +110,7 @@ class InsertFootnoteCommand(sublime_plugin.TextCommand):
         self.view.end_edit(edit)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
@@ -137,7 +137,7 @@ class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
                 self.view.show(defs[target])
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class GoToFootnoteReferenceCommand(sublime_plugin.TextCommand):
@@ -151,7 +151,7 @@ class GoToFootnoteReferenceCommand(sublime_plugin.TextCommand):
             self.view.show(refs[target][0])
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class MagicFootnotesCommand(sublime_plugin.TextCommand):
@@ -164,7 +164,7 @@ class MagicFootnotesCommand(sublime_plugin.TextCommand):
             self.view.run_command('insert_footnote')
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
@@ -175,7 +175,7 @@ class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
             self.view.run_command('go_to_footnote_definition')
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class SortFootnotesCommand(sublime_plugin.TextCommand):
@@ -207,4 +207,4 @@ class SortFootnotesCommand(sublime_plugin.TextCommand):
         self.view.end_edit(edit)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

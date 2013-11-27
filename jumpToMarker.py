@@ -21,3 +21,6 @@ class GotoReferenceCommand(sublime_plugin.TextCommand):
         # Get the selection
         pt = self.view.find(re.escape(findmarker+':'), 0)
         self.view.sel().add(pt)
+
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

@@ -71,6 +71,9 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
 			if m:
 				fix_dashes(self.view, edit, text_line, dashes_line)
 
+	def is_enabled(self):
+		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
+
 
 class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 	"""Searches for all setext headings resize them to match the preceding
@@ -99,3 +102,6 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 			m = SETEXT_DASHES_RE.match(dashes_text)
 			if m:
 				fix_dashes(self.view, edit, text_line, dashes_line)
+
+	def is_enabled(self):
+		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

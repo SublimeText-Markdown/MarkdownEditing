@@ -45,3 +45,6 @@ class ListMarkdownReferencesCommand(sublime_plugin.TextCommand):
 
         finally:
             self.view.end_edit(edit)
+
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

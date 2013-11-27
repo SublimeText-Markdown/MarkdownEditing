@@ -11,4 +11,4 @@ class PasteAsReferenceCommand(sublime_plugin.TextCommand):
         self.view.replace(edit, sel, "["+text+"]: "+contents)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

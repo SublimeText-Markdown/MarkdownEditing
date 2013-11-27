@@ -5,8 +5,14 @@
     https://github.com/maliayas/SublimeText_FullScreenStatus
 """
 
-import sublime, sublime_plugin, os
+import sublime, sublime_plugin
 
+
+def on_distraction_free():
+    return sublime.active_window().settings().get('fss_on_distraction_free')
+
+def view_is_markdown(view):
+    return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
 
 class KeepCurrentLineCentered(sublime_plugin.EventListener):
     def on_modified(self, view):
@@ -23,9 +29,3 @@ class KeepCurrentLineCentered(sublime_plugin.EventListener):
                 return False
 
         view.show_at_center(view.sel()[0].begin())
-
-def on_distraction_free():
-    return sublime.active_window().settings().get('fss_on_distraction_free')
-
-def view_is_markdown(view):
-    return os.path.dirname(__file__).replace("\\", "/").endswith(os.path.dirname(view.settings().get('syntax')))

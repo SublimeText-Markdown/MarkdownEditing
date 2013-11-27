@@ -35,7 +35,7 @@ class IndentQuote(sublime_plugin.TextCommand):
             selections.add(selection)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 
 class DeindentQuote(sublime_plugin.TextCommand):
@@ -70,4 +70,4 @@ class DeindentQuote(sublime_plugin.TextCommand):
             selections.add(selection)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

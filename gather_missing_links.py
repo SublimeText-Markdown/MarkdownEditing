@@ -20,4 +20,4 @@ class GatherMissingLinkMarkersCommand(sublime_plugin.TextCommand):
                 self.view.insert(edit, self.view.size(), '[%s]: \n' % link)
 
     def is_enabled(self):
-        return True
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
