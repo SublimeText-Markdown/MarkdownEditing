@@ -1102,7 +1102,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(&lt;)((?:mailto:)?[-.\w]+@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)(&gt;)</string>
+			<string>(&lt;)?((?:mailto:)?[-.\w]+@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)(&gt;)?</string>
 			<key>name</key>
 			<string>meta.link.email.lt-gt.markdown</string>
 		</dict>
@@ -1127,7 +1127,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(&lt;)((?:https?|ftp)://.*?)(&gt;)</string>
+			<string>(&lt;)?(\b(?:https?|ftp|file|git):///?[^\s()&lt;&gt;\[\]]+)(&gt;)?</string>
 			<key>name</key>
 			<string>meta.link.inet.markdown</string>
 		</dict>
