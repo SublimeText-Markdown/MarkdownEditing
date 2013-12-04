@@ -772,6 +772,20 @@
         </dict>
         <dict>
             <key>name</key>
+            <string>Markup: Plain Link</string>
+            <key>scope</key>
+            <string>
+                , meta.link.inet.markdown markup.underline.link.markdown,
+                , meta.link.email.lt-gt.markdown markup.underline.link.markdown,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#bbbb77</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
             <string>-----------------------------------</string>
             <key>settings</key>
             <dict/>
