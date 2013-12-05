@@ -693,6 +693,8 @@
                 , markup.strikethrough markup.raw.inline.markdown,
                 , markup.strikethrough markup.underline.link.image.markdown,
                 , markup.strikethrough markup.underline.link.markdown,
+                , markup.strikethrough meta.link.inet.markdown markup.underline.link.markdown,
+                , markup.strikethrough meta.link.email.lt-gt.markdown markup.underline.link.markdown,
                 , markup.strikethrough punctuation.definition.bold.markdown,
                 , markup.strikethrough punctuation.definition.italic.markdown,
                 , markup.strikethrough punctuation.definition.constant.begin.markdown,
