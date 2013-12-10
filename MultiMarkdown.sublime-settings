@@ -31,6 +31,8 @@
 
 	// Caret
 	"caret_style": "wide",
+	"caret_extra_top": 3,
+	"caret_extra_bottom": 3,
 
 	// add trailing #'s to headlines
 	"mde_match_header_hashes": false,
