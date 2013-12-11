@@ -10,6 +10,10 @@
 	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
+
+	// This is a quick and dirty focus theme. In order to make it work, you've to
+	// set `"highlight_line": true,` in this settings file. It is likely that there will
+	// be more mature focus improvements in the future (maybe similar to iA Writer).
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme",
 
 	"tab_size": 4,
@@ -25,7 +29,7 @@
 
 	// Line
 	"line_numbers": false,
-	"highlight_line": true,
+	"highlight_line": false,
 	"line_padding_top": 2,
 	"line_padding_bottom": 2,
 
