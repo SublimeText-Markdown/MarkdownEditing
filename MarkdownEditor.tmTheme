@@ -854,7 +854,7 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#BBBBBB11</string>
+                <string>#BBBBBB22</string>
                 <key>foreground</key>
                 <string>#AAAAAA</string>
             </dict>
