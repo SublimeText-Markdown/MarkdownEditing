@@ -91,18 +91,18 @@ If you are using Sublime Text 2, you have to disable the native package _manuall
 The preferred method of installation is via [Sublime Package Control][wbond].
 
 1. [Install Sublime Package Control][wbond 2]
-2. From inside Sublime Text 2, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
+2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
-5. Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ### Manual Installation
 
-1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text 2 Packages directory for your platform:
+1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory for your platform:
     * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
     * Windows: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
     * Linux: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
-2. Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+2. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ## Configuration
 
