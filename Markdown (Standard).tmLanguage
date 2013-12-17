@@ -1134,11 +1134,11 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>text.html.basic</string>
+							<string>#inline</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#inline</string>
+							<string>text.html.basic</string>
 						</dict>
 					</array>
 				</dict>
