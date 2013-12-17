@@ -23,7 +23,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)^
-				(?=	[ ]{,3}&gt;.
+				(?=	[ ]{,3}&gt;
 				|	([ ]{4}|\t)(?!$)
 				|	[#]{1,6}\s*+
 				|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
@@ -36,7 +36,7 @@
 			</string>
 			<key>end</key>
 			<string>(?x)^
-				(?!	[ ]{,3}&gt;.
+				(?!	[ ]{,3}&gt;
 				|	([ ]{4}|\t)
 				|	[#]{1,6}\s*+
 				|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
@@ -240,7 +240,7 @@
 			<key>begin</key>
 			<string>^(?=\S)(?![=-]{3,}(?=$))</string>
 			<key>end</key>
-			<string>^(?:\s*$|(?=[ ]{,3}&gt;.))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#)</string>
+			<string>^(?:\s*$|(?=[ ]{,3}&gt;))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#)</string>
 			<key>name</key>
 			<string>meta.paragraph.markdown</string>
 			<key>patterns</key>
@@ -301,7 +301,7 @@
 		<key>block_quote</key>
 		<dict>
 			<key>begin</key>
-			<string>\G[ ]{,3}(&gt;)(?!$)[ ]?</string>
+			<string>\G[ ]{,3}(&gt;)[ ]?</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -320,7 +320,7 @@
 			<string>(?x)^
 				(?=	\s*$
 				|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
-				|	[ ]{,3}&gt;.
+				|	[ ]{,3}&gt;
 				)</string>
 			<key>name</key>
 			<string>markup.quote.markdown</string>
@@ -329,7 +329,7 @@
 				<dict>
 					<key>begin</key>
 					<string>(?x)\G
-						(?=	[ ]{,3}&gt;.
+						(?=	[ ]{,3}&gt;
 						)</string>
 					<key>end</key>
 					<string>^</string>
@@ -372,7 +372,7 @@
 					<key>begin</key>
 					<string>(?x)\G
 						(?!	$
-						|	[ ]{,3}&gt;.
+						|	[ ]{,3}&gt;
 						|	([ ]{4}|\t)
 						|	[#]{1,6}\s*+
 						|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
