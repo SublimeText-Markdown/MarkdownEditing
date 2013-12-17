@@ -9,7 +9,8 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 ## Overview
 
 * [Features](#features)
-* [GFM Spesific features](#gfm-spesific-features)
+* [Key Bindings](#key-bindings)
+* [GFM Spesific Features](#gfm-spesific-features)
 * [Commands for Command Palette](#commands-for-command-palette)
 * [Installation](#installation)
 * [Configuration](#configuration)
@@ -22,34 +23,29 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 ## Features
 
 * Asterisks and underscores are autopaired and will wrap selected text
-* If you start an empty pair and hit backspace, both elements are deleted
-* If you start an empty pair and hit space, the right element is deleted
-* backticks are paired
+    - If you start an empty pair and hit backspace, both elements are deleted
+    - If you start an empty pair and hit space, the right element is deleted
+* Backticks are paired
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
 * Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>K</kbd> inserts an inline image
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>B</kbd> and <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>I</kbd> are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
 * <kbd>~</kbd> surrounds selected text with `~~` (strikethrough).
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde_match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde_match_header_hashes` option in your settings to disable.
 * Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
-* <kbd>⌘</kbd> <kbd>^</kbd> <kbd>1</kbd>  through <kbd>⌘</kbd> <kbd>^</kbd> <kbd>6</kbd>  will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `mde_match_header_hashes` preference setting.
-* <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
-* <kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>F</kbd> will locate footnote markers without definitions and insert the marker for the definition
-* <kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>G</kbd> will do the same for missing reference links
 
-Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS X.
+## Key Bindings
 
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>Shift</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts an inline image
-* <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>B</kbd> and <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
-* <kbd>Ctrl</kbd> <kbd>1</kbd> through <kbd>Ctrl</kbd> <kbd>6</kbd> will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `mde_match_header_hashes` preference setting.
-* <kbd>Ctrl</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
-
-Footnote commands submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown]
+| OS X | Windows/Linux | Description |
+|------|---------------|-------------|
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>V</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>V</kbd> | Pastes the contents of the clipboard as an inline link on selected text.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>R</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>R</kbd> | Pastes the contents of the clipboard as a reference link.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>K</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>K</kbd> | Inserts a standard inline link.
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd> | <kbd>Shift</kbd><kbd>Win</kbd><kbd>K</kbd> | Inserts an inline image.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+| <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde_match_header_hashes` preference setting.
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>6</kbd> | Inserts a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
+| <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
+| <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
 
 ## GFM Spesific Features
 
@@ -77,7 +73,7 @@ Adjusts every setext-style header to add or remove `=` or `-` characters as need
 
 ### Add Missing Link Labels
 
-Scans your document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
+Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
 
 ## Installation
 
