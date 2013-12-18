@@ -26,9 +26,13 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - If you start an empty pair and hit backspace, both elements are deleted
     - If you start an empty pair and hit space, the right element is deleted
 * Backticks are paired
+* At the end of a list item, pressing <kbd>Enter</kbd> will automatically insert the new list item bullet.
+    - Pressing <kbd>Tab</kbd> on the blank list item will indent it and switch the list bullet to another one (Order is `*`, `-`, `+` in a cycle).
+    - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
+    - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
 * Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
-* <kbd>~</kbd> surrounds selected text with `~~` (strikethrough).
+* <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde_match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde_match_header_hashes` option in your settings to disable.
 * Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
