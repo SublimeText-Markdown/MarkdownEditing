@@ -298,7 +298,7 @@
     { "keys": ["enter"], "command": "number_list", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d\\.)\\s+)\\S.*", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d+\\.)\\s+)\\S.*", "match_all": true },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false }
         ]
     },
