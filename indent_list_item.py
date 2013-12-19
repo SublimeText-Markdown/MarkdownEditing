@@ -7,19 +7,18 @@ class IndentListItemCommand(sublime_plugin.TextCommand):
             line = self.view.line(region)
             line_content = self.view.substr(line)
 
-            # List bullets in their order
-            bullets = ["*", "-", "+"]
-
             bullet_pattern = "([*+\\-])"
 
-            # Transform the bullet to the next/previous bullet type
-            for key, bullet in enumerate(bullets):
-                if bullet in line_content:
-                    new_line = line_content.replace(bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)])
-                    break
+            new_line = line_content
 
-            else:
-                return
+            # Transform the bullet to the next/previous bullet type
+            if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
+                bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+
+                for key, bullet in enumerate(bullets):
+                    if bullet in new_line:
+                        new_line = new_line.replace(bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)])
+                        break
 
             # Determine how to indent (tab or spaces)
             if self.view.settings().get("translate_tabs_to_spaces"):

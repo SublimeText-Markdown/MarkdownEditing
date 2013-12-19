@@ -44,6 +44,12 @@
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,
 
+	// Automatically switches list bullet when indenting blank list item with <Tab>.
+	"mde.list_indent_auto_switch_bullet": true,
+
+	// List bullets to be used for automatically switching. In their order.
+	"mde.list_indent_bullets": ["*", "-", "+"],
+
 	// Allways keep current line vertically centered.
 	"mde.keep_centered": false,
 
