@@ -1841,7 +1841,7 @@
 		</dict>
 	</dict>
 	<key>scopeName</key>
-	<string>text.html.markdown</string>
+	<string>text.html.markdown.gfm</string>
 	<key>uuid</key>
 	<string>423378C0-3E42-11E3-AA6E-0800200C9A66</string>
 </dict>

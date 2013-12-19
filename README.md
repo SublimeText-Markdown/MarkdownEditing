@@ -13,7 +13,8 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 ## Overview
 
 * [Features](#features)
-* [GFM Spesific features](#gfm-spesific-features)
+* [Key Bindings](#key-bindings)
+* [GFM Spesific Features](#gfm-spesific-features)
 * [Commands for Command Palette](#commands-for-command-palette)
 * [Installation](#installation)
 * [Configuration](#configuration)
@@ -26,33 +27,34 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 ## Features
 
 * Asterisks and underscores are autopaired and will wrap selected text
-* If you start an empty pair and hit backspace, both elements are deleted
-* If you start an empty pair and hit space, the right element is deleted
-* backticks are paired
+    - If you start an empty pair and hit backspace, both elements are deleted
+    - If you start an empty pair and hit space, the right element is deleted
+* Backticks are paired
+* At the end of a list item, pressing <kbd>Enter</kbd> will automatically insert the new list item bullet.
+    - Pressing <kbd>Tab</kbd> on the blank list item will indent it and switch the list bullet to another one (Order is `*`, `-`, `+` in a cycle).
+    - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
+    - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
+    - You can disable automatic bullet switching or choose which bullets to be used, in your settings file.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
 * Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link
-* <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>K</kbd> inserts an inline image
-* <kbd>Ctrl</kbd> <kbd>B</kbd> and <kbd>Ctrl</kbd> <kbd>I</kbd> are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
-* <kbd>~</kbd> surrounds selected text with `~~` (strikethrough).
-* Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde_match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
-* Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde_match_header_hashes` option in your settings to disable.
+* <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
+* Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
+* Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to disable.
 * Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
-* <kbd>⌘</kbd> <kbd>^</kbd> <kbd>1</kbd>  through <kbd>⌘</kbd> <kbd>^</kbd> <kbd>6</kbd>  will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `mde_match_header_hashes` preference setting.
-* <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
-* <kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>F</kbd> will locate footnote markers without definitions and insert the marker for the definition
-* <kbd>⌥</kbd> <kbd>⇧</kbd> <kbd>G</kbd> will do the same for missing reference links
 
-Keymap for Windows and Linux. Most of them are similar with the keymap on Mac OS X.
+## Key Bindings
 
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>V</kbd> will paste the contents of the clipboard as an inline link on selected text
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>R</kbd> will paste the contents of the clipboard as a reference link
-* <kbd>Ctrl</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts a standard inline link, <kbd>Shift</kbd> <kbd>Win</kbd> <kbd>K</kbd> inserts an inline image
-* <kbd>Ctrl</kbd> <kbd>1</kbd> through <kbd>Ctrl</kbd> <kbd>6</kbd> will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command now respects the `mde_match_header_hashes` preference setting.
-* <kbd>Ctrl</kbd> <kbd>⇧</kbd> <kbd>6</kbd> will insert a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
-
-Footnote commands submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown]
+| OS X | Windows/Linux | Description |
+|------|---------------|-------------|
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>V</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>V</kbd> | Pastes the contents of the clipboard as an inline link on selected text.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>R</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>R</kbd> | Pastes the contents of the clipboard as a reference link.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>K</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>K</kbd> | Inserts a standard inline link.
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd> | <kbd>Shift</kbd><kbd>Win</kbd><kbd>K</kbd> | Inserts an inline image.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+| <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>6</kbd> | Inserts a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
+| <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
+| <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
 
 ## GFM Spesific Features
 
@@ -80,7 +82,7 @@ Adjusts every setext-style header to add or remove `=` or `-` characters as need
 
 ### Add Missing Link Labels
 
-Scans your document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
+Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
 
 ## Installation
 
@@ -95,18 +97,18 @@ If you are using Sublime Text 2, you have to disable the native package _manuall
 The preferred method of installation is via [Sublime Package Control][wbond].
 
 1. [Install Sublime Package Control][wbond 2]
-2. From inside Sublime Text 2, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
+2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
-5. Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ### Manual Installation
 
-1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text 2 Packages directory for your platform:
+1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory for your platform:
     * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
     * Windows: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
     * Linux: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
-2. Restart Sublime Text 2 to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+2. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ## Configuration
 
@@ -114,13 +116,15 @@ The plugin contains 3 different Markdown flavors: Standard Markdown, GitHub flav
 
 You may want to have a look at the default settings files. They are located at:
 
-    Packages/MarkdownEditing/Markdown.sublime-settings [GitHub flavored Markdown]
+    Packages/MarkdownEditing/Markdown.sublime-settings         [GitHub flavored Markdown]
     Packages/MarkdownEditing/Markdown (Standard).sublime-settings
     Packages/MarkdownEditing/MultiMarkdown.sublime-settings
 
-Bold and italic markers are configurable through ST shell variables. You can use `Preferences > Package Settings > Markdown Editing` menu to see the default settings file. In order to override it, copy & paste its content into the user settings file (`Bold and Italic Markers.tmPreferences`) from the menu and make your edits. It is pretty straightforward.
+If you want to override any of the default settings, you can open the appropriate user settings file using the `Preferences > Package Settings > Markdown Editing` menu. Each flavor has a different settings file.
 
-In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor:
+Bold and italic markers are configurable through ST shell variables. You can use `Preferences > Package Settings > Markdown Editing` menu to see the default settings file. In order to override it, copy & paste its content into the user settings file (`Packages/User/Bold and Italic Markers.tmPreferences`) from the menu and make your edits. It is pretty straightforward.
+
+In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor (`Packages/User/[flavor].sublime-settings`):
 
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
@@ -135,7 +139,7 @@ By default, when you install the plugin, files with these extensions will be ass
 
 ## Tips
 
-* Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd>.
+* Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd> on Windows/Linux, <kbd>⌘</kbd> <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd> on Mac OS X.
 
 * If you install [FullScreenStatus][] plugin, MarkdownEditing will provide an extra functionality for Distraction Free mode. When you switch to Distraction Free mode, your current line will always be vertically centered as you edit. You can enable this functionality for normal mode, too, via settings.
 
@@ -146,6 +150,8 @@ By default, when you install the plugin, files with these extensions will be ass
     > __Typewriter Typing__ disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.
 
 * Markdown files usually contains URLs. If you want to open URLs under the cursor with a keybinding, you may want to install [OpenUrl][] plugin. It will work on other file types, too.
+
+* See [this excellent list][macstories] on Macstories for more tips and tricks.
 
 ## Similar Plugins
 
@@ -196,3 +202,4 @@ MarkdownEditing is released under the [MIT License][opensource].
 [wbond]: http://wbond.net/sublime_packages/package_control
 [wbond 2]: http://wbond.net/sublime_packages/package_control/installation
 [FullScreenStatus]: https://github.com/maliayas/SublimeText_FullScreenStatus
+[macstories]: http://www.macstories.net/roundups/sublime-text-2-and-markdown-tips-tricks-and-links/
