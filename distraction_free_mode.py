@@ -21,11 +21,11 @@ class KeepCurrentLineCentered(sublime_plugin.EventListener):
             return False
 
         if on_distraction_free():
-            if view.settings().get("mde_distraction_free_mode").get("mde_keep_centered") is False:
+            if view.settings().get("mde.distraction_free_mode").get("mde.keep_centered") is False:
                 return False
 
         else:
-            if view.settings().get("mde_keep_centered") is False:
+            if view.settings().get("mde.keep_centered") is False:
                 return False
 
         view.show_at_center(view.sel()[0].begin())

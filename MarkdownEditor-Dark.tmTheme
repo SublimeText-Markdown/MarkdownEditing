@@ -12,7 +12,7 @@
                 <key>background</key>
                 <string>#131313</string>
                 <key>caret</key>
-                <string>#00bdff</string>
+                <string>#00bbff</string>
                 <key>foreground</key>
                 <string>#aaaaaa</string>
                 <key>invisibles</key>
@@ -693,6 +693,8 @@
                 , markup.strikethrough markup.raw.inline.markdown,
                 , markup.strikethrough markup.underline.link.image.markdown,
                 , markup.strikethrough markup.underline.link.markdown,
+                , markup.strikethrough meta.link.inet.markdown markup.underline.link.markdown,
+                , markup.strikethrough meta.link.email.lt-gt.markdown markup.underline.link.markdown,
                 , markup.strikethrough punctuation.definition.bold.markdown,
                 , markup.strikethrough punctuation.definition.italic.markdown,
                 , markup.strikethrough punctuation.definition.constant.begin.markdown,
@@ -852,7 +854,7 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#44444411</string>
+                <string>#44444422</string>
                 <key>foreground</key>
                 <string>#555555</string>
             </dict>
