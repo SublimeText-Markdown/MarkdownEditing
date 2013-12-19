@@ -41,7 +41,7 @@ Each milestone will have a pull request that will be kept open until the milesto
     If the changelog file doesn't exist yet, create it by copying `messages/template.md` as a template.
 
 * If you are defining a new __key binding__, please define for all the 3 OSs in their own `.sublime-keymap` files. You have to insert your edits into the exacly same place in the 3 files.
-* If you want to introduce a new setting key for one of the `.sublime-settings` files, use `mde_` prefix in your setting key.
+* If you want to introduce a new setting key for one of the `.sublime-settings` files, use `mde.` prefix in your setting key.
 * For testing your changes, you can use the test files under `tests/`. You can extend those files to add new tests and edge cases.
 
 ## Publishing to Package Control

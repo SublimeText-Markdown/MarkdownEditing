@@ -31,14 +31,14 @@
 	"caret_extra_bottom": 3,
 
 	// add trailing #'s to headlines
-	"mde_match_header_hashes": false,
+	"mde.match_header_hashes": false,
 
 	// Allways keep current line vertically centered.
-	"mde_keep_centered": false,
+	"mde.keep_centered": false,
 
 	// Distraction free mode improvements. In order these to work, you have to install
 	// FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
-	"mde_distraction_free_mode": {
-		"mde_keep_centered": true
+	"mde.distraction_free_mode": {
+		"mde.keep_centered": true
 	}
 }
