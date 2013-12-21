@@ -311,6 +311,23 @@
             { "key": "auto_complete_visible", "operator": "equal", "operand": false }
         ]
     },
+    // Extend blockquote
+    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*(>\\s+([*\\-+]\\s+)?)).*/\n$2/}"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>\\s+\\S", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false }
+        ]
+    },
+    // Remove empty blockquote line
+    { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>\\s+$", "match_all": true },
+            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false }
+        ]
+    },
     { "keys": ["alt+shift+g"], "command": "gather_missing_link_markers", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
