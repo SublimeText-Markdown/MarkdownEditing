@@ -306,7 +306,7 @@
     { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+]|\\d\\.)\\s+)$", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false }
         ]
