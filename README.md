@@ -14,7 +14,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 * [Features](#features)
 * [Key Bindings](#key-bindings)
-* [GFM Spesific Features](#gfm-spesific-features)
+* [GFM Specific Features](#gfm-specific-features)
 * [Commands for Command Palette](#commands-for-command-palette)
 * [Installation](#installation)
 * [Configuration](#configuration)
@@ -57,7 +57,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
 
-## GFM Spesific Features
+## GFM Specific Features
 
 Underscores in words doesn't mess with bold or italic style:
 
