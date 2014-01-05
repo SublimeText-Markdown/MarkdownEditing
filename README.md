@@ -8,7 +8,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 > Your kind donations will help [me](https://github.com/maliayas) pause my daily job and put more serious effort into the development of this plugin for the next 2 milestones ([2.0.5](https://github.com/SublimeText-Markdown/MarkdownEditing/issues?milestone=1&state=open) and [2.2.0](https://github.com/SublimeText-Markdown/MarkdownEditing/issues?milestone=2&state=open)). When they are completed, donation button will be removed. Thanks.
 > 
-> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=Ali%20Ayas&amp;item_number=Open%20Source&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="[paypal]" /></a>
+> <a href="https://flattr.com/submit/auto?user_id=maliayas&url=https%3A%2F%2Fgithub.com%2FSublimeText-Markdown%2FMarkdownEditing" target="_blank"><img src="https://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a>
 
 ## Overview
 
