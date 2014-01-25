@@ -35,6 +35,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
     - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
     - You can disable automatic bullet switching or choose which bullets to be used, in your settings file.
+    - If a list item contains a [GFM task][GFM], pressing <kbd>Enter</kbd> at the end of the line will continue with a new blank task.
 * At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
 * Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
@@ -195,3 +196,4 @@ MarkdownEditing is released under the [MIT License][opensource].
 [macstories]: http://www.macstories.net/roundups/sublime-text-2-and-markdown-tips-tricks-and-links/
 [tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
 [Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
+[GFM]: https://help.github.com/articles/github-flavored-markdown
