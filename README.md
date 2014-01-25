@@ -140,19 +140,7 @@ By default, when you install the plugin, files with these extensions will be ass
 
 ## Tips
 
-* Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd> on Windows/Linux, <kbd>⌘</kbd> <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd> on Mac OS X.
-
-* If you install [FullScreenStatus][] plugin, MarkdownEditing will provide an extra functionality for Distraction Free mode. When you switch to Distraction Free mode, your current line will always be vertically centered as you edit. You can enable this functionality for normal mode, too, via settings.
-
-* If you work with Markdown tables too often, you may want to have a look at another plugin named [TableEditor][]. It brings huge improvements for table editing. Several table formats are supported.
-
-* There is a plugin named [Typewriter][] which provides a typewriter like writing environment. Excerpt from its homepage:
-
-    > __Typewriter Typing__ disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.
-
-* Markdown files usually contains URLs. If you want to open URLs under the cursor with a keybinding, you may want to install [OpenUrl][] plugin. It will work on other file types, too.
-
-* See [this excellent list][macstories] on Macstories for more tips and tricks.
+We are maintaining a [tips section][tips] in our [Wiki][]. Jump there to learn from others or share your experiences with others.
 
 ## Similar Plugins
 
@@ -204,3 +192,5 @@ MarkdownEditing is released under the [MIT License][opensource].
 [wbond 2]: http://wbond.net/sublime_packages/package_control/installation
 [FullScreenStatus]: https://github.com/maliayas/SublimeText_FullScreenStatus
 [macstories]: http://www.macstories.net/roundups/sublime-text-2-and-markdown-tips-tricks-and-links/
+[tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
+[Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
