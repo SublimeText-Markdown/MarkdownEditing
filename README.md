@@ -36,6 +36,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
     - You can disable automatic bullet switching or choose which bullets to be used, in your settings file.
 * At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
+* Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
 * Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
 * <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
