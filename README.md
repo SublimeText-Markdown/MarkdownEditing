@@ -14,7 +14,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 * [Features](#features)
 * [Key Bindings](#key-bindings)
-* [GFM Spesific Features](#gfm-spesific-features)
+* [GFM Specific Features](#gfm-specific-features)
 * [Commands for Command Palette](#commands-for-command-palette)
 * [Installation](#installation)
 * [Configuration](#configuration)
@@ -35,6 +35,9 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
     - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
     - You can disable automatic bullet switching or choose which bullets to be used, in your settings file.
+    - If a list item contains a [GFM task][GFM], pressing <kbd>Enter</kbd> at the end of the line will continue with a new blank task.
+* At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
+* Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
 * Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
 * <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
@@ -56,7 +59,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
 
-## GFM Spesific Features
+## GFM Specific Features
 
 Underscores in words doesn't mess with bold or italic style:
 
@@ -139,19 +142,7 @@ By default, when you install the plugin, files with these extensions will be ass
 
 ## Tips
 
-* Sublime Text has a _Distraction Free_ mode which is great with Markdown writing. Key binding for it: <kbd>Shift</kbd> <kbd>F11</kbd> on Windows/Linux, <kbd>⌘</kbd> <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F</kbd> on Mac OS X.
-
-* If you install [FullScreenStatus][] plugin, MarkdownEditing will provide an extra functionality for Distraction Free mode. When you switch to Distraction Free mode, your current line will always be vertically centered as you edit. You can enable this functionality for normal mode, too, via settings.
-
-* If you work with Markdown tables too often, you may want to have a look at another plugin named [TableEditor][]. It brings huge improvements for table editing. Several table formats are supported.
-
-* There is a plugin named [Typewriter][] which provides a typewriter like writing environment. Excerpt from its homepage:
-
-    > __Typewriter Typing__ disables your cursor keys and all bindings that move the cursor and/or select text, leaving you only with letters, numbers, symbols, <kbd>Backspace</kbd>, <kbd>Delete</kbd> and <kbd>Enter</kbd>.
-
-* Markdown files usually contains URLs. If you want to open URLs under the cursor with a keybinding, you may want to install [OpenUrl][] plugin. It will work on other file types, too.
-
-* See [this excellent list][macstories] on Macstories for more tips and tricks.
+We are maintaining a [tips section][tips] in our [Wiki][]. Jump there to learn from others or share your experiences with others.
 
 ## Similar Plugins
 
@@ -203,3 +194,6 @@ MarkdownEditing is released under the [MIT License][opensource].
 [wbond 2]: http://wbond.net/sublime_packages/package_control/installation
 [FullScreenStatus]: https://github.com/maliayas/SublimeText_FullScreenStatus
 [macstories]: http://www.macstories.net/roundups/sublime-text-2-and-markdown-tips-tricks-and-links/
+[tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
+[Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
+[GFM]: https://help.github.com/articles/github-flavored-markdown
