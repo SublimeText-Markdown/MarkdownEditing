@@ -1006,6 +1006,56 @@
                 <string>#00bdff77</string>
             </dict>
         </dict>
+
+        <!-- Styles for custom markdown extensions. -->
+        <dict>
+            <key>name</key>
+            <string>Markers (@)</string>
+            <key>scope</key>
+            <string>markup.marker.at.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#67BC00</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markers (%)</string>
+            <key>scope</key>
+            <string>markup.marker.percent.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#CC8100</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Invalid Markers</string>
+            <key>scope</key>
+            <string>markup.marker.invalid.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#F8F8F0</string>
+                <key>background</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Uncertain Markers</string>
+            <key>scope</key>
+            <string>markup.marker.uncertain.markdown</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#5555AA</string>
+                <key>background</key>
+                <string>#FD971F</string>
+            </dict>
+        </dict>
     </array>
     <key>uuid</key>
     <string>BF4E1964-0DB9-4E88-8142-E8F52D7EDEEC</string>

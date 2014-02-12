@@ -872,6 +872,38 @@
 			<key>name</key>
 			<string>meta.image.reference.markdown</string>
 		</dict>
+		<key>markers</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>%(?=\S)</string>
+					<key>name</key>
+					<string>markup.marker.percent.markdown</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>@(?=\S)</string>
+					<key>name</key>
+					<string>markup.marker.at.markdown</string>
+				</dict>
+			</array>
+		</dict>
+		<key>invalid-markers</key>
+		<dict>
+			<key>match</key>
+			<string>(?:(?&lt;=[^\s%@])(?:%|@)+|(?&lt;=\w)(?:%|@)(?=\w))</string>
+			<key>name</key>
+			<string>markup.marker.invalid.markdown</string>
+		</dict>
+		<key>uncertain-markers</key>
+		<dict>
+			<key>match</key>
+			<string>(?:%|@)(?!\S)</string>
+			<key>name</key>
+			<string>markup.marker.uncertain.markdown</string>
+		</dict>
 		<key>inline</key>
 		<dict>
 			<key>patterns</key>
@@ -939,6 +971,18 @@
 				<dict>
 					<key>include</key>
 					<string>#tag-kbd</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#uncertain-markers</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#invalid-markers</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#markers</string>
 				</dict>
 			</array>
 		</dict>
