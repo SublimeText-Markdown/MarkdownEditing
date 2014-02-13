@@ -722,7 +722,7 @@
 			<key>contentName</key>
 			<string>entity.name.section.markdown</string>
 			<key>end</key>
-			<string>\s*(#*)$\n?</string>
+			<string>[ \t]*(#*)$</string>
 			<key>name</key>
 			<string>markup.heading.markdown</string>
 			<key>patterns</key>
