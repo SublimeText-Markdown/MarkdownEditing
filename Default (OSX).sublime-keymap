@@ -211,6 +211,30 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+    // code on Super + Alt + ´
+    { "keys": ["super+alt+´"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Code.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+alt+´"], "command": "insert_snippet", "args": {"contents": "`$1`"}, "context":
+     [
+         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
+         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+     ]
+    },
+    { "keys": ["super+alt+´"], "command": "insert_snippet", "args": {"contents": "`${SELECTION/(^`*|`*$)//g}`"}, "context":
+        [
+            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
 
     // Unbold on Super + Alt + B if already bold
     { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
@@ -220,13 +244,13 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b__+\\S+__+$", "match_all": true },
@@ -242,13 +266,35 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b_(?!_)\\S+_$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+
+    // Uncode on Super + Alt + ´ if already code
+    { "keys": ["super+alt+´"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^`|`$)//g}"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "text", "operator": "regex_match", "operand": "^`.*`$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["super+alt+´"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.raw.inline", "match_all": true }
+        ]
+    },
+    { "keys": ["super+alt+´"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize Uncode.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b_(?!_)\\S+_$", "match_all": true },
