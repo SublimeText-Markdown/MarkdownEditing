@@ -116,7 +116,7 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 class ConvertToAtxCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit, closed=False):
-		regions =  self.view.sel()
+		regions =  list(self.view.sel())
 		if len(regions) == 1 and regions[0].size() == 0:
 			regions = [sublime.Region(0, self.view.size())]
 		regions.reverse()
