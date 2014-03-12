@@ -26,7 +26,7 @@ SETEXT_DASHES_RE = re.compile( r'''
 	''', re.X )
 
 SETEXT_HEADER_RE = re.compile( r'''
-	^(.*)\n
+	^(.+)\n
 	( =+ | -+ ) # A run of ---- or ==== underline characters.
 	[ \t]*        # Optional trailing whitespace.
 	$             # Must fill the while line. Don't match "- list items"
@@ -130,7 +130,7 @@ class ConvertToAtxCommand(sublime_plugin.TextCommand):
 				if '-' in m.group(2):
 					atx = "#" + atx
 				closing = atx[::-1] if closed else ""
-				self.view.replace(edit, mreg, '\n' + atx + m.group(1) + closing)
+				self.view.replace(edit, mreg, atx + m.group(1) + closing)
 
 	def is_enabled(self):
 		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
