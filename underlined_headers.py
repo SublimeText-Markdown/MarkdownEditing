@@ -25,6 +25,13 @@ SETEXT_DASHES_RE = re.compile( r'''
 	$             # Must fill the while line. Don't match "- list items"
 	''', re.X )
 
+SETEXT_HEADER_RE = re.compile( r'''
+	^(.+)\n
+	( =+ | -+ ) # A run of ---- or ==== underline characters.
+	[ \t]*        # Optional trailing whitespace.
+	$             # Must fill the while line. Don't match "- list items"
+	''', re.X | re.M )
+
 def fix_dashes(view, edit, text_region, dash_region):
 	"""Replaces the underlined "dash" region of a setext header with a run of
 	dashes or equal-signs that match the length of the header text."""
@@ -102,6 +109,28 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 			m = SETEXT_DASHES_RE.match(dashes_text)
 			if m:
 				fix_dashes(self.view, edit, text_line, dashes_line)
+
+	def is_enabled(self):
+		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
+
+class ConvertToAtxCommand(sublime_plugin.TextCommand):
+
+	def run(self, edit, closed=False):
+		regions =  list(self.view.sel())
+		if len(regions) == 1 and regions[0].size() == 0:
+			regions = [sublime.Region(0, self.view.size())]
+		regions.reverse()
+		for region in regions:
+			txt = self.view.substr(region)
+			matches = list(SETEXT_HEADER_RE.finditer(txt))
+			matches.reverse()
+			for m in matches:
+				mreg = sublime.Region(region.begin()+m.start(), region.begin()+m.end())
+				atx = "# "
+				if '-' in m.group(2):
+					atx = "#" + atx
+				closing = atx[::-1] if closed else ""
+				self.view.replace(edit, mreg, atx + m.group(1) + closing)
 
 	def is_enabled(self):
 		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
