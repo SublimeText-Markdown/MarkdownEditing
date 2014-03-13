@@ -83,6 +83,10 @@ Strikethrough is supported:
 
 Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
 
+### Convert Underlined Headers to ATX
+
+Converts every setext-style header into an ATX style header. If something is selected only the headers in the selections will be converted, otherwise the conversion will be applied to the whole view.
+
 ### Add Missing Link Labels
 
 Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.

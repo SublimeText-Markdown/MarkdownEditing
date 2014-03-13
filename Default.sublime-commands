@@ -4,6 +4,10 @@
         "command": "fix_all_underlined_headers"
     },
     {
+        "caption": "MarkdownEditing: Convert Underlined Headers to ATX",
+        "command": "convert_to_atx"
+    },
+    {
         "caption": "MarkdownEditing: Add Missing Link Labels",
         "command": "gather_missing_link_markers"
     },
