@@ -1322,6 +1322,12 @@
 							<string>#inline</string>
 						</dict>
 						<dict>
+							<key>match</key>
+							<string>\G\s*(?:[*\-+]|[0-9]+\.)\s+</string>
+							<key>name</key>
+							<string>punctuation.definition.list_item</string>
+						</dict>
+						<dict>
 							<key>include</key>
 							<string>text.html.basic</string>
 						</dict>
