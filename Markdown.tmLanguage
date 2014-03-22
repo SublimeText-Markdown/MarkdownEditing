@@ -1323,9 +1323,15 @@
 						</dict>
 						<dict>
 							<key>match</key>
-							<string>\G\s*(?:[*\-+]|[0-9]+\.)\s+</string>
-							<key>name</key>
-							<string>punctuation.definition.list_item</string>
+							<string>\G\s*([*\-+]|[0-9]+\.)\s+</string>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.definition.list_item</string>
+								</dict>
+							</dict>
 						</dict>
 						<dict>
 							<key>include</key>
