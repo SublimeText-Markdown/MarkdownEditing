@@ -1412,7 +1412,7 @@
 		<key>fenced-diff</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(diff)\s*$</string>
+		    <string>^(\s*[`~]{3,})(diff|patch)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
