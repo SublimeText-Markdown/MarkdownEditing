@@ -1322,6 +1322,18 @@
 							<string>#inline</string>
 						</dict>
 						<dict>
+							<key>match</key>
+							<string>\G\s*([*\-+]|[0-9]+\.)\s+</string>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.definition.list_item</string>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
 							<key>include</key>
 							<string>text.html.basic</string>
 						</dict>
@@ -1400,7 +1412,7 @@
 		<key>fenced-diff</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(diff)\s*$</string>
+		    <string>^(\s*[`~]{3,})(diff|patch)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
