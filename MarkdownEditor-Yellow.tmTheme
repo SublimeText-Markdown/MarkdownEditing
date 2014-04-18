@@ -759,6 +759,443 @@
                 <string>#e3dbac</string>
             </dict>
         </dict>
+
+        <!-- BEGIN: fenced-monokai -->
+        <dict>
+            <key>name</key>
+            <string>Block code: Comment</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown comment, markup.raw.block.fenced.markdown comment punctuation</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#75715E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: String</string>
+            <key>scope</key>
+            <string>
+                ,markup.raw.block.fenced.markdown string.quoted.double,
+                ,markup.raw.block.fenced.markdown string.quoted.single,
+                ,markup.raw.block.fenced.markdown string,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#E6DB74</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Numbers</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown constant.numeric, markup.raw.block.fenced.markdown meta.property-value constant.numeric</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#AE81FF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Keywords</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown keyword</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Built-in constant</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown constant.language</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#66D9EF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: User-defined constant</string>
+            <key>scope</key>
+            <string>
+                , markup.raw.block.fenced.markdown constant.character,
+                , markup.raw.block.fenced.markdown constant.character.escape,
+                , markup.raw.block.fenced.markdown constant.other,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#AE81FF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Keyword</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown keyword, markup.raw.block.fenced.markdown keyword.operator</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Storage</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown storage</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Storage type</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown storage.type</string>
+            <key>settings</key>
+            <dict>
+                <key>fontStyle</key>
+                <string>italic</string>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#66D9EF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Class name</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown entity.name.class, markup.raw.block.fenced.markdown entity.name.type, markup.raw.block.fenced.markdown entity.name.type.class</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#A6E22E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Inherited class</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown entity.other.inherited-class</string>
+            <key>settings</key>
+            <dict>
+                <key>fontStyle</key>
+                <string>italic underline</string>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#A6E22E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Function name</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown entity.name.function</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#A6E22E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Tags</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown entity.name.tag</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Function argument</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown variable.parameter</string>
+            <key>settings</key>
+            <dict>
+                <key>fontStyle</key>
+                <string>italic</string>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#FD971F</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Library function</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown support.function</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#66D9EF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Library constant</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown support.constant</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#66D9EF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Library class/type</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown support.type, markup.raw.block.fenced.markdown support.class</string>
+            <key>settings</key>
+            <dict>
+                <key>fontStyle</key>
+                <string>italic</string>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#66D9EF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Library variable</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown support.other.variable</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Invalid</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown invalid</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#F92672</string>
+                <key>fontStyle</key>
+                <string></string>
+                <key>foreground</key>
+                <string>#F8F8F0</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Invalid deprecated</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown invalid.deprecated</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#AE81FF</string>
+                <key>foreground</key>
+                <string>#F8F8F0</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: diff.header</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown meta.diff, markup.raw.block.fenced.markdown meta.diff.header</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#75715E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: diff.deleted</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown markup.deleted</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F92672</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: diff.inserted</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown markup.inserted</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#A6E22E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: diff.changed</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown markup.changed</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#E6DB74</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Punctuation</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown punctuation</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F8F8F2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Strings: Punctuation</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown string punctuation</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#E6DB74</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: Markup: Underline</string>
+            <key>scope</key>
+            <string>
+                , markup.raw.block.fenced.markdown markup.underline,
+                , markup.raw.block.fenced.markdown markup.underline.link.markdown,
+                , markup.raw.block.fenced.markdown constant.other.reference.link.markdown,
+                , markup.raw.block.fenced.markdown meta.image.reference.markdown,
+            </string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F8F8F2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Attribute Punctuation</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown meta.tag string punctuation, markup.raw.block.fenced.markdown punctuation.definition.entity.html</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F8F8F2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Tag Punctuation</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown punctuation.definition.tag</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F8F8F2</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Entities</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown constant.character.entity</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#AE81FF</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Attribute Names</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown entity.other.attribute-name, markup.raw.block.fenced.markdown meta.tag.block.any.html string.quoted.double.html, markup.raw.block.fenced.markdown meta.tag.block.any.html string.quoted.double.html punctuation.definition</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#A6E22E</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Block code: HTML: Attribute Values</string>
+            <key>scope</key>
+            <string>markup.raw.block.fenced.markdown meta.tag string.quoted, markup.raw.block.fenced.markdown meta.tag string.quoted constant.character.entity</string>
+            <key>settings</key>
+            <dict>
+                <key>background</key>
+                <string>#272822</string>
+                <key>foreground</key>
+                <string>#F8F8F2</string>
+            </dict>
+        </dict>
+        <!-- END: fenced-monokai -->
+
         <dict>
             <key>name</key>
             <string>Block Cursor</string>
