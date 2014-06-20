@@ -9,9 +9,11 @@ class NumberListCommand(sublime_plugin.TextCommand):
 		num = re.search('\d', text).start()
 		dot = text.find(".")
 		if num == 0:
-			view.insert(edit, sel.end(), "\n%d. " % (int(text[:dot]) + 1,))
+			view.erase(edit, sel)
+			view.insert(edit, sel.begin(), "\n%d. " % (int(text[:dot]) + 1,))
 		else:
-			view.insert(edit, sel.end(), "\n%s%d. " % (text[:num], int(text[num:dot]) + 1))
+			view.erase(edit, sel)
+			view.insert(edit, sel.begin(), "\n%s%d. " % (text[:num], int(text[num:dot]) + 1))
 
 	def is_enabled(self):
 		return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
