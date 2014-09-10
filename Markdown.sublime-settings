@@ -6,6 +6,9 @@
 		"txt"
 	],
 
+	"auto_complete_selector": "source, text",
+	//"auto_complete_selector": "markup.raw.block.markdown markup.raw.block.fenced.markdown",
+
 	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
