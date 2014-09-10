@@ -1588,7 +1588,7 @@
 		<key>fenced-shell</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(sh|shell)\s*$</string>
+		    <string>^(\s*[`~]{3,})(sh|shell|bash)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
