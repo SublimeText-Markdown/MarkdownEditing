@@ -246,6 +246,23 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>begin</key>
+				    <string>(`+)[^`\n]*</string>
+					<key>end</key>
+				    <string>(\n?\1)</string>
+				    <key>patterns</key>
+				    <array>
+				    	<dict>
+				    		<key>match</key>
+				    		<string>\n[^`\n]+</string>
+						    <key>name</key>
+						    <string>markup.content</string>
+				    	</dict>
+				    </array>
+				    <key>name</key>
+				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+				</dict>
+				<dict>
 					<key>include</key>
 					<string>#inline</string>
 				</dict>
