@@ -635,7 +635,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1)</string>
+			<string>(?&lt;=\S)(\1)(?!\S)</string>
 			<key>name</key>
 			<string>markup.strikethrough.markdown</string>
 			<key>patterns</key>
