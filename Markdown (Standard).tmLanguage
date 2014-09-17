@@ -249,7 +249,11 @@
 					<key>begin</key>
 				    <string>(`+)[^`\n]*</string>
 					<key>end</key>
-				    <string>(\n?\1)</string>
+				    <string>(\n?\1)|(?:^(?:\s*$|(?=[ ]{,3}&gt;))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+					<key>comment</key>
+					<string>
+						End of backticks block or end of paragraph.
+					</string>
 				    <key>patterns</key>
 				    <array>
 				    	<dict>

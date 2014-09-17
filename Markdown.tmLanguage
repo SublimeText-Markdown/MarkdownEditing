@@ -273,33 +273,39 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-				    <string>(`{3,})[^`\n]*$</string>
-					<key>end</key>
-				    <string>^.+(?&lt;!`)(\1)</string>
-				    <key>patterns</key>
-				    <array>
-				    	<dict>
-				    		<key>match</key>
-				    		<string>\n[^`\n]+</string>
-						    <key>name</key>
-						    <string>markup.content</string>
-				    	</dict>
-				    </array>
-				    <key>name</key>
-				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-				    <string>(`{1,2})[^`\n]*$</string>
-					<key>end</key>
-				    <string>(\n?(?&lt;!`)\1)</string>
-				    <key>name</key>
-				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
-				</dict>
-				<dict>
 					<key>include</key>
 					<string>#inline</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+				    <string>(`{3,})(?!`)</string>
+					<key>end</key>
+				    <string>(?:^.+(?&lt;!`)(\1))|(?:^(?:\s*$|(?=[ ]{,3}&gt;)|(?=~~~))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+					<key>comment</key>
+					<string>
+						End of backticks block or end of paragraph.
+						In GFM, if the number of backticks are greater or equal than 3,
+						then the ending backticks must not be at the beginnning
+						of a newline. So this pattern:
+							text1```
+							text2
+							```
+						is not allowed.
+					</string>
+				    <key>name</key>
+				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+				    <string>(`{1,2})(?!`)</string>
+					<key>end</key>
+				    <string>((?&lt;!`)\1)|(?:^(?:\s*$|(?=[ ]{,3}&gt;)|(?=~~~))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+					<key>comment</key>
+					<string>
+						End of backticks block or end of paragraph.
+					</string>
+				    <key>name</key>
+				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
 				</dict>
 				<dict>
 					<key>include</key>
