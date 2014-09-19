@@ -24,5 +24,9 @@
         {
             "file": "${packages}/User/Markdown.sublime-settings"
         }
+    },
+    {
+        "caption": "MarkdownEditing: Markdown Lint",
+        "command": "lint"
     }
 ]
