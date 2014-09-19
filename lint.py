@@ -11,10 +11,12 @@ class mddef(object):
     def __init__(self, settings):
         pass
 
+    def __str__(self):
+
 
 class md001_atx(mddef):
     flag = re.M
-    desc = 'MD001-atx - Header levels should only increment by one level at a time'
+    desc = 'Header levels should only increment by one level at a time'
     locator = '^#{1,6}(?!#)'
 
     lastMatch = None
@@ -30,7 +32,7 @@ class md001_atx(mddef):
 
 class md001_setext(mddef):
     flag = re.M
-    desc = 'MD001-Setext - Header levels should only increment by one level at a time'
+    desc = 'Header levels should only increment by one level at a time'
     locator = '^([\-\=]+)$'
     gid = 1
 
@@ -45,8 +47,8 @@ class md001_setext(mddef):
 
 class md002_atx(mddef):
     flag = re.S
-    desc = 'MD002-atx - First header should be a h1 header'
-    locator = '^.*?#{1,6}(?!#)'
+    desc = 'First header should be a h1 header'
+    locator = '^.*?(#{1,6}(?!#))'
     gid = 1
 
     def test(self, text, s, e):
@@ -55,7 +57,7 @@ class md002_atx(mddef):
 
 class md002_setext(mddef):
     flag = re.S
-    desc = 'MD002-Setext - First header should be a h1 header'
+    desc = 'First header should be a h1 header'
     locator = '^([\-\=]+)$'
     gid = 1
 
@@ -65,7 +67,7 @@ class md002_setext(mddef):
 
 class md003(mddef):
     flag = re.M
-    desc = 'MD003 - Header style'
+    desc = 'Header style'
     locator = '^([\-\=]+)|(#{1,6}(?!#).*)$'
     gid = 1
 
@@ -75,11 +77,25 @@ class md003(mddef):
     def test(self, text, s, e):
         t = text[s:e]
         if self.settings == 'atx':
-            if not re.match('[\-\=]+',t):
-                mr = re.match('(#{1,6}(?!#)).*((?<!#)#{1,6})',t)
-                if mr:
-
-                return True
+            if not re.match('(#{1,6}(?!#)).*', t) or\
+                    re.match('(#{1,6}(?!#)).*((?<!#)\1)', t):
+                return False
+        elif self.settings == 'atx_closed':
+            if not re.match('(#{1,6}(?!#)).*((?<!#)\1)', t):
+                return False
+        elif self.settings == 'setext':
+            if not re.match('[\-\=]+', t):
+                return False
+        elif self.settings == 'any':
+            if re.match('(#{1,6}(?!#)).*', t):
+                if re.match('(#{1,6}(?!#)).*((?<!#)\1)', t):
+                    self.settings = 'atx_closed'
+                else:
+                    self.settings = 'atx'
+            elif re.match('[\-\=]+', t):
+                self.settings = 'setext'
+            return self.test(text, s, e)
+        return True
 
 
 class LintCommand(sublime_plugin.TextCommand):
@@ -91,7 +107,8 @@ class LintCommand(sublime_plugin.TextCommand):
         st = self.view.settings().get('lint')
         print('================lint start================')
         for mddef in self.deflist:
-            self.test(mddef(st[mddef.__name__]), text)
+            self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
+                            else None), text)
         print('=================lint end=================')
 
     def test(self, tar, text):
@@ -106,6 +123,7 @@ class LintCommand(sublime_plugin.TextCommand):
             if not ans:
                 ret = False
                 (row, col) = self.view.rowcol(mr.start(tar.gid))
-                print('line %d: ' % (row + 1) + tar.desc)
+                print('line %d: %s ' %
+                      (row + 1, tar.__class__.__name__.upper()) + tar.desc)
 
         return ret
