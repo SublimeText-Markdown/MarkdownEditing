@@ -97,8 +97,11 @@ class md004(mddef):
     eol = r'^(?=\S)'
     gid = 1
     lastSym = None
-    lvs = [None, None, None]
     lastpos = -1
+
+    def __init__(self, settings, view):
+        super(md004, self).__init__(settings, view)
+        self.lvs = [None, None, None]
 
     def test(self, text, s, e):
         if self.lastpos > s:
@@ -200,8 +203,11 @@ class md005(mddef):
     locator = r'^([ ]{0,3})[*+-](?=\s)'
     eol = r'^(?=\S)'
     gid = 1
-    lvs = {}
     lastpos = -1
+
+    def __init__(self, settings, view):
+        super(md005, self).__init__(settings, view)
+        self.lvs = {}
 
     def spacecheck(self, lv, nspaces):
         if lv in self.lvs:
@@ -233,7 +239,7 @@ class md005(mddef):
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
+        mrs = re.finditer(r'^( *)([*\-+])\s+', block, re.M)
         for mr in mrs:
             # print('----')
             # print(mr.group(2))
@@ -333,7 +339,7 @@ class md007(mddef):
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
+        mrs = re.finditer(r'^( *)([*\-+])\s+', block, re.M)
         for mr in mrs:
             # print('----')
             # print(mr.group(2))
@@ -401,11 +407,118 @@ class md013(mddef):
         return {}
 
 
+class md018(mddef):
+    flag = re.M
+    desc = 'No space after hash on atx style header'
+    locator = r'^#{1,6}(?![#\s]).*(?<!#)$'
+
+    def test(self, text, s, e):
+        return {s: 'no space'}
+
+
+class md019(mddef):
+    flag = re.M
+    desc = 'Multiple spaces after hash on atx style header'
+    locator = r'^#{1,6}(?=\s{2,}).*(?<!#)$'
+
+    def test(self, text, s, e):
+        return {s: 'too many spaces'}
+
+
+class md020(mddef):
+    flag = re.M
+    desc = 'No space inside hashes on closed atx style header'
+    locator = r'(#{1,6}(?!#))(.*)((?<!#)\1)'
+    gid = 2
+
+    def test(self, text, s, e):
+        t = text[s:e]
+        if t[0] != ' ':
+            return {s: 'no space on the left'}
+        elif t[-1] != ' ':
+            return {s: 'no space on the right'}
+        return {}
+
+
+class md021(mddef):
+    flag = re.M
+    desc = 'Multiple spaces inside hashes on closed atx style header'
+    locator = r'(#{1,6}(?!#))(.*)((?<!#)\1)'
+    gid = 2
+
+    def test(self, text, s, e):
+        t = text[s:e]
+        if len(t) > 1 and ((t[0] == ' ' and t[1] == ' ') or
+                           (t[-1] == ' ' and t[-2] == ' ')):
+            return {s: 'too many spaces'}
+        return {}
+
+
+class md022(mddef):
+    flag = re.M
+    desc = 'Headers should be surrounded by blank lines'
+    locator = r'^((?:-+|=+)|(?:#{1,6}(?!#).*))$'
+
+    def test(self, text, s, e):
+        if s > 1 and text[s - 2] != '\n':
+            return {s: 'blank line required before this line'}
+
+        if e < len(text) - 2 and text[e + 1] != '\n':
+            return {s: 'blank line required after this line'}
+        return {}
+
+
+class md023(mddef):
+    flag = re.M
+    desc = 'Headers must start at the beginning of the line'
+    locator = r'^( +)((?:-+|=+)|(?:#{1,6}(?!#).*))$'
+    gid = 1
+
+    def test(self, text, s, e):
+        return {s: '%d spaces found' % (e - s)}
+
+
+class md024(mddef):
+    flag = re.M
+    desc = 'Multiple headers with the same content'
+    locator = r'^((?:-+|=+)|(?:#{1,6}(?!#).*))$'
+    gid = 1
+
+    ratx = r'(#{1,6}(?!#)) *(.*)'
+    ratxc = r'(#{1,6}(?!#)) *(.*)((?<!#)\1)'
+
+    def __init__(self, settings, view):
+        super(md024, self).__init__(settings, view)
+        self.storage = []
+
+    def test(self, text, s, e):
+        ret = {}
+        title = text[s:e]
+        if re.match(r'-+|=+', title):
+            st = text.rfind('\n', end=s - 1)
+            title = text[st + 1, s - 1]
+        else:
+            mr = re.match(self.ratxc, title)
+            if mr:
+                title = mr.group(2)
+            else:
+                mr = re.match(self.ratx, title)
+                title = mr.group(2)
+        print(repr(title))
+        if title in self.storage:
+            ret[s] = '%s duplicated' % repr(title)
+        else:
+            self.storage.append(title)
+        return ret
+
+
 class LintCommand(sublime_plugin.TextCommand):
 
     blockdef = []
+    scope_block = 'markup.raw.block.markdown'
 
     def run(self, edit):
+        mddef = globals()['mddef']
         text = self.view.substr(sublime.Region(0, self.view.size()))
         st = self.view.settings().get('lint', {})
         uselist = []
@@ -427,7 +540,7 @@ class LintCommand(sublime_plugin.TextCommand):
         ret = True
         for mr in it:
             # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
-            if 'markup.raw.block.markdown' in self.view.scope_name(mr.start(0)):
+            if self.scope_block in self.view.scope_name(mr.start(0)):
                 if tar.__class__ not in self.blockdef:
                     continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
