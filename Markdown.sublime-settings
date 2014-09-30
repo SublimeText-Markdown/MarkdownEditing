@@ -82,5 +82,12 @@
 		"md007": 0,
 		// Maximum line length, Set to 0 to use Sublime wrap_width instead
 		"md013": 0,
+		// Disallowed trailing punctuation in headers
+		"md026": ".,;:!",
+		// Options:
+		// 		one,		'1.' only
+		// 		ordered,	ascending number
+		// 		any,		consistent within one list
+		"md029": "any"
 	}
 }

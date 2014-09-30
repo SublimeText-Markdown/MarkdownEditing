@@ -105,7 +105,7 @@ class md004(mddef):
 
     def test(self, text, s, e):
         if self.lastpos > s:
-            return []
+            return {}
         self.lastpos = e
 
         ret = {}
@@ -484,8 +484,8 @@ class md024(mddef):
     locator = r'^((?:-+|=+)|(?:#{1,6}(?!#).*))$'
     gid = 1
 
-    ratx = r'(#{1,6}(?!#)) *(.*)'
-    ratxc = r'(#{1,6}(?!#)) *(.*)((?<!#)\1)'
+    ratx = r'(#{1,6}(?!#)) *(.*?) *$'
+    ratxc = r'(#{1,6}(?!#)) *(.*?) *((?<!#)\1)$'
 
     def __init__(self, settings, view):
         super(md024, self).__init__(settings, view)
@@ -495,8 +495,8 @@ class md024(mddef):
         ret = {}
         title = text[s:e]
         if re.match(r'-+|=+', title):
-            st = text.rfind('\n', end=s - 1)
-            title = text[st + 1, s - 1]
+            st = text.rfind('\n', 0, s - 1)
+            title = text[st + 1: s - 1]
         else:
             mr = re.match(self.ratxc, title)
             if mr:
@@ -504,11 +504,127 @@ class md024(mddef):
             else:
                 mr = re.match(self.ratx, title)
                 title = mr.group(2)
-        print(repr(title))
         if title in self.storage:
             ret[s] = '%s duplicated' % repr(title)
         else:
             self.storage.append(title)
+        return ret
+
+
+class md025(mddef):
+    flag = re.M
+    desc = 'Multiple top level headers in the same document'
+    locator = r'^(={3,}|#(?!#).*)$'
+    count = 0
+
+    def test(self, text, s, e):
+        ret = {}
+        self.count += 1
+        if self.count > 1:
+            ret[s] = '%d found' % self.count
+        return ret
+
+
+class md026(mddef):
+    flag = re.M
+    desc = 'Trailing punctuation in header'
+    locator = r'^((?:-+|=+)|(?:#{1,6}(?!#).*))$'
+    gid = 1
+
+    ratx = r'(#{1,6}(?!#)) *(.*?) *$'
+    ratxc = r'(#{1,6}(?!#)) *(.*?) *((?<!#)\1)$'
+
+    def test(self, text, s, e):
+        ret = {}
+        title = text[s:e]
+        if re.match(r'-+|=+', title):
+            st = text.rfind('\n', 0, s - 1)
+            title = text[st + 1: s - 1]
+        else:
+            mr = re.match(self.ratxc, title)
+            if mr:
+                title = mr.group(2)
+            else:
+                mr = re.match(self.ratx, title)
+                title = mr.group(2)
+        if title[-1] in self.settings:
+            ret[s] = '%s found' % repr(title[-1])
+        return ret
+
+
+class md027(mddef):
+    flag = re.M
+    desc = 'Multiple spaces after blockquote symbol'
+    locator = r'^ {0,4}> {2,}'
+
+    def test(self, text, s, e):
+        return {s: 'too many spaces'}
+
+
+class md028(mddef):
+    flag = re.M
+    desc = 'Blank line inside blockquote'
+    locator = r'^ {0,4}>.*$'
+    lastQuoteEnd = None
+
+    def test(self, text, s, e):
+        ret = {}
+        if self.lastQuoteEnd:
+            if re.match(r'(\n *){2,}', text[self.lastQuoteEnd:s]):
+                ret[self.lastQuoteEnd] = 'found one'
+        self.lastQuoteEnd = e
+        return ret
+
+
+class md029(mddef):
+    flag = re.M
+    desc = 'Ordered list item prefix'
+    locator = r'^ {0,3}([0-9]+)\.(?=\s)'
+    gid = 1
+    eol = r'^\s*$'
+    lastpos = -1
+
+    def test(self, text, s, e):
+        if self.lastpos > s:
+            return {}
+        self.lastpos = e
+
+        sym = text[s:e]
+        if self.settings == 'any':
+            if sym == '1':
+                style = None
+            else:
+                style = 'ordered'
+        elif self.settings == 'one':
+            style = 'one'
+        elif self.settings == 'ordered':
+            style = 'ordered'
+
+        rest = text[e + 1:]
+        mr = re.search(self.eol, rest, re.M)
+        end = mr.start(0) if mr else len(rest)
+        block = rest[:end]
+        mrs = re.finditer(r'^ {0,3}([0-9]+)\.(?=\s)', block, re.M)
+        lastSym = sym
+        ret = {}
+        for mr in mrs:
+            self.lastpos = e + 1 + mr.end(0)
+            sym = mr.group(1)
+            if style is None:
+                if sym == '1':
+                    style = 'one'
+                else:
+                    style = 'ordered'
+
+            if style == 'one':
+                if sym != '1':
+                    ret[mr.start(
+                        1) + e + 1] = '%s found, \'1\' expected' % repr(sym)
+            else:
+                if int(sym) != int(lastSym) + 1:
+                    ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' %
+                                                (repr(sym), int(lastSym) + 1))
+                lastSym = sym
         return ret
 
 
@@ -526,18 +642,32 @@ class LintCommand(sublime_plugin.TextCommand):
         for cl in mddef.__subclasses__():
             if cl.__name__ not in disablelist:
                 uselist.append(cl)
-        print('================lint start================')
+        # print('================lint start================')
+        result = []
         for mddef in uselist:
-            self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
-                            else None, self.view), text)
-        print('=================lint end=================')
+            r = self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
+                                else None, self.view), text)
+            result.extend(r)
+        # print('=================lint end=================')
+        # print(repr(result))
+        result = sorted(result, key=lambda t: t[0])
+        # print(repr(result))
+        outputtxt = ''
+        for t in result:
+            (row, col) = self.view.rowcol(t[0])
+            outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
+        window = sublime.active_window()
+        output = window.create_output_panel("mde")
+        output.run_command('erase_view')
+        output.run_command('append', {'characters': outputtxt})
+        window.run_command("show_panel", {"panel": "output.mde"})
 
     def test(self, tar, text):
         loc = tar.locator
-        print(tar)
+        # print(tar)
         # print(repr(loc))
         it = re.finditer(loc, text, tar.flag)
-        ret = True
+        ret = []
         for mr in it:
             # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
             if self.scope_block in self.view.scope_name(mr.start(0)):
@@ -545,9 +675,9 @@ class LintCommand(sublime_plugin.TextCommand):
                     continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
             for p in ans:
-                ret = False
-                (row, col) = self.view.rowcol(p)
-                print('line %d: %s, %s' % (row + 1, tar, ans[p]))
+                ret.append((p, str(tar), ans[p]))
+                # (row, col) = self.view.rowcol(p)
+                # print('line %d: %s, %s' % (row + 1, tar, ans[p]))
 
             # if not ans:
             #     ret = False
