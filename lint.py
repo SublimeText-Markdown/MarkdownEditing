@@ -428,7 +428,7 @@ class md019(mddef):
 class md020(mddef):
     flag = re.M
     desc = 'No space inside hashes on closed atx style header'
-    locator = r'(#{1,6}(?!#))(.*)((?<!#)\1)'
+    locator = r'^(#{1,6}(?!#))(.*)((?<!#)\1)$'
     gid = 2
 
     def test(self, text, s, e):
@@ -642,25 +642,23 @@ class LintCommand(sublime_plugin.TextCommand):
         for cl in mddef.__subclasses__():
             if cl.__name__ not in disablelist:
                 uselist.append(cl)
-        # print('================lint start================')
         result = []
         for mddef in uselist:
             r = self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
                                 else None, self.view), text)
             result.extend(r)
-        # print('=================lint end=================')
-        # print(repr(result))
-        result = sorted(result, key=lambda t: t[0])
-        # print(repr(result))
-        outputtxt = ''
-        for t in result:
-            (row, col) = self.view.rowcol(t[0])
-            outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
-        window = sublime.active_window()
-        output = window.create_output_panel("mde")
-        output.run_command('erase_view')
-        output.run_command('append', {'characters': outputtxt})
-        window.run_command("show_panel", {"panel": "output.mde"})
+        sublime.status_message('MarkdownLint: %d error(s) found'%len(result)) 
+        if len(result)>0:
+            result = sorted(result, key=lambda t: t[0])
+            outputtxt = ''
+            for t in result:
+                (row, col) = self.view.rowcol(t[0])
+                outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
+            window = sublime.active_window()
+            output = window.create_output_panel("mde")
+            output.run_command('erase_view')
+            output.run_command('append', {'characters': outputtxt})
+            window.run_command("show_panel", {"panel": "output.mde"})
 
     def test(self, tar, text):
         loc = tar.locator
