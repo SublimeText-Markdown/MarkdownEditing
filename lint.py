@@ -60,8 +60,8 @@ class md003(mddef):
     locator = r'^((?:-+|=+)|(?:#{1,6}(?!#).*))$'
     gid = 1
 
-    ratx = r'(#{1,6}(?!#)).*'
-    ratxc = r'(#{1,6}(?!#)).*((?<!#)\1)'
+    ratx = r'^(#{1,6}(?!#)).*$'
+    ratxc = r'^(#{1,6}(?!#)).*?(#+)$'
     rsetext = r'[\-\=]+'
 
     def test(self, text, s, e):
@@ -428,7 +428,7 @@ class md019(mddef):
 class md020(mddef):
     flag = re.M
     desc = 'No space inside hashes on closed atx style header'
-    locator = r'^(#{1,6}(?!#))(.*)((?<!#)\1)$'
+    locator = r'^(#{1,6}(?!#))(.*?)(#+)$'
     gid = 2
 
     def test(self, text, s, e):
@@ -443,7 +443,7 @@ class md020(mddef):
 class md021(mddef):
     flag = re.M
     desc = 'Multiple spaces inside hashes on closed atx style header'
-    locator = r'(#{1,6}(?!#))(.*)((?<!#)\1)'
+    locator = r'(#{1,6}(?!#))(.*?)(#+)'
     gid = 2
 
     def test(self, text, s, e):
@@ -489,7 +489,7 @@ class md024(mddef):
     gid = 1
 
     ratx = r'(#{1,6}(?!#)) *(.*?) *$'
-    ratxc = r'(#{1,6}(?!#)) *(.*?) *((?<!#)\1)$'
+    ratxc = r'(#{1,6}(?!#)) *(.*?) *(#+)$'
 
     def __init__(self, settings, view):
         super(md024, self).__init__(settings, view)
@@ -536,7 +536,7 @@ class md026(mddef):
     gid = 1
 
     ratx = r'(#{1,6}(?!#)) *(.*?) *$'
-    ratxc = r'(#{1,6}(?!#)) *(.*?) *((?<!#)\1)$'
+    ratxc = r'(#{1,6}(?!#)) *(.*?) *?(#+)$'
 
     def test(self, text, s, e):
         ret = {}
