@@ -56,7 +56,7 @@
 		//		atx_closed, ## title ##	only
 		//		setext, 	title		only
 		//				   	=====
-		//		any, 		only one style, don't care which
+		//		any, 		consistent within the document
 		"md003": "any",
 		// Options:
 		//	    asterisk,	* only
