@@ -1,74 +1,150 @@
 [
     {
         "caption": "Preferences",
-        "mnemonic": "n",
-        "id": "preferences",
-        "children":
-        [
+        "children": [
             {
                 "caption": "Package Settings",
-                "mnemonic": "P",
-                "id": "package-settings",
-                "children":
-                [
+                "children": [
                     {
                         "caption": "Markdown Editing",
-                        "children":
-                        [
+                        "children": [
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/README.md"},
-                                "caption": "README"
-                            },
-                            { "caption": "-" },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences"},
-                                "caption": "Bold and Italic Settings – Default"
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/README.md"
+                                },
+                                "caption": "README",
+                                "command": "open_file"
                             },
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/Bold and Italic Markers.tmPreferences"},
-                                "caption": "Bold and Italic Settings – User"
-                            },
-                            { "caption": "-" },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/Markdown.sublime-settings"},
-                                "caption": "Markdown GFM Settings – Default"
+                                "caption": "-"
                             },
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/Markdown.sublime-settings"},
-                                "caption": "Markdown GFM Settings – User"
-                            },
-                            { "caption": "-" },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings"},
-                                "caption": "Markdown (Standard) Settings – Default"
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences"
+                                },
+                                "caption": "Bold and Italic Settings \u2013 Default",
+                                "command": "open_file"
                             },
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/Markdown (Standard).sublime-settings"},
-                                "caption": "Markdown (Standard) Settings – User"
-                            },
-                            { "caption": "-" },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings"},
-                                "caption": "MultiMarkdown Settings – Default"
+                                "args": {
+                                    "file": "${packages}/User/Bold and Italic Markers.tmPreferences"
+                                },
+                                "caption": "Bold and Italic Settings \u2013 User",
+                                "command": "open_file"
                             },
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/MultiMarkdown.sublime-settings"},
-                                "caption": "MultiMarkdown Settings – User"
+                                "caption": "-"
                             },
-                            { "caption": "-" }
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
+                                },
+                                "caption": "Markdown GFM Settings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/Markdown.sublime-settings"
+                                },
+                                "caption": "Markdown GFM Settings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings"
+                                },
+                                "caption": "Markdown (Standard) Settings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/Markdown (Standard).sublime-settings"
+                                },
+                                "caption": "Markdown (Standard) Settings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings"
+                                },
+                                "caption": "MultiMarkdown Settings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/MultiMarkdown.sublime-settings"
+                                },
+                                "caption": "MultiMarkdown Settings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Default (Windows).sublime-keymap",
+                                    "platform": "Windows"
+                                },
+                                "caption": "Key Bindings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Default (OSX).sublime-keymap",
+                                    "platform": "OSX"
+                                },
+                                "caption": "Key Bindings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/MarkdownEditing/Default (Linux).sublime-keymap",
+                                    "platform": "Linux"
+                                },
+                                "caption": "Key Bindings \u2013 Default",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/Default (Windows).sublime-keymap",
+                                    "platform": "Windows"
+                                },
+                                "caption": "Key Bindings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/Default (OSX).sublime-keymap",
+                                    "platform": "OSX"
+                                },
+                                "caption": "Key Bindings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/User/Default (Linux).sublime-keymap",
+                                    "platform": "Linux"
+                                },
+                                "caption": "Key Bindings \u2013 User",
+                                "command": "open_file"
+                            },
+                            {
+                                "caption": "-"
+                            }
                         ]
                     }
-                ]
+                ],
+                "id": "package-settings",
+                "mnemonic": "P"
             }
-        ]
+        ],
+        "id": "preferences",
+        "mnemonic": "n"
     }
 ]
