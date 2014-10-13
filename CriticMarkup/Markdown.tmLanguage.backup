@@ -24,7 +24,7 @@
 	<key>keyEquivalent</key>
 	<string>^~M</string>
 	<key>name</key>
-	<string>Markdown GFM</string>
+	<string>Markdown GFM with CriticMarkup</string>
 	<key>patterns</key>
 	<array>
 		<dict>
