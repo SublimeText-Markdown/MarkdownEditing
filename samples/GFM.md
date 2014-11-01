@@ -14,9 +14,19 @@ This is *italic* and this is **bold**.  Another _italic_ and another __bold__.
 
 This is an [example inline link](http://example.com/) and [another one with a title](http://example.com/ "Hello, world"). And [another][someref] one.
 
+## GFM Features
+
+This ~~word~~ is deleted.
+
 ## Code
 
 This is inline code: `some code here`.
+
+This is inline code: ```this
+will be
+rendered
+in
+one line```
 
     <script>
         document.location = 'http://example.com/?q=markdown+cheat+sheet';

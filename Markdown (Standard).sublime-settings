@@ -8,20 +8,20 @@
 	// be more mature focus improvements in the future (maybe similar to iA Writer).
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme",
 
-	"tab_size": 4,
-	"translate_tabs_to_spaces": true,
-	"trim_trailing_white_space_on_save": false,
-	"auto_match_enabled": true,
+	// "tab_size": 4,
+	// "translate_tabs_to_spaces": true,
+	// "trim_trailing_white_space_on_save": false,
+	// "auto_match_enabled": true,
 
 	// Layout
 	"draw_centered": true,
-	"word_wrap": true,
-	"wrap_width": 80,
-	"rulers": [],
+	// "word_wrap": true,
+	// "wrap_width": 80,
+	// "rulers": [],
 
 	// Line
-	"line_numbers": false,
-	"highlight_line": false,
+	// "line_numbers": false,
+	// "highlight_line": false,
 	"line_padding_top": 2,
 	"line_padding_bottom": 2,
 
@@ -46,5 +46,37 @@
 	// FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
 	"mde.distraction_free_mode": {
 		"mde.keep_centered": true
+	},
+
+	"lint":{
+		// disabled rules, e.g. "md001".
+		"disable": ["md013"],
+		// Options:
+		//		atx, 		## title	only
+		//		atx_closed, ## title ##	only
+		//		setext, 	title		only
+		//				   	=====
+		//		any, 		consistent within the document
+		"md003": "any",
+		// Options:
+		//	    asterisk,	* only
+		//      plus, 		+ only
+		//      dash, 		- only
+		//      cyclic, 	different symbols on different levels
+		//      			and same symbol on same level
+		//      single, 	same symbol on different levels
+		//      any, 		same symbol on same level
+		"md004": "cyclic",
+		// Number of spaces per list indent. Set to 0 to use Sublime tab_size instead
+		"md007": 0,
+		// Maximum line length, Set to 0 to use Sublime wrap_width instead
+		"md013": 0,
+		// Disallowed trailing punctuation in headers
+		"md026": ".,;:!",
+		// Options:
+		// 		one,		'1.' only
+		// 		ordered,	ascending number
+		// 		any,		consistent within one list
+		"md029": "any"
 	}
 }

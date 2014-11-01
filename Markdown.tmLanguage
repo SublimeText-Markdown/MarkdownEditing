@@ -277,6 +277,37 @@
 					<string>#inline</string>
 				</dict>
 				<dict>
+					<key>begin</key>
+				    <string>(`{3,})(?!`)</string>
+					<key>end</key>
+				    <string>(?:^.+(?&lt;!`)(\1))|(?:^(?:\s*$|(?=[ ]{,3}&gt;)|(?=~~~))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+					<key>comment</key>
+					<string>
+						End of backticks block or end of paragraph.
+						In GFM, if the number of backticks are greater or equal than 3,
+						then the ending backticks must not be at the beginnning
+						of a newline. So this pattern:
+							text1```
+							text2
+							```
+						is not allowed.
+					</string>
+				    <key>name</key>
+				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+				    <string>(`{1,2})(?!`)</string>
+					<key>end</key>
+				    <string>((?&lt;!`)\1)|(?:^(?:\s*$|(?=[ ]{,3}&gt;)|(?=~~~))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+					<key>comment</key>
+					<string>
+						End of backticks block or end of paragraph.
+					</string>
+				    <key>name</key>
+				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
+				</dict>
+				<dict>
 					<key>include</key>
 					<string>text.html.basic</string>
 				</dict>
@@ -610,7 +641,11 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1)</string>
+			<string>(?:(?&lt;=\S)(\1)(?!\S))|(?:^(?:\s*$|(?=[ ]{,3}&gt;)|(?=```))|(?=[ \t]*\n)(?&lt;=^===|^====|=====|^---|^----|-----)[ \t]*\n|(?=^#))</string>
+			<key>comment</key>
+			<string>
+				End of backticks block or end of paragraph.
+			</string>
 			<key>name</key>
 			<string>markup.strikethrough.markdown</string>
 			<key>patterns</key>
@@ -887,6 +922,10 @@
 				<dict>
 					<key>include</key>
 					<string>#bracket</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-undefined-inline</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1345,6 +1384,8 @@
 				</dict>
 			</array>
 		</dict>
+
+
 		<key>raw</key>
 		<dict>
 			<key>captures</key>
@@ -1366,7 +1407,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(`+)((?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+)(\1)</string>
+			<string>(`{1,2})((?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+)(\1)</string>
 			<key>name</key>
 			<string>markup.raw.inline.markdown</string>
 		</dict>
@@ -1732,11 +1773,18 @@
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*(`{3,}|~{3,}))(.*?)\s*$</string>
+		    <string>^(\s*(`{3,}|~{3,}))\s*([^\s]*?)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		</dict>
+		<key>fenced-undefined-inline</key>
+		<dict>
+			<key>match</key>
+			<string>(`{3,})(.*)\1</string>
+			<key>name</key>
+			<string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		</dict>
 		<key>fenced-code-blocks</key>
 		<dict>
