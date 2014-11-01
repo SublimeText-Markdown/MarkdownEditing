@@ -282,7 +282,7 @@
 				    	</dict>
 				    </array>
 				    <key>name</key>
-				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
+				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -290,7 +290,7 @@
 					<key>end</key>
 				    <string>(\n?(?&lt;!`)\1)</string>
 				    <key>name</key>
-				    <string>markup.raw.inline.markdown markup.raw.inline.content.markdown</string>
+				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 				</dict>
 				<dict>
 					<key>include</key>
