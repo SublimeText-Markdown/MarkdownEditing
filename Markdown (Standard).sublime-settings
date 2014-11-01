@@ -8,20 +8,20 @@
 	// be more mature focus improvements in the future (maybe similar to iA Writer).
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme",
 
-	// "tab_size": 4,
-	// "translate_tabs_to_spaces": true,
-	// "trim_trailing_white_space_on_save": false,
-	// "auto_match_enabled": true,
+	"tab_size": 4,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": false,
+	"auto_match_enabled": true,
 
 	// Layout
 	"draw_centered": true,
-	// "word_wrap": true,
-	// "wrap_width": 80,
-	// "rulers": [],
+	"word_wrap": true,
+	"wrap_width": 80,
+	"rulers": [],
 
 	// Line
-	// "line_numbers": false,
-	// "highlight_line": false,
+	"line_numbers": false,
+	"highlight_line": false,
 	"line_padding_top": 2,
 	"line_padding_bottom": 2,
 
