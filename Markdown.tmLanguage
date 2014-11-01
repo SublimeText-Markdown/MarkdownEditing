@@ -268,31 +268,6 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-				    <string>(`{3,})[^`\n]*$</string>
-					<key>end</key>
-				    <string>^.+(?&lt;!`)(\1)</string>
-				    <key>patterns</key>
-				    <array>
-				    	<dict>
-				    		<key>match</key>
-				    		<string>\n[^`\n]+</string>
-						    <key>name</key>
-						    <string>markup.content</string>
-				    	</dict>
-				    </array>
-				    <key>name</key>
-				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-				    <string>(`{1,2})[^`\n]*$</string>
-					<key>end</key>
-				    <string>(\n?(?&lt;!`)\1)</string>
-				    <key>name</key>
-				    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
-				</dict>
-				<dict>
 					<key>include</key>
 					<string>#inline</string>
 				</dict>
@@ -914,10 +889,6 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#fenced-undefined-inline</string>
-				</dict>
-				<dict>
-					<key>include</key>
 					<string>#raw</string>
 				</dict>
 				<dict>
@@ -1373,8 +1344,6 @@
 				</dict>
 			</array>
 		</dict>
-
-
 		<key>raw</key>
 		<dict>
 			<key>captures</key>
@@ -1396,7 +1365,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(`{1,2})((?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+)(\1)</string>
+			<string>(`+)((?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+)(\1)</string>
 			<key>name</key>
 			<string>markup.raw.inline.markdown</string>
 		</dict>
@@ -1762,18 +1731,11 @@
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*(`{3,}|~{3,}))\s*([^\s]*?)\s*$</string>
+		    <string>^(\s*(`{3,}|~{3,}))(.*?)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
 		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
-		</dict>
-		<key>fenced-undefined-inline</key>
-		<dict>
-			<key>match</key>
-			<string>(`{3,})(.*)\1</string>
-			<key>name</key>
-			<string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
 		</dict>
 		<key>fenced-code-blocks</key>
 		<dict>
