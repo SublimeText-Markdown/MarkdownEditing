@@ -22,11 +22,10 @@ This ~~word~~ is deleted.
 
 This is inline code: `some code here`.
 
-This is inline code: ```this
-will be
-rendered
-in
-one line```
+This is inline code: ``some
+long
+code
+here``
 
     <script>
         document.location = 'http://example.com/?q=markdown+cheat+sheet';
