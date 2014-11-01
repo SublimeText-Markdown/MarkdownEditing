@@ -99,15 +99,10 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^[ ]{0,3}([0-9]+)(\.)(?=\s)</string>
+			<string>^[ ]{0,3}([0-9]+\.)(?=\s)</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.list_item.markdown punctuation.definition.list_item.number.markdown</string>
-				</dict>
-				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.list_item.markdown</string>
@@ -1368,7 +1363,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.list_item</string>
+									<string>punctuation.definition.list_item.markdown</string>
 								</dict>
 							</dict>
 						</dict>
