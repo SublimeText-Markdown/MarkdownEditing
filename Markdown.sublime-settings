@@ -53,7 +53,7 @@
 	// Allways keep current line vertically centered.
 	"mde.keep_centered": false,
 
-	// Distraction free mode improvements. In order these to work, you have to install
+	// Distraction free mode improvements. In order for these to work, you have to install
 	// FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
 	"mde.distraction_free_mode": {
 		"mde.keep_centered": true
