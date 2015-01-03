@@ -50,7 +50,7 @@
 	// List bullets to be used for automatically switching. In their order.
 	"mde.list_indent_bullets": ["*", "-", "+"],
 
-	// Allways keep current line vertically centered.
+	// Always keep current line vertically centered.
 	"mde.keep_centered": false,
 
 	// Distraction free mode improvements. In order for these to work, you have to install
