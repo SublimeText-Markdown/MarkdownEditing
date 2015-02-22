@@ -1,3 +1,4 @@
+import re
 import sublime_plugin
 
 
@@ -6,7 +7,7 @@ class GatherMissingLinkMarkersCommand(sublime_plugin.TextCommand):
         markers = []
         self.view.find_all("\]\[([^\]]+)\]", 0, "$1", markers)
         self.view.find_all("\[([^\]]*)\]\[\]", 0, "$1", markers)
-        missinglinks = [link for link in set(markers) if not self.view.find_all("\n\s*\[%s\]:" % link)]
+        missinglinks = [link for link in set(markers) if not self.view.find_all("\n\s*\[%s\]:" % re.escape(link))]
         if len(missinglinks):
             # Remove all whitespace at the end of the file
             whitespace_at_end = self.view.find(r'\s*\z', 0)
