@@ -1724,6 +1724,22 @@
 		        </dict>
 		    </array>
 		</dict>
+		<key>fenced-lua</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(lua)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.lua</string>
+		        </dict>
+		    </array>
+		</dict>
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
@@ -1824,6 +1840,10 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-lisp</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-lua</string>
 				</dict>
 				<dict>
 					<key>include</key>
