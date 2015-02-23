@@ -56,7 +56,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd> | Performs lint on current Markdown file
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd> | Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md).
 
 ## GFM Specific Features
 
@@ -102,7 +102,7 @@ If you are using Sublime Text 2, you have to disable the native package _manuall
 
     "ignored_packages": [..., "Markdown"],
 
-### [Package Control][wbond]
+### Package Control
 
 The preferred method of installation is via [Sublime Package Control][wbond].
 
