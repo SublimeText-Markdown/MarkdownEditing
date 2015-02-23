@@ -172,7 +172,7 @@ Note: this rule can be triggered inside code/quote block.
 
 ## MD010 - Hard tabs
 
-This rule is triggered any any lines that contain hard tab characters instead
+This rule is triggered on any lines that contain hard tab characters instead
 of using spaces for indentation. To fix this, replace any hard tab characters
 with spaces instead.
 
