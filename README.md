@@ -6,10 +6,6 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 [Dark][github 2] and [yellow][github 3] theme available.
 
-> Your kind donations will help [me](https://github.com/maliayas) pause my daily job and put more serious effort into the development of this plugin for the next 2 milestones ([2.0.5](https://github.com/SublimeText-Markdown/MarkdownEditing/issues?milestone=1&state=open) and [2.2.0](https://github.com/SublimeText-Markdown/MarkdownEditing/issues?milestone=2&state=open)). When they are completed, donation button will be removed. Thanks.
-> 
-> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=Ali%20Ayas&amp;item_number=Open%20Source&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="[paypal]" /></a>
-
 ## Overview
 
 * [Features](#features)
@@ -23,6 +19,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * [Known Bugs](#known-bugs)
 * [Contributing](#contributing)
 * [Credits](#credits)
+* [Donation](#donation)
 * [License](#license)
 
 ## Features
@@ -181,6 +178,12 @@ Related blog posts from Brett:
 This plugin contains portions of code from [Knockdown][].
 
 Footnote commands were submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown].
+
+## Donation
+
+You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownEditing/graphs/contributors) of this project individually. Every contributor is welcomed to add his/her line below with any content. Ordering shall be alphabetically by GitHub username.
+
+* [@maliayas](https://github.com/maliayas): <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
 
 ## License
 
