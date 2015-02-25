@@ -99,15 +99,10 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^[ ]{0,3}([0-9]+)(\.)(?=\s)</string>
+			<string>^[ ]{0,3}([0-9]+\.)(?=\s)</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.list_item.markdown punctuation.definition.list_item.number.markdown</string>
-				</dict>
-				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.list_item.markdown</string>
@@ -610,7 +605,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1)</string>
+			<string>(?&lt;=\S)(\1)(?!\w)</string>
 			<key>name</key>
 			<string>markup.strikethrough.markdown</string>
 			<key>patterns</key>
@@ -1329,7 +1324,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.list_item</string>
+									<string>punctuation.definition.list_item.markdown</string>
 								</dict>
 							</dict>
 						</dict>
@@ -1380,7 +1375,7 @@
 		<key>fenced-html</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(html|html5)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(html|html5)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1396,7 +1391,7 @@
 		<key>fenced-xml</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(xml)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(xml)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1412,7 +1407,7 @@
 		<key>fenced-diff</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(diff|patch)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(diff|patch)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1428,7 +1423,7 @@
 		<key>fenced-perl</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(perl)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(perl)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1444,7 +1439,7 @@
 		<key>fenced-php</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(php)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(php)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1460,7 +1455,7 @@
 		<key>fenced-css</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(css)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(css)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1476,7 +1471,7 @@
 		<key>fenced-less</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(less)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(less)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1492,7 +1487,7 @@
 		<key>fenced-java</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(java)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(java)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1508,7 +1503,7 @@
 		<key>fenced-c</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(c)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(c)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1524,7 +1519,7 @@
 		<key>fenced-c++</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(c\+\+|cpp)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(c\+\+|cpp)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1540,7 +1535,7 @@
 		<key>fenced-c#</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(c(?:s|sharp|#))\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(c(?:s|sharp|#))\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1556,7 +1551,7 @@
 		<key>fenced-yaml</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(yaml)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(yaml)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1572,7 +1567,7 @@
 		<key>fenced-sql</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(sql)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(sql)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1588,7 +1583,7 @@
 		<key>fenced-shell</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(sh|shell)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(sh|shell|bash)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1604,7 +1599,7 @@
 		<key>fenced-sass</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(sass|scss)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(sass|scss)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1620,7 +1615,7 @@
 		<key>fenced-scala</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(scala)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(scala)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1636,7 +1631,7 @@
 		<key>fenced-obj-c</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(objective-c)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(objective-c)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1652,7 +1647,7 @@
 		<key>fenced-coffee</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(coffee)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(coffee)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1668,7 +1663,7 @@
 		<key>fenced-js</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(js|json|javascript)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(js|json|javascript)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1684,7 +1679,7 @@
 		<key>fenced-ruby</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(ruby)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(ruby)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1700,7 +1695,7 @@
 		<key>fenced-python</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})(py|python)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(py|python)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1716,7 +1711,7 @@
 		<key>fenced-lisp</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})lisp\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(lisp)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1729,10 +1724,26 @@
 		        </dict>
 		    </array>
 		</dict>
+		<key>fenced-lua</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(lua)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.lua</string>
+		        </dict>
+		    </array>
+		</dict>
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*(`{3,}|~{3,}))(.*?)\s*$</string>
+		    <string>^(\s*(`{3,}|~{3,}))\s*[\w\-+#]*\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1829,6 +1840,10 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-lisp</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-lua</string>
 				</dict>
 				<dict>
 					<key>include</key>

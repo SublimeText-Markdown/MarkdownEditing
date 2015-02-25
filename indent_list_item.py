@@ -17,6 +17,10 @@ class IndentListItemCommand(sublime_plugin.TextCommand):
 
                 for key, bullet in enumerate(bullets):
                     if bullet in new_line:
+                        if reverse and new_line.startswith(bullet) and key is 0:
+                            # In this case, do not switch bullets
+                            continue
+
                         new_line = new_line.replace(bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)])
                         break
 
