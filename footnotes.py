@@ -29,7 +29,7 @@ def get_footnote_definition_markers(view):
 
 
 def get_footnote_identifiers(view):
-    ids = get_footnote_references(view).keys()
+    ids = list(get_footnote_references(view).keys())
     ids.sort()
     return ids
 
@@ -79,7 +79,6 @@ class MarkFootnotes(sublime_plugin.EventListener):
 
 class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        edit = self.view.begin_edit()
         refs = get_footnote_identifiers(self.view)
         defs = get_footnote_definition_markers(self.view)
         missingnotes = [note_token for note_token in refs if not note_token in defs]
@@ -87,7 +86,6 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
             self.view.insert(edit, self.view.size(), "\n")
             for note in missingnotes:
                 self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
-        self.view.end_edit(edit)
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
@@ -95,7 +93,6 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
 
 class InsertFootnoteCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        edit = self.view.begin_edit()
         startloc = self.view.sel()[-1].end()
         markernum = get_next_footnote_marker(self.view)
         if bool(self.view.size()):
@@ -107,7 +104,6 @@ class InsertFootnoteCommand(sublime_plugin.TextCommand):
         self.view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
         if self.view.settings().get('command_mode'):
             self.view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
-        self.view.end_edit(edit)
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
@@ -180,7 +176,6 @@ class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
 
 class SortFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        edit = self.view.begin_edit()
         strip_trailing_whitespace(self.view, edit)
         self.view.end_edit(edit)
         edit = self.view.begin_edit()
@@ -199,12 +194,9 @@ class SortFootnotesCommand(sublime_plugin.TextCommand):
         erase.sort()
         erase.reverse()
         [self.view.erase(edit, reg) for reg in erase]
-        self.view.end_edit(edit)
 
-        edit = self.view.begin_edit()
         for key in keys:
             self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])
-        self.view.end_edit(edit)
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
