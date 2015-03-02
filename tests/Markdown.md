@@ -44,6 +44,10 @@ __bold__
 
 **bold\***
 
+___bold_and_italic___
+
+***bold_and_italic***
+
 `raw more`
 
 ``dobule ` raw``
