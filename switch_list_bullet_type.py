@@ -8,7 +8,6 @@ class SwitchListBulletTypeCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             lines = self.view.line(region)
             lines = self.view.split_by_newlines(lines)
-            print(lines)
             for line in lines:
                 line_content = self.view.substr(line)
                 print(line_content)
