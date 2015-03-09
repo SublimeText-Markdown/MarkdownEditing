@@ -396,6 +396,130 @@
 			<key>name</key>
 			<string>markup.raw.block.markdown</string>
 		</dict>
+		<key>bold_italic</key>
+		<dict>
+			<key>begin</key>
+			<string>(?x)
+						(\*|_)(?=\1\1)(\1\1)(?=\S)								# Open
+						(?=
+							(
+							    &lt;[^&gt;]*+&gt;							# HTML tags
+							  | (?&lt;raw&gt;`+)([^`]|(?!(?&lt;!`)\k&lt;raw&gt;(?!`))`)*+\k&lt;raw&gt;
+																	# Raw
+							  | \\[\\`*_{}\[\]()#.!+\-&gt;]?+			# Escapes
+							  | \[
+								(
+								        (?&lt;square&gt;					# Named group
+											[^\[\]\\]				# Match most chars
+								          | \\.						# Escaped chars
+								          | \[ \g&lt;square&gt;*+ \]		# Nested brackets
+								        )*+
+									\]
+									(
+										(							# Reference Link
+											[ ]?					# Optional space
+											\[[^\]]*+\]				# Ref name
+										)
+									  | (							# Inline Link
+											\(						# Opening paren
+												[ \t]*+				# Optional whtiespace
+												&lt;?(.*?)&gt;?			# URL
+												[ \t]*+				# Optional whtiespace
+												(					# Optional Title
+													(?&lt;title&gt;['"])
+													(.*?)
+													\k&lt;title&gt;
+												)?
+											\)
+										)
+									)
+								)
+							  | (?!(?&lt;=\S)\1{3}(?!\1)).						# Everything besides
+																	# style closer
+							)++
+							(?&lt;=\S)\1{3}(?!\1)								# Close
+						)
+					</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.bold.markdown</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.bold.markdown</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(?&lt;=\S)(\1{3})(?!\1)</string>
+			<key>name</key>
+			<string>markup.bold_italic.markdown</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>applyEndPatternLast</key>
+					<integer>1</integer>
+					<key>begin</key>
+					<string>(?=&lt;[^&gt;]*?&gt;)</string>
+					<key>end</key>
+					<string>(?&lt;=&gt;)</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>text.html.basic</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#escape</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ampersand</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#bracket</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#raw</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#image-inline</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-inline</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-inet</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-email</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#image-ref</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-ref-literal</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-ref</string>
+				</dict>
+			</array>
+		</dict>
 		<key>bold</key>
 		<dict>
 			<key>begin</key>
@@ -484,6 +608,10 @@
 				<dict>
 					<key>include</key>
 					<string>#raw</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#bold_italic</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -725,6 +853,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#bold_italic</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#bold</string>
 				</dict>
 				<dict>
@@ -854,6 +986,10 @@
 				<dict>
 					<key>include</key>
 					<string>#raw</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#bold_italic</string>
 				</dict>
 				<dict>
 					<key>include</key>

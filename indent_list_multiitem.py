@@ -30,9 +30,8 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
                             if reverse and new_line.startswith(bullet) and key is 0:
                                 # In this case, do not switch bullets
                                 continue
-
-                            new_line = new_line.replace(
-                                bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)])
+                            new_bullet = bullets[(key + (1 if not reverse else -1)) % len(bullets)]
+                            new_line = re.sub(re_bullet, new_bullet, new_line, 1)
                             break
 
                 # Determine how to indent (tab or spaces)
@@ -45,12 +44,12 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
                 if not reverse:
                     # Do the indentation
                     new_line = re.sub(
-                        bullet_pattern, tab_str + "\\1", new_line)
+                        bullet_pattern, tab_str + "\\1", new_line, 1)
 
                 else:
                     # Do the unindentation
                     new_line = re.sub(
-                        tab_str + bullet_pattern, "\\1", new_line)
+                        tab_str + bullet_pattern, "\\1", new_line, 1)
 
                 # Insert the new item
                 todo.append([line, new_line])

@@ -28,5 +28,9 @@
     {
         "caption": "MarkdownEditing: Markdown Lint",
         "command": "lint"
+    },
+    {
+        "caption": "MarkdownEditing: Switch List Bullet Type",
+        "command": "switch_list_bullet_type"
     }
 ]

@@ -441,7 +441,6 @@
     // run paste as link command on selected text
     { "keys": ["super+alt+v"], "command": "paste_as_link", "context":
         [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },

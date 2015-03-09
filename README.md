@@ -163,6 +163,8 @@ We are maintaining a [tips section][tips] in our [Wiki][]. Jump there to learn f
 
 * Setext-style headers (`===` and `---`) do not show up in the symbol list. This is due to a Sublime Text limitation (see [#158][]). However, we are able to put a placeholder to indicate the existence of the header. We encourage you to use Atx-style headers (`#`).
 
+* Installing for the first time while having markdown files opened may cause MarkdownEditing to behave unexpectedly on those files. Close and reopen those files to fix it.
+
 ## Contributing
 
 See `CONTRIBUTING.md` file.
