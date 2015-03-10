@@ -651,40 +651,30 @@ class LintCommand(sublime_plugin.TextCommand):
             r = self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
                                 else None, self.view), text)
             result.extend(r)
-        sublime.status_message('MarkdownLint: %d error(s) found' % len(result))
+        outputtxt = 'MarkdownLint: %d error(s) found\n' % len(result)
         if len(result) > 0:
             result = sorted(result, key=lambda t: t[0])
-            outputtxt = ''
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
                 outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
             window = sublime.active_window()
             output = window.create_output_panel("mde")
-            output.run_command('erase_view')
-            output.run_command('append', {'characters': outputtxt})
-            window.run_command("show_panel", {"panel": "output.mde"})
+        output.run_command('erase_view')
+        output.run_command('append', {'characters': outputtxt})
+        window.run_command("show_panel", {"panel": "output.mde"})
 
     def test(self, tar, text):
         loc = tar.locator
-        # print(tar)
-        # print(repr(loc))
         it = re.finditer(loc, text, tar.flag)
         ret = []
         for mr in it:
-            # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
             if self.scope_block in self.view.scope_name(mr.start(0)):
                 if tar.__class__ not in self.blockdef:
                     continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
             for p in ans:
                 ret.append((p, str(tar), ans[p]))
-                # (row, col) = self.view.rowcol(p)
-                # print('line %d: %s, %s' % (row + 1, tar, ans[p]))
 
-            # if not ans:
-            #     ret = False
-            #     (row, col) = self.view.rowcol(mr.start(tar.gid))
-            #     print('line %d: %s ' % (row + 1, tar))
             if tar.finish:
                 break
 
