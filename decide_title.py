@@ -22,5 +22,5 @@ class DecideTitle(sublime_plugin.EventListener):
                     title = text[title_begin: title_end]
                 break
 
-            if len(view.name()) == 0 and len(title) > 0:
+            if view.file_name() is None and len(title) > 0:
                 view.set_name(title)
