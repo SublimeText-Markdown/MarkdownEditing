@@ -39,7 +39,7 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = 'First header should be a h1 header'
-    locator = r'^(?:#{1,6}(?!#))|(?:-+|=+)'
+    locator = r'^(?:#{1,6}(?!#))|(?:(?:-+|=+)$)'
 
     def test(self, text, s, e):
         ret = {}
@@ -116,7 +116,7 @@ class md004(mddef):
         if ans is None:
             (ans, exp) = self.testcyc(sym, -1)
             if ans is False:
-                ret[e] = '%s expected, %s found' % (exp, sym)
+                ret[e] = 'on level %d, %s expected, %s found' % (1, exp, sym)
         elif ans is False:
             ret[e] = '%s expected, %s found' % (exp, sym)
 
@@ -127,11 +127,11 @@ class md004(mddef):
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
+        mrs = re.finditer(r'^([ \t]*)([*\-+])\s+', block, re.M)
         for mr in mrs:
-            # print('====')
+            # print('----')
             # print(mr.group(2))
-            # print('====')
+            # print('----')
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
             (ans, exp) = self.testsingle(sym)
@@ -145,6 +145,7 @@ class md004(mddef):
                 else:
                     while len(lvstack) > 0:
                         n = lvstack.pop()
+                        print("%d<%d?" % (n, nspaces))
                         if n < nspaces:
                             lvstack.append(n)
                             break
@@ -156,7 +157,7 @@ class md004(mddef):
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
                     ret[e + 1 +
-                        mr.start(2)] = '%s expected, %s found' % (exp, sym)
+                        mr.start(2)] = 'on level %d, %s expected, %s found' % (lv + 2, exp, sym)
             else:
                 if not ans:
                     ret[e + 1 +
@@ -183,11 +184,13 @@ class md004(mddef):
             if self.lvs[lv]:
                 return (self.lvs[lv] == sym, self.lvs[lv])
             else:
+                print(self.lvs)
                 if (sym not in self.lvs):
                     self.lvs[lv] = sym
                     return (True, None)
                 else:
-                    return (False, None)
+                    exp = [item for item in ['*', '+', '-'] if item not in self.lvs]
+                    return (False, '/'.join(exp))
         if self.settings == 'any':
             if self.lvs[lv]:
                 return self.lvs[lv] == sym
@@ -657,8 +660,8 @@ class LintCommand(sublime_plugin.TextCommand):
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
                 outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
-            window = sublime.active_window()
-            output = window.create_output_panel("mde")
+        window = sublime.active_window()
+        output = window.create_output_panel("mde")
         output.run_command('erase_view')
         output.run_command('append', {'characters': outputtxt})
         window.run_command("show_panel", {"panel": "output.mde"})
