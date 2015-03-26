@@ -551,7 +551,7 @@ class md026(mddef):
             else:
                 mr = re.match(self.ratx, title)
                 title = mr.group(2)
-        if title[-1] in self.settings:
+        if len(title) and title[-1] in self.settings:
             ret[s] = '%s found' % repr(title[-1])
         return ret
 
