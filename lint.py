@@ -39,7 +39,7 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = 'First header should be a h1 header'
-    locator = r'^(?:#{1,6}(?!#))|(?:(?:-+|=+)$)'
+    locator = r'^(?:#{1,6}(?!#))|(?:-+|=+)'
 
     def test(self, text, s, e):
         ret = {}
@@ -116,7 +116,7 @@ class md004(mddef):
         if ans is None:
             (ans, exp) = self.testcyc(sym, -1)
             if ans is False:
-                ret[e] = 'on level %d, %s expected, %s found' % (1, exp, sym)
+                ret[e] = '%s expected, %s found' % (exp, sym)
         elif ans is False:
             ret[e] = '%s expected, %s found' % (exp, sym)
 
@@ -127,11 +127,11 @@ class md004(mddef):
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r'^([ \t]*)([*\-+])\s+', block, re.M)
+        mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
         for mr in mrs:
-            # print('----')
+            # print('====')
             # print(mr.group(2))
-            # print('----')
+            # print('====')
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
             (ans, exp) = self.testsingle(sym)
@@ -145,7 +145,6 @@ class md004(mddef):
                 else:
                     while len(lvstack) > 0:
                         n = lvstack.pop()
-                        print("%d<%d?" % (n, nspaces))
                         if n < nspaces:
                             lvstack.append(n)
                             break
@@ -157,7 +156,7 @@ class md004(mddef):
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
                     ret[e + 1 +
-                        mr.start(2)] = 'on level %d, %s expected, %s found' % (lv + 2, exp, sym)
+                        mr.start(2)] = '%s expected, %s found' % (exp, sym)
             else:
                 if not ans:
                     ret[e + 1 +
@@ -184,13 +183,11 @@ class md004(mddef):
             if self.lvs[lv]:
                 return (self.lvs[lv] == sym, self.lvs[lv])
             else:
-                print(self.lvs)
                 if (sym not in self.lvs):
                     self.lvs[lv] = sym
                     return (True, None)
                 else:
-                    exp = [item for item in ['*', '+', '-'] if item not in self.lvs]
-                    return (False, '/'.join(exp))
+                    return (False, None)
         if self.settings == 'any':
             if self.lvs[lv]:
                 return self.lvs[lv] == sym
@@ -554,7 +551,7 @@ class md026(mddef):
             else:
                 mr = re.match(self.ratx, title)
                 title = mr.group(2)
-        if len(title) and title[-1] in self.settings:
+        if title[-1] in self.settings:
             ret[s] = '%s found' % repr(title[-1])
         return ret
 
@@ -654,30 +651,40 @@ class LintCommand(sublime_plugin.TextCommand):
             r = self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
                                 else None, self.view), text)
             result.extend(r)
-        outputtxt = 'MarkdownLint: %d error(s) found\n' % len(result)
+        sublime.status_message('MarkdownLint: %d error(s) found' % len(result))
         if len(result) > 0:
             result = sorted(result, key=lambda t: t[0])
+            outputtxt = ''
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
                 outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
-        window = sublime.active_window()
-        output = window.create_output_panel("mde")
-        output.run_command('erase_view')
-        output.run_command('append', {'characters': outputtxt})
-        window.run_command("show_panel", {"panel": "output.mde"})
+            window = sublime.active_window()
+            output = window.create_output_panel("mde")
+            output.run_command('erase_view')
+            output.run_command('append', {'characters': outputtxt})
+            window.run_command("show_panel", {"panel": "output.mde"})
 
     def test(self, tar, text):
         loc = tar.locator
+        # print(tar)
+        # print(repr(loc))
         it = re.finditer(loc, text, tar.flag)
         ret = []
         for mr in it:
+            # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
             if self.scope_block in self.view.scope_name(mr.start(0)):
                 if tar.__class__ not in self.blockdef:
                     continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
             for p in ans:
                 ret.append((p, str(tar), ans[p]))
+                # (row, col) = self.view.rowcol(p)
+                # print('line %d: %s, %s' % (row + 1, tar, ans[p]))
 
+            # if not ans:
+            #     ret = False
+            #     (row, col) = self.view.rowcol(mr.start(tar.gid))
+            #     print('line %d: %s ' % (row + 1, tar))
             if tar.finish:
                 break
 
