@@ -635,7 +635,7 @@ class md029(mddef):
         return ret
 
 
-class LintCommand(sublime_plugin.TextCommand):
+class MarkdownLintCommand(sublime_plugin.TextCommand):
 
     blockdef = []
     scope_block = 'markup.raw.block.markdown'
