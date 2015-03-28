@@ -59,7 +59,7 @@
 		"mde.keep_centered": true
 	},
 	
-	"lint":{
+	"mde.lint":{
 		// disabled rules, e.g. "md001".
 		"disable": ["md013"],
 		// Options:

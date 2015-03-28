@@ -643,7 +643,7 @@ class MarkdownLintCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         mddef = globals()['mddef']
         text = self.view.substr(sublime.Region(0, self.view.size()))
-        st = self.view.settings().get('lint', {})
+        st = self.view.settings().get('mde.lint', {})
         uselist = []
         disablelist = st['disable']
         for cl in mddef.__subclasses__():
