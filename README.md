@@ -92,7 +92,7 @@ Scans document for referenced link usages (`[some link][some_ref]` and `[some li
 
 ### Markdown Lint
 
-Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md).
+Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
 
 ## Installation
 
