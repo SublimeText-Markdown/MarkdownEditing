@@ -122,7 +122,7 @@
 				Markdown formatting is disabled inside block-level tags.
 			</string>
 			<key>end</key>
-			<string>(?&lt;=^&lt;/\1&gt;$\n)</string>
+			<string>(?&lt;=&lt;/\1&gt;$\n)</string>
 			<key>patterns</key>
 			<array>
 				<dict>
