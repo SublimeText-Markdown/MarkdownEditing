@@ -94,6 +94,10 @@ Scans document for referenced link usages (`[some link][some_ref]` and `[some li
 
 Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
 
+### Switch List Bullet Type
+
+Switches the highlighted list between numbered and bulleted style.
+
 ## Installation
 
 > __Important Note About Installation__
