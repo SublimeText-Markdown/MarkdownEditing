@@ -5,7 +5,6 @@ import re
 class IndentListMultiitemCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, reverse=False):
-        print("indent multi")
         todo = []
         for region in self.view.sel():
             lines = self.view.line(region)
@@ -58,12 +57,6 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
                         new_line = tab_str + line_content
                     else:
                         new_line = re.sub(tab_str, "", line_content, 1)
-
-                print("=====")
-                print(line)
-                print(">>>>>")
-                print(new_line)
-                print("=====")
 
                 # Insert the new item
                 todo.append([line, new_line])
