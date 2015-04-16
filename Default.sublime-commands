@@ -27,7 +27,7 @@
     },
     {
         "caption": "MarkdownEditing: Markdown Lint",
-        "command": "lint"
+        "command": "markdown_lint"
     },
     {
         "caption": "MarkdownEditing: Switch List Bullet Type",

@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>Symbol List: Hide</string>
 	<key>scope</key>
-	<string>text.html.markdown markup.raw.block.fenced.markdown</string>
+	<string>text.html.markdown markup.raw.block.fenced.markdown, text.html.markdown meta.toc-list.id</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
