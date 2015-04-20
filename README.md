@@ -42,6 +42,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
 * Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to disable.
 * Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
+* New documents will be named automatically based on the first header.
 
 ## Key Bindings
 
@@ -56,7 +57,6 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote and jump to its definition. If your cursor is in a definition, it will jump back to the marker.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>F</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd> | Locates footnote markers without definitions and inserts their markers for the definition.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>G</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>G</kbd> | Locates link references without definitions and inserts their labels at the bottom for the definition.
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd> | Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md).
 
 ## GFM Specific Features
 
@@ -89,6 +89,14 @@ Converts every setext-style header into an ATX style header. If something is sel
 ### Add Missing Link Labels
 
 Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
+
+### Markdown Lint
+
+Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
+
+### Switch List Bullet Type
+
+Switches the highlighted list between numbered and bulleted style.
 
 ## Installation
 

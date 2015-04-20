@@ -632,7 +632,7 @@ class md029(mddef):
         return ret
 
 
-class LintCommand(sublime_plugin.TextCommand):
+class MarkdownLintCommand(sublime_plugin.TextCommand):
 
     blockdef = []
     scope_block = 'markup.raw.block.markdown'
@@ -640,7 +640,7 @@ class LintCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         mddef = globals()['mddef']
         text = self.view.substr(sublime.Region(0, self.view.size()))
-        st = self.view.settings().get('lint', {})
+        st = self.view.settings().get('mde.lint', {})
         uselist = []
         disablelist = st['disable']
         for cl in mddef.__subclasses__():
