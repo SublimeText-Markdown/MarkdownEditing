@@ -69,7 +69,7 @@
     { "keys": ["tab"], "command": "indent_list_multiitem", "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["shift+tab"], "command": "indent_list_item", "args": {"reverse": true}, "context":
@@ -84,7 +84,7 @@
     { "keys": ["shift+tab"], "command": "indent_list_multiitem", "args": {"reverse": true}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["_"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
