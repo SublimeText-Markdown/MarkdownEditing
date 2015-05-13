@@ -10,7 +10,7 @@ class SwitchListBulletTypeCommand(sublime_plugin.TextCommand):
             lines = self.view.split_by_newlines(lines)
             for line in lines:
                 line_content = self.view.substr(line)
-                print(line_content)
+                # print(line_content)
                 m = re.match(r"^(\s*(?:>\s*)?)[*+\-](\s+.*)$", line_content)
                 if m:
                     # Transform the bullet to numbered bullet type

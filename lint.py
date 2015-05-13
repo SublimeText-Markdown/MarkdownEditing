@@ -124,14 +124,14 @@ class md004(mddef):
         mr = re.search(self.eol, rest, re.M)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
-        print('====')
-        print(block)
-        print('====')
+        #print('====')
+        #print(block)
+        #print('====')
         mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
         for mr in mrs:
-            print('====')
-            print(mr.group(2))
-            print('====')
+            #print('====')
+            #print(mr.group(2))
+            #print('====')
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
             (ans, exp) = self.testsingle(sym)
@@ -150,9 +150,9 @@ class md004(mddef):
                             break
                     lv = len(lvstack)
                     lvstack.append(nspaces)
-                print(sym)
-                print(lv)
-                print(self.lvs)
+                #print(sym)
+                #print(lv)
+                #print(self.lvs)
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
                     ret[e + 1 +
