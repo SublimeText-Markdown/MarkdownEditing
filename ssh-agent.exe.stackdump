@@ -1,0 +1,10 @@
+MSYS-1.0.12 Build:2012-07-05 14:56
+Exception: STATUS_ACCESS_VIOLATION at eip=00A67968
+eax=00000001 ebx=0029FC94 ecx=00AE4C5C edx=003F0000 esi=00000000 edi=0029FD02
+ebp=0029FC14 esp=0029FA9C program=C:\Users\v-yihao\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin\ssh-agent.exe
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
+0029FC14  00A67968  (00000270, 00000000, 00000000, 00000000)
+00A4530B  00A51020  (5DEC895F, B48D90C3, 00000026, E5895500)
+1333234 [main] ssh-agent 14756 handle_exceptions: Error while dumping state (probably corrupted stack)
