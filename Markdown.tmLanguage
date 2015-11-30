@@ -1632,7 +1632,7 @@
 		    <array>
 		        <dict>
 		            <key>include</key>
-		            <string>source.css.less</string>
+		            <string>source.css, source.less</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -1760,7 +1760,7 @@
 		    <array>
 		        <dict>
 		            <key>include</key>
-		            <string>source.sass</string>
+		            <string>source.css, source.sass</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -1892,10 +1892,42 @@
 		        </dict>
 		    </array>
 		</dict>
+		<key>fenced-scheme</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(scheme)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.scheme</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-swift</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(swift)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.swift</string>
+		        </dict>
+		    </array>
+		</dict>
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*(`{3,}|~{3,}))\s*[\w\-+#]*\s*$</string>
+		    <string>^(\s*[`~]{3,}).*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1996,6 +2028,14 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-lua</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-scheme</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-swift</string>
 				</dict>
 				<dict>
 					<key>include</key>

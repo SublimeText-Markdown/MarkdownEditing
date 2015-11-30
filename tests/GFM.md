@@ -74,7 +74,7 @@ for (var i = 0; i < 10; i++) {
 
 ---
 
-Below are _not_ valid fenced code blocks according to the [GFM docs][GFM]. It says there must be a blank line before the code block. However, GitHub highlights them. So, they _should_ be highlighted.
+Below are _not_ recommended by the [GFM docs][GFM] due to the lack of preceding blank line; but still supported and highlighted by the GFM. So, they _should_ be highlighted.
 
 ---
 

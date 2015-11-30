@@ -12,7 +12,10 @@ def on_distraction_free():
     return sublime.active_window().settings().get('fss_on_distraction_free')
 
 def view_is_markdown(view):
-    return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
+    if len(view.sel()) > 0:
+        return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
+    else:
+        return False
 
 class KeepCurrentLineCentered(sublime_plugin.EventListener):
     def on_modified(self, view):
