@@ -90,20 +90,33 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+def suggest_default_link_name(title):
+    # Camel case impl.
+    ret = ''
+    for word in title.split():
+      ret += word.capitalize()
+      if len(ret) > 30:
+        break
+    return ret
 
 class InsertFootnoteCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        startloc = self.view.sel()[-1].end()
-        markernum = get_next_footnote_marker(self.view)
-        if bool(self.view.size()):
-            targetloc = self.view.find('(\s|$)', startloc).begin()
+        view = self.view
+        sel = view.sel()[-1]
+        startloc = sel.end()
+        if len(sel) > 0:
+            markernum = suggest_default_link_name(view.substr(sel))
+        else:
+            markernum = get_next_footnote_marker(view)
+        if bool(view.size()):
+            targetloc = view.find('(\s|$)', startloc).begin()
         else:
             targetloc = 0
-        self.view.insert(edit, targetloc, '[^%s]' % markernum)
-        self.view.insert(edit, self.view.size(), '\n [^%s]: ' % markernum)
-        self.view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
-        if self.view.settings().get('command_mode'):
-            self.view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
+        view.insert(edit, targetloc, '[^%s]' % markernum)
+        view.insert(edit, view.size(), '\n [^%s]: ' % markernum)
+        view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
+        if view.settings().get('command_mode'):
+            view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
@@ -177,8 +190,6 @@ class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
 class SortFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)
-        self.view.end_edit(edit)
-        edit = self.view.begin_edit()
         defs = get_footnote_definition_markers(self.view)
         notes = {}
         erase = []
