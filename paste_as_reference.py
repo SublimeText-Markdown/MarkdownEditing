@@ -13,14 +13,14 @@ def append_reference_link(edit, view, title, url):
     view.insert(edit, view.size(), '{0}[{1}]: {2}\n'.format(nl, title, url))
     return sublime.Region(edit_position, edit_position + len(title))
 
-def suggest_default_link_name(title):
+def suggest_default_link_name(title, image):
     # Camel case impl.
     ret = ''
     for word in title.split():
       ret += word.capitalize()
       if len(ret) > 30:
         break
-    return 'link' + ret
+    return ('image' if image else 'link') + ret
 
 def is_url(contents):
     # If the clipboard contains an URL, return it
@@ -30,23 +30,27 @@ def is_url(contents):
     return True if m else False
 
 class PasteAsReferenceCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
+    def run(self, edit, image = False):
         view = self.view
         edit_regions = []
         suggested_title = False
-        contents = sublime.get_clipboard()
+        contents = sublime.get_clipboard().strip()
         for sel in view.sel():
             text = view.substr(sel)
             if not suggested_title:
                 if is_url(contents):
-                    suggested_title = suggest_default_link_name(text)
+                    suggested_title = suggest_default_link_name(text, image)
                     link = contents
                 else:
-                    suggested_title = suggest_default_link_name(contents)
+                    suggested_title = suggest_default_link_name(contents, image)
                     link = ''
 
             edit_position = sel.end() + 3
-            self.view.replace(edit, sel, "[" + text + "][" + suggested_title + "]")
+            if image:
+                edit_position += 1
+                self.view.replace(edit, sel, "![" + text + "][" + suggested_title + "]")
+            else:
+                self.view.replace(edit, sel, "[" + text + "][" + suggested_title + "]")
             edit_regions.append(sublime.Region(edit_position, edit_position + len(suggested_title)))
         if len(edit_regions) > 0:
             selection = view.sel()
@@ -59,16 +63,37 @@ class PasteAsReferenceCommand(sublime_plugin.TextCommand):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
 class PasteAsInlineLinkCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
+    def run(self, edit, image = False):
         view = self.view
         edit_regions = []
         suggested_title = False
-        contents = sublime.get_clipboard()
+        contents = sublime.get_clipboard().strip()
         for sel in view.sel():
             text = view.substr(sel)
             edit_position = sel.end() + 3
-            self.view.replace(edit, sel, "[" + text + "](" + contents + ")")
+            if image:
+                edit_position += 1
+                self.view.replace(edit, sel, "![" + text + "](" + contents + ")")
+            else:
+                self.view.replace(edit, sel, "[" + text + "](" + contents + ")")
             edit_regions.append(sublime.Region(edit_position, edit_position + len(contents)))
         if len(edit_regions) > 0:
             selection.clear()
             selection.add_all(edit_regions)
+
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
+
+class PasteAsInlineImage(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.view.run_command("paste_as_inline_link", {"image": True})
+
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
+
+class PasteAsImage(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.view.run_command("paste_as_reference", {"image": True})
+
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

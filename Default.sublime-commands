@@ -52,5 +52,13 @@
     {
         "caption": "MarkdownEditing: Paste as Inline Link",
         "command": "paste_as_inline_link"
+    },
+    {
+        "caption": "MarkdownEditing: Paste as Inline Image",
+        "command": "paste_as_inline_image"
+    },
+    {
+        "caption": "MarkdownEditing: Paste as Image",
+        "command": "paste_as_image"
     }
 ]
