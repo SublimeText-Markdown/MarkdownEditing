@@ -32,5 +32,21 @@
     {
         "caption": "MarkdownEditing: Switch List Bullet Type",
         "command": "switch_list_bullet_type"
+    },
+    {
+        "caption": "MarkdownEditing: Paste as Link",
+        "command": "paste_as_link"
+    },
+    {
+        "caption": "MarkdownEditing: Paste as Reference",
+        "command": "paste_as_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Insert Named Reference...",
+        "command": "insert_named_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Insert Numbered Reference...",
+        "command": "insert_numbered_reference"
     }
 ]
