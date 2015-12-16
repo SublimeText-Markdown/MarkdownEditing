@@ -48,5 +48,9 @@
     {
         "caption": "MarkdownEditing: Insert Numbered Reference...",
         "command": "insert_numbered_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Paste as Inline Link",
+        "command": "paste_as_inline_link"
     }
 ]

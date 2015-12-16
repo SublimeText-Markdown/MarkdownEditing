@@ -32,24 +32,43 @@ def is_url(contents):
 class PasteAsReferenceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
-        sel = view.sel()[0]
-        text = view.substr(sel)
+        edit_regions = []
+        suggested_title = False
         contents = sublime.get_clipboard()
-        if is_url(contents):
-            suggested_title = suggest_default_link_name(text)
-            link = contents
-        else:
-            suggested_title = suggest_default_link_name(contents)
-            link = ''
+        for sel in view.sel():
+            text = view.substr(sel)
+            if not suggested_title:
+                if is_url(contents):
+                    suggested_title = suggest_default_link_name(text)
+                    link = contents
+                else:
+                    suggested_title = suggest_default_link_name(contents)
+                    link = ''
 
-        edit_position = sel.end() + 3
-        self.view.replace(edit, sel, "[" + text + "][" + suggested_title + "]")
-        reference_region = append_reference_link(edit, view, suggested_title, link)
-        sel = view.sel()
-        sel.clear()
-        sel.add(sublime.Region(edit_position, edit_position + len(suggested_title)))
-        sel.add(reference_region)
-
+            edit_position = sel.end() + 3
+            self.view.replace(edit, sel, "[" + text + "][" + suggested_title + "]")
+            edit_regions.append(sublime.Region(edit_position, edit_position + len(suggested_title)))
+        if len(edit_regions) > 0:
+            selection = view.sel()
+            selection.clear()
+            reference_region = append_reference_link(edit, view, suggested_title, link)
+            selection.add(reference_region)
+            selection.add_all(edit_regions)
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
+
+class PasteAsInlineLinkCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        view = self.view
+        edit_regions = []
+        suggested_title = False
+        contents = sublime.get_clipboard()
+        for sel in view.sel():
+            text = view.substr(sel)
+            edit_position = sel.end() + 3
+            self.view.replace(edit, sel, "[" + text + "](" + contents + ")")
+            edit_regions.append(sublime.Region(edit_position, edit_position + len(contents)))
+        if len(edit_regions) > 0:
+            selection.clear()
+            selection.add_all(edit_regions)
