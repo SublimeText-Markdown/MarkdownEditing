@@ -344,11 +344,20 @@
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
         ]
     },
+    // Extend Numbered Reference
+    { "keys": ["enter"], "command": "number_list_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\S*\\[(\\d+)\\]:\\s*)\\S.*", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
+        ]
+    },
     // Remove empty list item
     { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\[\\d+\\]:|[*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false },
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
