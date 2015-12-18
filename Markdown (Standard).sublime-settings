@@ -77,6 +77,15 @@
 		// 		one,		'1.' only
 		// 		ordered,	ascending number
 		// 		any,		consistent within one list
-		"md029": "any"
+		"md029": "any",
+		// (ordered vs unordered, single-line vs multi-line)
+		"md030": {
+			"ul_single": 1,
+			"ol_single": 1,
+			// optinally, 3
+			"ul_multi": 1,
+			// optionaly, 2
+			"ol_multi": 1
+		}
 	}
 }
