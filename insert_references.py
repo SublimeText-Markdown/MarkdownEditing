@@ -69,55 +69,6 @@ def insert_references(view, title):
     view.run_command("insert_references", {"title": title})
 
 # Inspired by http://www.leancrew.com/all-this/2012/08/markdown-reference-links-in-bbedit/
-# Appends a new reference link to end of document, using a user-input name and URL.
-# Then inserts a reference to the link at the current selection(s).
-
-class InsertNamedReferenceCommand(sublime_plugin.TextCommand):
-
-    def description(self):
-        return 'Insert Numbered Reference Link'
-
-    def run(self, edit):
-        self.view.window().show_input_panel(
-            'URL to link to:',
-            get_clipboard_if_url(),
-            self.receive_link,
-            None, None)
-
-    def receive_link(self, linkurl):
-        linkurl = mangle_url(linkurl)
-
-        newref = check_for_link(self.view, linkurl)
-        if newref:
-            # Link already exists, reuse existing reference
-            self.insert_link(linkurl, newref, False)
-
-        else:
-            self.view.window().show_input_panel(
-                'Name for reference:', '',
-                lambda newref: self.insert_link(linkurl, newref),
-                None, None)
-
-    def insert_link(self, linkurl, newref, actually_insert=True):
-        # Check if title is already present as reference
-        if actually_insert and self.view.find(r'^\s{0,3}\[' + re.escape(newref) + '\]:[ \t]+', 0):
-            sublime.error_message('A reference named "' + newref + '" already exists.')
-            self.view.window().show_input_panel(
-                'Name for reference:', '',
-                lambda newref: self.insert_link(linkurl, newref),
-                None, None)
-            return
-
-        if actually_insert:
-            append_reference_link(self.view, newref, linkurl)
-        else:
-            insert_references(self.view, newref)
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
-
-
-# Inspired by http://www.leancrew.com/all-this/2012/08/markdown-reference-links-in-bbedit/
 # Appends a new reference link to end of document, using an autoincrementing number as the reference title.
 # Then inserts a reference to the link at the current selection(s).
 
