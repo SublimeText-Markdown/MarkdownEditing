@@ -81,8 +81,6 @@
             <string>invalid.illegal</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#fa3127</string>
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
