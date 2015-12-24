@@ -64,13 +64,19 @@ def strip_trailing_whitespace(view, edit):
     if tws:
         view.erase(edit, tws)
 
+def view_is_markdown(view):
+    if len(view.sel()) > 0:
+        return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
+    else:
+        return False
 
 class MarkFootnotes(sublime_plugin.EventListener):
     def update_footnote_data(self, view):
-        view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
-        view.add_regions(DEFINITION_KEY, view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
+        if view_is_markdown(view):
+            view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
+            view.add_regions(DEFINITION_KEY, view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
 
-    def on_modified(self, view):
+    def on_modified_async(self, view):
         self.update_footnote_data(view)
 
     def on_load(self, view):
