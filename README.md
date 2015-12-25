@@ -4,7 +4,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 ![MarkdownEditing][github]
 
-[Dark][github 2] and [yellow][github 3] theme available.
+[Dark][github 2] and [yellow][github 3] theme available ([additional](#additional-color-themes)).
 
 ## Overview
 
@@ -149,6 +149,10 @@ In order to activate the dark or the yellow theme, put one of these lines to you
 
 If you want to go with your already existing theme, you can reenable it with the same method as above. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
 
+### Additional color themes:
+
+- [Blackboard theme][linkBlackboardTheme] by [@mdesantis][mdesantis]
+
 By default, when you install the plugin, files with these extensions will be assigned to Markdown syntax: "md", "txt", "mdown", "markdown", "markdn". If you want to prevent any of these extensions to be opened as Markdown, follow these steps:
 
 1. Click on the language menu at bottom right
@@ -225,3 +229,5 @@ MarkdownEditing is released under the [MIT License][opensource].
 [Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
 [GFM]: https://help.github.com/articles/github-flavored-markdown
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
+[linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
+[mdesantis]: https://github.com/mdesantis
