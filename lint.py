@@ -709,3 +709,6 @@ class MarkdownLintCommand(sublime_plugin.TextCommand):
                 break
 
         return ret
+        
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
