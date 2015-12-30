@@ -96,37 +96,28 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-def suggest_default_link_name(title):
-    # Camel case impl.
-    ret = ''
-    for word in title.split():
-      ret += word.capitalize()
-      if len(ret) > 30:
-        break
-    return ret
-
 class InsertFootnoteCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
-        sel = view.sel()[-1]
-        startloc = sel.end()
-        if len(sel) > 0:
-            markernum = suggest_default_link_name(view.substr(sel))
-        else:
-            markernum = get_next_footnote_marker(view)
-        if bool(view.size()):
-            targetloc = view.find('(\s|$)', startloc).begin()
-        else:
-            targetloc = 0
-        view.insert(edit, targetloc, '[^%s]' % markernum)
-        view.insert(edit, view.size(), '\n [^%s]: ' % markernum)
-        view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
-        if view.settings().get('command_mode'):
-            view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
+        markernum = get_next_footnote_marker(view)
+        markernum_str = '[^%s]' % markernum
+        for sel in view.sel():
+            startloc = sel.end()
+            if bool(view.size()):
+                targetloc = view.find('(\s|$)', startloc).begin()
+            else:
+                targetloc = 0
+            view.insert(edit, targetloc, markernum_str)
+        if len(view.sel()) > 0:
+            view.insert(edit, view.size(), '\n ' + markernum_str + ': ')
+            view.sel().clear()
+            view.sel().add(sublime.Region(view.size(), view.size()))
+            view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
+            if view.settings().get('command_mode'):
+                view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
-
 
 class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
     def run(self, edit):

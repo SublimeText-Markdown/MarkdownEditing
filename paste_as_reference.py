@@ -51,6 +51,7 @@ class PasteAsReferenceCommand(sublime_plugin.TextCommand):
         edit_regions = []
         contents = sublime.get_clipboard().strip()
         link = mangle_url(contents) if is_url(contents) else ""
+        suggested_title = ""
         if len(link) > 0:
             # If link already exists, reuse existing reference
             suggested_link_name = suggested_title = check_for_link(view, link)
