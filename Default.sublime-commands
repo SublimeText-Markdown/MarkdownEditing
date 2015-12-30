@@ -60,5 +60,13 @@
     {
         "caption": "MarkdownEditing: Paste as Image",
         "command": "paste_as_image"
+    },
+    {
+        "caption": "MarkdownEditing: Magic Footnotes Command",
+        "command": "magic_footnotes"
+    },
+    {
+        "caption": "MarkdownEditing: Gather Missing Footnotes",
+        "command": "gather_missing_footnotes"
     }
 ]
