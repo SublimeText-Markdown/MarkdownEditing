@@ -109,7 +109,7 @@ class InsertFootnoteCommand(sublime_plugin.TextCommand):
                 targetloc = 0
             view.insert(edit, targetloc, markernum_str)
         if len(view.sel()) > 0:
-            view.insert(edit, view.size(), '\n ' + markernum_str + ': ')
+            view.insert(edit, view.size(), '\n' + markernum_str + ': ')
             view.sel().clear()
             view.sel().add(sublime.Region(view.size(), view.size()))
             view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})

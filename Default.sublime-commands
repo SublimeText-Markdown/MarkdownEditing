@@ -34,39 +34,43 @@
         "command": "switch_list_bullet_type"
     },
     {
-        "caption": "MarkdownEditing: Paste as Link",
-        "command": "paste_as_link"
-    },
-    {
-        "caption": "MarkdownEditing: Paste as Reference",
-        "command": "paste_as_reference"
-    },
-    {
-        "caption": "MarkdownEditing: Insert Named Reference...",
-        "command": "insert_named_reference"
-    },
-    {
-        "caption": "MarkdownEditing: Insert Numbered Reference...",
-        "command": "insert_numbered_reference"
-    },
-    {
-        "caption": "MarkdownEditing: Paste as Inline Link",
-        "command": "paste_as_inline_link"
-    },
-    {
-        "caption": "MarkdownEditing: Paste as Inline Image",
-        "command": "paste_as_inline_image"
-    },
-    {
-        "caption": "MarkdownEditing: Paste as Image",
-        "command": "paste_as_image"
-    },
-    {
         "caption": "MarkdownEditing: Magic Footnotes Command",
         "command": "magic_footnotes"
     },
     {
         "caption": "MarkdownEditing: Gather Missing Footnotes",
         "command": "gather_missing_footnotes"
+    },
+    {
+        "caption": "MarkdownEditing: Jump Reference",
+        "command": "reference_jump"
+    },
+    {
+        "caption": "MarkdownEditing: New Reference",
+        "command": "reference_new_reference"
+    },
+    {
+        "caption": "MarkdownEditing: New Inline Link",
+        "command": "reference_new_inline_link"
+    },
+    {
+        "caption": "MarkdownEditing: New Inline Image",
+        "command": "reference_new_inline_image"
+    },
+    {
+        "caption": "MarkdownEditing: New Image",
+        "command": "reference_new_image"
+    },
+    {
+        "caption": "MarkdownEditing: New Footnote",
+        "command": "reference_new_footnote"
+    },
+    {
+        "caption": "MarkdownEditing: Delete Reference",
+        "command": "reference_delete_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Organize References",
+        "command": "reference_organize"
     }
 ]
