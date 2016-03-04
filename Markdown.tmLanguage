@@ -1844,7 +1844,7 @@
 		<key>fenced-coffee</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(coffee)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1860,7 +1860,7 @@
 		<key>fenced-js</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(js|json|javascript)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
