@@ -49,3 +49,134 @@ Each milestone will have a pull request that will be kept open until the milesto
 When the milestone is completed, push-access users can publish the new version to the Package Control. Creating the new version __tag__ on the GitHub repository is enough for this. For example, if the name of the milestone is `v2.0.4`, the tag should be `2.0.4`.
 
 The update process may take __up to an hour__ depending on the crawl frequency by the Package Control.
+
+## Contributing to themes
+
+Here are the used scopes under 3 different markdown flavors. If you are not sure about how the scopes are used, checkout .tmlanguage files or ask in issues. __Unique__ scopes are marked as bold.
+
+### ScopeName: text.html.markdown
+
+* constant.character.escape.markdown
+* constant.other.reference.link.markdown
+* invalid.illegal.whitespace.markdown
+* markup.bold.markdown
+* markup.bold_italic.markdown
+* markup.heading.1.markdown
+* markup.heading.2.markdown
+* markup.heading.markdown
+* markup.italic.markdown
+* markup.list.numbered.markdown
+* markup.list.unnumbered.markdown
+* markup.quote.markdown
+* markup.raw.block.markdown
+* markup.raw.inline.content.markdown
+* markup.raw.inline.markdown
+* markup.underline.link.image.markdown
+* markup.underline.link.markdown
+* meta.block-level.markdown
+* meta.disable-markdown
+* meta.dummy.line-break
+* meta.image.inline.markdown
+* meta.image.reference.markdown
+* meta.link.email.lt-gt.markdown
+* meta.link.inet.markdown
+* meta.link.inline.markdown
+* meta.link.reference.def.markdown
+* meta.link.reference.literal.markdown
+* meta.link.reference.markdown
+* meta.other.valid-ampersand.markdown
+* meta.other.valid-bracket.markdown
+* meta.paragraph.list.markdown
+* meta.paragraph.markdown
+* meta.separator.markdown
+* punctuation.definition.blockquote.markdown
+* punctuation.definition.bold.markdown
+* punctuation.definition.constant.begin.markdown
+* punctuation.definition.constant.end.markdown
+* punctuation.definition.constant.markdown
+* punctuation.definition.heading.markdown
+* punctuation.definition.italic.markdown
+* punctuation.definition.link.markdown
+* punctuation.definition.list_item.markdown
+* __punctuation.definition.list_item.number.markdown__
+* punctuation.definition.metadata.markdown
+* punctuation.definition.raw.markdown
+* punctuation.definition.string.begin.markdown
+* punctuation.definition.string.end.markdown
+* punctuation.definition.string.markdown
+* punctuation.separator.key-value.markdown
+* string.other.link.description.markdown
+* string.other.link.description.title.markdown
+* string.other.link.title.markdown
+
+### ScopeName: text.html.markdown.gfm
+
+* constant.character.escape.markdown
+* constant.other.reference.link.markdown
+* __entity.name.tag.other.html__
+* invalid.illegal.whitespace.markdown
+* markup.bold.markdown
+* markup.bold_italic.markdown
+* markup.heading.1.markdown
+* markup.heading.2.markdown
+* markup.heading.markdown
+* markup.italic.markdown
+* __markup.kbd.content.markdown__
+* __markup.kbd.markdown__
+* markup.list.numbered.markdown
+* markup.list.unnumbered.markdown
+* markup.quote.markdown
+* __markup.raw.block.fenced.markdown__
+* markup.raw.block.markdown
+* markup.raw.inline.content.markdown
+* markup.raw.inline.markdown
+* __markup.strikethrough.markdown__
+* markup.underline.link.image.markdown
+* markup.underline.link.markdown
+* meta.block-level.markdown
+* meta.disable-markdown
+* meta.dummy.line-break
+* meta.image.inline.markdown
+* meta.image.reference.markdown
+* meta.link.email.lt-gt.markdown
+* meta.link.inet.markdown
+* meta.link.inline.markdown
+* meta.link.reference.def.markdown
+* meta.link.reference.literal.markdown
+* meta.link.reference.markdown
+* meta.other.valid-ampersand.markdown
+* meta.other.valid-bracket.markdown
+* meta.paragraph.list.markdown
+* meta.paragraph.markdown
+* meta.separator.markdown
+* __meta.tag.other.html__
+* punctuation.definition.blockquote.markdown
+* punctuation.definition.bold.markdown
+* punctuation.definition.constant.begin.markdown
+* punctuation.definition.constant.end.markdown
+* punctuation.definition.constant.markdown
+* punctuation.definition.heading.markdown
+* punctuation.definition.italic.markdown
+* punctuation.definition.link.markdown
+* punctuation.definition.list_item.markdown
+* punctuation.definition.metadata.markdown
+* punctuation.definition.raw.markdown
+* __punctuation.definition.strikethrough.markdown__
+* punctuation.definition.string.begin.markdown
+* punctuation.definition.string.end.markdown
+* punctuation.definition.string.markdown
+* __punctuation.definition.tag.begin.html__
+* __punctuation.definition.tag.end.html__
+* punctuation.separator.key-value.markdown
+* string.other.link.description.markdown
+* string.other.link.description.title.markdown
+* string.other.link.title.markdown
+
+### ScopeName: text.html.markdown.multimarkdown
+
+* <All scopes under text.html.markdown.gfm>
+* __keyword.other.multimarkdown__
+* __punctuation.separator.key-value.multimarkdown__
+* __meta.header.multimarkdown__
+* __string.unquoted.multimarkdown__
+* __meta.content.multimarkdown__

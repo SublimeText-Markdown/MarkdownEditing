@@ -136,7 +136,7 @@
 				Markdown formatting is disabled inside block-level tags.
 			</string>
 			<key>end</key>
-			<string>(?&lt;=&lt;/\1&gt;$\n)</string>
+			<string>(?&lt;=^&lt;/\1&gt;$\n)</string>
 			<key>patterns</key>
 			<array>
 				<dict>
@@ -178,7 +178,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.begin.markdown</string>
 				</dict>
 				<key>10</key>
 				<dict>
@@ -208,7 +208,7 @@
 				<key>3</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.end.markdown</string>
 				</dict>
 				<key>4</key>
 				<dict>
@@ -556,6 +556,10 @@
 					<key>include</key>
 					<string>#link-ref</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-footnote</string>
+				</dict>
 			</array>
 		</dict>
 		<key>bold</key>
@@ -691,6 +695,10 @@
 					<key>include</key>
 					<string>#link-ref</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-footnote</string>
+				</dict>
 			</array>
 		</dict>
 		<key>strikethrough</key>
@@ -824,6 +832,10 @@
 				<dict>
 					<key>include</key>
 					<string>#link-ref</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-footnote</string>
 				</dict>
 			</array>
 		</dict>
@@ -988,7 +1000,7 @@
 				<key>4</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.string.begin.markdown</string>
+					<string>punctuation.definition.string.end.markdown</string>
 				</dict>
 				<key>5</key>
 				<dict>
@@ -1078,6 +1090,10 @@
 				<dict>
 					<key>include</key>
 					<string>#link-ref</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-footnote</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1218,6 +1234,10 @@
 				<dict>
 					<key>include</key>
 					<string>#link-ref</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-footnote</string>
 				</dict>
 			</array>
 		</dict>
@@ -1375,6 +1395,31 @@
 			 )</string>
 			<key>name</key>
 			<string>meta.link.inline.markdown</string>
+		</dict>
+		<key>link-footnote</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.constant.begin.markdown</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.reference.link.markdown</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.constant.end.markdown</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(\[)(\^[^\]]*+)(\])</string>
+			<key>name</key>
+			<string>meta.link.reference.markdown</string>
 		</dict>
 		<key>link-ref</key>
 		<dict>

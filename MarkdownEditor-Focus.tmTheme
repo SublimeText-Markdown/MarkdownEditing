@@ -92,8 +92,6 @@
             <string>invalid.illegal</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#F93232</string>
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
@@ -715,7 +713,7 @@
             <key>name</key>
             <string>Markup: Underline</string>
             <key>scope</key>
-            <string>markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown,meta.image.reference.markdown</string>
+            <string>markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown,meta.image.reference.markdown,meta.image.inline.markdown</string>
             <key>settings</key>
             <dict>
                 <key>background</key>

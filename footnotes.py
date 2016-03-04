@@ -64,13 +64,19 @@ def strip_trailing_whitespace(view, edit):
     if tws:
         view.erase(edit, tws)
 
+def view_is_markdown(view):
+    if len(view.sel()) > 0:
+        return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
+    else:
+        return False
 
 class MarkFootnotes(sublime_plugin.EventListener):
     def update_footnote_data(self, view):
-        view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
-        view.add_regions(DEFINITION_KEY, view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
+        if view_is_markdown(view):
+            view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
+            view.add_regions(DEFINITION_KEY, view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
 
-    def on_modified(self, view):
+    def on_modified_async(self, view):
         self.update_footnote_data(view)
 
     def on_load(self, view):
@@ -90,24 +96,28 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-
 class InsertFootnoteCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        startloc = self.view.sel()[-1].end()
-        markernum = get_next_footnote_marker(self.view)
-        if bool(self.view.size()):
-            targetloc = self.view.find('(\s|$)', startloc).begin()
-        else:
-            targetloc = 0
-        self.view.insert(edit, targetloc, '[^%s]' % markernum)
-        self.view.insert(edit, self.view.size(), '\n [^%s]: ' % markernum)
-        self.view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
-        if self.view.settings().get('command_mode'):
-            self.view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
+        view = self.view
+        markernum = get_next_footnote_marker(view)
+        markernum_str = '[^%s]' % markernum
+        for sel in view.sel():
+            startloc = sel.end()
+            if bool(view.size()):
+                targetloc = view.find('(\s|$)', startloc).begin()
+            else:
+                targetloc = 0
+            view.insert(edit, targetloc, markernum_str)
+        if len(view.sel()) > 0:
+            view.insert(edit, view.size(), '\n' + markernum_str + ': ')
+            view.sel().clear()
+            view.sel().add(sublime.Region(view.size(), view.size()))
+            view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
+            if view.settings().get('command_mode'):
+                view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
     def is_enabled(self):
         return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
-
 
 class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -177,8 +187,6 @@ class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
 class SortFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)
-        self.view.end_edit(edit)
-        edit = self.view.begin_edit()
         defs = get_footnote_definition_markers(self.view)
         notes = {}
         erase = []

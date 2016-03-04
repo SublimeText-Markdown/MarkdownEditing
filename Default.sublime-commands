@@ -32,5 +32,45 @@
     {
         "caption": "MarkdownEditing: Switch List Bullet Type",
         "command": "switch_list_bullet_type"
+    },
+    {
+        "caption": "MarkdownEditing: Magic Footnotes Command",
+        "command": "magic_footnotes"
+    },
+    {
+        "caption": "MarkdownEditing: Gather Missing Footnotes",
+        "command": "gather_missing_footnotes"
+    },
+    {
+        "caption": "MarkdownEditing: Jump Reference",
+        "command": "reference_jump"
+    },
+    {
+        "caption": "MarkdownEditing: New Reference",
+        "command": "reference_new_reference"
+    },
+    {
+        "caption": "MarkdownEditing: New Inline Link",
+        "command": "reference_new_inline_link"
+    },
+    {
+        "caption": "MarkdownEditing: New Inline Image",
+        "command": "reference_new_inline_image"
+    },
+    {
+        "caption": "MarkdownEditing: New Image",
+        "command": "reference_new_image"
+    },
+    {
+        "caption": "MarkdownEditing: New Footnote",
+        "command": "reference_new_footnote"
+    },
+    {
+        "caption": "MarkdownEditing: Delete Reference",
+        "command": "reference_delete_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Organize References",
+        "command": "reference_organize"
     }
 ]

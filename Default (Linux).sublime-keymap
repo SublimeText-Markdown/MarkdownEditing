@@ -344,11 +344,20 @@
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
         ]
     },
+    // Extend Numbered Reference
+    { "keys": ["enter"], "command": "number_list_reference", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*\\[(\\d+)\\]:\\s*)\\S.*", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
+        ]
+    },
     // Remove empty list item
     { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\[\\d+\\]:|[*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
             { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false },
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
@@ -370,16 +379,6 @@
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
         ]
     },
-    { "keys": ["alt+shift+g"], "command": "gather_missing_link_markers", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+shift+f"], "command": "gather_missing_footnotes", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
     { "keys": ["tab"], "command": "complete_underlined_header", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -390,41 +389,11 @@
         ]
     },
 
-    // inline link insertion
-    { "keys": ["ctrl+super+k"], "command": "insert_snippet", "args": {"contents": "[$1]($0)"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+super+k"], "command": "insert_snippet", "args": {"contents": "[$SELECTION]($0)"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
     // inline image insertion
-    { "keys": ["super+shift+k"], "command": "insert_snippet", "args": {"contents": "![$1]($0)"}, "context":
+    { "keys": ["super+shift+k"], "command": "reference_new_inline_image", "context":
      [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
-    },
-    { "keys": ["super+shift+k"], "command": "insert_snippet", "args": {"contents": "![$SELECTION]($0)"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
     },
     // modify [] pairing so that selection is removed after pairing, ready for [] or ()
     { "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$SELECTION]$0"}, "context":
@@ -435,32 +404,17 @@
         ]
     },
     // run paste as link command on selected text
-    { "keys": ["ctrl+super+v"], "command": "paste_as_link", "context":
+    { "keys": ["ctrl+super+v"], "command": "reference_new_inline_link", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+super+r"], "command": "paste_as_reference", "context":
+    { "keys": ["ctrl+super+r"], "command": "reference_new_reference", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["alt+ctrl+r"], "command": "insert_named_reference", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["super+ctrl+shift+r"], "command": "insert_numbered_reference", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+alt+l"], "command": "list_markdown_references", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+alt+g"], "command": "goto_reference", "context":
+    { "keys": ["ctrl+alt+g"], "command": "reference_jump", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
@@ -622,17 +576,12 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+shift+6"], "command": "magic_footnotes", "context":
+    { "keys": ["alt+shift+6"], "command": "reference_new_footnote", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["alt+shift+6"], "command": "insert_footnote", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+alt+s"], "command": "sort_footnotes", "context":
+    { "keys": ["ctrl+alt+s"], "command": "reference_organize", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
@@ -646,11 +595,6 @@
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+m"], "command": "lint", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     }
 ]

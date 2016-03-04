@@ -124,14 +124,8 @@ class md004(mddef):
         mr = re.search(self.eol, rest, re.M)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
-        #print('====')
-        #print(block)
-        #print('====')
         mrs = re.finditer(r'^(\s*)([*\-+])\s+', block, re.M)
         for mr in mrs:
-            #print('====')
-            #print(mr.group(2))
-            #print('====')
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
             (ans, exp) = self.testsingle(sym)
@@ -150,9 +144,6 @@ class md004(mddef):
                             break
                     lv = len(lvstack)
                     lvstack.append(nspaces)
-                #print(sym)
-                #print(lv)
-                #print(self.lvs)
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
                     ret[e + 1 +
@@ -632,6 +623,35 @@ class md029(mddef):
         return ret
 
 
+class md030(mddef):
+    flag = re.M
+    desc = 'Ordered list item prefix'
+    locator = r'^ {0,3}(([0-9]+\.)|[*+-])(?=\s)'
+    gid = 1
+
+    def test(self, text, s, e):
+        sym = text[s:e]
+        mr = re.match(r'[0-9]+\.', sym)
+        if mr:
+            single = self.settings['ol_single']
+            multi = self.settings['ol_multi']
+        else:
+            single = self.settings['ul_single']
+            multi = self.settings['ul_multi']
+        nspaces = 0
+        p = e
+        while text[p] == ' ':
+            p += 1
+            nspaces += 1
+        while text[p] != '\n' and text[p] != '\r':
+            p += 1
+        ret = {}
+        is_multi = (len(text) >= p + 2) and (text[p + 1] in '\r\n')
+        against_value = multi if is_multi else single
+        if against_value != nspaces:
+            ret[e] = '%d spaces found, %d expected' % (nspaces, against_value)
+        return ret
+
 class MarkdownLintCommand(sublime_plugin.TextCommand):
 
     blockdef = []
@@ -689,3 +709,6 @@ class MarkdownLintCommand(sublime_plugin.TextCommand):
                 break
 
         return ret
+        
+    def is_enabled(self):
+        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
