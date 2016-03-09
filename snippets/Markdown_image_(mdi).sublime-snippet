@@ -2,4 +2,5 @@
   <content><![CDATA[![${1:Alt text}](${2:/path/to/img.jpg} "${3:Optional title}")]]></content>
   <tabTrigger>mdi</tabTrigger>
   <scope>text.html.markdown.multimarkdown, text.html.markdown</scope>
+  <description>Markdown Image</description>
 </snippet>
