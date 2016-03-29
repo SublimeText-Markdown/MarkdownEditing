@@ -5,6 +5,7 @@ from MarkdownEditing.mdeutils import *
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
+footnote_scope_name = "meta.link.reference.footnote.markdown"
 marker_scope_name = "meta.link.reference.markdown"
 marker_image_scope_name = "meta.image.reference.markdown"
 ref_link_scope_name = "markup.underline.link.markdown"
@@ -26,14 +27,14 @@ def getMarkers(view, name=''):
     if name == '':
         markers.extend(view.find_all(r"(?<=\]\[)([^\]]+)(?=\])", 0))  # ][???]
         markers.extend(view.find_all(r"(?<=\[)([^\]]*)(?=\]\[\])", 0))  # [???][]
-        markers.extend(view.find_all(r"(?<=\[)(\^[^\]]+)(?=\])", 0))  # [^???]
+        markers.extend(view.find_all(r"(?<=\[)(\^[^\]]+)(?=\])(?!\s*\]:)", 0))  # [^???]
     else:
         # ][name]
         markers.extend(view.find_all(r"(?<=\]\[)(%s)(?=\])" % name, 0))
         markers.extend(view.find_all(r"(?<=\[)(%s)(?=\]\[\])" % name, 0))  # [name][]
         if name[0] == '^':
             # [(^)name]
-            markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])" % name, 0))
+            markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])(?!\s*\]:)" % name, 0))
     regions = []
     for x in markers:
         scope_name = view.scope_name(x.begin())
@@ -109,7 +110,7 @@ class ReferenceJumpCommand(MDETextCommand):
         missingRefs = []
         for sel in view.sel():
             scope = view.scope_name(sel.begin()).split(" ")
-            if definition_scope_name in scope:
+            if definition_scope_name in scope or footnote_scope_name in scope:
                 if refname_scope_name in scope:
                     # Definition name
                     defname = view.substr(getCurrentScopeRegion(view, sel.begin()))
@@ -117,7 +118,7 @@ class ReferenceJumpCommand(MDETextCommand):
                     # Starting "["
                     defname = view.substr(getCurrentScopeRegion(view, sel.begin()+1))
                 else:
-                    # URL
+                    # URL or footnote
                     marker_pt = findScopeFrom(view, sel.begin(), refname_scope_name, True)
                     defname = view.substr(getCurrentScopeRegion(view, marker_pt))
                 if defname in markers:
@@ -140,6 +141,7 @@ class ReferenceJumpCommand(MDETextCommand):
             sels = view.sel()
             sels.clear()
             sels.add_all(edit_regions)
+            view.show(edit_regions[0])
         if len(missingRefs) + len(missingMarkers) > 0:
             # has something missing
             if len(missingMarkers) == 0:
@@ -317,6 +319,7 @@ class ReferenceNewFootnote(MDETextCommand):
                 targetloc = 0
             view.insert(edit, targetloc, markernum_str)
         if len(view.sel()) > 0:
+            view.show(view.size())
             view.insert(edit, view.size(), '\n' + markernum_str + ': ')
             view.sel().clear()
             view.sel().add(sublime.Region(view.size(), view.size()))
