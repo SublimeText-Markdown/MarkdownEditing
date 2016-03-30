@@ -1828,7 +1828,7 @@
 		<key>fenced-obj-c</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(objective-c)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(obj(ective-)?c)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
