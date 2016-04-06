@@ -44,6 +44,9 @@
 	// List bullets to be used for automatically switching. In their order.
 	"mde.list_indent_bullets": ["*", "-", "+"],
 
+	// Auto increments ordered list number. Set to false if you want always "1".
+	"mde.auto_increment_ordered_list_number": true,
+
 	// Always keep current line vertically centered.
 	"mde.keep_centered": false,
 

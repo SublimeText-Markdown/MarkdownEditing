@@ -180,6 +180,47 @@
 					<key>name</key>
 					<string>punctuation.definition.constant.begin.markdown</string>
 				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.reference.link.markdown</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.constant.end.markdown</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.key-value.markdown</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>meta.paragraph.markdown</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x:
+				\s*						# Leading whitespace
+				(\[)(\^\d+?)(\])(:)		# Reference name
+				[ \t]*					# Optional whitespace
+				(.+?)			# The footnote
+				[ \t]*						# Optional whitespace
+				$
+			)</string>
+			<key>name</key>
+			<string>meta.link.reference.footnote.markdown</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.constant.begin.markdown</string>
+				</dict>
 				<key>10</key>
 				<dict>
 					<key>name</key>
@@ -1844,7 +1885,7 @@
 		<key>fenced-coffee</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(coffee)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1860,7 +1901,7 @@
 		<key>fenced-js</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(js|json|javascript)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>

@@ -3,4 +3,5 @@
 $0]]></content>
   <tabTrigger>mdh1</tabTrigger>
   <scope>text.html.markdown.multimarkdown, text.html.markdown</scope>
+  <description>Markdown Header 1</description>
 </snippet>
