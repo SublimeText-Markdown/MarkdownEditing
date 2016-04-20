@@ -10,29 +10,29 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#ECECEC</string>
+                <string>#F7F7F7</string>
                 <key>caret</key>
-                <string>#00bbff</string>
+                <string>#29beea</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#464643</string>
                 <key>invisibles</key>
-                <string>#E0E0E0</string>
+                <string>#F0F0F0</string>
                 <key>lineHighlight</key>
-                <string>#e6e6e6</string>
+                <string>#f7f7f7</string>
                 <key>selection</key>
-                <string>#C2E8FF</string>
+                <string>#C3E8F3</string>
                 <key>selectionBorder</key>
-                <string>#AACBDF</string>
+                <string>#C3E8F3</string>
                 <key>inactiveSelection</key>
-                <string>#B5D3E5</string>
+                <string>#C3E8F3</string>
                 <key>findHighlight</key>
-                <string>#FFE792</string>
+                <string>#c2e8f2</string>
                 <key>findHighlightForeground</key>
-                <string>#000000</string>
+                <string>#1a1a1a</string>
                 <key>shadow</key>
-                <string>#808080</string>
+                <string>#f7f7f7</string>
                 <key>shadowWidth</key>
-                <string>6</string>
+                <string>1</string>
             </dict>
         </dict>
         <dict>
@@ -110,7 +110,7 @@
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#61862F</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -201,7 +201,7 @@
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#000000</string>
+                <string>#c5c5c5</string>
             </dict>
         </dict>
         <dict>
@@ -211,12 +211,10 @@
             <string>constant.character, string</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#FBE9AD1A</string>
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#BC670F</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -229,7 +227,7 @@
                 <key>fontStyle</key>
                 <string></string>
                 <key>foreground</key>
-                <string>#E69A4C</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -240,7 +238,7 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#FBE9ADCC</string>
+                <string>#d0d0d0FF</string>
                 <key>fontStyle</key>
                 <string>bold</string>
             </dict>
@@ -323,7 +321,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#777777</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -388,44 +386,37 @@
             <key>name</key>
             <string>Markup: Emphasis</string>
             <key>scope</key>
-            <string>markup.italic, markup.italic.markdown</string>
+            <string>markup.italic, markup.italic.markdown,punctuation.definition.italic.markdown</string>
             <key>settings</key>
             <dict>
                 <key>fontStyle</key>
                 <string>italic</string>
                 <key>foreground</key>
-                <string>#777777</string>
-                <key>background</key>
-                <string>#E8E8E8</string>
+                <string>#454542</string>
             </dict>
         </dict>
         <dict>
             <key>name</key>
             <string>Markdown: Link</string>
             <key>scope</key>
-            <string>string.other.link.title.markdown,string.other.link.description.markdown</string>
+            <string>string.other.title.markdown,string.other.link.description.markdown,meta.image.reference.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#333333</string>
-                <key>background</key>
-                <string>#DDDDDD00</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
             <key>name</key>
             <string>Markdown: Punctuation</string>
             <key>scope</key>
-            <string>punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.strikethrough.markdown, punctuation.definition.heading.markdown</string>
+            <string>punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown, punctuation.definition.strikethrough.markdown,text.html.markdown.gfm meta.paragraph.markdown meta.link.inline.markdown punctuation.definition.metadata.markdown, text.html.markdown.gfm meta.paragraph.markdown meta.link.inline.markdown punctuation.definition.string.begin.markdown, text.html.markdown.gfm meta.paragraph.markdown meta.link.inline.markdown punctuation.definition.string.end, text.html.markdown.gfm meta.paragraph.markdown meta.image.inline.markdown punctuation.definition.string.begin.markdown, text.html.markdown.gfm meta.paragraph.markdown meta.image.inline.markdown punctuation.definition.string.end.markdown, meta.link.inline.markdown, meta.image.inline.markdown</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#AAAAAA</string>
-                <key>background</key>
-                <string>#EEEEEE00</string>
+                <string>#c5c5c5</string>
             </dict>
         </dict>
-
         <dict>
             <key>name</key>
             <string>Markdown: Lists</string>
@@ -455,7 +446,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#000000</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -484,11 +475,13 @@
             <key>name</key>
             <string>Markup: Heading</string>
             <key>scope</key>
-            <string>markup.heading</string>
+            <string>markup.heading,punctuation.definition.heading.markdown</string>
             <key>settings</key>
             <dict>
                 <key>fontStyle</key>
                 <string>bold</string>
+                <key>foreground</key>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -501,20 +494,20 @@
                 <key>fontStyle</key>
                 <string>bold italic</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
             <key>name</key>
             <string>Markup: Strong</string>
             <key>scope</key>
-            <string>markup.bold, markup.bold.markdown</string>
+            <string>markup.bold, markup.bold.markdown,punctuation.definition.bold.markdown</string>
             <key>settings</key>
             <dict>
                 <key>fontStyle</key>
                 <string>bold</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -554,9 +547,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#CECECE</string>
-                <key>background</key>
-                <string>#ECECEC</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -570,9 +561,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#B7B7B7</string>
-                <key>background</key>
-                <string>#DDDDDD</string>
+                <string>#c26b54</string>
             </dict>
         </dict>
         <dict>
@@ -585,7 +574,7 @@
                 <key>background</key>
                 <string>#D3D3D3</string>
                 <key>foreground</key>
-                <string>#131313</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -603,27 +592,23 @@
             <key>name</key>
             <string>Markup: Underline</string>
             <key>scope</key>
-            <string>markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown,meta.image.reference.markdown,meta.image.inline.markdown</string>
+            <string>markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown, markup.underline punctuation</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#E8E8E8</string>
                 <key>foreground</key>
-                <string>#AAAAAA</string>
+                <string>#c5c5c5</string>
             </dict>
         </dict>
         <dict>
             <key>name</key>
             <string>Markup: Plain Link</string>
             <key>scope</key>
-            <string>
-                , meta.link.inet.markdown markup.underline.link.markdown,
-                , meta.link.email.lt-gt.markdown markup.underline.link.markdown,
+              <string>string.other.link.title.markdown,string.other.link.description.markdown, meta.link.inet.markdown markup.underline.link.markdown, meta.link.email.lt-gt.markdown markup.underline.link.markdown,
             </string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#444488</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
 
@@ -689,9 +674,9 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#BBBBBB22</string>
+                <string>#F7F7F7</string>
                 <key>foreground</key>
-                <string>#AAAAAA</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -702,7 +687,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#999999</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -749,7 +734,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#999999</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -759,23 +744,21 @@
             <string>punctuation.definition.blockquote.markdown</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#D0D0D0</string>
                 <key>foreground</key>
-                <string>#D0D0D0</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
             <key>name</key>
             <string>Block code</string>
             <key>scope</key>
-            <string>markup.raw.block.markdown</string>
+            <string>markup.raw.block.markdown, text.html.markdown.gfm markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.raw.inline.markdown punctuation.definition.raw.markdown</string>
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#dedede</string>
+                <string>#f0f0f0</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#1a1a1a</string>
             </dict>
         </dict>
         <dict>
@@ -785,8 +768,10 @@
             <string>markup.raw.inline.markdown</string>
             <key>settings</key>
             <dict>
+                <key>foreground</key>
+                <string>#454542</string>
                 <key>background</key>
-                <string>#dedede</string>
+                <string>#f0f0f0</string>
             </dict>
         </dict>
         <dict>
