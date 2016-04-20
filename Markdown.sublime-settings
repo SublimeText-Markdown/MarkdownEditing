@@ -41,6 +41,10 @@
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
 
+	// Check spelling in Markdown files
+	"spell_check": true,
+	"dictionary": "Packages/Language - English/en_US.dic",
+
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,
 
