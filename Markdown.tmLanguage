@@ -467,7 +467,12 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(?&lt;!\w)(\*|_)(?=\1\1)(\1\1)(?=\S)								# Open
+						(
+							(?!\*_\*|_\*_)								#open
+							(\*|(?&lt;!\w)_)
+							(\*|_)
+							(\*(?=[^\s\*])|_(?=[^\s_]))
+						)
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -501,10 +506,10 @@
 										)
 									)
 								)
-							  | (?!(?&lt;=\S)\1{3}(?!\1)).						# Everything besides
+							  | (?!(?&lt;=\S)(?!.._\w)(\4\3\2)).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1{3}(?!\1)								# Close
+							(?&lt;=\S)(?!.._\w)(\4\3\2)									# Close
 						)
 					</string>
 			<key>captures</key>
@@ -521,7 +526,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1{3})(?!\1)</string>
+			<string>(?&lt;=\S)(?!.._\w)(\4\3\2)</string>
 			<key>name</key>
 			<string>markup.bold_italic.markdown</string>
 			<key>patterns</key>
@@ -607,7 +612,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(?&lt;!\w)(\*\*|__)(?=\S)								# Open
+						((\*\*)(?=[^\s\*]) | (?&lt;!\w)(__)(?=[^\s_]))								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -641,10 +646,10 @@
 										)
 									)
 								)
-							  | (?!(?&lt;=\S)\1).						# Everything besides
+							  | (?!(?&lt;=\S)(?=\1)((\*\*)|(__)(?!\w))).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1								# Close
+							(?&lt;=\S)(?=\1)((\*\*)|(__)(?!\w))								# Close
 						)
 					</string>
 			<key>captures</key>
@@ -656,7 +661,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1)</string>
+			<string>(?&lt;=\S)(?=\1)((\*\*)|(__)(?!\w))</string>
 			<key>name</key>
 			<string>markup.bold.markdown</string>
 			<key>patterns</key>
@@ -746,7 +751,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(?&lt;!\w)(~~)(?=[^\s~])								# Open
+						(~~)(?=[^\s~])								# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -1146,7 +1151,7 @@
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-						(?&lt;!\w)(\*|_)(?=\S)								# Open
+						((\*)(?=[^\s\*]) | (?&lt;!\w)(_)(?=[^\s_]))							# Open
 						(?=
 							(
 							    &lt;[^&gt;]*+&gt;							# HTML tags
@@ -1181,10 +1186,10 @@
 									)
 								)
 							  | \1\1								# Must be bold closer
-							  | (?!(?&lt;=\S)\1).						# Everything besides
+							  | (?!(?&lt;=\S)(?=\1)((\*)|(_)(?!\w))).						# Everything besides
 																	# style closer
 							)++
-							(?&lt;=\S)\1								# Close
+							(?&lt;=\S)(?=\1)((\*)|(_)(?!\w))								# Close
 						)
 					</string>
 			<key>captures</key>
@@ -1196,7 +1201,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\S)(\1)((?!\1)|(?=\1\1))</string>
+			<string>(?&lt;=\S)(?=\1)((\*)|(_)(?!\w))</string>
 			<key>name</key>
 			<string>markup.italic.markdown</string>
 			<key>patterns</key>
