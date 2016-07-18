@@ -8,11 +8,11 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 ## Overview
 
+* [Installation](#installation)
 * [Features](#features)
 * [Key Bindings](#key-bindings)
 * [GFM Specific Features](#gfm-specific-features)
 * [Commands for Command Palette](#commands-for-command-palette)
-* [Installation](#installation)
 * [Configuration](#configuration)
 * [Tips](#tips)
 * [Similar Plugins](#similar-plugins)
@@ -20,7 +20,37 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 * [Contributing](#contributing)
 * [Credits](#credits)
 * [Donation](#donation)
-* [License](#license)
+* [License](#license)   
+
+## Installation
+
+> __Important Note About Installation__
+> 
+> Are you getting this error after installation: _**Error loading syntax file** "Packages/Markdown/Markdown.tmLanguage": Unable to open Packages/Markdown/Markdown.tmLanguage_? This is caused by open markdown files at the install time. You have to __manually change their syntax to your newly installed Markdown syntax__. Read the below paragraph for more details on this.
+
+_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
+
+If you are using Sublime Text 2, you have to disable the native package _manually_. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
+
+    "ignored_packages": [..., "Markdown"],
+
+### Package Control
+
+The preferred method of installation is via [Sublime Package Control][wbond].
+
+1. [Install Sublime Package Control][wbond 2]
+2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
+3. Type `install package` and hit Return. A list of available packages will be displayed.
+4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
+5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+
+### Manual Installation
+
+1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory for your platform:
+    * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
+    * Windows: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
+    * Linux: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
+2. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ## Features
 
@@ -95,36 +125,6 @@ Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). So
 ### Switch List Bullet Type
 
 Switches the highlighted list between numbered and bulleted style.
-
-## Installation
-
-> __Important Note About Installation__
-> 
-> Are you getting this error after installation: _**Error loading syntax file** "Packages/Markdown/Markdown.tmLanguage": Unable to open Packages/Markdown/Markdown.tmLanguage_? This is caused by open markdown files at the install time. You have to __manually change their syntax to your newly installed Markdown syntax__. Read the below paragraph for more details on this.
-
-_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
-
-If you are using Sublime Text 2, you have to disable the native package _manually_. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
-
-    "ignored_packages": [..., "Markdown"],
-
-### Package Control
-
-The preferred method of installation is via [Sublime Package Control][wbond].
-
-1. [Install Sublime Package Control][wbond 2]
-2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
-3. Type `install package` and hit Return. A list of available packages will be displayed.
-4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
-5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
-
-### Manual Installation
-
-1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory for your platform:
-    * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
-    * Windows: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
-    * Linux: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
-2. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
 
 ## Configuration
 
