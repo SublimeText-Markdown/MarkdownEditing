@@ -24,7 +24,7 @@
 	<array>
 		<dict>
 			<key>begin</key>
-			<string>^([A-Za-z0-9]+)(:)\s*</string>
+			<string>^([A-Za-z0-9 _\-]+)(:)\s*</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
