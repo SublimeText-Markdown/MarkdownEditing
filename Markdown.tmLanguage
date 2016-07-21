@@ -1140,6 +1140,10 @@
 					<key>include</key>
 					<string>#tag-kbd</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
 			</array>
 		</dict>
 		<key>italic</key>
