@@ -1934,6 +1934,38 @@
 		        </dict>
 		    </array>
 		</dict>
+		<key>fenced-ts</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(ts|typescript)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.ts</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-tsx</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(tsx)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.tsx</string>
+		        </dict>
+		    </array>
+		</dict>
 		<key>fenced-ruby</key>
 		<dict>
 		    <key>begin</key>
@@ -2122,6 +2154,14 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-js</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-ts</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-tsx</string>
 				</dict>
 				<dict>
 					<key>include</key>
