@@ -1837,7 +1837,7 @@
 		<key>fenced-sass</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(sass|scss)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(sass)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1846,7 +1846,23 @@
 		    <array>
 		        <dict>
 		            <key>include</key>
-		            <string>source.css, source.sass</string>
+		            <string>source.sass</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-scss</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(scss)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.scss</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -2082,6 +2098,10 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-sass</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-scss</string>
 				</dict>
 				<dict>
 					<key>include</key>
