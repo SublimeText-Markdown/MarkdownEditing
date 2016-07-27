@@ -1140,6 +1140,10 @@
 					<key>include</key>
 					<string>#tag-kbd</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
 			</array>
 		</dict>
 		<key>italic</key>
@@ -1718,7 +1722,7 @@
 		    <array>
 		        <dict>
 		            <key>include</key>
-		            <string>source.css, source.less</string>
+		            <string>source.less</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -1837,7 +1841,7 @@
 		<key>fenced-sass</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(sass|scss)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(sass)\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
@@ -1846,7 +1850,23 @@
 		    <array>
 		        <dict>
 		            <key>include</key>
-		            <string>source.css, source.sass</string>
+		            <string>source.sass</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-scss</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(scss)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.scss</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -1911,6 +1931,38 @@
 		        <dict>
 		            <key>include</key>
 		            <string>source.js</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-ts</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(ts|typescript)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.ts</string>
+		        </dict>
+		    </array>
+		</dict>
+		<key>fenced-tsx</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(tsx)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.tsx</string>
 		        </dict>
 		    </array>
 		</dict>
@@ -2085,6 +2137,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#fenced-scss</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#fenced-scala</string>
 				</dict>
 				<dict>
@@ -2098,6 +2154,14 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-js</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-ts</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-tsx</string>
 				</dict>
 				<dict>
 					<key>include</key>
