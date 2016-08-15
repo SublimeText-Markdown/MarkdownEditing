@@ -16,7 +16,7 @@ def disable_native_markdown_package():
         ignored_packages.append('Markdown')
         save_ingored_packages(ignored_packages)
 
-def enable_native_markdown_packageb():
+def enable_native_markdown_package():
     ignored_packages = get_ingored_packages()
     if 'Markdown' in ignored_packages:
         ignored_packages.remove('Markdown')
