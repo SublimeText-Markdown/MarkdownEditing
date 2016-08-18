@@ -936,6 +936,10 @@
 					<key>include</key>
 					<string>#link-ref</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>text.html.basic</string>
+				</dict>
 			</array>
 		</dict>
 		<key>italic</key>
