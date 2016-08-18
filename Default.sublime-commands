@@ -8,10 +8,6 @@
         "command": "convert_to_atx"
     },
     {
-        "caption": "MarkdownEditing: Add Missing Link Labels",
-        "command": "gather_missing_link_markers"
-    },
-    {
         "caption": "Preferences: MarkdownEditing Settings – Default",
         "command": "open_file", "args":
         {

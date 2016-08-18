@@ -459,9 +459,11 @@ class ReferenceOrganize(MDETextCommand):
             output += "[%s] %s no definition\n" % (", ".join(missings), "have" if len(missings) > 1 else "has")
 
         # sel.clear()
-        if len(output) > 0:
-            window = view.window()
-            output_panel = window.create_output_panel("mde")
-            output_panel.run_command('erase_view')
-            output_panel.run_command('append', {'characters': output})
-            window.run_command("show_panel", {"panel": "output.mde"})
+        if len(output) == 0:
+            output = "All references are well defined:\n" + "\n".join(('[%s]' % m) for m in markers)
+
+        window = view.window()
+        output_panel = window.create_output_panel("mde")
+        output_panel.run_command('erase_view')
+        output_panel.run_command('append', {'characters': output})
+        window.run_command("show_panel", {"panel": "output.mde"})
