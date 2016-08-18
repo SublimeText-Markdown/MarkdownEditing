@@ -1,14 +1,16 @@
 """
-	Re-implements `find_under_expand` command because ST refuses to use it inside macro
-	definitions.
+    Re-implements `find_under_expand` command because ST refuses to use it inside macro
+    definitions.
 
-	Source: http://www.sublimetext.com/forum/viewtopic.php?f=3&t=5148
+    Source: http://www.sublimetext.com/forum/viewtopic.php?f=3&t=5148
 """
 
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 
 
 class CustomFindUnderExpandCommand(sublime_plugin.TextCommand):
+
     def run(self, edit):
         regions = []
 

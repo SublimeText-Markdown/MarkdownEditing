@@ -1,7 +1,10 @@
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
-class NumberListCommand(sublime_plugin.TextCommand):
+
+class NumberListCommand(MDETextCommand):
+
     def run(self, edit):
         view = self.view
         sel = view.sel()[0]
@@ -19,10 +22,9 @@ class NumberListCommand(sublime_plugin.TextCommand):
             view.erase(edit, sel)
             view.insert(edit, sel.begin(), "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces))
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-class NumberListReferenceCommand(sublime_plugin.TextCommand):
+class NumberListReferenceCommand(MDETextCommand):
+
     def run(self, edit):
         view = self.view
         sel = view.sel()[0]

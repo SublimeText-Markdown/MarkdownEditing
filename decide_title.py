@@ -18,8 +18,7 @@ class DecideTitle(sublime_plugin.EventListener):
                     title = text[title_begin: title_end]
                 else:
                     title_begin = m.end()
-                    title_end = re.search(
-                        '(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
+                    title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
                     title = text[title_begin: title_end]
                 break
 

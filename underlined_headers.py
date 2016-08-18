@@ -16,8 +16,11 @@ Also adds "Fix Underlined Markdown Headers" to Tools > Command Palette. After mo
 header text, this command will re-align the underline dashes with the new text length.
 
 """
-import sublime, sublime_plugin
-import re, itertools
+import sublime
+import sublime_plugin
+import re
+import itertools
+from MarkdownEditing.mdeutils import *
 
 SETEXT_DASHES_RE = re.compile( r'''
     (?: =+ | -+ ) # A run of ---- or ==== underline characters.
@@ -31,6 +34,7 @@ SETEXT_HEADER_RE = re.compile( r'''
     [ \t]*        # Optional trailing whitespace.
     $             # Must fill the while line. Don't match "- list items"
     ''', re.X | re.M )
+
 
 def fix_dashes(view, edit, text_region, dash_region):
     """Replaces the underlined "dash" region of a setext header with a run of
@@ -46,7 +50,8 @@ def fix_dashes(view, edit, text_region, dash_region):
     view.replace(edit, dash_region, new_dashes)
 
 
-class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
+class CompleteUnderlinedHeaderCommand(MDETextCommand):
+
     """If the current selection is looks like a setext underline of - or = ,
     then inserts enough dash characters to match the length of the previous
     (header text) line."""
@@ -55,10 +60,12 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             dashes_line = self.view.line(region)
             # Ignore first list
-            if dashes_line.begin() == 0: continue
+            if dashes_line.begin() == 0:
+                continue
 
             text_line = self.view.line(dashes_line.begin() - 1)
-            if text_line.begin() < 0: continue
+            if text_line.begin() < 0:
+                continue
 
             text = self.view.substr(text_line)
             dashes = self.view.substr(dashes_line)
@@ -70,7 +77,7 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
                 tab_size = int(settings.get('tab_size', 8))
                 indent_characters = '\t'
                 if use_spaces:
-                        indent_characters = ' ' * tab_size
+                    indent_characters = ' ' * tab_size
                 self.view.insert(edit, dashes_line.begin(), indent_characters)
                 break
 
@@ -78,11 +85,9 @@ class CompleteUnderlinedHeaderCommand(sublime_plugin.TextCommand):
             if m:
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class FixAllUnderlinedHeadersCommand(MDETextCommand):
 
-class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
     """Searches for all setext headings resize them to match the preceding
     header text."""
 
@@ -92,7 +97,8 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         lines = self.view.split_by_newlines(sublime.Region(0, self.view.size()))
-        if len(lines) < 2: return
+        if len(lines) < 2:
+            return
 
         # Since we're modifying the text, we are shifting all the following
         # regions. To avoid this, just go backwards.
@@ -110,13 +116,11 @@ class FixAllUnderlinedHeadersCommand(sublime_plugin.TextCommand):
             if m:
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-class ConvertToAtxCommand(sublime_plugin.TextCommand):
+class ConvertToAtxCommand(MDETextCommand):
 
     def run(self, edit, closed=False):
-        regions =  list(self.view.sel())
+        regions = list(self.view.sel())
         if len(regions) == 1 and regions[0].size() == 0:
             regions = [sublime.Region(0, self.view.size())]
         regions.reverse()
@@ -131,6 +135,3 @@ class ConvertToAtxCommand(sublime_plugin.TextCommand):
                     atx = "#" + atx
                 closing = atx[::-1] if closed else ""
                 self.view.replace(edit, mreg, atx + m.group(1) + closing)
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

@@ -1,8 +1,11 @@
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
-class IndentListItemCommand(sublime_plugin.TextCommand):
-    def run(self, edit, reverse = False):
+
+class IndentListItemCommand(MDETextCommand):
+
+    def run(self, edit, reverse=False):
         for region in self.view.sel():
             line = self.view.line(region)
             line_content = self.view.substr(line)
@@ -41,6 +44,3 @@ class IndentListItemCommand(sublime_plugin.TextCommand):
 
             # Insert the new item
             self.view.replace(edit, line, new_line)
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

@@ -1,7 +1,7 @@
-
 import sublime
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
 
 class mddef(object):
@@ -613,12 +613,10 @@ class md029(mddef):
 
             if style == 'one':
                 if sym != '1':
-                    ret[mr.start(
-                        1) + e + 1] = '%s found, \'1\' expected' % repr(sym)
+                    ret[mr.start(1) + e + 1] = '%s found, \'1\' expected' % repr(sym)
             else:
                 if int(sym) != int(lastSym) + 1:
-                    ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' %
-                                                (repr(sym), int(lastSym) + 1))
+                    ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' % (repr(sym), int(lastSym) + 1))
                 lastSym = sym
         return ret
 
@@ -652,7 +650,8 @@ class md030(mddef):
             ret[e] = '%d spaces found, %d expected' % (nspaces, against_value)
         return ret
 
-class MarkdownLintCommand(sublime_plugin.TextCommand):
+
+class MarkdownLintCommand(MDETextCommand):
 
     blockdef = []
     scope_block = 'markup.raw.block.markdown'
@@ -709,6 +708,3 @@ class MarkdownLintCommand(sublime_plugin.TextCommand):
                 break
 
         return ret
-        
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

@@ -145,15 +145,11 @@ class ReferenceJumpCommand(MDETextCommand):
         if len(missingRefs) + len(missingMarkers) > 0:
             # has something missing
             if len(missingMarkers) == 0:
-                sublime.status_message("The definition%s of %s cannot be found." %
-                                       ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs)))
+                sublime.status_message("The definition%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs)))
             elif len(missingRefs) == 0:
-                sublime.status_message("The marker%s of %s cannot be found." %
-                                       ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+                sublime.status_message("The marker%s of %s cannot be found." % ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
             else:
-                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." %
-                                       ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs),
-                                        "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs), "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
 
 
 def is_url(contents):
@@ -448,7 +444,6 @@ class ReferenceOrganize(MDETextCommand):
         # report missing
         refs = getReferences(view)
         markers = getMarkers(view)
-        print(markers)
         missings = []
         for ref in refs:
             if ref not in markers:

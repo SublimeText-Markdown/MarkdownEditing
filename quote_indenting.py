@@ -1,9 +1,11 @@
 import re
 import sublime
 import sublime_plugin
+from MarkdownEditing.mdeutils import *
 
 
-class IndentQuote(sublime_plugin.TextCommand):
+class IndentQuote(MDETextCommand):
+
     def description(self):
         return 'Indent a quote'
 
@@ -34,11 +36,9 @@ class IndentQuote(sublime_plugin.TextCommand):
         for selection in new_selections:
             selections.add(selection)
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class DeindentQuote(MDETextCommand):
 
-class DeindentQuote(sublime_plugin.TextCommand):
     def description(self):
         return 'Deindent a quote'
 
@@ -68,6 +68,3 @@ class DeindentQuote(sublime_plugin.TextCommand):
         selections.clear()
         for selection in new_selections:
             selections.add(selection)
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
