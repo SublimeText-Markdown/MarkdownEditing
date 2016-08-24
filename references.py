@@ -467,3 +467,28 @@ class ReferenceOrganize(MDETextCommand):
         output_panel.run_command('erase_view')
         output_panel.run_command('append', {'characters': output})
         window.run_command("show_panel", {"panel": "output.mde"})
+
+
+class GatherMissingLinkMarkersCommand(MDETextCommand):
+
+    def run(self, edit):
+        view = self.view
+        refs = getReferences(view)
+        markers = getMarkers(view)
+        missings = []
+        for marker in markers:
+            if marker not in refs:
+                missings.append(marker)
+        print(refs)
+        print(markers)
+        if len(missings):
+            # Remove all whitespace at the end of the file
+            whitespace_at_end = view.find(r'\s*\z', 0)
+            view.replace(edit, whitespace_at_end, "\n")
+
+            # If there is not already a reference list at the and, insert a new line at the end
+            if not view.find(r'\n\s*\[[^\]]*\]:.*\s*\z', 0):
+                view.insert(edit, view.size(), "\n")
+
+            for link in missings:
+                view.insert(edit, view.size(), '[%s]: \n' % link)
