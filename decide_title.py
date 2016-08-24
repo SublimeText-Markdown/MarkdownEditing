@@ -21,6 +21,11 @@ class DecideTitle(sublime_plugin.EventListener):
                     title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
                     title = text[title_begin: title_end]
                 break
+            if len(title) == 0:
+                firstLineEnd = text.find('\n')
+                if firstLineEnd == -1:
+                    firstLineEnd = len(text)
+                title = text[0: firstLineEnd]
 
             title = title.strip()
             if view.file_name() is None and len(title) > 0:
