@@ -145,15 +145,11 @@ class ReferenceJumpCommand(MDETextCommand):
         if len(missingRefs) + len(missingMarkers) > 0:
             # has something missing
             if len(missingMarkers) == 0:
-                sublime.status_message("The definition%s of %s cannot be found." %
-                                       ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs)))
+                sublime.status_message("The definition%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs)))
             elif len(missingRefs) == 0:
-                sublime.status_message("The marker%s of %s cannot be found." %
-                                       ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+                sublime.status_message("The marker%s of %s cannot be found." % ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
             else:
-                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." %
-                                       ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs),
-                                        "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs), "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
 
 
 def is_url(contents):
@@ -448,7 +444,6 @@ class ReferenceOrganize(MDETextCommand):
         # report missing
         refs = getReferences(view)
         markers = getMarkers(view)
-        print(markers)
         missings = []
         for ref in refs:
             if ref not in markers:
@@ -464,9 +459,36 @@ class ReferenceOrganize(MDETextCommand):
             output += "[%s] %s no definition\n" % (", ".join(missings), "have" if len(missings) > 1 else "has")
 
         # sel.clear()
-        if len(output) > 0:
-            window = view.window()
-            output_panel = window.create_output_panel("mde")
-            output_panel.run_command('erase_view')
-            output_panel.run_command('append', {'characters': output})
-            window.run_command("show_panel", {"panel": "output.mde"})
+        if len(output) == 0:
+            output = "All references are well defined:\n" + "\n".join(('[%s]' % m) for m in markers)
+
+        window = view.window()
+        output_panel = window.create_output_panel("mde")
+        output_panel.run_command('erase_view')
+        output_panel.run_command('append', {'characters': output})
+        window.run_command("show_panel", {"panel": "output.mde"})
+
+
+class GatherMissingLinkMarkersCommand(MDETextCommand):
+
+    def run(self, edit):
+        view = self.view
+        refs = getReferences(view)
+        markers = getMarkers(view)
+        missings = []
+        for marker in markers:
+            if marker not in refs:
+                missings.append(marker)
+        print(refs)
+        print(markers)
+        if len(missings):
+            # Remove all whitespace at the end of the file
+            whitespace_at_end = view.find(r'\s*\z', 0)
+            view.replace(edit, whitespace_at_end, "\n")
+
+            # If there is not already a reference list at the and, insert a new line at the end
+            if not view.find(r'\n\s*\[[^\]]*\]:.*\s*\z', 0):
+                view.insert(edit, view.size(), "\n")
+
+            for link in missings:
+                view.insert(edit, view.size(), '[%s]: \n' % link)

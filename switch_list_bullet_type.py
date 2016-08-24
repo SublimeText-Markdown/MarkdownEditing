@@ -1,8 +1,9 @@
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
 
-class SwitchListBulletTypeCommand(sublime_plugin.TextCommand):
+class SwitchListBulletTypeCommand(MDETextCommand):
 
     def run(self, edit):
         todo = []
@@ -23,8 +24,7 @@ class SwitchListBulletTypeCommand(sublime_plugin.TextCommand):
                     # Insert the new item
                     todo.append([line, new_line])
                 else:
-                    m = re.match(
-                        r"^(\s*(?:>\s*)?)[0-9]+\.(\s+.*)$", line_content)
+                    m = re.match(r"^(\s*(?:>\s*)?)[0-9]+\.(\s+.*)$", line_content)
                     if m:
                         marker = self.view.settings().get('mde.list_indent_bullets', ["*"])
                         # Transform the bullet to unnumbered bullet type
@@ -36,6 +36,3 @@ class SwitchListBulletTypeCommand(sublime_plugin.TextCommand):
         while len(todo) > 0:
             j = todo.pop()
             self.view.replace(edit, j[0], j[1])
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

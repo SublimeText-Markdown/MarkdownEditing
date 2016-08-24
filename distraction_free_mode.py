@@ -5,19 +5,17 @@
     https://github.com/maliayas/SublimeText_FullScreenStatus
 """
 
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
+from MarkdownEditing.mdeutils import *
 
 
 def on_distraction_free():
     return sublime.active_window().settings().get('fss_on_distraction_free')
 
-def view_is_markdown(view):
-    if len(view.sel()) > 0:
-        return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
-    else:
-        return False
 
 class KeepCurrentLineCentered(sublime_plugin.EventListener):
+
     def on_modified_async(self, view):
         # One of the MarkdownEditing syntax files must be in use.
         if not view_is_markdown(view):

@@ -1,6 +1,7 @@
 import sublime
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'
@@ -64,13 +65,9 @@ def strip_trailing_whitespace(view, edit):
     if tws:
         view.erase(edit, tws)
 
-def view_is_markdown(view):
-    if len(view.sel()) > 0:
-        return bool(view.score_selector(view.sel()[0].a, "text.html.markdown"))
-    else:
-        return False
 
 class MarkFootnotes(sublime_plugin.EventListener):
+
     def update_footnote_data(self, view):
         if view_is_markdown(view):
             view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
@@ -83,7 +80,8 @@ class MarkFootnotes(sublime_plugin.EventListener):
         self.update_footnote_data(view)
 
 
-class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
+class GatherMissingFootnotesCommand(MDETextCommand):
+
     def run(self, edit):
         refs = get_footnote_identifiers(self.view)
         defs = get_footnote_definition_markers(self.view)
@@ -93,10 +91,9 @@ class GatherMissingFootnotesCommand(sublime_plugin.TextCommand):
             for note in missingnotes:
                 self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-class InsertFootnoteCommand(sublime_plugin.TextCommand):
+class InsertFootnoteCommand(MDETextCommand):
+
     def run(self, edit):
         view = self.view
         markernum = get_next_footnote_marker(view)
@@ -116,10 +113,9 @@ class InsertFootnoteCommand(sublime_plugin.TextCommand):
             if view.settings().get('command_mode'):
                 view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
-class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
+class GoToFootnoteDefinitionCommand(MDETextCommand):
+
     def run(self, edit):
         defs = get_footnote_definition_markers(self.view)
         regions = self.view.get_regions(REFERENCE_KEY)
@@ -142,11 +138,9 @@ class GoToFootnoteDefinitionCommand(sublime_plugin.TextCommand):
                 self.view.sel().add(defs[target])
                 self.view.show(defs[target])
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class GoToFootnoteReferenceCommand(MDETextCommand):
 
-class GoToFootnoteReferenceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         refs = get_footnote_references(self.view)
         match = is_footnote_definition(self.view)
@@ -156,11 +150,9 @@ class GoToFootnoteReferenceCommand(sublime_plugin.TextCommand):
             [self.view.sel().add(a) for a in refs[target]]
             self.view.show(refs[target][0])
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class MagicFootnotesCommand(MDETextCommand):
 
-class MagicFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         if (is_footnote_definition(self.view)):
             self.view.run_command('go_to_footnote_reference')
@@ -169,22 +161,18 @@ class MagicFootnotesCommand(sublime_plugin.TextCommand):
         else:
             self.view.run_command('insert_footnote')
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class SwitchToFromFootnoteCommand(MDETextCommand):
 
-class SwitchToFromFootnoteCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         if (is_footnote_definition(self.view)):
             self.view.run_command('go_to_footnote_reference')
         else:
             self.view.run_command('go_to_footnote_definition')
 
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
 
+class SortFootnotesCommand(MDETextCommand):
 
-class SortFootnotesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)
         defs = get_footnote_definition_markers(self.view)
@@ -205,6 +193,3 @@ class SortFootnotesCommand(sublime_plugin.TextCommand):
 
         for key in keys:
             self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))

@@ -1,8 +1,9 @@
 import sublime_plugin
 import re
+from MarkdownEditing.mdeutils import *
 
 
-class IndentListMultiitemCommand(sublime_plugin.TextCommand):
+class IndentListMultiitemCommand(MDETextCommand):
 
     def run(self, edit, reverse=False):
         todo = []
@@ -29,8 +30,7 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
                     new_line = line_content
                     # Transform the bullet to the next/previous bullet type
                     if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
-                        bullets = self.view.settings().get(
-                            "mde.list_indent_bullets", ["*", "-", "+"])
+                        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
 
                         for key, bullet in enumerate(bullets):
                             re_bullet = re.escape(bullet)
@@ -45,13 +45,11 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
                                 break
                     if not reverse:
                         # Do the indentation
-                        new_line = re.sub(
-                            bullet_pattern, tab_str + "\\1", new_line, 1)
+                        new_line = re.sub(bullet_pattern, tab_str + "\\1", new_line, 1)
 
                     else:
                         # Do the unindentation
-                        new_line = re.sub(
-                            tab_str + bullet_pattern, "\\1", new_line, 1)
+                        new_line = re.sub(tab_str + bullet_pattern, "\\1", new_line, 1)
                 else:
                     if not reverse:
                         new_line = tab_str + line_content
@@ -64,6 +62,3 @@ class IndentListMultiitemCommand(sublime_plugin.TextCommand):
         while len(todo) > 0:
             j = todo.pop()
             self.view.replace(edit, j[0], j[1])
-
-    def is_enabled(self):
-        return bool(self.view.score_selector(self.view.sel()[0].a, "text.html.markdown"))
