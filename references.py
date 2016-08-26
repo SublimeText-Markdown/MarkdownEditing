@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 import re
-from MarkdownEditing.mdeutils import *
+from mdeutils import *
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
