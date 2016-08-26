@@ -1,7 +1,7 @@
 import re
 import sublime
 import sublime_plugin
-from MarkdownEditing.mdeutils import *
+from mdeutils import *
 
 
 class IndentQuote(MDETextCommand):

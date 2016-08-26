@@ -1,6 +1,6 @@
 import sublime_plugin
 import re
-from MarkdownEditing.mdeutils import *
+from mdeutils import *
 
 
 class SwitchListBulletTypeCommand(MDETextCommand):
