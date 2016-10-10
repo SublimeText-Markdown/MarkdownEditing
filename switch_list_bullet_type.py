@@ -10,6 +10,7 @@ class SwitchListBulletTypeCommand(MDETextCommand):
 
     def run(self, edit):
         todo = []
+        unordered_bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
         for region in self.view.sel():
             lines = self.view.line(region)
             lines = self.view.split_by_newlines(lines)
@@ -27,11 +28,12 @@ class SwitchListBulletTypeCommand(MDETextCommand):
                     # Insert the new item
                     todo.append([line, new_line])
                 else:
-                    m = re.match(r"^(\s*(?:>\s*)?)[0-9]+\.(\s+.*)$", line_content)
+                    m = re.match(r"^(\s*(?:>\s*)?)[" +
+                                 ''.join(re.escape(i) for i in unordered_bullets) +
+                                 r"](\s+.*)$", line_content)
                     if m:
-                        marker = self.view.settings().get('mde.list_indent_bullets', ["*"])
                         # Transform the bullet to unnumbered bullet type
-                        new_line = m.group(1) + marker[0] + m.group(2)
+                        new_line = m.group(1) + unordered_bullets[0] + m.group(2)
 
                         # Insert the new item
                         todo.append([line, new_line])
