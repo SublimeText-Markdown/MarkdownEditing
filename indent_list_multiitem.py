@@ -1,6 +1,9 @@
 import sublime_plugin
 import re
-from MarkdownEditing.mdeutils import *
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
 
 
 class IndentListMultiitemCommand(MDETextCommand):
