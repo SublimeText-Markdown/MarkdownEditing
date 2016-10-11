@@ -245,19 +245,11 @@ class ReferenceNewInlineLinkCommand(MDETextCommand):
         suggested_name = False
         contents = sublime.get_clipboard().strip()
         link = mangle_url(contents) if is_url(contents) else ""
-        for sel in view.sel():
-            text = view.substr(sel)
-            edit_position = sel.end() + 3
-            if image:
-                edit_position += 1
-                view.replace(edit, sel, "![" + text + "](" + link + ")")
-            else:
-                view.replace(edit, sel, "[" + text + "](" + link + ")")
-            edit_regions.append(sublime.Region(edit_position, edit_position + len(link)))
-        if len(edit_regions) > 0:
-            selection = view.sel()
-            selection.clear()
-            selection.add_all(edit_regions)
+        link = link.replace("$", "\\$")
+        if image:
+            view.run_command("insert_snippet", {"contents": "![${1:$SELECTION}](${2:" + link + "})"})
+        else:
+            view.run_command("insert_snippet", {"contents": "[${1:$SELECTION}](${2:" + link + "})"})
 
 
 class ReferenceNewInlineImage(MDETextCommand):
