@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>firstLineMatch</key>
-	<string>^Format:\s*(?i:complete)\s*$</string>
+	<string>(?i)^format:\s*complete\s*$</string>
 	<key>foldingStartMarker</key>
 	<string>(?x)
 		(&lt;(?i:head|body|table|thead|tbody|tfoot|tr|div|select|fieldset|style|script|ul|ol|form|dl)\b.*?&gt;
