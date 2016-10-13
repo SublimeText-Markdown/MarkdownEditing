@@ -1,6 +1,9 @@
 import sublime_plugin
 import re
-from MarkdownEditing.mdeutils import *
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
 
 
 class IndentListItemCommand(MDETextCommand):
@@ -10,13 +13,13 @@ class IndentListItemCommand(MDETextCommand):
             line = self.view.line(region)
             line_content = self.view.substr(line)
 
-            bullet_pattern = "([*+\\-])"
+            bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+            bullet_pattern = '([' + ''.join(re.escape(i) for i in bullets) + '])'
 
             new_line = line_content
 
             # Transform the bullet to the next/previous bullet type
             if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
-                bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
 
                 for key, bullet in enumerate(bullets):
                     if bullet in new_line:
