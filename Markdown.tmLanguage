@@ -1873,7 +1873,7 @@
 		<key>fenced-scala</key>
 		<dict>
 		    <key>begin</key>
-		    <string>^(\s*[`~]{3,})\s*(scala)\s*$</string>
+		    <string>^(\s*[`~]{3,})\s*(scala|tut)(:\S+)?\s*$</string>
 		    <key>end</key>
 		    <string>^(\1)\n</string>
 		    <key>name</key>
