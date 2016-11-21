@@ -4,9 +4,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 ![MarkdownEditing][github]
 
-[Dark][github 2] and [yellow][github 3] theme available ([additional](#additional-color-themes)).
-
-NOTE: [configuration](#configuration) **must be done in order to use a different theme other than the defualt.**
+[Dark][github 2] and [yellow][github 3] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
 
 ## Overview
 
