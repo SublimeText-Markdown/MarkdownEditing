@@ -72,5 +72,9 @@
     {
         "caption": "MarkdownEditing: Organize References",
         "command": "reference_organize"
+    },
+    {
+        "caption": "MarkdownEditing: Toggle Folding Current Section",
+        "command": "fold_section"
     }
 ]

@@ -9,7 +9,7 @@ class DecideTitle(sublime_plugin.EventListener):
         syntax = view.settings().get('syntax')
         if syntax and 'Markdown' in syntax:
             text = view.substr(sublime.Region(0, view.size()))
-            it = re.finditer(r'^(#{1,6}(?!#))|(-{3,}|={3,})', text, re.M)
+            it = re.finditer(r'^(#{1,6}(?!#))|^(-{3,}|={3,})', text, re.M)
             title = ''
             for m in it:
                 if re.match(r'^(-{3,}|={3,})$', m.group()):
