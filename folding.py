@@ -74,7 +74,8 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
             'Fold Level 1 Sections',
             'Fold Level 2 Sections',
             'Fold Level 3 Sections',
-            'Fold Level 4 Sections'
+            'Fold Level 4 Sections',
+            'Fold All Sections'
         ]
         view.window().show_quick_panel(options, self.run_command)
 
@@ -84,30 +85,38 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
             view.run_command('fold_all_sections', {'target_level': value})
         elif value == 0:
             view.run_command('unfold_all')
+        elif value == 5:
+            view.run_command('fold_all_sections')
 
 
 class FoldAllSectionsCommand(MDETextCommand):
 
-    def run(self, edit, target_level):
+    def run(self, edit, target_level=0):
         view = self.view
         view.run_command('unfold_all')
         section_start = -1
         section_end = view.size() - 1
         n_sections = 0
         for (title_begin, title_end, level) in all_headings(view):
-            if level <= target_level:
+            if target_level == 0 or level <= target_level:
                 if section_start > 0:
                     section_end = title_begin - 1
                     reg = sublime.Region(section_start, section_end)
                     view.fold(reg)
                     n_sections += 1
                     section_start = -1
-            if level == target_level:
+            if target_level == 0 or level == target_level:
                 section_start = title_end
         if section_start >= 0:
             reg = sublime.Region(section_start, view.size() - 1)
             view.fold(reg)
             n_sections += 1
+        if len(view.sel()) > 0:
+            for sel in view.sel():
+                if getFoldedRegion(view, sel) == None:
+                    view.show(sel)
+        else:
+            view.show(sublime.Region(0, 0))
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
 
