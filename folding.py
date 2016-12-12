@@ -31,6 +31,17 @@ def all_headings(view):
         yield (title_begin, title_end, level)
 
 
+def get_current_level(view, p):
+    last_level = 0
+    for (title_begin, title_end, level) in all_headings(view):
+        if title_end < p:
+            last_level = level
+        elif title_begin < p:
+            return level
+        else:
+            return last_level
+
+
 class FoldSectionCommand(MDETextCommand):
 
     def run(self, edit):
@@ -69,24 +80,34 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
-        options = [
-            'Unfold all',
-            'Fold Level 1 Sections',
-            'Fold Level 2 Sections',
-            'Fold Level 3 Sections',
-            'Fold Level 4 Sections',
-            'Fold All Sections'
-        ]
-        view.window().show_quick_panel(options, self.run_command)
+        current_level = 0
+        self.options = []
+        if len(view.sel()) > 0:
+            sel = view.sel()[0]
+            current_level = get_current_level(view, sel.a)
+            self.options.append('Fold Level %d Sections' % current_level)
+        self.options.append('Unfold all')
+        for i in range(1, 5):
+            if i != current_level:
+                self.options.append('Fold Level %d Sections' % i)
+        self.options.append('Fold All Sections')
+        view.window().show_quick_panel(self.options, self.run_command)
 
     def run_command(self, value):
         view = self.view
-        if value >= 1 and value <= 4:
-            view.run_command('fold_all_sections', {'target_level': value})
-        elif value == 0:
-            view.run_command('unfold_all')
-        elif value == 5:
-            view.run_command('fold_all_sections')
+        if value >= 0:
+            if self.options[value] == 'Unfold all':
+                view.run_command('unfold_all')
+            elif self.options[value] == 'Fold Level 1 Sections':
+                view.run_command('fold_all_sections', {'target_level': 1})
+            elif self.options[value] == 'Fold Level 2 Sections':
+                view.run_command('fold_all_sections', {'target_level': 2})
+            elif self.options[value] == 'Fold Level 3 Sections':
+                view.run_command('fold_all_sections', {'target_level': 3})
+            elif self.options[value] == 'Fold Level 4 Sections':
+                view.run_command('fold_all_sections', {'target_level': 4})
+            elif self.options[value] == 'Fold All Sections':
+                view.run_command('fold_all_sections')
 
 
 class FoldAllSectionsCommand(MDETextCommand):
