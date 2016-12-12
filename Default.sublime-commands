@@ -76,5 +76,61 @@
     {
         "caption": "MarkdownEditing: Toggle Folding Current Section",
         "command": "fold_section"
+    },
+    {
+        "caption": "MarkdownEditing: Fold Level 1 Sections",
+        "command": "fold_all_sections", "args" :
+        {
+            "target_level" : 1
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Fold Level 2 Sections",
+        "command": "fold_all_sections", "args" :
+        {
+            "target_level" : 2
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Fold Level 3 Sections",
+        "command": "fold_all_sections", "args" :
+        {
+            "target_level" : 3
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Fold Level 4 Sections",
+        "command": "fold_all_sections", "args" :
+        {
+            "target_level" : 4
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
+        "command": "goto_next_heading", "args" :
+        {
+            "same_level" : true
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Find Next Heading (Any level)",
+        "command": "goto_next_heading", "args" :
+        {
+            "same_level" : false
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
+        "command": "goto_previous_heading", "args" :
+        {
+            "same_level" : true
+        }
+    },
+    {
+        "caption": "MarkdownEditing: Find Previous Heading (Any level)",
+        "command": "goto_previous_heading", "args" :
+        {
+            "same_level" : false
+        }
     }
 ]

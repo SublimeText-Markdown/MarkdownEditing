@@ -599,5 +599,30 @@
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    { "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+;"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+."], "command": "goto_next_heading", "args": {"same_level": true}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+shift+;"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
+    { "keys": ["ctrl+shift+."], "command": "goto_next_heading", "args": {"same_level": false}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
     }
 ]
