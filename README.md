@@ -85,6 +85,9 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 | <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote.
 | <kbd>⌘</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
+| <kbd>⌘</kbd><kbd>;</kbd> <kbd>⌘</kbd><kbd>.</kbd> | <kbd>Ctrl</kbd><kbd>;</kbd> <kbd>Ctrl</kbd><kbd>.</kbd> | Go to the previous/next heading of the same or higher level
+| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>;</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>.</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>;</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>.</kbd> |  Go to the previous/next heading
 
 ## GFM Specific Features
 

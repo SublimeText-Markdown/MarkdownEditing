@@ -81,7 +81,7 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
     def run_command(self, value):
         view = self.view
         if value >= 1 and value <= 4:
-            view.run_command('fold_all_sections', {'target_level': value + 1})
+            view.run_command('fold_all_sections', {'target_level': value})
         elif value == 0:
             view.run_command('unfold_all')
 
