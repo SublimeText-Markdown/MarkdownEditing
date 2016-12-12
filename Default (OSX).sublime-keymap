@@ -605,7 +605,7 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+shift+tab"], "command": "show_fold_all_sections", "context":
+    { "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
