@@ -106,6 +106,10 @@
         }
     },
     {
+        "caption": "MarkdownEditing: Fold All Sections",
+        "command": "fold_all_sections"
+    },
+    {
         "caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
         "command": "goto_next_heading", "args" :
         {

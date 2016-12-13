@@ -50,7 +50,7 @@ class FoldSectionCommand(MDETextCommand):
         shouldUnfold = False
         for sel in view.sel():
             section_start = -1
-            section_end = view.size() - 1
+            section_end = view.size()
             section_level = 0
             for (title_begin, title_end, level) in all_headings(view):
                 if title_begin <= sel.a:
@@ -80,34 +80,7 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
-        current_level = 0
-        self.options = []
-        if len(view.sel()) > 0:
-            sel = view.sel()[0]
-            current_level = get_current_level(view, sel.a)
-            self.options.append('Fold Level %d Sections' % current_level)
-        self.options.append('Unfold all')
-        for i in range(1, 5):
-            if i != current_level:
-                self.options.append('Fold Level %d Sections' % i)
-        self.options.append('Fold All Sections')
-        view.window().show_quick_panel(self.options, self.run_command)
-
-    def run_command(self, value):
-        view = self.view
-        if value >= 0:
-            if self.options[value] == 'Unfold all':
-                view.run_command('unfold_all')
-            elif self.options[value] == 'Fold Level 1 Sections':
-                view.run_command('fold_all_sections', {'target_level': 1})
-            elif self.options[value] == 'Fold Level 2 Sections':
-                view.run_command('fold_all_sections', {'target_level': 2})
-            elif self.options[value] == 'Fold Level 3 Sections':
-                view.run_command('fold_all_sections', {'target_level': 3})
-            elif self.options[value] == 'Fold Level 4 Sections':
-                view.run_command('fold_all_sections', {'target_level': 4})
-            elif self.options[value] == 'Fold All Sections':
-                view.run_command('fold_all_sections')
+        view.window().run_command('show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
 
 
 class FoldAllSectionsCommand(MDETextCommand):
@@ -116,7 +89,7 @@ class FoldAllSectionsCommand(MDETextCommand):
         view = self.view
         view.run_command('unfold_all')
         section_start = -1
-        section_end = view.size() - 1
+        section_end = view.size()
         n_sections = 0
         for (title_begin, title_end, level) in all_headings(view):
             if target_level == 0 or level <= target_level:
@@ -129,7 +102,7 @@ class FoldAllSectionsCommand(MDETextCommand):
             if target_level == 0 or level == target_level:
                 section_start = title_end
         if section_start >= 0:
-            reg = sublime.Region(section_start, view.size() - 1)
+            reg = sublime.Region(section_start, view.size())
             view.fold(reg)
             n_sections += 1
         if len(view.sel()) > 0:
