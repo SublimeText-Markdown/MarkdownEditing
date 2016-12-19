@@ -613,27 +613,34 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
+    { "keys": ["shift+tab"], "command": "fold_section", "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"},
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]
+    },
     { "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+;"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
+    { "keys": ["super+ctrl+pageup"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+."], "command": "goto_next_heading", "args": {"same_level": true}, "context":
+    { "keys": ["super+ctrl+pagedown"], "command": "goto_next_heading", "args": {"same_level": true}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+shift+;"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
+    { "keys": ["super+shift+pageup"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["super+shift+."], "command": "goto_next_heading", "args": {"same_level": false}, "context":
+    { "keys": ["super+shift+pagedown"], "command": "goto_next_heading", "args": {"same_level": false}, "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]

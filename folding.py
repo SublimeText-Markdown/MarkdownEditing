@@ -21,7 +21,7 @@ def all_headings(view):
         if re.match(r'^(-{3,}|={3,})$', m.group()):
             title_end = m.start() - 1
             title_begin = text.rfind('\n', 0, title_end) + 1
-            title_end = m.end() + 1
+            title_end = m.end()
             level = 2 if text[m.start()] == '-' else 1
         else:
             title_begin = m.end()
