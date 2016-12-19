@@ -113,6 +113,11 @@ class FoldAllSectionsCommand(MDETextCommand):
             view.show(sublime.Region(0, 0))
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
+class UnfoldAllSectionsCommand(MDETextCommand):
+
+    def run(self, edit):
+        view = self.view
+        view.run_command('unfold_all')
 
 class GotoNextHeadingCommand(MDETextCommand):
 

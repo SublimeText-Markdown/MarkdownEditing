@@ -110,6 +110,10 @@
         "command": "fold_all_sections"
     },
     {
+        "caption": "MarkdownEditing: Unfold All Sections",
+        "command": "unfold_all_sections"
+    },
+    {
         "caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
         "command": "goto_next_heading", "args" :
         {
