@@ -193,6 +193,7 @@ If you want to go with your already existing theme, you can reenable it with the
 ### Additional color themes:
 
 - [Blackboard theme][linkBlackboardTheme] by [@mdesantis][mdesantis]
+- [monokaiC](https://github.com/avivace/monokaiC) by [@avivace][avivace]
 
 By default, when you install the plugin, files with these extensions will be assigned to Markdown syntax: "md", "txt", "mdown", "markdown", "markdn". If you want to prevent any of these extensions to be opened as Markdown, follow these steps:
 
