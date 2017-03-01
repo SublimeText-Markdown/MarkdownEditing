@@ -97,9 +97,9 @@
 		"md030": {
 			"ul_single": 1,
 			"ol_single": 1,
-			// optinally, 3
+			// optionally, 3
 			"ul_multi": 1,
-			// optionaly, 2
+			// optionally, 2
 			"ol_multi": 1
 		}
 	}
