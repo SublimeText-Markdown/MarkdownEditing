@@ -205,13 +205,29 @@ By default, when you install the plugin, files with these extensions will be ass
 
 We are maintaining a [tips section][tips] in our [Wiki][]. Jump there to learn from others or share your experiences with others.
 
-## Similar Plugins
+## Enable WYSIWYG
+
+Sublime can be configured into a WYSIWYG (what you see is what you get) editor with two other plugins:
+
+1. Markdown Preview (https://packagecontrol.io/packages/Markdown%20Preview)
+1. Livereload (https://packagecontrol.io/packages/LiveReload)
+
+Install them if you haven't. Then
+
+1. Open Palette
+1. LiveReload: Enable/Disable Plugins
+1. Enable Simple Reload.
+
+Now open palette and choose "Preview in Broswer" and you will get a WYSIWYG editor.
+
+## Related Plugins
 
 * [Knockdown][]
 
      Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
 * [Sublime Markdown Extended][]
 * [SmartMarkdown][]
+* See https://packagecontrol.io/search/markdown for more.
 
 ## Known Bugs
 
