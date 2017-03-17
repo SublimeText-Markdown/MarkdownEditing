@@ -28,6 +28,44 @@
 	<key>patterns</key>
 	<array>
 		<dict>
+			<key>comment</key>
+			<string>
+				Pandoc and blogging programs based on Markdown
+				allow a YAML header with metadata.
+				It is buggy if using `...` delimiter
+				and  last item is an unquoted block
+			</string>
+			<key>begin</key>
+			<string>^---$\n</string>
+			<key>end</key>
+			<string>^(---|\.\.\.)$\n</string>
+			<key>name</key>
+			<string>meta.metadata.markdown</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.separator.metadata.markdown</string>
+				</dict>
+			</dict>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.separator.metadata.markdown</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.yaml</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
 			<key>begin</key>
 			<string>(?x)^
 				(?=	[ ]{,3}&gt;
