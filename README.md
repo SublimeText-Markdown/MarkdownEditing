@@ -293,3 +293,4 @@ MarkdownEditing is released under the [MIT License][opensource].
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
 [mdesantis]: https://github.com/mdesantis
+[avivace]: https://github.com/avivace
