@@ -42,7 +42,7 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
-5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed below should now be available.
 
 ### Manual Installation
 
