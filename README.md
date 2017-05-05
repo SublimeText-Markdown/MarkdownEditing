@@ -42,7 +42,7 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
-5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed below should now be available.
 
 ### Manual Installation
 
@@ -67,10 +67,10 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 * At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
 * Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
 * Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
-* Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the presedence of `#`.
+* Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the precedence of `#`.
 * <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
 * Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
-* Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to disable.
+* Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to enable (disabled by default).
 * Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
 * New documents will be named automatically based on the first header.
 
@@ -84,8 +84,8 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Alt</kbd><kbd>B</kbd> <kbd>Alt</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
 | <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote.
-| <kbd>⌘</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
+| <kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
+| <kbd>^</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | Go to the previous/next heading of the same or higher level
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> |  Go to the previous/next heading
 
@@ -187,12 +187,15 @@ In order to activate the dark or the yellow theme, put one of these lines to you
 
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
     "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme",
+    
 
 If you want to go with your already existing theme, you can reenable it with the same method as above. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
 
 ### Additional color themes:
 
 - [Blackboard theme][linkBlackboardTheme] by [@mdesantis][mdesantis]
+- [monokaiC](https://github.com/avivace/monokaiC) by [@avivace][avivace]
 
 By default, when you install the plugin, files with these extensions will be assigned to Markdown syntax: "md", "txt", "mdown", "markdown", "markdn". If you want to prevent any of these extensions to be opened as Markdown, follow these steps:
 
@@ -204,13 +207,29 @@ By default, when you install the plugin, files with these extensions will be ass
 
 We are maintaining a [tips section][tips] in our [Wiki][]. Jump there to learn from others or share your experiences with others.
 
-## Similar Plugins
+## Enable WYSIWYG
+
+Sublime can be configured into a WYSIWYG (what you see is what you get) editor with two other plugins:
+
+1. Markdown Preview (https://packagecontrol.io/packages/Markdown%20Preview)
+1. Livereload (https://packagecontrol.io/packages/LiveReload)
+
+Install them if you haven't. Then
+
+1. Open Palette
+1. LiveReload: Enable/Disable Plugins
+1. Enable Simple Reload.
+
+Now open palette and choose "Preview in Broswer" and you will get a WYSIWYG editor.
+
+## Related Plugins
 
 * [Knockdown][]
 
      Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
 * [Sublime Markdown Extended][]
 * [SmartMarkdown][]
+* See https://packagecontrol.io/search/markdown for more.
 
 ## Known Bugs
 
@@ -274,3 +293,4 @@ MarkdownEditing is released under the [MIT License][opensource].
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
 [mdesantis]: https://github.com/mdesantis
+[avivace]: https://github.com/avivace
