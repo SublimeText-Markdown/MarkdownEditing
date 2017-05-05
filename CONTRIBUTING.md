@@ -174,7 +174,6 @@ Here are the used scopes under 3 different markdown flavors. If you are not sure
 
 ### ScopeName: text.html.markdown.multimarkdown
 
-* <All scopes under text.html.markdown.gfm>
 * __keyword.other.multimarkdown__
 * __punctuation.separator.key-value.multimarkdown__
 * __meta.header.multimarkdown__
