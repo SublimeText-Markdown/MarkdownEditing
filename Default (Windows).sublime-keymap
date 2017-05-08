@@ -642,4 +642,9 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     }
+    {
+        "keys": ["ctrl+context_menu"],
+        "command": "run_macro_file",
+        "args": { "file": "Packages/MarkdownEditing/macros/3left.sublime-macro" }
+    },
 ]
