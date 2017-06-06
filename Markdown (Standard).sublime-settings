@@ -96,7 +96,7 @@
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
 	// Jump between link/image/footnote reference and definition
 	// Default keys: (OSX)super+ctrl+shift+l	(Linux/Win)ctrl+alt+g
-	"mde.keymap_disable_reference_jump": true,
+	"mde.keymap_disable_reference_jump": false,
 	// Add a new link
 	// Default keys: (OSX)super+alt+r	(Linux/Win)ctrl+super+r
 	"mde.keymap_disable_reference_new_reference": false,
