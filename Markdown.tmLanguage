@@ -591,11 +591,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -730,11 +730,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -868,11 +868,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1046,7 +1046,7 @@
 				<key>5</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.begin.markdown</string>
 				</dict>
 				<key>6</key>
 				<dict>
@@ -1056,7 +1056,7 @@
 				<key>7</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.end.markdown</string>
 				</dict>
 			</dict>
 			<key>match</key>
@@ -1126,11 +1126,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1274,11 +1274,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1537,7 +1537,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(\[)(\])</string>
+			<string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(?:(\[)(\]))?</string>
 			<key>name</key>
 			<string>meta.link.reference.literal.markdown</string>
 		</dict>

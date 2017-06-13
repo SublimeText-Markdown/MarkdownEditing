@@ -140,4 +140,19 @@ Paragraph
     }
     ```
 
+# Links
+
+[I'm an inline link](http://fakewebsite.com/fakepage)
+![I'm an inline image](http://fakewebsite.com/fakeimg.png)
+[I'm a link][testLink]
+![I'm an image][imageLink]
+[I'm a link literal][]
+[I'm a link literal too]
+[i'm a CASE INSENSITIVE link]
+
 [GFM]: https://help.github.com/articles/github-flavored-markdown
+[testLink]: http://fakewebsite.com/fakepage
+[imageLink]: http://fakewebsite.com/fakeimg.png
+[I'm a link literal]: http://fakewebsite.com/fakepage
+[I'm a link literal too]: http://fakewebsite.com/fakepage
+[I'M A case insensitive LINK]: http://fakewebsite.com/fakepage
