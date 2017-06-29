@@ -16,6 +16,10 @@
                                 "command": "open_file"
                             },
                             {
+                                "caption": "Change color scheme...",
+                                "command": "mde_color_activate"
+                            },
+                            {
                                 "caption": "-"
                             },
                             {

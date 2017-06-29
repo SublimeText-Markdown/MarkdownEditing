@@ -140,5 +140,9 @@
         {
             "same_level" : false
         }
+    },
+    {
+        "caption": "MarkdownEditing: Change color scheme...",
+        "command": "mde_color_activate"
     }
 ]
