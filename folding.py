@@ -28,7 +28,8 @@ def all_headings(view):
             title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
             title_begin = m.start()
             level = m.end() - m.start()
-        yield (title_begin, title_end, level)
+        if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
+            yield (title_begin, title_end, level)
 
 
 def get_current_level(view, p):
@@ -113,11 +114,13 @@ class FoldAllSectionsCommand(MDETextCommand):
             view.show(sublime.Region(0, 0))
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
+
 class UnfoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
         view.run_command('unfold_all')
+
 
 class GotoNextHeadingCommand(MDETextCommand):
 
