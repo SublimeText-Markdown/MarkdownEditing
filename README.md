@@ -220,7 +220,7 @@ Install them if you haven't. Then
 1. LiveReload: Enable/Disable Plugins
 1. Enable Simple Reload.
 
-Now open palette and choose "Preview in Broswer" and you will get a WYSIWYG editor.
+Now open palette and choose "Preview in Browser" and you will get a WYSIWYG editor.
 
 ## Related Plugins
 
