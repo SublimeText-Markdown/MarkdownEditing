@@ -28,7 +28,8 @@ def all_headings(view):
             title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
             title_begin = m.start()
             level = m.end() - m.start()
-        yield (title_begin, title_end, level)
+        if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
+            yield (title_begin, title_end, level)
 
 
 def get_current_level(view, p):
@@ -43,6 +44,9 @@ def get_current_level(view, p):
 
 
 class FoldSectionCommand(MDETextCommand):
+
+    def description(self):
+        return 'Toggle fold/unfold on current section'
 
     def run(self, edit):
         view = self.view
@@ -75,6 +79,59 @@ class FoldSectionCommand(MDETextCommand):
                 view.fold(reg)
         sublime.status_message('%d region%s %sfolded' % (len(sections), 's' if len(sections) > 1 else '', 'un' if shouldUnfold else ''))
 
+class FoldSectionContextCommand(FoldSectionCommand):
+
+    def is_visible(self):
+        if not FoldSectionCommand.is_visible(self):
+            return False
+        view = self.view
+        hasSection = False
+        for sel in view.sel():
+            section_start = -1
+            section_end = view.size()
+            section_level = 0
+            for (title_begin, title_end, level) in all_headings(view):
+                if title_begin <= sel.a:
+                    section_start = title_end
+                    section_level = level
+                elif section_level >= level:
+                    section_end = title_begin - 1
+                    break
+            if section_start >= 0 and section_end >= section_start:
+                reg = sublime.Region(section_start, section_end)
+                folded = getFoldedRegion(view, reg)
+                if folded != None:
+                    return False
+                else:
+                    hasSection = True
+        return hasSection
+
+class UnfoldSectionContextCommand(FoldSectionCommand):
+
+    def is_visible(self):
+        if not FoldSectionCommand.is_visible(self):
+            return False
+        view = self.view
+        hasSection = False
+        for sel in view.sel():
+            section_start = -1
+            section_end = view.size()
+            section_level = 0
+            for (title_begin, title_end, level) in all_headings(view):
+                if title_begin <= sel.a:
+                    section_start = title_end
+                    section_level = level
+                elif section_level >= level:
+                    section_end = title_begin - 1
+                    break
+            if section_start >= 0 and section_end >= section_start:
+                reg = sublime.Region(section_start, section_end)
+                folded = getFoldedRegion(view, reg)
+                if folded != None:
+                    hasSection = True
+                else:
+                    return False
+        return hasSection
 
 class ShowFoldAllSectionsCommand(MDETextCommand):
 
@@ -113,11 +170,13 @@ class FoldAllSectionsCommand(MDETextCommand):
             view.show(sublime.Region(0, 0))
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
+
 class UnfoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
         view.run_command('unfold_all')
+
 
 class GotoNextHeadingCommand(MDETextCommand):
 

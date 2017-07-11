@@ -394,6 +394,7 @@
     // inline image insertion
     { "keys": ["super+shift+k"], "command": "reference_new_inline_image", "context":
         [
+            { "key": "setting.mde.keymap_disable.reference_new_inline_image", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
@@ -408,16 +409,19 @@
     // run paste as link command on selected text
     { "keys": ["super+alt+v"], "command": "reference_new_inline_link", "context":
         [
+            { "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+alt+r"], "command": "reference_new_reference", "context":
         [
+            { "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+ctrl+shift+l"], "command": "reference_jump", "context":
         [
+            { "key": "setting.mde.keymap_disable.reference_jump", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
@@ -580,6 +584,7 @@
     },
     { "keys": ["alt+shift+6"], "command": "reference_new_footnote", "context":
         [
+            { "key": "setting.mde.keymap_disable.reference_new_footnote", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
@@ -601,6 +606,7 @@
     },
     { "keys": ["shift+tab"], "command": "fold_section", "context":
         [
+            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true },
             { "key": "following_text", "operator": "not_regex_match", "operand": "^$", "match_all": true },
@@ -609,6 +615,7 @@
     },
     { "keys": ["shift+tab"], "command": "fold_section", "context":
         [
+            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true },
             { "key": "selector", "operator": "not_equal", "operand": "markup.list", "match_all": true },
@@ -617,6 +624,7 @@
     },
     { "keys": ["shift+tab"], "command": "fold_section", "context":
         [
+            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"},
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
@@ -624,26 +632,31 @@
     },
     { "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
         [
+            { "key": "setting.mde.keymap_disable.show_fold_all_sections", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+ctrl+pageup"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
         [
+            { "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+ctrl+pagedown"], "command": "goto_next_heading", "args": {"same_level": true}, "context":
         [
+            { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+shift+pageup"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
         [
+            { "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
     { "keys": ["super+shift+pagedown"], "command": "goto_next_heading", "args": {"same_level": false}, "context":
         [
+            { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     }

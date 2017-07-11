@@ -1,0 +1,14 @@
+[
+{
+    "caption": "MDE: Fold Section",
+    "command": "fold_section_context"
+},
+{
+    "caption": "MDE: Unfold Section",
+    "command": "unfold_section_context"
+},
+{
+    "caption": "MDE: Jump Reference",
+    "command": "reference_jump_context"
+}
+]

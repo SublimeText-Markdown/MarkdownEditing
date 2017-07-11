@@ -13,3 +13,6 @@ class MDETextCommand(sublime_plugin.TextCommand):
 
     def is_enabled(self):
         return view_is_markdown(self.view)
+
+    def is_visible(self):
+        return view_is_markdown(self.view)

@@ -264,33 +264,28 @@ You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownE
 
 MarkdownEditing is released under the [MIT License][opensource].
 
-[TableEditor]:                 https://github.com/vkocubinsky/SublimeTableEditor
-[Knockdown]:                   https://github.com/aziz/knockdown/
-[Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
-[SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
-[Typewriter]:                  https://github.com/alehandrof/Typewriter
-[OpenUrl]:                     https://github.com/noahcoad/open-url
-[brettterpstra]: http://brettterpstra.com
-[geekabouttown]: http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness
 [github]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
 [github 2]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
 [github 3]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png
-[github 4]: https://github.com/jngeist
+[wbond]: http://wbond.net/sublime_packages/package_control
+[wbond 2]: http://wbond.net/sublime_packages/package_control/installation
+[GFM]: https://help.github.com/articles/github-flavored-markdown
 [github 5]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png
 [github 6]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png
 [github 7]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png
 [github 8]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png
-[github 9]: https://github.com/maliayas
-[github 10]: https://github.com/felixhao28
-[opensource]: http://www.opensource.org/licenses/MIT
-[wbond]: http://wbond.net/sublime_packages/package_control
-[wbond 2]: http://wbond.net/sublime_packages/package_control/installation
-[FullScreenStatus]: https://github.com/maliayas/SublimeText_FullScreenStatus
-[macstories]: http://www.macstories.net/roundups/sublime-text-2-and-markdown-tips-tricks-and-links/
-[tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
-[Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
-[GFM]: https://help.github.com/articles/github-flavored-markdown
-[#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
 [mdesantis]: https://github.com/mdesantis
 [avivace]: https://github.com/avivace
+[tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
+[Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
+[Knockdown]:                   https://github.com/aziz/knockdown/
+[Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
+[SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
+[#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
+[brettterpstra]: http://brettterpstra.com
+[github 9]: https://github.com/maliayas
+[github 10]: https://github.com/felixhao28
+[github 4]: https://github.com/jngeist
+[geekabouttown]: http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness
+[opensource]: http://www.opensource.org/licenses/MIT

@@ -4,10 +4,10 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
+		<string>md</string>
 		<string>mdown</string>
 		<string>markdown</string>
 		<string>markdn</string>
-		<string>md</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>(?x)
@@ -591,11 +591,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -730,11 +730,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -868,11 +868,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1046,7 +1046,7 @@
 				<key>5</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.begin.markdown</string>
 				</dict>
 				<key>6</key>
 				<dict>
@@ -1056,7 +1056,7 @@
 				<key>7</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.constant.markdown</string>
+					<string>punctuation.definition.constant.end.markdown</string>
 				</dict>
 			</dict>
 			<key>match</key>
@@ -1126,11 +1126,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1274,11 +1274,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref-literal</string>
+					<string>#link-ref</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#link-ref</string>
+					<string>#link-ref-literal</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1537,7 +1537,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(\[)(\])</string>
+			<string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(?:(\[)(\]))?</string>
 			<key>name</key>
 			<string>meta.link.reference.literal.markdown</string>
 		</dict>
@@ -2062,6 +2062,22 @@
 		        </dict>
 		    </array>
 		</dict>
+		<key>fenced-clojure</key>
+		<dict>
+		    <key>begin</key>
+		    <string>^(\s*[`~]{3,})\s*(clojure)\s*$</string>
+		    <key>end</key>
+		    <string>^(\1)\n</string>
+		    <key>name</key>
+		    <string>markup.raw.block.markdown markup.raw.block.fenced.markdown</string>
+		    <key>patterns</key>
+		    <array>
+		        <dict>
+		            <key>include</key>
+		            <string>source.clojure</string>
+		        </dict>
+		    </array>
+		</dict>
 		<key>fenced-undefined</key>
 		<dict>
 		    <key>begin</key>
@@ -2186,6 +2202,10 @@
 				<dict>
 					<key>include</key>
 					<string>#fenced-swift</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#fenced-clojure</string>
 				</dict>
 				<dict>
 					<key>include</key>
