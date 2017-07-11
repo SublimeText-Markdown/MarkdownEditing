@@ -156,6 +156,9 @@ def get_reference(view, pos):
 class ReferenceJumpCommand(MDETextCommand):
     # reference_jump command
 
+    def description(self):
+        return 'Jump between definition and reference'
+
     def run(self, edit):
         view = self.view
         edit_regions = []
@@ -190,6 +193,12 @@ class ReferenceJumpCommand(MDETextCommand):
                 sublime.status_message("The marker%s of %s cannot be found." % ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
             else:
                 sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs), "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+
+
+class ReferenceJumpContextCommand(ReferenceJumpCommand):
+
+    def is_visible(self):
+        return ReferenceJumpCommand.is_visible(self) and any(get_reference(self.view, sel.begin())[0] for sel in self.view.sel())
 
 
 def is_url(contents):
