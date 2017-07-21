@@ -245,7 +245,7 @@ def check_for_link(view, link):
     refs = getReferences(view)
     link = link.strip()
     for name in refs:
-        link_begin = findScopeFrom(view, refs[name][0].begin(), ref_link_scope_name)
+        link_begin = findScopeFrom(view, refs[name].regions[0].begin(), ref_link_scope_name)
         reg = getCurrentScopeRegion(view, link_begin)
         found_link = view.substr(reg).strip()
         if found_link == link:
@@ -317,7 +317,7 @@ class ReferenceNewImage(MDETextCommand):
 
 def get_next_footnote_marker(view):
     refs = getReferences(view)
-    footnotes = [int(ref[1:]) for ref in refs if view.substr(refs[ref][0])[0] == "^"]
+    footnotes = [int(ref[1:]) for ref in refs if view.substr(refs[ref].regions[0])[0] == "^"]
 
     def target_loc(num):
         return (num - 1) % len(footnotes)
