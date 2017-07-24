@@ -897,6 +897,72 @@
                 <string>#565656</string>
             </dict>
         </dict>
+        <!--======================================
+        =       Persistent Regex Highlights      =
+        =======================================-->
+        <!-- Warm Blue color -->
+        <dict>
+        	<key>name</key>
+        	<string>Highlight Color Warm Blue</string>
+        	<key>scope</key>
+        	<string>highlight.color.ADD8E6</string>
+        	<key>settings</key>
+        	<dict>
+        		<key>foreground</key>
+        		<string>#ADD8E6</string>
+        	</dict>
+        </dict>
+        <!-- Misty Rose color -->
+        <dict>
+        	<key>name</key>
+        	<string>Highlight Color MistyRose</string>
+        	<key>scope</key>
+        	<string>highlight.color.FFE4E1</string>
+        	<key>settings</key>
+        	<dict>
+        		<key>foreground</key>
+        		<string>#FFE4E1</string>
+        	</dict>
+        </dict>
+        <!-- Green Tea color -->
+        <dict>
+        	<key>name</key>
+        	<string>Highlight Color Green Tea</string>
+        	<key>scope</key>
+        	<string>highlight.color.D0F0C0</string>
+        	<key>settings</key>
+        	<dict>
+        		<key>foreground</key>
+        		<string>#D0F0C0</string>
+        	</dict>
+        </dict>
+        <!--===================================
+        =            SublimeLinter            =
+        ====================================-->
+        <!-- SublimeLinter: warning -->
+        <dict>
+        	<key>name</key>
+        	<string>SublimeLinter: Warning</string>
+        	<key>scope</key>
+        	<string>sublimelinter.mark.warning</string>
+        	<key>settings</key>
+        	<dict>
+        		<key>foreground</key>
+        		<string>#DDB700</string>
+        	</dict>
+        </dict>
+        <!-- SublimeLinter: error -->
+        <dict>
+        	<key>name</key>
+        	<string>SublimeLinter: Error</string>
+        	<key>scope</key>
+        	<string>sublimelinter.mark.error</string>
+        	<key>settings</key>
+        	<dict>
+        		<key>foreground</key>
+        		<string>#D02000</string>
+        	</dict>
+        </dict>
     </array>
     <key>uuid</key>
     <string>BF4E1964-0DB9-4E88-8142-E8F52D7EDEEC</string>
