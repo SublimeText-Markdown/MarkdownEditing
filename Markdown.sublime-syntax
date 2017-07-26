@@ -10,6 +10,36 @@ file_extensions:
 scope: text.html.markdown.gfm
 contexts:
   main:
+    - match: (?=(?<!\s)---(\s*coffee|\s*json)?\n$)
+      push: front-matter
+    - match: ""
+      push: body
+  front-matter:
+    - match: (?<!\s)---\n$
+      push:
+        - meta_scope: markup.raw.yaml.front-matter
+        - meta_content_scope: source.yaml
+        - match: ^---\s
+          pop: true
+        - include: scope:source.yaml
+    - match: (?<!\s)---\s*coffee\n$
+      push:
+        - meta_scope: markup.raw.coffee.front-matter
+        - meta_content_scope: source.coffee
+        - match: ^---\s
+          pop: true
+        - include: scope:source.coffee
+    - match: (?<!\s)---\s*json\n$
+      push:
+        - meta_scope: markup.raw.json.front-matter
+        - meta_content_scope: source.json
+        - match: ^---\s
+          pop: true
+        - include: scope:source.json
+    - match: ""
+      pop: true
+      push: body
+  body:
     - match: |-
         (?x)^
         (?= [ ]{,3}>
