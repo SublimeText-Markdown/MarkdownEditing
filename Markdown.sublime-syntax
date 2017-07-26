@@ -690,6 +690,7 @@ contexts:
     - include: link-ref-literal
     - include: link-footnote
     - include: tag-kbd
+    - include: latex-inline
     - include: scope:text.html.basic
   italic:
     - match: |-
@@ -852,6 +853,7 @@ contexts:
         - include: scope:text.html.basic
         - include: fenced-code-blocks
   raw:
+    - include: latex-display
     - match: '(`+)((?:[^`]|(?!(?<!`)\1(?!`))`)*+)(\1)'
       scope: markup.raw.inline.markdown
       captures:
@@ -944,3 +946,36 @@ contexts:
         7: punctuation.definition.tag.begin.html
         8: entity.name.tag.other.html
         9: punctuation.definition.tag.end.html
+
+  latex-inline:
+    - match: \\\$
+    - match: |-
+        (?x)
+        (\$)(?=\S)
+        (?=
+          (?:
+            \\\\
+            |\\\$
+            |[^\$]
+          )*?
+          \S\$(?:[^a-zA-Z0-9]|$)
+        )
+      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      push:
+        - meta_scope: text.tex.latex meta.environment.math.latex
+        - include: scope:text.tex.latex#macros
+        - include: scope:text.tex.latex#math-content
+        - match: \$
+          scope: string.other.math.latex punctuation.definition.string.end.latex
+          pop: true
+
+  latex-display:
+    - match: \$\$
+      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      push:
+        - meta_scope: text.tex.latex meta.environment.math.latex
+        - include: scope:text.tex.latex#macros
+        - include: scope:text.tex.latex#math-content
+        - match: \$\$
+          scope: string.other.math.latex punctuation.definition.string.end.latex
+          pop: true
