@@ -18,6 +18,8 @@ def all_headings(view):
     text = view.substr(sublime.Region(0, view.size()))
     it = re.finditer(r'^(#{1,6}(?!#))|^(-{3,}|={3,})', text, re.M)
     for m in it:
+        if '.front-matter' in view.scope_name(m.start()):
+            continue
         if re.match(r'^(-{3,}|={3,})$', m.group()):
             title_end = m.start() - 1
             title_begin = text.rfind('\n', 0, title_end) + 1
@@ -79,6 +81,7 @@ class FoldSectionCommand(MDETextCommand):
                 view.fold(reg)
         sublime.status_message('%d region%s %sfolded' % (len(sections), 's' if len(sections) > 1 else '', 'un' if shouldUnfold else ''))
 
+
 class FoldSectionContextCommand(FoldSectionCommand):
 
     def is_visible(self):
@@ -106,6 +109,7 @@ class FoldSectionContextCommand(FoldSectionCommand):
                     hasSection = True
         return hasSection
 
+
 class UnfoldSectionContextCommand(FoldSectionCommand):
 
     def is_visible(self):
@@ -132,6 +136,7 @@ class UnfoldSectionContextCommand(FoldSectionCommand):
                 else:
                     return False
         return hasSection
+
 
 class ShowFoldAllSectionsCommand(MDETextCommand):
 
