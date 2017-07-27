@@ -229,6 +229,8 @@ Now open palette and choose "Preview in Browser" and you will get a WYSIWYG edit
      Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
 * [Sublime Markdown Extended][]
 * [SmartMarkdown][]
+* [MarkdownTOC][]
+    - Sublime Text 3 plugin for generating a Table of Contents (TOC) in a Markdown document.
 * See https://packagecontrol.io/search/markdown for more.
 
 ## Known Bugs
@@ -282,6 +284,7 @@ MarkdownEditing is released under the [MIT License][opensource].
 [Knockdown]:                   https://github.com/aziz/knockdown/
 [Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
 [SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
+[MarkdownTOC]: https://github.com/naokazuterada/MarkdownTOC
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [brettterpstra]: http://brettterpstra.com
 [github 9]: https://github.com/maliayas
