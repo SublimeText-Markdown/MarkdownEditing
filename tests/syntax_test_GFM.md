@@ -1,4 +1,4 @@
-<!-- SYNTAX TEST "Packages/MarkdownEditing/Markdown.tmLanguage" -->
+<!-- SYNTAX TEST "Packages/MarkdownEditing/Markdown.sublime-syntax" -->
 
 Inline styles
 =============
