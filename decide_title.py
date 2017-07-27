@@ -12,20 +12,19 @@ class DecideTitle(sublime_plugin.EventListener):
             it = re.finditer(r'^(#{1,6}(?!#))|^(-{3,}|={3,})', text, re.M)
             title = ''
             for m in it:
+                if '.front-matter' in view.scope_name(m.start()):
+                    continue
                 if re.match(r'^(-{3,}|={3,})$', m.group()):
                     title_end = m.start() - 1
                     title_begin = text.rfind('\n', 0, title_end) + 1
-                    title = text[title_begin: title_end]
                 else:
                     title_begin = m.end()
                     title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
-                    title = text[title_begin: title_end]
-                break
+                    title_begin = m.start() + 1
+                if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
+                    break
             if len(title) == 0:
-                firstLineEnd = text.find('\n')
-                if firstLineEnd == -1:
-                    firstLineEnd = len(text)
-                title = text[0: firstLineEnd]
+                title = text[title_begin: title_end]
 
             title = title.strip()
             if view.file_name() is None and len(title) > 0:
