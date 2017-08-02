@@ -2,43 +2,54 @@
 
 Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more __robust__ syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, __GitHub flavored Markdown__, MultiMarkdown.
 
-![MarkdownEditing][github]
+![MarkdownEditing][LightTheme]
 
-[Dark][github 2] and [yellow][github 3] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
+[Dark][DarkTheme] and [Yellow][YellowTheme] and [ArcDark][ArcDarkTheme] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
 
 ## Overview
 
-* [Installation](#installation)
-* [Features](#features)
-* [Key Bindings](#key-bindings)
-* [GFM Specific Features](#gfm-specific-features)
-* [Commands for Command Palette](#commands-for-command-palette)
-* [Configuration](#configuration)
-* [Tips](#tips)
-* [Similar Plugins](#similar-plugins)
-* [Known Bugs](#known-bugs)
-* [Contributing](#contributing)
-* [Credits](#credits)
-* [Donation](#donation)
-* [License](#license)   
+<!-- MarkdownTOC autolink="true" bracket="round" markdown_preview="markdown" -->
+
+- [Installation](#installation)
+    - [Package Control](#package-control)
+    - [Manual Installation](#manual-installation)
+- [Features](#features)
+- [Key Bindings](#key-bindings)
+- [GFM Specific Features](#gfm-specific-features)
+- [Commands for Command Palette](#commands-for-command-palette)
+    - [General Commands](#general-commands)
+    - [Links, References and Footnotes](#links-references-and-footnotes)
+    - [Folding and Navigation](#folding-and-navigation)
+- [Configuration](#configuration)
+    - [Additional color themes:](#additional-color-themes)
+- [Tips](#tips)
+- [Enable WYSIWYG](#enable-wysiwyg)
+- [Troubleshooting](#troubleshooting)
+    - [Error loading syntax file...](#error-loading-syntax-file)
+- [Related Plugins](#related-plugins)
+- [Known Bugs](#known-bugs)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [Donation](#donation)
+- [License](#license)
+
+<!-- /MarkdownTOC -->
 
 ## Installation
 
-> __Important Note About Installation__
-> 
-> Are you getting this error after installation: _**Error loading syntax file** "Packages/Markdown/Markdown.tmLanguage": Unable to open Packages/Markdown/Markdown.tmLanguage_? This is caused by open markdown files at the install time. You have to __manually change their syntax to your newly installed Markdown syntax__. Read the below paragraph for more details on this.
-
-_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
+You can install MarkdownEditing either from Package Control (recommended) or manually. Package Control automatically download the package and keeps it up-to-date. Manual installation is required if you need to tweak the code.
 
 If you are using Sublime Text 2, you have to disable the native package _manually_. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
 
     "ignored_packages": [..., "Markdown"],
 
+> Getting "Error loading syntax file..."? See [this](#error-loading-syntax-file).
+
 ### Package Control
 
-The preferred method of installation is via [Sublime Package Control][wbond].
+The preferred method of installation is via [Sublime Package Control][PackageControl].
 
-1. [Install Sublime Package Control][wbond 2]
+1. [Install Sublime Package Control][InstallPackageControl]
 2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
@@ -46,33 +57,45 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 
 ### Manual Installation
 
-1. Download or clone this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory for your platform:
-    * Mac: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/MarkdownEditing`
-    * Windows: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git %APPDATA%\Sublime/ Text/ 2/\MarkdownEditing`
-    * Linux: `git clone https://github.com/SublimeText-Markdown/MarkdownEditing.git ~/.Sublime\ Text\ 2/Packages/MarkdownEditing`
-2. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed above should now be available.
+1. In Sublime Text, open the menu "Preferences" -> "Browse Packages...". This is the Sublime Text Packages directory.
+2. [Download and unzip](https://github.com/SublimeText-Markdown/MarkdownEditing/archive/master.zip) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory.
+3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownEditing/[files]`.
+4. Restart Sublime Text to complete installation. Open a Markdown file. The features listed below should now be available.
 
 ## Features
 
-* Asterisks and underscores are autopaired and will wrap selected text
-    - If you start an empty pair and hit backspace, both elements are deleted
-    - If you start an empty pair and hit space, the right element is deleted
-* Backticks are paired
-* At the end of a list item, pressing <kbd>Enter</kbd> will automatically insert the new list item bullet.
+You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`. MarkdownEditing commands start with `MarkdownEditing:`. And they are only visible when a markdown file is open and active.
+
+* __Pairing__
+    - Asterisks and underscores are autopaired and will wrap selected text.
+    - If you start an empty pair and hit backspace, both elements are deleted.
+    - If you start an empty pair and hit space, the right element is deleted.
+    - Backticks are paired. So entering ` will expand to `(cursor here)`.
+* __List__
+    - At the end of a list item, pressing <kbd>Enter</kbd> will automatically insert the new list item bullet.
     - Pressing <kbd>Tab</kbd> on the blank list item will indent it and switch the list bullet to another one (Order is `*`, `-`, `+` in a cycle).
     - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
     - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
-    - You can disable automatic bullet switching or choose which bullets to be used, in your settings file.
-    - If a list item contains a [GFM task][GFM], pressing <kbd>Enter</kbd> at the end of the line will continue with a new blank task.
-* At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
-* Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
-* Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link
-* Displays Markdown headers in the Project Symbol List (<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the precedence of `#`.
-* <kbd>~</kbd> wraps selected text with `~~` (strikethrough).
-* Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
-* Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to enable (disabled by default).
-* Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
-* New documents will be named automatically based on the first header.
+    - You can disable automatic bullet switching or choose which bullets to be used, in your settings file (`mde.list_indent_bullets`).
+    - If a list item contains a [GFM task][], pressing <kbd>Enter</kbd> at the end of the line will continue with a new blank task.
+* __Blockquote__
+    - At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
+    - Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
+* __Link__
+    - Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link.
+    - If you leave the cursor on a link, you can right click and jump between reference and url.
+* __Navigation__
+    - Displays Markdown headers in the Project Symbol List (`Goto -> Goto Symbol in Project...`). They will start with `#`, so you will know they belong to markdown files at a glance. Also they will be on top of the list because of the precedence of `#`.
+    - Headers also appear in Document Symbol List (`Goto -> Goto Symbol...`)
+    - You can fold current section with <kbd>Ctrl</kbd> <kbd>Tab</kbd>
+    - You can navigate between adjacent headers with `Find Next(Previous) Heading` command.
+* __Strikethrough__
+    - <kbd>~</kbd> wraps selected text with `~~` (strikethrough). When you for instance select the word "foo" and hit  `~`, the result will be `~~foo~~`.
+* __Header__
+    - Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_header_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
+    - Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_header_hashes` option in your settings to enable (disabled by default).
+    - Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
+    - New documents will be named automatically based on the first header.
 
 ## Key Bindings
 
@@ -91,83 +114,78 @@ The preferred method of installation is via [Sublime Package Control][wbond].
 
 ## GFM Specific Features
 
+[GFM][] means GitHub Flavored Markdown is the dialect of Markdown that is currently supported for user content on GitHub.com and GitHub Enterprise. It has [some unique features][GFMFeatures]:
+
 Underscores in words doesn't mess with bold or italic style:
 
-![underscore-in-words][github 5]
+![underscore-in-words][GFM-UnderscoreInWords]
 
 Fenced code blocks gets syntax highlighting inside:
 
-![fenced-code-block][github 6]
+![fenced-code-block][GFM-FencedCodeBlock]
 
 Keyboard shortcuts gets highlighted like in GitHub:
 
-![keyboard-shortcut][github 7]
+![keyboard-shortcut][GFM-KeyboardShortcut]
 
 Strikethrough is supported:
 
-![strikethrough][github 8]
+![strikethrough][GFM-Strikethrough]
 
 ## Commands for Command Palette
 
-### Fix Underlined Headers
+You can launch Command Palette from `Tools -> Command Palette...`. MarkdownEditing commands start with `MarkdownEditing:`. And they are only visible when a markdown file is open and active.
 
-Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
+### General Commands
 
-### Convert Underlined Headers to ATX
+* __Fix Underlined Headers__
+    Adjusts every setext-style header to add or remove `=` or `-` characters as needed to match the lengths of their header text.
+* __Convert Underlined Headers to ATX__
+    Converts every setext-style header into an ATX style header. If something is selected only the headers in the selections will be converted, otherwise the conversion will be applied to the whole view.
+* __Markdown Lint__
+    Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
+* __Change color scheme...__
+    Lists built-in Markdown color schemes for you to preview and use.
+* __Switch List Bullet Type__
+    Switches the highlighted list between numbered and bulleted style.
 
-Converts every setext-style header into an ATX style header. If something is selected only the headers in the selections will be converted, otherwise the conversion will be applied to the whole view.
+### Links, References and Footnotes
 
-### Add Missing Link Labels
+* __Add Missing Link Labels__
+    Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
+* __Magic Footnotes Command__
+    Adds a footnote after the word under cursor. If cursor is already on a footnote, jumps to its definition or reference.
+* __Gather Missing Footnotes__
+    Add definition stubs (if there is none) for all footnotes references.
+* __Jump Reference__
+    Jumps cursor between definitions and references.
+* __New Reference__
+    Adds a new link under cursor.
+* __New Inline Link__
+    Adds a new inline link under cursor.
+* __New Inline Image__
+    Adds a new inline image under cursor.
+* __New Image__
+    Adds a new image under cursor.
+* __New Footnote__
+    Adds a footnote under cursor.
+* __Delete Reference__
+    Deletes the definition and references of a link.
+* __Organize References__
+    Sorts and gives a report on current link references usage.
 
-Scans document for referenced link usages (`[some link][some_ref]` and `[some link][]`) and checks if they are all defined. If there are undefined link references, command will automatically create their definition snippet at the bottom of the file.
+### Folding and Navigation
 
-### Markdown Lint
+Remeber you can <kbd>Ctrl</kbd> <kbd>R</kbd> (in document) and <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd> (project-wise) for quick navigation for all headers.
 
-Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
-
-### Switch List Bullet Type
-
-Switches the highlighted list between numbered and bulleted style.
-
-### Magic Footnotes Command
-
-Adds a footnote after the word under cursor. If cursor is already on a footnote, jumps to its definition or reference.
-
-### Gather Missing Footnotes
-
-Add definition stubs (if there is none) for all footnotes references.
-
-### Jump Reference
-
-Jumps cursor between definitions and references.
-
-### New Reference
-
-Adds a new link under cursor.
-
-### New Inline Link
-
-Adds a new inline link under cursor.
-
-### New Inline Image
-
-Adds a new inline image under cursor.
-
-### New Image
-
-Adds a new image under cursor.
-
-### New Footnote
-
-Adds a footnote under cursor.
-
-### Delete Reference
-
-Deletes the definition and references of a link.
-
-### Organize References
-
-Sorts and gives a report on current link references usage.
+* __Toggle Folding Current Section__
+    Folds/unfolds current section.
+* __Fold Level 1-4 Sections__
+    Fold all sections under headers of specific level.
+* __Fold/Unfold All Sections__
+    Self explanatory.
+* __Find Next/Previous Heading__
+    You have option to find just same or higher level or any level
 
 ## Configuration
 
@@ -222,6 +240,16 @@ Install them if you haven't. Then
 
 Now open palette and choose "Preview in Browser" and you will get a WYSIWYG editor.
 
+## Troubleshooting
+
+### Error loading syntax file...
+
+__Are you getting this error after installation: _**Error loading syntax file** "Packages/Markdown/Markdown.tmLanguage": Unable to open Packages/Markdown/Markdown.tmLanguage_?__
+
+>  This is caused by open markdown files at the install time. You have to __manually change their syntax to your newly installed Markdown syntax__. Read the below paragraph for more details on this.
+
+_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
+
 ## Related Plugins
 
 * [Knockdown][]
@@ -245,7 +273,7 @@ See `CONTRIBUTING.md` file.
 
 ## Credits
 
-MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][github 9] and [Felix Hao][github 10].
+MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][maliayas] and [Felix Hao][felixhao28].
 
 Related blog posts from Brett:
 * http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
@@ -253,42 +281,45 @@ Related blog posts from Brett:
 
 This plugin contains portions of code from [Knockdown][].
 
-Footnote commands were submitted by [J. Nicholas Geist][github 4] and originated at [geekabouttown][geekabouttown].
+Footnote commands were submitted by [J. Nicholas Geist][] and originated at [geekabouttown][geekabouttown].
 
 ## Donation
 
 You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownEditing/graphs/contributors) of this project individually. Every contributor is welcomed to add his/her line below with any content. Ordering shall be alphabetically by GitHub username.
 
-* [@felixhao28][github 10]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9QV2RFV2J8UZS"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
-* [@maliayas][github 9]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
+* [@felixhao28][felixhao28]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9QV2RFV2J8UZS"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
+* [@maliayas][maliayas]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
 
 ## License
 
 MarkdownEditing is released under the [MIT License][opensource].
 
-[github]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
-[github 2]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
-[github 3]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png
-[wbond]: http://wbond.net/sublime_packages/package_control
-[wbond 2]: http://wbond.net/sublime_packages/package_control/installation
-[GFM]: https://help.github.com/articles/github-flavored-markdown
-[github 5]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png
-[github 6]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png
-[github 7]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png
-[github 8]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png
+[LightTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
+[DarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
+[YellowTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png
+[ArcDarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/arcdark.png
+[PackageControl]: http://wbond.net/sublime_packages/package_control
+[InstallPackageControl]: http://wbond.net/sublime_packages/package_control/installation
+[GFM task]: https://github.github.com/gfm/#task-list-items-extension-
+[GFM]: https://github.github.com/gfm/
+[GFMFeatures]: https://guides.github.com/features/mastering-markdown/
+[GFM-UnderscoreInWords]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png
+[GFM-FencedCodeBlock]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png
+[GFM-KeyboardShortcut]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png
+[GFM-Strikethrough]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png
 [linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
 [mdesantis]: https://github.com/mdesantis
 [avivace]: https://github.com/avivace
 [tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
 [Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
-[Knockdown]:                   https://github.com/aziz/knockdown/
-[Sublime Markdown Extended]:   https://github.com/jonschlinkert/sublime-markdown-extended
-[SmartMarkdown]:               https://github.com/demon386/SmartMarkdown
+[Knockdown]: https://github.com/aziz/knockdown/
+[Sublime Markdown Extended]: https://github.com/jonschlinkert/sublime-markdown-extended
+[SmartMarkdown]: https://github.com/demon386/SmartMarkdown
 [MarkdownTOC]: https://github.com/naokazuterada/MarkdownTOC
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [brettterpstra]: http://brettterpstra.com
-[github 9]: https://github.com/maliayas
-[github 10]: https://github.com/felixhao28
-[github 4]: https://github.com/jngeist
+[maliayas]: https://github.com/maliayas
+[felixhao28]: https://github.com/felixhao28
+[J. Nicholas Geist]: https://github.com/jngeist
 [geekabouttown]: http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness
 [opensource]: http://www.opensource.org/licenses/MIT
