@@ -70,7 +70,7 @@ You can access most features through Command Palette. You can launch it from `To
     - Asterisks and underscores are autopaired and will wrap selected text.
     - If you start an empty pair and hit backspace, both elements are deleted.
     - If you start an empty pair and hit space, the right element is deleted.
-    - Backticks are paired. So entering ` will expand to `(cursor here)`.
+    - Backticks are paired. So entering `` ` `` will expand to `` `(cursor here)` ``.
 * __List__
     - At the end of a list item, pressing <kbd>Enter</kbd> will automatically insert the new list item bullet.
     - Pressing <kbd>Tab</kbd> on the blank list item will indent it and switch the list bullet to another one (Order is `*`, `-`, `+` in a cycle).
