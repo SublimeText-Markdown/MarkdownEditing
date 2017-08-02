@@ -22,16 +22,20 @@ marker_end_scope_name = "punctuation.definition.constant.end.markdown"
 
 
 def hasScope(scope_name, to_find):
+    """Test to_find's existence in scope_name."""
     return to_find in scope_name.split(" ")
 
 
 class Obj(object):
+    """A utility obj for anoymous object."""
 
     def __init__(self, **kwargs):
+        """Take keyword arguments."""
         self.__dict__.update(kwargs)
 
 
 def getMarkers(view, name=''):
+    """Find all markers."""
     # returns {name -> Region}
     markers = []
     name = re.escape(name)
@@ -66,6 +70,7 @@ def getMarkers(view, name=''):
 
 
 def getReferences(view, name=''):
+    """Find all reference definitions."""
     # returns {name -> Region}
     refs = []
     name = re.escape(name)
@@ -86,15 +91,15 @@ def getReferences(view, name=''):
 
 
 def isMarkerDefined(view, name):
-    # returns bool
+    """Return True if a marker is defined by that name."""
     return len(getReferences(view, name)) > 0
 
 
 def getCurrentScopeRegion(view, pt):
-    # returns Region
+    """Extend the region under current scope."""
     scope = view.scope_name(pt)
     l = pt
-    while l > 0 and view.scope_name(l-1) == scope:
+    while l > 0 and view.scope_name(l - 1) == scope:
         l -= 1
     r = pt
     while r < view.size() and view.scope_name(r) == scope:
@@ -103,7 +108,7 @@ def getCurrentScopeRegion(view, pt):
 
 
 def findScopeFrom(view, pt, scope, backwards=False):
-    # returns number
+    """Find the nearest position of a scope from given position."""
     if backwards:
         while pt >= 0 and not hasScope(view.scope_name(pt), scope):
             pt -= 1
@@ -114,6 +119,7 @@ def findScopeFrom(view, pt, scope, backwards=False):
 
 
 def get_reference(view, pos):
+    """Try to match a marker or reference on given position. Return a tuple (matched, is_definition, name)."""
     scope = view.scope_name(pos).split(" ")
     if definition_scope_name in scope or footnote_scope_name in scope:
         if refname_scope_name in scope:
@@ -121,7 +127,7 @@ def get_reference(view, pos):
             defname = view.substr(getCurrentScopeRegion(view, pos))
         elif refname_start_scope_name in scope:
             # Starting "["
-            defname = view.substr(getCurrentScopeRegion(view, pos+1))
+            defname = view.substr(getCurrentScopeRegion(view, pos + 1))
         else:
             # URL or footnote
             marker_pt = findScopeFrom(view, pos, refname_scope_name, True)
@@ -154,18 +160,18 @@ def get_reference(view, pos):
 
 
 class ReferenceJumpCommand(MDETextCommand):
-    # reference_jump command
+    """Jump between definition and reference."""
 
     def description(self):
+        """Description for package control."""
         return 'Jump between definition and reference'
 
     def run(self, edit):
+        """Run command callback."""
         view = self.view
         edit_regions = []
         markers = getMarkers(view)
         refs = getReferences(view)
-        missingMarkers = []
-        missingRefs = []
         for sel in view.sel():
             matched, is_definition, defname = get_reference(view, sel.begin())
             if matched:
@@ -196,19 +202,22 @@ class ReferenceJumpCommand(MDETextCommand):
 
 
 class ReferenceJumpContextCommand(ReferenceJumpCommand):
+    """Jump between definition and reference. Used in context menu."""
 
     def is_visible(self):
+        """Return True if cursor is on a marker or reference."""
         return ReferenceJumpCommand.is_visible(self) and any(get_reference(self.view, sel.begin())[0] for sel in self.view.sel())
 
 
 def is_url(contents):
-    # Returns if contents contains an URL
+    """Return if contents contains an URL."""
     re_match_urls = re.compile(r"""((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.‌​][a-z]{2,4}/)(?:[^\s()<>]+|(([^\s()<>]+|(([^\s()<>]+)))*))+(?:(([^\s()<>]+|(‌​([^\s()<>]+)))*)|[^\s`!()[]{};:'".,<>?«»“”‘’]))""", re.DOTALL)
     m = re_match_urls.search(contents)
     return True if m else False
 
 
 def mangle_url(url):
+    """Mangle URL for links."""
     url = url.strip()
     if re.match(r'^([a-z0-9-]+\.)+\w{2,4}', url, re.IGNORECASE):
         url = 'http://' + url
@@ -216,7 +225,7 @@ def mangle_url(url):
 
 
 def append_reference_link(edit, view, name, url):
-    # Detect if file ends with \n
+    r"""Detect if file ends with \n."""
     if view.substr(view.size() - 1) == '\n':
         nl = ''
     else:
@@ -228,7 +237,7 @@ def append_reference_link(edit, view, name, url):
 
 
 def suggest_default_link_name(name, image):
-    # Camel case impl.
+    """Suggest default link name in camel case."""
     ret = ''
     name_segs = name.split()
     if len(name_segs) > 1:
@@ -242,6 +251,7 @@ def suggest_default_link_name(name, image):
 
 
 def check_for_link(view, link):
+    """Check if the link already defined. Return the name if so."""
     refs = getReferences(view)
     link = link.strip()
     for name in refs:
@@ -254,9 +264,10 @@ def check_for_link(view, link):
 
 
 class ReferenceNewReferenceCommand(MDETextCommand):
-    # reference_new_reference command
+    """Create a new reference."""
 
     def run(self, edit, image=False):
+        """Run command callback."""
         view = self.view
         edit_regions = []
         contents = sublime.get_clipboard().strip()
@@ -286,12 +297,11 @@ class ReferenceNewReferenceCommand(MDETextCommand):
 
 
 class ReferenceNewInlineLinkCommand(MDETextCommand):
-    # reference_new_inline_link command
+    """Create a new inline link."""
 
     def run(self, edit, image=False):
+        """Run command callback."""
         view = self.view
-        edit_regions = []
-        suggested_name = False
         contents = sublime.get_clipboard().strip()
         link = mangle_url(contents) if is_url(contents) else ""
         link = link.replace("$", "\\$")
@@ -302,20 +312,23 @@ class ReferenceNewInlineLinkCommand(MDETextCommand):
 
 
 class ReferenceNewInlineImage(MDETextCommand):
-    # reference_new_inline_image command
+    """Create a new inline image."""
 
     def run(self, edit):
+        """Run command callback."""
         self.view.run_command("reference_new_inline_link", {"image": True})
 
 
 class ReferenceNewImage(MDETextCommand):
-    # reference_new_image command
+    """Create a new image."""
 
     def run(self, edit):
+        """Run command callback."""
         self.view.run_command("reference_new_reference", {"image": True})
 
 
 def get_next_footnote_marker(view):
+    """Get the number of the next footnote."""
     refs = getReferences(view)
     footnotes = [int(ref[1:]) for ref in refs if view.substr(refs[ref].regions[0])[0] == "^"]
 
@@ -336,15 +349,16 @@ def get_next_footnote_marker(view):
             else:
                 break
     for i in range(len(footnotes)):
-        if footnotes[i] != i+1:
-            return i+1
+        if footnotes[i] != i + 1:
+            return i + 1
     return len(footnotes) + 1
 
 
 class ReferenceNewFootnote(MDETextCommand):
-    # reference_new_footnote command
+    """Create a new footnote."""
 
     def run(self, edit):
+        """Run command callback."""
         view = self.view
         markernum = get_next_footnote_marker(view)
         markernum_str = '[^%s]' % markernum
@@ -363,9 +377,10 @@ class ReferenceNewFootnote(MDETextCommand):
 
 
 class ReferenceDeleteReference(MDETextCommand):
-    # reference_delete_reference command
+    """Delete a reference."""
 
     def run(self, edit):
+        """Run command callback."""
         view = self.view
         edit_regions = []
         markers = getMarkers(view)
@@ -377,25 +392,25 @@ class ReferenceDeleteReference(MDETextCommand):
                 if defname_key in markers:
                     for marker in markers[defname_key].regions:
                         if defname[0] == "^":
-                            edit_regions.append(sublime.Region(marker.begin()-1, marker.end()+1))
+                            edit_regions.append(sublime.Region(marker.begin() - 1, marker.end() + 1))
                         else:
                             l = findScopeFrom(view, marker.begin(), marker_begin_scope_name, True)
-                            if l > 0 and view.substr(sublime.Region(l-1, l)) == "!":
-                                edit_regions.append(sublime.Region(l-1, l+1))
+                            if l > 0 and view.substr(sublime.Region(l - 1, l)) == "!":
+                                edit_regions.append(sublime.Region(l - 1, l + 1))
                             else:
-                                edit_regions.append(sublime.Region(l, l+1))
+                                edit_regions.append(sublime.Region(l, l + 1))
                             if hasScope(view.scope_name(marker.end()), marker_text_end_scope_name):
-                                if view.substr(sublime.Region(marker.end()+1, marker.end()+2)) == '[':
+                                if view.substr(sublime.Region(marker.end() + 1, marker.end() + 2)) == '[':
                                     # [Text][]
                                     r = findScopeFrom(view, marker.end(), marker_end_scope_name, False)
-                                    edit_regions.append(sublime.Region(marker.end(), r+1))
+                                    edit_regions.append(sublime.Region(marker.end(), r + 1))
                                 else:
                                     # [Text]
-                                    edit_regions.append(sublime.Region(marker.end(), marker.end()+1))
+                                    edit_regions.append(sublime.Region(marker.end(), marker.end() + 1))
                             else:
                                 # [Text][name]
                                 r = findScopeFrom(view, marker.begin(), marker_text_end_scope_name, True)
-                                edit_regions.append(sublime.Region(r, marker.end()+1))
+                                edit_regions.append(sublime.Region(r, marker.end() + 1))
                 if defname_key in refs:
                     for ref in refs[defname_key].regions:
                         edit_regions.append(view.full_line(ref.begin()))
@@ -412,9 +427,10 @@ class ReferenceDeleteReference(MDETextCommand):
 
 
 class ReferenceOrganize(MDETextCommand):
-    # reference_organize command
+    """Sort and report all references."""
 
     def run(self, edit):
+        """Run command callback."""
         view = self.view
 
         # reorder
@@ -440,8 +456,8 @@ class ReferenceOrganize(MDETextCommand):
         flatrefs.sort(key=lambda x: marker_order[x[0].lower()] if x[0].lower() in marker_order else 9999)
 
         view.run_command("left_delete")
-        if view.size() >= 2 and view.substr(sublime.Region(view.size()-2, view.size())) == "\n\n":
-            view.erase(edit, sublime.Region(view.size()-1, view.size()))
+        if view.size() >= 2 and view.substr(sublime.Region(view.size() - 2, view.size())) == "\n\n":
+            view.erase(edit, sublime.Region(view.size() - 1, view.size()))
         for fn_tuple in flatfns:
             view.insert(edit, view.size(), fn_tuple[1])
             view.insert(edit, view.size(), "\n")
@@ -523,8 +539,10 @@ class ReferenceOrganize(MDETextCommand):
 
 
 class GatherMissingLinkMarkersCommand(MDETextCommand):
+    """Gather all missing references and creates them."""
 
     def run(self, edit):
+        """Run command callback."""
         view = self.view
         refs = getReferences(view)
         markers = getMarkers(view)
