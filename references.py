@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 import re
 import operator
+from functools import partial
 try:
     from MarkdownEditing.mdeutils import *
 except ImportError:
@@ -107,13 +108,15 @@ def getCurrentScopeRegion(view, pt):
     return sublime.Region(l, r)
 
 
-def findScopeFrom(view, pt, scope, backwards=False):
+def findScopeFrom(view, pt, scope, backwards=False, char=None):
     """Find the nearest position of a scope from given position."""
     if backwards:
-        while pt >= 0 and not hasScope(view.scope_name(pt), scope):
+        while pt >= 0 and (not hasScope(view.scope_name(pt), scope) or
+                           (char is not None and view.substr(pt) != char)):
             pt -= 1
     else:
-        while pt < view.size() and not hasScope(view.scope_name(pt), scope):
+        while pt < view.size() and (not hasScope(view.scope_name(pt), scope) or
+                                    (char is not None and view.substr(pt) != char)):
             pt += 1
     return pt
 
@@ -245,7 +248,7 @@ def suggest_default_link_name(name, image):
             ret += word.capitalize()
             if len(ret) > 30:
                 break
-        return ('image' if image else 'link') + ret
+        return ('image' if image else '') + ret
     else:
         return name
 
@@ -274,7 +277,7 @@ class ReferenceNewReferenceCommand(MDETextCommand):
         link = mangle_url(contents) if is_url(contents) else ""
         suggested_name = ""
         if len(link) > 0:
-                # If link already exists, reuse existing reference
+            # If link already exists, reuse existing reference
             suggested_link_name = suggested_name = check_for_link(view, link)
         for sel in view.sel():
             text = view.substr(sel)
@@ -555,9 +558,105 @@ class GatherMissingLinkMarkersCommand(MDETextCommand):
             whitespace_at_end = view.find(r'\s*\z', 0)
             view.replace(edit, whitespace_at_end, "\n")
 
-            # If there is not already a reference list at the and, insert a new line at the end
+            # If there is not already a reference list at the end, insert a new line at the end
             if not view.find(r'\n\s*\[[^\]]*\]:.*\s*\z', 0):
                 view.insert(edit, view.size(), "\n")
 
             for link in missings:
                 view.insert(edit, view.size(), '[%s]: \n' % link)
+
+
+def convert2ref(view, edit, link_span, name, omit_name=False):
+    """Convert single link to reference."""
+    view.sel().clear()
+    link = view.substr(sublime.Region(link_span.a + 1, link_span.b - 1))
+    if omit_name:
+        view.replace(edit, link_span, '[]')
+        link_span = sublime.Region(link_span.a + 1, link_span.a + 1)
+        offset = len(link)
+    else:
+        view.replace(edit, link_span, '[%s]' % name)
+        link_span = sublime.Region(link_span.a + 1, link_span.a + 1 + len(name))
+        offset = len(link) - len(name)
+    view.sel().add(link_span)
+    view.show_at_center(link_span)
+
+    _viewsize = view.size()
+    view.insert(edit, _viewsize, '[%s]: %s\n' % (name, link))
+    reference_span = sublime.Region(_viewsize + 1, _viewsize + 1 + len(name))
+    view.sel().add(reference_span)
+    return offset
+
+
+class ConvertInlineLinkToReferenceCommand(MDETextCommand):
+    """Convert an inline link to reference."""
+
+    def is_visible(self):
+        """Return True if cursor is on a marker or reference."""
+        for sel in self.view.sel():
+            scope_name = self.view.scope_name(sel.b)
+            if hasScope(scope_name, 'meta.link.inline.markdown'):
+                return True
+        return False
+
+    def run(self, edit, name=None):
+        """Run command callback."""
+        view = self.view
+        pattern = r"\[([^\]]+)\]\((?!#)([^\)]+)\)"
+
+        # Remove all whitespace at the end of the file
+        whitespace_at_end = view.find(r'\s*\z', 0)
+        view.replace(edit, whitespace_at_end, "\n")
+
+        # If there is not already a reference list at the end, insert a new line at the end
+        if not view.find(r'\n\s*\[[^\]]*\]:.*\s*\z', 0):
+            view.insert(edit, view.size(), "\n")
+
+        link_spans = []
+
+        for sel in view.sel():
+            scope_name = view.scope_name(sel.b)
+            if not hasScope(scope_name, 'meta.link.inline.markdown'):
+                continue
+            start = findScopeFrom(view, sel.b, marker_begin_scope_name, backwards=True)
+            end = findScopeFrom(view, sel.b, 'punctuation.definition.metadata.markdown', char=')') + 1
+            text = view.substr(sublime.Region(start, end))
+            m = re.match(pattern, text)
+            if m is None:
+                continue
+            text = m.group(1)
+            link = m.group(2)
+            link_span = sublime.Region(start + m.span(2)[0] - 1, start + m.span(2)[1] + 1)
+            if is_url(link):
+                link = mangle_url(link)
+            if len(link) > 0:
+                if name is None:
+                    # If link already exists, reuse existing reference
+                    suggested_name = check_for_link(view, link)
+                    if suggested_name is None:
+                        is_image = view.substr(start - 1) == '!' if start > 0 else False
+                        suggested_name = suggest_default_link_name(text, is_image)
+
+                _name = name if name is not None else suggested_name
+                link_spans.append((link_span, _name, _name == text))
+
+        offset = 0
+        for link_span in link_spans:
+            _link_span = sublime.Region(link_span[0].a + offset, link_span[0].b + offset)
+            offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
+
+
+class ConvertInlineLinksToReferencesCommand(MDETextCommand):
+    """Convert inline links to references."""
+
+    def run(self, edit):
+        """Run command callback."""
+        view = self.view
+        pattern = r"(?<=\]\()(?!#)([^\)]+)(?=\))"
+
+        _sel = []
+        for sel in view.sel():
+            _sel.append(sel)
+        view.sel().clear()
+        view.sel().add_all(view.find_all(pattern))
+        view.run_command('convert_inline_link_to_reference')

@@ -11,6 +11,7 @@ class DecideTitle(sublime_plugin.EventListener):
             text = view.substr(sublime.Region(0, view.size()))
             it = re.finditer(r'^(#{1,6}(?!#))|^(-{3,}|={3,})', text, re.M)
             title = ''
+            title_begin = None
             for m in it:
                 if '.front-matter' in view.scope_name(m.start()):
                     continue
@@ -23,7 +24,7 @@ class DecideTitle(sublime_plugin.EventListener):
                     title_begin = m.start() + 1
                 if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
                     break
-            if len(title) == 0:
+            if len(title) == 0 and title_begin is not None:
                 title = text[title_begin: title_end]
 
             title = title.strip()

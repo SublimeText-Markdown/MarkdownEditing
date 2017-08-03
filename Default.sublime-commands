@@ -144,5 +144,13 @@
     {
         "caption": "MarkdownEditing: Change color scheme...",
         "command": "mde_color_activate"
+    },
+    {
+        "caption": "MarkdownEditing: Convert all inline links to references",
+        "command": "convert_inline_links_to_references"
+    },
+    {
+        "caption": "MarkdownEditing: Convert inline link to reference",
+        "command": "convert_inline_link_to_reference"
     }
 ]
