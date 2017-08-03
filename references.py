@@ -1,12 +1,27 @@
+"""
+Commands related to links, references and footnotes.
+
+Exported commands:
+    ReferenceJumpCommand
+    ReferenceJumpContextCommand
+    ReferenceNewReferenceCommand
+    ReferenceNewInlineLinkCommand
+    ReferenceNewInlineImage
+    ReferenceNewImage
+    ReferenceNewFootnote
+    ReferenceDeleteReference
+    ReferenceOrganize
+    GatherMissingLinkMarkersCommand
+    ConvertInlineLinkToReferenceCommand
+    ConvertInlineLinksToReferencesCommand
+"""
 import sublime
-import sublime_plugin
 import re
 import operator
-from functools import partial
 try:
-    from MarkdownEditing.mdeutils import *
+    from MarkdownEditing.mdeutils import MDETextCommand
 except ImportError:
-    from mdeutils import *
+    from mdeutils import MDETextCommand
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
@@ -175,6 +190,8 @@ class ReferenceJumpCommand(MDETextCommand):
         edit_regions = []
         markers = getMarkers(view)
         refs = getReferences(view)
+        missing_markers = []
+        missing_refs = []
         for sel in view.sel():
             matched, is_definition, defname = get_reference(view, sel.begin())
             if matched:
@@ -183,25 +200,25 @@ class ReferenceJumpCommand(MDETextCommand):
                     if defname_key in markers:
                         edit_regions.extend(markers[defname_key].regions)
                     else:
-                        missingMarkers.append(defname)
+                        missing_markers.append(defname)
                 else:
                     if defname_key in refs:
                         edit_regions.extend(refs[defname_key].regions)
                     else:
-                        missingRefs.append(defname)
+                        missing_refs.append(defname)
         if len(edit_regions) > 0:
             sels = view.sel()
             sels.clear()
             sels.add_all(edit_regions)
             view.show(edit_regions[0])
-        if len(missingRefs) + len(missingMarkers) > 0:
+        if len(missing_refs) + len(missing_markers) > 0:
             # has something missing
-            if len(missingMarkers) == 0:
-                sublime.status_message("The definition%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs)))
-            elif len(missingRefs) == 0:
-                sublime.status_message("The marker%s of %s cannot be found." % ("" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+            if len(missing_markers) == 0:
+                sublime.status_message("The definition%s of %s cannot be found." % ("" if len(missing_refs) == 1 else "s", ", ".join(missing_refs)))
+            elif len(missing_refs) == 0:
+                sublime.status_message("The marker%s of %s cannot be found." % ("" if len(missing_markers) == 1 else "s", ", ".join(missing_markers)))
             else:
-                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missingRefs) == 1 else "s", ", ".join(missingRefs), "" if len(missingMarkers) == 1 else "s", ", ".join(missingMarkers)))
+                sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missing_refs) == 1 else "s", ", ".join(missing_refs), "" if len(missing_markers) == 1 else "s", ", ".join(missing_markers)))
 
 
 class ReferenceJumpContextCommand(ReferenceJumpCommand):
