@@ -410,6 +410,13 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:source.go
+  fenced-kotlin:
+    - match: '^(\s*[`~]{3,})\s*(kt|kotlin)\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:source.Kotlin
   fenced-code-blocks:
     - include: fenced-html
     - include: fenced-xml
@@ -441,6 +448,7 @@ contexts:
     - include: fenced-swift
     - include: fenced-clojure
     - include: fenced-go
+    - include: fenced-kotlin
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
