@@ -344,6 +344,24 @@
             { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
         ]
     },
+    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*(?<symbol>[*\\-+])(?<space>\\s)?).*/\n$+{symbol} /}"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)$", "match_all": true },
+            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*\\S.*$", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
+        ]
+    },
+    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*(?<symbol>[*\\-+])(?<space>\\s)?).*/\n$+{symbol}/}"}, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+]))$", "match_all": true },
+            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s+\\S.*$", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
+        ]
+    },
     // Extend lists with GFM tasks
     { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ x]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
         [
