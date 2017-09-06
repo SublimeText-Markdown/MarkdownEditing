@@ -19,21 +19,21 @@ contexts:
       push:
         - meta_scope: markup.raw.yaml.front-matter
         - meta_content_scope: source.yaml
-        - match: ^---\s
+        - match: ^(---|\.\.\.)\s
           pop: true
         - include: scope:source.yaml
     - match: (?<!\s)---\s*coffee\n$
       push:
         - meta_scope: markup.raw.coffee.front-matter
         - meta_content_scope: source.coffee
-        - match: ^---\s
+        - match: ^(---|\.\.\.)\s
           pop: true
         - include: scope:source.coffee
     - match: (?<!\s)---\s*json\n$
       push:
         - meta_scope: markup.raw.json.front-matter
         - meta_content_scope: source.json
-        - match: ^---\s
+        - match: ^(---|\.\.\.)\s
           pop: true
         - include: scope:source.json
     - match: ""
