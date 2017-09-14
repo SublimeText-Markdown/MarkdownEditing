@@ -449,6 +449,8 @@ contexts:
     - include: fenced-clojure
     - include: fenced-go
     - include: fenced-kotlin
+    - include: fenced-ocaml
+    - include: fenced-reason
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -513,6 +515,13 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:source.lua
+  fenced-ocaml:
+    - match: '^(\s*[`~]{3,})\s*(ocaml)\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:source.ocaml
   fenced-obj-c:
     - match: '^(\s*[`~]{3,})\s*(obj(ective-)?c)\s*$'
       push:
@@ -541,6 +550,13 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:source.python
+  fenced-reason:
+    - match: '^(\s*[`~]{3,})\s*(re|reason)\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:source.reason
   fenced-ruby:
     - match: '^(\s*[`~]{3,})\s*(ruby)\s*$'
       push:
