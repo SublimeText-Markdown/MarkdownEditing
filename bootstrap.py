@@ -16,6 +16,7 @@ def get_ingored_packages():
 
 
 def save_ingored_packages(ignored_packages):
+    settings = sublime.load_settings('Preferences.sublime-settings')
     settings.set('ignored_packages', ignored_packages)
     sublime.save_settings('Preferences.sublime-settings')
 
