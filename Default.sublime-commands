@@ -152,5 +152,9 @@
     {
         "caption": "MarkdownEditing: Convert inline link to reference",
         "command": "convert_inline_link_to_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Open Page",
+        "command": "open_page"
     }
 ]

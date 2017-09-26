@@ -549,6 +549,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#link-wiki</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#image-ref</string>
 				</dict>
 				<dict>
@@ -673,6 +677,10 @@
 				<dict>
 					<key>include</key>
 					<string>#link-email</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#link-wiki</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -926,6 +934,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#link-wiki</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#image-ref</string>
 				</dict>
 				<dict>
@@ -1058,6 +1070,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#link-wiki</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#image-ref</string>
 				</dict>
 				<dict>
@@ -1126,6 +1142,31 @@
 			<string>(&lt;)((?:https?|ftp)://.*?)(&gt;)</string>
 			<key>name</key>
 			<string>meta.link.inet.markdown</string>
+		</dict>
+		<key>link-wiki</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.link.markdown</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>markup.underline.link.markdown</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.link.markdown</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(\[\[)([A-za-z0-9]+)(\]\])</string>
+			<key>name</key>
+			<string>meta.link.wiki.markdown</string>
 		</dict>
 		<key>link-inline</key>
 		<dict>

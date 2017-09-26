@@ -290,6 +290,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -362,6 +363,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -717,6 +719,7 @@ contexts:
     - include: link-inline
     - include: link-inet
     - include: link-email
+    - include: link-wiki
     - include: image-ref
     - include: link-ref
     - include: link-ref-literal
@@ -792,6 +795,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -806,6 +810,13 @@ contexts:
         1: punctuation.definition.link.markdown
         2: markup.underline.link.markdown
         4: punctuation.definition.link.markdown
+  link-wiki:
+    - match: '(\[\[)([a-zA-Z0-9]+)(\]\])'
+      scope: meta.link.wiki.markdown
+      captures:
+        1: punctuation.definition.link.markdown
+        2: markup.underline.link.markdown
+        3: punctuation.definition.link.markdown
   link-footnote:
     - match: '(\[)(\^[^\]]*+)(\])'
       scope: meta.link.reference.markdown
