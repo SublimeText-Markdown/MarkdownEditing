@@ -19,7 +19,7 @@ import sublime
 import re
 import operator
 try:
-    from MarkdownEditing.mdeutils import MDETextCommand
+    from MarkdownWiki.mdeutils import MDETextCommand
 except ImportError:
     from mdeutils import MDETextCommand
 

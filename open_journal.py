@@ -5,7 +5,7 @@ import re
 from datetime import date
 
 try:
-    from MarkdownEditing.open_page import *
+    from MarkdownWiki.open_page import *
 except ImportError:
     from open_page import *
 

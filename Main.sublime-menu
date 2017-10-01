@@ -6,11 +6,11 @@
                 "caption": "Package Settings",
                 "children": [
                     {
-                        "caption": "Markdown Editing",
+                        "caption": "Markdown Wiki",
                         "children": [
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/README.md"
+                                    "file": "${packages}/MarkdownWiki/README.md"
                                 },
                                 "caption": "README",
                                 "command": "open_file"
@@ -24,7 +24,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences"
+                                    "file": "${packages}/MarkdownWiki/Bold and Italic Markers.tmPreferences"
                                 },
                                 "caption": "Bold and Italic Settings \u2013 Default",
                                 "command": "open_file"
@@ -41,7 +41,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
+                                    "file": "${packages}/MarkdownWiki/Markdown.sublime-settings"
                                 },
                                 "caption": "Markdown GFM Settings \u2013 Default",
                                 "command": "open_file"
@@ -58,7 +58,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings"
+                                    "file": "${packages}/MarkdownWiki/Markdown (Standard).sublime-settings"
                                 },
                                 "caption": "Markdown (Standard) Settings \u2013 Default",
                                 "command": "open_file"
@@ -75,7 +75,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings"
+                                    "file": "${packages}/MarkdownWiki/MultiMarkdown.sublime-settings"
                                 },
                                 "caption": "MultiMarkdown Settings \u2013 Default",
                                 "command": "open_file"
@@ -92,7 +92,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (Windows).sublime-keymap",
+                                    "file": "${packages}/MarkdownWiki/Default (Windows).sublime-keymap",
                                     "platform": "Windows"
                                 },
                                 "caption": "Key Bindings \u2013 Default",
@@ -100,7 +100,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (OSX).sublime-keymap",
+                                    "file": "${packages}/MarkdownWiki/Default (OSX).sublime-keymap",
                                     "platform": "OSX"
                                 },
                                 "caption": "Key Bindings \u2013 Default",
@@ -108,7 +108,7 @@
                             },
                             {
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (Linux).sublime-keymap",
+                                    "file": "${packages}/MarkdownWiki/Default (Linux).sublime-keymap",
                                     "platform": "Linux"
                                 },
                                 "caption": "Key Bindings \u2013 Default",

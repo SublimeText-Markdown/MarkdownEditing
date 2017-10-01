@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>name</key>
-    <string>MarkdownEditing</string>
+    <string>MarkdownWiki</string>
     <key>settings</key>
     <array>
         <dict>
@@ -688,10 +688,10 @@
             <string>meta.separator.markdown</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#44444422</string>
                 <key>foreground</key>
-                <string>#555555</string>
+                <string>#666666</string>
+                <key>background</key>
+                <string>#BBBBBB</string>
             </dict>
         </dict>
         <dict>

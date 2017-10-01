@@ -21,7 +21,7 @@ import sublime_plugin
 import re
 import itertools
 try:
-    from MarkdownEditing.mdeutils import *
+    from MarkdownWiki.mdeutils import *
 except ImportError:
     from mdeutils import *
 

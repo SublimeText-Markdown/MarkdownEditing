@@ -1,7 +1,7 @@
 import sublime_plugin
 import re
 try:
-    from MarkdownEditing.mdeutils import *
+    from MarkdownWiki.mdeutils import *
 except ImportError:
     from mdeutils import *
 
