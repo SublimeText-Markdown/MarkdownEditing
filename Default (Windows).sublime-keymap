@@ -661,9 +661,15 @@
             { "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true }
         ]    
     },
+    {"keys": ["alt+b"], "command": "list_back_links", "context":
+        [
+            { "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    },
     {"keys": ["alt+j"], "command": "open_journal", "context":
         [
-            { "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true },
+            { "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]    
     }

@@ -156,5 +156,13 @@
     {
         "caption": "MarkdownWiki: Open Page",
         "command": "open_page"
+    },
+    {
+        "caption": "MarkdownWiki: List Back Links",
+        "command": "list_back_links"
+    },
+    {
+        "caption": "MarkdownWiki: Open Journal",
+        "command": "open_journal"
     }
 ]

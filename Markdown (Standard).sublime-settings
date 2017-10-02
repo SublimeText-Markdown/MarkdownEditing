@@ -122,5 +122,7 @@
 	// Default keys: (OSX)super+ctrl/shift+pageup	(Linux/Win)ctrl+shift(+alt)+pageup
 	"mde.keymap_disable_goto_previous_heading": false,
 	// Open the page referenced
-	"mde.keymap_disable_open_page": false
+	"mde.keymap_disable.list_back_links": false,
+	// Open the page referenced
+	"mde.keymap_disable.open_page": false
 }
