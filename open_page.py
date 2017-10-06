@@ -41,22 +41,21 @@ class OpenPage(sublime_plugin.TextCommand):
         _, current_extension = os.path.splitext(self.current_file)
         self.current_dir = os.path.dirname(self.current_file)
 
-        pagename = pagename + current_extension
         print("Locating page '%s' in: %s" % (pagename, self.current_dir) )
 
+        search_pattern = "^%s%s$" % (pagename, current_extension)
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
-                # Skip backup files 
-                if not file.endswith("~"):
+                if re.search(search_pattern, file):
                     filename = os.path.join(dirname, file)
-                    if re.search(pagename, filename):
-                        results.append([self.extract_page_name(filename), filename])
+                    results.append([self.extract_page_name(filename), filename])
 
         return results
 
 
     def open_new_file(self, pagename):
+        current_syntax = self.view.settings().get('syntax')
         current_file = self.view.file_name()
         _, current_extension = os.path.splitext(current_file)
         current_dir = os.path.dirname(current_file)
@@ -69,7 +68,11 @@ class OpenPage(sublime_plugin.TextCommand):
             'title': pagename,
             'template': 'default_page'
         })
-        new_view.run_command('save')
+        print("Current syntax: %s" % current_syntax)
+        new_view.set_syntax_file(current_syntax)
+
+        # Create but don't save page
+        # new_view.run_command('save')
 
 
     def open_selected_file(self, selected_index):
