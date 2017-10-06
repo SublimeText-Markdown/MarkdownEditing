@@ -1,33 +1,41 @@
 import sublime, sublime_plugin
 import os, string
-import re
-import mmap
 
-class ListBackLinks(sublime_plugin.TextCommand):
+try:
+    from MarkdownWiki.open_page import *
+except ImportError:
+    from open_page import *
+
+
+MARKDOWN_EXTENSION = '.md'
+PAGE_REF_FORMAT = '[[%s]]'
+
+
+class ListBackLinks(OpenPage):
     def run(self, edit):
-        print("Listing backlinks")
-        self.backlinks = self.find_backlinks()
+        print("Listing file_list")
+        self.file_list = self.find_files_with_ref()
         self.select_backlink()
 
 
-    def find_backlinks(self):
-        current_file = self.view.file_name()
-        current_dir, current_base = os.path.split(current_file)
-        current_name, current_extension = os.path.splitext(current_base)
+    def find_files_with_ref(self):
+        self.current_file = self.view.file_name()
+        self.current_dir, current_base = os.path.split(self.current_file)
+        self.current_name, current_extension = os.path.splitext(current_base)
 
         results = []
-        for dirname, _, files in self.list_dir_tree(current_dir):
+        for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
+                page_name, extension = os.path.splitext(file)
                 filename = os.path.join(dirname, file)
-                if self.contains_wikilink(filename, current_name):
-                    results.append(filename)
+                if extension == MARKDOWN_EXTENSION and self.contains_ref(filename, self.current_name):
+                    results.append([page_name, filename])
 
         return results
 
 
-    def contains_wikilink(self, filename, current_name):
-        link_text = "[[" + current_name + "]]"
-        print("Searching %s for: %s" % (filename, current_name))
+    def contains_ref(self, filename, page_name):
+        link_text = PAGE_REF_FORMAT % page_name
 
         try:
             if link_text in open(filename).read():
@@ -38,19 +46,5 @@ class ListBackLinks(sublime_plugin.TextCommand):
         return False
 
     def select_backlink(self):
-        self.view.window().show_quick_panel(self.backlinks, self.open_file)
-
-
-    def open_file(self, selected_index):
-        if selected_index != -1:
-            file = self.backlinks[selected_index]
-            
-            print("Opening file '%s'" % (file))
-            self.view.window().open_file(file)
-
-
-    def list_dir_tree(self, directory):
-        for dir, dirnames, files in os.walk(directory):
-            dirnames[:] = [dirname for dirname in dirnames]
-            yield dir, dirnames, files
+        self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
 

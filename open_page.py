@@ -24,37 +24,39 @@ class OpenPage(sublime_plugin.TextCommand):
 
     def select_page(self, pagename):
         if pagename:
-            self.potential_files = self.find_files(pagename)
+            self.file_list = self.find_files(pagename)
 
-        if len(self.potential_files) > 1:
-            self.view.window().show_quick_panel(self.potential_files, self.open_file)
-        elif len(self.potential_files) == 1:
-            self.open_file(0)
+        if len(self.file_list) > 1:
+            self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
+        elif len(self.file_list) == 1:
+            self.open_selected_file(0)
         else:
-            self.new_file(pagename)
+            self.open_new_file(pagename)
 
 
     def find_files(self, pagename):
         pagename = pagename.replace('\\', os.sep).replace(os.sep+os.sep, os.sep).strip()
 
-        current_file = self.view.file_name()
-        _, current_extension = os.path.splitext(current_file)
-        current_dir = os.path.dirname(current_file)
+        self.current_file = self.view.file_name()
+        _, current_extension = os.path.splitext(self.current_file)
+        self.current_dir = os.path.dirname(self.current_file)
 
         pagename = pagename + current_extension
-        print("Locating page '%s' in: %s" % (pagename, current_dir) )
+        print("Locating page '%s' in: %s" % (pagename, self.current_dir) )
 
         results = []
-        for dirname, _, files in self.list_dir_tree(current_dir):
+        for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
-                fileName = os.path.join(dirname, file)
-                if re.search(pagename, fileName):
-                    results.append(fileName)
+                # Skip backup files 
+                if not file.endswith("~"):
+                    filename = os.path.join(dirname, file)
+                    if re.search(pagename, filename):
+                        results.append([self.extract_page_name(filename), filename])
 
         return results
 
 
-    def new_file(self, pagename):
+    def open_new_file(self, pagename):
         current_file = self.view.file_name()
         _, current_extension = os.path.splitext(current_file)
         current_dir = os.path.dirname(current_file)
@@ -63,15 +65,25 @@ class OpenPage(sublime_plugin.TextCommand):
 
         new_view = self.view.window().new_file()
         new_view.retarget(filename)
+        new_view.run_command('prepare_from_template', {
+            'title': pagename,
+            'template': 'default_page'
+        })
         new_view.run_command('save')
 
 
-    def open_file(self, selected_index):
+    def open_selected_file(self, selected_index):
         if selected_index != -1:
-            file = self.potential_files[selected_index]
+            _, file = self.file_list[selected_index]
             
             print("Opening file '%s'" % (file))
             self.view.window().open_file(file)
+
+    def extract_page_name(self, filename):
+        _, base_name = os.path.split(filename)
+        page_name, _ = os.path.splitext(base_name)
+
+        return page_name;
 
 
     def list_dir_tree(self, directory):

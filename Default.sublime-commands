@@ -154,6 +154,10 @@
         "command": "convert_inline_link_to_reference"
     },
     {
+        "caption": "MarkdownWiki: Open Home Page",
+        "command": "open_home_page"
+    },
+    {
         "caption": "MarkdownWiki: Open Page",
         "command": "open_page"
     },
