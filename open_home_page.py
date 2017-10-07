@@ -7,9 +7,13 @@ try:
 except ImportError:
     from open_page import *
 
-class OpenHomePage(OpenPage):
-    def run(self, edit):
-        page = "HomePage"
 
-        print("Open Home: %s" % (page))
+HOME_PAGE = "HomePage"
+
+
+class OpenHomePageCommand(OpenPageCommand):
+    def run(self, edit):
+        page = HOME_PAGE
+
+        print("Open Home Page: %s" % (page))
         self.select_page(page)

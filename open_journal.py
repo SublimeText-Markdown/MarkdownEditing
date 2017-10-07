@@ -9,7 +9,7 @@ try:
 except ImportError:
     from open_page import *
 
-class OpenJournal(OpenPage):
+class OpenJournalCommand(OpenPageCommand):
     def run(self, edit):
         today = date.today()
         page = today.strftime('%Y-%m-%d')

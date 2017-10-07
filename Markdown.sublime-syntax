@@ -814,9 +814,9 @@ contexts:
     - match: '(\[\[)([a-zA-Z0-9]+)(\]\])'
       scope: meta.link.wiki.markdown
       captures:
-        1: punctuation.definition.link.markdown
+        1: punctuation.definition.string.begin.markdown
         2: markup.underline.link.markdown
-        3: punctuation.definition.link.markdown
+        3: punctuation.definition.string.end.markdown
   link-footnote:
     - match: '(\[)(\^[^\]]*+)(\])'
       scope: meta.link.reference.markdown

@@ -162,6 +162,10 @@
         "command": "open_page"
     },
     {
+        "caption": "MarkdownWiki: Open Reference",
+        "command": "open_reference"
+    },
+    {
         "caption": "MarkdownWiki: List Back Links",
         "command": "list_back_links"
     },

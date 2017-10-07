@@ -16,8 +16,8 @@
 	// Layout
 	"draw_centered": false,
 	"word_wrap": true,
-	"wrap_width": 80,
-	"rulers": [],
+	"wrap_width": 120,
+	"rulers": [120],
 
 	// Line
 	"line_numbers": false,
@@ -125,6 +125,10 @@
 	"mde.keymap_disable.list_back_links": false,
 	// Open the home page
 	"mde.keymap_disable.open_home_page": false,
+	// Open the journal
+	"mde.keymap_disable.open_journal": false,
 	// Open the page referenced
-	"mde.keymap_disable.open_page": false
+	"mde.keymap_disable.open_page": false,
+	// Open the link referenced
+	"mde.keymap_disable.open_reference": false
 }

@@ -11,7 +11,7 @@ MARKDOWN_EXTENSION = '.md'
 PAGE_REF_FORMAT = '[[%s]]'
 
 
-class ListBackLinks(OpenPage):
+class ListBackLinksCommand(OpenPageCommand):
     def run(self, edit):
         print("Listing file_list")
         self.file_list = self.find_files_with_ref()

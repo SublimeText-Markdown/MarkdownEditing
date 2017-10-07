@@ -2,7 +2,7 @@ import sublime, sublime_plugin
 import os, string
 import re
 
-class OpenPage(sublime_plugin.TextCommand):
+class OpenPageCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         page = self.identify_page()
 

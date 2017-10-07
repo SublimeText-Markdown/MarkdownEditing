@@ -6,6 +6,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 
 [Dark][DarkTheme] and [Yellow][YellowTheme] and [ArcDark][ArcDarkTheme] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
 
+
 ## Overview
 
 <!-- MarkdownTOC autolink="true" bracket="round" markdown_preview="markdown" -->
@@ -63,6 +64,7 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownWiki/[files]`.
 4. Restart Sublime Text to complete installation. Open a Markdown file. The features listed below should now be available.
 
+
 ## Features
 
 You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`. MarkdownWiki commands start with `MarkdownWiki:`. And they are only visible when a markdown file is open and active.
@@ -98,6 +100,7 @@ You can access most features through Command Palette. You can launch it from `To
     - Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
     - New documents will be named automatically based on the first header.
 
+
 ## Key Bindings
 
 | OS X | Windows/Linux | Description |
@@ -105,13 +108,18 @@ You can access most features through Command Palette. You can launch it from `To
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>V</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>V</kbd> | Creates or pastes the contents of the clipboard as an inline link on selected text.
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>R</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd> | <kbd>Shift</kbd><kbd>Win</kbd><kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Alt</kbd><kbd>B</kbd> <kbd>Alt</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Ctrl</kbd><kbd>B</kbd> <kbd>Ctrl</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
 | <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote.
 | <kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
 | <kbd>^</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | Go to the previous/next heading of the same or higher level
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> |  Go to the previous/next heading
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>H</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd> | Open home page
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>D</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd> | Open the referenced wiki page
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>J</kbd> | Open journal page for today
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> | List back links
+
 
 ## GFM Specific Features
 
@@ -132,6 +140,7 @@ Keyboard shortcuts gets highlighted like in GitHub:
 Strikethrough is supported:
 
 ![strikethrough][GFM-Strikethrough]
+
 
 ## Commands for Command Palette
 

@@ -1150,7 +1150,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.link.markdown</string>
+					<string>punctuation.definition.string.begin.markdown</string>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -1160,7 +1160,7 @@
 				<key>3</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.link.markdown</string>
+					<string>punctuation.definition.string.end.markdown</string>
 				</dict>
 			</dict>
 			<key>match</key>
