@@ -14,5 +14,4 @@ class OpenJournalCommand(OpenPageCommand):
         today = date.today()
         page = today.strftime('%Y-%m-%d')
 
-        print("Open journal: %s" % (page))
         self.select_page(page)

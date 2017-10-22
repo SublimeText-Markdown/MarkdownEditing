@@ -130,5 +130,7 @@
 	// Open the page referenced
 	"mde.keymap_disable.open_page": false,
 	// Open the link referenced
-	"mde.keymap_disable.open_reference": false
+	"mde.keymap_disable.open_reference": false,
+	// Make page reference
+	"mde.keymap_disable..make_page_reference": false
 }

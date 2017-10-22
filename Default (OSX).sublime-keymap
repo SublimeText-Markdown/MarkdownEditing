@@ -678,7 +678,16 @@
             { "key": "selector", "operator": "equal", "operand": "constant.other.reference.link.markdown", "match_all": true }
         ]    
     },
-    {"keys": ["super+shift+b"], "command": "list_back_links", "context":
+    {"keys": ["super+shift+d"], "command": "make_page_reference", "context":
+        [
+            { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "meta.link.wiki.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }            
+        ]    
+    },
+    {"keys": ["super+shift+x"], "command": "list_back_links", "context":
         [
             { "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }

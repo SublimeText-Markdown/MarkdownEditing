@@ -13,7 +13,4 @@ HOME_PAGE = "HomePage"
 
 class OpenHomePageCommand(OpenPageCommand):
     def run(self, edit):
-        page = HOME_PAGE
-
-        print("Open Home Page: %s" % (page))
-        self.select_page(page)
+        self.select_page(HOME_PAGE)

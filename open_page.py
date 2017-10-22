@@ -4,27 +4,28 @@ import re
 
 class OpenPageCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        page = self.identify_page()
-
-        print("Open page: %s" % (page))
-        self.select_page(page)
+        pagename = self.identify_page_at_cursor()
+        self.select_page(pagename)
 
 
-    def identify_page(self):
+    def identify_page_at_cursor(self):
         for region in self.view.sel():
             text_on_cursor = None
-            if region.begin() == region.end():
-                word = self.view.word(region)
-                if not word.empty():
-                    text_on_cursor = self.view.substr(word)
-                    return text_on_cursor
+
+            pos = region.begin()
+            scope_region = self.view.extract_scope(pos)
+            if not scope_region.empty():
+                text_on_cursor = self.view.substr(scope_region)
+                return text_on_cursor.strip(string.punctuation)
 
         return None
 
 
     def select_page(self, pagename):
+        print("Open page: %s" % (pagename))
+
         if pagename:
-            self.file_list = self.find_files(pagename)
+            self.file_list = self.find_files_with_name(pagename)
 
         if len(self.file_list) > 1:
             self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
@@ -34,7 +35,7 @@ class OpenPageCommand(sublime_plugin.TextCommand):
             self.open_new_file(pagename)
 
 
-    def find_files(self, pagename):
+    def find_files_with_name(self, pagename):
         pagename = pagename.replace('\\', os.sep).replace(os.sep+os.sep, os.sep).strip()
 
         self.current_file = self.view.file_name()

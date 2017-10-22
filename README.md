@@ -27,7 +27,6 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 - [Enable WYSIWYG](#enable-wysiwyg)
 - [Troubleshooting](#troubleshooting)
     - [Error loading syntax file...](#error-loading-syntax-file)
-    - [Roll back to an older version](#roll-back-to-an-older-version)
 - [Related Plugins](#related-plugins)
 - [Known Bugs](#known-bugs)
 - [Contributing](#contributing)
@@ -60,7 +59,7 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 ### Manual Installation
 
 1. In Sublime Text, open the menu "Preferences" -> "Browse Packages...". This is the Sublime Text Packages directory.
-2. [Download and unzip](https://github.com/SublimeText-Markdown/MarkdownWiki/archive/master.zip) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownWiki` in the Sublime Text Packages directory.
+2. Download and unzip from [GitHub]](https://github.com/) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownWiki` in the Sublime Text Packages directory.
 3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownWiki/[files]`.
 4. Restart Sublime Text to complete installation. Open a Markdown file. The features listed below should now be available.
 
@@ -116,7 +115,7 @@ You can access most features through Command Palette. You can launch it from `To
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | Go to the previous/next heading of the same or higher level
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> |  Go to the previous/next heading
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>H</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd> | Open home page
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>D</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd> | Open the referenced wiki page
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>D</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd> | Open wiki page or url reference under the cursor
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>J</kbd> | Open journal page for today
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> | List back links
 
@@ -260,12 +259,11 @@ __Are you getting this error after installation: _**Error loading syntax file** 
 
 _Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownWiki is enabled, native package causes some conflicts. For this reason, MarkdownWiki will automatically disable it. Since it doesn't bring anything new over MarkdownWiki, this is not a loss. But remember, when you disable MarkdownWiki, you have to reenable the native one manually (if you want).
 
-### Roll back to an older version
-
-When you notice any undesired behavior introduced by the latest update, your feedback is always welcome in our [issue page](https://github.com/SublimeText-Markdown/MarkdownWiki/issues). However before it's fixed, you can rollback to [an earlier version](https://github.com/SublimeText-Markdown/MarkdownWiki/releases). Find the desired version and download the zip file, then follow [manual installation guide](#manual-installation)
 
 ## Related Plugins
 
+* [Markdowning Editing][]
+    - This package was forked from Markdown Editing
 * [Knockdown][]
 
      Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownWiki and some of them are actually improved further in MarkdownWiki.
@@ -291,7 +289,7 @@ MarkdownWiki was originally created by [Brett Terpstra][brettterpstra] and has b
 
 Related blog posts from Brett:
 * http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
-* http://brettterpstra.com/2013/11/23/MarkdownWiki-for-sublime-text-updates/
+* http://brettterpstra.com/2013/11/23/MarkdownEditing-for-sublime-text-updates/
 
 This plugin contains portions of code from [Knockdown][].
 
@@ -299,7 +297,7 @@ Footnote commands were submitted by [J. Nicholas Geist][] and originated at [gee
 
 ## Donation
 
-You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownWiki/graphs/contributors) of this project individually. Every contributor is welcomed to add his/her line below with any content. Ordering shall be alphabetically by GitHub username.
+You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownEditing/graphs/contributors) of this project individually. Every contributor is welcomed to add his/her line below with any content. Ordering shall be alphabetically by GitHub username.
 
 * [@felixhao28][felixhao28]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9QV2RFV2J8UZS"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
 * [@maliayas][maliayas]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
@@ -308,29 +306,30 @@ You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownW
 
 MarkdownWiki is released under the [MIT License][opensource].
 
-[LightTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/light.png
-[DarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/dark.png
-[YellowTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/yellow.png
-[ArcDarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/arcdark.png
+[LightTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
+[DarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
+[YellowTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/yellow.png
+[ArcDarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/arcdark.png
 [PackageControl]: http://wbond.net/sublime_packages/package_control
 [InstallPackageControl]: http://wbond.net/sublime_packages/package_control/installation
 [GFM task]: https://github.github.com/gfm/#task-list-items-extension-
 [GFM]: https://github.github.com/gfm/
 [GFMFeatures]: https://guides.github.com/features/mastering-markdown/
-[GFM-UnderscoreInWords]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/underscore-in-words.png
-[GFM-FencedCodeBlock]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/fenced-code-block.png
-[GFM-KeyboardShortcut]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/keyboard-shortcut.png
-[GFM-Strikethrough]: https://raw.github.com/SublimeText-Markdown/MarkdownWiki/master/screenshots/strikethrough.png
-[linkBlackboardTheme]: https://github.com/mdesantis/MarkdownWiki/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
+[GFM-UnderscoreInWords]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/underscore-in-words.png
+[GFM-FencedCodeBlock]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/fenced-code-block.png
+[GFM-KeyboardShortcut]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/keyboard-shortcut.png
+[GFM-Strikethrough]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/strikethrough.png
+[linkBlackboardTheme]: https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme
 [mdesantis]: https://github.com/mdesantis
 [avivace]: https://github.com/avivace
-[tips]: https://github.com/SublimeText-Markdown/MarkdownWiki/wiki/Tips
-[Wiki]: https://github.com/SublimeText-Markdown/MarkdownWiki/wiki
+[tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
+[Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
+[Markdown Editing]: (https://github.com/SublimeText-Markdown/MarkdownEditing
 [Knockdown]: https://github.com/aziz/knockdown/
 [Sublime Markdown Extended]: https://github.com/jonschlinkert/sublime-markdown-extended
 [SmartMarkdown]: https://github.com/demon386/SmartMarkdown
 [MarkdownTOC]: https://github.com/naokazuterada/MarkdownTOC
-[#158]: https://github.com/SublimeText-Markdown/MarkdownWiki/issues/158
+[#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
 [brettterpstra]: http://brettterpstra.com
 [maliayas]: https://github.com/maliayas
 [felixhao28]: https://github.com/felixhao28
