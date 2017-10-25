@@ -8,8 +8,6 @@ except ImportError:
     from wiki_page import *
 
 
-HOME_PAGE = "HomePage"
-
 
 class OpenHomePageCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
