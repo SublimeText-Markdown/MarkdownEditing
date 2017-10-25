@@ -5,13 +5,14 @@ import re
 from datetime import date
 
 try:
-    from MarkdownWiki.open_page import *
+    from MarkdownWiki.wiki_page import *
 except ImportError:
-    from open_page import *
+    from wiki_page import *
 
-class OpenJournalCommand(OpenPageCommand):
+class OpenJournalCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         today = date.today()
-        page = today.strftime('%Y-%m-%d')
+        name = today.strftime('%Y-%m-%d')
 
-        self.select_page(page)
+        wiki_page = WikiPage(self.view)
+        wiki_page.select_page(name)

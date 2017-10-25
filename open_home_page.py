@@ -3,14 +3,15 @@ import os, string
 import re
 
 try:
-    from MarkdownWiki.open_page import *
+    from MarkdownWiki.wiki_page import *
 except ImportError:
-    from open_page import *
+    from wiki_page import *
 
 
 HOME_PAGE = "HomePage"
 
 
-class OpenHomePageCommand(OpenPageCommand):
-    def run(self, edit):
-        self.select_page(HOME_PAGE)
+class OpenHomePageCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		wiki_page = WikiPage(self.view)
+		wiki_page.select_page(HOME_PAGE)
