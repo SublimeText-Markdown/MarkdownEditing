@@ -1,10 +1,6 @@
-# MarkdownWiki
+# Markdown Wiki
 
-Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more __robust__ syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, __GitHub flavored Markdown__, MultiMarkdown.
-
-![MarkdownWiki][LightTheme]
-
-[Dark][DarkTheme] and [Yellow][YellowTheme] and [ArcDark][ArcDarkTheme] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
+Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEditing) plugin for Sublime Text by adding the functionality of a personal wiki.
 
 
 ## Overview
@@ -15,6 +11,8 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - [Package Control](#package-control)
     - [Manual Installation](#manual-installation)
 - [Features](#features)
+    - [Wiki features](#wiki-features)
+    - [Markdown features](#markdown-features)
 - [Key Bindings](#key-bindings)
 - [GFM Specific Features](#gfm-specific-features)
 - [Commands for Command Palette](#commands-for-command-palette)
@@ -35,6 +33,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 - [License](#license)
 
 <!-- /MarkdownTOC -->
+
 
 ## Installation
 
@@ -66,8 +65,33 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 
 ## Features
 
-You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`. MarkdownWiki commands start with `MarkdownWiki:`. And they are only visible when a markdown file is open and active.
+You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`.  The Markdown Wiki commands start with `MarkdownWiki:`, and they are only visible when a markdown file is open and active.
 
+### Wiki features
+
+Wiki links are defined by surrounding a (wiki) word with double square brackets, for example:
+
+    [[SampleWikiPage]]
+
+The user can `open` wiki page using a sublime command.  This will search the current open file's directory (and sub-directories) for a file with a matching name and a markdown extension.  For example, opening the previous wiki link
+will look for and open a file named:
+
+    SampleWikiPage.md
+
+The user can `list back links` and of course to open them.  Back links are pages that reference the current page.  This allows pages to be tied together into a personal wiki.   A common technique is to define *tag* wiki pages and to list any tags for a page as references to the tag pages at the bottom of the page, for example:
+    
+    [[TagSyntax]] [[TagDev]] [[TagPython]]
+
+This allows the user to list all pages with a specific tag, by opening the tag page and list all back links.
+
+Journal wiki pages are also supported.  A journal page is just a wiki page with a name matching the current date.
+
+Lastly the command to open the *home* page is provided, where the home page is just a wiki page named `HomePage`.
+
+
+### Markdown features
+
+All the old `MarkdownEditing` commands are available:
 * __Pairing__
     - Asterisks and underscores are autopaired and will wrap selected text.
     - If you start an empty pair and hit backspace, both elements are deleted.
@@ -273,19 +297,22 @@ _Note_: Sublime text has a native tiny package for Markdown. However, when Markd
     - Sublime Text 3 plugin for generating a Table of Contents (TOC) in a Markdown document.
 * See https://packagecontrol.io/search/markdown for more.
 
+
 ## Known Bugs
 
 * Setext-style headers (`===` and `---`) do not show up in the symbol list. This is due to a Sublime Text limitation (see [#158][]). However, we are able to put a placeholder to indicate the existence of the header. We encourage you to use Atx-style headers (`#`).
 
 * Installing for the first time while having markdown files opened may cause MarkdownWiki to behave unexpectedly on those files. Close and reopen those files to fix it.
 
+
 ## Contributing
 
 See `CONTRIBUTING.md` file.
 
+
 ## Credits
 
-MarkdownWiki was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][maliayas] and [Felix Hao][felixhao28].
+MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][maliayas] and [Felix Hao][felixhao28].
 
 Related blog posts from Brett:
 * http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
@@ -295,12 +322,14 @@ This plugin contains portions of code from [Knockdown][].
 
 Footnote commands were submitted by [J. Nicholas Geist][] and originated at [geekabouttown][geekabouttown].
 
+
 ## Donation
 
 You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownEditing/graphs/contributors) of this project individually. Every contributor is welcomed to add his/her line below with any content. Ordering shall be alphabetically by GitHub username.
 
 * [@felixhao28][felixhao28]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9QV2RFV2J8UZS"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
 * [@maliayas][maliayas]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
+
 
 ## License
 

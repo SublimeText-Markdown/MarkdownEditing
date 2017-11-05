@@ -5,6 +5,7 @@ import re
 
 MARKDOWN_EXTENSION = '.md'
 PAGE_REF_FORMAT = '[[%s]]'
+HOME_PAGE = "HomePage"
 
 
 class WikiPage:
