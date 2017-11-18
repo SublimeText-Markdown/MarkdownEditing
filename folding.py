@@ -2,7 +2,7 @@ import sublime
 import sublime_plugin
 import re
 try:
-    from MarkdownWiki.mdeutils import *
+    from MarkdownEditing.mdeutils import *
 except ImportError:
     from mdeutils import *
 
@@ -142,7 +142,7 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
-        view.window().run_command('show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownWiki: Fold'})
+        view.window().run_command('show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
 
 
 class FoldAllSectionsCommand(MDETextCommand):

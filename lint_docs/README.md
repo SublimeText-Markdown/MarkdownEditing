@@ -1,8 +1,8 @@
-# Lint feature for MarkdownWiki
+# Lint feature for MarkdownEditing
 
 This feature is still experimental. Use at your own risk.
 
-Open a markdown document and press `<kbd>ctrl</kbd>(<kbd>⌘</kbd>)+<kbd>shift</kbd>(<kbd>⇧</kbd>)+<kbd>M</kbd>` or input `MarkdownWiki: Markdown Lint` in command pallette to try it.
+Open a markdown document and press `<kbd>ctrl</kbd>(<kbd>⌘</kbd>)+<kbd>shift</kbd>(<kbd>⇧</kbd>)+<kbd>M</kbd>` or input `MarkdownEditing: Markdown Lint` in command pallette to try it.
 
 ## Editing rules
 
@@ -64,4 +64,4 @@ You can create new settings as well. Just follow the examples of existing rules 
 
 ## Discussion
 
-You can share your opinions through [issues](https://github.com/SublimeText-Markdown/MarkdownWiki/issues).
+You can share your opinions through [issues](https://github.com/SublimeText-Markdown/MarkdownEditing/issues).

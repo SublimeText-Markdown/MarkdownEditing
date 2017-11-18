@@ -1,176 +1,176 @@
 [
     {
-        "caption": "MarkdownWiki: Fix Underlined Headers",
+        "caption": "MarkdownEditing: Fix Underlined Headers",
         "command": "fix_all_underlined_headers"
     },
     {
-        "caption": "MarkdownWiki: Convert Underlined Headers to ATX",
+        "caption": "MarkdownEditing: Convert Underlined Headers to ATX",
         "command": "convert_to_atx"
     },
     {
-        "caption": "MarkdownWiki: Add Missing Link Labels",
+        "caption": "MarkdownEditing: Add Missing Link Labels",
         "command": "gather_missing_link_markers"
     },
     {
-        "caption": "Preferences: MarkdownWiki Settings – Default",
+        "caption": "Preferences: MarkdownEditing Settings – Default",
         "command": "open_file", "args":
         {
-            "file": "${packages}/MarkdownWiki/Markdown.sublime-settings"
+            "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
         }
     },
     {
-        "caption": "Preferences: MarkdownWiki Settings – User",
+        "caption": "Preferences: MarkdownEditing Settings – User",
         "command": "open_file", "args":
         {
             "file": "${packages}/User/Markdown.sublime-settings"
         }
     },
     {
-        "caption": "MarkdownWiki: Markdown Lint",
+        "caption": "MarkdownEditing: Markdown Lint",
         "command": "markdown_lint"
     },
     {
-        "caption": "MarkdownWiki: Switch List Bullet Type",
+        "caption": "MarkdownEditing: Switch List Bullet Type",
         "command": "switch_list_bullet_type"
     },
     {
-        "caption": "MarkdownWiki: Magic Footnotes Command",
+        "caption": "MarkdownEditing: Magic Footnotes Command",
         "command": "magic_footnotes"
     },
     {
-        "caption": "MarkdownWiki: Gather Missing Footnotes",
+        "caption": "MarkdownEditing: Gather Missing Footnotes",
         "command": "gather_missing_footnotes"
     },
     {
-        "caption": "MarkdownWiki: Jump Reference",
+        "caption": "MarkdownEditing: Jump Reference",
         "command": "reference_jump"
     },
     {
-        "caption": "MarkdownWiki: New Reference",
+        "caption": "MarkdownEditing: New Reference",
         "command": "reference_new_reference"
     },
     {
-        "caption": "MarkdownWiki: New Inline Link",
+        "caption": "MarkdownEditing: New Inline Link",
         "command": "reference_new_inline_link"
     },
     {
-        "caption": "MarkdownWiki: New Inline Image",
+        "caption": "MarkdownEditing: New Inline Image",
         "command": "reference_new_inline_image"
     },
     {
-        "caption": "MarkdownWiki: New Image",
+        "caption": "MarkdownEditing: New Image",
         "command": "reference_new_image"
     },
     {
-        "caption": "MarkdownWiki: New Footnote",
+        "caption": "MarkdownEditing: New Footnote",
         "command": "reference_new_footnote"
     },
     {
-        "caption": "MarkdownWiki: Delete Reference",
+        "caption": "MarkdownEditing: Delete Reference",
         "command": "reference_delete_reference"
     },
     {
-        "caption": "MarkdownWiki: Organize References",
+        "caption": "MarkdownEditing: Organize References",
         "command": "reference_organize"
     },
     {
-        "caption": "MarkdownWiki: Toggle Folding Current Section",
+        "caption": "MarkdownEditing: Toggle Folding Current Section",
         "command": "fold_section"
     },
     {
-        "caption": "MarkdownWiki: Fold Level 1 Sections",
+        "caption": "MarkdownEditing: Fold Level 1 Sections",
         "command": "fold_all_sections", "args" :
         {
             "target_level" : 1
         }
     },
     {
-        "caption": "MarkdownWiki: Fold Level 2 Sections",
+        "caption": "MarkdownEditing: Fold Level 2 Sections",
         "command": "fold_all_sections", "args" :
         {
             "target_level" : 2
         }
     },
     {
-        "caption": "MarkdownWiki: Fold Level 3 Sections",
+        "caption": "MarkdownEditing: Fold Level 3 Sections",
         "command": "fold_all_sections", "args" :
         {
             "target_level" : 3
         }
     },
     {
-        "caption": "MarkdownWiki: Fold Level 4 Sections",
+        "caption": "MarkdownEditing: Fold Level 4 Sections",
         "command": "fold_all_sections", "args" :
         {
             "target_level" : 4
         }
     },
     {
-        "caption": "MarkdownWiki: Fold All Sections",
+        "caption": "MarkdownEditing: Fold All Sections",
         "command": "fold_all_sections"
     },
     {
-        "caption": "MarkdownWiki: Unfold All Sections",
+        "caption": "MarkdownEditing: Unfold All Sections",
         "command": "unfold_all_sections"
     },
     {
-        "caption": "MarkdownWiki: Find Next Heading (Same or higher level)",
+        "caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
         "command": "goto_next_heading", "args" :
         {
             "same_level" : true
         }
     },
     {
-        "caption": "MarkdownWiki: Find Next Heading (Any level)",
+        "caption": "MarkdownEditing: Find Next Heading (Any level)",
         "command": "goto_next_heading", "args" :
         {
             "same_level" : false
         }
     },
     {
-        "caption": "MarkdownWiki: Find Previous Heading (Same or higher level)",
+        "caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
         "command": "goto_previous_heading", "args" :
         {
             "same_level" : true
         }
     },
     {
-        "caption": "MarkdownWiki: Find Previous Heading (Any level)",
+        "caption": "MarkdownEditing: Find Previous Heading (Any level)",
         "command": "goto_previous_heading", "args" :
         {
             "same_level" : false
         }
     },
     {
-        "caption": "MarkdownWiki: Change color scheme...",
+        "caption": "MarkdownEditing: Change color scheme...",
         "command": "mde_color_activate"
     },
     {
-        "caption": "MarkdownWiki: Convert all inline links to references",
+        "caption": "MarkdownEditing: Convert all inline links to references",
         "command": "convert_inline_links_to_references"
     },
     {
-        "caption": "MarkdownWiki: Convert inline link to reference",
+        "caption": "MarkdownEditing: Convert inline link to reference",
         "command": "convert_inline_link_to_reference"
     },
     {
-        "caption": "MarkdownWiki: Open Home Page",
+        "caption": "MarkdownEditing: Open Home Page",
         "command": "open_home_page"
     },
     {
-        "caption": "MarkdownWiki: Open Page",
+        "caption": "MarkdownEditing: Open Page",
         "command": "open_page"
     },
     {
-        "caption": "MarkdownWiki: Open Reference",
+        "caption": "MarkdownEditing: Open Reference",
         "command": "open_reference"
     },
     {
-        "caption": "MarkdownWiki: List Back Links",
+        "caption": "MarkdownEditing: List Back Links",
         "command": "list_back_links"
     },
     {
-        "caption": "MarkdownWiki: Open Journal",
+        "caption": "MarkdownEditing: Open Journal",
         "command": "open_journal"
     }
 ]

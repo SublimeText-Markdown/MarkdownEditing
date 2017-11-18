@@ -2,12 +2,12 @@ import sublime
 import sublime_plugin
 import re
 try:
-    from MarkdownWiki.mdeutils import *
+    from MarkdownEditing.mdeutils import *
 except ImportError:
     from mdeutils import *
 
-DEFINITION_KEY = 'MarkdownWiki-footnote-definitions'
-REFERENCE_KEY = 'MarkdownWiki-footnote-references'
+DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
+REFERENCE_KEY = 'MarkdownEditing-footnote-references'
 REFERENCE_REGEX = "\[\^([^\]]*)\]"
 DEFINITION_REGEX = "^ *\[\^([^\]]*)\]:"
 

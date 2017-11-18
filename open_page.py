@@ -5,7 +5,7 @@ import re
 
 
 try:
-    from MarkdownWiki.wiki_page import *
+    from MarkdownEditing.wiki_page import *
 except ImportError:
     from wiki_page import *
 

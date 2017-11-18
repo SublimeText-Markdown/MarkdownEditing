@@ -8,7 +8,7 @@
 import sublime
 import sublime_plugin
 try:
-    from MarkdownWiki.mdeutils import *
+    from MarkdownEditing.mdeutils import *
 except ImportError:
     from mdeutils import *
 
@@ -20,7 +20,7 @@ def on_distraction_free():
 class KeepCurrentLineCentered(sublime_plugin.EventListener):
 
     def on_modified_async(self, view):
-        # One of the MarkdownWiki syntax files must be in use.
+        # One of the MarkdownEditing syntax files must be in use.
         if not view_is_markdown(view):
             return False
 

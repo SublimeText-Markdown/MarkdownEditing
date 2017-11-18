@@ -2,12 +2,12 @@ import sublime, sublime_plugin
 import os, string
 
 try:
-    from MarkdownWiki.wiki_page import *
+    from MarkdownEditing.wiki_page import *
 except ImportError:
     from wiki_page import *
 
 
-class ListBackLinksCommand(OpenPageCommand):
+class ListBackLinksCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         wiki_page = WikiPage(self.view)
 

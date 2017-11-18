@@ -3,11 +3,11 @@ import sublime
 import sublime_plugin
 import re
 try:
-    from MarkdownWiki.mdeutils import *
+    from MarkdownEditing.mdeutils import *
 except ImportError:
     from mdeutils import *
 
-package_name = 'MarkdownWiki'
+package_name = 'MarkdownEditing'
 
 
 def get_ingored_packages():
@@ -80,19 +80,19 @@ function fibo(n) {
 [links]: https://example.com/index.html
 [sample image]: https://example.com/sample.png
 '''})
-    view.set_syntax_file('Packages/MarkdownWiki/Markdown.tmLanguage')
-    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownWiki/MarkdownEditor.tmTheme'
+    view.set_syntax_file('Packages/MarkdownEditing/Markdown.tmLanguage')
+    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.tmTheme'
     print(default_mde_scheme)
     view.settings().set('color_scheme', default_mde_scheme)
     view.set_read_only(True)
     view.set_scratch(True)
 
     global_scheme = sublime.load_settings('Preferences.sublime-settings').get('color_scheme')
-    themes = ['Packages/MarkdownWiki/MarkdownEditor.tmTheme',
-              'Packages/MarkdownWiki/MarkdownEditor-Focus.tmTheme',
-              'Packages/MarkdownWiki/MarkdownEditor-Yellow.tmTheme',
-              'Packages/MarkdownWiki/MarkdownEditor-Dark.tmTheme',
-              'Packages/MarkdownWiki/MarkdownEditor-ArcDark.tmTheme',
+    themes = ['Packages/MarkdownEditing/MarkdownEditor.tmTheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme',
+              'Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme',
               global_scheme]
 
     themes_display = [re.search('[^/]+(?=\.tmTheme$)', s).group(0) + (' (Current)' if s == default_mde_scheme else '') + (' (Global)' if s == global_scheme else '') for s in themes]

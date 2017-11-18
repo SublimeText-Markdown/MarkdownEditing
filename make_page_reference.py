@@ -2,7 +2,7 @@ import sublime, sublime_plugin
 import os, string
 
 try:
-    from MarkdownWiki.wiki_page import *
+    from MarkdownEditing.wiki_page import *
 except ImportError:
     from wiki_page import *
 

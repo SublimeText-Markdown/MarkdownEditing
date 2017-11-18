@@ -1,4 +1,4 @@
-# Markdown Wiki
+# MarkdownEditing
 
 Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEditing) plugin for Sublime Text by adding the functionality of a personal wiki.
 
@@ -37,7 +37,7 @@ Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEd
 
 ## Installation
 
-You can install MarkdownWiki either from Package Control (recommended) or manually. Package Control automatically download the package and keeps it up-to-date. Manual installation is required if you need to tweak the code.
+You can install MarkdownEditing either from Package Control (recommended) or manually. Package Control automatically download the package and keeps it up-to-date. Manual installation is required if you need to tweak the code.
 
 If you are using Sublime Text 2, you have to disable the native package _manually_. To do that, add `Markdown` to your `ignored_packages` list in ST user settings:
 
@@ -52,20 +52,20 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 1. [Install Sublime Package Control][InstallPackageControl]
 2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
 3. Type `install package` and hit Return. A list of available packages will be displayed.
-4. Type `MarkdownWiki` and hit Return. The package will be downloaded to the appropriate directory.
+4. Type `MarkdownEditing` and hit Return. The package will be downloaded to the appropriate directory.
 5. Restart Sublime Text to complete installation. Open a Markdown file and this custom theme. The features listed below should now be available.
 
 ### Manual Installation
 
 1. In Sublime Text, open the menu "Preferences" -> "Browse Packages...". This is the Sublime Text Packages directory.
-2. Download and unzip from [GitHub]](https://github.com/) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownWiki` in the Sublime Text Packages directory.
-3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownWiki/[files]`.
+2. Download and unzip from [GitHub]](https://github.com/) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory.
+3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownEditing/[files]`.
 4. Restart Sublime Text to complete installation. Open a Markdown file. The features listed below should now be available.
 
 
 ## Features
 
-You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`.  The Markdown Wiki commands start with `MarkdownWiki:`, and they are only visible when a markdown file is open and active.
+You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`.  The Markdown Editing commands start with `MarkdownEditing:`, and they are only visible when a markdown file is open and active.
 
 ### Wiki features
 
@@ -167,7 +167,7 @@ Strikethrough is supported:
 
 ## Commands for Command Palette
 
-You can launch Command Palette from `Tools -> Command Palette...`. MarkdownWiki commands start with `MarkdownWiki:`. And they are only visible when a markdown file is open and active.
+You can launch Command Palette from `Tools -> Command Palette...`. MarkdownEditing commands start with `MarkdownEditing:`. And they are only visible when a markdown file is open and active.
 
 ### General Commands
 
@@ -226,9 +226,9 @@ The plugin contains 3 different Markdown flavors: Standard Markdown, GitHub flav
 
 You may want to have a look at the default settings files. They are located at:
 
-    Packages/MarkdownWiki/Markdown.sublime-settings         [GitHub flavored Markdown]
-    Packages/MarkdownWiki/Markdown (Standard).sublime-settings
-    Packages/MarkdownWiki/MultiMarkdown.sublime-settings
+    Packages/MarkdownEditing/Markdown.sublime-settings         [GitHub flavored Markdown]
+    Packages/MarkdownEditing/Markdown (Standard).sublime-settings
+    Packages/MarkdownEditing/MultiMarkdown.sublime-settings
 
 If you want to override any of the default settings, you can open the appropriate user settings file using the `Preferences > Package Settings > Markdown Editing` menu. Each flavor has a different settings file.
 
@@ -236,9 +236,9 @@ Bold and italic markers are configurable through ST shell variables. You can use
 
 In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor (`Packages/User/[flavor].sublime-settings`):
 
-    "color_scheme": "Packages/MarkdownWiki/MarkdownEditor-Dark.tmTheme",
-    "color_scheme": "Packages/MarkdownWiki/MarkdownEditor-Yellow.tmTheme",
-    "color_scheme": "Packages/MarkdownWiki/MarkdownEditor-ArcDark.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme",
     
 
 If you want to go with your already existing theme, you can reenable it with the same method as above. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
@@ -281,7 +281,7 @@ __Are you getting this error after installation: _**Error loading syntax file** 
 
 >  This is caused by open markdown files at the install time. You have to __manually change their syntax to your newly installed Markdown syntax__. Read the below paragraph for more details on this.
 
-_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownWiki is enabled, native package causes some conflicts. For this reason, MarkdownWiki will automatically disable it. Since it doesn't bring anything new over MarkdownWiki, this is not a loss. But remember, when you disable MarkdownWiki, you have to reenable the native one manually (if you want).
+_Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
 
 
 ## Related Plugins
@@ -290,7 +290,7 @@ _Note_: Sublime text has a native tiny package for Markdown. However, when Markd
     - This package was forked from Markdown Editing
 * [Knockdown][]
 
-     Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownWiki and some of them are actually improved further in MarkdownWiki.
+     Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
 * [Sublime Markdown Extended][]
 * [SmartMarkdown][]
 * [MarkdownTOC][]
@@ -302,7 +302,7 @@ _Note_: Sublime text has a native tiny package for Markdown. However, when Markd
 
 * Setext-style headers (`===` and `---`) do not show up in the symbol list. This is due to a Sublime Text limitation (see [#158][]). However, we are able to put a placeholder to indicate the existence of the header. We encourage you to use Atx-style headers (`#`).
 
-* Installing for the first time while having markdown files opened may cause MarkdownWiki to behave unexpectedly on those files. Close and reopen those files to fix it.
+* Installing for the first time while having markdown files opened may cause MarkdownEditing to behave unexpectedly on those files. Close and reopen those files to fix it.
 
 
 ## Contributing
@@ -333,7 +333,7 @@ You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownE
 
 ## License
 
-MarkdownWiki is released under the [MIT License][opensource].
+MarkdownEditing is released under the [MIT License][opensource].
 
 [LightTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/light.png
 [DarkTheme]: https://raw.github.com/SublimeText-Markdown/MarkdownEditing/master/screenshots/dark.png
