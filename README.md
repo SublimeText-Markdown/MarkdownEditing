@@ -1,7 +1,10 @@
 # MarkdownEditing
 
-Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEditing) plugin for Sublime Text by adding the functionality of a personal wiki.
+Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light and dark) with more __robust__ syntax highlighting and useful Markdown editing features for Sublime Text. 3 flavors are supported: Standard Markdown, __GitHub flavored Markdown__, MultiMarkdown.
 
+![MarkdownEditing][LightTheme]
+
+[Dark][DarkTheme] and [Yellow][YellowTheme] and [ArcDark][ArcDarkTheme] theme available, plus [thirdparty themes](#additional-color-themes). See [configuration](#configuration) section to learn **how to change the theme**.
 
 ## Overview
 
@@ -11,8 +14,8 @@ Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEd
     - [Package Control](#package-control)
     - [Manual Installation](#manual-installation)
 - [Features](#features)
-    - [Wiki features](#wiki-features)
     - [Markdown features](#markdown-features)
+    - [Wiki features](#wiki-features)
 - [Key Bindings](#key-bindings)
 - [GFM Specific Features](#gfm-specific-features)
 - [Commands for Command Palette](#commands-for-command-palette)
@@ -25,6 +28,7 @@ Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEd
 - [Enable WYSIWYG](#enable-wysiwyg)
 - [Troubleshooting](#troubleshooting)
     - [Error loading syntax file...](#error-loading-syntax-file)
+    - [Roll back to an older version](#roll-back-to-an-older-version)
 - [Related Plugins](#related-plugins)
 - [Known Bugs](#known-bugs)
 - [Contributing](#contributing)
@@ -33,7 +37,6 @@ Extends the [MarkdownEditing](https://github.com/SublimeText-Markdown/MarkdownEd
 - [License](#license)
 
 <!-- /MarkdownTOC -->
-
 
 ## Installation
 
@@ -58,40 +61,16 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 ### Manual Installation
 
 1. In Sublime Text, open the menu "Preferences" -> "Browse Packages...". This is the Sublime Text Packages directory.
-2. Download and unzip from [GitHub]](https://github.com/) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory.
+2. [Download and unzip](https://github.com/SublimeText-Markdown/MarkdownEditing/archive/master.zip) or [clone](https://help.github.com/articles/cloning-a-repository/) this repository to a directory `MarkdownEditing` in the Sublime Text Packages directory.
 3. The folder structure should look like `.../Sublime Text 3/Packages/MarkdownEditing/[files]`.
 4. Restart Sublime Text to complete installation. Open a Markdown file. The features listed below should now be available.
 
-
 ## Features
 
-You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`.  The Markdown Editing commands start with `MarkdownEditing:`, and they are only visible when a markdown file is open and active.
-
-### Wiki features
-
-Wiki links are defined by surrounding a (wiki) word with double square brackets, for example:
-
-    [[SampleWikiPage]]
-
-The user can `open` wiki page using a sublime command.  This will search the current open file's directory (and sub-directories) for a file with a matching name and a markdown extension.  For example, opening the previous wiki link
-will look for and open a file named:
-
-    SampleWikiPage.md
-
-The user can `list back links` and of course to open them.  Back links are pages that reference the current page.  This allows pages to be tied together into a personal wiki.   A common technique is to define *tag* wiki pages and to list any tags for a page as references to the tag pages at the bottom of the page, for example:
-    
-    [[TagSyntax]] [[TagDev]] [[TagPython]]
-
-This allows the user to list all pages with a specific tag, by opening the tag page and list all back links.
-
-Journal wiki pages are also supported.  A journal page is just a wiki page with a name matching the current date.
-
-Lastly the command to open the *home* page is provided, where the home page is just a wiki page named `HomePage`.
-
+You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`. MarkdownEditing commands start with `MarkdownEditing:`. And they are only visible when a markdown file is open and active.
 
 ### Markdown features
 
-All the old `MarkdownEditing` commands are available:
 * __Pairing__
     - Asterisks and underscores are autopaired and will wrap selected text.
     - If you start an empty pair and hit backspace, both elements are deleted.
@@ -123,6 +102,26 @@ All the old `MarkdownEditing` commands are available:
     - Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
     - New documents will be named automatically based on the first header.
 
+### Wiki features
+
+Wiki links are defined by surrounding a (wiki) word with double square brackets, for example:
+
+    [[SampleWikiPage]]
+
+The user can `open` wiki page using a sublime command.  This will search the current open file's directory (and sub-directories) for a file with a matching name and a markdown extension.  For example, opening the previous wiki link
+will look for and open a file named:
+
+    SampleWikiPage.md
+
+The user can `list back links` and of course to open them.  Back links are pages that reference the current page.  This allows pages to be tied together into a personal wiki.   A common technique is to define *tag* wiki pages and to list any tags for a page as references to the tag pages at the bottom of the page, for example:
+    
+    [[TagSyntax]] [[TagDev]] [[TagPython]]
+
+This allows the user to list all pages with a specific tag, by opening the tag page and list all back links.
+
+Journal wiki pages are also supported.  A journal page is just a wiki page with a name matching the current date.
+
+Lastly the command to open the *home* page is provided, where the home page is just a wiki page named `HomePage`.
 
 ## Key Bindings
 
@@ -131,7 +130,7 @@ All the old `MarkdownEditing` commands are available:
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>V</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>V</kbd> | Creates or pastes the contents of the clipboard as an inline link on selected text.
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>R</kbd> | <kbd>Ctrl</kbd><kbd>Win</kbd><kbd>R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd> | <kbd>Shift</kbd><kbd>Win</kbd><kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Ctrl</kbd><kbd>B</kbd> <kbd>Ctrl</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Alt</kbd><kbd>B</kbd> <kbd>Alt</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
 | <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
 | <kbd>⌥</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote.
 | <kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
@@ -163,7 +162,6 @@ Keyboard shortcuts gets highlighted like in GitHub:
 Strikethrough is supported:
 
 ![strikethrough][GFM-Strikethrough]
-
 
 ## Commands for Command Palette
 
@@ -283,11 +281,12 @@ __Are you getting this error after installation: _**Error loading syntax file** 
 
 _Note_: Sublime text has a native tiny package for Markdown. However, when MarkdownEditing is enabled, native package causes some conflicts. For this reason, MarkdownEditing will automatically disable it. Since it doesn't bring anything new over MarkdownEditing, this is not a loss. But remember, when you disable MarkdownEditing, you have to reenable the native one manually (if you want).
 
+### Roll back to an older version
+
+When you notice any undesired behavior introduced by the latest update, your feedback is always welcome in our [issue page](https://github.com/SublimeText-Markdown/MarkdownEditing/issues). However before it's fixed, you can rollback to [an earlier version](https://github.com/SublimeText-Markdown/MarkdownEditing/releases). Find the desired version and download the zip file, then follow [manual installation guide](#manual-installation)
 
 ## Related Plugins
 
-* [Markdowning Editing][]
-    - This package was forked from Markdown Editing
 * [Knockdown][]
 
      Knockdown offers useful Markdown features and a custom Markdown theme. All of its unique features except its theme are ported to MarkdownEditing and some of them are actually improved further in MarkdownEditing.
@@ -297,18 +296,15 @@ _Note_: Sublime text has a native tiny package for Markdown. However, when Markd
     - Sublime Text 3 plugin for generating a Table of Contents (TOC) in a Markdown document.
 * See https://packagecontrol.io/search/markdown for more.
 
-
 ## Known Bugs
 
 * Setext-style headers (`===` and `---`) do not show up in the symbol list. This is due to a Sublime Text limitation (see [#158][]). However, we are able to put a placeholder to indicate the existence of the header. We encourage you to use Atx-style headers (`#`).
 
 * Installing for the first time while having markdown files opened may cause MarkdownEditing to behave unexpectedly on those files. Close and reopen those files to fix it.
 
-
 ## Contributing
 
 See `CONTRIBUTING.md` file.
-
 
 ## Credits
 
@@ -316,12 +312,11 @@ MarkdownEditing was originally created by [Brett Terpstra][brettterpstra] and ha
 
 Related blog posts from Brett:
 * http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
-* http://brettterpstra.com/2013/11/23/MarkdownEditing-for-sublime-text-updates/
+* http://brettterpstra.com/2013/11/23/markdownediting-for-sublime-text-updates/
 
 This plugin contains portions of code from [Knockdown][].
 
 Footnote commands were submitted by [J. Nicholas Geist][] and originated at [geekabouttown][geekabouttown].
-
 
 ## Donation
 
@@ -329,7 +324,6 @@ You can support [contributors](https://github.com/SublimeText-Markdown/MarkdownE
 
 * [@felixhao28][felixhao28]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9QV2RFV2J8UZS"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
 * [@maliayas][maliayas]: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=W2NXRPD43YSCU&amp;lc=TR&amp;item_name=open-source&amp;item_number=markdown-editing&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a> ![donation received](http://maliayas.com/business/donation/badge.php?project=markdown_editing)
-
 
 ## License
 
@@ -353,7 +347,6 @@ MarkdownEditing is released under the [MIT License][opensource].
 [avivace]: https://github.com/avivace
 [tips]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki/Tips
 [Wiki]: https://github.com/SublimeText-Markdown/MarkdownEditing/wiki
-[Markdown Editing]: (https://github.com/SublimeText-Markdown/MarkdownEditing
 [Knockdown]: https://github.com/aziz/knockdown/
 [Sublime Markdown Extended]: https://github.com/jonschlinkert/sublime-markdown-extended
 [SmartMarkdown]: https://github.com/demon386/SmartMarkdown

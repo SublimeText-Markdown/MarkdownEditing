@@ -1,12 +1,13 @@
 {
 	"extensions":
 	[
-		"md"
+		"md",
+		"mdown",
+		"txt"
 	],
 
-	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
-	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
-	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme",
+	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
+	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
 	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
 
 	// This is a quick and dirty focus theme. In order to make it work, you've to
@@ -20,10 +21,10 @@
 	"auto_match_enabled": true,
 
 	// Layout
-	"draw_centered": false,
+	"draw_centered": true,
 	"word_wrap": true,
-	"wrap_width": 120,
-	"rulers": [120],
+	"wrap_width": 80,
+	"rulers": [],
 
 	// Line
 	"line_numbers": false,

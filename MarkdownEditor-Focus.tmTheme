@@ -789,10 +789,10 @@
             <string>meta.separator.markdown</string>
             <key>settings</key>
             <dict>
-                <key>foreground</key>
-                <string>#212121</string>
                 <key>background</key>
                 <string>#BBBBBB</string>
+                <key>foreground</key>
+                <string>#AAAAAA</string>
             </dict>
         </dict>
         <dict>

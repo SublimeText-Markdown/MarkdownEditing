@@ -19,10 +19,10 @@
 	"auto_match_enabled": true,
 
 	// Layout
-	"draw_centered": false,
+	"draw_centered": true,
 	"word_wrap": true,
-	"wrap_width": 120,
-	"rulers": [120],
+	"wrap_width": 80,
+	"rulers": [],
 
 	// Line
 	"line_numbers": false,

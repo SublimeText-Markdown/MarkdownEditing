@@ -688,10 +688,10 @@
             <string>meta.separator.markdown</string>
             <key>settings</key>
             <dict>
-                <key>foreground</key>
-                <string>#666666</string>
                 <key>background</key>
-                <string>#BBBBBB</string>
+                <string>#44444422</string>
+                <key>foreground</key>
+                <string>#555555</string>
             </dict>
         </dict>
         <dict>

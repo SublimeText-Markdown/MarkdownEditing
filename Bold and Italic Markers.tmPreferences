@@ -14,13 +14,13 @@
 				<key>name</key>
 				<string>MD_BOLD_MARKER</string>
 				<key>value</key>
-				<string>**</string>
+				<string>__</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>MD_ITALIC_MARKER</string>
 				<key>value</key>
-				<string>*</string>
+				<string>_</string>
 			</dict>
 		</array>
 	</dict>

@@ -177,14 +177,14 @@
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    // Bold on ctrl + B
-    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold.sublime-macro"}, "context":
+    // Bold on Super + Alt + B
+    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}$1${MD_BOLD_MARKER}"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}$1${MD_BOLD_MARKER}"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -194,21 +194,21 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_BOLD_MARKER}"}, "context":
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_BOLD_MARKER}"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    // italics on ctrl + I
-    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic.sublime-macro"}, "context":
+    // italics on Super + Alt + I
+    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}$0${MD_ITALIC_MARKER}"}, "context":
+    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}$0${MD_ITALIC_MARKER}"}, "context":
      [
          { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
          { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -218,7 +218,7 @@
          { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
      ]
     },
-    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_ITALIC_MARKER}"}, "context":
+    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_ITALIC_MARKER}"}, "context":
         [
             { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
@@ -226,21 +226,21 @@
         ]
     },
 
-    // Unbold on ctrl + B if already bold
-    { "keys": ["ctrl+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
+    // Unbold on Super + Alt + B if already bold
+    { "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "text", "operator": "regex_match", "operand": "^[*_]{2}.*[*_]{2}$", "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b__+\\S+__+$", "match_all": true },
@@ -248,21 +248,21 @@
         ]
     },
 
-    // Unitalicize on ctrl + I if already italic
-    { "keys": ["ctrl+i"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]|[\\*_]$)//g}"}, "context":
+    // Unitalicize on Super + Alt + I if already italic
+    { "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]|[\\*_]$)//g}"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "text", "operator": "regex_match", "operand": "^[*_].*[*_]$", "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
+    { "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
             { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b_(?!_)\\S+_$", "match_all": true },
