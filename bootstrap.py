@@ -79,6 +79,13 @@ function fibo(n) {
 
 [links]: https://example.com/index.html
 [sample image]: https://example.com/sample.png
+
+## Wiki links
+
+This [[SamplePage]] is a wiki link
+
+---
+
 '''})
     view.set_syntax_file('Packages/MarkdownEditing/Markdown.tmLanguage')
     default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.tmTheme'

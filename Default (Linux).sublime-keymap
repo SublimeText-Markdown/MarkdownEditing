@@ -226,8 +226,6 @@
         ]
     },
 
-    
-
     // Unbold on Alt + B if already bold
     { "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
         [

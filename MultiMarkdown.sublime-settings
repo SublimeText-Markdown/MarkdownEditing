@@ -97,6 +97,9 @@
 		}
 	},
 
+	"mde.wikilinks.markdown_extension": ".md",
+	"mde.wikilinks.homepage": "HomePage",
+
 	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
 	// Jump between link/image/footnote reference and definition
@@ -130,8 +133,12 @@
 	"mde.keymap_disable.list_back_links": false,
 	// Open the home page
 	"mde.keymap_disable.open_home_page": false,
+	// Open the journal
+	"mde.keymap_disable.open_journal": false,
 	// Open the page referenced
 	"mde.keymap_disable.open_page": false,
 	// Open the link referenced
-	"mde.keymap_disable.open_reference": false
+	"mde.keymap_disable.open_reference": false,
+	// Make page reference
+	"mde.keymap_disable.make_page_reference": false
 }

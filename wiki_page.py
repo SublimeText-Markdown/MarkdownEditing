@@ -3,9 +3,9 @@ import os, string
 import re
 
 
-MARKDOWN_EXTENSION = '.md'
+DEFAULT_MARKDOWN_EXTENSION = '.md'
 PAGE_REF_FORMAT = '[[%s]]'
-HOME_PAGE = "HomePage"
+DEFAULT_HOME_PAGE = "HomePage"
 
 
 class WikiPage:
@@ -42,12 +42,13 @@ class WikiPage:
         pagename = pagename.replace('\\', os.sep).replace(os.sep+os.sep, os.sep).strip()
 
         self.current_file = self.view.file_name()
-        _, current_extension = os.path.splitext(self.current_file)
         self.current_dir = os.path.dirname(self.current_file)
 
         print("Locating page '%s' in: %s" % (pagename, self.current_dir) )
 
-        search_pattern = "^%s%s$" % (pagename, current_extension)
+        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+
+        search_pattern = "^%s%s$" % (pagename, markdown_extension)
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
@@ -60,14 +61,16 @@ class WikiPage:
     def find_files_with_ref(self):
         self.current_file = self.view.file_name()
         self.current_dir, current_base = os.path.split(self.current_file)
-        self.current_name, current_extension = os.path.splitext(current_base)
+        self.current_name, _ = os.path.splitext(current_base)
+
+        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
                 page_name, extension = os.path.splitext(file)
                 filename = os.path.join(dirname, file)
-                if extension == MARKDOWN_EXTENSION and self.contains_ref(filename, self.current_name):
+                if extension == markdown_extension and self.contains_ref(filename, self.current_name):
                     results.append([page_name, filename])
 
         return results
@@ -93,10 +96,11 @@ class WikiPage:
     def open_new_file(self, pagename):
         current_syntax = self.view.settings().get('syntax')
         current_file = self.view.file_name()
-        _, current_extension = os.path.splitext(current_file)
         current_dir = os.path.dirname(current_file)
 
-        filename = os.path.join(current_dir, pagename + current_extension)
+        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+
+        filename = os.path.join(current_dir, pagename + markdown_extension)
 
         new_view = self.view.window().new_file()
         new_view.retarget(filename)
@@ -168,13 +172,15 @@ class WikiPage:
         current_file = self.view.file_name()
         current_dir, current_base = os.path.split(current_file)
 
+        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+
         results = []
         for dirname, _, files in self.list_dir_tree(current_dir):
             for file in files:
                 page_name, extension = os.path.splitext(file)
                 filename = os.path.join(dirname, file)
 
-                if extension == MARKDOWN_EXTENSION and (not word or word in page_name):
+                if extension == markdown_extension and (not word or word in page_name):
                     results.append([page_name, filename])
 
         return results
