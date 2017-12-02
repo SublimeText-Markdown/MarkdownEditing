@@ -14,6 +14,7 @@ except ImportError:
 
 class MakePageReferenceCommand(MDETextCommand):
     def run(self, edit):
+        print("Running MakePageReferenceCommand")        
         wiki_page = WikiPage(self.view)
 
         word_region = wiki_page.select_word_at_cursor()

@@ -43,12 +43,17 @@ class WikiPage:
 
         self.current_file = self.view.file_name()
         self.current_dir = os.path.dirname(self.current_file)
-
         print("Locating page '%s' in: %s" % (pagename, self.current_dir) )
 
         markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
-        search_pattern = "^%s%s$" % (pagename, markdown_extension)
+        # Optionally strip extension...
+        if pagename.endswith(markdown_extension):
+            search_pattern = "^%s$" % pagename
+        else:
+            search_pattern = "^%s%s$" % (pagename, markdown_extension)
+
+        # Scan directory tree for files that match the pagename...
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
@@ -151,8 +156,6 @@ class WikiPage:
         self.file_list = file_list
 
         window = self.view.window()
-
-        print("Show quick list: %s" % file_list)
         window.show_quick_panel(file_list, self.replace_selection_with_pagename)
 
 
@@ -167,13 +170,17 @@ class WikiPage:
     def find_matching_files(self, word_region):
         word = None if word_region.empty() else self.view.substr(word_region)
 
-        print("Finding matching files for %s" % word)
-
         current_file = self.view.file_name()
         current_dir, current_base = os.path.split(current_file)
+        print("Finding matching files for %s in %s" % (word, current_dir))
 
         markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
+        # Optionally strip extension...
+        if word is not None and word.endswith(markdown_extension):
+            word = word[:-len(markdown_extension)]
+
+        # Scan directory tree for potential filenames that contain the word...
         results = []
         for dirname, _, files in self.list_dir_tree(current_dir):
             for file in files:

@@ -17,6 +17,7 @@ except ImportError:
 
 class OpenJournalCommand(MDETextCommand):
     def run(self, edit):
+        print("Running OpenJournalCommand")        
         today = date.today()
         name = today.strftime('%Y-%m-%d')
 

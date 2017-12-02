@@ -9,6 +9,7 @@ except ImportError:
 
 class OpenReferenceCommand(MDETextCommand):
     def run(self, edit):
+        print("Running OpenReferenceCommand")
         reference = self.identify_reference_at_cursor()
         self.open_reference_in_browser(reference)
 
