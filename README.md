@@ -113,6 +113,8 @@ will look for and open a file named:
 
     SampleWikiPage.md
 
+Note that, if the wiki page does *not* yet exist, if will be created with a header matching the page name.  However the file will only actually be created on the file system, when it is saved by the user.  
+
 The user can `list back links` and of course to open them.  Back links are pages that reference the current page.  This allows pages to be tied together into a personal wiki.   A common technique is to define *tag* wiki pages and to list any tags for a page as references to the tag pages at the bottom of the page, for example:
     
     [[TagSyntax]] [[TagDev]] [[TagPython]]
