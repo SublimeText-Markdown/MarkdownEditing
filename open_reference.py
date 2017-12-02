@@ -8,6 +8,19 @@ except ImportError:
 
 
 class OpenReferenceCommand(MDETextCommand):
+    def description(self):
+        return "Open the URL reference in browser"
+
+    def is_visible(self):
+        """Return True if cursor is on a wiki page reference."""
+        for sel in self.view.sel():
+            scopes = self.view.scope_name(sel.b).split(" ")
+            if 'meta.link.inline.markdown' in scopes:
+                if 'markup.underline.link.markdown' in scopes:
+                    return True                
+
+        return False
+
     def run(self, edit):
         print("Running OpenReferenceCommand")
         reference = self.identify_reference_at_cursor()

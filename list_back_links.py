@@ -8,6 +8,12 @@ except ImportError:
 
 
 class ListBackLinksCommand(MDETextCommand):
+    def description(self):
+        return "List wiki pages that reference this page"
+
+    def is_visible(self):
+        return True
+
     def run(self, edit):
         wiki_page = WikiPage(self.view)
 

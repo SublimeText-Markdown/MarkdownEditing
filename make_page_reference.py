@@ -13,6 +13,15 @@ except ImportError:
 
 
 class MakePageReferenceCommand(MDETextCommand):
+    def is_visible(self):
+        """Return True if cursor is on a wiki page reference."""
+        for sel in self.view.sel():
+            scopes = self.view.scope_name(sel.b).split(" ")
+            if 'meta.link.wiki.markdown' in scopes:
+                return False                
+
+        return True
+
     def run(self, edit):
         print("Running MakePageReferenceCommand")        
         wiki_page = WikiPage(self.view)
