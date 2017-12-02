@@ -7,9 +7,13 @@ try:
 except ImportError:
     from wiki_page import *
 
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
 
 
-class OpenHomePageCommand(sublime_plugin.TextCommand):
+class OpenHomePageCommand(MDETextCommand):
 	def run(self, edit):
 		home_page = self.view.settings().get("mde.wikilinks.homepage", DEFAULT_HOME_PAGE)
 

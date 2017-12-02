@@ -9,7 +9,13 @@ try:
 except ImportError:
     from wiki_page import *
 
-class OpenJournalCommand(sublime_plugin.TextCommand):
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
+
+
+class OpenJournalCommand(MDETextCommand):
     def run(self, edit):
         today = date.today()
         name = today.strftime('%Y-%m-%d')

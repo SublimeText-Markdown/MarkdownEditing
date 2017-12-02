@@ -1,8 +1,13 @@
 import sublime, sublime_plugin
 import os, string
 
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
 
-class OpenReferenceCommand(sublime_plugin.TextCommand):
+
+class OpenReferenceCommand(MDETextCommand):
     def run(self, edit):
         reference = self.identify_reference_at_cursor()
         self.open_reference_in_browser(reference)

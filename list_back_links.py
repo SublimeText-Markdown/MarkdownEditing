@@ -7,7 +7,7 @@ except ImportError:
     from wiki_page import *
 
 
-class ListBackLinksCommand(sublime_plugin.TextCommand):
+class ListBackLinksCommand(MDETextCommand):
     def run(self, edit):
         wiki_page = WikiPage(self.view)
 

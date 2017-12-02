@@ -6,8 +6,13 @@ try:
 except ImportError:
     from wiki_page import *
 
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
 
-class MakePageReferenceCommand(sublime_plugin.TextCommand):
+
+class MakePageReferenceCommand(MDETextCommand):
     def run(self, edit):
         wiki_page = WikiPage(self.view)
 
