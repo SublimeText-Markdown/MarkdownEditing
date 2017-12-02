@@ -94,8 +94,13 @@ class WikiPage:
 
 
     def select_backlink(self, file_list):
-        self.file_list = file_list
-        self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
+        if file_list:
+            self.file_list = file_list
+            self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
+        else:
+            msg = "No pages reference this page"
+            print(msg)
+            self.view.window().status_message(msg)
 
 
     def open_new_file(self, pagename):

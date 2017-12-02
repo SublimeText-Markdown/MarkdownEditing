@@ -34,5 +34,9 @@
 {
     "caption": "MDE: Make wiki page reference",
     "command": "make_page_reference"
+},
+{
+    "caption": "MDE: List back links",
+    "command": "list_back_links"
 }
 ]

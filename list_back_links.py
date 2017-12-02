@@ -6,15 +6,15 @@ try:
 except ImportError:
     from wiki_page import *
 
+try:
+    from MarkdownEditing.mdeutils import *
+except ImportError:
+    from mdeutils import *
+
 
 class ListBackLinksCommand(MDETextCommand):
-    def description(self):
-        return "List wiki pages that reference this page"
-
-    def is_visible(self):
-        return True
-
     def run(self, edit):
+        print("Running ListBackLinksCommand")        
         wiki_page = WikiPage(self.view)
 
         file_list = wiki_page.find_files_with_ref()
