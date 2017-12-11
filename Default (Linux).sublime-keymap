@@ -667,12 +667,6 @@
             { "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true }
         ]    
     },
-    {"keys": ["ctrl+alt+d"], "command": "open_reference", "context":
-        [
-            { "key": "setting.mde.keymap_disable.open_reference", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "constant.other.reference.link.markdown", "match_all": true }
-        ]    
-    },
     {"keys": ["ctrl+alt+d"], "command": "make_page_reference", "context":
         [
             { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },

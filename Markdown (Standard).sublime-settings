@@ -132,8 +132,6 @@
 	"mde.keymap_disable.open_journal": true,
 	// Open the page referenced
 	"mde.keymap_disable.open_page": true,
-	// Open the link referenced
-	"mde.keymap_disable.open_reference": true,
 	// Make page reference
 	"mde.keymap_disable.make_page_reference": true
 }

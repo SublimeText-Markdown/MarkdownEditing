@@ -162,10 +162,6 @@
         "command": "open_page"
     },
     {
-        "caption": "MarkdownEditing: Open Reference",
-        "command": "open_reference"
-    },
-    {
         "caption": "MarkdownEditing: List Back Links",
         "command": "list_back_links"
     },

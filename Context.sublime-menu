@@ -16,10 +16,6 @@
     "command": "convert_inline_link_to_reference"
 },
 {
-    "caption": "MDE: Open URL reference",
-    "command": "open_reference"
-},
-{
     "caption": "MDE: Open wiki page",
     "command": "open_page"
 },
