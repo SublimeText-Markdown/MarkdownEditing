@@ -128,21 +128,23 @@ This [[SamplePage]] is a wiki link
 
 
 def plugin_loaded():
-    from package_control import events
+    if "package_control" in sys.modules:
+        from package_control import events
 
-    if events.install(package_name):
-        # Native package causes some conflicts.
-        disable_native_markdown_package()
-        # Prmopts to select a color theme
-        choose_color_theme()
+        if events.install(package_name):
+            # Native package causes some conflicts.
+            disable_native_markdown_package()
+            # Prmopts to select a color theme
+            choose_color_theme()
 
 
 def plugin_unloaded():
-    from package_control import events
+    if "package_control" in sys.modules:
+        from package_control import events
 
-    if events.remove(package_name):
-        # Native package causes some conflicts.
-        enable_native_markdown_package()
+        if events.remove(package_name):
+            # Native package causes some conflicts.
+            enable_native_markdown_package()
 
 # Compat with ST2
 if sys.version_info < (3,):
