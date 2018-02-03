@@ -664,6 +664,8 @@
             <dict>
                 <key>foreground</key>
                 <string>#555555</string>
+                <key>background</key>
+                <string>#2e3240</string>
             </dict>
         </dict>
         <dict>

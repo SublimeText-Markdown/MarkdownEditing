@@ -790,7 +790,7 @@
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#BBBBBB11</string>
+                <string>#BBBBBB</string>
                 <key>foreground</key>
                 <string>#AAAAAA</string>
             </dict>

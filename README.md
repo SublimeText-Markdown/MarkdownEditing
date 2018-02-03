@@ -14,6 +14,8 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
     - [Package Control](#package-control)
     - [Manual Installation](#manual-installation)
 - [Features](#features)
+    - [Markdown features](#markdown-features)
+    - [Wiki features](#wiki-features)
 - [Key Bindings](#key-bindings)
 - [GFM Specific Features](#gfm-specific-features)
 - [Commands for Command Palette](#commands-for-command-palette)
@@ -26,6 +28,7 @@ Markdown plugin for Sublime Text. Provides a decent Markdown color scheme (light
 - [Enable WYSIWYG](#enable-wysiwyg)
 - [Troubleshooting](#troubleshooting)
     - [Error loading syntax file...](#error-loading-syntax-file)
+    - [Roll back to an older version](#roll-back-to-an-older-version)
 - [Related Plugins](#related-plugins)
 - [Known Bugs](#known-bugs)
 - [Contributing](#contributing)
@@ -66,6 +69,8 @@ The preferred method of installation is via [Sublime Package Control][PackageCon
 
 You can access most features through Command Palette. You can launch it from `Tools -> Command Palette...`. MarkdownEditing commands start with `MarkdownEditing:`. And they are only visible when a markdown file is open and active.
 
+### Markdown features
+
 * __Pairing__
     - Asterisks and underscores are autopaired and will wrap selected text.
     - If you start an empty pair and hit backspace, both elements are deleted.
@@ -97,6 +102,29 @@ You can access most features through Command Palette. You can launch it from `To
     - Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
     - New documents will be named automatically based on the first header.
 
+### Wiki features
+
+Wiki links are defined by surrounding a (wiki) word with double square brackets, for example:
+
+    [[SampleWikiPage]]
+
+The user can `open` wiki page using a sublime command.  This will search the current open file's directory (and sub-directories) for a file with a matching name and a markdown extension.  For example, opening the previous wiki link
+will look for and open a file named:
+
+    SampleWikiPage.md
+
+Note that, if the wiki page does *not* yet exist, if will be created with a header matching the page name.  However the file will only actually be created on the file system, when it is saved by the user.  
+
+The user can `list back links` and of course to open them.  Back links are pages that reference the current page.  This allows pages to be tied together into a personal wiki.   A common technique is to define *tag* wiki pages and to list any tags for a page as references to the tag pages at the bottom of the page, for example:
+    
+    [[TagSyntax]] [[TagDev]] [[TagPython]]
+
+This allows the user to list all pages with a specific tag, by opening the tag page and list all back links.
+
+Journal wiki pages are also supported.  A journal page is just a wiki page with a name matching the current date.
+
+Lastly the command to open the *home* page is provided, where the home page is just a wiki page named `HomePage`.
+
 ## Key Bindings
 
 | OS X | Windows/Linux | Description |
@@ -111,6 +139,11 @@ You can access most features through Command Palette. You can launch it from `To
 | <kbd>^</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | Go to the previous/next heading of the same or higher level
 | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> |  Go to the previous/next heading
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>H</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd> | Open home page
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>D</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd> | Open wiki page under the cursor
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>J</kbd> | Open journal page for today
+| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> | List back links
+
 
 ## GFM Specific Features
 

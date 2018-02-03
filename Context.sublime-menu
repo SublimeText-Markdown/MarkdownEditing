@@ -14,5 +14,25 @@
 {
     "caption": "MDE: Convert inline link to reference",
     "command": "convert_inline_link_to_reference"
+},
+{
+    "caption": "MDE: Open wiki page",
+    "command": "open_page"
+},
+{
+    "caption": "MDE: Open home wiki page",
+    "command": "open_home_page"
+},
+{
+    "caption": "MDE: Open todays journal page",
+    "command": "open_journal"
+},
+{
+    "caption": "MDE: Make wiki page reference",
+    "command": "make_page_reference"
+},
+{
+    "caption": "MDE: List back links",
+    "command": "list_back_links"
 }
 ]
