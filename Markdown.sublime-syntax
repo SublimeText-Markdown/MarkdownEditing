@@ -88,6 +88,12 @@ contexts:
         - include: fenced-code-blocks
         - include: list-paragraph
     - include: fenced-code-blocks
+    - match: '<!---'
+      comment: Github style comment
+      push:
+        - meta_scope: comment.block.html
+        - match: ->
+          pop: true
     - match: '^(?=<(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|noscript|form|fieldset|iframe|math|ins|del)\b[^>]*>)(?!.*?</\1>)'
       comment: Markdown formatting is disabled inside block-level tags.
       push:
