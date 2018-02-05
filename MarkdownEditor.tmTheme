@@ -606,8 +606,6 @@
             <string>markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown,meta.image.reference.markdown,meta.image.inline.markdown</string>
             <key>settings</key>
             <dict>
-                <key>background</key>
-                <string>#E8E8E8</string>
                 <key>foreground</key>
                 <string>#AAAAAA</string>
             </dict>
