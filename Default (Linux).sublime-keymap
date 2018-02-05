@@ -407,13 +407,13 @@
         ]
     },
     // run paste as link command on selected text
-    { "keys": ["ctrl+super+v"], "command": "reference_new_inline_link", "context":
+    { "keys": ["ctrl+alt+v"], "command": "reference_new_inline_link", "context":
         [
             { "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+super+r"], "command": "reference_new_reference", "context":
+    { "keys": ["ctrl+alt+r"], "command": "reference_new_reference", "context":
         [
             { "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
