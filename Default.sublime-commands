@@ -168,5 +168,9 @@
     {
         "caption": "MarkdownEditing: Open Journal",
         "command": "open_journal"
+    },
+    {
+        "caption": "MarkdownEditing: Run markdownlint",
+        "command": "markdown_lint_mdl"
     }
 ]

@@ -63,6 +63,15 @@
 	},
 	
 	"mde.lint": {
+		"mdl": {
+			// By default it is mdl.bat on windows and mdl otherwise. Leave it blank to use the default value
+			// If you are using a custom launcher, you may want to change this
+			"executable": "",
+			// Extra arguments passed to mdl. For all options, see here:
+			// https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/cli.rb
+			// You can also specify a config file with '-c ~/.mdlrc'
+			"additional_arguments": [],
+		},
 		// disabled rules, e.g. "md001".
 		"disable": ["md013"],
 		// Options:

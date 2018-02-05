@@ -176,7 +176,9 @@ You can launch Command Palette from `Tools -> Command Palette...`. MarkdownEditi
 * __Convert Underlined Headers to ATX__
     Converts every setext-style header into an ATX style header. If something is selected only the headers in the selections will be converted, otherwise the conversion will be applied to the whole view.
 * __Markdown Lint__
-    Performs lint on current Markdown file. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
+    Performs lint on current Markdown file using a local linter. See [lint rules](lint_docs/RULES.md). Some of the linting rules are customizable via user settings file.
+* __Run markdownlint__
+    Run mdl command from [markdownlint](https://github.com/markdownlint/markdownlint) package. You need to install it by yourself.
 * __Change color scheme...__
     Lists built-in Markdown color schemes for you to preview and use.
 * __Switch List Bullet Type__
