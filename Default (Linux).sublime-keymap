@@ -670,10 +670,9 @@
     {"keys": ["ctrl+alt+d"], "command": "make_page_reference", "context":
         [
             { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
             { "key": "selector", "operator": "not_equal", "operand": "meta.link.wiki.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }            
+            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }
         ]    
     },
     {"keys": ["ctrl+alt+x"], "command": "list_back_links", "context":
