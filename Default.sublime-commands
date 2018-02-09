@@ -152,5 +152,25 @@
     {
         "caption": "MarkdownEditing: Convert inline link to reference",
         "command": "convert_inline_link_to_reference"
+    },
+    {
+        "caption": "MarkdownEditing: Open Home Page",
+        "command": "open_home_page"
+    },
+    {
+        "caption": "MarkdownEditing: Open Page",
+        "command": "open_page"
+    },
+    {
+        "caption": "MarkdownEditing: List Back Links",
+        "command": "list_back_links"
+    },
+    {
+        "caption": "MarkdownEditing: Open Journal",
+        "command": "open_journal"
+    },
+    {
+        "caption": "MarkdownEditing: Run markdownlint",
+        "command": "markdown_lint_mdl"
     }
 ]

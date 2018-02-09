@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>fileTypes</key>
+	<array>
+		<string>md</string>
+		<string>mdown</string>
+		<string>markdown</string>
+		<string>markdn</string>
+	</array>
 	<key>firstLineMatch</key>
 	<string>(?i)^format:\s*complete\s*$</string>
 	<key>foldingStartMarker</key>

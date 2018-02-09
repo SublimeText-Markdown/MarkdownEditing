@@ -616,10 +616,12 @@ class md029(mddef):
 
             if style == 'one':
                 if sym != '1':
-                    ret[mr.start(1) + e + 1] = '%s found, \'1\' expected' % repr(sym)
+                    ret[mr.start(1) + e +
+                        1] = '%s found, \'1\' expected' % repr(sym)
             else:
                 if int(sym) != int(lastSym) + 1:
-                    ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' % (repr(sym), int(lastSym) + 1))
+                    ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' %
+                                                (repr(sym), int(lastSym) + 1))
                 lastSym = sym
         return ret
 
@@ -711,3 +713,68 @@ class MarkdownLintCommand(MDETextCommand):
                 break
 
         return ret
+
+import platform
+import sys
+import subprocess
+ON_WINDOWS = platform.system() is 'Windows'
+ST2 = sys.version_info < (3, 0)
+
+
+class MarkdownLintMdlCommand(MDETextCommand):
+
+    def run(self, edit):
+        try:
+            st = self.view.settings().get('mde.lint', {})
+            mdl_config = st['mdl'] or {}
+            sublime.status_message("Linting file...")
+            textContent = self.view.substr(sublime.Region(0, self.view.size()))
+            textContent = textContent.encode('utf-8')
+            executable_name = mdl_config['executable']
+            if not executable_name:
+                executable_name = "mdl.bat" if ON_WINDOWS else "mdl"
+            additional_arguments = mdl_config['additional_arguments'] or []
+            # call mdl version
+            process = subprocess.Popen([executable_name] + additional_arguments,
+                                       bufsize=1024 * 1024 + len(textContent),
+                                       stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       startupinfo=self.getStartupInfo())
+            stdout, stderr = process.communicate(textContent)
+            if stderr:
+                result = False
+                error = self.readResult(stderr)
+                outputtxt = error
+            else:
+                result = self.readResult(stdout)
+                outputtxt = result
+                sublime.status_message(
+                    'MarkdownLint: %d error(s) found' % len(result.split('\n')))
+            window = sublime.active_window()
+            output = window.create_output_panel("mde")
+            output.run_command('erase_view')
+            output.run_command('append', {'characters': outputtxt})
+            window.run_command("show_panel", {"panel": "output.mde"})
+
+        except OSError as e:
+            print(e)
+            sublime.error_message(
+                "It looks like markdownlint is not installed.\nPlease make sure that it is installed and globally accessible as `mdl`.")
+        except Exception as e:
+            print(e)
+
+    def readResult(self, stdout):
+        if ST2:
+            r = stdout.decode('utf-8')
+        else:
+            r = str(stdout, encoding='utf-8')
+        return r.strip().replace('\r', '').replace('(stdin):', '')
+
+    def getStartupInfo(self):
+        if ON_WINDOWS:
+            info = subprocess.STARTUPINFO()
+            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            info.wShowWindow = subprocess.SW_HIDE
+            return info
+        return None

@@ -659,5 +659,37 @@
             { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
-    }
+    },
+    {"keys": ["super+shift+h"], "command": "open_home_page", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["super+shift+d"], "command": "open_page", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["super+shift+d"], "command": "make_page_reference", "context":
+        [
+            { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "meta.link.wiki.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["super+shift+x"], "command": "list_back_links", "context":
+        [
+            { "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["super+shift+j"], "command": "open_journal", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    }    
 ]

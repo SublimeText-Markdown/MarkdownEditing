@@ -57,6 +57,15 @@
 	},
 
 	"mde.lint":{
+		"mdl": {
+			// By default it is mdl.bat on windows and mdl otherwise. Leave it blank to use the default value
+			// If you are using a custom launcher, you may want to change this
+			"executable": "",
+			// Extra arguments passed to mdl. For all options, see here:
+			// https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/cli.rb
+			// You can also specify a config file with '-c ~/.mdlrc'
+			"additional_arguments": [],
+		},
 		// disabled rules, e.g. "md001".
 		"disable": ["md013"],
 		// Options:
@@ -97,33 +106,46 @@
 		}
 	},
 
+	"mde.wikilinks.markdown_extension": ".md",
+	"mde.wikilinks.homepage": "HomePage",
+
 	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
 	// Jump between link/image/footnote reference and definition
 	// Default keys: (OSX)super+ctrl+shift+l	(Linux/Win)ctrl+alt+g
-	"mde.keymap_disable_reference_jump": false,
+	"mde.keymap_disable.reference_jump": false,
 	// Add a new link
 	// Default keys: (OSX)super+alt+r	(Linux/Win)ctrl+super+r
-	"mde.keymap_disable_reference_new_reference": false,
+	"mde.keymap_disable.reference_new_reference": false,
 	// Add a new inline link
 	// Default keys: (OSX)super+alt+v	(Linux/Win)ctrl+super+v
-	"mde.keymap_disable_reference_new_inline_link": false,
+	"mde.keymap_disable.reference_new_inline_link": false,
 	// Add a new inline image
 	// Default keys: (OSX/Linux/Win)super+shift+k
-	"mde.keymap_disable_reference_new_inline_image": false,
+	"mde.keymap_disable.reference_new_inline_image": false,
 	// Add a new footnote
 	// Default keys: (OSX/Linux/Win)alt+shift+6
-	"mde.keymap_disable_reference_new_footnote": false,
+	"mde.keymap_disable.reference_new_footnote": false,
 	// Fold current section
 	// Default keys: (OSX/Linux/Win)shift+tab
-	"mde.keymap_disable_fold_section": false,
+	"mde.keymap_disable.fold_section": false,
 	// Open a panel showing all functions related to folding
 	// Default keys: (OSX/Linux/Win)ctrl+shift+tab
-	"mde.keymap_disable_show_fold_all_sections": false,
+	"mde.keymap_disable.show_fold_all_sections": false,
 	// Jump to the next heading (any level/same or higher level)
 	// Default keys: (OSX)super+ctrl/shift+pagedown	(Linux/Win)ctrl+shift(+alt)+pagedown
-	"mde.keymap_disable_goto_next_heading": false,
+	"mde.keymap_disable.goto_next_heading": false,
 	// Jump to the previous heading (any level/same or higher level)
 	// Default keys: (OSX)super+ctrl/shift+pageup	(Linux/Win)ctrl+shift(+alt)+pageup
-	"mde.keymap_disable_goto_previous_heading": false
+	"mde.keymap_disable.goto_previous_heading": false,
+	// List pages the link to the current page
+	"mde.keymap_disable.list_back_links": true,
+	// Open the home page
+	"mde.keymap_disable.open_home_page": true,
+	// Open the journal
+	"mde.keymap_disable.open_journal": true,
+	// Open the page referenced
+	"mde.keymap_disable.open_page": true,
+	// Make page reference
+	"mde.keymap_disable.make_page_reference": true
 }

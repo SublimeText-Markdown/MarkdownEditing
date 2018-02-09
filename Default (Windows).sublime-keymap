@@ -407,13 +407,13 @@
         ]
     },
     // run paste as link command on selected text
-    { "keys": ["ctrl+super+v"], "command": "reference_new_inline_link", "context":
+    { "keys": ["ctrl+alt+v"], "command": "reference_new_inline_link", "context":
         [
             { "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
     },
-    { "keys": ["ctrl+super+r"], "command": "reference_new_reference", "context":
+    { "keys": ["ctrl+alt+r"], "command": "reference_new_reference", "context":
         [
             { "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
@@ -654,5 +654,37 @@
             { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
         ]
+    },
+    {"keys": ["ctrl+alt+h"], "command": "open_home_page", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["ctrl+alt+d"], "command": "open_page", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["ctrl+alt+d"], "command": "make_page_reference", "context":
+        [
+            { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "meta.link.wiki.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }            
+        ]    
+    },
+    {"keys": ["ctrl+alt+x"], "command": "list_back_links", "context":
+        [
+            { "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
+    },
+    {"keys": ["ctrl+alt+j"], "command": "open_journal", "context":
+        [
+            { "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+        ]    
     }
 ]

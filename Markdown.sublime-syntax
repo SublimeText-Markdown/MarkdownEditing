@@ -88,6 +88,12 @@ contexts:
         - include: fenced-code-blocks
         - include: list-paragraph
     - include: fenced-code-blocks
+    - match: '<!---'
+      comment: Github style comment
+      push:
+        - meta_scope: comment.block.html
+        - match: ->
+          pop: true
     - match: '^(?=<(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|noscript|form|fieldset|iframe|math|ins|del)\b[^>]*>)(?!.*?</\1>)'
       comment: Markdown formatting is disabled inside block-level tags.
       push:
@@ -290,6 +296,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -362,6 +369,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -451,6 +459,7 @@ contexts:
     - include: fenced-kotlin
     - include: fenced-ocaml
     - include: fenced-reason
+    - include: fenced-haskell
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -627,6 +636,13 @@ contexts:
         - match: ^(\1)\n
           pop: true
         - include: scope:source.tsx
+  fenced-haskell:
+    - match: '^(\s*[`~]{3,})\s*(haskell|hs)\s*$'
+      push:
+        - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+        - match: ^(\1)\n
+          pop: true
+        - include: scope:source.haskell
   fenced-undefined:
     - match: '^(\s*[`~]{3,}).*$'
       push:
@@ -717,6 +733,7 @@ contexts:
     - include: link-inline
     - include: link-inet
     - include: link-email
+    - include: link-wiki
     - include: image-ref
     - include: link-ref
     - include: link-ref-literal
@@ -792,6 +809,7 @@ contexts:
         - include: link-inline
         - include: link-inet
         - include: link-email
+        - include: link-wiki
         - include: image-ref
         - include: link-ref
         - include: link-ref-literal
@@ -806,6 +824,13 @@ contexts:
         1: punctuation.definition.link.markdown
         2: markup.underline.link.markdown
         4: punctuation.definition.link.markdown
+  link-wiki:
+    - match: '(\[\[)([a-zA-Z0-9.]+)(\]\])'
+      scope: meta.link.wiki.markdown
+      captures:
+        1: punctuation.definition.string.begin.markdown
+        2: markup.underline.link.markdown
+        3: punctuation.definition.string.end.markdown
   link-footnote:
     - match: '(\[)(\^[^\]]*+)(\])'
       scope: meta.link.reference.markdown

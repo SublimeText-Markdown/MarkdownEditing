@@ -12,6 +12,9 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
+			s/\[([^]]+)\]\([^)]+\)/$1/g;
+			s/\[([^]]+)\]\[[^]]+\]/$1/g;
+			s/\[([^]]+)\]/$1/g;
 			s/\s*#+\s*$//g;
 			s/^\s*#(#*)\s*/$1/g;
 			s/^#{5}/                                   /g;
