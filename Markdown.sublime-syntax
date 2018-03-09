@@ -194,13 +194,14 @@ contexts:
             (?= \s*$
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             | [ ]{,3}([*+-])(?=\s)
-            | [ ]{0,3}([0-9]+\.)(?=\s)
+            | [ ]{,3}([0-9]+\.)(?=\s)
             | [ ]{,3}>
             )
           pop: true
         - match: |-
             (?x)\G
-            (?= [ ]{,3}>
+            [ ]*
+            (?= >
             )
           push:
             - match: ^
@@ -208,12 +209,10 @@ contexts:
             - include: block_quote
         - match: |-
             (?x)\G
-            (?= ([ ]{4}|\t)
-            | [#]{1,6}\s*+
+            (?= [#]{1,6}\s*+
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             )
           push:
-            - include: block_raw
             - include: heading
             - include: separator
             - match: ^
