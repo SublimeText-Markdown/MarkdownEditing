@@ -209,10 +209,12 @@ contexts:
             - include: block_quote
         - match: |-
             (?x)\G
-            (?= [#]{1,6}\s*+
+            (?= ([ ]{4}|\t)
+            | [#]{1,6}\s*+
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             )
           push:
+            - include: block_raw
             - include: heading
             - include: separator
             - match: ^
