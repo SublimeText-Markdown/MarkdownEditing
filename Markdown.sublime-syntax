@@ -385,44 +385,74 @@ contexts:
       scope: constant.character.escape.markdown
   fenced-c:
     - match: '^(\s*[`~]{3,})\s*(c)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.c
   fenced-csharp:
     - match: '^(\s*[`~]{3,})\s*(c(?:s|sharp|#))\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.cs
   fenced-c++:
     - match: '^(\s*[`~]{3,})\s*(c\+\+|cpp)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.c++
   fenced-clojure:
     - match: '^(\s*[`~]{3,})\s*(clojure)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.clojure
   fenced-go:
     - match: '^(\s*[`~]{3,})\s*(go|golang)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.go
   fenced-kotlin:
     - match: '^(\s*[`~]{3,})\s*(kt|kotlin)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.Kotlin
   fenced-code-blocks:
@@ -463,204 +493,349 @@ contexts:
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.coffee
   fenced-css:
     - match: '^(\s*[`~]{3,})\s*(css)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.css
   fenced-diff:
     - match: '^(\s*[`~]{3,})\s*(diff|patch)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.diff
   fenced-html:
     - match: '^(\s*[`~]{3,})\s*(html|html5)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:text.html.basic
   fenced-java:
     - match: '^(\s*[`~]{3,})\s*(java)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.java
   fenced-js:
     - match: '^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.js
   fenced-less:
     - match: '^(\s*[`~]{3,})\s*(less)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.less
   fenced-lisp:
     - match: '^(\s*[`~]{3,})\s*(lisp)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.lisp
   fenced-lua:
     - match: '^(\s*[`~]{3,})\s*(lua)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.lua
   fenced-ocaml:
     - match: '^(\s*[`~]{3,})\s*(ocaml)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.ocaml
   fenced-obj-c:
     - match: '^(\s*[`~]{3,})\s*(obj(ective-)?c)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.objc
   fenced-perl:
     - match: '^(\s*[`~]{3,})\s*(perl)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.perl
   fenced-php:
     - match: '^(\s*[`~]{3,})\s*(php)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.php
   fenced-python:
     - match: '^(\s*[`~]{3,})\s*(py|python)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.python
   fenced-reason:
     - match: '^(\s*[`~]{3,})\s*(re|reason)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.reason
   fenced-ruby:
     - match: '^(\s*[`~]{3,})\s*(ruby)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.ruby
   fenced-sass:
     - match: '^(\s*[`~]{3,})\s*(sass)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.sass
   fenced-scala:
     - match: '^(\s*[`~]{3,})\s*(scala)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.scala
   fenced-scheme:
     - match: '^(\s*[`~]{3,})\s*(scheme)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.scheme
   fenced-scss:
     - match: '^(\s*[`~]{3,})\s*(scss)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.scss
   fenced-shell:
     - match: '^(\s*[`~]{3,})\s*(sh|shell|bash)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.shell
   fenced-sql:
     - match: '^(\s*[`~]{3,})\s*(sql)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.sql
   fenced-swift:
     - match: '^(\s*[`~]{3,})\s*(swift)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.swift
   fenced-ts:
     - match: '^(\s*[`~]{3,})\s*(ts|typescript)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.ts
   fenced-tsx:
     - match: '^(\s*[`~]{3,})\s*(tsx)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.tsx
   fenced-haskell:
     - match: '^(\s*[`~]{3,})\s*(haskell|hs)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.haskell
   fenced-undefined:
     - match: '^(\s*[`~]{3,}).*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
   fenced-xml:
     - match: '^(\s*[`~]{3,})\s*(xml)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:text.xml
   fenced-yaml:
     - match: '^(\s*[`~]{3,})\s*(yaml)\s*$'
+      captures:
+        1: punctuation.definition.raw.markdown
+        2: markup.raw.block.fenced.language-identifier.markdown
       push:
         - meta_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
         - match: ^(\1)\n
+          captures:
+            1: punctuation.definition.raw.markdown
           pop: true
         - include: scope:source.yaml
   heading:
