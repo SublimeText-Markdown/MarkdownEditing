@@ -75,6 +75,7 @@ contexts:
             1: punctuation.definition.list_item.markdown
           pop: true
         - include: fenced-code-blocks
+        - include: block_quote
         - include: list-paragraph
     - match: '^[ ]{0,3}([0-9]+\.)(?=\s)'
       captures:
@@ -86,6 +87,7 @@ contexts:
             1: punctuation.definition.list_item.markdown
           pop: true
         - include: fenced-code-blocks
+        - include: block_quote
         - include: list-paragraph
     - include: fenced-code-blocks
     - match: '<!---'
@@ -180,7 +182,8 @@ contexts:
     - match: '\G[ ]{,3}(>)[ ]?'
       comment: |
         We terminate the block quote when seeing an empty line, a
-                        separator or a line with leading > characters. The latter is
+                        separator, a numbered or un-numbered list-item
+                        or a line with leading > characters. The latter is
                         to “reset” the quote level for quoted lines.
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -190,12 +193,15 @@ contexts:
             (?x)^
             (?= \s*$
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
+            | [ ]{,3}([*+-])(?=\s)
+            | [ ]{,3}([0-9]+\.)(?=\s)
             | [ ]{,3}>
             )
           pop: true
         - match: |-
             (?x)\G
-            (?= [ ]{,3}>
+            [ ]*
+            (?= >
             )
           push:
             - match: ^
@@ -917,6 +923,7 @@ contexts:
             1: punctuation.definition.list_item.markdown
         - include: scope:text.html.basic
         - include: fenced-code-blocks
+        - include: block_quote
   raw:
     - include: latex-display
     - match: '(`+)((?:[^`]|(?!(?<!`)\1(?!`))`)*+)(\1)'

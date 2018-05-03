@@ -59,7 +59,7 @@
 			// Extra arguments passed to mdl. For all options, see here:
 			// https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/cli.rb
 			// You can also specify a config file with '-c ~/.mdlrc'
-			"additional_arguments": [],
+			"additional_arguments": []
 		},
 		// disabled rules, e.g. "md001".
 		"disable": ["md013"],
