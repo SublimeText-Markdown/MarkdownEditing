@@ -103,6 +103,9 @@
 
 	"mde.wikilinks.markdown_extension": ".md",
 	"mde.wikilinks.homepage": "HomePage",
+	"mde.wikilinks.templates": {
+		"default_page": "templates/PageTemplate.md"
+	},
 
 	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
