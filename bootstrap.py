@@ -48,7 +48,7 @@ Markdown supports _italics_, __bold__, and ___bold italics___ style.
 
 There are also inline styles like `inline code in monospace font` and ~~strikethrough style~~. __There may be ~~strikethroughed text~~ or `code text` inside bold text.__ _And There may be ~~strikethroughed text~~ or `code text` inside italic text._
 
-To reference something from a URL, [Named Links][links] and [Inline links](https://example.com/index.html) are of great help. Sometimes ![A picture][sample image] is worth a thousand words.
+To reference something from a URL, [Named Links][links], [Inline links](https://example.com/index.html) and direct link like <https://example.com/> are of great help. Sometimes ![A picture][sample image] is worth a thousand words.
 
 There are two types of lists, numbered and unnumbered.
 
@@ -88,21 +88,27 @@ This [[SamplePage]] is a wiki link
 
 '''})
     view.set_syntax_file('Packages/MarkdownEditing/Markdown.tmLanguage')
-    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.tmTheme'
+    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme'
     print(default_mde_scheme)
     view.settings().set('color_scheme', default_mde_scheme)
     view.set_read_only(True)
     view.set_scratch(True)
 
     global_scheme = sublime.load_settings('Preferences.sublime-settings').get('color_scheme')
-    themes = ['Packages/MarkdownEditing/MarkdownEditor.tmTheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme',
-              'Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme',
+    themes = ['Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Focus.sublime-color-scheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Yellow.sublime-color-scheme',
+              'Packages/MarkdownEditing/MarkdownEditor-Dark.sublime-color-scheme',
+              'Packages/MarkdownEditing/MarkdownEditor-ArcDark.sublime-color-scheme',
               global_scheme]
 
-    themes_display = [re.search('[^/]+(?=\.tmTheme$)', s).group(0) + (' (Current)' if s == default_mde_scheme else '') + (' (Global)' if s == global_scheme else '') for s in themes]
+    themes_display = []
+    for s in themes:
+        m = re.search('[^/]+(?=\\.sublime-color-scheme$)', s)
+        if m is None:
+            continue
+        theme_display = m.group(0) + (' (Current)' if s == default_mde_scheme else '') + (' (Global)' if s == global_scheme else '')
+        themes_display.append(theme_display)
 
     def set_scheme(scheme):
         view.settings().set('color_scheme', scheme)

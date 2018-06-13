@@ -238,9 +238,9 @@ Bold and italic markers are configurable through ST shell variables. You can use
 
 In order to activate the dark or the yellow theme, put one of these lines to your user settings file of the flavor (`Packages/User/[flavor].sublime-settings`):
 
-    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
-    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
-    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-ArcDark.tmTheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.sublime-color-scheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.sublime-color-scheme",
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-ArcDark.sublime-color-scheme",
     
 
 If you want to go with your already existing theme, you can reenable it with the same method as above. Keep in mind that, that theme may not cover all the parts of the Markdown syntax that this plugin defines.
