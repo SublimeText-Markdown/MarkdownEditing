@@ -440,6 +440,7 @@ contexts:
     - include: fenced-obj-c
     - include: fenced-coffee
     - include: fenced-js
+    - include: fenced-json
     - include: fenced-ts
     - include: fenced-tsx
     - include: fenced-ruby
@@ -482,8 +483,13 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-js:
-    - match: '^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$'
+    - match: '^(\s*[`~]{3,})\s*(js|jsx|javascript)\s*$'
       embed: scope:source.js
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-json:
+    - match: '^(\s*[`~]{3,})\s*(json)\s*$'
+      embed: scope:source.json
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-less:
