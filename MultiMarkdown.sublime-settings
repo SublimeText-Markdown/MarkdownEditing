@@ -35,6 +35,10 @@
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
 
+	// Behavior
+	"mde.bold_marker_asterisk": true,
+	"mde.italic_marker_asterisk": true,
+
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,
 
