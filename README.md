@@ -211,7 +211,7 @@ You can launch Command Palette from `Tools -> Command Palette...`. MarkdownEditi
 
 ### Folding and Navigation
 
-Remeber you can <kbd>Ctrl</kbd> <kbd>R</kbd> (in document) and <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd> (project-wise) for quick navigation for all headers.
+Remember you can <kbd>Ctrl</kbd> <kbd>R</kbd> (in document) and <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd> (project-wise) for quick navigation for all headers.
 
 * __Toggle Folding Current Section__
     Folds/unfolds current section.
