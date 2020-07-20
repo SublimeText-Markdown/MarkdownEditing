@@ -609,7 +609,7 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-r:
-    - match: '^(\s*[`~]{3,})\s*(R|\{r[a-zA-Z0-9!"#$%&'()*+,./:;<=>?@\^_`|~-]*\})\s*$'
+    - match: '^(\s*[`~]{3,})\s*(R|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
       embed: scope:source.r
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
