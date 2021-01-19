@@ -458,6 +458,7 @@ contexts:
     - include: fenced-rust
     - include: fenced-ahk
     - include: fenced-r
+    - include: fenced-stata
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -599,6 +600,9 @@ contexts:
       embed: scope:source.rust
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
+  fenced-stata:
+    - match: '^(\s*[`~]{3,})\s*(s|stata|{s}|{s(\s|\,).*}|{stata}|{stata(\s|\,).*})\s*$'
+      embed: scope:source.stata
   fenced-ahk:
     - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
       embed: scope:source.ahk
@@ -621,7 +625,7 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-r:
-    - match: '^(\s*[`~]{3,})\s*(R|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
+    - match: '^(\s*[`~]{3,})\s*(R|r|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
       embed: scope:source.r
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
