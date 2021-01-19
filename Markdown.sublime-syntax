@@ -457,6 +457,7 @@ contexts:
     - include: fenced-haskell
     - include: fenced-rust
     - include: fenced-ahk
+    - include: fenced-r
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -617,6 +618,11 @@ contexts:
   fenced-yaml:
     - match: '^(\s*[`~]{3,})\s*(yaml)\s*$'
       embed: scope:source.yaml
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-r:
+    - match: '^(\s*[`~]{3,})\s*(R|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
+      embed: scope:source.r
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   heading:
