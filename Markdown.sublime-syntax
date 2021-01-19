@@ -440,6 +440,7 @@ contexts:
     - include: fenced-obj-c
     - include: fenced-coffee
     - include: fenced-js
+    - include: fenced-json
     - include: fenced-ts
     - include: fenced-tsx
     - include: fenced-ruby
@@ -455,6 +456,7 @@ contexts:
     - include: fenced-reason
     - include: fenced-haskell
     - include: fenced-rust
+    - include: fenced-ahk
     - include: fenced-r
     - include: fenced-stata
     - include: fenced-undefined
@@ -484,8 +486,13 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-js:
-    - match: '^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$'
+    - match: '^(\s*[`~]{3,})\s*(js|jsx|javascript)\s*$'
       embed: scope:source.js
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-json:
+    - match: '^(\s*[`~]{3,})\s*(json)\s*$'
+      embed: scope:source.json
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-less:
@@ -593,14 +600,12 @@ contexts:
       embed: scope:source.rust
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
-  fenced-r:
-    - match: '^(\s*[`~]{3,})\s*(r|{r}|{r(\s|\,).*})\s*$' 
-      embed: scope:source.r
-      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
-      escape: ^(\1)\n
   fenced-stata:
     - match: '^(\s*[`~]{3,})\s*(s|stata|{s}|{s(\s|\,).*}|{stata}|{stata(\s|\,).*})\s*$'
       embed: scope:source.stata
+  fenced-ahk:
+    - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
+      embed: scope:source.ahk
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-undefined:
@@ -617,6 +622,11 @@ contexts:
   fenced-yaml:
     - match: '^(\s*[`~]{3,})\s*(yaml)\s*$'
       embed: scope:source.yaml
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-r:
+    - match: '^(\s*[`~]{3,})\s*(R|r|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
+      embed: scope:source.r
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   heading:
