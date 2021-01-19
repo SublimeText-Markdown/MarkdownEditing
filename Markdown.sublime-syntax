@@ -456,6 +456,7 @@ contexts:
     - include: fenced-reason
     - include: fenced-haskell
     - include: fenced-rust
+    - include: fenced-ahk
     - include: fenced-r
     - include: fenced-undefined
   fenced-coffee:
@@ -596,6 +597,11 @@ contexts:
   fenced-rust:
     - match: '^(\s*[`~]{3,})\s*(rust)\s*$'
       embed: scope:source.rust
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-ahk:
+    - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
+      embed: scope:source.ahk
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-undefined:
