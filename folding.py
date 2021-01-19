@@ -245,3 +245,17 @@ class GotoPreviousHeadingCommand(MDETextCommand):
             for region in new_sel:
                 view.sel().add(region)
                 view.show(region)
+
+class FoldAllLinkUrls(MDETextCommand):
+
+    def run(self, edit):
+        view = self.view
+        all_links = view.find_by_selector('markup.underline.link')
+        folded_regions = view.folded_regions()
+        folded_a_link = False
+        for link in all_links:
+            if link not in folded_regions:
+                view.fold(link)
+                folded_a_link = True
+        if not folded_a_link:
+            view.unfold(all_links)
