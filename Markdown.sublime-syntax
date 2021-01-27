@@ -459,6 +459,7 @@ contexts:
     - include: fenced-ahk
     - include: fenced-r
     - include: fenced-stata
+    - include: fenced-nim
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -606,6 +607,11 @@ contexts:
   fenced-ahk:
     - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
       embed: scope:source.ahk
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-nim:
+    - match: '^(\s*[`~]{3,})\s*(nim)\s*$'
+      embed: scope:source.nim
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-undefined:
