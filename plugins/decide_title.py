@@ -1,6 +1,6 @@
+import re
 import sublime
 import sublime_plugin
-import re
 
 
 class DecideTitle(sublime_plugin.EventListener):
