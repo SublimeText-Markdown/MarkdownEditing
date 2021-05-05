@@ -87,7 +87,7 @@ This [[SamplePage]] is a wiki link
 ---
 
 '''})
-    view.set_syntax_file('Packages/MarkdownEditing/Markdown.tmLanguage')
+    view.assign_syntax('Packages/MarkdownEditing/Markdown.sublime-syntax')
     default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme'
     print(default_mde_scheme)
     view.settings().set('color_scheme', default_mde_scheme)
