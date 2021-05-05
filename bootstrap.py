@@ -88,7 +88,8 @@ This [[SamplePage]] is a wiki link
 
 '''})
     view.assign_syntax('Packages/MarkdownEditing/Markdown.sublime-syntax')
-    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme'
+    md_settings = sublime.load_settings('Markdown.sublime-settings')
+    default_mde_scheme = md_settings.get('color_scheme') or 'MarkdownEditor.sublime-color-scheme'
     print(default_mde_scheme)
     view.settings().set('color_scheme', default_mde_scheme)
     view.set_read_only(True)
@@ -114,7 +115,7 @@ This [[SamplePage]] is a wiki link
 
     def set_scheme(scheme):
         view.settings().set('color_scheme', scheme)
-        sublime.load_settings('Markdown.sublime-settings').set('color_scheme', scheme)
+        md_settings.set('color_scheme', scheme)
 
     def on_done(index):
         if index == -1:
