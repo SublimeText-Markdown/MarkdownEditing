@@ -95,12 +95,14 @@ This [[SamplePage]] is a wiki link
     view.set_scratch(True)
 
     global_scheme = sublime.load_settings('Preferences.sublime-settings').get('color_scheme')
-    themes = ['Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Focus.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Yellow.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Dark.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-ArcDark.sublime-color-scheme',
-              global_scheme]
+    themes = [
+        'MarkdownEditor.sublime-color-scheme',
+        'MarkdownEditor-Focus.sublime-color-scheme',
+        'MarkdownEditor-Yellow.sublime-color-scheme',
+        'MarkdownEditor-Dark.sublime-color-scheme',
+        'MarkdownEditor-ArcDark.sublime-color-scheme',
+        global_scheme
+    ]
 
     themes_display = []
     for s in themes:
