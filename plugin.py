@@ -28,9 +28,6 @@ else:
         on_after_install,
         on_before_uninstall,
     )
-    from .plugins.custom_find_under_expand import (
-        CustomFindUnderExpandCommand,
-    )
     from .plugins.decide_title import (
         DecideTitle,
     )
