@@ -4,14 +4,14 @@
 		"mmd"
 	],
 
-	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
-	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.tmTheme",
-	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.tmTheme",
+	"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme",
+	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Dark.sublime-color-scheme",
+	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Yellow.sublime-color-scheme",
 
 	// This is a quick and dirty focus theme. In order to make it work, you've to
 	// set `"highlight_line": true,` in this settings file. It is likely that there will
 	// be more mature focus improvements in the future (maybe similar to iA Writer).
-	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.tmTheme",
+	// "color_scheme": "Packages/MarkdownEditing/MarkdownEditor-Focus.sublime-color-scheme",
 
 	"tab_size": 4,
 	"translate_tabs_to_spaces": true,
@@ -34,6 +34,10 @@
 	"caret_style": "wide",
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
+
+	// Behavior
+	"mde.bold_marker_asterisk": true,
+	"mde.italic_marker_asterisk": true,
 
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,

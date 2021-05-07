@@ -23,69 +23,36 @@
                                 "caption": "-"
                             },
                             {
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences"
+                                    "base_file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences",
+                                    "default": "{\n$0\n}\n"
                                 },
-                                "caption": "Bold and Italic Settings \u2013 Default",
-                                "command": "open_file"
+                                "caption": "Bold and Italic Settings"
                             },
                             {
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/User/Bold and Italic Markers.tmPreferences"
+                                    "base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
+                                    "default": "{\n$0\n}\n"
                                 },
-                                "caption": "Bold and Italic Settings \u2013 User",
-                                "command": "open_file"
+                                "caption": "Markdown GFM Settings"
                             },
                             {
-                                "caption": "-"
-                            },
-                            {
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
+                                    "base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
+                                    "default": "{\n$0\n}\n"
                                 },
-                                "caption": "Markdown GFM Settings \u2013 Default",
-                                "command": "open_file"
+                                "caption": "Markdown (Standard) Settings"
                             },
                             {
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/User/Markdown.sublime-settings"
+                                    "base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
+                                    "default": "{\n$0\n}\n"
                                 },
-                                "caption": "Markdown GFM Settings \u2013 User",
-                                "command": "open_file"
-                            },
-                            {
-                                "caption": "-"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings"
-                                },
-                                "caption": "Markdown (Standard) Settings \u2013 Default",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/User/Markdown (Standard).sublime-settings"
-                                },
-                                "caption": "Markdown (Standard) Settings \u2013 User",
-                                "command": "open_file"
-                            },
-                            {
-                                "caption": "-"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings"
-                                },
-                                "caption": "MultiMarkdown Settings \u2013 Default",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/User/MultiMarkdown.sublime-settings"
-                                },
-                                "caption": "MultiMarkdown Settings \u2013 User",
-                                "command": "open_file"
+                                "caption": "MultiMarkdown Settings"
                             },
                             {
                                 "caption": "-"
