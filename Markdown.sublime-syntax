@@ -604,6 +604,7 @@ contexts:
   fenced-stata:
     - match: '^(\s*[`~]{3,})\s*(s|stata|{s}|{s(\s|\,).*}|{stata}|{stata(\s|\,).*})\s*$'
       embed: scope:source.stata
+      escape: ^(\1)\n
   fenced-ahk:
     - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
       embed: scope:source.ahk
