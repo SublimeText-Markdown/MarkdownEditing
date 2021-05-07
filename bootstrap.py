@@ -87,20 +87,23 @@ This [[SamplePage]] is a wiki link
 ---
 
 '''})
-    view.set_syntax_file('Packages/MarkdownEditing/Markdown.tmLanguage')
-    default_mde_scheme = sublime.load_settings('Markdown.sublime-settings').get('color_scheme') or 'Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme'
+    view.assign_syntax('Packages/MarkdownEditing/Markdown.sublime-syntax')
+    md_settings = sublime.load_settings('Markdown.sublime-settings')
+    default_mde_scheme = md_settings.get('color_scheme') or 'MarkdownEditor.sublime-color-scheme'
     print(default_mde_scheme)
     view.settings().set('color_scheme', default_mde_scheme)
     view.set_read_only(True)
     view.set_scratch(True)
 
     global_scheme = sublime.load_settings('Preferences.sublime-settings').get('color_scheme')
-    themes = ['Packages/MarkdownEditing/MarkdownEditor.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Focus.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Yellow.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-Dark.sublime-color-scheme',
-              'Packages/MarkdownEditing/MarkdownEditor-ArcDark.sublime-color-scheme',
-              global_scheme]
+    themes = [
+        'MarkdownEditor.sublime-color-scheme',
+        'MarkdownEditor-Focus.sublime-color-scheme',
+        'MarkdownEditor-Yellow.sublime-color-scheme',
+        'MarkdownEditor-Dark.sublime-color-scheme',
+        'MarkdownEditor-ArcDark.sublime-color-scheme',
+        global_scheme
+    ]
 
     themes_display = []
     for s in themes:
@@ -112,7 +115,7 @@ This [[SamplePage]] is a wiki link
 
     def set_scheme(scheme):
         view.settings().set('color_scheme', scheme)
-        sublime.load_settings('Markdown.sublime-settings').set('color_scheme', scheme)
+        md_settings.set('color_scheme', scheme)
 
     def on_done(index):
         if index == -1:
