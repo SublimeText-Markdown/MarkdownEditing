@@ -119,7 +119,7 @@ class WikiPage:
             'template': 'default_page'
         })
         print("Current syntax: %s" % current_syntax)
-        new_view.set_syntax_file(current_syntax)
+        new_view.assign_syntax(current_syntax)
 
         # Create but don't save page
         # new_view.run_command('save')

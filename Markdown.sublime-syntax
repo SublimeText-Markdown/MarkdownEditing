@@ -440,6 +440,7 @@ contexts:
     - include: fenced-obj-c
     - include: fenced-coffee
     - include: fenced-js
+    - include: fenced-json
     - include: fenced-ts
     - include: fenced-tsx
     - include: fenced-ruby
@@ -456,6 +457,10 @@ contexts:
     - include: fenced-haskell
     - include: fenced-rust
     - include: fenced-nix
+    - include: fenced-ahk
+    - include: fenced-r
+    - include: fenced-stata
+    - include: fenced-nim
     - include: fenced-undefined
   fenced-coffee:
     - match: '^(\s*[`~]{3,})\s*(coffee|cjsx)\s*$'
@@ -483,8 +488,13 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-js:
-    - match: '^(\s*[`~]{3,})\s*(js|jsx|json|javascript)\s*$'
+    - match: '^(\s*[`~]{3,})\s*(js|jsx|javascript)\s*$'
       embed: scope:source.js
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-json:
+    - match: '^(\s*[`~]{3,})\s*(json)\s*$'
+      embed: scope:source.json
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   fenced-less:
@@ -592,6 +602,20 @@ contexts:
       embed: scope:source.rust
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
+  fenced-stata:
+    - match: '^(\s*[`~]{3,})\s*(s|stata|{s}|{s(\s|\,).*}|{stata}|{stata(\s|\,).*})\s*$'
+      embed: scope:source.stata
+      escape: ^(\1)\n
+  fenced-ahk:
+    - match: '^(\s*[`~]{3,})\s*(ahk)\s*$'
+      embed: scope:source.ahk
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-nim:
+    - match: '^(\s*[`~]{3,})\s*(nim)\s*$'
+      embed: scope:source.nim
+      embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
   fenced-undefined:
     - match: '^(\s*[`~]{3,}).*$'
       push:
@@ -611,6 +635,10 @@ contexts:
   fenced-nix:
     - match: '^(\s*[`~]{3,})\s*(nix)\s*$'
       embed: scope:source.nix
+      escape: ^(\1)\n
+  fenced-r:
+    - match: '^(\s*[`~]{3,})\s*(R|r|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
+      embed: scope:source.r
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   heading:
