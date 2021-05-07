@@ -6,6 +6,10 @@ try:
 except ImportError:
     from mdeutils import *
 
+try:
+    from MarkdownEditing.folding import *
+except ImportError:
+    from folding import *
 
 class MDEBoldCommand(MDETextCommand):
 
