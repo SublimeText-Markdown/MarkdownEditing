@@ -456,6 +456,7 @@ contexts:
     - include: fenced-reason
     - include: fenced-haskell
     - include: fenced-rust
+    - include: fenced-nix
     - include: fenced-ahk
     - include: fenced-r
     - include: fenced-stata
@@ -630,6 +631,10 @@ contexts:
     - match: '^(\s*[`~]{3,})\s*(yaml)\s*$'
       embed: scope:source.yaml
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
+      escape: ^(\1)\n
+  fenced-nix:
+    - match: '^(\s*[`~]{3,})\s*(nix)\s*$'
+      embed: scope:source.nix
       escape: ^(\1)\n
   fenced-r:
     - match: '^(\s*[`~]{3,})\s*(R|r|\{r[a-zA-Z0-9.,-="\s]*\})\s*$'
