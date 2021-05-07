@@ -1,10 +1,9 @@
+import re
+
 import sublime
 import sublime_plugin
-import re
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
+
+from .mdeutils import *
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'

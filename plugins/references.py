@@ -18,10 +18,8 @@ Exported commands:
 import sublime
 import re
 import operator
-try:
-    from MarkdownEditing.mdeutils import MDETextCommand
-except ImportError:
-    from mdeutils import MDETextCommand
+
+from .mdeutils import *
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"

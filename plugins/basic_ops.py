@@ -1,15 +1,8 @@
 import sublime
-import sublime_plugin
-import re
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
 
-try:
-    from MarkdownEditing.folding import *
-except ImportError:
-    from folding import *
+from .folding import *
+from .mdeutils import *
+
 
 class MDEBoldCommand(MDETextCommand):
 
@@ -45,4 +38,3 @@ class MDEBoldCommand(MDETextCommand):
                 view.unfold(reg)
             else:
                 view.fold(reg)
-

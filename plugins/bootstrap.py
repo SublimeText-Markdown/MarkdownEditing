@@ -1,11 +1,9 @@
-import sys
-import sublime
-import sublime_plugin
 import re
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
+import sys
+
+import sublime
+
+from .mdeutils import *
 
 package_name = 'MarkdownEditing'
 
@@ -35,7 +33,7 @@ def enable_native_markdown_package():
         save_ingored_packages(ignored_packages)
 
 
-def choose_color_theme(window):
+def choose_color_theme(window=None):
     window = window or sublime.active_window()
     view = window.new_file()
     view.run_command('append', {'characters': '''# A sample Markdown document
@@ -136,29 +134,24 @@ This [[SamplePage]] is a wiki link
     window.show_quick_panel(themes_display, on_done, flags=sublime.KEEP_OPEN_ON_FOCUS_LOST, on_highlight=on_highlighted)
 
 
-def plugin_loaded():
+def on_after_install():
     if "package_control" in sys.modules:
         from package_control import events
 
         if events.install(package_name):
             # Native package causes some conflicts.
             disable_native_markdown_package()
-            # Prmopts to select a color theme
+            # Prompts to select a color theme
             choose_color_theme()
 
 
-def plugin_unloaded():
+def on_before_uninstall():
     if "package_control" in sys.modules:
         from package_control import events
 
         if events.remove(package_name):
             # Native package causes some conflicts.
             enable_native_markdown_package()
-
-# Compat with ST2
-if sys.version_info < (3,):
-    plugin_loaded()
-    unload_handler = plugin_unloaded
 
 
 class MdeColorActivateCommand(MDETextCommand):
