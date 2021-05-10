@@ -12,17 +12,27 @@
         "command": "gather_missing_link_markers"
     },
     {
-        "caption": "Preferences: MarkdownEditing Settings – Default",
-        "command": "open_file", "args":
-        {
-            "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
+        "caption": "Preferences: Markdown GFM Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
+            "default": "{\n$0\n}\n"
         }
     },
     {
-        "caption": "Preferences: MarkdownEditing Settings – User",
-        "command": "open_file", "args":
-        {
-            "file": "${packages}/User/Markdown.sublime-settings"
+        "caption": "Preferences: Markdown (Standard) Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
+            "default": "{\n$0\n}\n"
+        }
+    },
+    {
+        "caption": "Preferences: MultiMarkdown Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
+            "default": "{\n$0\n}\n"
         }
     },
     {
