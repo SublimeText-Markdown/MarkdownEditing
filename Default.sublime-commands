@@ -1,17 +1,5 @@
 [
     {
-        "caption": "MarkdownEditing: Fix Underlined Headers",
-        "command": "fix_all_underlined_headers"
-    },
-    {
-        "caption": "MarkdownEditing: Convert Underlined Headers to ATX",
-        "command": "convert_to_atx"
-    },
-    {
-        "caption": "MarkdownEditing: Add Missing Link Labels",
-        "command": "gather_missing_link_markers"
-    },
-    {
         "caption": "Preferences: Markdown GFM Settings",
         "command": "edit_settings",
         "args": {
@@ -42,6 +30,18 @@
             "base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
             "default": "{\n$0\n}\n"
         }
+    },
+    {
+        "caption": "MarkdownEditing: Fix Underlined Headers",
+        "command": "fix_all_underlined_headers"
+    },
+    {
+        "caption": "MarkdownEditing: Convert Underlined Headers to ATX",
+        "command": "convert_to_atx"
+    },
+    {
+        "caption": "MarkdownEditing: Add Missing Link Labels",
+        "command": "gather_missing_link_markers"
     },
     {
         "caption": "MarkdownEditing: Markdown Lint",
