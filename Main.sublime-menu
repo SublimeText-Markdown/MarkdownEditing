@@ -9,11 +9,11 @@
                         "caption": "Markdown Editing",
                         "children": [
                             {
+                                "caption": "README",
+                                "command": "open_file",
                                 "args": {
                                     "file": "${packages}/MarkdownEditing/README.md"
-                                },
-                                "caption": "README",
-                                "command": "open_file"
+                                }
                             },
                             {
                                 "caption": "Change color scheme...",
@@ -23,28 +23,28 @@
                                 "caption": "-"
                             },
                             {
+                                "caption": "Markdown GFM Settings",
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
                                     "default": "{\n$0\n}\n"
-                                },
-                                "caption": "Markdown GFM Settings"
+                                }
                             },
                             {
+                                "caption": "Markdown (Standard) Settings",
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
                                     "default": "{\n$0\n}\n"
-                                },
-                                "caption": "Markdown (Standard) Settings"
+                                }
                             },
                             {
+                                "caption": "MultiMarkdown Settings",
                                 "command": "edit_settings",
                                 "args": {
                                     "base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
                                     "default": "{\n$0\n}\n"
-                                },
-                                "caption": "MultiMarkdown Settings"
+                                }
                             },
                             {
                                 "caption": "-"
