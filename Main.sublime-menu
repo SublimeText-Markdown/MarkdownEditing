@@ -25,14 +25,6 @@
                             {
                                 "command": "edit_settings",
                                 "args": {
-                                    "base_file": "${packages}/MarkdownEditing/Bold and Italic Markers.tmPreferences",
-                                    "default": "{\n$0\n}\n"
-                                },
-                                "caption": "Bold and Italic Settings"
-                            },
-                            {
-                                "command": "edit_settings",
-                                "args": {
                                     "base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
                                     "default": "{\n$0\n}\n"
                                 },
