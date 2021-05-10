@@ -1,73 +1,73 @@
 [
-    {
-        "caption": "Preferences",
-        "children": [
-            {
-                "caption": "Package Settings",
-                "children": [
-                    {
-                        "caption": "Markdown Editing",
-                        "children": [
-                            {
-                                "caption": "README",
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/MarkdownEditing/README.md"
-                                }
-                            },
-                            {
-                                "caption": "Change color scheme...",
-                                "command": "mde_color_activate"
-                            },
-                            {
-                                "caption": "-"
-                            },
-                            {
-                                "caption": "Markdown GFM Settings",
-                                "command": "edit_settings",
-                                "args": {
-                                    "base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
-                                    "default": "{\n$0\n}\n"
-                                }
-                            },
-                            {
-                                "caption": "Markdown (Standard) Settings",
-                                "command": "edit_settings",
-                                "args": {
-                                    "base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
-                                    "default": "{\n$0\n}\n"
-                                }
-                            },
-                            {
-                                "caption": "MultiMarkdown Settings",
-                                "command": "edit_settings",
-                                "args": {
-                                    "base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
-                                    "default": "{\n$0\n}\n"
-                                }
-                            },
-                            {
-                                "caption": "-"
-                            },
-                            {
-                                "caption": "Key Bindings",
-                                "command": "edit_settings",
-                                "args": {
-                                    "base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
-                                    "default": "{\n$0\n}\n"
-                                },
-                            },
-                            {
-                                "caption": "-"
-                            }
-                        ]
-                    }
-                ],
-                "id": "package-settings",
-                "mnemonic": "P"
-            }
-        ],
-        "id": "preferences",
-        "mnemonic": "n"
-    }
+	{
+		"caption": "Preferences",
+		"children": [
+			{
+				"caption": "Package Settings",
+				"children": [
+					{
+						"caption": "Markdown Editing",
+						"children": [
+							{
+								"caption": "README",
+								"command": "open_file",
+								"args": {
+									"file": "${packages}/MarkdownEditing/README.md"
+								}
+							},
+							{
+								"caption": "Change color scheme...",
+								"command": "mde_color_activate"
+							},
+							{
+								"caption": "-"
+							},
+							{
+								"caption": "Markdown GFM Settings",
+								"command": "edit_settings",
+								"args": {
+									"base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
+									"default": "{\n$0\n}\n"
+								}
+							},
+							{
+								"caption": "Markdown (Standard) Settings",
+								"command": "edit_settings",
+								"args": {
+									"base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
+									"default": "{\n$0\n}\n"
+								}
+							},
+							{
+								"caption": "MultiMarkdown Settings",
+								"command": "edit_settings",
+								"args": {
+									"base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
+									"default": "{\n$0\n}\n"
+								}
+							},
+							{
+								"caption": "-"
+							},
+							{
+								"caption": "Key Bindings",
+								"command": "edit_settings",
+								"args": {
+									"base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
+									"default": "{\n$0\n}\n"
+								}
+							},
+							{
+								"caption": "-"
+							}
+						]
+					}
+				],
+				"id": "package-settings",
+				"mnemonic": "P"
+			}
+		],
+		"id": "preferences",
+		"mnemonic": "n"
+	}
 ]
