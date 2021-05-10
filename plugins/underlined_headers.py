@@ -16,14 +16,11 @@ Also adds "Fix Underlined Markdown Headers" to Tools > Command Palette. After mo
 header text, this command will re-align the underline dashes with the new text length.
 
 """
-import sublime
-import sublime_plugin
-import re
 import itertools
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
+import re
+import sublime
+
+from .mdeutils import *
 
 SETEXT_DASHES_RE = re.compile( r'''
     (?: =+ | -+ ) # A run of ---- or ==== underline characters.

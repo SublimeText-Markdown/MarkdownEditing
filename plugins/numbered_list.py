@@ -1,9 +1,6 @@
-import sublime_plugin
 import re
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
+
+from .mdeutils import *
 
 
 class NumberListCommand(MDETextCommand):

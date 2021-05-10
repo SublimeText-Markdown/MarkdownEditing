@@ -1,10 +1,8 @@
-import sublime
-import sublime_plugin
 import re
-try:
-    from MarkdownEditing.mdeutils import *
-except ImportError:
-    from mdeutils import *
+
+import sublime
+
+from .mdeutils import *
 
 
 def getFoldedRegion(view, reg):
