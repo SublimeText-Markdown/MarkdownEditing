@@ -26,6 +26,14 @@
         }
     },
     {
+        "caption": "Preferences: MarkdownEditing Key Bindings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
+            "default": "{\n$0\n}\n"
+        }
+    },
+    {
         "caption": "MarkdownEditing: Markdown Lint",
         "command": "markdown_lint"
     },

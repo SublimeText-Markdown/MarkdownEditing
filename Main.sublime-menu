@@ -50,52 +50,12 @@
                                 "caption": "-"
                             },
                             {
+                                "caption": "Key Bindings",
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (Windows).sublime-keymap",
-                                    "platform": "Windows"
+                                    "base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
+                                    "default": "{\n$0\n}\n"
                                 },
-                                "caption": "Key Bindings \u2013 Default",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (OSX).sublime-keymap",
-                                    "platform": "OSX"
-                                },
-                                "caption": "Key Bindings \u2013 Default",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/MarkdownEditing/Default (Linux).sublime-keymap",
-                                    "platform": "Linux"
-                                },
-                                "caption": "Key Bindings \u2013 Default",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/User/Default (Windows).sublime-keymap",
-                                    "platform": "Windows"
-                                },
-                                "caption": "Key Bindings \u2013 User",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/User/Default (OSX).sublime-keymap",
-                                    "platform": "OSX"
-                                },
-                                "caption": "Key Bindings \u2013 User",
-                                "command": "open_file"
-                            },
-                            {
-                                "args": {
-                                    "file": "${packages}/User/Default (Linux).sublime-keymap",
-                                    "platform": "Linux"
-                                },
-                                "caption": "Key Bindings \u2013 User",
-                                "command": "open_file"
                             },
                             {
                                 "caption": "-"
