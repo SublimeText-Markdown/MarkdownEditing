@@ -43,7 +43,7 @@
 
 	// Behavior
 	"mde.bold_marker_asterisk": true,
-	"mde.italic_marker_asterisk": true,
+	"mde.italic_marker_asterisk": false,
 
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,
