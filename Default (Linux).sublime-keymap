@@ -254,7 +254,7 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
 		]
 	},
-	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*$0$*"}, "context":
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
@@ -265,7 +265,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
 	},
-	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_$0$_"}, "context":
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
