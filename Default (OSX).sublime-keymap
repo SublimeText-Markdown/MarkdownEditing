@@ -191,14 +191,18 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$1**"}, "context":
@@ -244,14 +248,18 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
