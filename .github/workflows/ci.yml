@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'master'
+      - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: Python ${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-18.04
+        python:
+          - '3.3.7'
+          - '3.8.7'
+        arch:
+          - 'x64'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@main
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: ${{ matrix.arch }}
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run pytest
+        run: python -m pytest --import-mode=append tests/

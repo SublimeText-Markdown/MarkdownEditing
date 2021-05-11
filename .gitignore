@@ -1,4 +1,8 @@
+# python cache files
+__pycache__/
+.pytest_cache/
 *.pyc
+
 *.cache
 MarkdownEditing.taskpaper
 /_warehouse
