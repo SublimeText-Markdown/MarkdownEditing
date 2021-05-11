@@ -7,8 +7,8 @@ from .mdeutils import MDETextCommand, view_is_markdown
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'
-REFERENCE_REGEX = "\[\^([^\]]*)\]"
-DEFINITION_REGEX = "^ *\[\^([^\]]*)\]:"
+REFERENCE_REGEX = r"\[\^([^\]]*)\]"
+DEFINITION_REGEX = r"^ *\[\^([^\]]*)\]:"
 
 
 def get_footnote_references(view):
@@ -63,7 +63,7 @@ def is_footnote_reference(view):
 
 
 def strip_trailing_whitespace(view, edit):
-    tws = view.find('\s+\Z', 0)
+    tws = view.find(r'\s+\Z', 0)
     if tws:
         view.erase(edit, tws)
 
@@ -87,7 +87,7 @@ class GatherMissingFootnotesCommand(MDETextCommand):
     def run(self, edit):
         refs = get_footnote_identifiers(self.view)
         defs = get_footnote_definition_markers(self.view)
-        missingnotes = [note_token for note_token in refs if not note_token in defs]
+        missingnotes = [note_token for note_token in refs if note_token not in defs]
         if len(missingnotes):
             self.view.insert(edit, self.view.size(), "\n")
             for note in missingnotes:
@@ -103,7 +103,7 @@ class InsertFootnoteCommand(MDETextCommand):
         for sel in view.sel():
             startloc = sel.end()
             if bool(view.size()):
-                targetloc = view.find('(\s|$)', startloc).begin()
+                targetloc = view.find(r'(\s|$)', startloc).begin()
             else:
                 targetloc = 0
             view.insert(edit, targetloc, markernum_str)
@@ -133,7 +133,7 @@ class GoToFootnoteDefinitionCommand(MDETextCommand):
             if not target:
                 try:
                     target = self.view.substr(self.view.find(REFERENCE_REGEX, sel[-1].end()))[2:-1]
-                except:
+                except Exception:
                     pass
             if target:
                 self.view.sel().clear()
@@ -149,7 +149,7 @@ class GoToFootnoteReferenceCommand(MDETextCommand):
         if match:
             target = match.groups()[0]
             self.view.sel().clear()
-            [self.view.sel().add(a) for a in refs[target]]
+            self.view.sel().add_all(refs[target])
             self.view.show(refs[target][0])
 
 
@@ -182,16 +182,19 @@ class SortFootnotesCommand(MDETextCommand):
         erase = []
         keyorder = map(lambda x: self.view.substr(x)[2:-1], self.view.get_regions(REFERENCE_KEY))
         keys = []
-        [keys.append(r) for r in keyorder if not r in keys]
+        for r in keyorder:
+            if r not in keys:
+                keys.append(r)
 
         for (key, item) in defs.items():
-            fnend = self.view.find('(\s*\Z|\n\s*\n(?!\ {4,}))', item.end())
+            fnend = self.view.find(r'(\s*\Z|\n\s*\n(?!\ {4,}))', item.end())
             fnreg = sublime.Region(item.begin(), fnend.end())
             notes[key] = self.view.substr(fnreg).strip()
             erase.append(fnreg)
         erase.sort()
         erase.reverse()
-        [self.view.erase(edit, reg) for reg in erase]
+        for reg in erase:
+            self.view.erase(edit, reg)
 
         for key in keys:
             self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])

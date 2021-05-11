@@ -15,9 +15,10 @@ class SwitchListBulletTypeCommand(MDETextCommand):
             for line in lines:
                 line_content = self.view.substr(line)
                 # print(line_content)
-                m = re.match(r"^(\s*(?:>\s*)?)[" +
-                             ''.join(re.escape(i) for i in unordered_bullets) +
-                             r"](\s+.*)$", line_content)
+                m = re.match(
+                    r"^(\s*(?:>\s*)?)["
+                    + ''.join(re.escape(i) for i in unordered_bullets)
+                    + r"](\s+.*)$", line_content)
                 if m:
                     # Transform the bullet to numbered bullet type
                     new_line = m.group(1) + str(number) + "." + m.group(2)

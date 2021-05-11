@@ -38,15 +38,15 @@ class WikiPage:
         else:
             self.open_new_file(pagename)
 
-
     def find_files_with_name(self, pagename):
-        pagename = pagename.replace('\\', os.sep).replace(os.sep+os.sep, os.sep).strip()
+        pagename = pagename.replace('\\', os.sep).replace(os.sep + os.sep, os.sep).strip()
 
         self.current_file = self.view.file_name()
         self.current_dir = os.path.dirname(self.current_file)
-        print("Locating page '%s' in: %s" % (pagename, self.current_dir) )
+        print("Locating page '%s' in: %s" % (pagename, self.current_dir))
 
-        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+        markdown_extension = self.view.settings().get(
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
         # Optionally strip extension...
         if pagename.endswith(markdown_extension):
@@ -69,7 +69,8 @@ class WikiPage:
         self.current_dir, current_base = os.path.split(self.current_file)
         self.current_name, _ = os.path.splitext(current_base)
 
-        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+        markdown_extension = self.view.settings().get(
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
@@ -81,18 +82,16 @@ class WikiPage:
 
         return results
 
-
     def contains_ref(self, filename, page_name):
         link_text = PAGE_REF_FORMAT % page_name
 
         try:
             if link_text in open(filename).read():
                 return True
-        except:
+        except OSError:
             pass
 
         return False
-
 
     def select_backlink(self, file_list):
         if file_list:
@@ -103,13 +102,13 @@ class WikiPage:
             print(msg)
             self.view.window().status_message(msg)
 
-
     def open_new_file(self, pagename):
         current_syntax = self.view.settings().get('syntax')
         current_file = self.view.file_name()
         current_dir = os.path.dirname(current_file)
 
-        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+        markdown_extension = self.view.settings().get(
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
         filename = os.path.join(current_dir, pagename + markdown_extension)
 
@@ -125,11 +124,10 @@ class WikiPage:
         # Create but don't save page
         # new_view.run_command('save')
 
-
     def open_selected_file(self, selected_index):
         if selected_index != -1:
             _, file = self.file_list[selected_index]
-            
+
             print("Opening file '%s'" % (file))
             self.view.window().open_file(file)
 
@@ -137,8 +135,7 @@ class WikiPage:
         _, base_name = os.path.split(filename)
         page_name, _ = os.path.splitext(base_name)
 
-        return page_name;
-
+        return page_name
 
     def list_dir_tree(self, directory):
         for dir, dirnames, files in os.walk(directory):
@@ -158,20 +155,18 @@ class WikiPage:
 
         return word_region
 
-    def show_quick_list(self, file_list):        
+    def show_quick_list(self, file_list):
         self.file_list = file_list
 
         window = self.view.window()
         window.show_quick_panel(file_list, self.replace_selection_with_pagename)
 
-
     def replace_selection_with_pagename(self, selected_index):
         if selected_index != -1:
             page_name, file = self.file_list[selected_index]
-            
+
             print("Using selected page '%s'" % (page_name))
             self.view.run_command('replace_selected', {'text': page_name})
-
 
     def find_matching_files(self, word_region):
         word = None if word_region.empty() else self.view.substr(word_region)
@@ -180,7 +175,8 @@ class WikiPage:
         current_dir, current_base = os.path.split(current_file)
         print("Finding matching files for %s in %s" % (word, current_dir))
 
-        markdown_extension = self.view.settings().get("mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+        markdown_extension = self.view.settings().get(
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
 
         # Optionally strip extension...
         if word is not None and word.endswith(markdown_extension):
@@ -198,7 +194,6 @@ class WikiPage:
 
         return results
 
-
     def make_page_reference(self, edit, region):
         print("Make page reference %s" % region)
 
@@ -209,8 +204,6 @@ class WikiPage:
         self.view.insert(edit, begin, "[[")
 
         if region.empty():
-            region = sublime.Region(begin+2, end+2)
-
             selection = self.view.sel()
             selection.clear()
-            selection.add(region)
+            selection.add(sublime.Region(begin + 2, end + 2))

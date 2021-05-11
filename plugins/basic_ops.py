@@ -27,7 +27,7 @@ class MDEBoldCommand(MDETextCommand):
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
                 folded = getFoldedRegion(view, reg)
-                if folded != None:
+                if folded is not None:
                     sections.append(folded)
                     shouldUnfold = True
                 else:

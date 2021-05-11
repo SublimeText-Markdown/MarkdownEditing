@@ -23,20 +23,19 @@ class IndentListMultiitemCommand(MDETextCommand):
                 else:
                     tab_str = "\t"
 
-                if re.match("^\\s*(>\\s*)?[*+\\-]\\s+(.*)$", line_content):
+                if re.match(r"^\s*(>\s*)?[*+\\-]\s+(.*)$", line_content):
                     bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
                     bullet_pattern = '([' + ''.join(re.escape(i) for i in bullets) + '])'
-                    bullet_pattern_a = "^\\s*(?:>\\s*)?("
-                    bullet_pattern_b = ")\\s+"
+                    bullet_pattern_a = r"^\s*(?:>\s*)?("
+                    bullet_pattern_b = r")\s+"
                     new_line = line_content
                     # Transform the bullet to the next/previous bullet type
                     if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
                         for key, bullet in enumerate(bullets):
                             re_bullet = re.escape(bullet)
-                            search_pattern = bullet_pattern_a + \
-                                re_bullet + bullet_pattern_b
+                            search_pattern = bullet_pattern_a + re_bullet + bullet_pattern_b
                             if re.search(search_pattern, line_content):
-                                if reverse and new_line.startswith(bullet) and key is 0:
+                                if reverse and new_line.startswith(bullet) and key == 0:
                                     # In this case, do not switch bullets
                                     continue
                                 new_bullet = bullets[(key + (1 if not reverse else -1)) % len(bullets)]
@@ -44,11 +43,11 @@ class IndentListMultiitemCommand(MDETextCommand):
                                 break
                     if not reverse:
                         # Do the indentation
-                        new_line = re.sub(bullet_pattern, tab_str + "\\1", new_line, 1)
+                        new_line = re.sub(bullet_pattern, tab_str + r"\1", new_line, 1)
 
                     else:
                         # Do the unindentation
-                        new_line = re.sub(tab_str + bullet_pattern, "\\1", new_line, 1)
+                        new_line = re.sub(tab_str + bullet_pattern, r"\1", new_line, 1)
                 else:
                     if not reverse:
                         new_line = tab_str + line_content

@@ -25,7 +25,7 @@ def all_headings(view):
             level = 2 if text[m.start()] == '-' else 1
         else:
             title_begin = m.end()
-            title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
+            title_end = re.search(r'(' + m.group() + r')?(\n|$)', text[title_begin:]).start() + title_begin
             title_begin = m.start()
             level = m.end() - m.start()
         if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
@@ -66,7 +66,7 @@ class FoldSectionCommand(MDETextCommand):
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
                 folded = getFoldedRegion(view, reg)
-                if folded != None:
+                if folded is not None:
                     sections.append(folded)
                     shouldUnfold = True
                 else:
@@ -77,7 +77,9 @@ class FoldSectionCommand(MDETextCommand):
                 view.unfold(reg)
             else:
                 view.fold(reg)
-        sublime.status_message('%d region%s %sfolded' % (len(sections), 's' if len(sections) > 1 else '', 'un' if shouldUnfold else ''))
+        sublime.status_message('%d region%s %sfolded' % (
+            len(sections), 's' if len(sections) > 1 else '', 'un' if shouldUnfold else '')
+        )
 
 
 class FoldSectionContextCommand(FoldSectionCommand):
@@ -101,7 +103,7 @@ class FoldSectionContextCommand(FoldSectionCommand):
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
                 folded = getFoldedRegion(view, reg)
-                if folded != None:
+                if folded is not None:
                     return False
                 else:
                     hasSection = True
@@ -129,7 +131,7 @@ class UnfoldSectionContextCommand(FoldSectionCommand):
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
                 folded = getFoldedRegion(view, reg)
-                if folded != None:
+                if folded is not None:
                     hasSection = True
                 else:
                     return False
@@ -140,7 +142,8 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
 
     def run(self, edit):
         view = self.view
-        view.window().run_command('show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
+        view.window().run_command(
+            'show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
 
 
 class FoldAllSectionsCommand(MDETextCommand):
@@ -167,7 +170,7 @@ class FoldAllSectionsCommand(MDETextCommand):
             n_sections += 1
         if len(view.sel()) > 0:
             for sel in view.sel():
-                if getFoldedRegion(view, sel) == None:
+                if getFoldedRegion(view, sel) is None:
                     view.show(sel)
         else:
             view.show(sublime.Region(0, 0))
@@ -243,6 +246,7 @@ class GotoPreviousHeadingCommand(MDETextCommand):
             for region in new_sel:
                 view.sel().add(region)
                 view.show(region)
+
 
 class FoldAllLinkUrls(MDETextCommand):
 

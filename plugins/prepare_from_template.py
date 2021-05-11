@@ -43,8 +43,8 @@ class PrepareFromTemplateCommand(sublime_plugin.TextCommand):
     def retrieve_template_text(self, template_name):
         """Retrieve the template text.
 
-        The setting 'mde.wikilinks.templates' may be configured with a filename for 
-        the template.  This file (if it exists) will be loaded otherwise the preset 
+        The setting 'mde.wikilinks.templates' may be configured with a filename for
+        the template.  This file (if it exists) will be loaded otherwise the preset
         template will be used
         """
 
@@ -60,9 +60,9 @@ class PrepareFromTemplateCommand(sublime_plugin.TextCommand):
             try:
                 with open(template, 'rt') as f:
                     return f.read()
-            except:
+            except OSError:
                 print("Unable to read template:", sys.exc_info()[0])
 
-        # Unable to load template  so using preset template 
+        # Unable to load template  so using preset template
         print("Template:", template, "not found.  Using preset.")
         return PRESET_TEMPLATE_TEXT

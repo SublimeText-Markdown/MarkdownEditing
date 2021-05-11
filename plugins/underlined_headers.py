@@ -22,18 +22,22 @@ import sublime
 
 from .mdeutils import MDETextCommand
 
-SETEXT_DASHES_RE = re.compile( r'''
+SETEXT_DASHES_RE = re.compile(
+    r'''
     (?: =+ | -+ ) # A run of ---- or ==== underline characters.
     \s*           # Optional trailing whitespace.
     $             # Must fill the while line. Don't match "- list items"
-    ''', re.X )
+    ''', re.X
+)
 
-SETEXT_HEADER_RE = re.compile( r'''
+SETEXT_HEADER_RE = re.compile(
+    r'''
     ^(.+)\n
     ( =+ | -+ ) # A run of ---- or ==== underline characters.
     [ \t]*        # Optional trailing whitespace.
     $             # Must fill the while line. Don't match "- list items"
-    ''', re.X | re.M )
+    ''', re.X | re.M
+)
 
 
 def fix_dashes(view, edit, text_region, dash_region):
@@ -129,7 +133,7 @@ class ConvertToAtxCommand(MDETextCommand):
             matches = list(SETEXT_HEADER_RE.finditer(txt))
             matches.reverse()
             for m in matches:
-                mreg = sublime.Region(region.begin()+m.start(), region.begin()+m.end())
+                mreg = sublime.Region(region.begin() + m.start(), region.begin() + m.end())
                 atx = "# "
                 if '-' in m.group(2):
                     atx = "#" + atx

@@ -268,12 +268,10 @@ class md004(mddef):
                     lvstack.append(nspaces)
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
-                    ret[e + 1 +
-                        mr.start(2)] = '%s expected, %s found' % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = '%s expected, %s found' % (exp, sym)
             else:
                 if not ans:
-                    ret[e + 1 +
-                        mr.start(2)] = '%s expected, %s found' % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = '%s expected, %s found' % (exp, sym)
         return ret
 
     def testsingle(self, sym):
@@ -338,7 +336,7 @@ class md005(mddef):
 
         ret = {}
         lvstack = []
-        sym = text[e:e + 1]
+        # sym = text[e:e + 1]
         nspaces = e - s
         basenspaces = e - s
         (ans, exp) = self.spacecheck(-1, nspaces)
@@ -358,7 +356,7 @@ class md005(mddef):
             # print(mr.group(2))
             # print('----')
             self.lastpos = e + 1 + mr.end(0)
-            sym = mr.group(2)
+            # sym = mr.group(2)
             nspaces = len(mr.group(1))
             if nspaces < basenspaces:
                 lv = 0
@@ -374,8 +372,7 @@ class md005(mddef):
                 lvstack.append(nspaces)
             (ans, exp) = self.spacecheck(lv, nspaces)
             if ans is False:
-                ret[e + 1 +
-                    mr.start(2)] = '%s expected, %s found' % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = '%s expected, %s found' % (exp, nspaces)
         return ret
 
 
@@ -394,8 +391,8 @@ class md006(mddef):
         self.lastpos = e
 
         ret = {}
-        lvstack = []
-        sym = text[e:e + 1]
+        # lvstack = []
+        # sym = text[e:e + 1]
         nspaces = e - s
         if nspaces > 0:
             ret[s] = '%d found' % nspaces
@@ -461,8 +458,7 @@ class md007(mddef):
             nspaces = len(mr.group(1))
             (ans, exp) = self.spacecheck(nspaces)
             if ans is False:
-                ret[e + 1 +
-                    mr.start(2)] = '%s expected, %s found' % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = '%s expected, %s found' % (exp, nspaces)
         return ret
 
 
@@ -561,8 +557,7 @@ class md021(mddef):
 
     def test(self, text, s, e):
         t = text[s:e]
-        if len(t) > 1 and ((t[0] == ' ' and t[1] == ' ') or
-                           (t[-1] == ' ' and t[-2] == ' ')):
+        if len(t) > 1 and ((t[0] == ' ' and t[1] == ' ') or (t[-1] == ' ' and t[-2] == ' ')):
             return {s: 'too many spaces'}
         return {}
 
@@ -735,8 +730,7 @@ class md029(mddef):
 
             if style == 'one':
                 if sym != '1':
-                    ret[mr.start(1) + e +
-                        1] = '%s found, \'1\' expected' % repr(sym)
+                    ret[mr.start(1) + e + 1] = '%s found, \'1\' expected' % repr(sym)
             else:
                 if int(sym) != int(lastSym) + 1:
                     ret[mr.start(1) + e + 1] = ('%s found, \'%d\' expected' %

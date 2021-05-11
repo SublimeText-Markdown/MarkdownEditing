@@ -112,24 +112,26 @@ def isMarkerDefined(view, name):
 def getCurrentScopeRegion(view, pt):
     """Extend the region under current scope."""
     scope = view.scope_name(pt)
-    l = pt
-    while l > 0 and view.scope_name(l - 1) == scope:
-        l -= 1
-    r = pt
-    while r < view.size() and view.scope_name(r) == scope:
-        r += 1
-    return sublime.Region(l, r)
+    start = pt
+    while start > 0 and view.scope_name(start - 1) == scope:
+        start -= 1
+    end = pt
+    while end < view.size() and view.scope_name(end) == scope:
+        end += 1
+    return sublime.Region(start, end)
 
 
 def findScopeFrom(view, pt, scope, backwards=False, char=None):
     """Find the nearest position of a scope from given position."""
     if backwards:
-        while pt >= 0 and (not hasScope(view.scope_name(pt), scope) or
-                           (char is not None and view.substr(pt) != char)):
+        while pt >= 0 and (
+            not hasScope(view.scope_name(pt), scope) or (char is not None and view.substr(pt) != char)
+        ):
             pt -= 1
     else:
-        while pt < view.size() and (not hasScope(view.scope_name(pt), scope) or
-                                    (char is not None and view.substr(pt) != char)):
+        while pt < view.size() and (
+            not hasScope(view.scope_name(pt), scope) or (char is not None and view.substr(pt) != char)
+        ):
             pt += 1
     return pt
 
@@ -383,7 +385,7 @@ class ReferenceNewFootnote(MDETextCommand):
         for sel in view.sel():
             startloc = sel.end()
             if bool(view.size()):
-                targetloc = view.find('(\s|$)', startloc).begin()
+                targetloc = view.find(r'(\s|$)', startloc).begin()
             else:
                 targetloc = 0
             view.insert(edit, targetloc, markernum_str)
@@ -412,23 +414,23 @@ class ReferenceDeleteReference(MDETextCommand):
                         if defname[0] == "^":
                             edit_regions.append(sublime.Region(marker.begin() - 1, marker.end() + 1))
                         else:
-                            l = findScopeFrom(view, marker.begin(), marker_begin_scope_name, True)
-                            if l > 0 and view.substr(sublime.Region(l - 1, l)) == "!":
-                                edit_regions.append(sublime.Region(l - 1, l + 1))
+                            left = findScopeFrom(view, marker.begin(), marker_begin_scope_name, True)
+                            if left > 0 and view.substr(sublime.Region(left - 1, left)) == "!":
+                                edit_regions.append(sublime.Region(left - 1, left + 1))
                             else:
-                                edit_regions.append(sublime.Region(l, l + 1))
+                                edit_regions.append(sublime.Region(left, left + 1))
                             if hasScope(view.scope_name(marker.end()), marker_text_end_scope_name):
                                 if view.substr(sublime.Region(marker.end() + 1, marker.end() + 2)) == '[':
                                     # [Text][]
-                                    r = findScopeFrom(view, marker.end(), marker_end_scope_name, False)
-                                    edit_regions.append(sublime.Region(marker.end(), r + 1))
+                                    right = findScopeFrom(view, marker.end(), marker_end_scope_name, False)
+                                    edit_regions.append(sublime.Region(marker.end(), right + 1))
                                 else:
                                     # [Text]
                                     edit_regions.append(sublime.Region(marker.end(), marker.end() + 1))
                             else:
                                 # [Text][name]
-                                r = findScopeFrom(view, marker.begin(), marker_text_end_scope_name, True)
-                                edit_regions.append(sublime.Region(r, marker.end() + 1))
+                                right = findScopeFrom(view, marker.begin(), marker_text_end_scope_name, True)
+                                edit_regions.append(sublime.Region(right, marker.end() + 1))
                 if defname_key in refs:
                     for ref in refs[defname_key].regions:
                         edit_regions.append(view.full_line(ref.begin()))

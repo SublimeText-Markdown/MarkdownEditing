@@ -20,7 +20,7 @@ class DecideTitle(sublime_plugin.EventListener):
                     title_begin = text.rfind('\n', 0, title_end) + 1
                 else:
                     title_begin = m.end()
-                    title_end = re.search('(' + m.group() + ')?(\n|$)', text[title_begin:]).start() + title_begin
+                    title_end = re.search(r'(' + m.group() + r')?(\n|$)', text[title_begin:]).start() + title_begin
                     title_begin = m.start() + 1
                 if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
                     break

@@ -63,7 +63,8 @@ class DeindentQuote(MDETextCommand):
             replacement_text = "\n".join(all_lines)
             view.replace(edit, expanded_selection, replacement_text)
 
-            new_selections.append(sublime.Region(expanded_selection_start, expanded_selection_start + len(replacement_text)))
+            new_selections.append(sublime.Region(
+                expanded_selection_start, expanded_selection_start + len(replacement_text)))
 
         selections.clear()
         for selection in new_selections:

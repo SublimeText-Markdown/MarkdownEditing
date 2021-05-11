@@ -9,9 +9,9 @@ class NumberListCommand(MDETextCommand):
         view = self.view
         sel = view.sel()[0]
         text = view.substr(view.full_line(sel))
-        num = re.search('\d', text).start()
+        num = re.search(r'\d', text).start()
         dot = text.find(".")
-        additional_spaces = re.search(r"^\s*", text[dot+1:]).group()
+        additional_spaces = re.search(r"^\s*", text[dot + 1:]).group()
         increment = 0
         if self.view.settings().get('mde.auto_increment_ordered_list_number', True):
             increment = 1
@@ -29,7 +29,7 @@ class NumberListReferenceCommand(MDETextCommand):
         view = self.view
         sel = view.sel()[0]
         text = view.substr(view.full_line(sel))
-        num = re.search('\d', text).start()
+        num = re.search(r'\d', text).start()
         dot = text.find("]")
         if num == 0:
             view.erase(edit, sel)
