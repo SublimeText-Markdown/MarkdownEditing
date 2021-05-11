@@ -8,7 +8,7 @@
 import sublime
 import sublime_plugin
 
-from .mdeutils import *
+from .mdeutils import view_is_markdown
 
 
 def on_distraction_free():

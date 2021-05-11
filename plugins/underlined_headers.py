@@ -20,7 +20,7 @@ import itertools
 import re
 import sublime
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 SETEXT_DASHES_RE = re.compile( r'''
     (?: =+ | -+ ) # A run of ---- or ==== underline characters.

@@ -3,7 +3,7 @@ import re
 import sublime
 import sublime_plugin
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand, view_is_markdown
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'

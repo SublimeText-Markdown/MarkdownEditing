@@ -1,5 +1,5 @@
-from .mdeutils import *
-from .wiki_page import *
+from .mdeutils import MDETextCommand
+from .wiki_page import WikiPage, DEFAULT_HOME_PAGE
 
 
 class OpenHomePageCommand(MDETextCommand):

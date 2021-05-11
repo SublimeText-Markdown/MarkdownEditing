@@ -1,6 +1,6 @@
 import re
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 
 class SwitchListBulletTypeCommand(MDETextCommand):

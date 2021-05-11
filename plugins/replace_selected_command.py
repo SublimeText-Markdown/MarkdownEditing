@@ -1,4 +1,4 @@
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 
 class ReplaceSelectedCommand(MDETextCommand):

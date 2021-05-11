@@ -2,7 +2,7 @@ import re
 
 import sublime
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 
 def getFoldedRegion(view, reg):

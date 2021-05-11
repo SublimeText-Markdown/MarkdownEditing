@@ -19,7 +19,7 @@ import sublime
 import re
 import operator
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"

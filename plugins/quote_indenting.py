@@ -1,7 +1,7 @@
 import re
 import sublime
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 
 class IndentQuote(MDETextCommand):

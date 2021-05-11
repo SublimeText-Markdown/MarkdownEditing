@@ -1,7 +1,7 @@
 import sublime
 
-from .folding import *
-from .mdeutils import *
+from .folding import all_headings, getFoldedRegion
+from .mdeutils import MDETextCommand
 
 
 class MDEBoldCommand(MDETextCommand):

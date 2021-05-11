@@ -1,7 +1,7 @@
 import sublime
 
-from .mdeutils import *
-from .wiki_page import *
+from .mdeutils import MDETextCommand
+from .wiki_page import WikiPage
 
 
 class OpenPageCommand(MDETextCommand):

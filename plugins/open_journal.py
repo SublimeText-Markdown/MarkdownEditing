@@ -1,7 +1,7 @@
 from datetime import date
 
-from .mdeutils import *
-from .wiki_page import *
+from .mdeutils import MDETextCommand
+from .wiki_page import WikiPage
 
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 

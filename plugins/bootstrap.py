@@ -3,7 +3,7 @@ import sys
 
 import sublime
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 package_name = 'MarkdownEditing'
 

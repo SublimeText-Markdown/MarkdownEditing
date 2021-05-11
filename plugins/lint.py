@@ -2,7 +2,7 @@ import re
 import sublime
 import subprocess
 
-from .mdeutils import *
+from .mdeutils import MDETextCommand
 
 
 class MarkdownLintMdlCommand(MDETextCommand):
