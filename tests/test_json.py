@@ -237,6 +237,7 @@ class TestSublimeResources(unittest.TestCase):
         print()  # add a new line to console output before printing file names
         patterns = (
             '*.json',
+            '*.sublime-color-scheme',
             '*.sublime-commands',
             '*.sublime-keymap',
             '*.sublime-menu',
