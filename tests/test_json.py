@@ -224,14 +224,14 @@ class CheckJsonFormat(object):
 class TestSublimeResources(unittest.TestCase):
     """Test Sublime JSON resource files."""
 
-    def _get_files(self, pattern, folder='.'):
+    def _get_files(self, patterns, folder='.'):
+        ignored = {'.git', '.mypy_cache', '.pytest_cache', '.tox', '.venv'}
         for root, dirnames, filenames in os.walk(folder):
-            for filename in fnmatch.filter(filenames, pattern):
-                yield os.path.join(root, filename)
-            ignored = ('.git', '.hg', '.svn', '.tox')
-            for dirname in [d for d in dirnames if d not in ignored]:
-                for f in self._get_files(pattern, os.path.join(root, dirname)):
-                    yield f
+            if any(i in root for i in ignored):
+                continue
+            for pattern in patterns:
+                for filename in fnmatch.filter(filenames, pattern):
+                    yield os.path.join(root, filename)
 
     def test_json(self):
         print()  # add a new line to console output before printing file names
@@ -248,9 +248,8 @@ class TestSublimeResources(unittest.TestCase):
         )
         result = False
         folder = os.path.dirname(os.path.dirname(__file__))
-        for pattern in patterns:
-            for file in self._get_files(pattern, folder=folder):
-                print('checking %s ... ' % file)
-                result |= CheckJsonFormat(True, True).check_format(file)
+        for file in self._get_files(patterns, folder=folder):
+            print('checking %s ... ' % file)
+            result |= CheckJsonFormat(True, True).check_format(file)
 
         self.assertFalse(result, 'At least one JSON file contains errors!')
