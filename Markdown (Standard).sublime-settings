@@ -27,7 +27,8 @@
 	"line_padding_bottom": 2,
 
 	// Caret
-	"caret_style": "wide",
+	"caret_style": "solid",
+	"caret_extra_width": 1,
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
 

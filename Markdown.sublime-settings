@@ -33,11 +33,8 @@
 	"line_padding_bottom": 2,
 
 	// Caret
-	"caret_style": "wide",	// "wide" is deprecated starting with ST Build 3057.
-							// In the future, this line will be replaced with:
-							//     "caret_style": "solid",
-							//     "caret_extra_width": 1,
-	// These will work only in ST Build 3057 and later.
+	"caret_style": "solid",
+	"caret_extra_width": 1,
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
 
