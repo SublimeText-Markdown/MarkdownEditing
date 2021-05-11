@@ -29,4 +29,7 @@ class KeepCurrentLineCentered(sublime_plugin.EventListener):
         elif not view.settings().get('mde.keep_centered', False):
             return False
 
-        view.show_at_center(view.sel()[0].begin())
+        try:
+            view.show_at_center(view.sel()[0].begin())
+        except IndexError:
+            pass
