@@ -1,0 +1,12 @@
+# Skip the following content from *.sublime-package files
+
+# Git & Github
+.github/            export-ignore
+.gitattributes      export-ignore
+.gitignore          export-ignore
+
+# Unittests
+tests/              export-ignore
+
+# Development Info
+CONTRIBUTING.md     export-ignore
