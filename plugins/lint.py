@@ -1,7 +1,129 @@
 import re
 import sublime
+import subprocess
 
 from .mdeutils import *
+
+
+class MarkdownLintMdlCommand(MDETextCommand):
+    def run(self, edit):
+        try:
+            is_windows = sublime.platform() == 'windows'
+
+            mdl_config = self.view.settings().get('mde.lint', {}).get('mdl', {})
+            sublime.status_message("Linting file...")
+            text_content = self.view.substr(sublime.Region(0, self.view.size()))
+            text_content = text_content.encode('utf-8')
+
+            executable_name = mdl_config.get('executable')
+            if not executable_name:
+                executable_name = 'mdl.bat' if is_windows else 'mdl'
+
+            startupinfo = None
+            if is_windows:
+                startupinfo = subprocess.STARTUPINFO()
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                startupinfo.wShowWindow = subprocess.SW_HIDE
+
+            # call mdl version
+            process = subprocess.Popen(
+                [executable_name] + mdl_config.get('additional_arguments', []),
+                bufsize=1024 * 1024 + len(text_content),
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                startupinfo=startupinfo,
+            )
+            stdout, stderr = process.communicate(text_content)
+            if stderr:
+                result = False
+                error = self.read_result(stderr)
+                outputtxt = error
+            else:
+                result = self.read_result(stdout)
+                outputtxt = result
+                sublime.status_message(
+                    "MarkdownLint: %d error(s) found" % len(result.split('\n'))
+                )
+            window = sublime.active_window()
+            output = window.create_output_panel('mde')
+            output.run_command('erase_view')
+            output.run_command('append', {'characters': outputtxt})
+            window.run_command('show_panel', {'panel': 'output.mde'})
+
+        except OSError as e:
+            print(e)
+            sublime.error_message(
+                "It looks like markdownlint is not installed.\n"
+                "Please make sure that it is installed and globally accessible as `mdl`."
+            )
+        except Exception as e:
+            print(e)
+
+    def read_result(self, stdout):
+        r = str(stdout, encoding='utf-8')
+        return r.strip().replace('\r', '').replace('(stdin):', '')
+
+
+class MarkdownLintCommand(MDETextCommand):
+
+    blockdef = []
+    scope_block = 'markup.raw.block.markdown'
+
+    def run(self, edit):
+        mddef = globals()['mddef']
+        text = self.view.substr(sublime.Region(0, self.view.size()))
+        st = self.view.settings().get('mde.lint', {})
+        uselist = []
+        disablelist = st['disable']
+        for cl in mddef.__subclasses__():
+            if cl.__name__ not in disablelist:
+                uselist.append(cl)
+        result = []
+        for mddef in uselist:
+            r = self.test(
+                mddef(st[mddef.__name__] if mddef.__name__ in st else None, self.view),
+                text,
+            )
+            result.extend(r)
+        sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
+        if len(result) > 0:
+            result = sorted(result, key=lambda t: t[0])
+            outputtxt = ''
+            for t in result:
+                (row, col) = self.view.rowcol(t[0])
+                outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
+            window = sublime.active_window()
+            output = window.create_output_panel('mde')
+            output.run_command('erase_view')
+            output.run_command('append', {'characters': outputtxt})
+            window.run_command('show_panel', {'panel': 'output.mde'})
+
+    def test(self, tar, text):
+        loc = tar.locator
+        # print(tar)
+        # print(repr(loc))
+        it = re.finditer(loc, text, tar.flag)
+        ret = []
+        for mr in it:
+            # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
+            if self.scope_block in self.view.scope_name(mr.start(0)):
+                if tar.__class__ not in self.blockdef:
+                    continue
+            ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
+            for p in ans:
+                ret.append((p, str(tar), ans[p]))
+                # (row, col) = self.view.rowcol(p)
+                # print('line %d: %s, %s' % (row + 1, tar, ans[p]))
+
+            # if not ans:
+            #     ret = False
+            #     (row, col) = self.view.rowcol(mr.start(tar.gid))
+            #     print('line %d: %s ' % (row + 1, tar))
+            if tar.finish:
+                break
+
+        return ret
 
 
 class mddef(object):
@@ -651,127 +773,3 @@ class md030(mddef):
         if against_value != nspaces:
             ret[e] = '%d spaces found, %d expected' % (nspaces, against_value)
         return ret
-
-
-class MarkdownLintCommand(MDETextCommand):
-
-    blockdef = []
-    scope_block = 'markup.raw.block.markdown'
-
-    def run(self, edit):
-        mddef = globals()['mddef']
-        text = self.view.substr(sublime.Region(0, self.view.size()))
-        st = self.view.settings().get('mde.lint', {})
-        uselist = []
-        disablelist = st['disable']
-        for cl in mddef.__subclasses__():
-            if cl.__name__ not in disablelist:
-                uselist.append(cl)
-        result = []
-        for mddef in uselist:
-            r = self.test(mddef(st[mddef.__name__] if mddef.__name__ in st
-                                else None, self.view), text)
-            result.extend(r)
-        sublime.status_message('MarkdownLint: %d error(s) found' % len(result))
-        if len(result) > 0:
-            result = sorted(result, key=lambda t: t[0])
-            outputtxt = ''
-            for t in result:
-                (row, col) = self.view.rowcol(t[0])
-                outputtxt += 'line %d: %s, %s\n' % (row + 1, t[1], t[2])
-            window = sublime.active_window()
-            output = window.create_output_panel("mde")
-            output.run_command('erase_view')
-            output.run_command('append', {'characters': outputtxt})
-            window.run_command("show_panel", {"panel": "output.mde"})
-
-    def test(self, tar, text):
-        loc = tar.locator
-        # print(tar)
-        # print(repr(loc))
-        it = re.finditer(loc, text, tar.flag)
-        ret = []
-        for mr in it:
-            # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
-            if self.scope_block in self.view.scope_name(mr.start(0)):
-                if tar.__class__ not in self.blockdef:
-                    continue
-            ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
-            for p in ans:
-                ret.append((p, str(tar), ans[p]))
-                # (row, col) = self.view.rowcol(p)
-                # print('line %d: %s, %s' % (row + 1, tar, ans[p]))
-
-            # if not ans:
-            #     ret = False
-            #     (row, col) = self.view.rowcol(mr.start(tar.gid))
-            #     print('line %d: %s ' % (row + 1, tar))
-            if tar.finish:
-                break
-
-        return ret
-
-import platform
-import sys
-import subprocess
-ON_WINDOWS = platform.system() is 'Windows'
-ST2 = sys.version_info < (3, 0)
-
-
-class MarkdownLintMdlCommand(MDETextCommand):
-
-    def run(self, edit):
-        try:
-            st = self.view.settings().get('mde.lint', {})
-            mdl_config = st['mdl'] or {}
-            sublime.status_message("Linting file...")
-            textContent = self.view.substr(sublime.Region(0, self.view.size()))
-            textContent = textContent.encode('utf-8')
-            executable_name = mdl_config['executable']
-            if not executable_name:
-                executable_name = "mdl.bat" if ON_WINDOWS else "mdl"
-            additional_arguments = mdl_config['additional_arguments'] or []
-            # call mdl version
-            process = subprocess.Popen([executable_name] + additional_arguments,
-                                       bufsize=1024 * 1024 + len(textContent),
-                                       stdin=subprocess.PIPE,
-                                       stdout=subprocess.PIPE,
-                                       stderr=subprocess.PIPE,
-                                       startupinfo=self.getStartupInfo())
-            stdout, stderr = process.communicate(textContent)
-            if stderr:
-                result = False
-                error = self.readResult(stderr)
-                outputtxt = error
-            else:
-                result = self.readResult(stdout)
-                outputtxt = result
-                sublime.status_message(
-                    'MarkdownLint: %d error(s) found' % len(result.split('\n')))
-            window = sublime.active_window()
-            output = window.create_output_panel("mde")
-            output.run_command('erase_view')
-            output.run_command('append', {'characters': outputtxt})
-            window.run_command("show_panel", {"panel": "output.mde"})
-
-        except OSError as e:
-            print(e)
-            sublime.error_message(
-                "It looks like markdownlint is not installed.\nPlease make sure that it is installed and globally accessible as `mdl`.")
-        except Exception as e:
-            print(e)
-
-    def readResult(self, stdout):
-        if ST2:
-            r = stdout.decode('utf-8')
-        else:
-            r = str(stdout, encoding='utf-8')
-        return r.strip().replace('\r', '').replace('(stdin):', '')
-
-    def getStartupInfo(self):
-        if ON_WINDOWS:
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            info.wShowWindow = subprocess.SW_HIDE
-            return info
-        return None
