@@ -30,9 +30,6 @@ else:
     from .plugins.color_schemes import (
         MdeSelectColorSchemeCommand,
     )
-    from .plugins.distraction_free_mode import (
-        KeepCurrentLineCentered,
-    )
     from .plugins.folding import (
         FoldAllLinkUrls,
         FoldAllSectionsCommand,
@@ -116,6 +113,7 @@ else:
         FixAllUnderlinedHeadersCommand,
     )
     from .plugins.view import (
+        MdeKeepCurrentLineCentered,
         MdeUnsavedViewNameSetter,
     )
 
