@@ -15,3 +15,17 @@ class MDETextCommand(sublime_plugin.TextCommand):
 
     def is_visible(self):
         return view_is_markdown(self.view)
+
+
+class MDEViewEventListener(sublime_plugin.ViewEventListener):
+
+    @classmethod
+    def is_applicable(cls, settings):
+        try:
+            return 'Markdown' in settings.get('syntax')
+        except (AttributeError, TypeError):
+            return False
+
+    @classmethod
+    def applies_to_primary_view_only(cls):
+        return False

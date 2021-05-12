@@ -30,9 +30,6 @@ else:
     from .plugins.color_schemes import (
         MdeSelectColorSchemeCommand,
     )
-    from .plugins.decide_title import (
-        DecideTitle,
-    )
     from .plugins.distraction_free_mode import (
         KeepCurrentLineCentered,
     )
@@ -117,6 +114,9 @@ else:
         CompleteUnderlinedHeaderCommand,
         ConvertToAtxCommand,
         FixAllUnderlinedHeadersCommand,
+    )
+    from .plugins.view import (
+        MdeUnsavedViewNameSetter,
     )
 
     def plugin_loaded():
