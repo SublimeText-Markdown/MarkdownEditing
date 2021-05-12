@@ -4,9 +4,97 @@ import string
 
 import sublime
 
+from datetime import date
+
+from .mdeutils import MDETextCommand
+
+DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+DEFAULT_HOME_PAGE = "HomePage"
 DEFAULT_MARKDOWN_EXTENSION = '.md'
 PAGE_REF_FORMAT = '[[%s]]'
-DEFAULT_HOME_PAGE = "HomePage"
+
+
+class MdeListBackLinksCommand(MDETextCommand):
+    def run(self, edit):
+        print("Running ListBackLinksCommand")
+        wiki_page = WikiPage(self.view)
+
+        file_list = wiki_page.find_files_with_ref()
+        wiki_page.select_backlink(file_list)
+
+
+class MdeMakePageReferenceCommand(MDETextCommand):
+    def is_visible(self):
+        """Return True if  is on a wiki page reference."""
+        for sel in self.view.sel():
+            if not self.view.match_selector(sel.end(), 'meta.link.wiki.markdown'):
+                return False
+        return True
+
+    def run(self, edit):
+        print("Running MakePageReferenceCommand")
+        wiki_page = WikiPage(self.view)
+
+        word_region = wiki_page.select_word_at_cursor()
+        file_list = wiki_page.find_matching_files(word_region)
+
+        wiki_page.make_page_reference(edit, word_region)
+
+        if len(file_list) > 1:
+            wiki_page.show_quick_list(file_list)
+
+
+class MdeOpenHomePageCommand(MDETextCommand):
+    def run(self, edit):
+        print("Running OpenHomePageCommand")
+        home_page = self.view.settings().get("mde.wikilinks.homepage", DEFAULT_HOME_PAGE)
+
+        wiki_page = WikiPage(self.view)
+        wiki_page.select_page(home_page)
+
+
+class MdeOpenJournalCommand(MDETextCommand):
+    def run(self, edit):
+        print("Running OpenJournalCommand")
+        today = date.today()
+        date_format = self.view.settings().get("mde.journal.dateformat", DEFAULT_DATE_FORMAT)
+        name = today.strftime(date_format)
+
+        wiki_page = WikiPage(self.view)
+        wiki_page.select_page(name)
+
+
+class MdeOpenPageCommand(MDETextCommand):
+    def is_visible(self):
+        """Return True if caret is on a wiki page reference."""
+        for sel in self.view.sel():
+            if not self.view.match_selector(sel.end(), 'meta.link.wiki.markdown'):
+                return False
+        return True
+
+    def run(self, edit):
+        print("Running OpenPageCommand")
+        wiki_page = WikiPage(self.view)
+
+        sel_region = self.get_selected()
+        if sel_region:
+            wiki_page.select_word_at_cursor()
+
+            region = sublime.Region(sel_region.begin(), sel_region.begin())
+            file_list = wiki_page.find_matching_files(region)
+
+            if len(file_list) > 1:
+                wiki_page.show_quick_list(file_list)
+        else:
+            name = wiki_page.identify_page_at_cursor()
+            wiki_page.select_page(name)
+
+    def get_selected(self):
+        selection = self.view.sel()
+        for region in selection:
+            return region
+
+        return None
 
 
 class WikiPage:

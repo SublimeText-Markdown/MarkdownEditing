@@ -61,24 +61,9 @@ else:
         MarkdownLintCommand,
         MarkdownLintMdlCommand,
     )
-    from .plugins.list_back_links import (
-        ListBackLinksCommand,
-    )
-    from .plugins.make_page_reference import (
-        MakePageReferenceCommand,
-    )
     from .plugins.numbered_list import (
         NumberListCommand,
         NumberListReferenceCommand,
-    )
-    from .plugins.open_home_page import (
-        OpenHomePageCommand,
-    )
-    from .plugins.open_journal import (
-        OpenJournalCommand,
-    )
-    from .plugins.open_page import (
-        OpenPageCommand,
     )
     from .plugins.prepare_from_template import (
         PrepareFromTemplateCommand,
@@ -115,6 +100,13 @@ else:
     from .plugins.view import (
         MdeKeepCurrentLineCentered,
         MdeUnsavedViewNameSetter,
+    )
+    from .plugins.wiki_page import (
+        MdeListBackLinksCommand,
+        MdeMakePageReferenceCommand,
+        MdeOpenHomePageCommand,
+        MdeOpenJournalCommand,
+        MdeOpenPageCommand,
     )
 
     def plugin_loaded():
