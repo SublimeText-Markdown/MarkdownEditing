@@ -2,12 +2,14 @@
 ---
 # http://www.sublimetext.com/docs/3/syntax.html
 name: Markdown GFM
+scope: text.html.markdown.gfm
+
 file_extensions:
   - md
   - mdown
   - markdown
   - markdn
-scope: text.html.markdown.gfm
+
 contexts:
   main:
     - match: (?=(?<!\s)---(\s*coffee|\s*json)?\n$)

@@ -4,10 +4,6 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
-		<string>md</string>
-		<string>mdown</string>
-		<string>markdown</string>
-		<string>markdn</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>(?x)

@@ -4,10 +4,7 @@
 <dict>
 	<key>fileTypes</key>
 	<array>
-		<string>md</string>
-		<string>mdown</string>
-		<string>markdown</string>
-		<string>markdn</string>
+		<string>mmd</string>
 	</array>
 	<key>firstLineMatch</key>
 	<string>(?i)^format:\s*complete\s*$</string>
@@ -53,7 +50,7 @@
 			<array>
 				<dict>
 					<key>comment</key>
-					<string>The reason for not setting scopeName = "string.unquoted" 
+					<string>The reason for not setting scopeName = "string.unquoted"
 						(for the parent rule) is that we do not want
 						newlines to be marked as string.unquoted</string>
 					<key>match</key>
