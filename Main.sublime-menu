@@ -16,8 +16,8 @@
 								}
 							},
 							{
-								"caption": "Change color scheme...",
-								"command": "mde_color_activate"
+								"caption": "Select Color Scheme",
+								"command": "mde_select_color_scheme"
 							},
 							{
 								"caption": "-"

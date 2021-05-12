@@ -164,8 +164,8 @@
 		}
 	},
 	{
-		"caption": "MarkdownEditing: Change color scheme...",
-		"command": "mde_color_activate"
+		"caption": "MarkdownEditing: Select Color scheme",
+		"command": "mde_select_color_scheme"
 	},
 	{
 		"caption": "MarkdownEditing: Convert all inline links to references",

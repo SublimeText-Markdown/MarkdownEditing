@@ -24,9 +24,11 @@ else:
         MDEBoldCommand,
     )
     from .plugins.bootstrap import (
-        MdeColorActivateCommand,
         on_after_install,
         on_before_uninstall,
+    )
+    from .plugins.color_schemes import (
+        MdeSelectColorSchemeCommand,
     )
     from .plugins.decide_title import (
         DecideTitle,
