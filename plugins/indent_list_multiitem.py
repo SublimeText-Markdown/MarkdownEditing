@@ -1,9 +1,9 @@
 import re
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
-class IndentListMultiitemCommand(MDETextCommand):
+class IndentListMultiitemCommand(MdeTextCommand):
 
     def run(self, edit, reverse=False):
         todo = []

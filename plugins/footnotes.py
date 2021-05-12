@@ -3,7 +3,7 @@ import re
 import sublime
 import sublime_plugin
 
-from .mdeutils import MDETextCommand, view_is_markdown
+from .view import MdeTextCommand, view_is_markdown
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'
@@ -82,7 +82,7 @@ class MarkFootnotes(sublime_plugin.EventListener):
         self.update_footnote_data(view)
 
 
-class GatherMissingFootnotesCommand(MDETextCommand):
+class GatherMissingFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         refs = get_footnote_identifiers(self.view)
@@ -94,7 +94,7 @@ class GatherMissingFootnotesCommand(MDETextCommand):
                 self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
 
 
-class InsertFootnoteCommand(MDETextCommand):
+class InsertFootnoteCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
@@ -116,7 +116,7 @@ class InsertFootnoteCommand(MDETextCommand):
                 view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
 
-class GoToFootnoteDefinitionCommand(MDETextCommand):
+class GoToFootnoteDefinitionCommand(MdeTextCommand):
 
     def run(self, edit):
         defs = get_footnote_definition_markers(self.view)
@@ -141,7 +141,7 @@ class GoToFootnoteDefinitionCommand(MDETextCommand):
                 self.view.show(defs[target])
 
 
-class GoToFootnoteReferenceCommand(MDETextCommand):
+class GoToFootnoteReferenceCommand(MdeTextCommand):
 
     def run(self, edit):
         refs = get_footnote_references(self.view)
@@ -153,7 +153,7 @@ class GoToFootnoteReferenceCommand(MDETextCommand):
             self.view.show(refs[target][0])
 
 
-class MagicFootnotesCommand(MDETextCommand):
+class MagicFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         if (is_footnote_definition(self.view)):
@@ -164,7 +164,7 @@ class MagicFootnotesCommand(MDETextCommand):
             self.view.run_command('insert_footnote')
 
 
-class SwitchToFromFootnoteCommand(MDETextCommand):
+class SwitchToFromFootnoteCommand(MdeTextCommand):
 
     def run(self, edit):
         if (is_footnote_definition(self.view)):
@@ -173,7 +173,7 @@ class SwitchToFromFootnoteCommand(MDETextCommand):
             self.view.run_command('go_to_footnote_definition')
 
 
-class SortFootnotesCommand(MDETextCommand):
+class SortFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)

@@ -2,7 +2,7 @@ import re
 
 import sublime
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 MARKDOWN_TEMPLATE = """# A sample Markdown document
 
@@ -59,7 +59,7 @@ This [[SamplePage]] is a wiki link
 """
 
 
-class MdeSelectColorSchemeCommand(MDETextCommand):
+class MdeSelectColorSchemeCommand(MdeTextCommand):
 
     def run(self, edit):
         select_color_scheme(self.view)

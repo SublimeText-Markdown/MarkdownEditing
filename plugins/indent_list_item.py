@@ -1,9 +1,9 @@
 import re
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
-class IndentListItemCommand(MDETextCommand):
+class IndentListItemCommand(MdeTextCommand):
 
     def run(self, edit, reverse=False):
         for region in self.view.sel():

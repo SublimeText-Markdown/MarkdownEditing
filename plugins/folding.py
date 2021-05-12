@@ -2,7 +2,7 @@ import re
 
 import sublime
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
 def getFoldedRegion(view, reg):
@@ -43,7 +43,7 @@ def get_current_level(view, p):
             return last_level
 
 
-class FoldSectionCommand(MDETextCommand):
+class FoldSectionCommand(MdeTextCommand):
 
     def description(self):
         return 'Toggle fold/unfold on current section'
@@ -138,7 +138,7 @@ class UnfoldSectionContextCommand(FoldSectionCommand):
         return hasSection
 
 
-class ShowFoldAllSectionsCommand(MDETextCommand):
+class ShowFoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
@@ -146,7 +146,7 @@ class ShowFoldAllSectionsCommand(MDETextCommand):
             'show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
 
 
-class FoldAllSectionsCommand(MDETextCommand):
+class FoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit, target_level=0):
         view = self.view
@@ -177,14 +177,14 @@ class FoldAllSectionsCommand(MDETextCommand):
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
 
-class UnfoldAllSectionsCommand(MDETextCommand):
+class UnfoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
         view.run_command('unfold_all')
 
 
-class GotoNextHeadingCommand(MDETextCommand):
+class GotoNextHeadingCommand(MdeTextCommand):
 
     def run(self, edit, same_level=True):
         view = self.view
@@ -209,7 +209,7 @@ class GotoNextHeadingCommand(MDETextCommand):
                 view.show(region)
 
 
-class GotoPreviousHeadingCommand(MDETextCommand):
+class GotoPreviousHeadingCommand(MdeTextCommand):
 
     def run(self, edit, same_level=True):
         view = self.view
@@ -248,7 +248,7 @@ class GotoPreviousHeadingCommand(MDETextCommand):
                 view.show(region)
 
 
-class FoldAllLinkUrls(MDETextCommand):
+class FoldAllLinkUrls(MdeTextCommand):
 
     def run(self, edit):
         view = self.view

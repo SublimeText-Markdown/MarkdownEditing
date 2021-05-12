@@ -86,9 +86,6 @@ else:
         ReferenceNewReferenceCommand,
         ReferenceOrganize,
     )
-    from .plugins.replace_selected_command import (
-        ReplaceSelectedCommand,
-    )
     from .plugins.switch_list_bullet_type import (
         SwitchListBulletTypeCommand,
     )
@@ -98,6 +95,7 @@ else:
         FixAllUnderlinedHeadersCommand,
     )
     from .plugins.view import (
+        MdeReplaceSelectedCommand,
         MdeKeepCurrentLineCentered,
         MdeUnsavedViewNameSetter,
     )

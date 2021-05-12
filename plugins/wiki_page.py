@@ -6,7 +6,7 @@ import sublime
 
 from datetime import date
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 DEFAULT_HOME_PAGE = "HomePage"
@@ -14,7 +14,7 @@ DEFAULT_MARKDOWN_EXTENSION = '.md'
 PAGE_REF_FORMAT = '[[%s]]'
 
 
-class MdeListBackLinksCommand(MDETextCommand):
+class MdeListBackLinksCommand(MdeTextCommand):
     def run(self, edit):
         print("Running ListBackLinksCommand")
         wiki_page = WikiPage(self.view)
@@ -23,7 +23,7 @@ class MdeListBackLinksCommand(MDETextCommand):
         wiki_page.select_backlink(file_list)
 
 
-class MdeMakePageReferenceCommand(MDETextCommand):
+class MdeMakePageReferenceCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if  is on a wiki page reference."""
         for sel in self.view.sel():
@@ -44,7 +44,7 @@ class MdeMakePageReferenceCommand(MDETextCommand):
             wiki_page.show_quick_list(file_list)
 
 
-class MdeOpenHomePageCommand(MDETextCommand):
+class MdeOpenHomePageCommand(MdeTextCommand):
     def run(self, edit):
         print("Running OpenHomePageCommand")
         home_page = self.view.settings().get("mde.wikilinks.homepage", DEFAULT_HOME_PAGE)
@@ -53,7 +53,7 @@ class MdeOpenHomePageCommand(MDETextCommand):
         wiki_page.select_page(home_page)
 
 
-class MdeOpenJournalCommand(MDETextCommand):
+class MdeOpenJournalCommand(MdeTextCommand):
     def run(self, edit):
         print("Running OpenJournalCommand")
         today = date.today()
@@ -64,7 +64,7 @@ class MdeOpenJournalCommand(MDETextCommand):
         wiki_page.select_page(name)
 
 
-class MdeOpenPageCommand(MDETextCommand):
+class MdeOpenPageCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if caret is on a wiki page reference."""
         for sel in self.view.sel():
@@ -254,7 +254,7 @@ class WikiPage:
             page_name, file = self.file_list[selected_index]
 
             print("Using selected page '%s'" % (page_name))
-            self.view.run_command('replace_selected', {'text': page_name})
+            self.view.run_command('mde_replace_selected', {'text': page_name})
 
     def find_matching_files(self, word_region):
         word = None if word_region.empty() else self.view.substr(word_region)

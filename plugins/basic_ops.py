@@ -1,10 +1,10 @@
 import sublime
 
 from .folding import all_headings, getFoldedRegion
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
-class MDEBoldCommand(MDETextCommand):
+class MDEBoldCommand(MdeTextCommand):
 
     def description(self):
         return 'Apply bold style'

@@ -1,9 +1,9 @@
 import re
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
-class SwitchListBulletTypeCommand(MDETextCommand):
+class SwitchListBulletTypeCommand(MdeTextCommand):
 
     def run(self, edit):
         todo = []

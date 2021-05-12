@@ -20,7 +20,7 @@ import itertools
 import re
 import sublime
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 SETEXT_DASHES_RE = re.compile(
     r'''
@@ -54,7 +54,7 @@ def fix_dashes(view, edit, text_region, dash_region):
     view.replace(edit, dash_region, new_dashes)
 
 
-class CompleteUnderlinedHeaderCommand(MDETextCommand):
+class CompleteUnderlinedHeaderCommand(MdeTextCommand):
 
     """If the current selection is looks like a setext underline of - or = ,
     then inserts enough dash characters to match the length of the previous
@@ -90,7 +90,7 @@ class CompleteUnderlinedHeaderCommand(MDETextCommand):
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
 
-class FixAllUnderlinedHeadersCommand(MDETextCommand):
+class FixAllUnderlinedHeadersCommand(MdeTextCommand):
 
     """Searches for all setext headings resize them to match the preceding
     header text."""
@@ -121,7 +121,7 @@ class FixAllUnderlinedHeadersCommand(MDETextCommand):
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
 
-class ConvertToAtxCommand(MDETextCommand):
+class ConvertToAtxCommand(MdeTextCommand):
 
     def run(self, edit, closed=False):
         regions = list(self.view.sel())

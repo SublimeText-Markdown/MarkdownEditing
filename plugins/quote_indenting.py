@@ -1,10 +1,10 @@
 import re
 import sublime
 
-from .mdeutils import MDETextCommand
+from .view import MdeTextCommand
 
 
-class IndentQuote(MDETextCommand):
+class IndentQuote(MdeTextCommand):
 
     def description(self):
         return 'Indent a quote'
@@ -37,7 +37,7 @@ class IndentQuote(MDETextCommand):
             selections.add(selection)
 
 
-class DeindentQuote(MDETextCommand):
+class DeindentQuote(MdeTextCommand):
 
     def description(self):
         return 'Deindent a quote'

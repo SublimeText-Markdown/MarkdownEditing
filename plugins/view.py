@@ -1,7 +1,43 @@
-from .mdeutils import MDEViewEventListener
+import sublime_plugin
 
 
-class MdeKeepCurrentLineCentered(MDEViewEventListener):
+def view_is_markdown(view):
+    try:
+        return view.match_selector(view.sel()[0].begin(), "text.html.markdown")
+    except IndexError:
+        return False
+
+
+class MdeTextCommand(sublime_plugin.TextCommand):
+
+    def is_enabled(self):
+        return view_is_markdown(self.view)
+
+    def is_visible(self):
+        return view_is_markdown(self.view)
+
+
+class MdeReplaceSelectedCommand(sublime_plugin.TextCommand):
+    def run(self, edit, **args):
+        for region in self.view.sel():
+            self.view.replace(edit, region, args['text'])
+
+
+class MdeViewEventListener(sublime_plugin.ViewEventListener):
+
+    @classmethod
+    def is_applicable(cls, settings):
+        try:
+            return 'Markdown' in settings.get('syntax')
+        except (AttributeError, TypeError):
+            return False
+
+    @classmethod
+    def applies_to_primary_view_only(cls):
+        return False
+
+
+class MdeKeepCurrentLineCentered(MdeViewEventListener):
     """
     This class keeps caret in vertical center position.
     These features can be enabled/disabled via settings files.
@@ -24,7 +60,7 @@ class MdeKeepCurrentLineCentered(MDEViewEventListener):
         self.view.show_at_center(sel[0].begin())
 
 
-class MdeUnsavedViewNameSetter(MDEViewEventListener):
+class MdeUnsavedViewNameSetter(MdeViewEventListener):
     """
     This view event listener prints the first heading as tab title of unsaved documents.
     """
