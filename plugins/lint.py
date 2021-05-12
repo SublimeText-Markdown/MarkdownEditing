@@ -690,7 +690,7 @@ class md028(mddef):
     def test(self, text, s, e):
         ret = {}
         if self.lastQuoteEnd:
-            if re.match(r'(\n *){2,}', text[self.lastQuoteEnd:s]):
+            if re.match(r'^(\n *){2,}$', text[self.lastQuoteEnd:s]):
                 ret[self.lastQuoteEnd] = 'found one'
         self.lastQuoteEnd = e
         return ret
