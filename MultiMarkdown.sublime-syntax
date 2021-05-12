@@ -1,0 +1,38 @@
+%YAML 1.2
+---
+name: MultiMarkdown
+scope: text.html.markdown.multimarkdown
+
+file_extensions:
+  - mmd
+
+first_line_match: (?i:^format:\s*complete\s*$)
+
+variables:
+  header: ([A-Za-z0-9][\w -]*)(:)
+
+contexts:
+  main:
+    - match: ^(?={{header}})
+      push: multimarkdown-header
+    - match: ^
+      set: multimarkdown-content
+
+  multimarkdown-header:
+    - match: ^$
+      pop: 1
+    - match: ^(?:{{header}}\s*)?
+      captures:
+        1: keyword.other.multimarkdown
+        2: punctuation.separator.key-value.multimarkdown
+      push: multimarkdown-header-value
+
+  multimarkdown-header-value:
+    - meta_scope: meta.header.multimarkdown
+    - meta_content_scope: string.unquoted.multimarkdown
+    - match: \n
+      pop: 1
+
+  multimarkdown-content:
+    - meta_scope: meta.content.multimarkdown
+    - include: scope:text.html.markdown.gfm
