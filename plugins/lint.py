@@ -668,9 +668,17 @@ class md027(mddef):
     flag = re.M
     desc = 'Multiple spaces after blockquote symbol'
     locator = r'^ {0,4}> {2,}'
+    list_indent = 0
 
     def test(self, text, s, e):
-        return {s: 'too many spaces'}
+        ret = {}
+        match = re.search(r'^ {0,4}>( {2,}(?:[-+*]|[0-9]+\.)\s)', text[s:s + 100])
+        if match:
+            self.list_indent = len(match.group(1))
+            print("indent", self.list_indent)
+        elif e - s - 1 != self.list_indent:
+            ret[s] = 'too many spaces'
+        return ret
 
 
 class md028(mddef):
