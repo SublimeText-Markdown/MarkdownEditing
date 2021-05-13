@@ -454,7 +454,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["tab"], "command": "complete_underlined_header", "context":
+	{ "keys": ["tab"], "command": "mde_complete_underlined_headings", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },

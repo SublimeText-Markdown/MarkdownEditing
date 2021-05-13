@@ -1,6 +1,6 @@
 """Commands for working with with setext-style (underlined) Markdown headers.
 
-Header dashes can be completed with <tab>. For example:
+Heading dashes can be completed with <tab>. For example:
 
     This is an H2
     -<tab>
@@ -12,7 +12,7 @@ Becomes:
 
 Inspired by the similar TextMate command.
 
-Also adds "Fix Underlined Markdown Headers" to Tools > Command Palette. After modifying
+Also adds "Fix Underlined Markdown Headings" to Tools > Command Palette. After modifying
 header text, this command will re-align the underline dashes with the new text length.
 
 """
@@ -54,7 +54,7 @@ def fix_dashes(view, edit, text_region, dash_region):
     view.replace(edit, dash_region, new_dashes)
 
 
-class CompleteUnderlinedHeaderCommand(MdeTextCommand):
+class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
 
     """If the current selection is looks like a setext underline of - or = ,
     then inserts enough dash characters to match the length of the previous
@@ -90,14 +90,34 @@ class CompleteUnderlinedHeaderCommand(MdeTextCommand):
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
 
-class FixAllUnderlinedHeadersCommand(MdeTextCommand):
+class MdeConvertUnderlinedHeadingsToAtxCommand(MdeTextCommand):
+
+    def run(self, edit, closed=False):
+        regions = list(self.view.sel())
+        if len(regions) == 1 and regions[0].size() == 0:
+            regions = [sublime.Region(0, self.view.size())]
+        regions.reverse()
+        for region in regions:
+            txt = self.view.substr(region)
+            matches = list(SETEXT_HEADER_RE.finditer(txt))
+            matches.reverse()
+            for m in matches:
+                mreg = sublime.Region(region.begin() + m.start(), region.begin() + m.end())
+                atx = "# "
+                if '-' in m.group(2):
+                    atx = "#" + atx
+                closing = atx[::-1] if closed else ""
+                self.view.replace(edit, mreg, atx + m.group(1) + closing)
+
+
+class MdeFixUnderlinedHeadingsCommand(MdeTextCommand):
 
     """Searches for all setext headings resize them to match the preceding
     header text."""
 
     def description(self):
         # Used as the name for Undo.
-        return 'Fix Underlined Markdown Headers'
+        return 'Fix Underlined Markdown Headings'
 
     def run(self, edit):
         lines = self.view.split_by_newlines(sublime.Region(0, self.view.size()))
@@ -119,23 +139,3 @@ class FixAllUnderlinedHeadersCommand(MdeTextCommand):
             m = SETEXT_DASHES_RE.match(dashes_text)
             if m:
                 fix_dashes(self.view, edit, text_line, dashes_line)
-
-
-class ConvertToAtxCommand(MdeTextCommand):
-
-    def run(self, edit, closed=False):
-        regions = list(self.view.sel())
-        if len(regions) == 1 and regions[0].size() == 0:
-            regions = [sublime.Region(0, self.view.size())]
-        regions.reverse()
-        for region in regions:
-            txt = self.view.substr(region)
-            matches = list(SETEXT_HEADER_RE.finditer(txt))
-            matches.reverse()
-            for m in matches:
-                mreg = sublime.Region(region.begin() + m.start(), region.begin() + m.end())
-                atx = "# "
-                if '-' in m.group(2):
-                    atx = "#" + atx
-                closing = atx[::-1] if closed else ""
-                self.view.replace(edit, mreg, atx + m.group(1) + closing)

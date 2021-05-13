@@ -32,12 +32,12 @@
 		}
 	},
 	{
-		"caption": "MarkdownEditing: Fix Underlined Headers",
-		"command": "fix_all_underlined_headers"
+		"caption": "MarkdownEditing: Fix Underlined Headings",
+		"command": "mde_fix_underlined_headings"
 	},
 	{
-		"caption": "MarkdownEditing: Convert Underlined Headers to ATX",
-		"command": "convert_to_atx"
+		"caption": "MarkdownEditing: Convert Underlined Headings to ATX",
+		"command": "mde_convert_underlined_headings_to_atx"
 	},
 	{
 		"caption": "MarkdownEditing: Add Missing Link Labels",

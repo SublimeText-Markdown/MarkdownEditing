@@ -51,6 +51,11 @@ else:
         MdeSwitchToFromFootnoteCommand,
         MdeMarkFootnotesListener,
     )
+    from .plugins.headings import (
+        MdeCompleteUnderlinedHeadingsCommand,
+        MdeConvertUnderlinedHeadingsToAtxCommand,
+        MdeFixUnderlinedHeadingsCommand,
+    )
     from .plugins.indent_list_item import (
         MdeIndentListItemCommand,
         MdeIndentListMultiitemCommand,
@@ -86,11 +91,6 @@ else:
     )
     from .plugins.switch_list_bullet_type import (
         MdeSwitchListBulletTypeCommand,
-    )
-    from .plugins.underlined_headers import (
-        CompleteUnderlinedHeaderCommand,
-        ConvertToAtxCommand,
-        FixAllUnderlinedHeadersCommand,
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,
