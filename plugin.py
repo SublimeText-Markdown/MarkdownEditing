@@ -66,9 +66,9 @@ else:
     from .plugins.prepare_from_template import (
         MdePrepareFromTemplateCommand,
     )
-    from .plugins.quote_indenting import (
-        DeindentQuote,
-        IndentQuote,
+    from .plugins.quotes import (
+        MdeIndentQuote,
+        MdeUnindentQuote,
     )
     from .plugins.references import (
         ConvertInlineLinksToReferencesCommand,
