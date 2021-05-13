@@ -7,6 +7,7 @@ import sublime
 
 from datetime import date
 
+from .logging import logger
 from .view import MdeTextCommand
 
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
@@ -17,7 +18,6 @@ PAGE_REF_FORMAT = '[[%s]]'
 
 class MdeListBackLinksCommand(MdeTextCommand):
     def run(self, edit):
-        print("Running ListBackLinksCommand")
         wiki_page = WikiPage(self.view)
 
         file_list = wiki_page.find_files_with_ref()
@@ -33,7 +33,6 @@ class MdeMakePageReferenceCommand(MdeTextCommand):
         return True
 
     def run(self, edit):
-        print("Running MakePageReferenceCommand")
         wiki_page = WikiPage(self.view)
 
         word_region = wiki_page.select_word_at_cursor()
@@ -47,7 +46,6 @@ class MdeMakePageReferenceCommand(MdeTextCommand):
 
 class MdeOpenHomePageCommand(MdeTextCommand):
     def run(self, edit):
-        print("Running OpenHomePageCommand")
         home_page = self.view.settings().get("mde.wikilinks.homepage", DEFAULT_HOME_PAGE)
 
         wiki_page = WikiPage(self.view)
@@ -56,7 +54,6 @@ class MdeOpenHomePageCommand(MdeTextCommand):
 
 class MdeOpenJournalCommand(MdeTextCommand):
     def run(self, edit):
-        print("Running OpenJournalCommand")
         today = date.today()
         date_format = self.view.settings().get("mde.journal.dateformat", DEFAULT_DATE_FORMAT)
         name = today.strftime(date_format)
@@ -74,7 +71,6 @@ class MdeOpenPageCommand(MdeTextCommand):
         return True
 
     def run(self, edit):
-        print("Running OpenPageCommand")
         wiki_page = WikiPage(self.view)
 
         sel_region = self.get_selected()
@@ -118,9 +114,8 @@ class MdePrepareFromTemplateCommand(MdeTextCommand):
         :param args: The command arguments including 'title' and 'template'
         """
 
-        print("Running MdePrepareFromTemplateCommand")
         template_name = args['template']
-        print("Creating new page from template: ", template_name)
+        logger.info("Creating new page from template: ", template_name)
 
         text = self.generate_from_template(template_name, args)
         self.view.insert(edit, 0, text)
@@ -149,15 +144,15 @@ class MdePrepareFromTemplateCommand(MdeTextCommand):
             template = os.path.join(current_dir, template)
 
         if os.path.isfile(template):
-            print("Using template:", template)
+            logger.debug("Using template:", template)
             try:
                 with open(template, 'rt') as f:
                     return f.read()
             except OSError:
-                print("Unable to read template:", sys.exc_info()[0])
+                logger.debug("Unable to read template:", sys.exc_info()[0])
 
         # Unable to load template  so using preset template
-        print("Template:", template, "not found.  Using preset.")
+        logger.warning("Template:", template, "not found. Using preset.")
         return self.PRESET_TEMPLATE_TEXT
 
 
@@ -178,7 +173,7 @@ class WikiPage:
         return None
 
     def select_page(self, pagename):
-        print("Open page: %s" % (pagename))
+        logger.debug("Open page: %s" % (pagename))
 
         if pagename:
             self.file_list = self.find_files_with_name(pagename)
@@ -195,7 +190,7 @@ class WikiPage:
 
         self.current_file = self.view.file_name()
         self.current_dir = os.path.dirname(self.current_file)
-        print("Locating page '%s' in: %s" % (pagename, self.current_dir))
+        logger.debug("Locating page '%s' in: %s" % (pagename, self.current_dir))
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
@@ -251,7 +246,7 @@ class WikiPage:
             self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
         else:
             msg = "No pages reference this page"
-            print(msg)
+            logger.error(msg)
             self.view.window().status_message(msg)
 
     def open_new_file(self, pagename):
@@ -270,7 +265,7 @@ class WikiPage:
             'title': pagename,
             'template': 'default_page'
         })
-        print("Current syntax: %s" % current_syntax)
+        logger.debug("Current syntax: %s", current_syntax)
         new_view.set_syntax_file(current_syntax)
 
         # Create but don't save page
@@ -280,7 +275,7 @@ class WikiPage:
         if selected_index != -1:
             _, file = self.file_list[selected_index]
 
-            print("Opening file '%s'" % (file))
+            logger.debug("Opening file '%s'", file)
             self.view.window().open_file(file)
 
     def extract_page_name(self, filename):
@@ -317,7 +312,7 @@ class WikiPage:
         if selected_index != -1:
             page_name, file = self.file_list[selected_index]
 
-            print("Using selected page '%s'" % (page_name))
+            logger.debug("Using selected page '%s'", page_name)
             self.view.run_command('mde_replace_selected', {'text': page_name})
 
     def find_matching_files(self, word_region):
@@ -325,7 +320,7 @@ class WikiPage:
 
         current_file = self.view.file_name()
         current_dir, current_base = os.path.split(current_file)
-        print("Finding matching files for %s in %s" % (word, current_dir))
+        logger.debug("Finding matching files for %s in %s", word, current_dir)
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
@@ -347,7 +342,7 @@ class WikiPage:
         return results
 
     def make_page_reference(self, edit, region):
-        print("Make page reference %s" % region)
+        logger.debug("Make page reference %s", region)
 
         begin = region.begin()
         end = region.end()

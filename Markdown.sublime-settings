@@ -22,6 +22,10 @@
 	"caret_extra_top": 3,
 	"caret_extra_bottom": 3,
 
+	// set log level
+	// valid values are: "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG"
+	"mde.logging.level": "ERROR",
+
 	// Behavior
 	"mde.bold_marker_asterisk": true,
 	"mde.italic_marker_asterisk": false,

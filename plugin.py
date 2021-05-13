@@ -67,6 +67,10 @@ else:
         MdeMarkdownLintCommand,
         MdeMarkdownLintMdlCommand,
     )
+    from .plugins.logging import (
+        load_logger,
+        unload_logger
+    )
     from .plugins.quotes import (
         MdeIndentQuote,
         MdeUnindentQuote,
@@ -100,7 +104,9 @@ else:
     )
 
     def plugin_loaded():
+        load_logger()
         on_after_install()
 
     def plugin_unloaded():
+        unload_logger()
         on_before_uninstall()
