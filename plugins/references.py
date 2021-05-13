@@ -2,18 +2,18 @@
 Commands related to links, references and footnotes.
 
 Exported commands:
-    ReferenceJumpCommand
-    ReferenceJumpContextCommand
-    ReferenceNewReferenceCommand
-    ReferenceNewInlineLinkCommand
-    ReferenceNewInlineImage
-    ReferenceNewImage
-    ReferenceNewFootnote
-    ReferenceDeleteReference
-    ReferenceOrganize
-    GatherMissingLinkMarkersCommand
-    ConvertInlineLinkToReferenceCommand
-    ConvertInlineLinksToReferencesCommand
+    MdeReferenceJumpCommand
+    MdeReferenceJumpContextCommand
+    MdeReferenceNewReferenceCommand
+    MdeReferenceNewInlineLinkCommand
+    MdeReferenceNewInlineImageCommand
+    MdeReferenceNewImageCommand
+    MdeReferenceNewFootnoteCommand
+    MdeReferenceDeleteReferenceCommand
+    MdeReferenceOrganizeCommand
+    MdeGatherMissingLinkMarkersCommand
+    MdeConvertInlineLinkToReferenceCommand
+    MdeConvertInlineLinksToReferencesCommand
 """
 import sublime
 import re
@@ -177,7 +177,7 @@ def get_reference(view, pos):
         return (False, None, None)
 
 
-class ReferenceJumpCommand(MdeTextCommand):
+class MdeReferenceJumpCommand(MdeTextCommand):
     """Jump between definition and reference."""
 
     def description(self):
@@ -221,12 +221,12 @@ class ReferenceJumpCommand(MdeTextCommand):
                 sublime.status_message("The definition%s of %s and the marker%s of %s cannot be found." % ("" if len(missing_refs) == 1 else "s", ", ".join(missing_refs), "" if len(missing_markers) == 1 else "s", ", ".join(missing_markers)))
 
 
-class ReferenceJumpContextCommand(ReferenceJumpCommand):
+class MdeReferenceJumpContextCommand(MdeReferenceJumpCommand):
     """Jump between definition and reference. Used in context menu."""
 
     def is_visible(self):
         """Return True if cursor is on a marker or reference."""
-        return ReferenceJumpCommand.is_visible(self) and any(get_reference(self.view, sel.begin())[0] for sel in self.view.sel())
+        return MdeReferenceJumpCommand.is_visible(self) and any(get_reference(self.view, sel.begin())[0] for sel in self.view.sel())
 
 
 def is_url(contents):
@@ -283,7 +283,7 @@ def check_for_link(view, link):
     return None
 
 
-class ReferenceNewReferenceCommand(MdeTextCommand):
+class MdeReferenceNewReferenceCommand(MdeTextCommand):
     """Create a new reference."""
 
     def run(self, edit, image=False):
@@ -316,7 +316,7 @@ class ReferenceNewReferenceCommand(MdeTextCommand):
             selection.add_all(edit_regions)
 
 
-class ReferenceNewInlineLinkCommand(MdeTextCommand):
+class MdeReferenceNewInlineLinkCommand(MdeTextCommand):
     """Create a new inline link."""
 
     def run(self, edit, image=False):
@@ -331,20 +331,20 @@ class ReferenceNewInlineLinkCommand(MdeTextCommand):
             view.run_command("insert_snippet", {"contents": "[${1:$SELECTION}](${2:" + link + "})"})
 
 
-class ReferenceNewInlineImage(MdeTextCommand):
+class MdeReferenceNewInlineImageCommand(MdeTextCommand):
     """Create a new inline image."""
 
     def run(self, edit):
         """Run command callback."""
-        self.view.run_command("reference_new_inline_link", {"image": True})
+        self.view.run_command("mde_reference_new_inline_link", {"image": True})
 
 
-class ReferenceNewImage(MdeTextCommand):
+class MdeReferenceNewImageCommand(MdeTextCommand):
     """Create a new image."""
 
     def run(self, edit):
         """Run command callback."""
-        self.view.run_command("reference_new_reference", {"image": True})
+        self.view.run_command("mde_reference_new_reference", {"image": True})
 
 
 def get_next_footnote_marker(view):
@@ -374,7 +374,7 @@ def get_next_footnote_marker(view):
     return len(footnotes) + 1
 
 
-class ReferenceNewFootnote(MdeTextCommand):
+class MdeReferenceNewFootnoteCommand(MdeTextCommand):
     """Create a new footnote."""
 
     def run(self, edit):
@@ -396,7 +396,7 @@ class ReferenceNewFootnote(MdeTextCommand):
             view.sel().add(sublime.Region(view.size(), view.size()))
 
 
-class ReferenceDeleteReference(MdeTextCommand):
+class MdeReferenceDeleteReferenceCommand(MdeTextCommand):
     """Delete a reference."""
 
     def run(self, edit):
@@ -446,7 +446,7 @@ class ReferenceDeleteReference(MdeTextCommand):
             view.window().show_quick_panel(["Delete the References", "Preview the Changes"], delete_all, sublime.MONOSPACE_FONT)
 
 
-class ReferenceOrganize(MdeTextCommand):
+class MdeReferenceOrganizeCommand(MdeTextCommand):
     """Sort and report all references."""
 
     def run(self, edit):
@@ -558,7 +558,7 @@ class ReferenceOrganize(MdeTextCommand):
         window.run_command("show_panel", {"panel": "output.mde"})
 
 
-class GatherMissingLinkMarkersCommand(MdeTextCommand):
+class MdeGatherMissingLinkMarkersCommand(MdeTextCommand):
     """Gather all missing references and creates them."""
 
     def run(self, edit):
@@ -605,7 +605,7 @@ def convert2ref(view, edit, link_span, name, omit_name=False):
     return offset
 
 
-class ConvertInlineLinkToReferenceCommand(MdeTextCommand):
+class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
     """Convert an inline link to reference."""
 
     def is_visible(self):
@@ -663,7 +663,7 @@ class ConvertInlineLinkToReferenceCommand(MdeTextCommand):
             offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
 
 
-class ConvertInlineLinksToReferencesCommand(MdeTextCommand):
+class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):
     """Convert inline links to references."""
 
     def run(self, edit):
@@ -676,4 +676,4 @@ class ConvertInlineLinksToReferencesCommand(MdeTextCommand):
             _sel.append(sel)
         view.sel().clear()
         view.sel().add_all(view.find_all(pattern))
-        view.run_command('convert_inline_link_to_reference')
+        view.run_command('mde_convert_inline_link_to_reference')

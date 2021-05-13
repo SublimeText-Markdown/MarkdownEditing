@@ -473,7 +473,7 @@
 	},
 
 	// inline image insertion
-	{ "keys": ["super+shift+k"], "command": "reference_new_inline_image", "context":
+	{ "keys": ["super+shift+k"], "command": "mde_reference_new_inline_image", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_new_inline_image", "operator": "not_equal", "operand": true }
@@ -488,19 +488,19 @@
 		]
 	},
 	// run paste as link command on selected text
-	{ "keys": ["ctrl+alt+v"], "command": "reference_new_inline_link", "context":
+	{ "keys": ["ctrl+alt+v"], "command": "mde_reference_new_inline_link", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+r"], "command": "reference_new_reference", "context":
+	{ "keys": ["ctrl+alt+r"], "command": "mde_reference_new_reference", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+g"], "command": "reference_jump", "context":
+	{ "keys": ["ctrl+alt+g"], "command": "mde_reference_jump", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_jump", "operator": "not_equal", "operand": true }
@@ -663,7 +663,7 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	{ "keys": ["alt+shift+6"], "command": "reference_new_footnote", "context":
+	{ "keys": ["alt+shift+6"], "command": "mde_reference_new_footnote", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_new_footnote", "operator": "not_equal", "operand": true }
