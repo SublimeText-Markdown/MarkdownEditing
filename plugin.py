@@ -85,7 +85,7 @@ else:
         MdeReferenceOrganizeCommand,
     )
     from .plugins.switch_list_bullet_type import (
-        SwitchListBulletTypeCommand,
+        MdeSwitchListBulletTypeCommand,
     )
     from .plugins.underlined_headers import (
         CompleteUnderlinedHeaderCommand,

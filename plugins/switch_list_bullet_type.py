@@ -3,7 +3,7 @@ import re
 from .view import MdeTextCommand
 
 
-class SwitchListBulletTypeCommand(MdeTextCommand):
+class MdeSwitchListBulletTypeCommand(MdeTextCommand):
 
     def run(self, edit):
         todo = []

@@ -53,7 +53,7 @@
 	},
 	{
 		"caption": "MarkdownEditing: Switch List Bullet Type",
-		"command": "switch_list_bullet_type"
+		"command": "mde_switch_list_bullet_type"
 	},
 	{
 		"caption": "MarkdownEditing: Magic Footnotes Command",
