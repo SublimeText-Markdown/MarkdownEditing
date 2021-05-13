@@ -56,17 +56,16 @@ else:
         MdeConvertUnderlinedHeadingsToAtxCommand,
         MdeFixUnderlinedHeadingsCommand,
     )
-    from .plugins.indent_list_item import (
+    from .plugins.lists import (
         MdeIndentListItemCommand,
         MdeIndentListMultiitemCommand,
+        MdeNumberListCommand,
+        MdeNumberListReferenceCommand,
+        MdeSwitchListBulletTypeCommand,
     )
     from .plugins.lint import (
         MdeMarkdownLintCommand,
         MdeMarkdownLintMdlCommand,
-    )
-    from .plugins.numbered_list import (
-        MdeNumberListCommand,
-        MdeNumberListReferenceCommand,
     )
     from .plugins.prepare_from_template import (
         MdePrepareFromTemplateCommand,
@@ -88,9 +87,6 @@ else:
         MdeReferenceNewInlineLinkCommand,
         MdeReferenceNewReferenceCommand,
         MdeReferenceOrganizeCommand,
-    )
-    from .plugins.switch_list_bullet_type import (
-        MdeSwitchListBulletTypeCommand,
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,

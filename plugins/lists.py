@@ -104,3 +104,77 @@ class MdeIndentListMultiitemCommand(MdeTextCommand):
         while len(todo) > 0:
             j = todo.pop()
             self.view.replace(edit, j[0], j[1])
+
+
+class MdeSwitchListBulletTypeCommand(MdeTextCommand):
+
+    def run(self, edit):
+        todo = []
+        unordered_bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        for region in self.view.sel():
+            lines = self.view.line(region)
+            lines = self.view.split_by_newlines(lines)
+            number = 1
+            for line in lines:
+                line_content = self.view.substr(line)
+                # print(line_content)
+                m = re.match(
+                    r"^(\s*(?:>\s*)?)["
+                    + ''.join(re.escape(i) for i in unordered_bullets)
+                    + r"](\s+.*)$", line_content)
+                if m:
+                    # Transform the bullet to numbered bullet type
+                    new_line = m.group(1) + str(number) + "." + m.group(2)
+                    if self.view.settings().get('mde.auto_increment_ordered_list_number', True):
+                        number += 1
+
+                    # Insert the new item
+                    todo.append([line, new_line])
+                else:
+                    m = re.match(r"^(\s*(?:>\s*)?)[0-9]+\.(\s+.*)$", line_content)
+                    if m:
+                        # Transform the bullet to unnumbered bullet type
+                        new_line = m.group(1) + unordered_bullets[0] + m.group(2)
+
+                        # Insert the new item
+                        todo.append([line, new_line])
+
+        while len(todo) > 0:
+            j = todo.pop()
+            self.view.replace(edit, j[0], j[1])
+
+
+class MdeNumberListCommand(MdeTextCommand):
+
+    def run(self, edit):
+        view = self.view
+        sel = view.sel()[0]
+        text = view.substr(view.full_line(sel))
+        num = re.search(r'\d', text).start()
+        dot = text.find(".")
+        additional_spaces = re.search(r"^\s*", text[dot + 1:]).group()
+        increment = 0
+        if self.view.settings().get('mde.auto_increment_ordered_list_number', True):
+            increment = 1
+        if num == 0:
+            view.erase(edit, sel)
+            view.insert(edit, sel.begin(), "\n%d.%s" % (int(text[:dot]) + increment, additional_spaces))
+        else:
+            view.erase(edit, sel)
+            view.insert(edit, sel.begin(), "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces))
+
+
+class MdeNumberListReferenceCommand(MdeTextCommand):
+
+    def run(self, edit):
+        view = self.view
+        sel = view.sel()[0]
+        text = view.substr(view.full_line(sel))
+        num = re.search(r'\d', text).start()
+        dot = text.find("]")
+        if num == 0:
+            view.erase(edit, sel)
+            view.insert(edit, sel.begin(), "\n%d]: " % (int(text[:dot]) + 1,))
+        else:
+            view.erase(edit, sel)
+            view.insert(edit, sel.begin(), "\n%s%d]: " % (text[:num], int(text[num:dot]) + 1))
