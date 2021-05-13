@@ -64,7 +64,7 @@ else:
         MdeNumberListReferenceCommand,
     )
     from .plugins.prepare_from_template import (
-        PrepareFromTemplateCommand,
+        MdePrepareFromTemplateCommand,
     )
     from .plugins.quote_indenting import (
         DeindentQuote,

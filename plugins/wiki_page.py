@@ -202,7 +202,7 @@ class WikiPage:
 
         new_view = self.view.window().new_file()
         new_view.retarget(filename)
-        new_view.run_command('prepare_from_template', {
+        new_view.run_command('mde_prepare_from_template', {
             'title': pagename,
             'template': 'default_page'
         })

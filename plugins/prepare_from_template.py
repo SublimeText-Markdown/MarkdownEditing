@@ -10,13 +10,13 @@ DEFAULT_PAGE_TEMPLATE = "templates/PageTemplate.md"
 PRESET_TEMPLATE_TEXT = "# $title\n\n"
 
 
-class PrepareFromTemplateCommand(sublime_plugin.TextCommand):
+class MdePrepareFromTemplateCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
-        """Prepare a new page content from a named template triggered from run command 'prepare_from_template'.
+        """Prepare a new page content from a named template.
 
         :Example:
 
-        view.run_command('prepare_from_template', {
+        view.run_command('mde_prepare_from_template', {
             'title': pagename,
             'template': 'default_page'
         })
@@ -26,7 +26,7 @@ class PrepareFromTemplateCommand(sublime_plugin.TextCommand):
         :param args: The command arguments including 'title' and 'template'
         """
 
-        print("Running PrepareFromTemplateCommand")
+        print("Running MdePrepareFromTemplateCommand")
         template_name = args['template']
         print("Creating new page from template: ", template_name)
 
