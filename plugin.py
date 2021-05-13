@@ -67,9 +67,6 @@ else:
         MdeMarkdownLintCommand,
         MdeMarkdownLintMdlCommand,
     )
-    from .plugins.prepare_from_template import (
-        MdePrepareFromTemplateCommand,
-    )
     from .plugins.quotes import (
         MdeIndentQuote,
         MdeUnindentQuote,
@@ -99,6 +96,7 @@ else:
         MdeOpenHomePageCommand,
         MdeOpenJournalCommand,
         MdeOpenPageCommand,
+        MdePrepareFromTemplateCommand,
     )
 
     def plugin_loaded():
