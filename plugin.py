@@ -60,8 +60,8 @@ else:
         MdeMarkdownLintMdlCommand,
     )
     from .plugins.numbered_list import (
-        NumberListCommand,
-        NumberListReferenceCommand,
+        MdeNumberListCommand,
+        MdeNumberListReferenceCommand,
     )
     from .plugins.prepare_from_template import (
         PrepareFromTemplateCommand,

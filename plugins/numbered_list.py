@@ -3,7 +3,7 @@ import re
 from .view import MdeTextCommand
 
 
-class NumberListCommand(MdeTextCommand):
+class MdeNumberListCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
@@ -23,7 +23,7 @@ class NumberListCommand(MdeTextCommand):
             view.insert(edit, sel.begin(), "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces))
 
 
-class NumberListReferenceCommand(MdeTextCommand):
+class MdeNumberListReferenceCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view

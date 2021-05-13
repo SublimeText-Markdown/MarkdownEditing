@@ -406,7 +406,7 @@
 		]
 	},
 	// Extend Numbered Lists
-	{ "keys": ["enter"], "command": "number_list", "context":
+	{ "keys": ["enter"], "command": "mde_number_list", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d+\\.)\\s+)\\S.*", "match_all": true },
@@ -414,7 +414,7 @@
 		]
 	},
 	// Extend Numbered Reference
-	{ "keys": ["enter"], "command": "number_list_reference", "context":
+	{ "keys": ["enter"], "command": "mde_number_list_reference", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*\\[(\\d+)\\]:\\s*)\\S.*", "match_all": true },
