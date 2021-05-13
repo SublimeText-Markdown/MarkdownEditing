@@ -56,8 +56,8 @@ else:
         MdeIndentListMultiitemCommand,
     )
     from .plugins.lint import (
-        MarkdownLintCommand,
-        MarkdownLintMdlCommand,
+        MdeMarkdownLintCommand,
+        MdeMarkdownLintMdlCommand,
     )
     from .plugins.numbered_list import (
         NumberListCommand,

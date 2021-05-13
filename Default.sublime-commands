@@ -45,7 +45,11 @@
 	},
 	{
 		"caption": "MarkdownEditing: Markdown Lint",
-		"command": "markdown_lint"
+		"command": "mde_markdown_lint"
+	},
+	{
+		"caption": "MarkdownEditing: Run markdownlint",
+		"command": "mde_markdown_lint_mdl"
 	},
 	{
 		"caption": "MarkdownEditing: Switch List Bullet Type",
@@ -190,9 +194,5 @@
 	{
 		"caption": "MarkdownEditing: Open Journal",
 		"command": "mde_open_journal"
-	},
-	{
-		"caption": "MarkdownEditing: Run markdownlint",
-		"command": "markdown_lint_mdl"
 	}
 ]

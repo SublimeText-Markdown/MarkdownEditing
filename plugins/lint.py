@@ -5,7 +5,7 @@ import subprocess
 from .view import MdeTextCommand
 
 
-class MarkdownLintMdlCommand(MdeTextCommand):
+class MdeMarkdownLintMdlCommand(MdeTextCommand):
     def run(self, edit):
         try:
             is_windows = sublime.platform() == 'windows'
@@ -65,7 +65,7 @@ class MarkdownLintMdlCommand(MdeTextCommand):
         return r.strip().replace('\r', '').replace('(stdin):', '')
 
 
-class MarkdownLintCommand(MdeTextCommand):
+class MdeMarkdownLintCommand(MdeTextCommand):
 
     blockdef = []
     scope_block = 'markup.raw.block.markdown'
