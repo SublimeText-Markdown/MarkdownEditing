@@ -42,14 +42,14 @@ else:
         MdeUnfoldSectionContextCommand,
     )
     from .plugins.footnotes import (
-        GatherMissingFootnotesCommand,
-        GoToFootnoteDefinitionCommand,
-        GoToFootnoteReferenceCommand,
-        InsertFootnoteCommand,
-        MagicFootnotesCommand,
-        MarkFootnotes,
-        SortFootnotesCommand,
-        SwitchToFromFootnoteCommand,
+        MdeGatherMissingFootnotesCommand,
+        MdeGotoFootnoteDefinitionCommand,
+        MdeGotoFootnoteReferenceCommand,
+        MdeInsertFootnoteCommand,
+        MdeMagicFootnotesCommand,
+        MdeSortFootnotesCommand,
+        MdeSwitchToFromFootnoteCommand,
+        MdeMarkFootnotesListener,
     )
     from .plugins.indent_list_item import (
         IndentListItemCommand,

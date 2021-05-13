@@ -1,14 +1,13 @@
 import re
 
 import sublime
-import sublime_plugin
 
-from .view import MdeTextCommand, view_is_markdown
+from .view import MdeTextCommand, MdeViewEventListener
 
 DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
 REFERENCE_KEY = 'MarkdownEditing-footnote-references'
+DEFINITION_REGEX = r"^[\t ]*\[\^([^\]]*)\]:"
 REFERENCE_REGEX = r"\[\^([^\]]*)\]"
-DEFINITION_REGEX = r"^ *\[\^([^\]]*)\]:"
 
 
 def get_footnote_references(view):
@@ -68,21 +67,22 @@ def strip_trailing_whitespace(view, edit):
         view.erase(edit, tws)
 
 
-class MarkFootnotes(sublime_plugin.EventListener):
+class MdeMarkFootnotesListener(MdeViewEventListener):
 
-    def update_footnote_data(self, view):
-        if view_is_markdown(view):
-            view.add_regions(REFERENCE_KEY, view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
-            view.add_regions(DEFINITION_KEY, view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
+    def update_footnote_data(self):
+        self.view.add_regions(
+            REFERENCE_KEY, self.view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
+        self.view.add_regions(
+            DEFINITION_KEY, self.view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
 
-    def on_modified_async(self, view):
-        self.update_footnote_data(view)
+    def on_load(self):
+        self.update_footnote_data()
 
-    def on_load(self, view):
-        self.update_footnote_data(view)
+    def on_modified_async(self):
+        self.update_footnote_data()
 
 
-class GatherMissingFootnotesCommand(MdeTextCommand):
+class MdeGatherMissingFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         refs = get_footnote_identifiers(self.view)
@@ -94,7 +94,7 @@ class GatherMissingFootnotesCommand(MdeTextCommand):
                 self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
 
 
-class InsertFootnoteCommand(MdeTextCommand):
+class MdeInsertFootnoteCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
@@ -116,7 +116,7 @@ class InsertFootnoteCommand(MdeTextCommand):
                 view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
 
 
-class GoToFootnoteDefinitionCommand(MdeTextCommand):
+class MdeGotoFootnoteDefinitionCommand(MdeTextCommand):
 
     def run(self, edit):
         defs = get_footnote_definition_markers(self.view)
@@ -141,7 +141,7 @@ class GoToFootnoteDefinitionCommand(MdeTextCommand):
                 self.view.show(defs[target])
 
 
-class GoToFootnoteReferenceCommand(MdeTextCommand):
+class MdeGotoFootnoteReferenceCommand(MdeTextCommand):
 
     def run(self, edit):
         refs = get_footnote_references(self.view)
@@ -153,27 +153,27 @@ class GoToFootnoteReferenceCommand(MdeTextCommand):
             self.view.show(refs[target][0])
 
 
-class MagicFootnotesCommand(MdeTextCommand):
+class MdeMagicFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         if (is_footnote_definition(self.view)):
-            self.view.run_command('go_to_footnote_reference')
+            self.view.run_command('mde_goto_footnote_reference')
         elif (is_footnote_reference(self.view)):
-            self.view.run_command('go_to_footnote_definition')
+            self.view.run_command('mde_goto_footnote_definition')
         else:
-            self.view.run_command('insert_footnote')
+            self.view.run_command('mde_insert_footnote')
 
 
-class SwitchToFromFootnoteCommand(MdeTextCommand):
+class MdeSwitchToFromFootnoteCommand(MdeTextCommand):
 
     def run(self, edit):
         if (is_footnote_definition(self.view)):
-            self.view.run_command('go_to_footnote_reference')
+            self.view.run_command('mde_goto_footnote_reference')
         else:
-            self.view.run_command('go_to_footnote_definition')
+            self.view.run_command('mde_goto_footnote_definition')
 
 
-class SortFootnotesCommand(MdeTextCommand):
+class MdeSortFootnotesCommand(MdeTextCommand):
 
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)

@@ -53,11 +53,11 @@
 	},
 	{
 		"caption": "MarkdownEditing: Magic Footnotes Command",
-		"command": "magic_footnotes"
+		"command": "mde_magic_footnotes"
 	},
 	{
 		"caption": "MarkdownEditing: Gather Missing Footnotes",
-		"command": "gather_missing_footnotes"
+		"command": "mde_gather_missing_footnotes"
 	},
 	{
 		"caption": "MarkdownEditing: Jump Reference",
