@@ -52,10 +52,8 @@ else:
         MdeMarkFootnotesListener,
     )
     from .plugins.indent_list_item import (
-        IndentListItemCommand,
-    )
-    from .plugins.indent_list_multiitem import (
-        IndentListMultiitemCommand,
+        MdeIndentListItemCommand,
+        MdeIndentListMultiitemCommand,
     )
     from .plugins.lint import (
         MarkdownLintCommand,

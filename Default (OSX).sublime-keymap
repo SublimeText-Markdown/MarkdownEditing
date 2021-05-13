@@ -51,7 +51,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
 		]
 	},
-	{ "keys": ["tab"], "command": "indent_list_item", "context":
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -59,7 +59,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
 		]
 	},
-	{ "keys": ["tab"], "command": "indent_list_item", "context":
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -67,13 +67,13 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[*+\\-]\\s+", "match_all": true }
 		]
 	},
-	{ "keys": ["tab"], "command": "indent_list_multiitem", "context":
+	{ "keys": ["tab"], "command": "mde_indent_list_multiitem", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "indent_list_item", "args": {"reverse": true}, "context":
+	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -81,7 +81,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "indent_list_item", "args": {"reverse": true}, "context":
+	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
@@ -89,7 +89,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[*+\\-]\\s+", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "indent_list_multiitem", "args": {"reverse": true}, "context":
+	{ "keys": ["shift+tab"], "command": "mde_indent_list_multiitem", "args": {"reverse": true}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
