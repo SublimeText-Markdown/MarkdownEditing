@@ -31,15 +31,15 @@ else:
         MdeSelectColorSchemeCommand,
     )
     from .plugins.folding import (
-        FoldAllLinkUrls,
-        FoldAllSectionsCommand,
-        FoldSectionCommand,
-        FoldSectionContextCommand,
-        GotoNextHeadingCommand,
-        GotoPreviousHeadingCommand,
-        ShowFoldAllSectionsCommand,
-        UnfoldAllSectionsCommand,
-        UnfoldSectionContextCommand,
+        MdeFoldAllLinkUrlsCommand,
+        MdeFoldAllSectionsCommand,
+        MdeFoldSectionCommand,
+        MdeFoldSectionContextCommand,
+        MdeGotoNextHeadingCommand,
+        MdeGotoPreviousHeadingCommand,
+        MdeShowFoldAllSectionsCommand,
+        MdeUnfoldAllSectionsCommand,
+        MdeUnfoldSectionContextCommand,
     )
     from .plugins.footnotes import (
         GatherMissingFootnotesCommand,

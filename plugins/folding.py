@@ -43,7 +43,7 @@ def get_current_level(view, p):
             return last_level
 
 
-class FoldSectionCommand(MdeTextCommand):
+class MdeFoldSectionCommand(MdeTextCommand):
 
     def description(self):
         return 'Toggle fold/unfold on current section'
@@ -82,10 +82,10 @@ class FoldSectionCommand(MdeTextCommand):
         )
 
 
-class FoldSectionContextCommand(FoldSectionCommand):
+class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
 
     def is_visible(self):
-        if not FoldSectionCommand.is_visible(self):
+        if not MdeFoldSectionCommand.is_visible(self):
             return False
         view = self.view
         hasSection = False
@@ -110,10 +110,10 @@ class FoldSectionContextCommand(FoldSectionCommand):
         return hasSection
 
 
-class UnfoldSectionContextCommand(FoldSectionCommand):
+class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
 
     def is_visible(self):
-        if not FoldSectionCommand.is_visible(self):
+        if not MdeFoldSectionCommand.is_visible(self):
             return False
         view = self.view
         hasSection = False
@@ -138,7 +138,7 @@ class UnfoldSectionContextCommand(FoldSectionCommand):
         return hasSection
 
 
-class ShowFoldAllSectionsCommand(MdeTextCommand):
+class MdeShowFoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
@@ -146,7 +146,7 @@ class ShowFoldAllSectionsCommand(MdeTextCommand):
             'show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
 
 
-class FoldAllSectionsCommand(MdeTextCommand):
+class MdeFoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit, target_level=0):
         view = self.view
@@ -177,14 +177,14 @@ class FoldAllSectionsCommand(MdeTextCommand):
         sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
 
 
-class UnfoldAllSectionsCommand(MdeTextCommand):
+class MdeUnfoldAllSectionsCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view
         view.run_command('unfold_all')
 
 
-class GotoNextHeadingCommand(MdeTextCommand):
+class MdeGotoNextHeadingCommand(MdeTextCommand):
 
     def run(self, edit, same_level=True):
         view = self.view
@@ -209,7 +209,7 @@ class GotoNextHeadingCommand(MdeTextCommand):
                 view.show(region)
 
 
-class GotoPreviousHeadingCommand(MdeTextCommand):
+class MdeGotoPreviousHeadingCommand(MdeTextCommand):
 
     def run(self, edit, same_level=True):
         view = self.view
@@ -248,7 +248,7 @@ class GotoPreviousHeadingCommand(MdeTextCommand):
                 view.show(region)
 
 
-class FoldAllLinkUrls(MdeTextCommand):
+class MdeFoldAllLinkUrlsCommand(MdeTextCommand):
 
     def run(self, edit):
         view = self.view

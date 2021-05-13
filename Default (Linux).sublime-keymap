@@ -680,7 +680,7 @@
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "fold_section", "context":
+	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
@@ -689,7 +689,7 @@
 			{ "key": "following_text", "operator": "not_regex_match", "operand": "^$", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "fold_section", "context":
+	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
@@ -697,7 +697,7 @@
 			{ "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "fold_section", "context":
+	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
@@ -705,31 +705,31 @@
 			{ "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"}
 		]
 	},
-	{ "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
+	{ "keys": ["ctrl+shift+tab"], "command": "mde_show_fold_all_sections", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.show_fold_all_sections", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+shift+alt+pageup"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
+	{ "keys": ["ctrl+shift+alt+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": true}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+shift+alt+pagedown"], "command": "goto_next_heading", "args": {"same_level": true}, "context":
+	{ "keys": ["ctrl+shift+alt+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": true}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+shift+pageup"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
+	{ "keys": ["ctrl+shift+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": false}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["ctrl+shift+pagedown"], "command": "goto_next_heading", "args": {"same_level": false}, "context":
+	{ "keys": ["ctrl+shift+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": false}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
