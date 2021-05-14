@@ -99,6 +99,9 @@
 	// Add a new footnote
 	// Default keys: (OSX/Linux/Win)alt+shift+6
 	"mde.keymap_disable.reference_new_footnote": false,
+	// Reorganize footnotes footnote
+	// Default keys: (OSX)super+ctrl+s   (Linux/Win)alt+shift+s
+	"mde.keymap_disable.reference_organize": true,
 	// Fold current section
 	// Default keys: (OSX/Linux/Win)shift+tab
 	"mde.keymap_disable.fold_section": false,

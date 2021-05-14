@@ -867,7 +867,8 @@
 	// organize references
 	{ "keys": ["super+ctrl+s"], "command": "mde_reference_organize", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_organize", "operator": "not_equal", "operand": true }
 		]
 	},
 
