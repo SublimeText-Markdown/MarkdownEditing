@@ -619,33 +619,33 @@
 	// Lists
 	//
 
-	// Extend lists
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)).*/\n$2$3/}"}, "context":
+	// Extend lists (also in block quotes)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([*\\-+])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([*\\-+])\\s+)\\S.*", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)).*/\n$2$3/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([*\\-+])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([*\\-+])\\s+)\\S.*", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	// Extend lists with GFM tasks
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ xX]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
+	// Extend lists with GFM tasks (also in block quotes)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([*\\-+])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([*\\-+])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ xX]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([*\\-+])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([*\\-+])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -746,18 +746,18 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	// Extend blockquote
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*((>+\\s+)+([*\\-+]\\s+)?)).*/\n$2/}"}, "context":
+	// Extend blockquote (ignore lists or tasks)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>+\\s+)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>+\\s+", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(?:\\s*>)+\\s*[^\\-+\\s>*]", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*((>+\\s+)+([*\\-+]\\s+)?)).*/\n$2/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>+\\s+)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>+\\s+", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(?:\\s*>)+\\s*[^\\-+\\s>*]", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
