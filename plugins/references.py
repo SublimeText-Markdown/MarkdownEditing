@@ -350,7 +350,14 @@ class MdeReferenceNewImageCommand(MdeTextCommand):
 def get_next_footnote_marker(view):
     """Get the number of the next footnote."""
     refs = getReferences(view)
-    footnotes = [int(ref[1:]) for ref in refs if view.substr(refs[ref].regions[0])[0] == "^"]
+
+    footnotes = []
+    for ref in refs:
+        if ref[0] == "^":
+            try:
+                footnotes.append(int(ref[1:]))
+            except ValueError:
+                pass
 
     def target_loc(num):
         return (num - 1) % len(footnotes)
