@@ -82,7 +82,9 @@ You can access most features through Command Palette. You can launch it from `To
     - Pressing <kbd>Shift</kbd> <kbd>Tab</kbd> on the blank list item will unindent it in the same way as above.
     - Sequential <kbd>Tab</kbd> s or <kbd>Shift</kbd> <kbd>Tab</kbd> s are supported.
     - You can disable automatic bullet switching or choose which bullets to be used, in your settings file (`mde.list_indent_bullets`).
-    - If a list item contains a [GFM task][], pressing <kbd>Enter</kbd> at the end of the line will continue with a new blank task.
+    - If a list item contains a [GFM task][], pressing 
+        - <kbd>Enter</kbd> at the end of the line continues with a new blank task.
+        - <kbd>Alt+X</kbd> in the line toggles the check mark.
 * __Blockquote__
     - At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
     - Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.

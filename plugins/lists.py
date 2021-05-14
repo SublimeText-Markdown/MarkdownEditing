@@ -178,3 +178,53 @@ class MdeNumberListReferenceCommand(MdeTextCommand):
         else:
             view.erase(edit, sel)
             view.insert(edit, sel.begin(), "\n%s%d]: " % (text[:num], int(text[num:dot]) + 1))
+
+
+class MdeToggleTaskListItemCommand(MdeTextCommand):
+    """
+    The `mde_toggle_task_list_item` command toggles the check mark of task list items.
+
+    It must be called in the line of the check mark.
+
+    **Examples:**
+
+    ```markdown
+    # Orderd Task List
+
+    1. [ ] task 1
+    2. [X] task 2
+
+    # Unorderd Task List
+
+    * [ ] task 1
+    - [X] task 2
+    + [ ] task 3
+
+    # Quoted Task List
+
+    > * [ ] task 1
+    > * [X] task 2
+    ```
+    """
+
+    PATTERN = r"^((?:\s*>)*\s*(?:[\\%s]|[0-9]+\.)\s+\[)([ xX])\]\s"
+
+    def run(self, edit):
+        unordered_bullets = "\\".join(
+            self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        )
+
+        pattern = re.compile(self.PATTERN % unordered_bullets)
+        for sel in self.view.sel():
+            sel = self.view.line(sel)
+            sel.b = min(sel.b, sel.a + 50)
+            match = pattern.search(self.view.substr(sel))
+            if not match:
+                continue
+
+            # calculate text position of check mark
+            sel.a += len(match.group(1))
+            sel.b = sel.a + 1
+
+            mark = "X" if match.group(2) == " " else " "
+            self.view.replace(edit, sel, mark)

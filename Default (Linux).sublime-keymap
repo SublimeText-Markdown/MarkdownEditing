@@ -398,10 +398,10 @@
 		]
 	},
 	// Extend lists with GFM tasks
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ x]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ xX]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\[[ x]\\]\\s+\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -763,6 +763,17 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true }
+		]
+	},
+
+	//
+	// Lists
+	//
+
+	{ "keys": ["alt+x"], "command": "mde_toggle_task_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown & (markup.list | markup.quote)", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
 		]
 	}
 ]

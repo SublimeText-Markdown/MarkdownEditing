@@ -62,6 +62,7 @@ else:
         MdeNumberListCommand,
         MdeNumberListReferenceCommand,
         MdeSwitchListBulletTypeCommand,
+        MdeToggleTaskListItemCommand,
     )
     from .plugins.lint import (
         MdeMarkdownLintCommand,
