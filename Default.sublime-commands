@@ -1,26 +1,10 @@
 [
 	{
-		"caption": "Preferences: Markdown GFM Settings",
+		"caption": "Preferences: MarkdownEditing Settings",
 		"command": "edit_settings",
 		"args": {
-			"base_file": "${packages}/MarkdownEditing/Markdown.sublime-settings",
-			"default": "{\n$0\n}\n"
-		}
-	},
-	{
-		"caption": "Preferences: Markdown (Standard) Settings",
-		"command": "edit_settings",
-		"args": {
-			"base_file": "${packages}/MarkdownEditing/Markdown (Standard).sublime-settings",
-			"default": "{\n$0\n}\n"
-		}
-	},
-	{
-		"caption": "Preferences: MultiMarkdown Settings",
-		"command": "edit_settings",
-		"args": {
-			"base_file": "${packages}/MarkdownEditing/MultiMarkdown.sublime-settings",
-			"default": "{\n$0\n}\n"
+			"base_file": "${packages}/MarkdownEditing/Preferences.sublime-settings",
+			"default": "// Settings in here override those in \"Default/Preferences.sublime-settings\",\n// and are overridden in turn by syntax-specific settings.\n{\n\t$0\n}\n"
 		}
 	},
 	{
