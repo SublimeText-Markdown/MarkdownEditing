@@ -60,7 +60,6 @@ else:
         MdeIndentListItemCommand,
         MdeIndentListMultiitemCommand,
         MdeNumberListCommand,
-        MdeNumberListReferenceCommand,
         MdeSwitchListBulletTypeCommand,
         MdeToggleTaskListItemCommand,
     )
@@ -89,6 +88,7 @@ else:
         MdeReferenceNewInlineLinkCommand,
         MdeReferenceNewReferenceCommand,
         MdeReferenceOrganizeCommand,
+        MdeAddNumberedReferenceDefinitionCommand,
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,

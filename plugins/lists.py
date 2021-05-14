@@ -164,22 +164,6 @@ class MdeNumberListCommand(MdeTextCommand):
             view.insert(edit, sel.begin(), "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces))
 
 
-class MdeNumberListReferenceCommand(MdeTextCommand):
-
-    def run(self, edit):
-        view = self.view
-        sel = view.sel()[0]
-        text = view.substr(view.full_line(sel))
-        num = re.search(r'\d', text).start()
-        dot = text.find("]")
-        if num == 0:
-            view.erase(edit, sel)
-            view.insert(edit, sel.begin(), "\n%d]: " % (int(text[:dot]) + 1,))
-        else:
-            view.erase(edit, sel)
-            view.insert(edit, sel.begin(), "\n%s%d]: " % (text[:num], int(text[num:dot]) + 1))
-
-
 class MdeToggleTaskListItemCommand(MdeTextCommand):
     """
     The `mde_toggle_task_list_item` command toggles the check mark of task list items.

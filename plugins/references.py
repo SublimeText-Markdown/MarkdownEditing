@@ -677,3 +677,55 @@ class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):
         view.sel().clear()
         view.sel().add_all(view.find_all(pattern))
         view.run_command('mde_convert_inline_link_to_reference')
+
+
+class MdeAddNumberedReferenceDefinitionCommand(MdeTextCommand):
+    """
+    The `mde_add_numbered_reference_definition` command adds a new line with a numbered reference
+    definition if the current line's one contains a label. Otherwise the current line is deleted.
+
+    The added reference uses the next bigger number which does not yet exist in the document.
+
+    The command works for unnamed, named definitions as well as for footnotes.
+
+    ```markdown
+    [^1]: footnote
+    [1]: unnamed_reference
+    [name1]: named_reference
+    ```
+
+    **Note:**
+
+    Implementation uses regexp functions as Markdown syntax doesn't scope reference definitions atm.
+    A future change might make use of `view.find_by_selector("...")` to create the list of existing
+    references.
+    """
+
+    REFERENCE_DEFINITION_PATTERN = r"^([ \t]{0,3})\[(.*?)(\d+)\]:[ \t]*(\S)?"
+
+    def run(self, edit):
+        view = self.view
+        pattern = re.compile(self.REFERENCE_DEFINITION_PATTERN)
+
+        refs = {}
+
+        # find all existing reference definitions and group them by name
+        for ref in view.find_all(self.REFERENCE_DEFINITION_PATTERN):
+            _, name, num, _ = pattern.search(view.substr(ref)).groups()
+            refs.setdefault(name, set()).add(int(num))
+
+        for sel in view.sel():
+            line = view.line(sel)
+            match = pattern.search(view.substr(line))
+            if not match:
+                continue
+
+            indent, name, num, label = match.groups()
+            if label:
+                # calculate next none-existing reference number
+                num = int(num)
+                while num in refs.get(name, {}):
+                    num += 1
+                view.insert(edit, sel.begin(), "\n%s[%s%d]: " % (indent, name, num))
+            else:
+                view.erase(edit, line)
