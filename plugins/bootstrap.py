@@ -21,6 +21,14 @@ def save_ingored_packages(ignored_packages):
 def disable_native_markdown_package():
     ignored_packages = get_ingored_packages()
     if 'Markdown' not in ignored_packages:
+        reassign_syntax(
+            'Packages/Markdown/Markdown.sublime-syntax',
+            'Packages/MarkdownEditing/Markdown.sublime-syntax'
+        )
+        reassign_syntax(
+            'Packages/Markdown/MultiMarkdown.sublime-syntax',
+            'Packages/MarkdownEditing/MultiMarkdown.sublime-syntax'
+        )
         ignored_packages.append('Markdown')
         save_ingored_packages(ignored_packages)
 
@@ -30,6 +38,25 @@ def enable_native_markdown_package():
     if 'Markdown' in ignored_packages:
         ignored_packages.remove('Markdown')
         save_ingored_packages(ignored_packages)
+
+        def reassign():
+            reassign_syntax(
+                'Packages/MarkdownEditing/Markdown.sublime-syntax',
+                'Packages/Markdown/Markdown.sublime-syntax'
+            )
+            reassign_syntax(
+                'Packages/MarkdownEditing/MultiMarkdown.sublime-syntax',
+                'Packages/Markdown/MultiMarkdown.sublime-syntax'
+            )
+        sublime.set_timeout(reassign, 100)
+
+
+def reassign_syntax(current_syntax, new_syntax):
+    for window in sublime.windows():
+        for view in window.views():
+            syntax = view.settings().get("syntax")
+            if syntax and syntax == current_syntax:
+                view.assign_syntax(new_syntax)
 
 
 def on_after_install():
