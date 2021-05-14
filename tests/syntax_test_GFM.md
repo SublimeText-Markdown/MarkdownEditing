@@ -111,6 +111,18 @@ heading 2
 <!-- ^ markup.heading.2.markdown -->
 <!-- ^ punctuation.definition.heading.markdown -->
 
+#NoHeadings
+<!-- <-- punctuation - entity.name.section -->
+<!--^^^^^^^^ - entity.name.section -->
+
+# heading 1
+<!--<- punctuation.definition.heading.markdown -->
+<!--^ entity.name.section.markdown -->
+
+  # heading 1
+  <!--<- punctuation.definition.heading.markdown -->
+  <!--^ entity.name.section.markdown -->
+
 ## heading 2
 <!--<- punctuation.definition.heading.markdown -->
 <!--^ entity.name.section.markdown -->

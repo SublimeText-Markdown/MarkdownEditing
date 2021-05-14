@@ -46,7 +46,7 @@ contexts:
         (?x)^
         (?= [ ]{,3}>
         | ([ ]{4}|\t)(?!$)
-        | [#]{1,6}\s*+
+        | [ ]{,3}[#]{1,6}\s+
         | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
         )
       comment: |
@@ -59,7 +59,7 @@ contexts:
             (?x)^
             (?! [ ]{,3}>
             | ([ ]{4}|\t)
-            | [#]{1,6}\s*+
+            | [ ]{,3}[#]{1,6}\s+
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             )
           pop: true
@@ -212,7 +212,7 @@ contexts:
         - match: |-
             (?x)\G
             (?= ([ ]{4}|\t)
-            | [#]{1,6}\s*+
+            | [ ]{,3}[#]{1,6}\s+
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             )
           push:
@@ -226,7 +226,7 @@ contexts:
             (?! $
             | [ ]{,3}>
             | ([ ]{4}|\t)
-            | [#]{1,6}\s*+
+            | [ ]{,3}[#]{1,6}\s+
             | [ ]{,3}(?<marker>[-*_])([ ]{,2}\k<marker>){2,}[ \t]*+$
             )
           push:
@@ -644,7 +644,7 @@ contexts:
       embed_scope: markup.raw.block.markdown markup.raw.block.fenced.markdown
       escape: ^(\1)\n
   heading:
-    - match: '\G(#{1,6})(?!#)\s*(?=\S)'
+    - match: '\G[ \t]{,3}(#{1,6})(?!#)\s+(?=\S)'
       captures:
         1: punctuation.definition.heading.markdown
       push:

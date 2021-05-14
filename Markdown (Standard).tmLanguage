@@ -28,7 +28,7 @@
 			<string>(?x)^
 				(?=	[ ]{,3}&gt;
 				|	([ ]{4}|\t)(?!$)
-				|	[#]{1,6}\s*+
+				|	[ ]{,3}[#]{1,6}\s*+
 				|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
 				)</string>
 			<key>comment</key>
@@ -41,7 +41,7 @@
 			<string>(?x)^
 				(?!	[ ]{,3}&gt;
 				|	([ ]{4}|\t)
-				|	[#]{1,6}\s*+
+				|	[ ]{,3}[#]{1,6}\s+
 				|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
 				)</string>
 			<key>name</key>
@@ -391,7 +391,7 @@
 					<key>begin</key>
 					<string>(?x)\G
 						(?=	([ ]{4}|\t)
-						|	[#]{1,6}\s*+
+						|	[ ]{,3}[#]{1,6}\s+
 						|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
 						)</string>
 					<key>end</key>
@@ -418,7 +418,7 @@
 						(?!	$
 						|	[ ]{,3}&gt;
 						|	([ ]{4}|\t)
-						|	[#]{1,6}\s*+
+						|	[ ]{,3}[#]{1,6}\s+
 						|	[ ]{,3}(?&lt;marker&gt;[-*_])([ ]{,2}\k&lt;marker&gt;){2,}[ \t]*+$
 						)</string>
 					<key>end</key>
@@ -721,7 +721,7 @@
 		<key>heading</key>
 		<dict>
 			<key>begin</key>
-			<string>\G(#{1,6})(?!#)\s*(?=\S)</string>
+			<string>\G[ ]{,3}(#{1,6})(?!#)\s*(?=\S)</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
