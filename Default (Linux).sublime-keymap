@@ -525,32 +525,32 @@
 	//
 
 	// Extend lists (also in block quotes)
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([-+*])\\s+)\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\S.*", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([-+*])\\s+)\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\S.*", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
 	// Extend lists with GFM tasks (also in block quotes)
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([-+*])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:((?:\\s*>)+\\s*)?\\s*([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^((?:\\s*>)*\\s*([-+*])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+\\S.*", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -591,7 +591,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?[*+\\-]\\s+$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
 		]
 	},
@@ -599,8 +599,8 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[*+\\-]\\s+", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s+", "match_all": true }
 		]
 	},
 	{ "keys": ["tab"], "command": "mde_indent_list_multiitem", "context":
@@ -614,7 +614,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?[*+\\-]\\s+$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
 		]
 	},
@@ -622,8 +622,8 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[*+\\-]\\s+", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s+", "match_all": true }
 		]
 	},
 	{ "keys": ["shift+tab"], "command": "mde_indent_list_multiitem", "args": {"reverse": true}, "context":
@@ -652,17 +652,17 @@
 		]
 	},
 	// Extend blockquote (ignore lists or tasks)
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>+\\s+)+).*/\n$1/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(?:\\s*>)+\\s*[^-+*>\\s]", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>\\s]", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>+\\s+)+).*/\n$1/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(?:\\s*>)+\\s*[^-+*>\\s]", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>\\s]", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -689,7 +689,7 @@
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>+\\s+)+([-+*]\\s+)?))$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>\\s*)+([-+*]\\s+)?))$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
@@ -697,7 +697,7 @@
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>+\\s+)+([-+*]\\s+)?))$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>\\s*)+([-+*]\\s+)?))$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
