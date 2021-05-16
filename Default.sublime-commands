@@ -8,12 +8,24 @@
 		}
 	},
 	{
+		"caption": "Preferences: MarkdownEditing Settings - Distraction Free",
+		"command": "edit_settings",
+		"args": {
+			"base_file": "${packages}/MarkdownEditing/Distraction Free.sublime-settings",
+			"default": "// Settings in here override those in \"Default/Distraction Free.sublime-settings\",\n// and are overridden in turn by syntax-specific settings.\n{\n\t$0\n}\n"
+		}
+	},
+	{
 		"caption": "Preferences: MarkdownEditing Key Bindings",
 		"command": "edit_settings",
 		"args": {
 			"base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
 			"default": "{\n$0\n}\n"
 		}
+	},
+	{
+		"caption": "MarkdownEditing: Toggle Centered Line",
+		"command": "mde_toggle_centered_line"
 	},
 	{
 		"caption": "MarkdownEditing: Fix Underlined Headings",

@@ -2,7 +2,10 @@ import re
 
 import sublime
 
-from .view import MdeTextCommand
+from .view import (
+    MdeTextCommand,
+    syntax_specific_settings_file
+)
 
 MARKDOWN_TEMPLATE = """# A sample Markdown document
 
@@ -66,21 +69,9 @@ class MdeSelectColorSchemeCommand(MdeTextCommand):
 
 
 def select_color_scheme(view=None):
-    if isinstance(view, sublime.View):
-        window = view.window()
-        syntax = view.settings().get("syntax")
-        if syntax:
-            syntax_settings = re.sub(
-                r".*/(.+)\.(sublime-syntax|tmLanguage)",
-                r"\1.sublime-settings",
-                syntax
-            )
-        else:
-            syntax_settings = "Markdown.sublime-settings"
-    else:
-        window = sublime.active_window()
-        syntax_settings = "Markdown.sublime-settings"
+    syntax_settings = syntax_specific_settings_file(view) or "Markdown.sublime-settings"
 
+    window = view.window() if isinstance(view, sublime.View) else sublime.active_window()
     pre_view = window.new_file(
         flags=sublime.TRANSIENT,
         syntax="Packages/MarkdownEditing/Markdown.sublime-syntax"

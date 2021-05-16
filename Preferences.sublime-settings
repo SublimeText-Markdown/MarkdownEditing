@@ -1,5 +1,9 @@
 {
 	// MarkdownEditing:
+	// Always keep current line vertically centered.
+	"mde.keep_centered": false,
+
+	// MarkdownEditing:
 	// set log level
 	// valid values are: "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG"
 	"mde.logging.level": "ERROR",
@@ -24,17 +28,6 @@
 	// MarkdownEditing:
 	// Auto increments ordered list number. Set to false if you want always "1".
 	"mde.auto_increment_ordered_list_number": true,
-
-	// MarkdownEditing:
-	// Always keep current line vertically centered.
-	"mde.keep_centered": false,
-
-	// MarkdownEditing:
-	// Distraction free mode improvements. In order for these to work, you have to install
-	// FullScreenStatus plugin: https://github.com/maliayas/SublimeText_FullScreenStatus
-	"mde.distraction_free_mode": {
-		"mde.keep_centered": true
-	},
 
 	// MarkdownEditing:
 	"mde.lint": {

@@ -28,6 +28,14 @@
 								}
 							},
 							{
+								"caption": "Settings - Distraction Free",
+								"command": "edit_settings",
+								"args": {
+									"base_file": "${packages}/MarkdownEditing/Distraction Free.sublime-settings",
+									"default": "// Settings in here override those in \"Default/Distraction Free.sublime-settings\",\n// and are overridden in turn by syntax-specific settings.\n{\n\t$0\n}\n"
+								}
+							},
+							{
 								"caption": "Key Bindings",
 								"command": "edit_settings",
 								"args": {

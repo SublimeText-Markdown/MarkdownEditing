@@ -92,7 +92,8 @@ else:
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,
-        MdeKeepCurrentLineCentered,
+        MdeToggleCenteredLineCommand,
+        MdeCenteredLineKeeper,
         MdeUnsavedViewNameSetter,
     )
     from .plugins.wiki_page import (
