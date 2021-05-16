@@ -569,21 +569,28 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	// Remove empty list item
+	// Remove empty list item including GFM tasks
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([-+*]|\\d+\\.)\\s+)$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([-+*]|\\d+\\.)\\s+)$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
 	// Indent list item
@@ -689,17 +696,24 @@
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>\\s*)+([-+*]\\s+)?))$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*((>\\s*)+([-+*]\\s+)?))$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
 	// Indent blockquote
