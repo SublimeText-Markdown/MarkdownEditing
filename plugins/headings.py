@@ -1,21 +1,3 @@
-"""Commands for working with with setext-style (underlined) Markdown headers.
-
-Heading dashes can be completed with <tab>. For example:
-
-    This is an H2
-    -<tab>
-
-Becomes:
-
-    This is an H2
-    -------------
-
-Inspired by the similar TextMate command.
-
-Also adds "Fix Underlined Markdown Headings" to Tools > Command Palette. After modifying
-header text, this command will re-align the underline dashes with the new text length.
-
-"""
 import itertools
 import re
 import sublime
@@ -41,8 +23,10 @@ SETEXT_HEADER_RE = re.compile(
 
 
 def fix_dashes(view, edit, text_region, dash_region):
-    """Replaces the underlined "dash" region of a setext header with a run of
-    dashes or equal-signs that match the length of the header text."""
+    """
+    Replaces the underlined "dash" region of a setext header with a run of
+    dashes or equal-signs that match the length of the header text.
+    """
 
     if len(view.substr(text_region).strip()) == 0:
         # Ignore dashes not under text. They are HRs.
@@ -55,10 +39,25 @@ def fix_dashes(view, edit, text_region, dash_region):
 
 
 class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
+    """
+    The `mde_complete_underline_headings` command inserts enough dash characters
+    to match the length of the previous (header text) line, if the current
+    selection is looks like a setext underline of - or = .
 
-    """If the current selection is looks like a setext underline of - or = ,
-    then inserts enough dash characters to match the length of the previous
-    (header text) line."""
+    Before:
+
+    ```markdown
+    This is an H2
+    -|
+    ```
+
+    After:
+
+    ```markdown
+    This is an H2
+    -------------|
+    ```
+    """
 
     def run(self, edit):
         for region in self.view.sel():
@@ -91,6 +90,10 @@ class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
 
 
 class MdeConvertUnderlinedHeadingsToAtxCommand(MdeTextCommand):
+    """
+    The `mde_convert_underlined_headings` command searches for all setext headings
+    and converts them to atx format.
+    """
 
     def run(self, edit, closed=False):
         regions = list(self.view.sel())
@@ -111,9 +114,10 @@ class MdeConvertUnderlinedHeadingsToAtxCommand(MdeTextCommand):
 
 
 class MdeFixUnderlinedHeadingsCommand(MdeTextCommand):
-
-    """Searches for all setext headings resize them to match the preceding
-    header text."""
+    """
+    The `mde_fix_underlined_headings` command searches for all setext headings
+    resize them to match the preceding header text.
+    """
 
     def description(self):
         # Used as the name for Undo.
