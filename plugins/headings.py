@@ -42,8 +42,8 @@ def fix_dashes(view, edit, text_region, dash_region):
 class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
     """
     The `mde_complete_underline_headings` command inserts enough dash characters
-    to match the length of the previous (header text) line, if the current
-    selection is looks like a setext underline of - or = .
+    to match the length of the previous (header text) line, if the selection
+    looks like a setext underline of - or = .
 
     Before:
 
@@ -58,6 +58,11 @@ class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
     This is an H2
     -------------|
     ```
+
+    Note:
+
+    If the line before a selection is empty or starts with single dash, a tab
+    character is inserted instead assuming the current line belonging to a list.
     """
 
     def run(self, edit):
@@ -71,22 +76,17 @@ class MdeCompleteUnderlinedHeadingsCommand(MdeTextCommand):
             if text_line.begin() < 0:
                 continue
 
-            text = self.view.substr(text_line)
-            dashes = self.view.substr(dashes_line)
+            text = self.view.substr(text_line).lstrip()
+            dashes = self.view.substr(dashes_line).strip()
+            bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
 
-            # ignore, text_line is a list item
-            if text.lstrip().startswith("-") and len(dashes.strip()) < 2:
-                settings = self.view.settings()
-                use_spaces = bool(settings.get('translate_tabs_to_spaces'))
-                tab_size = int(settings.get('tab_size', 8))
-                indent_characters = '\t'
-                if use_spaces:
-                    indent_characters = ' ' * tab_size
-                self.view.insert(edit, dashes_line.begin(), indent_characters)
-                break
+            # ignore, text_line is a list item or empty
+            if len(dashes) < 2 and (not text or text[0] in bullets):
+                self.view.insert(edit, region.begin(), '\t')
+                continue
 
-            m = SETEXT_DASHES_RE.match(dashes)
-            if m:
+            match = SETEXT_DASHES_RE.match(dashes)
+            if match:
                 fix_dashes(self.view, edit, text_line, dashes_line)
 
 
