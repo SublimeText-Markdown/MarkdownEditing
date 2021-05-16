@@ -1,5 +1,0 @@
-[
-    {"command": "expand_selection", "args": {"to": "line"}},
-    {"command": "insert_snippet","args":{"contents": "${0:${SELECTION/(^#+ | #+$)//gm}}"}},
-    {"command": "move", "args": {"by": "characters", "forward": false, "extend": true}}
-]

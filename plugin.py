@@ -55,6 +55,7 @@ else:
         MdeCompleteUnderlinedHeadingsCommand,
         MdeConvertUnderlinedHeadingsToAtxCommand,
         MdeFixUnderlinedHeadingsCommand,
+        MdeChangeHeadingsLevelCommand,
     )
     from .plugins.lists import (
         MdeIndentListItemCommand,

@@ -36,6 +36,51 @@
 		"command": "mde_convert_underlined_headings_to_atx"
 	},
 	{
+		"caption": "MarkdownEditing: Convert Heading to Text",
+		"command": "mde_change_headings_level",
+		"args": { "to": 0 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 1",
+		"command": "mde_change_headings_level",
+		"args": { "to": 1 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 2",
+		"command": "mde_change_headings_level",
+		"args": { "to": 2 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 3",
+		"command": "mde_change_headings_level",
+		"args": { "to": 3 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 4",
+		"command": "mde_change_headings_level",
+		"args": { "to": 4 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 5",
+		"command": "mde_change_headings_level",
+		"args": { "to": 5 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 6",
+		"command": "mde_change_headings_level",
+		"args": { "to": 6 }
+	},
+	{
+		"caption": "MarkdownEditing: Increase Headings Level",
+		"command": "mde_change_headings_level",
+		"args": { "by": 1 }
+	},
+	{
+		"caption": "MarkdownEditing: Decrease Headings Level",
+		"command": "mde_change_headings_level",
+		"args": { "by": -1 }
+	},
+	{
 		"caption": "MarkdownEditing: Add Missing Link Labels",
 		"command": "mde_gather_missing_link_markers"
 	},

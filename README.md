@@ -131,20 +131,22 @@ Lastly the command to open the *home* page is provided, where the home page is j
 
 | OS X | Windows/Linux | Description |
 |------|---------------|-------------|
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>V</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>V</kbd> | Creates or pastes the contents of the clipboard as an inline link on selected text.
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>R</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd> | <kbd>Shift</kbd><kbd>Win</kbd><kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>I</kbd> | <kbd>Alt</kbd><kbd>B</kbd> <kbd>Alt</kbd><kbd>I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
-| <kbd>⌘</kbd><kbd>^</kbd><kbd>1...6</kbd> | <kbd>Ctrl</kbd><kbd>1...6</kbd> | These will add the corresponding number of hashmarks for headlines. Works on blank lines and selected text in tandem with the above headline tools. If you select an entire existing headline, the current hashmarks will be removed and replaced with the header level you requested. This command respects the `mde.match_header_hashes` preference setting.
-| <kbd>⌥</kbd><kbd>⇧</kbd><kbd>6</kbd> | <kbd>Alt</kbd><kbd>Shift</kbd><kbd>6</kbd> | Inserts a footnote.
-| <kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Shift</kbd><kbd>Tab</kbd> | Fold/Unfold current section.
-| <kbd>^</kbd><kbd>⇧</kbd><kbd>Tab</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Tab</kbd> | Fold all sections under headings of a certain level.
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | Go to the previous/next heading of the same or higher level
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageUp</kbd> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>PageDown</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> |  Go to the previous/next heading
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>H</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd> | Open home page
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>D</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd> | Open wiki page under the cursor
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>J</kbd> | Open journal page for today
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>B</kbd> | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> | List back links
+| <kbd>⌘ + ⌥ + V</kbd> | <kbd>Ctrl + Alt + V</kbd> | Creates or pastes the contents of the clipboard as an inline link on selected text.
+| <kbd>⌘ + ⌥ + R</kbd> | <kbd>Ctrl + Alt + R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
+| <kbd>⌘ + ⇧ + K</kbd> | <kbd>Shift + Win + K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
+| <kbd>⌘ + ⌥ + B</kbd> <kbd>⌘ + ⌥ + I</kbd> | <kbd>Alt + B</kbd> <kbd>Alt + I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+| <kbd>⌘ + ^ + 1...6</kbd> | <kbd>Ctrl + Alt + 1...6</kbd> | These will add the corresponding number of hashmarks for headlines. This command respects the `mde.match_header_hashes` preference setting.
+| <kbd>⌘ + ^ + ,</kbd> | <kbd>Ctrl + Alt + ,</kbd> | Decrease number of hashmarks for headlines. This command respects the `mde.match_header_hashes` preference setting.
+| <kbd>⌘ + ^ + .</kbd> | <kbd>Ctrl + Alt + .</kbd> | Increase number of hashmarks for headlines. This command respects the `mde.match_header_hashes` preference setting.
+| <kbd>⌥ + ⇧ + 6</kbd> | <kbd>Alt + Shift + 6</kbd> | Inserts a footnote.
+| <kbd>⇧ + Tab</kbd> | <kbd>Shift + Tab</kbd> | Fold/Unfold current section.
+| <kbd>^ + ⇧ + Tab</kbd> | <kbd>Ctrl + Shift + Tab</kbd> | Fold all sections under headings of a certain level.
+| <kbd>⌘ + ⌥ + PageUp</kbd> <kbd>⌘ + ⌥ + PageDown</kbd> | <kbd>Ctrl + Alt + Shift + PageUp</kbd> <kbd>Ctrl + Alt + Shift + PageDown</kbd> | Go to the previous/next heading of the same or higher level
+| <kbd>⌘ + ⇧ + PageUp</kbd> <kbd>⌘ + ⇧ + PageDown</kbd> | <kbd>Ctrl + Shift + PageUp</kbd> <kbd>Ctrl + Shift + PageDown</kbd> |  Go to the previous/next heading
+| <kbd>⌘ + ⌥ + H</kbd> | <kbd>Ctrl + Shift + H</kbd> | Open home page
+| <kbd>⌘ + ⌥ + D</kbd> | <kbd>Ctrl + Shift + D</kbd> | Open wiki page under the cursor
+| <kbd>⌘ + ⌥ + J</kbd> | <kbd>Ctrl + Shift + J</kbd> | Open journal page for today
+| <kbd>⌘ + ⌥ + B</kbd> | <kbd>Ctrl + Shift + B</kbd> | List back links
 
 
 ## GFM Specific Features
