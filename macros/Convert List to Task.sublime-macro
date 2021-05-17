@@ -1,0 +1,6 @@
+[
+	{"command": "move", "args": {"by": "words", "forward": false, "extend": true}},
+	{"command": "move", "args": {"by": "characters", "forward": true, "extend": true}},
+	{"command": "left_delete"},
+	{"command": "insert", "args": {"characters": " [ ] "}}
+]

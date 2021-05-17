@@ -524,6 +524,27 @@
 	// Lists
 	//
 
+	// Convert List Item to GFM Task
+	{ "keys": ["["], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert List to Task.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	{ "keys": ["["], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert List to Task Tab.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
 	// Extend lists (also in block quotes)
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[

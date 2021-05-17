@@ -17,6 +17,11 @@
 	// add trailing #'s to headlines
 	"mde.match_header_hashes": false,
 
+	// MarkdownEditing (Lists):
+	// Align list item text at indentation level.
+	// Adds <Tab> after list items instead of a single <space>.
+	"mde.list_align_text": false,
+
 	// MarkdownEditing:
 	// Automatically switches list bullet when indenting blank list item with <Tab>.
 	"mde.list_indent_auto_switch_bullet": true,
