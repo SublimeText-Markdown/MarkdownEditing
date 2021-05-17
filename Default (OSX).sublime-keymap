@@ -433,20 +433,38 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/(#+?)[^#].*$/$1\n/}"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*#+\\s+[^#].*[^#]\\s*$", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/(#+?)[^#].*$/$1\n/}"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*#+\\s+[^#].*[^#]\\s*$", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
@@ -679,37 +697,18 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	// Extend blockquote (ignore lists or tasks)
+	// Extend blockquote (ignore headings, lists and tasks)
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>\\s]", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>#\\s]", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>\\s]", "match_all": true },
-			{ "key": "setting.auto_complete_commit_on_tab" }
-		]
-	},
-	// Extend blockquote and match heading hashes
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/^\\s*((?:>\\s*)+)(#+?)[^#].*$/$2\n$1/}"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+#+\\s+[^#].*[^#]\\s*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
-			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
-		]
-	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/^\\s*((?:>\\s*)+)(#+?)[^#].*$/$2\n$1/}"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+#+\\s+[^#].*[^#]\\s*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+[^-+*>#\\s]", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},

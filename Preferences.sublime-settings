@@ -13,9 +13,9 @@
 	"mde.bold_marker_asterisk": true,
 	"mde.italic_marker_asterisk": false,
 
-	// MarkdownEditing:
+	// MarkdownEditing (Headings):
 	// add trailing #'s to headlines
-	"mde.match_header_hashes": false,
+	"mde.auto_match_heading_hashes": false,
 
 	// MarkdownEditing (Lists):
 	// Align list item text at indentation level.
