@@ -177,8 +177,8 @@
 		"command": "mde_unfold_all_sections"
 	},
 	{
-		"caption": "MarkdownEditing: Fold All Link URLs",
-		"command": "mde_fold_all_link_urls"
+		"caption": "MarkdownEditing: Auto Fold Link URLs",
+		"command": "mde_fold_links"
 	},
 	{
 		"caption": "MarkdownEditing: Find Next Heading (Same or higher level)",

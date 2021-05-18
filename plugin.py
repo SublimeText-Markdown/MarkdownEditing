@@ -31,8 +31,9 @@ else:
         MdeSelectColorSchemeCommand,
     )
     from .plugins.folding import (
-        MdeFoldAllLinkUrlsCommand,
         MdeFoldAllSectionsCommand,
+        MdeFoldLinksCommand,
+        MdeFoldLinksListener,
         MdeFoldSectionCommand,
         MdeFoldSectionContextCommand,
         MdeGotoNextHeadingCommand,

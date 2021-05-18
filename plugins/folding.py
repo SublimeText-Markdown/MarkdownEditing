@@ -2,7 +2,7 @@ import re
 
 import sublime
 
-from .view import MdeTextCommand
+from .view import MdeTextCommand, MdeViewEventListener
 
 
 def getFoldedRegion(view, reg):
@@ -248,16 +248,133 @@ class MdeGotoPreviousHeadingCommand(MdeTextCommand):
                 view.show(region)
 
 
-class MdeFoldAllLinkUrlsCommand(MdeTextCommand):
+class MdeFoldLinksProviderMixin:
+    def __init__(self):
+        self._fold_regions = None
+        self._folded_regions = set()
+        self._unfolded_regions = set()
 
-    def run(self, edit):
-        view = self.view
-        all_links = view.find_by_selector('markup.underline.link')
-        folded_regions = view.folded_regions()
-        folded_a_link = False
-        for link in all_links:
-            if link not in folded_regions:
-                view.fold(link)
-                folded_a_link = True
-        if not folded_a_link:
-            view.unfold(all_links)
+    def is_auto_fold_enabled(self):
+        return self.view.settings().get("mde.auto_fold_link.enabled", True)
+
+    def enable_auto_fold(self, enable=None):
+        if enable is None:
+            enable = not self.is_auto_fold_enabled()
+        if enable:
+            self.auto_fold_all()
+        else:
+            self.unfold_all()
+        self.view.settings().set("mde.auto_fold_link.enabled", enable)
+
+    def get_fold_regions(self):
+        if self._fold_regions is None:
+            self._fold_regions = self.view.find_by_selector(
+                self.view.settings().get("mde.auto_fold_link.selector", "")
+            )
+        return self._fold_regions
+
+    def invalidate_fold_regions(self):
+        self._fold_regions = None
+
+    def auto_fold_all(self):
+        """
+        Fold all but selected regions or those the caret intersects with.
+        """
+
+        def intersects(lhs, rhs):
+            """
+            Fix ST's dump Region.intersects().
+
+            :param      lhs:    region on the left hand side
+            :type       lhs:    sublime.Region
+            :param      rhs:    region on the right hand side
+            :type       rhs:    sublime.Region
+            """
+            lb = lhs.begin()
+            le = lhs.end()
+            rb = rhs.begin()
+            re = rhs.end()
+            return (
+                (rb >= lb and rb <= le)
+                or (re >= lb and re <= le)
+                or (lb >= rb and lb <= re)
+                or (le >= rb and le <= re)
+            )
+
+        fold_regions = self.get_fold_regions()
+        folded_regions = []
+        folded_set = set()
+        unfolded_regions = []
+        unfolded_set = set()
+        for sel in self.view.sel():
+            for region in fold_regions:
+                if intersects(sel, region):
+                    unfolded_regions.append(region)
+                    unfolded_set.add(region.to_tuple())
+                else:
+                    folded_regions.append(region)
+                    folded_set.add(region.to_tuple())
+
+        if self._folded_regions != folded_set:
+            self._folded_regions = folded_set
+            self.view.fold(folded_regions)
+
+        if self._unfolded_regions != unfolded_set:
+            self._unfolded_regions = unfolded_set
+            self.view.unfold(unfolded_regions)
+
+    def fold_all(self):
+        """
+        Fold all auto folding regions.
+        """
+        self.view.fold(self.get_fold_regions())
+
+    def unfold_all(self):
+        """
+        Unfold all auto folding regions.
+        """
+        self.view.unfold(self.get_fold_regions())
+
+
+class MdeFoldLinksListener(MdeViewEventListener, MdeFoldLinksProviderMixin):
+    def __init__(self, view):
+        super().__init__(view)
+        MdeFoldLinksProviderMixin.__init__(self)
+        self.fold_all()
+
+    @classmethod
+    def is_applicable(cls, settings):
+        return (
+            MdeViewEventListener.is_applicable(settings)
+            and settings.get("mde.auto_fold_link.enabled", False)
+        )
+
+    def on_load(self):
+        """
+        Called on load.
+        """
+        self.auto_fold_all()
+
+    def on_activated(self):
+        """
+        Called on load.
+        """
+        self.auto_fold_all()
+
+    def on_selection_modified(self):
+        """
+        Temporarily unfold links
+        """
+        self.auto_fold_all()
+
+    def on_modified(self):
+        self.invalidate_fold_regions()
+
+
+class MdeFoldLinksCommand(MdeTextCommand, MdeFoldLinksProviderMixin):
+    def __init__(self, view):
+        super().__init__(view)
+        MdeFoldLinksProviderMixin.__init__(self)
+
+    def run(self, edit, fold=None):
+        self.enable_auto_fold(fold)

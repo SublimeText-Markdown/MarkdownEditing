@@ -86,6 +86,13 @@
 		}
 	},
 
+	// MarkdownEditing: (Folding)
+	// Enable automatic folding of url parts of inline links or images
+	"mde.auto_fold_link.enabled": true,
+	// MarkdownEditing: (Folding)
+	// Selector for urls to automatically fold
+	"mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
+
 	// MarkdownEditing: wiki file extensions
 	"mde.wikilinks.markdown_extension": ".md",
 	// MarkdownEditing: wiki home page
