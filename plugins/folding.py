@@ -4,32 +4,35 @@ import sublime
 
 from .view import MdeTextCommand, MdeViewEventListener
 
+HEADINGS_RE = re.compile(
+    r"""
+    ^( [ \t]* )                                   # leading whitespace
+    (?:
+      ( \#{1,6} ) [ \t]+ ( [^\n]+ )               # ATX headings
+    | ( [^-#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} )  # SETEXT headings
+    ) [ \t]*$                                     # maybe trailing whitespace
+    """,
+    re.X | re.M
+)
 
-def get_folded_region(view, region):
-    for i in view.folded_regions():
-        if i.contains(region):
-            return i
-    return None
 
-
-def all_headings(view):
-    text = view.substr(sublime.Region(0, view.size()))
-    it = re.finditer(r'^(#{1,6}(?!#))|^(-{3,}|={3,})', text, re.M)
-    for m in it:
-        if '.front-matter' in view.scope_name(m.start()):
-            continue
-        if re.match(r'^(-{3,}|={3,})$', m.group()):
-            title_end = m.start() - 1
-            title_begin = text.rfind('\n', 0, title_end) + 1
-            title_end = m.end()
-            level = 2 if text[m.start()] == '-' else 1
+def all_headings(view, start=0, end=None):
+    if end is None:
+        end = view.size()
+    text = view.substr(sublime.Region(start, end))
+    for m in HEADINGS_RE.finditer(text):
+        title_begin = start + m.start()
+        title_end = start + m.end()
+        if m.group(2):
+            # ATX headings use group 2 (heading) and 3 (leading hashes)
+            level = m.end(2) - m.start(2)
         else:
-            title_begin = m.end()
-            title_end = re.search(r'(' + m.group() + r')?(\n|$)', text[title_begin:]).start() + title_begin
-            title_begin = m.start()
-            level = m.end() - m.start()
-        if 'markup.raw.block.markdown' not in view.scope_name(title_begin).split(' '):
+            # SETEXT headings use group 4 (text) and 5 (underlines)
+            level = 2 if text[m.start(5)] == "-" else 1
+        # ignore front matter and raw code blocks
+        if not view.match_selector(title_begin, "front-matter, markup.raw.block.markdown"):
             yield (title_begin, title_end, level)
+    return None
 
 
 def get_current_level(view, pt):
@@ -41,6 +44,13 @@ def get_current_level(view, pt):
             return level
         else:
             return last_level
+
+
+def get_folded_region(view, region):
+    for i in view.folded_regions():
+        if i.contains(region):
+            return i
+    return None
 
 
 class MdeFoldSectionCommand(MdeTextCommand):
