@@ -363,17 +363,12 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
-		]
-	},
 	{ "keys": ["ctrl+alt+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+	{ "keys": ["ctrl+alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
@@ -383,7 +378,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+	{ "keys": ["ctrl+alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
@@ -393,7 +388,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+	{ "keys": ["ctrl+alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
@@ -403,7 +398,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+	{ "keys": ["ctrl+alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
@@ -413,7 +408,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+	{ "keys": ["ctrl+alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
@@ -423,12 +418,17 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["ctrl+alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+	{ "keys": ["ctrl+alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
 	{ "keys": ["ctrl+alt+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
