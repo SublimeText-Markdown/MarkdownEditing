@@ -142,31 +142,33 @@
 	},
 	{
 		"caption": "MarkdownEditing: Fold Level 1 Sections",
-		"command": "mde_fold_all_sections", "args" :
-		{
-			"target_level" : 1
-		}
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 1 }
 	},
 	{
 		"caption": "MarkdownEditing: Fold Level 2 Sections",
-		"command": "mde_fold_all_sections", "args" :
-		{
-			"target_level" : 2
-		}
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 2 }
 	},
 	{
 		"caption": "MarkdownEditing: Fold Level 3 Sections",
-		"command": "mde_fold_all_sections", "args" :
-		{
-			"target_level" : 3
-		}
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 3 }
 	},
 	{
 		"caption": "MarkdownEditing: Fold Level 4 Sections",
-		"command": "mde_fold_all_sections", "args" :
-		{
-			"target_level" : 4
-		}
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 4 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 5 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 5 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 6 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 6 }
 	},
 	{
 		"caption": "MarkdownEditing: Fold All Sections",

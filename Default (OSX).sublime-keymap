@@ -482,6 +482,76 @@
 	// Folding
 	//
 
+	{ "keys": ["super+k", "super+keypad0"], "command": "mde_unfold_all_sections", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+0"], "command": "mde_unfold_all_sections", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad1"], "command": "mde_fold_all_sections", "args": {"target_level": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+1"], "command": "mde_fold_all_sections", "args": {"target_level": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad2"], "command": "mde_fold_all_sections", "args": {"target_level": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+2"], "command": "mde_fold_all_sections", "args": {"target_level": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad3"], "command": "mde_fold_all_sections", "args": {"target_level": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+3"], "command": "mde_fold_all_sections", "args": {"target_level": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad4"], "command": "mde_fold_all_sections", "args": {"target_level": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+4"], "command": "mde_fold_all_sections", "args": {"target_level": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad5"], "command": "mde_fold_all_sections", "args": {"target_level": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+5"], "command": "mde_fold_all_sections", "args": {"target_level": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+keypad6"], "command": "mde_fold_all_sections", "args": {"target_level": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+6"], "command": "mde_fold_all_sections", "args": {"target_level": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
 	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
