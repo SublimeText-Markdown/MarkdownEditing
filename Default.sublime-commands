@@ -184,31 +184,23 @@
 	},
 	{
 		"caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
-		"command": "mde_goto_next_heading", "args" :
-		{
-			"same_level" : true
-		}
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": true }
 	},
 	{
 		"caption": "MarkdownEditing: Find Next Heading (Any level)",
-		"command": "mde_goto_next_heading", "args" :
-		{
-			"same_level" : false
-		}
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": false }
 	},
 	{
 		"caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
-		"command": "mde_goto_previous_heading", "args" :
-		{
-			"same_level" : true
-		}
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": true }
 	},
 	{
 		"caption": "MarkdownEditing: Find Previous Heading (Any level)",
-		"command": "mde_goto_previous_heading", "args" :
-		{
-			"same_level" : false
-		}
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": false }
 	},
 	{
 		"caption": "MarkdownEditing: Select Color scheme",
