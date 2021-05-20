@@ -1,6 +1,6 @@
 import sublime
 
-from .folding import all_headings, getFoldedRegion
+from .folding import all_headings, get_folded_region
 from .view import MdeTextCommand
 
 
@@ -26,7 +26,7 @@ class MDEBoldCommand(MdeTextCommand):
                     break
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
-                folded = getFoldedRegion(view, reg)
+                folded = get_folded_region(view, reg)
                 if folded is not None:
                     sections.append(folded)
                     shouldUnfold = True

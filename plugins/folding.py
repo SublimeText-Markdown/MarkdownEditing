@@ -5,9 +5,9 @@ import sublime
 from .view import MdeTextCommand, MdeViewEventListener
 
 
-def getFoldedRegion(view, reg):
+def get_folded_region(view, region):
     for i in view.folded_regions():
-        if i.contains(reg):
+        if i.contains(region):
             return i
     return None
 
@@ -32,12 +32,12 @@ def all_headings(view):
             yield (title_begin, title_end, level)
 
 
-def get_current_level(view, p):
+def get_current_level(view, pt):
     last_level = 0
-    for (title_begin, title_end, level) in all_headings(view):
-        if title_end < p:
+    for title_begin, title_end, level in all_headings(view):
+        if title_end < pt:
             last_level = level
-        elif title_begin < p:
+        elif title_begin < pt:
             return level
         else:
             return last_level
@@ -65,7 +65,7 @@ class MdeFoldSectionCommand(MdeTextCommand):
                     break
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
-                folded = getFoldedRegion(view, reg)
+                folded = get_folded_region(view, reg)
                 if folded is not None:
                     sections.append(folded)
                     shouldUnfold = True
@@ -102,7 +102,7 @@ class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
                     break
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
-                folded = getFoldedRegion(view, reg)
+                folded = get_folded_region(view, reg)
                 if folded is not None:
                     return False
                 else:
@@ -130,7 +130,7 @@ class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
                     break
             if section_start >= 0 and section_end >= section_start:
                 reg = sublime.Region(section_start, section_end)
-                folded = getFoldedRegion(view, reg)
+                folded = get_folded_region(view, reg)
                 if folded is not None:
                     hasSection = True
                 else:
@@ -170,7 +170,7 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
             n_sections += 1
         if len(view.sel()) > 0:
             for sel in view.sel():
-                if getFoldedRegion(view, sel) is None:
+                if get_folded_region(view, sel) is None:
                     view.show(sel)
         else:
             view.show(sublime.Region(0, 0))
