@@ -350,7 +350,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#+\\s*$", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#+\\s?$", "match_all": true }
 		]
 	},
 	{ "keys": ["ctrl+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
@@ -698,7 +698,7 @@
 	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s?$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
