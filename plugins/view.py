@@ -115,18 +115,38 @@ class MdeUnsavedViewNameSetter(MdeViewEventListener):
     This view event listener prints the first heading as tab title of unsaved documents.
     """
 
+    HEADINGS_RE = re.compile(
+        r"""
+        ^( [ \t]* )                                   # leading whitespace
+        (?:
+          ( \#{1,6} ) [ \t]+ ( [^\n]+ )               # ATX headings
+        | ( [^-#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} )  # SETEXT headings
+        ) [ \t]*$                                     # maybe trailing whitespace
+        """,
+        re.X | re.M
+    )
+
     MAX_NAME = 50
 
-    def on_modified_async(self):
+    def first_heading(self):
+        text = self.view.substr(sublime.Region(0, min(self.view.size(), 1024 * 1024)))
+        for m in self.HEADINGS_RE.finditer(text):
+            if m.group(3):
+                title_begin = m.start(3)
+                title_end = m.end(3)
+            else:
+                title_begin = m.start(4)
+                title_end = m.end(4)
+            # ignore front matter and raw code blocks
+            if not self.view.match_selector(title_begin, "front-matter, markup.raw.block.markdown"):
+                return text[title_begin:title_end]
+        return text[0:text.find("\n")]
+
+    def on_modified(self):
         if self.view.file_name() is not None:
             return
 
-        headings = self.view.find_by_selector('text.html.markdown markup.heading - punctuation')
-        region = headings[0] if headings else self.view.line(0)
-        if len(region) > self.MAX_NAME:
-            region.b = region.a + self.MAX_NAME
-            suffix = '…'
-        else:
-            suffix = ''
-
-        self.view.set_name(self.view.substr(region).strip() + suffix)
+        name = self.first_heading()
+        if len(name) > self.MAX_NAME:
+            name = name[:self.MAX_NAME] + "…"
+        self.view.set_name(name)
