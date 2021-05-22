@@ -23,9 +23,8 @@ def get_folded_region(view, region):
 
 
 class MdeFoldSectionCommand(MdeTextCommand):
-
     def description(self):
-        return 'Toggle fold/unfold on current section'
+        return "Toggle fold/unfold on current section"
 
     def run(self, edit):
         view = self.view
@@ -56,13 +55,13 @@ class MdeFoldSectionCommand(MdeTextCommand):
                 view.unfold(reg)
             else:
                 view.fold(reg)
-        sublime.status_message('%d region%s %sfolded' % (
-            len(sections), 's' if len(sections) > 1 else '', 'un' if shouldUnfold else '')
+        sublime.status_message(
+            "%d region%s %sfolded"
+            % (len(sections), "s" if len(sections) > 1 else "", "un" if shouldUnfold else "")
         )
 
 
 class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
-
     def is_visible(self):
         if not MdeFoldSectionCommand.is_visible(self):
             return False
@@ -90,7 +89,6 @@ class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
 
 
 class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
-
     def is_visible(self):
         if not MdeFoldSectionCommand.is_visible(self):
             return False
@@ -118,18 +116,17 @@ class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
 
 
 class MdeShowFoldAllSectionsCommand(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
         view.window().run_command(
-            'show_overlay', {'overlay': 'command_palette', 'text': 'MarkdownEditing: Fold'})
+            "show_overlay", {"overlay": "command_palette", "text": "MarkdownEditing: Fold"}
+        )
 
 
 class MdeFoldAllSectionsCommand(MdeTextCommand):
-
     def run(self, edit, target_level=0):
         view = self.view
-        view.run_command('unfold_all')
+        view.run_command("unfold_all")
         section_start = -1
         section_end = view.size()
         n_sections = 0
@@ -153,14 +150,13 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
                     view.show(sel)
         else:
             view.show(sublime.Region(0, 0))
-        sublime.status_message('%d region%s folded' % (n_sections, 's' if n_sections > 1 else ''))
+        sublime.status_message("%d region%s folded" % (n_sections, "s" if n_sections > 1 else ""))
 
 
 class MdeUnfoldAllSectionsCommand(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
-        view.run_command('unfold_all')
+        view.run_command("unfold_all")
 
 
 class MdeFoldLinksProviderMixin:
@@ -259,9 +255,8 @@ class MdeFoldLinksListener(MdeViewEventListener, MdeFoldLinksProviderMixin):
 
     @classmethod
     def is_applicable(cls, settings):
-        return (
-            MdeViewEventListener.is_applicable(settings)
-            and settings.get("mde.auto_fold_link.enabled", False)
+        return MdeViewEventListener.is_applicable(settings) and settings.get(
+            "mde.auto_fold_link.enabled", False
         )
 
     def on_load(self):

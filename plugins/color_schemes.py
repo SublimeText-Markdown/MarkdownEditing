@@ -2,10 +2,7 @@ import re
 
 import sublime
 
-from .view import (
-    MdeTextCommand,
-    syntax_specific_settings_file
-)
+from .view import MdeTextCommand, syntax_specific_settings_file
 
 MARKDOWN_TEMPLATE = """# A sample Markdown document
 
@@ -63,7 +60,6 @@ This [[SamplePage]] is a wiki link
 
 
 class MdeSelectColorSchemeCommand(MdeTextCommand):
-
     def run(self, edit):
         select_color_scheme(self.view)
 
@@ -73,8 +69,7 @@ def select_color_scheme(view=None):
 
     window = view.window() if isinstance(view, sublime.View) else sublime.active_window()
     pre_view = window.new_file(
-        flags=sublime.TRANSIENT,
-        syntax="Packages/MarkdownEditing/Markdown.sublime-syntax"
+        flags=sublime.TRANSIENT, syntax="Packages/MarkdownEditing/Markdown.sublime-syntax"
     )
     pre_view.set_scratch(True)
     pre_view.run_command("append", {"characters": MARKDOWN_TEMPLATE})
@@ -85,10 +80,7 @@ def select_color_scheme(view=None):
 
     global_settings = sublime.load_settings("Preferences.sublime-settings")
     global_scheme = global_settings.get("color_scheme")
-    schemes = [
-        global_scheme,
-        "MarkdownEditor.sublime-color-scheme"
-    ]
+    schemes = [global_scheme, "MarkdownEditor.sublime-color-scheme"]
     for scheme in sublime.find_resources("MarkdownEditor*.sublime-color-scheme"):
         file_name = scheme.split("/")[-1]
         if file_name not in schemes:
@@ -136,5 +128,5 @@ def select_color_scheme(view=None):
         flags=sublime.KEEP_OPEN_ON_FOCUS_LOST,
         selected_index=selected_index,
         on_select=on_done,
-        on_highlight=on_highlighted
+        on_highlight=on_highlighted,
     )

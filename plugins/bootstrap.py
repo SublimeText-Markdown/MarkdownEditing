@@ -4,50 +4,51 @@ import sublime
 
 from .color_schemes import select_color_scheme
 
-package_name = 'MarkdownEditing'
+package_name = "MarkdownEditing"
 
 
 def get_ingored_packages():
-    settings = sublime.load_settings('Preferences.sublime-settings')
-    return settings.get('ignored_packages', [])
+    settings = sublime.load_settings("Preferences.sublime-settings")
+    return settings.get("ignored_packages", [])
 
 
 def save_ingored_packages(ignored_packages):
-    settings = sublime.load_settings('Preferences.sublime-settings')
-    settings.set('ignored_packages', ignored_packages)
-    sublime.save_settings('Preferences.sublime-settings')
+    settings = sublime.load_settings("Preferences.sublime-settings")
+    settings.set("ignored_packages", ignored_packages)
+    sublime.save_settings("Preferences.sublime-settings")
 
 
 def disable_native_markdown_package():
     ignored_packages = get_ingored_packages()
-    if 'Markdown' not in ignored_packages:
+    if "Markdown" not in ignored_packages:
         reassign_syntax(
-            'Packages/Markdown/Markdown.sublime-syntax',
-            'Packages/MarkdownEditing/Markdown.sublime-syntax'
+            "Packages/Markdown/Markdown.sublime-syntax",
+            "Packages/MarkdownEditing/Markdown.sublime-syntax",
         )
         reassign_syntax(
-            'Packages/Markdown/MultiMarkdown.sublime-syntax',
-            'Packages/MarkdownEditing/MultiMarkdown.sublime-syntax'
+            "Packages/Markdown/MultiMarkdown.sublime-syntax",
+            "Packages/MarkdownEditing/MultiMarkdown.sublime-syntax",
         )
-        ignored_packages.append('Markdown')
+        ignored_packages.append("Markdown")
         save_ingored_packages(ignored_packages)
 
 
 def enable_native_markdown_package():
     ignored_packages = get_ingored_packages()
-    if 'Markdown' in ignored_packages:
-        ignored_packages.remove('Markdown')
+    if "Markdown" in ignored_packages:
+        ignored_packages.remove("Markdown")
         save_ingored_packages(ignored_packages)
 
         def reassign():
             reassign_syntax(
-                'Packages/MarkdownEditing/Markdown.sublime-syntax',
-                'Packages/Markdown/Markdown.sublime-syntax'
+                "Packages/MarkdownEditing/Markdown.sublime-syntax",
+                "Packages/Markdown/Markdown.sublime-syntax",
             )
             reassign_syntax(
-                'Packages/MarkdownEditing/MultiMarkdown.sublime-syntax',
-                'Packages/Markdown/MultiMarkdown.sublime-syntax'
+                "Packages/MarkdownEditing/MultiMarkdown.sublime-syntax",
+                "Packages/Markdown/MultiMarkdown.sublime-syntax",
             )
+
         sublime.set_timeout(reassign, 100)
 
 

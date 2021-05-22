@@ -10,10 +10,10 @@ from datetime import date
 from .logging import logger
 from .view import MdeTextCommand
 
-DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+DEFAULT_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_HOME_PAGE = "HomePage"
-DEFAULT_MARKDOWN_EXTENSION = '.md'
-PAGE_REF_FORMAT = '[[%s]]'
+DEFAULT_MARKDOWN_EXTENSION = ".md"
+PAGE_REF_FORMAT = "[[%s]]"
 
 
 class MdeListBackLinksCommand(MdeTextCommand):
@@ -28,7 +28,7 @@ class MdeMakePageReferenceCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if  is on a wiki page reference."""
         for sel in self.view.sel():
-            if not self.view.match_selector(sel.end(), 'meta.link.wiki.markdown'):
+            if not self.view.match_selector(sel.end(), "meta.link.wiki.markdown"):
                 return False
         return True
 
@@ -66,7 +66,7 @@ class MdeOpenPageCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if caret is on a wiki page reference."""
         for sel in self.view.sel():
-            if not self.view.match_selector(sel.end(), 'meta.link.wiki.markdown'):
+            if not self.view.match_selector(sel.end(), "meta.link.wiki.markdown"):
                 return False
         return True
 
@@ -114,7 +114,7 @@ class MdePrepareFromTemplateCommand(MdeTextCommand):
         :param args: The command arguments including 'title' and 'template'
         """
 
-        template_name = args['template']
+        template_name = args["template"]
         logger.info("Creating new page from template: ", template_name)
 
         text = self.generate_from_template(template_name, args)
@@ -135,8 +135,7 @@ class MdePrepareFromTemplateCommand(MdeTextCommand):
         template will be used
         """
 
-        template = self.view.settings().get(
-            "mde.wikilinks.templates", self.DEFAULT_PAGE_TEMPLATE)
+        template = self.view.settings().get("mde.wikilinks.templates", self.DEFAULT_PAGE_TEMPLATE)
 
         if not os.path.isfile(template):
             current_file = self.view.file_name()
@@ -146,7 +145,7 @@ class MdePrepareFromTemplateCommand(MdeTextCommand):
         if os.path.isfile(template):
             logger.debug("Using template:", template)
             try:
-                with open(template, 'rt') as f:
+                with open(template, "rt") as f:
                     return f.read()
             except OSError:
                 logger.debug("Unable to read template:", sys.exc_info()[0])
@@ -186,14 +185,15 @@ class WikiPage:
             self.open_new_file(pagename)
 
     def find_files_with_name(self, pagename):
-        pagename = pagename.replace('\\', os.sep).replace(os.sep + os.sep, os.sep).strip()
+        pagename = pagename.replace("\\", os.sep).replace(os.sep + os.sep, os.sep).strip()
 
         self.current_file = self.view.file_name()
         self.current_dir = os.path.dirname(self.current_file)
         logger.debug("Locating page '%s' in: %s" % (pagename, self.current_dir))
 
         markdown_extension = self.view.settings().get(
-            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
+        )
 
         # Optionally strip extension...
         if pagename.endswith(markdown_extension):
@@ -217,14 +217,17 @@ class WikiPage:
         self.current_name, _ = os.path.splitext(current_base)
 
         markdown_extension = self.view.settings().get(
-            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
+        )
 
         results = []
         for dirname, _, files in self.list_dir_tree(self.current_dir):
             for file in files:
                 page_name, extension = os.path.splitext(file)
                 filename = os.path.join(dirname, file)
-                if extension == markdown_extension and self.contains_ref(filename, self.current_name):
+                if extension == markdown_extension and self.contains_ref(
+                    filename, self.current_name
+                ):
                     results.append([page_name, filename])
 
         return results
@@ -250,21 +253,21 @@ class WikiPage:
             self.view.window().status_message(msg)
 
     def open_new_file(self, pagename):
-        current_syntax = self.view.settings().get('syntax')
+        current_syntax = self.view.settings().get("syntax")
         current_file = self.view.file_name()
         current_dir = os.path.dirname(current_file)
 
         markdown_extension = self.view.settings().get(
-            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
+        )
 
         filename = os.path.join(current_dir, pagename + markdown_extension)
 
         new_view = self.view.window().new_file()
         new_view.retarget(filename)
-        new_view.run_command('mde_prepare_from_template', {
-            'title': pagename,
-            'template': 'default_page'
-        })
+        new_view.run_command(
+            "mde_prepare_from_template", {"title": pagename, "template": "default_page"}
+        )
         logger.debug("Current syntax: %s", current_syntax)
         new_view.set_syntax_file(current_syntax)
 
@@ -313,7 +316,7 @@ class WikiPage:
             page_name, file = self.file_list[selected_index]
 
             logger.debug("Using selected page '%s'", page_name)
-            self.view.run_command('mde_replace_selected', {'text': page_name})
+            self.view.run_command("mde_replace_selected", {"text": page_name})
 
     def find_matching_files(self, word_region):
         word = None if word_region.empty() else self.view.substr(word_region)
@@ -323,11 +326,12 @@ class WikiPage:
         logger.debug("Finding matching files for %s in %s", word, current_dir)
 
         markdown_extension = self.view.settings().get(
-            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION)
+            "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
+        )
 
         # Optionally strip extension...
         if word is not None and word.endswith(markdown_extension):
-            word = word[:-len(markdown_extension)]
+            word = word[: -len(markdown_extension)]
 
         # Scan directory tree for potential filenames that contain the word...
         results = []

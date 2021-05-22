@@ -4,14 +4,13 @@ from .view import MdeTextCommand
 
 
 class MdeIndentListItemCommand(MdeTextCommand):
-
     def run(self, edit, reverse=False):
         for region in self.view.sel():
             line = self.view.line(region)
             line_content = self.view.substr(line)
 
             bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-            bullet_pattern = '([' + ''.join(re.escape(i) for i in bullets) + '])'
+            bullet_pattern = "([" + "".join(re.escape(i) for i in bullets) + "])"
 
             new_line = line_content
 
@@ -25,7 +24,8 @@ class MdeIndentListItemCommand(MdeTextCommand):
                             continue
 
                         new_line = new_line.replace(
-                            bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)])
+                            bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)]
+                        )
                         break
 
             # Determine how to indent (tab or spaces)
@@ -48,7 +48,6 @@ class MdeIndentListItemCommand(MdeTextCommand):
 
 
 class MdeIndentListMultiitemCommand(MdeTextCommand):
-
     def run(self, edit, reverse=False):
         todo = []
         for region in self.view.sel():
@@ -69,7 +68,7 @@ class MdeIndentListMultiitemCommand(MdeTextCommand):
 
                 if re.match(r"^\s*(>\s*)?[*+\\-]\s+(.*)$", line_content):
                     bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-                    bullet_pattern = '([' + ''.join(re.escape(i) for i in bullets) + '])'
+                    bullet_pattern = "([" + "".join(re.escape(i) for i in bullets) + "])"
                     bullet_pattern_a = r"^\s*(?:>\s*)?("
                     bullet_pattern_b = r")\s+"
                     new_line = line_content
@@ -82,7 +81,9 @@ class MdeIndentListMultiitemCommand(MdeTextCommand):
                                 if reverse and new_line.startswith(bullet) and key == 0:
                                     # In this case, do not switch bullets
                                     continue
-                                new_bullet = bullets[(key + (1 if not reverse else -1)) % len(bullets)]
+                                new_bullet = bullets[
+                                    (key + (1 if not reverse else -1)) % len(bullets)
+                                ]
                                 new_line = re.sub(re_bullet, new_bullet, new_line, 1)
                                 break
                     if not reverse:
@@ -107,7 +108,6 @@ class MdeIndentListMultiitemCommand(MdeTextCommand):
 
 
 class MdeSwitchListBulletTypeCommand(MdeTextCommand):
-
     def run(self, edit):
         todo = []
         unordered_bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
@@ -120,12 +120,14 @@ class MdeSwitchListBulletTypeCommand(MdeTextCommand):
                 # print(line_content)
                 m = re.match(
                     r"^(\s*(?:>\s*)?)["
-                    + ''.join(re.escape(i) for i in unordered_bullets)
-                    + r"](\s+.*)$", line_content)
+                    + "".join(re.escape(i) for i in unordered_bullets)
+                    + r"](\s+.*)$",
+                    line_content,
+                )
                 if m:
                     # Transform the bullet to numbered bullet type
                     new_line = m.group(1) + str(number) + "." + m.group(2)
-                    if self.view.settings().get('mde.auto_increment_ordered_list_number', True):
+                    if self.view.settings().get("mde.auto_increment_ordered_list_number", True):
                         number += 1
 
                     # Insert the new item
@@ -145,23 +147,28 @@ class MdeSwitchListBulletTypeCommand(MdeTextCommand):
 
 
 class MdeNumberListCommand(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
         sel = view.sel()[0]
         text = view.substr(view.full_line(sel))
-        num = re.search(r'\d', text).start()
+        num = re.search(r"\d", text).start()
         dot = text.find(".")
-        additional_spaces = re.search(r"^\s*", text[dot + 1:]).group()
+        additional_spaces = re.search(r"^\s*", text[dot + 1 :]).group()
         increment = 0
-        if self.view.settings().get('mde.auto_increment_ordered_list_number', True):
+        if self.view.settings().get("mde.auto_increment_ordered_list_number", True):
             increment = 1
         if num == 0:
             view.erase(edit, sel)
-            view.insert(edit, sel.begin(), "\n%d.%s" % (int(text[:dot]) + increment, additional_spaces))
+            view.insert(
+                edit, sel.begin(), "\n%d.%s" % (int(text[:dot]) + increment, additional_spaces)
+            )
         else:
             view.erase(edit, sel)
-            view.insert(edit, sel.begin(), "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces))
+            view.insert(
+                edit,
+                sel.begin(),
+                "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces),
+            )
 
 
 class MdeToggleTaskListItemCommand(MdeTextCommand):

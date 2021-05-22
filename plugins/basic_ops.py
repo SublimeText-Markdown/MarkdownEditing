@@ -5,9 +5,8 @@ from .view import MdeTextCommand
 
 
 class MDEBoldCommand(MdeTextCommand):
-
     def description(self):
-        return 'Apply bold style'
+        return "Apply bold style"
 
     def run(self, edit):
         view = self.view

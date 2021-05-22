@@ -5,7 +5,6 @@ from .view import MdeTextCommand
 
 
 class MdeIndentQuote(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
         selections = view.sel()
@@ -27,7 +26,11 @@ class MdeIndentQuote(MdeTextCommand):
             replacement_text = "\n".join(all_lines)
             view.replace(edit, expanded_selection, replacement_text)
 
-            new_selections.append(sublime.Region(expanded_selection_start, expanded_selection_start + len(replacement_text)))
+            new_selections.append(
+                sublime.Region(
+                    expanded_selection_start, expanded_selection_start + len(replacement_text)
+                )
+            )
 
         selections.clear()
         for selection in new_selections:
@@ -35,7 +38,6 @@ class MdeIndentQuote(MdeTextCommand):
 
 
 class MdeUnindentQuote(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
         selections = view.sel()
@@ -50,15 +52,18 @@ class MdeUnindentQuote(MdeTextCommand):
                 complete_line = view.line(line)
                 expanded_selection_end = complete_line.end()
                 text = view.substr(complete_line)
-                all_lines.append(re.sub(r'^(> )', '', text))
+                all_lines.append(re.sub(r"^(> )", "", text))
 
             expanded_selection = sublime.Region(expanded_selection_start, expanded_selection_end)
 
             replacement_text = "\n".join(all_lines)
             view.replace(edit, expanded_selection, replacement_text)
 
-            new_selections.append(sublime.Region(
-                expanded_selection_start, expanded_selection_start + len(replacement_text)))
+            new_selections.append(
+                sublime.Region(
+                    expanded_selection_start, expanded_selection_start + len(replacement_text)
+                )
+            )
 
         selections.clear()
         for selection in new_selections:

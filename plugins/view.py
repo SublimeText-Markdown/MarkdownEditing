@@ -21,7 +21,6 @@ def syntax_specific_settings_file(view):
 
 
 class MdeTextCommand(sublime_plugin.TextCommand):
-
     def is_enabled(self):
         return view_is_markdown(self.view)
 
@@ -32,15 +31,14 @@ class MdeTextCommand(sublime_plugin.TextCommand):
 class MdeReplaceSelectedCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
         for region in self.view.sel():
-            self.view.replace(edit, region, args['text'])
+            self.view.replace(edit, region, args["text"])
 
 
 class MdeViewEventListener(sublime_plugin.ViewEventListener):
-
     @classmethod
     def is_applicable(cls, settings):
         try:
-            return 'Markdown' in settings.get('syntax')
+            return "Markdown" in settings.get("syntax")
         except (AttributeError, TypeError):
             return False
 
@@ -79,14 +77,14 @@ class MdeToggleCenteredLineCommand(MdeTextCommand):
     def run(self, edit, **args):
         settings_file = syntax_specific_settings_file(self.view) or "Markdown.sublime-settings"
         syntax_settings = sublime.load_settings(settings_file)
-        is_centered_by_syntax = syntax_settings.get('mde.keep_centered', False)
+        is_centered_by_syntax = syntax_settings.get("mde.keep_centered", False)
 
         settings = self.view.settings()
-        want_centered = not settings.get('mde.keep_centered', False)
+        want_centered = not settings.get("mde.keep_centered", False)
         if want_centered != is_centered_by_syntax:
-            settings.set('mde.keep_centered', want_centered)
+            settings.set("mde.keep_centered", want_centered)
         else:
-            settings.erase('mde.keep_centered')
+            settings.erase("mde.keep_centered")
 
 
 class MdeCenteredLineKeeper(MdeViewEventListener):
@@ -94,6 +92,7 @@ class MdeCenteredLineKeeper(MdeViewEventListener):
     This class keeps caret in vertical center position.
     These features can be enabled/disabled via settings files.
     """
+
     current_line = -1
 
     def on_modified(self):
@@ -102,7 +101,7 @@ class MdeCenteredLineKeeper(MdeViewEventListener):
             return
 
         settings = self.view.settings()
-        if not settings.get('mde.keep_centered', False):
+        if not settings.get("mde.keep_centered", False):
             return
 
         pt = sel[0].begin()
@@ -125,5 +124,5 @@ class MdeUnsavedViewNameSetter(MdeViewEventListener):
 
         name = first_heading_text(self.view)
         if len(name) > self.MAX_NAME:
-            name = name[:self.MAX_NAME] + "…"
+            name = name[: self.MAX_NAME] + "…"
         self.view.set_name(name)

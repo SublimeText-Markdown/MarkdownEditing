@@ -3,10 +3,7 @@ import sublime
 
 PACKAGE_NAME = __package__.split(".", 1)[0]
 
-logging.basicConfig(
-    level=logging.ERROR,
-    format="%(name)s [%(levelname)s]: %(message)s"
-)
+logging.basicConfig(level=logging.ERROR, format="%(name)s [%(levelname)s]: %(message)s")
 logger = logging.getLogger(PACKAGE_NAME)
 
 

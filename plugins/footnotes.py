@@ -4,8 +4,8 @@ import sublime
 
 from .view import MdeTextCommand, MdeViewEventListener
 
-DEFINITION_KEY = 'MarkdownEditing-footnote-definitions'
-REFERENCE_KEY = 'MarkdownEditing-footnote-references'
+DEFINITION_KEY = "MarkdownEditing-footnote-definitions"
+REFERENCE_KEY = "MarkdownEditing-footnote-references"
 DEFINITION_REGEX = r"^[\t ]*\[\^([^\]]*)\]:"
 REFERENCE_REGEX = r"\[\^([^\]]*)\]"
 
@@ -62,18 +62,19 @@ def is_footnote_reference(view):
 
 
 def strip_trailing_whitespace(view, edit):
-    tws = view.find(r'\s+\Z', 0)
+    tws = view.find(r"\s+\Z", 0)
     if tws:
         view.erase(edit, tws)
 
 
 class MdeMarkFootnotesListener(MdeViewEventListener):
-
     def update_footnote_data(self):
         self.view.add_regions(
-            REFERENCE_KEY, self.view.find_all(REFERENCE_REGEX), '', 'cross', sublime.HIDDEN)
+            REFERENCE_KEY, self.view.find_all(REFERENCE_REGEX), "", "cross", sublime.HIDDEN
+        )
         self.view.add_regions(
-            DEFINITION_KEY, self.view.find_all(DEFINITION_REGEX), '', 'cross', sublime.HIDDEN)
+            DEFINITION_KEY, self.view.find_all(DEFINITION_REGEX), "", "cross", sublime.HIDDEN
+        )
 
     def on_load(self):
         self.update_footnote_data()
@@ -83,7 +84,6 @@ class MdeMarkFootnotesListener(MdeViewEventListener):
 
 
 class MdeGatherMissingFootnotesCommand(MdeTextCommand):
-
     def run(self, edit):
         refs = get_footnote_identifiers(self.view)
         defs = get_footnote_definition_markers(self.view)
@@ -91,33 +91,44 @@ class MdeGatherMissingFootnotesCommand(MdeTextCommand):
         if len(missingnotes):
             self.view.insert(edit, self.view.size(), "\n")
             for note in missingnotes:
-                self.view.insert(edit, self.view.size(), '\n [^%s]: ' % note)
+                self.view.insert(edit, self.view.size(), "\n [^%s]: " % note)
 
 
 class MdeInsertFootnoteCommand(MdeTextCommand):
-
     def run(self, edit):
         view = self.view
         markernum = get_next_footnote_marker(view)
-        markernum_str = '[^%s]' % markernum
+        markernum_str = "[^%s]" % markernum
         for sel in view.sel():
             startloc = sel.end()
             if bool(view.size()):
-                targetloc = view.find(r'(\s|$)', startloc).begin()
+                targetloc = view.find(r"(\s|$)", startloc).begin()
             else:
                 targetloc = 0
             view.insert(edit, targetloc, markernum_str)
         if len(view.sel()) > 0:
-            view.insert(edit, view.size(), '\n' + markernum_str + ': ')
+            view.insert(edit, view.size(), "\n" + markernum_str + ": ")
             view.sel().clear()
             view.sel().add(sublime.Region(view.size(), view.size()))
-            view.run_command('set_motion', {"inclusive": True, "motion": "move_to", "motion_args": {"extend": True, "to": "eof"}})
-            if view.settings().get('command_mode'):
-                view.run_command('enter_insert_mode', {"insert_command": "move", "insert_args": {"by": "characters", "forward": True}})
+            view.run_command(
+                "set_motion",
+                {
+                    "inclusive": True,
+                    "motion": "move_to",
+                    "motion_args": {"extend": True, "to": "eof"},
+                },
+            )
+            if view.settings().get("command_mode"):
+                view.run_command(
+                    "enter_insert_mode",
+                    {
+                        "insert_command": "move",
+                        "insert_args": {"by": "characters", "forward": True},
+                    },
+                )
 
 
 class MdeGotoFootnoteDefinitionCommand(MdeTextCommand):
-
     def run(self, edit):
         defs = get_footnote_definition_markers(self.view)
         regions = self.view.get_regions(REFERENCE_KEY)
@@ -142,7 +153,6 @@ class MdeGotoFootnoteDefinitionCommand(MdeTextCommand):
 
 
 class MdeGotoFootnoteReferenceCommand(MdeTextCommand):
-
     def run(self, edit):
         refs = get_footnote_references(self.view)
         match = is_footnote_definition(self.view)
@@ -154,27 +164,24 @@ class MdeGotoFootnoteReferenceCommand(MdeTextCommand):
 
 
 class MdeMagicFootnotesCommand(MdeTextCommand):
-
     def run(self, edit):
-        if (is_footnote_definition(self.view)):
-            self.view.run_command('mde_goto_footnote_reference')
-        elif (is_footnote_reference(self.view)):
-            self.view.run_command('mde_goto_footnote_definition')
+        if is_footnote_definition(self.view):
+            self.view.run_command("mde_goto_footnote_reference")
+        elif is_footnote_reference(self.view):
+            self.view.run_command("mde_goto_footnote_definition")
         else:
-            self.view.run_command('mde_insert_footnote')
+            self.view.run_command("mde_insert_footnote")
 
 
 class MdeSwitchToFromFootnoteCommand(MdeTextCommand):
-
     def run(self, edit):
-        if (is_footnote_definition(self.view)):
-            self.view.run_command('mde_goto_footnote_reference')
+        if is_footnote_definition(self.view):
+            self.view.run_command("mde_goto_footnote_reference")
         else:
-            self.view.run_command('mde_goto_footnote_definition')
+            self.view.run_command("mde_goto_footnote_definition")
 
 
 class MdeSortFootnotesCommand(MdeTextCommand):
-
     def run(self, edit):
         strip_trailing_whitespace(self.view, edit)
         defs = get_footnote_definition_markers(self.view)
@@ -187,7 +194,7 @@ class MdeSortFootnotesCommand(MdeTextCommand):
                 keys.append(r)
 
         for (key, item) in defs.items():
-            fnend = self.view.find(r'(\s*\Z|\n\s*\n(?!\ {4,}))', item.end())
+            fnend = self.view.find(r"(\s*\Z|\n\s*\n(?!\ {4,}))", item.end())
             fnreg = sublime.Region(item.begin(), fnend.end())
             notes[key] = self.view.substr(fnreg).strip()
             erase.append(fnreg)
@@ -197,4 +204,4 @@ class MdeSortFootnotesCommand(MdeTextCommand):
             self.view.erase(edit, reg)
 
         for key in keys:
-            self.view.insert(edit, self.view.size(), '\n\n ' + notes[key])
+            self.view.insert(edit, self.view.size(), "\n\n " + notes[key])
