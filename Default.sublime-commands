@@ -1,4 +1,8 @@
 [
+	//
+	// Settings
+	//
+
 	{
 		"caption": "Preferences: MarkdownEditing Settings",
 		"command": "edit_settings",
@@ -24,9 +28,31 @@
 		}
 	},
 	{
+		"caption": "MarkdownEditing: Select Color scheme",
+		"command": "mde_select_color_scheme"
+	},
+	{
 		"caption": "MarkdownEditing: Toggle Centered Line",
 		"command": "mde_toggle_centered_line"
 	},
+
+	//
+	// Linting
+	//
+
+	{
+		"caption": "MarkdownEditing: Markdown Lint",
+		"command": "mde_markdown_lint"
+	},
+	{
+		"caption": "MarkdownEditing: Run markdownlint",
+		"command": "mde_markdown_lint_mdl"
+	},
+
+	//
+	// Headings
+	//
+
 	{
 		"caption": "MarkdownEditing: Fix Underlined Headings",
 		"command": "mde_fix_underlined_headings"
@@ -81,61 +107,30 @@
 		"args": { "by": -1 }
 	},
 	{
-		"caption": "MarkdownEditing: Add Missing Link Labels",
-		"command": "mde_gather_missing_link_markers"
+		"caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": true }
 	},
 	{
-		"caption": "MarkdownEditing: Markdown Lint",
-		"command": "mde_markdown_lint"
+		"caption": "MarkdownEditing: Find Next Heading (Any level)",
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": false }
 	},
 	{
-		"caption": "MarkdownEditing: Run markdownlint",
-		"command": "mde_markdown_lint_mdl"
+		"caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": true }
 	},
 	{
-		"caption": "MarkdownEditing: Switch List Bullet Type",
-		"command": "mde_switch_list_bullet_type"
+		"caption": "MarkdownEditing: Find Previous Heading (Any level)",
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": false }
 	},
-	{
-		"caption": "MarkdownEditing: Magic Footnotes Command",
-		"command": "mde_magic_footnotes"
-	},
-	{
-		"caption": "MarkdownEditing: Gather Missing Footnotes",
-		"command": "mde_gather_missing_footnotes"
-	},
-	{
-		"caption": "MarkdownEditing: Jump Reference",
-		"command": "mde_reference_jump"
-	},
-	{
-		"caption": "MarkdownEditing: New Reference",
-		"command": "mde_reference_new_reference"
-	},
-	{
-		"caption": "MarkdownEditing: New Inline Link",
-		"command": "mde_reference_new_inline_link"
-	},
-	{
-		"caption": "MarkdownEditing: New Inline Image",
-		"command": "mde_reference_new_inline_image"
-	},
-	{
-		"caption": "MarkdownEditing: New Image",
-		"command": "mde_reference_new_image"
-	},
-	{
-		"caption": "MarkdownEditing: New Footnote",
-		"command": "mde_reference_new_footnote"
-	},
-	{
-		"caption": "MarkdownEditing: Delete Reference",
-		"command": "mde_reference_delete_reference"
-	},
-	{
-		"caption": "MarkdownEditing: Organize References",
-		"command": "mde_reference_organize"
-	},
+
+	//
+	// Folding
+	//
+
 	{
 		"caption": "MarkdownEditing: Toggle Folding Current Section",
 		"command": "mde_fold_section"
@@ -182,29 +177,51 @@
 		"caption": "MarkdownEditing: Auto Fold Link URLs",
 		"command": "mde_fold_links"
 	},
+
+	//
+	// Lists
+	//
+
 	{
-		"caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
-		"command": "mde_goto_next_heading",
-		"args": { "same_level": true }
+		"caption": "MarkdownEditing: Switch List Bullet Type",
+		"command": "mde_switch_list_bullet_type"
+	},
+
+	//
+	// References
+	//
+
+	{
+		"caption": "MarkdownEditing: Magic Footnotes",
+		"command": "mde_magic_footnotes"
 	},
 	{
-		"caption": "MarkdownEditing: Find Next Heading (Any level)",
-		"command": "mde_goto_next_heading",
-		"args": { "same_level": false }
+		"caption": "MarkdownEditing: Jump Reference",
+		"command": "mde_reference_jump"
 	},
 	{
-		"caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
-		"command": "mde_goto_previous_heading",
-		"args": { "same_level": true }
+		"caption": "MarkdownEditing: New Reference",
+		"command": "mde_reference_new_reference"
 	},
 	{
-		"caption": "MarkdownEditing: Find Previous Heading (Any level)",
-		"command": "mde_goto_previous_heading",
-		"args": { "same_level": false }
+		"caption": "MarkdownEditing: New Inline Link",
+		"command": "mde_reference_new_inline_link"
 	},
 	{
-		"caption": "MarkdownEditing: Select Color scheme",
-		"command": "mde_select_color_scheme"
+		"caption": "MarkdownEditing: New Inline Image",
+		"command": "mde_reference_new_inline_image"
+	},
+	{
+		"caption": "MarkdownEditing: New Image",
+		"command": "mde_reference_new_image"
+	},
+	{
+		"caption": "MarkdownEditing: New Footnote",
+		"command": "mde_reference_new_footnote"
+	},
+	{
+		"caption": "MarkdownEditing: Delete Reference",
+		"command": "mde_reference_delete_reference"
 	},
 	{
 		"caption": "MarkdownEditing: Convert all inline links to references",
@@ -215,6 +232,23 @@
 		"command": "mde_convert_inline_link_to_reference"
 	},
 	{
+		"caption": "MarkdownEditing: Add Missing Link Labels",
+		"command": "mde_gather_missing_link_markers"
+	},
+	{
+		"caption": "MarkdownEditing: Gather Missing Footnotes",
+		"command": "mde_gather_missing_footnotes"
+	},
+	{
+		"caption": "MarkdownEditing: Organize References",
+		"command": "mde_reference_organize"
+	},
+
+	//
+	// Wiki
+	//
+
+	{
 		"caption": "MarkdownEditing: Open Home Page",
 		"command": "mde_open_home_page"
 	},
@@ -223,11 +257,11 @@
 		"command": "mde_open_page"
 	},
 	{
-		"caption": "MarkdownEditing: List Back Links",
-		"command": "mde_list_back_links"
-	},
-	{
 		"caption": "MarkdownEditing: Open Journal",
 		"command": "mde_open_journal"
+	},
+	{
+		"caption": "MarkdownEditing: List Back Links",
+		"command": "mde_list_back_links"
 	}
 ]
