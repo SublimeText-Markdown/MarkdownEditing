@@ -57,6 +57,8 @@ else:
         MdeFixUnderlinedHeadingsCommand,
         MdeGotoNextHeadingCommand,
         MdeGotoPreviousHeadingCommand,
+        MdeMatchHeadingHashesCommand,
+        MdeMatchHeadingHashesDetector,
     )
     from .plugins.lists import (
         MdeIndentListItemCommand,

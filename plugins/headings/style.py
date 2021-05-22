@@ -1,0 +1,86 @@
+import re
+
+from ..view import MdeTextCommand, MdeViewEventListener
+
+
+class MdeMatchHeadingHashesCommand(MdeTextCommand):
+    """
+    The `mde_match_heading_hashes` command adds or removes trailing hashes to or from atx headings.
+
+    If no argument is passed, trailing hashes are added or removed depending on actual value of
+    the current view's `mde.match_heading_hashes` setting.
+
+    If the argument `enabled` is of `True` or `False`, its value is applied to view specific
+    `mde.match_heading_hashes` setting and trailing hashes are added and removed accordingly.
+
+    Note: The function balances the amount of leading and trailing hashes.
+    """
+
+    def run(self, edit, enabled=None):
+        view = self.view
+
+        if enabled is None:
+            enabled = view.settings().get("mde.match_heading_hashes", False)
+        elif isinstance(enabled, bool):
+            view.settings().set("mde.match_heading_hashes", enabled)
+        else:
+            raise TypeError("Argument: 'enabled' must be a bool!")
+
+        if enabled:
+            replacement = r"\1\2 \3 \2"
+        else:
+            replacement = r"\1\2 \3"
+
+        pattern = re.compile(r"^([ \t]*)(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$")
+        for region in reversed(view.find_by_selector("markup.heading")):
+            text = view.substr(region)
+            new_text = pattern.sub(replacement, text)
+            if text != new_text:
+                view.replace(edit, region, new_text)
+
+
+class MdeMatchHeadingHashesDetector(MdeViewEventListener):
+    """
+    The `MdeMatchHeadingHashesDetector` auto-detects ATX heading style.
+
+    The detected style is applied to the view specific setting `"mde.match_heading_hashes"`
+    so that any modification to headings works as expected.
+    """
+
+    @classmethod
+    def is_applicable(cls, settings):
+        try:
+            if "Markdown" not in settings.get("syntax"):
+                return False
+            if not settings.get("mde.detect_heading_style", False):
+                # remove view specific setting to use global value from preferences
+                settings.erase("mde.match_heading_hashes")
+                return False
+            return True
+        except (AttributeError, TypeError):
+            return False
+
+    def on_load(self):
+        self.auto_detect_heading_style()
+
+    def on_pre_save(self):
+        self.auto_detect_heading_style()
+
+    def auto_detect_heading_style(self):
+        view = self.view
+        num_leading = 0
+        num_trailing = 0
+
+        for h1, h2 in zip(
+            view.find_by_selector("markup.heading")[:10],
+            view.find_by_selector("markup.heading - punctuation")[:10],
+        ):
+            num_leading += 1
+            if h1.end() != h2.end():
+                num_trailing += 1
+
+        if num_leading:
+            view.settings().set("mde.match_heading_hashes", num_trailing / num_leading > 0.5)
+
+        if view.settings().get("mde.auto_match_heading_hashes", False):
+            view.run_command("mde_match_heading_hashes")

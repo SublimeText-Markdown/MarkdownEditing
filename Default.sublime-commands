@@ -54,6 +54,20 @@
 	//
 
 	{
+		"caption": "MarkdownEditing: Add Closing Heading Hashes",
+		"command": "mde_match_heading_hashes",
+		"args": { "enabled": true }
+	},
+	{
+		"caption": "MarkdownEditing: Remove Closing Heading Hashes",
+		"command": "mde_match_heading_hashes",
+		"args": { "enabled": false }
+	},
+	{
+		"caption": "MarkdownEditing: Fix Closing Heading Hashes",
+		"command": "mde_match_heading_hashes"
+	},
+	{
 		"caption": "MarkdownEditing: Fix Underlined Headings",
 		"command": "mde_fix_underlined_headings"
 	},

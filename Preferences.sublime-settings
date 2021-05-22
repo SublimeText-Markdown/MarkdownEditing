@@ -14,8 +14,22 @@
 	"mde.italic_marker_asterisk": false,
 
 	// MarkdownEditing (Headings):
+	// auto detect whether to add trailing #'s to headlines
+	// If "true" `mde.match_heading_hashes` is set per view depending on
+	// majority of first 10 headings containing trailing #'s or not.
+	"mde.detect_heading_style": true,
+
+	// MarkdownEditing (Headings):
 	// add trailing #'s to headlines
-	"mde.auto_match_heading_hashes": false,
+	"mde.match_heading_hashes": false,
+
+	// MarkdownEditing (Headings):
+	// If true, trailing heading hashes are added or removed automatically,
+	// depending on a view's `mde.match_heading_hashes` setting value.
+	// Headings are fixed:
+	// a) when hitting enter at the end of a heading line
+	// b) after loading or before saving a file if `mde.auto_detect_match_heading_hashes` is true.
+	"mde.auto_match_heading_hashes": true,
 
 	// MarkdownEditing (Lists):
 	// Align list item text at indentation level.

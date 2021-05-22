@@ -13,7 +13,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
     1. Carets are moved to the beginning of each header label.
     2. Indentation level is kept intact.
     3. Works within block quotes.
-    4. Respects `mde.auto_match_heading_hashes` setting.
+    4. Respects `mde.match_heading_hashes` setting.
 
     Absolute:
 
@@ -92,7 +92,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
     def _set_level(self, edit, calc_level, select):
         view = self.view  # type: sublime.View
         vsels = view.sel()  # type: sublime.Selection
-        auto_match_heading_hashes = view.settings().get("mde.auto_match_heading_hashes")
+        match_heading_hashes = view.settings().get("mde.match_heading_hashes")
 
         # One or more selections may span multiple lines each of them to change heading level for.
         # To correctly handle caret placements split all selections into single lines first.
@@ -116,7 +116,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
             quote, hashes, spacing, text, suffix = match.groups()
             to = calc_level(hashes or "")
             new_text = quote + "#" * to + " " * bool(to) + text
-            if auto_match_heading_hashes and to > 0:
+            if match_heading_hashes and to > 0:
                 new_text += " " + "#" * to
             view.replace(edit, line, new_text)
             # move caret to the beginning of heading text and optionaly select it

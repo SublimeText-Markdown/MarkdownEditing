@@ -99,8 +99,8 @@ You can access most features through Command Palette. You can launch it from `To
 * __Strikethrough__
     - <kbd>~</kbd> wraps selected text with `~~` (strikethrough). When you for instance select the word "foo" and hit  `~`, the result will be `~~foo~~`.
 * __Header__
-    - Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.auto_match_heading_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
-    - Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.auto_match_heading_hashes` option in your settings to enable (disabled by default).
+    - Typing `#` when there's a selection will surround it with `#` to make it a headline. Multiple presses add additional hashes, increasing the level of the header. Once you hit 6 hashes, it will reset to 0 on the next press. The `mde.match_heading_hashes` will determine if the `#` are mirrored on both sides or just at the beginning of the line.
+    - Typing return at the end of a line that begins with hashmarks will insert closing hashmarks on the headline. They're not required for Markdown, it's just aesthetics, and you can change the `mde.match_heading_hashes` option in your settings to enable (disabled by default).
     - Setext-style headers can be completed with `Tab`. That is, typing `Tab` on a line containing only `=` or `-` characters will add or remove enough characters to it to match the length of the line above.
     - New documents will be named automatically based on the first header.
 
@@ -135,9 +135,9 @@ Lastly the command to open the *home* page is provided, where the home page is j
 | <kbd>⌘ + ⌥ + R</kbd> | <kbd>Ctrl + Alt + R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
 | <kbd>⌘ + ⇧ + K</kbd> | <kbd>Shift + Win + K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
 | <kbd>⌘ + ⌥ + B</kbd> <kbd>⌘ + ⌥ + I</kbd> | <kbd>Alt + B</kbd> <kbd>Alt + I</kbd> | These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
-| <kbd>⌘ + ^ + 1...6</kbd> | <kbd>Ctrl + Alt + 1...6</kbd> | These will add the corresponding number of hashmarks for headlines. This command respects the `mde.auto_match_heading_hashes` preference setting.
-| <kbd>⌘ + ^ + ,</kbd> | <kbd>Ctrl + Alt + ,</kbd> | Decrease number of hashmarks for headlines. This command respects the `mde.auto_match_heading_hashes` preference setting.
-| <kbd>⌘ + ^ + .</kbd> | <kbd>Ctrl + Alt + .</kbd> | Increase number of hashmarks for headlines. This command respects the `mde.auto_match_heading_hashes` preference setting.
+| <kbd>⌘ + ^ + 1...6</kbd> | <kbd>Ctrl + Alt + 1...6</kbd> | These will add the corresponding number of hashmarks for headlines. This command respects the `mde.match_heading_hashes` preference setting.
+| <kbd>⌘ + ^ + ,</kbd> | <kbd>Ctrl + Alt + ,</kbd> | Decrease number of hashmarks for headlines. This command respects the `mde.match_heading_hashes` preference setting.
+| <kbd>⌘ + ^ + .</kbd> | <kbd>Ctrl + Alt + .</kbd> | Increase number of hashmarks for headlines. This command respects the `mde.match_heading_hashes` preference setting.
 | <kbd>⌥ + ⇧ + 6</kbd> | <kbd>Alt + Shift + 6</kbd> | Inserts a footnote.
 | <kbd>⇧ + Tab</kbd> | <kbd>Shift + Tab</kbd> | Fold/Unfold current section.
 | <kbd>^ + ⇧ + Tab</kbd> | <kbd>Ctrl + Shift + Tab</kbd> | Fold all sections under headings of a certain level.
