@@ -1,38 +1,7 @@
-import re
-
 import sublime
 
+from .headings import all_headings
 from .view import MdeTextCommand, MdeViewEventListener
-
-HEADINGS_RE = re.compile(
-    r"""
-    ^( [ \t]* )                                   # leading whitespace
-    (?:
-      ( \#{1,6} ) [ \t]+ ( [^\n]+ )               # ATX headings
-    | ( [^-#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} )  # SETEXT headings
-    ) [ \t]*$                                     # maybe trailing whitespace
-    """,
-    re.X | re.M
-)
-
-
-def all_headings(view, start=0, end=None):
-    if end is None:
-        end = view.size()
-    text = view.substr(sublime.Region(start, end))
-    for m in HEADINGS_RE.finditer(text):
-        title_begin = start + m.start()
-        title_end = start + m.end()
-        if m.group(2):
-            # ATX headings use group 2 (heading) and 3 (leading hashes)
-            level = m.end(2) - m.start(2)
-        else:
-            # SETEXT headings use group 4 (text) and 5 (underlines)
-            level = 2 if text[m.start(5)] == "-" else 1
-        # ignore front matter and raw code blocks
-        if not view.match_selector(title_begin, "front-matter, markup.raw.block.markdown"):
-            yield (title_begin, title_end, level)
-    return None
 
 
 def get_current_level(view, pt):
@@ -192,70 +161,6 @@ class MdeUnfoldAllSectionsCommand(MdeTextCommand):
     def run(self, edit):
         view = self.view
         view.run_command('unfold_all')
-
-
-class MdeGotoNextHeadingCommand(MdeTextCommand):
-
-    def run(self, edit, same_level=True):
-        view = self.view
-        new_sel = []
-        for sel in view.sel():
-            section_level = 0
-            found = False
-            for (title_begin, title_end, level) in all_headings(view):
-                if title_begin <= sel.a:
-                    section_level = level
-                elif not same_level or section_level >= level:
-                    found = True
-                    break
-            if found:
-                new_sel.append(sublime.Region(title_begin, title_end))
-        if len(new_sel) == 0:
-            sublime.status_message('No heading can be found')
-        else:
-            view.sel().clear()
-            for region in new_sel:
-                view.sel().add(region)
-                view.show(region)
-
-
-class MdeGotoPreviousHeadingCommand(MdeTextCommand):
-
-    def run(self, edit, same_level=True):
-        view = self.view
-        new_sel = []
-        max_level = 0
-        last_level = 0
-        found = False
-        for sel in view.sel():
-            prev = {}
-            for (title_begin, title_end, level) in all_headings(view):
-                max_level = max(max_level, level)
-                if title_end < sel.a:
-                    for lvl in range(level, max_level + 1):
-                        prev[lvl] = (title_begin, title_end)
-                    last_level = level
-                else:
-                    found = True
-                    break
-            if found:
-                if same_level:
-                    while level not in prev and level > 0:
-                        level -= 1
-                    if level > 0 and level in prev:
-                        new_sel.append(sublime.Region(prev[level][0], prev[level][1]))
-                else:
-                    if last_level > 0 and last_level in prev:
-                        new_sel.append(sublime.Region(prev[last_level][0], prev[last_level][1]))
-            elif max_level > 0:
-                new_sel.append(sublime.Region(title_begin, title_end))
-        if len(new_sel) == 0:
-            sublime.status_message('No heading can be found')
-        else:
-            view.sel().clear()
-            for region in new_sel:
-                view.sel().add(region)
-                view.show(region)
 
 
 class MdeFoldLinksProviderMixin:

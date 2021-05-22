@@ -36,8 +36,6 @@ else:
         MdeFoldLinksListener,
         MdeFoldSectionCommand,
         MdeFoldSectionContextCommand,
-        MdeGotoNextHeadingCommand,
-        MdeGotoPreviousHeadingCommand,
         MdeShowFoldAllSectionsCommand,
         MdeUnfoldAllSectionsCommand,
         MdeUnfoldSectionContextCommand,
@@ -53,10 +51,12 @@ else:
         MdeMarkFootnotesListener,
     )
     from .plugins.headings import (
+        MdeChangeHeadingsLevelCommand,
         MdeCompleteUnderlinedHeadingsCommand,
         MdeConvertUnderlinedHeadingsToAtxCommand,
         MdeFixUnderlinedHeadingsCommand,
-        MdeChangeHeadingsLevelCommand,
+        MdeGotoNextHeadingCommand,
+        MdeGotoPreviousHeadingCommand,
     )
     from .plugins.lists import (
         MdeIndentListItemCommand,
