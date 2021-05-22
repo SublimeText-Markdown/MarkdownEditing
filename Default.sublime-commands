@@ -107,22 +107,22 @@
 		"args": { "by": -1 }
 	},
 	{
-		"caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
+		"caption": "MarkdownEditing: Goto Next Heading (same or higher level)",
 		"command": "mde_goto_next_heading",
 		"args": { "same_level": true }
 	},
 	{
-		"caption": "MarkdownEditing: Find Next Heading (Any level)",
+		"caption": "MarkdownEditing: Goto Next Heading (any level)",
 		"command": "mde_goto_next_heading",
 		"args": { "same_level": false }
 	},
 	{
-		"caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
+		"caption": "MarkdownEditing: Goto Previous Heading (same or higher level)",
 		"command": "mde_goto_previous_heading",
 		"args": { "same_level": true }
 	},
 	{
-		"caption": "MarkdownEditing: Find Previous Heading (Any level)",
+		"caption": "MarkdownEditing: Goto Previous Heading (any level)",
 		"command": "mde_goto_previous_heading",
 		"args": { "same_level": false }
 	},
