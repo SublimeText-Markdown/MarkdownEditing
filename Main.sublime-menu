@@ -40,7 +40,7 @@
 								"command": "edit_settings",
 								"args": {
 									"base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
-									"default": "{\n$0\n}\n"
+									"default": "// Bindings in here override those in \"Default/Default.sublime-keymap\"\n[\n\t$0\n]\n"
 								}
 							}
 						]
