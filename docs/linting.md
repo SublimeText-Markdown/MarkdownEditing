@@ -1,4 +1,78 @@
-# Rules
+# Lint feature for MarkdownEditing
+
+## Running Lint
+
+Open a markdown document and press <kbd>ctrl</kbd>(<kbd>⌘</kbd>) + <kbd>shift</kbd>(<kbd>⇧</kbd>) + <kbd>M</kbd> or input `MarkdownEditing: Markdown Lint` in Command Pallette to try it.
+
+*   **Markdown Lint**  
+    Performs lint on current Markdown file using a local linter. See [lint rules](#rules). Some of the linting rules are customizable via user settings file.
+
+*   **Run markdownlint**  
+    Run mdl command from [markdownlint](https://github.com/markdownlint/markdownlint) package. You need to install it by yourself.
+
+## Editing Rules
+
+All rules are implemented in `lint.py`. In case you a rule is modified, please remember to also edit the description below.
+
+### How rules work
+
+All rules are implemented as seperated subclasses of `mddef` class defined in `lint.py`. The lifespan of a rule instance is one lint process. There are several important fields in every rule class:
+
+| Name | Type | Comment |
+|------|------|---------|
+| flag | int | the flag used to search for locator (default: 0) |
+| desc | str | description of the rule |
+| locator | str | a regex that will be used to locate the targets |
+| gid | int | the id of the group in locator that will be passed to test method (default: 0) |
+| finish | bool | the linter will stop scanning the rest of the document if it is true (default: false) |
+
+and a "test" method like this:
+
+```python
+def test(self, text, s, e):
+    if isIllegal(text[s:e]):
+        return {the_offset: "additional information"}
+    else:
+        return {}
+```
+
+The linter will search for all occcurences of `locator` with regex flag equals to `flag` in the document. Then it passes the document itself and the begin position and the end position of target captured group to `test` method. The `test` method will return a dictionary of "offset:information" key-value pairs. That offset will decide the displayed line number of the occurence of the error.
+
+### Editing an existing rule
+
+First you need to know the name of that rule (e.g. MD001), and search for the class with the same name in `lint.py` (e.g. `md001`). You may want to change the `locator` to narrow down (or expand) the applied domain first before editing `test` method.
+
+### Creating new rules
+
+Every rule is a subclass of `mdddef`. Here is an example:
+
+```python
+class md001(mddef):
+    flag = re.M # re.M is for multiline mode
+    desc = 'Header levels should only increment by one level at a time'
+    locator = r'^#{1,6}(?!#)' # This is for atx and atx_closed style headers
+
+    lastMatch = None # We are comparing two successive headers, so we
+                     # need to store the previous one
+
+    def test(self, text, s, e):
+        ret = {}
+        if self.lastMatch:
+            n1 = len(self.lastMatch) # the length of the captured group
+            n2 = e - s               # is the level of the header
+            if n2 > n1 and n2 != n1 + 1:
+                ret[s] = 'expected %d, %d found' % (n1 + 1, n2)
+        self.lastMatch = text[s: e]
+        return ret
+```
+
+You can create new settings as well. Just follow the examples of existing rules and the value of settings are stored as `self.settings`.
+
+## Discussion
+
+You can share your opinions through [issues](https://github.com/SublimeText-Markdown/MarkdownEditing/issues).
+
+## Rules
 
 This document contains a description of all rules, what they are checking for,
 as well as an examples of documents that break the rule and corrected
@@ -6,7 +80,7 @@ versions of the examples.
 
 The rules are mostly [from markdownlint](https://github.com/mivok/markdownlint/blob/master/docs/RULES.md).
 
-## MD001 - Header levels should only increment by one level at a time
+### MD001 - Header levels should only increment by one level at a time
 
 This rule is triggered when you skip header levels in a markdown document, for
 example:
@@ -34,7 +108,7 @@ level at a time:
 
 This rule only applies to atx and atx_closed styles of headers.
 
-## MD002 - First header should be a h1 header
+### MD002 - First header should be a h1 header
 
 This rule is triggered when the first header in the document isn't a h1 header:
 
@@ -50,7 +124,7 @@ The first header in the document should be a h1 header:
 
 This rule applies to all three styles of headers.
 
-## MD003 - Header style
+### MD003 - Header style
 
 This rule is triggered when different header styles (atx, setext, and 'closed'
 atx) are used in the same document:
@@ -72,7 +146,7 @@ Note: the configured header style can be a specific style to use (atx,
 atx_closed, setext), or simply require that the usage be consistent within the
 document.
 
-## MD004 - Unordered list style
+### MD004 - Unordered list style
 
 This rule is triggered when the symbols used in the document for unordered
 list items do not match the configured unordered list style:
@@ -92,7 +166,7 @@ Note: the configured list style can be a specific symbol to use (asterisk,
 plus, dash), or simply require that the usage be consistent within the
 document, or require that the three different symbols to be used cyclically on different level or same symbol on same levels.
 
-## MD005 - Inconsistent indentation for list items at the same level
+### MD005 - Inconsistent indentation for list items at the same level
 
 This rule is triggered when list items are parsed as being at the same level,
 but don't have the same indentation:
@@ -110,7 +184,7 @@ for the list to fix it:
       * Nested Item 2
       * Nested Item 3
 
-## MD006 - Consider starting bulleted lists at the beginning of the line
+### MD006 - Consider starting bulleted lists at the beginning of the line
 
 This rule is triggered when top level lists don't start at the beginning of a
 line:
@@ -134,7 +208,7 @@ or the tab key is used to indent. Starting a list 1 space in means that the
 indent of the first nested list is less than the indent of the second level (3
 characters if you use 4 space tabs, or 1 character if you use 2 space tabs).
 
-## MD007 - Unordered list indentation
+### MD007 - Unordered list indentation
 
 This rule is triggered when list items are not indented by the configured
 number of spaces (default: current Sublime tab_size).
@@ -163,14 +237,14 @@ require a 4 space indents. See
 <http://support.markedapp.com/discussions/problems/21-sub-lists-not-indenting>
 for a description of the problem.
 
-## MD009 - Trailing spaces
+### MD009 - Trailing spaces
 
 This rule is triggered on any lines that end with whitespace. To fix this,
 find the line that is triggered and remove any trailing spaces from the end.
 
 Note: this rule can be triggered inside code/quote block.
 
-## MD010 - Hard tabs
+### MD010 - Hard tabs
 
 This rule is triggered on any lines that contain hard tab characters instead
 of using spaces for indentation. To fix this, replace any hard tab characters
@@ -188,7 +262,7 @@ Corrected example:
 
         * Spaces used to indent the list item instead
 
-## MD011 - Reversed link syntax
+### MD011 - Reversed link syntax
 
 This rule is triggered when text that appears to be a link is encountered, but
 where the syntax appears to have been reversed (the `[]` and `()` are
@@ -200,7 +274,7 @@ To fix this, swap the `[]` and `()` around:
 
     [Correct link syntax](http://www.example.com/)
 
-## MD012 - Multiple consecutive blank lines
+### MD012 - Multiple consecutive blank lines
 
 Tags: whitespace, blank_lines
 
@@ -221,7 +295,7 @@ To fix this, delete the offending lines:
 Note: this rule will not be triggered if there are multiple consecutive blank
 lines inside code blocks.
 
-## MD013 - Line length
+### MD013 - Line length
 
 This rule is triggered when there are lines that are longer than the
 configured line length (default: current Sublime wrap_width). To fix this, split the line
@@ -229,7 +303,7 @@ up into multiple lines.
 
 This rule is disabled by default.
 
-## MD018 - No space after hash on atx style header
+### MD018 - No space after hash on atx style header
 
 This rule is triggered when when spaces are missing after the hash characters
 in an atx style header:
@@ -245,7 +319,7 @@ space:
 
     ## Header 2
 
-## MD019 - Multiple spaces after hash on atx style header
+### MD019 - Multiple spaces after hash on atx style header
 
 This rule is triggered when when more than one space is used to separate the
 header text from the hash characters in an atx style header:
@@ -261,7 +335,7 @@ space:
 
     ## Header 2
 
-## MD020 - No space inside hashes on closed atx style header
+### MD020 - No space inside hashes on closed atx style header
 
 This rule is triggered when when spaces are missing inside the hash characters
 in a closed atx style header:
@@ -279,7 +353,7 @@ space:
 
 Note: this rule will fire if either side of the header is missing spaces.
 
-## MD021 - Multiple spaces inside hashes on closed atx style header
+### MD021 - Multiple spaces inside hashes on closed atx style header
 
 This rule is triggered when when more than one space is used to separate the
 header text from the hash characters in a closed atx style header:
@@ -298,7 +372,7 @@ space:
 Note: this rule will fire if either side of the header contains multiple
 spaces.
 
-## MD022 - Headers should be surrounded by blank lines
+### MD022 - Headers should be surrounded by blank lines
 
 This rule is triggered when headers (any style) are either not preceded or not
 followed by a blank line:
@@ -324,7 +398,7 @@ Rationale: Aside from asthetic reasons, some parsers, including kramdown, will
 not parse headers that don't have a blank line before, and will parse them as
 regular text.
 
-## MD023 - Headers must start at the beginning of the line
+### MD023 - Headers must start at the beginning of the line
 
 This rule is triggered when a header is indented by one or more spaces:
 
@@ -341,7 +415,7 @@ To fix this, ensure that all headers start at the beginning of the line:
 Rationale: Headers that don't start at the beginning of the line will not be
 parsed as headers, and will instead appear as regular text.
 
-## MD024 - Multiple headers with the same content
+### MD024 - Multiple headers with the same content
 
 This rule is triggered if there are multiple headers in the document that have
 the same text:
@@ -360,7 +434,7 @@ Rationale: Some markdown parses generate anchors for headers based on the
 header name, and having headers with the same content can cause problems with
 this.
 
-## MD025 - Multiple top level headers in the same document
+### MD025 - Multiple top level headers in the same document
 
 This rule is triggered when a top level header is in use (the first line of
 the file is a h1 header), and more than one h1 header is in use in the
@@ -385,7 +459,7 @@ serves as the title for the document. If this convention is in use, then there
 can not be more than one title for the document, and the entire document
 should be contained within this header.
 
-## MD026 - Trailing punctuation in header
+### MD026 - Trailing punctuation in header
 
 This rule is triggered on any header that has a punctuation character as the
 last character in the line:
@@ -400,7 +474,7 @@ Note: The punctuation parameter can be used to specify what characters class
 as punctuation at the end of the header (defaults to `".,;:!"`). For example, you can set it to
 `".,;:"` to allow headers with exclamation marks in them.
 
-## MD027 - Multiple spaces after blockquote symbol
+### MD027 - Multiple spaces after blockquote symbol
 
 This rule is triggered when blockquotes have more than one space after the
 blockquote (`>`) symbol:
@@ -413,7 +487,7 @@ To fix, remove any extraneous space:
     > This is a blockquote with correct
     > indentation.
 
-## MD028 - Blank line inside blockquote
+### MD028 - Blank line inside blockquote
 
 This rule is triggered when two blockquote blocks are separated by nothing
 except for a blank line:
@@ -444,7 +518,7 @@ Rationale: Some markdown parsers will treat two blockquotes separated by one
 or more blank lines as the same blockquote, while others will treat them as
 separate blockquotes.
 
-## MD029 - Ordered list item prefix
+### MD029 - Ordered list item prefix
 
 This rule is triggered on ordered lists that do not either start with '1.' or
 do not have a prefix that increases in numerical order (depending on the
