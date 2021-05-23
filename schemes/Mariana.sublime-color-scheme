@@ -1,0 +1,100 @@
+// This patch for Mariana.sublime-color-scheme adds some Markdown specific color definitions
+// while making use of well defined colors for code blocks.
+{
+	"variables": {
+		"raw_fg": "hsl(210, 10%, 60%)",
+		"raw_bg": "hsl(210, 15%, 20%)"
+	},
+	"rules": [
+
+		// Basic Formattings
+		{
+			"name": "Italic Content",
+			"scope": "text.html.markdown markup.italic - punctuation.definition.italic",
+			"font_style": "italic"
+		},
+		{
+			"name": "Italic Punctuation",
+			"scope": "text.html.markdown markup.bold punctuation.definition.italic",
+			"font_style": ""
+		},
+		{
+			"name": "Bold Content",
+			"scope": "text.html.markdown markup.bold - punctuation.definition.bold",
+			"font_style": "bold"
+		},
+		{
+			"name": "Bold Punctuation",
+			"scope": "text.html.markdown markup.bold punctuation.definition.bold",
+			"font_style": ""
+		},
+		{
+			"name": "Bold Italic Content",
+			"scope": "text.html.markdown markup.bold markup.italic - punctuation, text.html.markdown markup.bold_italic - punctuation",
+			"font_style": "bold italic"
+		},
+		{
+			"name": "Bold Italic Punctuation",
+			"scope": "text.html.markdown markup.strikethrough",
+			"foreground": "color(var(grey))"
+		},
+
+		// Block Quotes
+		{
+			"name": "Block Quotes",
+			"scope": "text.html.markdown markup.quote punctuation.definition.blockquote, text.html.markdown markup.quote punctuation.definition.quote",
+			"foreground": "var(blue2)",
+			"background": "var(blue2)"
+		},
+
+		// Code Blocks
+		{
+			"name": "Inline Code Block",
+			"scope": "text.html.markdown markup.raw.inline",
+			"foreground": "var(raw_fg)",
+			"background": "var(raw_bg)"
+		},
+		{
+			"name": "Raw Code Block",
+			"scope": "text.html.markdown markup.raw, text.html.markdown meta.code-fence",
+			"foreground": "var(raw_fg)",
+			"background": "var(raw_bg)"
+		},
+
+		// Inline References
+		{
+			"name": "Inline Link URL",
+			"scope": "text.html.markdown meta.link.inline markup.underline.link",
+			"foreground": "var(pink)"
+		},
+
+		// Keyboard Shortcuts
+		{
+			"name": "Keyboard Shortcut Background",
+			"scope": "text.html.markdown markup.kbd",
+			"background": "var(raw_bg)"
+		},
+		{
+			"name": "Keyboard Shortcut Tags",
+			"scope": "text.html.markdown markup.kbd entity.name.tag, text.html.markdown markup.kbd punctuation.definition.tag",
+			"foreground": "var(raw_fg)"
+		},
+		{
+			"name": "Keyboard Shortcut Content",
+			"scope": "markup.kbd.content",
+			"foreground": "var(blue)"
+		},
+
+		// Tables
+		{
+			"name": "Table Separators / Lines",
+			"scope": "meta.table.header-separator punctuation.section, meta.table.header-separator, punctuation.separator.table-cell",
+			"foreground": "var(grey)"
+		},
+		{
+			"name": "Table Cell Content Alignment Operator",
+			"scope": "meta.table.header-separator punctuation.definition",
+			"foreground": "var(pink)"
+		}
+	]
+}
