@@ -1,4 +1,12 @@
 [
+	// Fix smart expand selection
+	// see: https://github.com/sublimehq/sublime_text/issues/4125
+	{ "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "smart"}, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown - text.html.markdown text.html - text.html.markdown text.xml - text.html.markdown meta.disable-markdown", "match_all": true }
+		]
+	},
+
 	//
 	// Auto-Pairing Astersisks
 	//
