@@ -30,21 +30,6 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
 
     MAX_LEVEL = 6
 
-    ATX_HEADER_PATTERN = re.compile(
-        r"""(?x)
-        ^
-        (?P<quote> [\s>]* )           # maybe block quote
-        (?:
-           (?P<hashes> \#{1,6} )      # maybe leading hashes
-           (?P<spacing> \s+? )        # followed by at least one whitespace
-        |  (?! [-+*#] )               # or not an unordered list
-        )
-        (?P<text> .*? )               # maybe line text
-        (?P<suffix> (?:\s+\#+)?\s* )  # maybe trailing hashes
-        $
-    """
-    )
-
     def description(self):
         # Used as the name for Undo.
         return "Change Headings Level"
@@ -93,6 +78,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
         view = self.view  # type: sublime.View
         vsels = view.sel()  # type: sublime.Selection
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
+        pattern = re.compile(r"^([ \t>]*)(?:(\#{1,6})[ \t]+?|(?![-+*#]))(.*?)(?:[ \t]+\#+)?[ \t]*$")
 
         # One or more selections may span multiple lines each of them to change heading level for.
         # To correctly handle caret placements split all selections into single lines first.
@@ -104,7 +90,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
         for sel in vsels:
             line = view.line(sel)
             string = view.substr(line)
-            match = self.ATX_HEADER_PATTERN.match(string)
+            match = pattern.match(string)
             if not match:
                 logger.debug(
                     "Change heading level ignored line %d: '%s'",
@@ -113,15 +99,21 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 )
                 continue
 
-            quote, hashes, spacing, text, suffix = match.groups()
+            quote, hashes, text = match.groups()
             to = calc_level(hashes or "")
             new_text = quote + "#" * to + " " * bool(to) + text
             if match_heading_hashes and to > 0:
                 new_text += " " + "#" * to
             view.replace(edit, line, new_text)
-            # move caret to the beginning of heading text and optionaly select it
-            line.a += len(quote) + bool(to) + to
-            line.b = line.a + len(text) * bool(select)
+            if select:
+                line.a += len(quote) + bool(to) + to
+                line.b = line.a + len(text) * bool(select)
+            else:
+                if hashes:
+                    line.a = max(line.a, sel.a + to - len(hashes) - int(not to))
+                else:
+                    line.a = max(line.a, sel.a + to + bool(to))
+                line.b = line.a
             regions.append(line)
 
         # fix caret positions and selections
