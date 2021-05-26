@@ -1,5 +1,4 @@
 import re
-import sublime
 
 from ..logging import logger
 from ..view import MdeTextCommand
@@ -75,8 +74,8 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
             logger.error("No headings level specified!")
 
     def _set_level(self, edit, calc_level, select):
-        view = self.view  # type: sublime.View
-        vsels = view.sel()  # type: sublime.Selection
+        view = self.view
+        vsels = view.sel()
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
         pattern = re.compile(r"^([ \t>]*)(?:(\#{1,6})[ \t]+?|(?![-+*#]))(.*?)(?:[ \t]+\#+)?[ \t]*$")
 

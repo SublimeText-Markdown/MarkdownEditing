@@ -18,7 +18,7 @@ jobs:
           - ubuntu-18.04
         python:
           - '3.3.7'
-          - '3.8.7'
+          - '3.8.8'
         arch:
           - 'x64'
     steps:
@@ -33,11 +33,12 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
-      - name: Install flake8
-        run: pip install flake8
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install test suites
+        run: pip install -r tests/requirements.txt
       - name: Run flake8
         run: python -m flake8
       - name: Run pytest
         run: python -m pytest --import-mode=append tests/
+      - name: Run black
+        run: python -m black --check .
+        if: ${{ matrix.python == '3.8.8' }}

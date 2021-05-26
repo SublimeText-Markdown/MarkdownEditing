@@ -1,6 +1,8 @@
 # Configuration for Black.
 
 [tool.black]
+line-length = 100
+target-version = ['py38']
 exclude = '''
       \.git
     | \.github
@@ -10,6 +12,3 @@ exclude = '''
     | plugin\.py
     | tests
 '''
-line-length = 100
-target-version = ['py33', 'py38']
-target_version = ['py33', 'py38']

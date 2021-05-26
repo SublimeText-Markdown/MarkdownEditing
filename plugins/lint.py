@@ -80,7 +80,8 @@ class MdeMarkdownLintCommand(MdeTextCommand):
         result = []
         for mddef in uselist:
             r = self.test(
-                mddef(st[mddef.__name__] if mddef.__name__ in st else None, self.view), text,
+                mddef(st[mddef.__name__] if mddef.__name__ in st else None, self.view),
+                text,
             )
             result.extend(r)
         sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
