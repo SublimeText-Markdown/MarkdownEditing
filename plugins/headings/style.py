@@ -73,10 +73,10 @@ class MdeMatchHeadingHashesDetector(MdeViewEventListener):
 
         for h1, h2 in zip(
             view.find_by_selector("markup.heading")[:10],
-            view.find_by_selector("markup.heading - punctuation")[:10],
+            view.find_by_selector("markup.heading - punctuation.definition.heading")[:10],
         ):
             num_leading += 1
-            if h1.end() != h2.end():
+            if h1.end() > h2.end():
                 num_trailing += 1
 
         if num_leading:
