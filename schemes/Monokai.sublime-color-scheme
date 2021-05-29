@@ -3,7 +3,7 @@
 {
 	"variables": {
 		"raw_fg": "hsl(210, 10%, 60%)",
-		"raw_bg": "hsl(210, 15%, 20%)"
+		"raw_bg": "color(var(white) alpha(4%))"
 	},
 	"rules": [
 
@@ -64,8 +64,8 @@
 		{
 			"name": "Block Quotes",
 			"scope": "text.html.markdown markup.quote punctuation.definition.blockquote, text.html.markdown markup.quote punctuation.definition.quote",
-			"foreground": "var(blue2)",
-			"background": "var(blue2)"
+			"foreground": "var(grey)",
+			"background": "var(grey)"
 		},
 
 		// Code Blocks
@@ -92,7 +92,7 @@
 		{
 			"name": "Inline Link URL",
 			"scope": "text.html.markdown meta.link.inline markup.underline.link",
-			"foreground": "var(pink)"
+			"foreground": "var(blue)"
 		},
 
 		// Keyboard Shortcuts
@@ -121,7 +121,7 @@
 		{
 			"name": "Table Cell Content Alignment Operator",
 			"scope": "meta.table.header-separator punctuation.definition",
-			"foreground": "var(pink)"
+			"foreground": "var(red2)"
 		}
 	]
 }
