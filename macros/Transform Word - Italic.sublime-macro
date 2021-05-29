@@ -1,4 +1,0 @@
-[
-	{"command": "expand_selection", "args": {"to": "word"}},
-	{"command": "insert_snippet", "args": {"contents": "_${SELECTION/(^[\\*_]*|[\\*_]*$)//g}_"}}
-]
