@@ -2,7 +2,7 @@ import sys
 
 import sublime
 
-from .color_schemes import select_color_scheme
+from .color_schemes import clear_color_schemes, select_color_scheme
 
 package_name = "MarkdownEditing"
 
@@ -67,7 +67,7 @@ def on_after_install():
         if events.install(package_name):
             # Native package causes some conflicts.
             disable_native_markdown_package()
-            # Prompts to select a color theme
+            # Prompts to select a color scheme.
             select_color_scheme()
 
 
@@ -78,3 +78,5 @@ def on_before_uninstall():
         if events.remove(package_name):
             # Native package causes some conflicts.
             enable_native_markdown_package()
+            # Remove syntax specific color schemes.
+            clear_color_schemes()

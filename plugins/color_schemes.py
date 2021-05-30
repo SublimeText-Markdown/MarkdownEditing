@@ -130,3 +130,15 @@ def select_color_scheme(view=None):
         on_select=on_done,
         on_highlight=on_highlighted,
     )
+
+
+def clear_color_schemes():
+    clear_color_scheme("Markdown.sublime-settings")
+    clear_color_scheme("Markdown GFM.sublime-settings")
+    clear_color_scheme("MultiMarkdown.sublime-settings")
+
+
+def clear_color_scheme(filename):
+    settings = sublime.load_settings(filename)
+    settings.erase("color_scheme")
+    sublime.save_settings(filename)
