@@ -108,10 +108,11 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 line.a += len(quote) + bool(to) + to
                 line.b = line.a + len(text) * bool(select)
             else:
+                line = view.line(line.a)
                 if hashes:
-                    line.a = max(line.a, sel.a + to - len(hashes) - int(not to))
+                    line.a = min(line.b, max(line.a, sel.a + to - len(hashes) - int(not to)))
                 else:
-                    line.a = max(line.a, sel.a + to + bool(to))
+                    line.a = min(line.b, max(line.a, sel.a + to + bool(to)))
                 line.b = line.a
             regions.append(line)
 
