@@ -583,16 +583,7 @@
 	},
 	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true },
-			{ "key": "following_text", "operator": "not_regex_match", "operand": "^$", "match_all": true }
-		]
-	},
-	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true }
