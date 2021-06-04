@@ -185,7 +185,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -195,7 +195,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "__$0__"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -269,7 +269,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -279,7 +279,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
