@@ -2,8 +2,6 @@ import re
 import sublime
 import sublime_plugin
 
-from .headings import first_heading_text
-
 
 def view_is_markdown(view):
     try:
@@ -109,20 +107,3 @@ class MdeCenteredLineKeeper(MdeViewEventListener):
         if self.current_line != current_line:
             self.current_line = current_line
             self.view.show_at_center(pt)
-
-
-class MdeUnsavedViewNameSetter(MdeViewEventListener):
-    """
-    This view event listener prints the first heading as tab title of unsaved documents.
-    """
-
-    MAX_NAME = 50
-
-    def on_modified(self):
-        if self.view.file_name() is not None:
-            return
-
-        name = first_heading_text(self.view)
-        if len(name) > self.MAX_NAME:
-            name = name[: self.MAX_NAME] + "…"
-        self.view.set_name(name)

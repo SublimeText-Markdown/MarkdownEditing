@@ -56,6 +56,7 @@ else:
         MdeGotoPreviousHeadingCommand,
         MdeMatchHeadingHashesCommand,
         MdeMatchHeadingHashesDetector,
+        MdeUnsavedViewNameSetter,
     )
     from .plugins.lists import (
         MdeIndentListItemCommand,
@@ -95,7 +96,6 @@ else:
         MdeReplaceSelectedCommand,
         MdeToggleCenteredLineCommand,
         MdeCenteredLineKeeper,
-        MdeUnsavedViewNameSetter,
     )
     from .plugins.wiki_page import (
         MdeListBackLinksCommand,

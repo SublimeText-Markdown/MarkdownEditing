@@ -1,6 +1,8 @@
 import re
 import sublime
 
+from ..view import MdeViewEventListener
+
 HEADINGS_RE = re.compile(
     r"""
     ^( [ \t]* )                                   # leading whitespace
@@ -45,3 +47,20 @@ def first_heading_text(view):
         if view.match_selector(title_begin, "- markup.raw"):
             return text[title_begin:title_end]
     return text[0 : text.find("\n")]
+
+
+class MdeUnsavedViewNameSetter(MdeViewEventListener):
+    """
+    This view event listener prints the first heading as tab title of unsaved documents.
+    """
+
+    MAX_NAME = 50
+
+    def on_modified(self):
+        if self.view.file_name() is not None:
+            return
+
+        name = first_heading_text(self.view)
+        if len(name) > self.MAX_NAME:
+            name = name[: self.MAX_NAME] + "…"
+        self.view.set_name(name)
