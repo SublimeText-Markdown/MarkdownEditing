@@ -1,3 +1,4 @@
+import os.path
 import re
 
 from ..view import MdeTextCommand, MdeViewEventListener
@@ -68,6 +69,13 @@ class MdeMatchHeadingHashesDetector(MdeViewEventListener):
 
     def auto_detect_heading_style(self):
         view = self.view
+
+        # don't break syntax_test files
+        file_name = view.file_name()
+        if file_name and os.path.basename(file_name).startswith("syntax_test"):
+            view.settings().set("mde.auto_match_heading_hashes", False)
+            return
+
         num_leading = 0
         num_trailing = 0
 
