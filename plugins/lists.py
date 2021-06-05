@@ -108,42 +108,50 @@ class MdeIndentListMultiitemCommand(MdeTextCommand):
 
 
 class MdeSwitchListBulletTypeCommand(MdeTextCommand):
+    """
+    The `mde_switch_list_bullet_type` command converts selected list items to ordered and unordered.
+
+    Each selected item is evaluated separately.
+    """
+
     def run(self, edit):
-        todo = []
-        unordered_bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-        for region in self.view.sel():
-            lines = self.view.line(region)
-            lines = self.view.split_by_newlines(lines)
-            number = 1
-            for line in lines:
-                line_content = self.view.substr(line)
-                # print(line_content)
-                m = re.match(
-                    r"^(\s*(?:>\s*)?)["
-                    + "".join(re.escape(i) for i in unordered_bullets)
-                    + r"](\s+.*)$",
-                    line_content,
-                )
-                if m:
-                    # Transform the bullet to numbered bullet type
-                    new_line = m.group(1) + str(number) + "." + m.group(2)
-                    if self.view.settings().get("mde.auto_increment_ordered_list_number", True):
-                        number += 1
+        align_text = self.view.settings().get("mde.list_align_text", True)
+        auto_increment = self.view.settings().get("mde.auto_increment_ordered_list_number", True)
+        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        pattern = re.compile(
+            r"^\s*(?:>\s*)*(?:([%s])|([0-9]+\.))(\s+)"
+            % "".join(re.escape(bullet) for bullet in bullets)
+        )
 
-                    # Insert the new item
-                    todo.append([line, new_line])
-                else:
-                    m = re.match(r"^(\s*(?:>\s*)?)[0-9]+\.(\s+.*)$", line_content)
-                    if m:
-                        # Transform the bullet to unnumbered bullet type
-                        new_line = m.group(1) + unordered_bullets[0] + m.group(2)
+        for sel in self.view.sel():
+            idx = 1
+            for region in self.view.split_by_newlines(self.view.line(sel)):
+                text = self.view.substr(region)
+                match = pattern.search(text)
+                if not match:
+                    continue
 
-                        # Insert the new item
-                        todo.append([line, new_line])
+                bullet, number, space = match.groups()
+                if bullet:
+                    # Transform unordered to ordered list
+                    new_text = str(idx) + "."
+                    if auto_increment:
+                        idx += 1
 
-        while len(todo) > 0:
-            j = todo.pop()
-            self.view.replace(edit, j[0], j[1])
+                    region.a += match.start(1)
+                    region.b = region.a + min(len(new_text), max(1, len(space)))
+                    self.view.replace(edit, region, new_text)
+
+                elif number:
+                    # Transform ordered to unordered list
+                    region.a += match.start(2)
+                    if align_text:
+                        new_text = bullets[0] + " " * len(number)
+                        region.b = region.a + len(new_text)
+                    else:
+                        new_text = bullets[0]
+                        region.b = region.a + len(number)
+                    self.view.replace(edit, region, new_text)
 
 
 class MdeNumberListCommand(MdeTextCommand):
