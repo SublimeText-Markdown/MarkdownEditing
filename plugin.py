@@ -20,9 +20,6 @@ else:
     prefix = None
 
     # import all published Commands and EventListeners
-    from .plugins.basic_ops import (
-        MDEBoldCommand,
-    )
     from .plugins.bootstrap import (
         on_after_install,
         on_before_uninstall,
