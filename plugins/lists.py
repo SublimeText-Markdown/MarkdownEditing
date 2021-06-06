@@ -5,106 +5,92 @@ from .view import MdeTextCommand
 
 class MdeIndentListItemCommand(MdeTextCommand):
     def run(self, edit, reverse=False):
+        auto_switch_bullet = self.view.settings().get("mde.list_indent_auto_switch_bullet", True)
+        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        bullet_pattern = r"([%s])" % "".join(re.escape(bullet) for bullet in bullets)
+
+        if self.view.settings().get("translate_tabs_to_spaces"):
+            tab_str = " " * self.view.settings().get("tab_size", 4)
+        else:
+            tab_str = "\t"
+
         for region in self.view.sel():
             line = self.view.line(region)
-            line_content = self.view.substr(line)
-
-            bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-            bullet_pattern = "([" + "".join(re.escape(i) for i in bullets) + "])"
-
-            new_line = line_content
+            text = self.view.substr(line)
 
             # Transform the bullet to the next/previous bullet type
-            if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
-
-                for key, bullet in enumerate(bullets):
-                    if bullet in new_line:
-                        if reverse and new_line.startswith(bullet) and key == 0:
+            if auto_switch_bullet:
+                for idx, bullet in enumerate(bullets):
+                    if bullet in text:
+                        if reverse and text.startswith(bullet) and idx == 0:
                             # In this case, do not switch bullets
                             continue
 
-                        new_line = new_line.replace(
-                            bullet, bullets[(key + (1 if not reverse else -1)) % len(bullets)]
+                        text = text.replace(
+                            bullet, bullets[(idx + (1 if not reverse else -1)) % len(bullets)],
                         )
                         break
 
-            # Determine how to indent (tab or spaces)
-            if self.view.settings().get("translate_tabs_to_spaces"):
-                tab_str = self.view.settings().get("tab_size", 4) * " "
-
+            if reverse:
+                # unindent
+                text = re.sub(tab_str + bullet_pattern, r"\1", text)
             else:
-                tab_str = "\t"
+                # indent
+                text = re.sub(bullet_pattern, tab_str + r"\1", text)
 
-            if not reverse:
-                # Do the indentation
-                new_line = re.sub(bullet_pattern, tab_str + "\\1", new_line)
-
-            else:
-                # Do the unindentation
-                new_line = re.sub(tab_str + bullet_pattern, "\\1", new_line)
-
-            # Insert the new item
-            self.view.replace(edit, line, new_line)
+            self.view.replace(edit, line, text)
 
 
 class MdeIndentListMultiitemCommand(MdeTextCommand):
     def run(self, edit, reverse=False):
-        todo = []
-        for region in self.view.sel():
-            lines = self.view.line(region)
-            lines = self.view.split_by_newlines(lines)
-            for line in lines:
-                line_content = self.view.substr(line)
+        queue = []
 
-                if len(line_content) == 0:
+        auto_switch_bullet = self.view.settings().get("mde.list_indent_auto_switch_bullet", True)
+        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+
+        if self.view.settings().get("translate_tabs_to_spaces"):
+            tab_str = " " * self.view.settings().get("tab_size", 4)
+        else:
+            tab_str = "\t"
+
+        pattern = re.compile(
+            r"^(?:[\s>]*>\s)?(\s*)(?:([%s])\s)?"
+            % "".join(re.escape(bullet) for bullet in bullets)
+        )
+
+        for region in self.view.sel():
+            for line in self.view.split_by_newlines(self.view.line(region)):
+                match = re.search(pattern, self.view.substr(line))
+                if not match:
                     continue
 
-                # Determine how to indent (tab or spaces)
-                if self.view.settings().get("translate_tabs_to_spaces"):
-                    tab_str = self.view.settings().get("tab_size", 4) * " "
+                indent, bullet = match.groups()
+                if reverse:
+                    if not indent:
+                        continue
 
+                    text = indent.replace(tab_str, "", 1)
+                    if bullet:
+                        if auto_switch_bullet:
+                            text += bullets[(bullets.index(bullet) - 1) % len(bullets)]
+                        else:
+                            text += bullet
                 else:
-                    tab_str = "\t"
+                    text = indent + tab_str
+                    if bullet:
+                        if auto_switch_bullet:
+                            text += bullets[(bullets.index(bullet) + 1) % len(bullets)]
+                        else:
+                            text += bullet
 
-                if re.match(r"^\s*(>\s*)?[*+\\-]\s+(.*)$", line_content):
-                    bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-                    bullet_pattern = "([" + "".join(re.escape(i) for i in bullets) + "])"
-                    bullet_pattern_a = r"^\s*(?:>\s*)?("
-                    bullet_pattern_b = r")\s+"
-                    new_line = line_content
-                    # Transform the bullet to the next/previous bullet type
-                    if self.view.settings().get("mde.list_indent_auto_switch_bullet", True):
-                        for key, bullet in enumerate(bullets):
-                            re_bullet = re.escape(bullet)
-                            search_pattern = bullet_pattern_a + re_bullet + bullet_pattern_b
-                            if re.search(search_pattern, line_content):
-                                if reverse and new_line.startswith(bullet) and key == 0:
-                                    # In this case, do not switch bullets
-                                    continue
-                                new_bullet = bullets[
-                                    (key + (1 if not reverse else -1)) % len(bullets)
-                                ]
-                                new_line = re.sub(re_bullet, new_bullet, new_line, 1)
-                                break
-                    if not reverse:
-                        # Do the indentation
-                        new_line = re.sub(bullet_pattern, tab_str + r"\1", new_line, 1)
+                # setup region to replace based on pattern match
+                line.b = line.a + max(match.end(1), match.end(2))
+                line.a += match.start(1)
 
-                    else:
-                        # Do the unindentation
-                        new_line = re.sub(tab_str + bullet_pattern, r"\1", new_line, 1)
-                else:
-                    if not reverse:
-                        new_line = tab_str + line_content
-                    else:
-                        new_line = re.sub(tab_str, "", line_content, 1)
+                queue.append([line, text])
 
-                # Insert the new item
-                todo.append([line, new_line])
-
-        while len(todo) > 0:
-            j = todo.pop()
-            self.view.replace(edit, j[0], j[1])
+        for r, text in reversed(queue):
+            self.view.replace(edit, r, text)
 
 
 class MdeSwitchListBulletTypeCommand(MdeTextCommand):
