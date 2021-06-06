@@ -199,15 +199,15 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
         )
 
         for sel in self.view.sel():
-            sel = self.view.line(sel)
-            sel.b = min(sel.b, sel.a + 50)
-            match = pattern.search(self.view.substr(sel))
-            if not match:
-                continue
+            for region in self.view.split_by_newlines(self.view.line(sel)):
+                region.b = min(region.b, region.a + 50)
+                match = pattern.search(self.view.substr(region))
+                if not match:
+                    continue
 
-            # calculate text position of check mark
-            sel.a += len(match.group(1))
-            sel.b = sel.a + 1
+                # calculate text position of check mark
+                region.a += len(match.group(1))
+                region.b = region.a + 1
 
-            mark = "X" if match.group(2) == " " else " "
-            self.view.replace(edit, sel, mark)
+                mark = "X" if match.group(2) == " " else " "
+                self.view.replace(edit, region, mark)

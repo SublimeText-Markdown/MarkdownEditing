@@ -781,8 +781,7 @@
 	// Toggle GFM tasks
 	{ "keys": ["alt+x"], "command": "mde_toggle_task_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown & (markup.list | markup.quote)", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown & (markup.list | markup.quote)", "match_all": true }
 		]
 	},
 
