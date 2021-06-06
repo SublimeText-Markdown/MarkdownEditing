@@ -206,14 +206,13 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
     ```
     """
 
-    PATTERN = r"^((?:\s*>)*\s*(?:[\\%s]|[0-9]+\.)\s+\[)([ xX])\]\s"
-
     def run(self, edit):
-        unordered_bullets = "\\".join(
-            self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        pattern = re.compile(
+            r"^(\s*(?:>\s*)*(?:[%s]|[0-9]+\.)\s+\[)([ xX])\]\s"
+            % "".join(re.escape(bullet) for bullet in bullets)
         )
 
-        pattern = re.compile(self.PATTERN % unordered_bullets)
         for sel in self.view.sel():
             sel = self.view.line(sel)
             sel.b = min(sel.b, sel.a + 50)
