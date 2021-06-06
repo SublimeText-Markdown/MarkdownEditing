@@ -722,49 +722,59 @@
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
-	// Indent list item
+	// Indent list item if caret is in front of bullets
 	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s", "match_all": true }
 		]
 	},
+	// Indent list item, if caret is directly behind bullet only if followed by whitespace
+	// Hitting "tab" directly after new list bullet should insert \t otherwise
 	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s+", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s", "match_all": true }
 		]
 	},
-	{ "keys": ["tab"], "command": "mde_indent_list_multiitem", "context":
+	// Indent list item if caret is behind bullets
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true }
+		]
+	},
+	// Indent selected list items
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	// Unindent list item
+	// Unindent list item if caret is in front of bullets
 	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s", "match_all": true }
 		]
 	},
+	// Unndent list item if caret is behind bullets
 	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s+", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s*", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "mde_indent_list_multiitem", "args": {"reverse": true}, "context":
+	// Unndent selected list items
+	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},

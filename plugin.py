@@ -60,7 +60,6 @@ else:
     )
     from .plugins.lists import (
         MdeIndentListItemCommand,
-        MdeIndentListMultiitemCommand,
         MdeNumberListCommand,
         MdeSwitchListBulletTypeCommand,
         MdeToggleTaskListItemCommand,

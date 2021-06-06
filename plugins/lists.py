@@ -5,44 +5,6 @@ from .view import MdeTextCommand
 
 class MdeIndentListItemCommand(MdeTextCommand):
     def run(self, edit, reverse=False):
-        auto_switch_bullet = self.view.settings().get("mde.list_indent_auto_switch_bullet", True)
-        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
-        bullet_pattern = r"([%s])" % "".join(re.escape(bullet) for bullet in bullets)
-
-        if self.view.settings().get("translate_tabs_to_spaces"):
-            tab_str = " " * self.view.settings().get("tab_size", 4)
-        else:
-            tab_str = "\t"
-
-        for region in self.view.sel():
-            line = self.view.line(region)
-            text = self.view.substr(line)
-
-            # Transform the bullet to the next/previous bullet type
-            if auto_switch_bullet:
-                for idx, bullet in enumerate(bullets):
-                    if bullet in text:
-                        if reverse and text.startswith(bullet) and idx == 0:
-                            # In this case, do not switch bullets
-                            continue
-
-                        text = text.replace(
-                            bullet, bullets[(idx + (1 if not reverse else -1)) % len(bullets)],
-                        )
-                        break
-
-            if reverse:
-                # unindent
-                text = re.sub(tab_str + bullet_pattern, r"\1", text)
-            else:
-                # indent
-                text = re.sub(bullet_pattern, tab_str + r"\1", text)
-
-            self.view.replace(edit, line, text)
-
-
-class MdeIndentListMultiitemCommand(MdeTextCommand):
-    def run(self, edit, reverse=False):
         queue = []
 
         auto_switch_bullet = self.view.settings().get("mde.list_indent_auto_switch_bullet", True)
