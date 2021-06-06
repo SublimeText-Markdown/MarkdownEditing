@@ -757,22 +757,22 @@
 		]
 	},
 	// Unindent list item if caret is in front of bullets
-	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s", "match_all": true }
 		]
 	},
-	// Unndent list item if caret is behind bullets
-	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
+	// Unindent list item if caret is behind bullets
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s*", "match_all": true }
 		]
 	},
-	// Unndent selected list items
-	{ "keys": ["shift+tab"], "command": "mde_indent_list_item", "args": {"reverse": true}, "context":
+	// Unindent selected list items
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }

@@ -3,56 +3,93 @@ import re
 from .view import MdeTextCommand
 
 
-class MdeIndentListItemCommand(MdeTextCommand):
-    def run(self, edit, reverse=False):
+class MdeUnIndentListItemCommand(MdeTextCommand):
+    """
+    This is an interanal text command class shared by `(un)indent_list_item` commands.
+
+    It is responsible to read settings and cycle through all selections to replace text.
+    """
+
+    def run(self, edit):
         queue = []
 
-        auto_switch_bullet = self.view.settings().get("mde.list_indent_auto_switch_bullet", True)
-        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+        view = self.view
+        settings = view.settings()
+        bullets = settings.get("mde.list_indent_bullets", ["*", "-", "+"])
+        if settings.get("mde.list_indent_auto_switch_bullet", True):
+            new_bullets = bullets
+        else:
+            new_bullets = None
 
-        if self.view.settings().get("translate_tabs_to_spaces"):
-            tab_str = " " * self.view.settings().get("tab_size", 4)
+        if settings.get("translate_tabs_to_spaces"):
+            tab_str = " " * settings.get("tab_size", 4)
         else:
             tab_str = "\t"
 
         pattern = re.compile(
-            r"^(?:[\s>]*>\s)?(\s*)(?:([%s])\s)?"
-            % "".join(re.escape(bullet) for bullet in bullets)
+            r"^(?:[\s>]*>\s)?(\s*)(?:([%s])\s)?" % "".join(re.escape(bullet) for bullet in bullets)
         )
 
-        for region in self.view.sel():
-            for line in self.view.split_by_newlines(self.view.line(region)):
-                match = re.search(pattern, self.view.substr(line))
+        for sel in view.sel():
+            for region in view.split_by_newlines(view.line(sel)):
+                match = re.search(pattern, view.substr(region))
                 if not match:
                     continue
 
                 indent, bullet = match.groups()
-                if reverse:
-                    if not indent:
-                        continue
-
-                    text = indent.replace(tab_str, "", 1)
-                    if bullet:
-                        if auto_switch_bullet:
-                            text += bullets[(bullets.index(bullet) - 1) % len(bullets)]
-                        else:
-                            text += bullet
-                else:
-                    text = indent + tab_str
-                    if bullet:
-                        if auto_switch_bullet:
-                            text += bullets[(bullets.index(bullet) + 1) % len(bullets)]
-                        else:
-                            text += bullet
+                text = self.compute_replacement(indent, tab_str, bullet, new_bullets)
+                if text is None:
+                    continue
 
                 # setup region to replace based on pattern match
-                line.b = line.a + max(match.end(1), match.end(2))
-                line.a += match.start(1)
+                region.b = region.a + max(match.end(1), match.end(2))
+                region.a += match.start(1)
 
-                queue.append([line, text])
+                queue.append([region, text])
 
         for r, text in reversed(queue):
-            self.view.replace(edit, r, text)
+            view.replace(edit, r, text)
+
+
+class MdeIndentListItemCommand(MdeUnIndentListItemCommand):
+    """
+    The `mde_indent_list_item` command indents unordered list items.
+
+    It indents lists within blockquotes.
+    It changes list bullet according to indentation level
+    if `mde.list_indent_auto_switch_bullet` is set `true`.
+    """
+
+    def compute_replacement(self, indent, tab_str, bullet, bullets):
+        text = indent + tab_str
+        if bullet:
+            if bullets:
+                text += bullets[(bullets.index(bullet) + 1) % len(bullets)]
+            else:
+                text += bullet
+        return text
+
+
+class MdeUnindentListItemCommand(MdeUnIndentListItemCommand):
+    """
+    The `mde_unindent_list_item` command unindents unordered list items.
+
+    It unindents lists within blockquotes.
+    It changes list bullet according to indentation level.
+    if `mde.list_indent_auto_switch_bullet` is set `true`.
+    """
+
+    def compute_replacement(self, indent, tab_str, bullet, bullets):
+        if not indent:
+            return None
+
+        text = indent.replace(tab_str, "", 1)
+        if bullet:
+            if bullets:
+                text += bullets[(bullets.index(bullet) - 1) % len(bullets)]
+            else:
+                text += bullet
+        return text
 
 
 class MdeSwitchListBulletTypeCommand(MdeTextCommand):
