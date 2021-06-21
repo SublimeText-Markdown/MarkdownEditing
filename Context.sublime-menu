@@ -1,38 +1,56 @@
 [
 	{
-		"caption": "MDE: Fold Section",
-		"command": "mde_fold_section_context"
-	},
-	{
-		"caption": "MDE: Unfold Section",
-		"command": "mde_unfold_section_context"
-	},
-	{
-		"caption": "MDE: Jump Reference",
-		"command": "mde_reference_jump_context"
-	},
-	{
-		"caption": "MDE: Convert inline link to reference",
-		"command": "mde_convert_inline_link_to_reference"
-	},
-	{
-		"caption": "MDE: Open wiki page",
-		"command": "mde_open_page"
-	},
-	{
-		"caption": "MDE: Open home wiki page",
-		"command": "mde_open_home_page"
-	},
-	{
-		"caption": "MDE: Open todays journal page",
-		"command": "mde_open_journal"
-	},
-	{
-		"caption": "MDE: Make wiki page reference",
-		"command": "mde_make_page_reference"
-	},
-	{
-		"caption": "MDE: List back links",
-		"command": "mde_list_back_links"
+		"caption": "MarkdownEditing",
+		"id": "markdownediting",
+		"children": [
+			{
+				"caption": "-",
+				"id": "folding"
+			},
+			{
+				"caption": "Fold Section",
+				"command": "mde_fold_section_context"
+			},
+			{
+				"caption": "Unfold Section",
+				"command": "mde_unfold_section_context"
+			},
+			{
+				"caption": "-",
+				"id": "references"
+			},
+			{
+				"caption": "Jump Reference",
+				"command": "mde_reference_jump_context"
+			},
+			{
+				"caption": "Convert inline link to reference",
+				"command": "mde_convert_inline_link_to_reference"
+			},
+			{
+				"caption": "-",
+				"id": "wiki"
+			},
+			{
+				"caption": "Open wiki page",
+				"command": "mde_open_page"
+			},
+			{
+				"caption": "Open home wiki page",
+				"command": "mde_open_home_page"
+			},
+			{
+				"caption": "Open todays journal page",
+				"command": "mde_open_journal"
+			},
+			{
+				"caption": "Make wiki page reference",
+				"command": "mde_make_page_reference"
+			},
+			{
+				"caption": "List back links",
+				"command": "mde_list_back_links"
+			}
+		]
 	}
 ]
