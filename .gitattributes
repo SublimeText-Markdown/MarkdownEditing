@@ -13,6 +13,7 @@ mcdocs.yml			export-ignore
 
 # Unittests
 tests/              export-ignore
+make.cmd 			export-ignore
 
 # Settings
 .editorconfig		export-ignore
