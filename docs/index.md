@@ -76,7 +76,7 @@ with...
 
 [preview]: img/preview.png
 [configuration]: config.md#change-color-scheme
-[AtxHeadings]: usage/headings.md#atx-headings-style
-[HeadingsLevels]: usage/headings.md#change-level
-[SeHeadings]: usage/headings.md#setext-headings-style
+[AtxHeadings]: usage.md#atx-style
+[HeadingsLevels]: usage.md#headings-levels
+[SeHeadings]: usage.md#setext-style
 [GFM Task]: https://github.github.com/gfm/#task-list-items-extension-
