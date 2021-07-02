@@ -43,6 +43,7 @@ markdown_extensions:
   - pymdownx.progressbar:
   - pymdownx.arithmatex:
   - pymdownx.mark:
+  - pymdownx.tilde:
   - pymdownx.striphtml:
   - pymdownx.keys:
       separator: "\uff0b"
