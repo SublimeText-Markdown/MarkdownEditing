@@ -12,7 +12,7 @@ Thus all syntax specific settings or overrides which have been used to "remove" 
 Macro calls and key binding contexts have been changed heavily.
 
 Commands have been renamed in order to avoid possible conflicts with other packages.
-Others have been split to follow naming scheme of ST's builtin commands (e.g. indent/unindent commands).
+Others have been split to follow naming scheme of ST's built-in commands (e.g. indent/unindent commands).
 
 Hints about required or optional arguments may be found in _MarkdownEditing/Default (...).sublime-keymap_.
 
@@ -76,7 +76,7 @@ However open markdown files at install time may cause this issue. You have to **
 
 ## Roll back to an older version
 
-When you notice any undesired behavior introduced by the latest update, your feedback is always welcome at [issue page][mdeissues]. However before it's fixed, you can rollback to [an earlier version][mdereleases]. Find the desired version and download the zip file, then follow [manual installation guide](#manual-installation)
+When you notice any undesired behaviour introduced by the latest update, your feedback is always welcome at [issue page][mdeissues]. However before it's fixed, you can rollback to [an earlier version][mdereleases]. Find the desired version and download the zip file, then follow [manual installation guide](#manual-installation)
 
 ## Known Bugs
 

@@ -69,7 +69,7 @@ with...
 ### Text Formatting
 
 *   Asterisks (<kbd>*</kbd>), backticks (<kbd>`</kbd>) and underscores (<kbd>_</kbd>) are auto-paired and wrap selected text
-*   <kbd>~</kbd> wraps selected text with `~~` (strikethrough)
+*   <kbd>~</kbd> wraps selected text with `~~` (strike-through)
 *   <kbd>Backspace</kbd> deletes an empty pair
 *   <kbd>Space</kbd> or <kbd>Tab</kbd> deletes right element of empty pair of asterisks or underscores
 

@@ -2,7 +2,7 @@
 
 ## Running Lint
 
-Open a markdown document and press <kbd>ctrl</kbd>(<kbd>⌘</kbd>) + <kbd>shift</kbd>(<kbd>⇧</kbd>) + <kbd>M</kbd> or input `MarkdownEditing: Markdown Lint` in Command Pallette to try it.
+Open a markdown document and press <kbd>ctrl</kbd>(<kbd>⌘</kbd>) + <kbd>shift</kbd>(<kbd>⇧</kbd>) + <kbd>M</kbd> or input `MarkdownEditing: Markdown Lint` in Command Palette to try it.
 
 *   **Markdown Lint**  
     Performs lint on current Markdown file using a local linter. See [lint rules](#rules). Some of the linting rules are customizable via user settings file.
@@ -16,7 +16,7 @@ All rules are implemented in `lint.py`. In case you a rule is modified, please r
 
 ### How rules work
 
-All rules are implemented as seperated subclasses of `mddef` class defined in `lint.py`. The lifespan of a rule instance is one lint process. There are several important fields in every rule class:
+All rules are implemented as separated subclasses of `mddef` class defined in `lint.py`. The lifespan of a rule instance is one lint process. There are several important fields in every rule class:
 
 | Name | Type | Comment |
 |------|------|---------|
@@ -36,7 +36,7 @@ def test(self, text, s, e):
         return {}
 ```
 
-The linter will search for all occcurences of `locator` with regex flag equals to `flag` in the document. Then it passes the document itself and the begin position and the end position of target captured group to `test` method. The `test` method will return a dictionary of "offset:information" key-value pairs. That offset will decide the displayed line number of the occurence of the error.
+The linter will search for all occurrences of `locator` with regexp flag equals to `flag` in the document. Then it passes the document itself and the begin position and the end position of target captured group to `test` method. The `test` method will return a dictionary of "offset:information" key-value pairs. That offset will decide the displayed line number of the occurrence of the error.
 
 ### Editing an existing rule
 
@@ -394,7 +394,7 @@ To fix this, ensure that all headers have a blank line both before and after
 
     ## Header 2
 
-Rationale: Aside from asthetic reasons, some parsers, including kramdown, will
+Rationale: Aside from aesthetic reasons, some parsers, including kramdown, will
 not parse headers that don't have a blank line before, and will parse them as
 regular text.
 

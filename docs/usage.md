@@ -7,10 +7,10 @@ MarkdownEditing supports formatting text by
 
 ## Auto Pairing
 
-MarkdownEditing extends extends ST's auto pairing capablilities.
+MarkdownEditing extends extends ST's auto pairing capabilities.
 
 *   Asterisks (<kbd>*</kbd>), backticks (<kbd>`</kbd>) and underscores (<kbd>_</kbd>) are auto-paired and wrap selected text
-*   <kbd>~</kbd> wraps selected text with `~~` (strikethrough)
+*   <kbd>~</kbd> wraps selected text with `~~` (strike-through)
 *   <kbd>Backspace</kbd> deletes an empty pair
 *   <kbd>Space</kbd> or <kbd>Tab</kbd> deletes right element of empty pair of asterisks or underscores
 
@@ -18,9 +18,9 @@ This feature is controlled by global `auto_match_enabled` setting.
 
 ## Key Bindings
 
-These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These keybindings will unbold/unitalicize selection if it is already bold/italic.
+These are bound to bold and italic. They work both with and without selections. If there is no selection, they will just transform the word under the cursor. These key bindings will unbold/unitalicize selection if it is already bold/italic.
 
-| markup       | renderend  | Linux/Windows                 | MacOS
+| markup       | rendered   | Linux/Windows                 | MacOS
 |--------------|------------|-------------------------------|---------------------------------------------
 \*\*bold\*\*   | **bold**   | <kbd>Alt</kbd> + <kbd>B</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>B</kbd>
 \_italic\_     | _italic_   | <kbd>Alt</kbd> + <kbd>I</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>I</kbd>
