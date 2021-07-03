@@ -8,14 +8,17 @@
 	// valid values are: "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG"
 	"mde.logging.level": "ERROR",
 
-	// MarkdownEditing:
-	// Behavior
+	// MarkdownEditing (Formatting):
+	// If `true` asterisk is used to markup bold text, underscore otherwise.
 	"mde.bold_marker_asterisk": true,
+
+	// MarkdownEditing (Formatting):
+	// If `true` asterisk is used to markup italic text, underscore otherwise.
 	"mde.italic_marker_asterisk": false,
 
 	// MarkdownEditing (Headings):
 	// auto detect whether to add trailing #'s to headlines
-	// If "true" `mde.match_heading_hashes` is set per view depending on
+	// If `true` `mde.match_heading_hashes` is set per view depending on
 	// majority of first 10 headings containing trailing #'s or not.
 	"mde.detect_heading_style": true,
 
@@ -24,11 +27,12 @@
 	"mde.match_heading_hashes": false,
 
 	// MarkdownEditing (Headings):
-	// If true, trailing heading hashes are added or removed automatically,
+	// If `true`, trailing heading hashes are added or removed automatically,
 	// depending on a view's `mde.match_heading_hashes` setting value.
+	//
 	// Headings are fixed:
 	// a) when hitting enter at the end of a heading line
-	// b) after loading or before saving a file if `mde.auto_detect_match_heading_hashes` is true.
+	// b) after loading or before saving a file if `mde.auto_detect_match_heading_hashes` is `true`.
 	"mde.auto_match_heading_hashes": true,
 
 	// MarkdownEditing (Lists):
@@ -100,18 +104,21 @@
 		}
 	},
 
-	// MarkdownEditing: (Folding)
-	// Enable automatic folding of url parts of inline links or images
+	// MarkdownEditing (Folding):
+	// Enable automatic folding of url parts of inline references or images
 	"mde.auto_fold_link.enabled": true,
-	// MarkdownEditing: (Folding)
+	// MarkdownEditing (Folding):
 	// Selector for urls to automatically fold
 	"mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
 
-	// MarkdownEditing: wiki file extensions
+	// MarkdownEditing (Wiki):
+	// wiki file extensions
 	"mde.wikilinks.markdown_extension": ".md",
-	// MarkdownEditing: wiki home page
+	// MarkdownEditing (Wiki):
+	// wiki home page
 	"mde.wikilinks.homepage": "HomePage",
-	// MarkdownEditing: wiki templates
+	// MarkdownEditing (Wiki):
+	// wiki templates
 	"mde.wikilinks.templates": {
 		"default_page": "templates/PageTemplate.md"
 	},
