@@ -175,7 +175,7 @@ Navigation is bound to following keys by default:
 
 # Lists and Tasks
 
-List bullets are automatically changed when indenting or unindenting list items by default. This behavior can be disabled via `"mde.list_indent_auto_switch_bullet": false`.
+List bullets are automatically changed when indenting or unindenting list items by default. This behaviour can be disabled via `"mde.list_indent_auto_switch_bullet": false`.
 
 Markdown can support with keeping list item text aligned at tab width if `"mde.list_align_text": true` is set.
 
@@ -183,6 +183,13 @@ Following commands are provided via Command Palette:
 
 *   **Switch List Bullet Type**
     Switches the highlighted list between numbered and bulleted style.
+
+Following key bindings may be used to create or toggle tasks.
+
+| Linux/Windows | MacOS | Description
+|---------------|-------|-------------
+| <kbd>Alt</kbd> + <kbd>t</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>t</kbd> | Creates new GFM task (`* [ ] task`)
+| <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [X] task`)
 
 # References
 
