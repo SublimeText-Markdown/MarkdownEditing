@@ -251,7 +251,6 @@ class MdeFoldLinksListener(MdeViewEventListener, MdeFoldLinksProviderMixin):
     def __init__(self, view):
         super().__init__(view)
         MdeFoldLinksProviderMixin.__init__(self)
-        self.fold_all()
 
     @classmethod
     def is_applicable(cls, settings):
@@ -263,7 +262,7 @@ class MdeFoldLinksListener(MdeViewEventListener, MdeFoldLinksProviderMixin):
         """
         Called on load.
         """
-        self.auto_fold_all()
+        self.fold_all()
 
     def on_activated(self):
         """
