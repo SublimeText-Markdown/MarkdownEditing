@@ -8,7 +8,7 @@ pushd %~dp0
 
 if /i "%1" == "init" goto INIT
 if /i "%1" == "docs" goto DOCS
-if /i "%1" == "docs" goto GH-PAGES
+if /i "%1" == "deploy-docs" goto DEPLOY-DOCS
 if /i "%1" == "serve" goto SERVE
 if /i "%1" == "lint" goto LINT
 goto :usage
@@ -26,9 +26,9 @@ goto :usage
     mkdocs build
     goto :eof
 
-:GH-PAGES
+:DEPLOY-DOCS
     call :venv
-    mkdocs gh-pages
+    mkdocs gh-deploy
     goto :eof
 
 :SERVE
@@ -54,9 +54,9 @@ goto :usage
     echo.
     echo   make ^[init^|docs^|gh-pages^|serve^|lint^]
     echo.
-    echo   init     -- setup .venv and install requirements.
-    echo   docs     -- build documentation
-    echo   gh-pages -- build documentation and publish on Github Pages
-    echo   serve    -- build documentation and serve via development server
-    echo   lint     -- run black, flake8 and pytest
+    echo   init        -- setup .venv and install requirements.
+    echo   docs        -- build documentation
+    echo   deploy-docs -- build documentation and publish on Github Pages
+    echo   serve       -- build documentation and serve via development server
+    echo   lint        -- run black, flake8 and pytest
     goto :eof
