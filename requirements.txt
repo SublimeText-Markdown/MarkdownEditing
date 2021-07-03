@@ -1,0 +1,6 @@
+mkdocs
+mkdocs-cinder
+mkdocs-git-revision-date-localized-plugin
+mkdocs-mermaid-plugin
+mkdocs-minify-plugin
+pymdown-extensions
