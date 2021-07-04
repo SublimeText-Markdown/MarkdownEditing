@@ -69,7 +69,7 @@ def select_color_scheme(view=None):
 
     window = view.window() if isinstance(view, sublime.View) else sublime.active_window()
     pre_view = window.new_file(
-        flags=sublime.TRANSIENT, syntax="Packages/MarkdownEditing/Markdown.sublime-syntax"
+        flags=sublime.TRANSIENT, syntax="Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"
     )
     pre_view.set_scratch(True)
     pre_view.run_command("append", {"characters": MARKDOWN_TEMPLATE})
