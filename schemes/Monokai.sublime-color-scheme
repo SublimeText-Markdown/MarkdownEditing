@@ -1,4 +1,4 @@
-// This patch for Mariana.sublime-color-scheme adds some Markdown specific color definitions
+// This patch for Monokai.sublime-color-scheme adds some Markdown specific color definitions
 // while making use of well defined colors for code blocks.
 {
 	"variables": {
