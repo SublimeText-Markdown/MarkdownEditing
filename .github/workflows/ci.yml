@@ -4,9 +4,17 @@ on:
   push:
     branches:
       - 'master'
+    paths:
+      - '**/*.json'
+      - '**/*.py'
+      - '**/*.sublime-*'
   pull_request:
     branches:
       - '**'
+    paths:
+      - '**/*.json'
+      - '**/*.py'
+      - '**/*.sublime-*'
 
 jobs:
   build:
@@ -17,19 +25,15 @@ jobs:
         os:
           - ubuntu-18.04
         python:
-          - '3.3.7'
-          - '3.8.8'
+          - '3.3'
+          - '3.8'
         arch:
           - 'x64'
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-        with:
-          fetch-depth: 0
-      - name: Switch to Current Branch
-        run: git checkout ${{ env.BRANCH }}
+      - name: Checkout Repository
+        uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python }}
-        uses: actions/setup-python@main
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
@@ -41,4 +45,4 @@ jobs:
         run: python -m pytest --import-mode=append tests/
       - name: Run black
         run: python -m black --check .
-        if: ${{ matrix.python == '3.8.8' }}
+        if: ${{ matrix.python == '3.8' }}
