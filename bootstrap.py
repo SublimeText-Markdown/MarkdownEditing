@@ -35,7 +35,7 @@ def enable_native_markdown_package():
         save_ingored_packages(ignored_packages)
 
 
-def choose_color_theme(window):
+def choose_color_theme(window=None):
     window = window or sublime.active_window()
     view = window.new_file()
     view.run_command('append', {'characters': '''# A sample Markdown document
