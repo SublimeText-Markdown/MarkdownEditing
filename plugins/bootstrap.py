@@ -23,11 +23,11 @@ def disable_native_markdown_package():
     if "Markdown" not in ignored_packages:
         reassign_syntax(
             "Packages/Markdown/Markdown.sublime-syntax",
-            "Packages/MarkdownEditing/Markdown.sublime-syntax",
+            "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
         )
         reassign_syntax(
             "Packages/Markdown/MultiMarkdown.sublime-syntax",
-            "Packages/MarkdownEditing/MultiMarkdown.sublime-syntax",
+            "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
         )
         ignored_packages.append("Markdown")
         save_ingored_packages(ignored_packages)
@@ -41,11 +41,11 @@ def enable_native_markdown_package():
 
         def reassign():
             reassign_syntax(
-                "Packages/MarkdownEditing/Markdown.sublime-syntax",
+                "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
                 "Packages/Markdown/Markdown.sublime-syntax",
             )
             reassign_syntax(
-                "Packages/MarkdownEditing/MultiMarkdown.sublime-syntax",
+                "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
                 "Packages/Markdown/MultiMarkdown.sublime-syntax",
             )
 

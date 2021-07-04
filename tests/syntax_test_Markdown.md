@@ -1,4 +1,4 @@
-<!-- SYNTAX TEST "Packages/MarkdownEditing/Markdown (Standard).tmLanguage" -->
+<!-- SYNTAX TEST "Packages/MarkdownEditing/syntaxes/Markdown (Standard).tmLanguage" -->
 
 Inline styles
 =============
