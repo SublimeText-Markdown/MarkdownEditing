@@ -1,6 +1,9 @@
 %YAML 1.2
 ---
 site_name: "MarkdownEditing"
+site_description: MarkdownEditing User Manual
+site_author: DeathAxe
+site_url: "https://sublimetext-markdown.github.io/MarkdownEditing"
 repo_url: "https://github.com/SublimeText-Markdown/MarkdownEditing"
 docs_dir: "docs"
 
