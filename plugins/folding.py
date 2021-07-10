@@ -22,6 +22,19 @@ def get_folded_region(view, region):
     return None
 
 
+def unfold_all_sections(view):
+    view.unfold(sublime.Region(0, view.size()))
+    fold_all_links(view)
+
+
+def fold_all_links(view):
+    if view.settings().get("mde.auto_fold_link.enabled", True):
+        ignored = view.find_by_selector(
+            view.settings().get("mde.auto_fold_link.selector", "")
+        )
+        view.fold(ignored)
+
+
 class MdeFoldSectionCommand(MdeTextCommand):
     def description(self):
         return "Toggle fold/unfold on current section"
@@ -55,6 +68,9 @@ class MdeFoldSectionCommand(MdeTextCommand):
                 view.unfold(reg)
             else:
                 view.fold(reg)
+
+        fold_all_links(view)
+        
         sublime.status_message(
             "%d region%s %sfolded"
             % (len(sections), "s" if len(sections) > 1 else "", "un" if shouldUnfold else "")
@@ -126,7 +142,7 @@ class MdeShowFoldAllSectionsCommand(MdeTextCommand):
 class MdeFoldAllSectionsCommand(MdeTextCommand):
     def run(self, edit, target_level=0):
         view = self.view
-        view.run_command("unfold_all")
+        unfold_all_sections(view)
         section_start = -1
         section_end = view.size()
         n_sections = 0
@@ -155,8 +171,7 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
 
 class MdeUnfoldAllSectionsCommand(MdeTextCommand):
     def run(self, edit):
-        view = self.view
-        view.run_command("unfold_all")
+        unfold_all_sections(self.view)
 
 
 class MdeFoldLinksProviderMixin:
