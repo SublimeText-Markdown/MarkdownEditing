@@ -506,6 +506,30 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
+	{ "keys": ["super+ctrl+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["super+ctrl+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["super+shift+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": false}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["super+shift+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": false}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
+		]
+	},
 
 	//
 	// Folding
@@ -601,30 +625,6 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.show_fold_all_sections", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+ctrl+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": true}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+ctrl+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": true}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+shift+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": false}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+shift+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": false}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
 		]
 	},
 
