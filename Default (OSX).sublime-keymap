@@ -789,7 +789,8 @@
 	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s*", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_match", "operand": "(?:-{2,}|={2,})", "match_all": true }
 		]
 	},
 	// Unindent selected list items
