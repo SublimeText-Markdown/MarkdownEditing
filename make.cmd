@@ -41,7 +41,6 @@ goto :usage
     call :venv
     black --check .
     flake8
-    pytest --import-mode=append tests/
     goto :eof
 
 :VENV

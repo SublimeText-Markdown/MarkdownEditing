@@ -18,13 +18,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Python ${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.arch }}
-    runs-on: ${{ matrix.os }}
+  lint:
+    name: Lint code via python ${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.arch }}
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
-        os:
-          - ubuntu-18.04
         python:
           - '3.3'
           - '3.8'
@@ -38,12 +36,32 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
-      - name: Install test suites
+      - name: Install linters
         run: pip install -r tests/requirements.txt
-      - name: Run flake8
-        run: python -m flake8
-      - name: Run pytest
-        run: python -m pytest --import-mode=append tests/
       - name: Run black
         run: python -m black --check .
         if: ${{ matrix.python == '3.8' }}
+      - name: Run flake8
+        run: python -m flake8
+
+  test:
+    name: Run tests on (ST${{ matrix.st_version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        st_version: [3, 4]
+    container:
+      image: sublimetext/unittesting
+      options: --cap-add=NET_ADMIN
+    env:
+      SUBLIME_TEXT_VERSION: ${{ matrix.st_version }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: sh -e /etc/init.d/xvfb start
+      - run: curl -OL https://raw.githubusercontent.com/SublimeText/UnitTesting/master/sbin/github.sh
+      - run: |
+          PATH="$HOME/.local/bin:$PATH"
+          sh github.sh bootstrap
+          sh github.sh install_package_control
+          sh github.sh run_tests
