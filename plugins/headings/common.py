@@ -8,7 +8,7 @@ HEADINGS_RE = re.compile(
     ^( [ \t]* )                                   # leading whitespace
     (?:
       ( \#{1,6} ) [ \t]+ ( [^\n]+ )               # ATX headings
-    | ( [^-#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} )  # SETEXT headings
+    | ( [^-=#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} ) # SETEXT headings
     ) [ \t]*$                                     # maybe trailing whitespace
     """,
     re.X | re.M,
