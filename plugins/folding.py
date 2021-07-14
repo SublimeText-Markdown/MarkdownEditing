@@ -3,12 +3,22 @@ import sublime
 from .headings import all_headings
 from .view import MdeTextCommand, MdeViewEventListener
 
+ST4 = int(sublime.version()) > 4000
+
 
 def folded_region(view, region):
     for i in view.folded_regions():
         if i.contains(region):
             return i
     return None
+
+
+def first_unfolded_selection(view):
+    folded_regions = view.folded_regions()
+    for sel in view.sel():
+        if not any(r.contains(sel) for r in folded_regions):
+            return sel
+    return sublime.Region(0, 0)
 
 
 def section_level(view, pt):
@@ -38,15 +48,9 @@ def section_region_and_level(view, pt):
     return (None, -1)
 
 
-def unfold_all_sections(view):
-    view.unfold(sublime.Region(0, view.size()))
-    fold_all_links(view)
-
-
 def fold_all_links(view):
     if view.settings().get("mde.auto_fold_link.enabled", True):
-        ignored = view.find_by_selector(view.settings().get("mde.auto_fold_link.selector", ""))
-        view.fold(ignored)
+        view.fold(view.find_by_selector(view.settings().get("mde.auto_fold_link.selector", "")))
 
 
 class MdeFoldSectionCommand(MdeTextCommand):
@@ -124,38 +128,69 @@ class MdeShowFoldAllSectionsCommand(MdeTextCommand):
 
 
 class MdeFoldAllSectionsCommand(MdeTextCommand):
+    """
+    The `mde_fold_all_sections` command folds sections by level.
+
+    With `target_level`
+
+    - `= 0`, all sections are folded, but their headings keep visible.
+    - `> 0`, only headings of same or higher level are visible.
+    """
+
     def run(self, edit, target_level=0):
         view = self.view
-        unfold_all_sections(view)
+        view_size = view.size()
+        view.unfold(sublime.Region(0, view_size))
+
+        regions_to_fold = []
         section_start = -1
-        section_end = view.size()
-        n_sections = 0
+        section_end = view_size
+
         for heading_begin, heading_end, heading_level in all_headings(view):
-            if target_level == 0 or heading_level <= target_level:
-                if section_start > 0:
-                    section_end = heading_begin - 1
-                    reg = sublime.Region(section_start, section_end)
-                    view.fold(reg)
-                    n_sections += 1
-                    section_start = -1
+            if target_level == 0 or heading_level <= target_level and section_start > 0:
+                section_end = heading_begin - 1
+                regions_to_fold.append(sublime.Region(section_start, section_end))
+                section_start = -1
             if target_level == 0 or heading_level == target_level:
                 section_start = heading_end
+
         if section_start >= 0:
-            reg = sublime.Region(section_start, view.size())
-            view.fold(reg)
-            n_sections += 1
-        if len(view.sel()) > 0:
-            for sel in view.sel():
-                if folded_region(view, sel) is None:
-                    view.show(sel)
+            regions_to_fold.append(sublime.Region(section_start, view_size))
+
+        n_sections = len(regions_to_fold)
+
+        if view.settings().get("mde.auto_fold_link.enabled", True):
+            regions_to_fold.extend(
+                view.find_by_selector(view.settings().get("mde.auto_fold_link.selector", ""))
+            )
+
+        view.fold(regions_to_fold)
+        view.settings().set("mde.folding.target_level", target_level)
+
+        if ST4:
+            view.show(first_unfolded_selection(), keep_to_left=True, animate=False)
         else:
-            view.show(sublime.Region(0, 0))
-        sublime.status_message("%d region%s folded" % (n_sections, "s" if n_sections > 1 else ""))
+            view.show(first_unfolded_selection())
+
+        sublime.status_message("%d regions%s folded" % (n_sections, "s" if n_sections > 1 else ""))
 
 
 class MdeUnfoldAllSectionsCommand(MdeTextCommand):
+    """
+    The `mde_unfold_all_sections` command unfolds all sections.
+    """
+
     def run(self, edit):
-        unfold_all_sections(self.view)
+        view = self.view
+        view.unfold(sublime.Region(0, view.size()))
+        view.settings().erase("mde.folding.target_level")
+
+        fold_all_links(view)
+
+        if ST4:
+            view.show(first_unfolded_selection(), keep_to_left=True, animate=False)
+        else:
+            view.show(first_unfolded_selection())
 
 
 class MdeFoldLinksProviderMixin:
@@ -257,21 +292,27 @@ class MdeFoldLinksListener(MdeViewEventListener, MdeFoldLinksProviderMixin):
             "mde.auto_fold_link.enabled", False
         )
 
+    def on_init(self):
+        """
+        Fold all links after application startup.
+        """
+        self.fold_all()
+
     def on_load(self):
         """
-        Called on load.
+        Fold all links once file is loaded.
         """
         self.fold_all()
 
     def on_activated(self):
         """
-        Called on load.
+        Update link folding when activating view.
         """
         self.auto_fold_all()
 
     def on_selection_modified(self):
         """
-        Temporarily unfold links
+        Update link folding when moving caret around.
         """
         self.auto_fold_all()
 

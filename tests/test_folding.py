@@ -251,4 +251,126 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_fold_section")
         self.assertEqual(self.view.folded_regions(), [])
 
-        self.view.settings().erase("mde.auto_fold_link.enabled")
+    # test folding and unfolding by level
+
+    def test_fold_all_sections__level_0_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(0, [
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_fold_all_sections__level_1_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(1, [
+            sublime.Region(11, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_fold_all_sections__level_2_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(2, [
+            sublime.Region(98, 357),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610)
+        ])
+
+    def test_fold_all_sections__level_3_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(3, [
+            sublime.Region(117, 274),
+            sublime.Region(292, 357)
+        ])
+
+    def test_fold_all_sections__level_4_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(4, [
+            sublime.Region(158, 202),
+            sublime.Region(223, 274)
+        ])
+
+    def test_fold_all_sections__level_5_without_auto_link_folding(self):
+        self._test_fold_all_sections_without_auto_link_folding(5, [])
+
+    def _test_fold_all_sections_without_auto_link_folding(self, level, expected_regions):
+        self.view.settings().set("mde.auto_fold_link.enabled", False)
+        self.view.run_command("mde_fold_all_sections", {"target_level": level})
+        self.assertEqual(self.view.folded_regions(), expected_regions)
+
+    def test_fold_all_sections__level_0_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(0, [
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_fold_all_sections__level_1_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(1, [
+            sublime.Region(11, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_fold_all_sections__level_2_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(2, [
+            sublime.Region(37, 52),
+            sublime.Region(98, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610)
+        ])
+
+    def test_fold_all_sections__level_3_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(3, [
+            sublime.Region(37, 52),
+            sublime.Region(117, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+    def test_fold_all_sections__level_4_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(4, [
+            sublime.Region(37, 52),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+    def test_fold_all_sections__level_5_with_auto_link_folding(self):
+        self._test_fold_all_sections_with_auto_link_folding(5, [
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+    def _test_fold_all_sections_with_auto_link_folding(self, level, expected_regions):
+        self.view.settings().set("mde.auto_fold_link.enabled", True)
+        self.view.run_command("mde_fold_all_sections", {"target_level": level})
+        self.assertEqual(self.view.folded_regions(), expected_regions)
