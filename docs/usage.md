@@ -132,12 +132,16 @@ Adding or removing `#` at the beginning of lines also modifies heading levels im
 Irrelevant sections of documents can be folded/collapsed via Command Palette:
 
 *   **MarkdownEditing: Toggle Folding Current Section**  
-    Folds/unfolds current section.
+    Folds/unfolds current section including child sections.
+    Unfolding a section of level 2 heading also unfolds those of level 3 to 6.
 
 *   **MarkdownEditing: Fold Level 1-6 Sections**  
-    Fold all sections under headers of specific level.
+    Folds all sections of headings of specific level. Also hides lower level headings.
 
-*   **MarkdownEditing: Fold/Unfold All Sections**  
+*   **MarkdownEditing: Fold All Sections**  
+    Folds all sections of any level but keeps their headings visible.
+
+*   **MarkdownEditing: Unfold All Sections**  
     Self explanatory.
 
 Folding is bound to following keys by default:
@@ -145,7 +149,8 @@ Folding is bound to following keys by default:
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
 | <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
-| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections of level 1..6
+| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
+| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
 | <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold/Unfold current section.
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 

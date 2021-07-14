@@ -605,6 +605,16 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
 		]
 	},
+	{ "keys": ["super+k", "super+keypad9"], "command": "mde_fold_all_sections", "args": {"target_level": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["super+k", "super+9"], "command": "mde_fold_all_sections", "args": {"target_level": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true }
+		]
+	},
 	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw - markup.list", "match_all": true },
