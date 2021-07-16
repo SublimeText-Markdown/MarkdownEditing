@@ -168,9 +168,9 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
         view.settings().set("mde.folding.target_level", target_level)
 
         if ST4:
-            view.show(first_unfolded_selection(), keep_to_left=True, animate=False)
+            view.show(first_unfolded_selection(view), keep_to_left=True, animate=False)
         else:
-            view.show(first_unfolded_selection())
+            view.show(first_unfolded_selection(view))
 
         sublime.status_message("%d regions%s folded" % (n_sections, "s" if n_sections > 1 else ""))
 
@@ -188,9 +188,9 @@ class MdeUnfoldAllSectionsCommand(MdeTextCommand):
         fold_all_links(view)
 
         if ST4:
-            view.show(first_unfolded_selection(), keep_to_left=True, animate=False)
+            view.show(first_unfolded_selection(view), keep_to_left=True, animate=False)
         else:
-            view.show(first_unfolded_selection())
+            view.show(first_unfolded_selection(view))
 
 
 class MdeFoldLinksProviderMixin:
