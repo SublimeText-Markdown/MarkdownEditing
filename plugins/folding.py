@@ -21,6 +21,13 @@ def first_unfolded_selection(view):
     return sublime.Region(0, 0)
 
 
+def show_first_unfolded_selection(view):
+    if ST4:
+        view.show(first_unfolded_selection(view), keep_to_left=True, animate=False)
+    else:
+        view.show(first_unfolded_selection(view))
+
+
 def section_level(view, pt):
     last_level = 0
     for heading_begin, heading_end, level in all_headings(view):
@@ -167,10 +174,7 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
         view.fold(regions_to_fold)
         view.settings().set("mde.folding.target_level", target_level)
 
-        if ST4:
-            view.show(first_unfolded_selection(view), keep_to_left=True, animate=False)
-        else:
-            view.show(first_unfolded_selection(view))
+        show_first_unfolded_selection(view)
 
         sublime.status_message("%d regions%s folded" % (n_sections, "s" if n_sections > 1 else ""))
 
@@ -186,11 +190,7 @@ class MdeUnfoldAllSectionsCommand(MdeTextCommand):
         view.settings().erase("mde.folding.target_level")
 
         fold_all_links(view)
-
-        if ST4:
-            view.show(first_unfolded_selection(view), keep_to_left=True, animate=False)
-        else:
-            view.show(first_unfolded_selection(view))
+        show_first_unfolded_selection(view)
 
 
 class MdeFoldLinksProviderMixin:
