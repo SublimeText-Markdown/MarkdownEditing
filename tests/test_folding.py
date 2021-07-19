@@ -26,6 +26,9 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def tearDown(self):
         self.view.settings().erase("mde.auto_fold_link.enabled")
 
+    def assertFoldedRegions(self, regions):
+        self.assertEqual(self.view.folded_regions(), regions)
+
     # all_headings() unittests
 
     def test_all_headings(self):
@@ -123,7 +126,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def _test_section_region_and_level(self, row, col, begin, end, level):
         self.assertEqual(
-            section_region_and_level(self.view, self.textPoint(row, col)),
+            section_region_and_level(self.view, self.textPoint(row, col), -1),
             (sublime.Region(begin, end), level)
         )
 
@@ -374,3 +377,199 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": level})
         self.assertEqual(self.view.folded_regions(), expected_regions)
+
+    def test_unfold_section__heading_1_with_folding_tartet_level_0(self):
+        # unfold and then fold "1 Heading"
+        self._test_unfold_section__heading_x_with_folding_tartet_level_0(1, [
+            sublime.Region(37, 52),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_unfold_section__heading_1_1_with_folding_tartet_level_0(self):
+        # unfold and then fold "1.1 Heading"
+        self._test_unfold_section__heading_x_with_folding_tartet_level_0(9, [
+            sublime.Region(11, 83),
+            # sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_unfold_section__heading_1_1_1_with_folding_tartet_level_0(self):
+        # unfold and then fold "1.1.1 Heading"
+        self._test_unfold_section__heading_x_with_folding_tartet_level_0(11, [
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            # sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_unfold_section__heading_3_with_folding_tartet_level_0(self):
+        # unfold and then fold "3 Heading"
+        self._test_unfold_section__heading_x_with_folding_tartet_level_0(45, [
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            # sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_unfold_section__heading_3_2_with_folding_tartet_level_0(self):
+        # unfold and then fold "3.2 Heading"
+        self._test_unfold_section__heading_x_with_folding_tartet_level_0(53, [
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            # sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def _test_unfold_section__heading_x_with_folding_tartet_level_0(self, row, expected_regions):
+        # prepare test by folding sections by target_level 0 (outline mode)
+        # outline mode: Only fold a section up to very next heading!
+        self.view.settings().set("mde.auto_fold_link.enabled", True)
+        self.view.run_command("mde_fold_all_sections", {"target_level": 0})
+
+        # unfold heading
+        self.setCaretTo(self.textPoint(row, 1))
+        self.view.run_command("mde_fold_section")
+
+        # fold heading
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_unfold_section__heading_1_with_folding_tartet_level_1(self):
+        # prepare test by folding sections by target_level 1
+        self.view.settings().set("mde.auto_fold_link.enabled", True)
+        self.view.run_command("mde_fold_all_sections", {"target_level": 1})
+
+        # unfold "1 Heading"
+        self.setCaretTo(self.textPoint(1, 11))
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(98, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # unfold "1.1 Heading"
+        self.setCaretTo(self.textPoint(9, 9))
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(117, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # unfold "1.1.2 Heading"
+        self.setCaretTo(self.textPoint(25, 9))
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(117, 274),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # fold "1.1 Heading"
+        self.setCaretTo(self.textPoint(9, 9))
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(98, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # fold "1 Heading"
+        self.setCaretTo(self.textPoint(1, 11))
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(11, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
