@@ -149,36 +149,27 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(
-            self.view.folded_regions(),
-            [sublime.Region(11, 470)]
-        )
+        self.assertFoldedRegions([sublime.Region(11, 470)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(
-            self.view.folded_regions(),
-            [
-                sublime.Region(37, 52),
-                sublime.Region(184, 199),
-                sublime.Region(367, 382),
-                sublime.Region(417, 432)
-            ]
-        )
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
 
         # setup test
         self.view.settings().set("mde.auto_fold_link.enabled", False)
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(
-            self.view.folded_regions(),
-            [sublime.Region(11, 470)]
-        )
+        self.assertFoldedRegions([sublime.Region(11, 470)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(self.view.folded_regions(), [])
+        self.assertFoldedRegions([])
 
     # test folding and unfolding setext heading level 1
 
@@ -208,14 +199,11 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(
-            self.view.folded_regions(),
-            [sublime.Region(522, 610)]
-        )
+        self.assertFoldedRegions([sublime.Region(522, 610)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(self.view.folded_regions(), [])
+        self.assertFoldedRegions([])
 
     # test folding and unfolding setext heading level 2
 
@@ -245,14 +233,11 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(
-            self.view.folded_regions(),
-            [sublime.Region(547, 567)]
-        )
+        self.assertFoldedRegions([sublime.Region(547, 567)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
-        self.assertEqual(self.view.folded_regions(), [])
+        self.assertFoldedRegions([])
 
     # test folding and unfolding by level
 
@@ -308,7 +293,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def _test_fold_all_sections_without_auto_link_folding(self, level, expected_regions):
         self.view.settings().set("mde.auto_fold_link.enabled", False)
         self.view.run_command("mde_fold_all_sections", {"target_level": level})
-        self.assertEqual(self.view.folded_regions(), expected_regions)
+        self.assertFoldedRegions(expected_regions)
 
     def test_fold_all_sections__level_0_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(0, [
@@ -376,7 +361,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def _test_fold_all_sections_with_auto_link_folding(self, level, expected_regions):
         self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": level})
-        self.assertEqual(self.view.folded_regions(), expected_regions)
+        self.assertFoldedRegions(expected_regions)
 
     def test_unfold_section__heading_1_with_folding_tartet_level_0(self):
         # unfold and then fold "1 Heading"
