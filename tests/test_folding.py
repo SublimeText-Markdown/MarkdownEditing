@@ -143,7 +143,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def _test_fold_section__heading_1(self, row, col):
         # setup test
-        self.setCaretTo(self.textPoint(row, col))
+        self.setCaretTo(row, col)
         self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("unfold_all")
 
@@ -193,7 +193,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def _test_fold_section__heading_3(self, row, col):
         # setup test
-        self.setCaretTo(self.textPoint(row, col))
+        self.setCaretTo(row, col)
         self.view.settings().set("mde.auto_fold_link.enabled", False)
         self.view.run_command("unfold_all")
 
@@ -227,7 +227,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def _test_fold_section__heading_3_1(self, row, col):
         # setup test
-        self.setCaretTo(self.textPoint(row, col))
+        self.setCaretTo(row, col)
         self.view.settings().set("mde.auto_fold_link.enabled", False)
         self.view.run_command("unfold_all")
 
@@ -465,7 +465,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_fold_all_sections", {"target_level": 0})
 
         # unfold heading
-        self.setCaretTo(self.textPoint(row, 1))
+        self.setCaretTo(row, 1)
         self.view.run_command("mde_fold_section")
 
         # fold heading
@@ -493,7 +493,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_fold_all_sections", {"target_level": 1})
 
         # unfold "1 Heading"
-        self.setCaretTo(self.textPoint(1, 11))
+        self.setCaretTo(1, 11)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(37, 52),
@@ -507,7 +507,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ])
 
         # unfold "1.1 Heading"
-        self.setCaretTo(self.textPoint(9, 9))
+        self.setCaretTo(9, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(37, 52),
@@ -522,7 +522,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ])
 
         # unfold "1.1.2 Heading"
-        self.setCaretTo(self.textPoint(25, 9))
+        self.setCaretTo(25, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(37, 52),
@@ -536,7 +536,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ])
 
         # fold "1.1 Heading"
-        self.setCaretTo(self.textPoint(9, 9))
+        self.setCaretTo(9, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(37, 52),
@@ -550,7 +550,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ])
 
         # fold "1 Heading"
-        self.setCaretTo(self.textPoint(1, 11))
+        self.setCaretTo(1, 11)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(11, 470),

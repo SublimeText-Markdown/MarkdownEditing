@@ -31,12 +31,14 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         cls.view = cls.window.destroy_output_panel("MarkdownUnitTests")
 
     @classmethod
-    def setCaretTo(cls, pt):
+    def setCaretTo(cls, row, col):
         """
         Move caret to given point
 
-        :param      pt:   Text point to move caret to.
+        :param row:  The natural 1-based row number. 1=first row
+        :param col:  The natural 1-based column number. 1=first column
         """
+        pt = cls.textPoint(row, col)
         cls.view.sel().clear()
         cls.view.sel().add(sublime.Region(pt, pt))
 
@@ -45,7 +47,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         """
         Replace everything with given block text
 
-        :param      text:  The triple quoted block text to put into scratch view.
+        :param text:  The triple quoted block text to put into scratch view.
         """
         cls.setText(dedent(text.strip()))
 
@@ -54,7 +56,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         """
         Replace everything with given text
 
-        :param      text:  The text to put into scratch view.
+        :param text:  The text to put into scratch view.
         """
         cls.view.run_command("select_all")
         cls.view.run_command("right_delete")
@@ -65,7 +67,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         """
         Return row's text content.
 
-        :param      row:  The natural 1-based row number. 1=first row
+        :param row:  The natural 1-based row number. 1=first row
         """
         return cls.view.substr(cls.view.line(cls.textPoint(row, 0)))
 
@@ -74,7 +76,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         """
         Return textpoint for given row,col coordinats.
 
-        :param      row:  The natural 1-based row number. 1=first row
-        :param      col:  The natural 1-based column number. 1=first column
+        :param row:  The natural 1-based row number. 1=first row
+        :param col:  The natural 1-based column number. 1=first column
         """
         return cls.view.text_point(row - 1, col - 1)
