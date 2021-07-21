@@ -132,14 +132,19 @@ Adding or removing `#` at the beginning of lines also modifies heading levels im
 Irrelevant sections of documents can be folded/collapsed via Command Palette:
 
 *   **MarkdownEditing: Toggle Folding Current Section**  
-    Folds/unfolds current section including child sections.
-    Unfolding a section of level 2 heading also unfolds those of level 3 to 6.
+    Whether child sections are folded or unfolded as well depends on folding level defined by calling one of the following commands.
+
+    If `Fold All Sections` was called before _("outline mode" is active)_, the region between current and following sibling or child heading is (un)folded only.
+
+    If `Fold Level 1-6 Sections` was called before, all child sections with lower level keep folded when unfolding their parent section.
+
+    If `Unfold All Sections` was called before, all child sections are (un)folded.
 
 *   **MarkdownEditing: Fold Level 1-6 Sections**  
     Folds all sections of headings of specific level. Also hides lower level headings.
 
 *   **MarkdownEditing: Fold All Sections**  
-    Folds all sections of any level but keeps their headings visible.
+    Folds all sections of any level but keeps their headings visible. Let's call it "outline mode".
 
 *   **MarkdownEditing: Unfold All Sections**  
     Self explanatory.
