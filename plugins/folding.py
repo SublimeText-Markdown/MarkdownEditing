@@ -154,7 +154,7 @@ class MdeFoldSectionCommand(MdeTextCommand):
         target_level = folding_target_level(view)
         sections = []
         levels = []
-        shouldUnfold = False
+        unfold = False
         for sel in view.sel():
             if any(s.contains(sel) for s in sections):
                 continue
@@ -166,12 +166,12 @@ class MdeFoldSectionCommand(MdeTextCommand):
                 if folded_section != section:
                     level = section_level(view, folded_section.begin())
                 sections.append(folded_section)
-                shouldUnfold = True
+                unfold = True
             else:
                 sections.append(section)
             levels.append(level)
 
-        if shouldUnfold:
+        if unfold:
             regions_to_fold = []
             if target_level > -1:
                 # keep all child sections folded
@@ -191,7 +191,7 @@ class MdeFoldSectionCommand(MdeTextCommand):
 
         sublime.status_message(
             "%d region%s %sfolded"
-            % (len(sections), "s" if len(sections) > 1 else "", "un" if shouldUnfold else "")
+            % (len(sections), "s" if len(sections) > 1 else "", "un" if unfold else "")
         )
 
 
