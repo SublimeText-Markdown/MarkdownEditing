@@ -492,8 +492,32 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": 1})
 
-        # unfold "1 Heading"
+        # unfold "1 Heading" with caret before folding marker
         self.setCaretTo(1, 11)
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(98, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # fold "1 Heading"
+        self.setCaretTo(1, 11)
+        self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions([
+            sublime.Region(11, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # unfold "1 Heading" with caret after folding marker
+        self.setCaretTo(40, 1)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
             sublime.Region(37, 52),
@@ -544,16 +568,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
             sublime.Region(367, 382),
             sublime.Region(391, 435),
             sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
-        ])
-
-        # fold "1 Heading"
-        self.setCaretTo(1, 11)
-        self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([
-            sublime.Region(11, 470),
             sublime.Region(482, 502),
             sublime.Region(522, 610),
             sublime.Region(630, 649)

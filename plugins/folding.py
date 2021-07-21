@@ -47,6 +47,25 @@ def show_first_unfolded_selection(view):
         view.show(first_unfolded_selection(view))
 
 
+def section_level(view, pt):
+    """
+    Calculate heading level of the section `pt` is in.
+
+    :param view:          The view
+    :param region:        The text position to find the section's region for
+
+    :returns:             The section level
+    """
+    last_level = 0
+    for heading_begin, heading_end, level in all_headings(view):
+        if heading_end < pt:
+            last_level = level
+        elif heading_begin < pt:
+            return level
+        else:
+            return last_level
+
+
 def section_region_and_level(view, pt, target_level):
     """
     Calculate `region` and heading level of the section `pt` is in.
@@ -137,16 +156,20 @@ class MdeFoldSectionCommand(MdeTextCommand):
         levels = []
         shouldUnfold = False
         for sel in view.sel():
-            if not any(s.contains(sel) in s for s in sections):
-                section, level = section_region_and_level(view, sel.a, target_level)
-                if section:
-                    levels.append(level)
-                    folded = folded_region(view, section)
-                    if folded:
-                        sections.append(folded)
-                        shouldUnfold = True
-                    else:
-                        sections.append(section)
+            if any(s.contains(sel) for s in sections):
+                continue
+            section, level = section_region_and_level(view, sel.begin(), target_level)
+            if not section:
+                continue
+            folded_section = folded_region(view, section)
+            if folded_section:
+                if folded_section != section:
+                    level = section_level(view, folded_section.begin())
+                sections.append(folded_section)
+                shouldUnfold = True
+            else:
+                sections.append(section)
+            levels.append(level)
 
         if shouldUnfold:
             regions_to_fold = []
