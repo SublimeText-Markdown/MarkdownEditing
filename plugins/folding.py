@@ -190,8 +190,9 @@ class MdeFoldSectionCommand(MdeTextCommand):
             view.fold(sections)
 
         sublime.status_message(
-            "%d region%s %sfolded"
-            % (len(sections), "s" if len(sections) > 1 else "", "un" if unfold else "")
+            "{} region{} {}folded".format(
+                len(sections), "s" if len(sections) > 1 else "", "un" if unfold else ""
+            )
         )
 
 
