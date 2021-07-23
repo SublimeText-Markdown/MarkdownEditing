@@ -124,7 +124,11 @@ def sections_to_fold(view, region, target_level):
 
 def links_to_fold(view):
     if view.settings().get("mde.auto_fold_link.enabled", True):
-        return view.find_by_selector(view.settings().get("mde.auto_fold_link.selector", ""))
+        sels = view.sel()
+        return [
+            r for r in view.find_by_selector(view.settings().get("mde.auto_fold_link.selector", ""))
+            if not any(r.contains(s) for s in sels)
+        ]
     return []
 
 
