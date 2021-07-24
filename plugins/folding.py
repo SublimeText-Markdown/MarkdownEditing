@@ -138,7 +138,7 @@ def url_regions(view):
     change_count = view.change_count()
 
     try:
-        if url_regions.view_id == view_id and url_regions.change_count != change_count:
+        if url_regions.view_id == view_id and url_regions.change_count == change_count:
             return url_regions.regions
     except AttributeError:
         pass
