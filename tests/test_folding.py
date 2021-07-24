@@ -759,3 +759,35 @@ class FoldingTestCase(DereferrablePanelTestCase):
             sublime.Region(367, 382),
             sublime.Region(417, 432)
         ])
+
+    def test_folded_links_when_editing_content(self):
+        # setup initial state with all sections unfolded
+        self.setCaretTo(3, 2)
+        self.view.run_command("mde_unfold_all_sections")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+        # caret between "A" and "paragraph" and insert "new "
+        # make sure following regions move accordingly
+        self.view.run_command("insert", {"characters": "new "})
+        self.assertFoldedRegions([
+            sublime.Region(41, 56),
+            sublime.Region(188, 203),
+            sublime.Region(371, 386),
+            sublime.Region(421, 436)
+        ])
+
+        # delete "new " again to restore previous state
+        self.view.sel().clear()
+        self.view.sel().add(sublime.Region(self.textPoint(3, 2), self.textPoint(3, 6)))
+        self.view.run_command("left_delete")
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
