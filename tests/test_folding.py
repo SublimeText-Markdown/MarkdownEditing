@@ -25,7 +25,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def setUp(self):
         self.view.settings().set("mde.auto_fold_link.enabled", True)
-        self.setCaretTo(1, 1)
 
     def tearDown(self):
         self.view.settings().erase("mde.auto_fold_link.enabled")
@@ -576,6 +575,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_links_command__target_level_none(self):
         # setup initial state with all sections unfolded
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_unfold_all_sections")
 
         # disable automatic link folding
@@ -593,6 +593,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_links_command__target_level_0(self):
         # prepare test by folding sections by target_level 0 (outline-mode)
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_fold_all_sections", {"target_level": 0})
 
         # disable automatic link folding
@@ -643,6 +644,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ]
 
         # prepare test by folding sections by target_level 1
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_fold_all_sections", {"target_level": 1})
 
         # disable automatic link folding
@@ -655,6 +657,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_links_command__target_level_2(self):
         # prepare test by folding sections by target_level 1
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_fold_all_sections", {"target_level": 2})
 
         # disable automatic link folding
@@ -681,6 +684,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_links_command__target_level_3(self):
         # prepare test by folding sections by target_level 1
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_fold_all_sections", {"target_level": 3})
 
         # disable automatic link folding
@@ -702,6 +706,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_auto_fold_links__target_level_none(self):
         # setup initial state with all sections unfolded
+        self.setCaretTo(1, 1)
         self.view.run_command("mde_unfold_all_sections")
 
         # caret not within a link url, all folded

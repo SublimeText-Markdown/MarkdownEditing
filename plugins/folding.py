@@ -207,7 +207,7 @@ def unfold_urls(view):
 
 class MdeFoldSectionCommand(MdeTextCommand):
     """
-    This class implements the `mde_fold_section` command.
+    This class describes a `mde_fold_section` command.
 
     The command folds or unfolds sections at least one caret is within.
 
@@ -274,6 +274,10 @@ class MdeFoldSectionCommand(MdeTextCommand):
 
 
 class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
+    """
+    This class describes a `mde_fold_section_context` command.
+    """
+
     def is_visible(self):
         if not super().is_visible():
             return False
@@ -292,6 +296,10 @@ class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
 
 
 class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
+    """
+    This class describes a `mde_unfold_section_context` command.
+    """
+
     def is_visible(self):
         if not super().is_visible():
             return False
@@ -310,6 +318,10 @@ class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
 
 
 class MdeShowFoldAllSectionsCommand(MdeTextCommand):
+    """
+    This class describes a `mde_show_fold_all_sections` command.
+    """
+
     def run(self, edit):
         view = self.view
         view.window().run_command(
@@ -319,7 +331,7 @@ class MdeShowFoldAllSectionsCommand(MdeTextCommand):
 
 class MdeFoldAllSectionsCommand(MdeTextCommand):
     """
-    The `mde_fold_all_sections` command folds sections by level.
+    This class describes a `mde_fold_all_sections` command which folds sections by level.
 
     With `target_level`
 
@@ -342,7 +354,7 @@ class MdeFoldAllSectionsCommand(MdeTextCommand):
 
 class MdeUnfoldAllSectionsCommand(MdeTextCommand):
     """
-    The `mde_unfold_all_sections` command unfolds all sections.
+    This class describes a `mde_unfold_all_sections` command which unfolds all sections.
     """
 
     def run(self, edit):
