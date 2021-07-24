@@ -199,8 +199,7 @@ def unfold_urls(view):
     """
     folded_regions = view.folded_regions()
     unfold_regions = [
-        url for url in url_regions(view)
-        if any(url.contains(folded) for folded in folded_regions)
+        url for url in url_regions(view) if any(url.contains(folded) for folded in folded_regions)
     ]
     view.unfold(unfold_regions)
 
@@ -402,9 +401,8 @@ class MdeFoldLinksListener(MdeViewEventListener):
 
     @classmethod
     def is_applicable(cls, settings):
-        return (
-            MdeViewEventListener.is_applicable(settings)
-            and settings.get("mde.auto_fold_link.enabled", True)
+        return MdeViewEventListener.is_applicable(settings) and settings.get(
+            "mde.auto_fold_link.enabled", True
         )
 
     def on_init(self):
