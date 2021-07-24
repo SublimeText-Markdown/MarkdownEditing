@@ -38,9 +38,8 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         :param row:  The natural 1-based row number. 1=first row
         :param col:  The natural 1-based column number. 1=first column
         """
-        pt = cls.textPoint(row, col)
         cls.view.sel().clear()
-        cls.view.sel().add(sublime.Region(pt, pt))
+        cls.view.sel().add(cls.textPoint(row, col))
 
     @classmethod
     def setBlockText(cls, text):

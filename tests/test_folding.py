@@ -23,8 +23,13 @@ class FoldingTestCase(DereferrablePanelTestCase):
         with open(__file__[:-2] + "md") as f:
             cls.setText(f.read().replace("\r\n", "\n").replace("\r", "\n"))
 
+    def setUp(self):
+        self.view.settings().set("mde.auto_fold_link.enabled", True)
+        self.setCaretTo(1, 1)
+
     def tearDown(self):
         self.view.settings().erase("mde.auto_fold_link.enabled")
+        self.view.settings().erase("mde.folding.target_level")
 
     def assertFoldedRegions(self, regions):
         self.assertEqual(self.view.folded_regions(), regions)
@@ -144,7 +149,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def _test_fold_section__heading_1(self, row, col):
         # setup test
         self.setCaretTo(row, col)
-        self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("unfold_all")
 
         # fold heading
@@ -359,7 +363,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
         ])
 
     def _test_fold_all_sections_with_auto_link_folding(self, level, expected_regions):
-        self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": level})
         self.assertFoldedRegions(expected_regions)
 
@@ -461,7 +464,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def _test_unfold_section__heading_x_with_folding_tartet_level_0(self, row, expected_regions):
         # prepare test by folding sections by target_level 0 (outline mode)
         # outline mode: Only fold a section up to very next heading!
-        self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": 0})
 
         # unfold heading
@@ -489,7 +491,6 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_unfold_section__heading_1_with_folding_tartet_level_1(self):
         # prepare test by folding sections by target_level 1
-        self.view.settings().set("mde.auto_fold_link.enabled", True)
         self.view.run_command("mde_fold_all_sections", {"target_level": 1})
 
         # unfold "1 Heading" with caret before folding marker
@@ -571,4 +572,185 @@ class FoldingTestCase(DereferrablePanelTestCase):
             sublime.Region(482, 502),
             sublime.Region(522, 610),
             sublime.Region(630, 649)
+        ])
+
+    def test_fold_links_command__target_level_none(self):
+        # setup initial state with all sections unfolded
+        self.view.run_command("mde_unfold_all_sections")
+
+        # disable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": False})
+        self.assertFoldedRegions([])
+
+        # enable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+    def test_fold_links_command__target_level_0(self):
+        # prepare test by folding sections by target_level 0 (outline-mode)
+        self.view.run_command("mde_fold_all_sections", {"target_level": 0})
+
+        # disable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": False})
+        self.assertFoldedRegions([
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            # sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+        # enable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            sublime.Region(11, 83),
+            sublime.Region(98, 99),
+            sublime.Region(117, 137),
+            sublime.Region(158, 202),
+            sublime.Region(223, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 523),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610),
+            sublime.Region(630, 649)
+        ])
+
+    def test_fold_links_command__target_level_1(self):
+        # no link is visible, thus folded regions must not change
+        expected_regions = [
+            sublime.Region(11, 470),
+            sublime.Region(482, 502),
+            sublime.Region(522, 610),
+            sublime.Region(630, 649)
+        ]
+
+        # prepare test by folding sections by target_level 1
+        self.view.run_command("mde_fold_all_sections", {"target_level": 1})
+
+        # disable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": False})
+        self.assertFoldedRegions(expected_regions)
+
+        # enable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions(expected_regions)
+
+    def test_fold_links_command__target_level_2(self):
+        # prepare test by folding sections by target_level 1
+        self.view.run_command("mde_fold_all_sections", {"target_level": 2})
+
+        # disable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": False})
+        self.assertFoldedRegions([
+            sublime.Region(98, 357),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610)
+        ])
+
+        # enable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(98, 357),
+            sublime.Region(367, 382),
+            sublime.Region(391, 435),
+            sublime.Region(450, 470),
+            sublime.Region(547, 567),
+            sublime.Region(591, 610)
+        ])
+
+    def test_fold_links_command__target_level_3(self):
+        # prepare test by folding sections by target_level 1
+        self.view.run_command("mde_fold_all_sections", {"target_level": 3})
+
+        # disable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": False})
+        self.assertFoldedRegions([
+            sublime.Region(117, 274),
+            sublime.Region(292, 357)
+        ])
+
+        # enable automatic link folding
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(117, 274),
+            sublime.Region(292, 357),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+    def test_auto_fold_links__target_level_none(self):
+        # setup initial state with all sections unfolded
+        self.view.run_command("mde_unfold_all_sections")
+
+        # caret not within a link url, all folded
+        self.setCaretTo(1, 1)
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+        # caret at beginning of url in line 3 (unfolded)
+        self.setCaretTo(3, 25)
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            # sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+        # caret at end of url in line 3 (unfolded)
+        self.setCaretTo(3, 40)
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            # sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+        # select url in line 3 (unfolded)
+        self.view.sel().clear()
+        self.view.sel().add(sublime.Region(self.textPoint(3, 25), self.textPoint(3, 40)))
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            # sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
+        ])
+
+        # select line 3 (all folded)
+        self.view.sel().clear()
+        self.view.sel().add(self.view.line(self.textPoint(3, 25)))
+        self.view.run_command("mde_fold_links", {"fold": True})
+        self.assertFoldedRegions([
+            sublime.Region(37, 52),
+            sublime.Region(184, 199),
+            sublime.Region(367, 382),
+            sublime.Region(417, 432)
         ])
