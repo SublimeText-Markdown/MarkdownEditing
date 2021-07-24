@@ -19,7 +19,7 @@ on:
 
 jobs:
   lint:
-    name: Lint code via python ${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.arch }}
+    name: lint code using python ${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.arch }}
     runs-on: ubuntu-18.04
     strategy:
       matrix:
@@ -45,7 +45,7 @@ jobs:
         run: python -m flake8
 
   test:
-    name: Run tests on (ST${{ matrix.st_version }})
+    name: run tests using Sublime Text ${{ matrix.st_version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
