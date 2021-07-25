@@ -787,7 +787,8 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "has_next_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_match", "operand": "(?:-{2,}|={2,}|[+*])", "match_all": true }
 		]
 	},
 	// Indent selected list items
