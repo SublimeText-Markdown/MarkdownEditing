@@ -362,6 +362,31 @@
 			"name": "GitGutter untracked",
 			"scope": "markup.untracked.git_gutter",
 			"foreground": "#565656"
+		},
+		{
+			"name": "Highlight Color Warm Blue",
+			"scope": "highlight.color.ADD8E6",
+			"foreground": "#ADD8E6"
+		},
+		{
+			"name": "Highlight Color MistyRose",
+			"scope": "highlight.color.FFE4E1",
+			"foreground": "#FFE4E1"
+		},
+		{
+			"name": "Highlight Color Green Tea",
+			"scope": "highlight.color.D0F0C0",
+			"foreground": "#D0F0C0"
+		},
+		{
+			"name": "SublimeLinter: Warning",
+			"scope": "sublimelinter.mark.warning",
+			"foreground": "#DDB700"
+		},
+		{
+			"name": "SublimeLinter: Error",
+			"scope": "sublimelinter.mark.error",
+			"foreground": "#D02000"
 		}
 	]
 }
