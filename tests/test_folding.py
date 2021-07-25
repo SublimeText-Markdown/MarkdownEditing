@@ -30,8 +30,11 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.settings().erase("mde.auto_fold_link.enabled")
         self.view.settings().erase("mde.folding.target_level")
 
-    def assertFoldedRegions(self, regions):
-        self.assertEqual(self.view.folded_regions(), regions)
+    def assertFoldedRegions(self, region_tuples):
+        self.assertEqual(
+            self.view.folded_regions(),
+            list(map(lambda x: sublime.Region(*x), region_tuples))
+        )
 
     # all_headings() unittests
 
@@ -152,23 +155,18 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([sublime.Region(11, 470)])
+        self.assertFoldedRegions([(11, 470)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
-        ])
+        self.assertFoldedRegions([(37, 52), (184, 199), (367, 382), (417, 432)])
 
         # setup test
         self.view.settings().set("mde.auto_fold_link.enabled", False)
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([sublime.Region(11, 470)])
+        self.assertFoldedRegions([(11, 470)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
@@ -202,7 +200,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([sublime.Region(522, 610)])
+        self.assertFoldedRegions([(522, 610)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
@@ -236,7 +234,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
         # fold heading
         self.view.run_command("mde_fold_section")
-        self.assertFoldedRegions([sublime.Region(547, 567)])
+        self.assertFoldedRegions([(547, 567)])
 
         # unfold heading
         self.view.run_command("mde_fold_section")
@@ -246,48 +244,48 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_all_sections__level_0_without_auto_link_folding(self):
         self._test_fold_all_sections_without_auto_link_folding(0, [
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_fold_all_sections__level_1_without_auto_link_folding(self):
         self._test_fold_all_sections_without_auto_link_folding(1, [
-            sublime.Region(11, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (11, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
     def test_fold_all_sections__level_2_without_auto_link_folding(self):
         self._test_fold_all_sections_without_auto_link_folding(2, [
-            sublime.Region(98, 357),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610)
+            (98, 357),
+            (391, 435),
+            (450, 470),
+            (547, 567),
+            (591, 610)
         ])
 
     def test_fold_all_sections__level_3_without_auto_link_folding(self):
         self._test_fold_all_sections_without_auto_link_folding(3, [
-            sublime.Region(117, 274),
-            sublime.Region(292, 357)
+            (117, 274),
+            (292, 357)
         ])
 
     def test_fold_all_sections__level_4_without_auto_link_folding(self):
         self._test_fold_all_sections_without_auto_link_folding(4, [
-            sublime.Region(158, 202),
-            sublime.Region(223, 274)
+            (158, 202),
+            (223, 274)
         ])
 
     def test_fold_all_sections__level_5_without_auto_link_folding(self):
@@ -300,65 +298,65 @@ class FoldingTestCase(DereferrablePanelTestCase):
 
     def test_fold_all_sections__level_0_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(0, [
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_fold_all_sections__level_1_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(1, [
-            sublime.Region(11, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (11, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
     def test_fold_all_sections__level_2_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(2, [
-            sublime.Region(37, 52),
-            sublime.Region(98, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610)
+            (37, 52),
+            (98, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (547, 567),
+            (591, 610)
         ])
 
     def test_fold_all_sections__level_3_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(3, [
-            sublime.Region(37, 52),
-            sublime.Region(117, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (117, 274),
+            (292, 357),
+            (367, 382),
+            (417, 432)
         ])
 
     def test_fold_all_sections__level_4_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(4, [
-            sublime.Region(37, 52),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (158, 202),
+            (223, 274),
+            (367, 382),
+            (417, 432)
         ])
 
     def test_fold_all_sections__level_5_with_auto_link_folding(self):
         self._test_fold_all_sections_with_auto_link_folding(5, [
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
     def _test_fold_all_sections_with_auto_link_folding(self, level, expected_regions):
@@ -368,96 +366,96 @@ class FoldingTestCase(DereferrablePanelTestCase):
     def test_unfold_section__heading_1_with_folding_tartet_level_0(self):
         # unfold and then fold "1 Heading"
         self._test_unfold_section__heading_x_with_folding_tartet_level_0(1, [
-            sublime.Region(37, 52),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_unfold_section__heading_1_1_with_folding_tartet_level_0(self):
         # unfold and then fold "1.1 Heading"
         self._test_unfold_section__heading_x_with_folding_tartet_level_0(9, [
-            sublime.Region(11, 83),
-            # sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            # (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_unfold_section__heading_1_1_1_with_folding_tartet_level_0(self):
         # unfold and then fold "1.1.1 Heading"
         self._test_unfold_section__heading_x_with_folding_tartet_level_0(11, [
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            # sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            # (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_unfold_section__heading_3_with_folding_tartet_level_0(self):
         # unfold and then fold "3 Heading"
         self._test_unfold_section__heading_x_with_folding_tartet_level_0(45, [
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            # sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            # (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_unfold_section__heading_3_2_with_folding_tartet_level_0(self):
         # unfold and then fold "3.2 Heading"
         self._test_unfold_section__heading_x_with_folding_tartet_level_0(53, [
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            # sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            # (591, 610),
+            (630, 649)
         ])
 
     def _test_unfold_section__heading_x_with_folding_tartet_level_0(self, row, expected_regions):
@@ -473,20 +471,20 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # fold heading
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_unfold_section__heading_1_with_folding_tartet_level_1(self):
@@ -497,81 +495,81 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.setCaretTo(1, 11)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(98, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (98, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
         # fold "1 Heading"
         self.setCaretTo(1, 11)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(11, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (11, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
         # unfold "1 Heading" with caret after folding marker
         self.setCaretTo(40, 1)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(98, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (98, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
         # unfold "1.1 Heading"
         self.setCaretTo(9, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(117, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (117, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
         # unfold "1.1.2 Heading"
         self.setCaretTo(25, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(117, 274),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (117, 274),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
         # fold "1.1 Heading"
         self.setCaretTo(9, 9)
         self.view.run_command("mde_fold_section")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(98, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (37, 52),
+            (98, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ])
 
     def test_fold_links_command__target_level_none(self):
@@ -586,10 +584,10 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # enable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
     def test_fold_links_command__target_level_0(self):
@@ -600,48 +598,48 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # disable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": False})
         self.assertFoldedRegions([
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            # sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            # (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
         # enable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            sublime.Region(11, 83),
-            sublime.Region(98, 99),
-            sublime.Region(117, 137),
-            sublime.Region(158, 202),
-            sublime.Region(223, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 523),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610),
-            sublime.Region(630, 649)
+            (11, 83),
+            (98, 99),
+            (117, 137),
+            (158, 202),
+            (223, 274),
+            (292, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (482, 502),
+            (522, 523),
+            (547, 567),
+            (591, 610),
+            (630, 649)
         ])
 
     def test_fold_links_command__target_level_1(self):
         # no link is visible, thus folded regions must not change
         expected_regions = [
-            sublime.Region(11, 470),
-            sublime.Region(482, 502),
-            sublime.Region(522, 610),
-            sublime.Region(630, 649)
+            (11, 470),
+            (482, 502),
+            (522, 610),
+            (630, 649)
         ]
 
         # prepare test by folding sections by target_level 1
@@ -664,23 +662,23 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # disable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": False})
         self.assertFoldedRegions([
-            sublime.Region(98, 357),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610)
+            (98, 357),
+            (391, 435),
+            (450, 470),
+            (547, 567),
+            (591, 610)
         ])
 
         # enable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(98, 357),
-            sublime.Region(367, 382),
-            sublime.Region(391, 435),
-            sublime.Region(450, 470),
-            sublime.Region(547, 567),
-            sublime.Region(591, 610)
+            (37, 52),
+            (98, 357),
+            (367, 382),
+            (391, 435),
+            (450, 470),
+            (547, 567),
+            (591, 610)
         ])
 
     def test_fold_links_command__target_level_3(self):
@@ -691,18 +689,18 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # disable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": False})
         self.assertFoldedRegions([
-            sublime.Region(117, 274),
-            sublime.Region(292, 357)
+            (117, 274),
+            (292, 357)
         ])
 
         # enable automatic link folding
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(117, 274),
-            sublime.Region(292, 357),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (117, 274),
+            (292, 357),
+            (367, 382),
+            (417, 432)
         ])
 
     def test_auto_fold_links__target_level_none(self):
@@ -713,30 +711,30 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # caret not within a link url, all folded
         self.setCaretTo(1, 1)
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
         # caret at beginning of url in line 3 (unfolded)
         self.setCaretTo(3, 25)
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            # sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            # (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
         # caret at end of url in line 3 (unfolded)
         self.setCaretTo(3, 40)
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            # sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            # (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
         # select url in line 3 (unfolded)
@@ -744,10 +742,10 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.sel().add(sublime.Region(self.textPoint(3, 25), self.textPoint(3, 40)))
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            # sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            # (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
         # select line 3 (all folded)
@@ -755,10 +753,10 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.sel().add(self.view.line(self.textPoint(3, 25)))
         self.view.run_command("mde_fold_links", {"fold": True})
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
     def test_folded_links_when_editing_content(self):
@@ -766,20 +764,20 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.setCaretTo(3, 2)
         self.view.run_command("mde_unfold_all_sections")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
 
         # caret between "A" and "paragraph" and insert "new "
         # make sure following regions move accordingly
         self.view.run_command("insert", {"characters": "new "})
         self.assertFoldedRegions([
-            sublime.Region(41, 56),
-            sublime.Region(188, 203),
-            sublime.Region(371, 386),
-            sublime.Region(421, 436)
+            (41, 56),
+            (188, 203),
+            (371, 386),
+            (421, 436)
         ])
 
         # delete "new " again to restore previous state
@@ -787,8 +785,8 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.view.sel().add(sublime.Region(self.textPoint(3, 2), self.textPoint(3, 6)))
         self.view.run_command("left_delete")
         self.assertFoldedRegions([
-            sublime.Region(37, 52),
-            sublime.Region(184, 199),
-            sublime.Region(367, 382),
-            sublime.Region(417, 432)
+            (37, 52),
+            (184, 199),
+            (367, 382),
+            (417, 432)
         ])
