@@ -468,6 +468,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         # unfold heading
         self.setCaretTo(row, 1)
         self.view.run_command("mde_fold_section")
+        self.assertFoldedRegions(expected_regions)
 
         # fold heading
         self.view.run_command("mde_fold_section")
