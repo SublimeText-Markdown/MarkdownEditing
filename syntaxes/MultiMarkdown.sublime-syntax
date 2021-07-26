@@ -1,28 +1,38 @@
 %YAML 1.2
 ---
-# http://www.sublimetext.com/docs/3/syntax.html
 name: MultiMarkdown
-first_line_match: (?i)^format:\s*complete\s*$
 scope: text.html.markdown.multimarkdown
+
+file_extensions:
+  - mmd
+
+first_line_match: (?i:^format:\s*complete\s*$)
+
 variables:
-  header: ((?=[A-Za-z0-9])[\w -]+)(:)
+  header: ([A-Za-z0-9][\w -]*)(:)
+
 contexts:
   main:
-    - match: '^{{header}}\s*'
+    - match: ^(?={{header}})
+      push: multimarkdown-header
+    - match: ^
+      set: multimarkdown-content
+
+  multimarkdown-header:
+    - match: ^$
+      pop: true
+    - match: ^(?:{{header}}\s*)?
       captures:
         1: keyword.other.multimarkdown
         2: punctuation.separator.key-value.multimarkdown
-      push:
-        - meta_scope: meta.header.multimarkdown
-        - match: '^$|^(?={{header}})'
-          pop: true
-        - match: .+
-          comment: |
-            The reason for not setting scopeName = "string.unquoted"
-                                    (for the parent rule) is that we do not want
-                                    newlines to be marked as string.unquoted
-          scope: string.unquoted.multimarkdown
-    - match: ''
-      push:
-        - meta_scope: meta.content.multimarkdown
-        - include: scope:text.html.markdown
+      push: multimarkdown-header-value
+
+  multimarkdown-header-value:
+    - meta_scope: meta.header.multimarkdown
+    - meta_content_scope: string.unquoted.multimarkdown
+    - match: \n
+      pop: true
+
+  multimarkdown-content:
+    - meta_scope: meta.content.multimarkdown
+    - include: scope:text.html.markdown

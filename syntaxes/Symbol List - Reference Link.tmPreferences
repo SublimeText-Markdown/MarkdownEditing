@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
 <dict>
-	<key>name</key>
-	<string>Symbol List: Reference Link</string>
 	<key>scope</key>
 	<string>text.html.markdown meta.link.reference.def</string>
 	<key>settings</key>
