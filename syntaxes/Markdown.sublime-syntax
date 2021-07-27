@@ -323,6 +323,7 @@ contexts:
             )
           pop: true
         - include: inline-bold-italic-linebreak
+        - include: tag-kbd
         - include: scope:text.html.basic
         - match: '^(={3,})(?=[ \t]*$)'
           scope: markup.heading.1.setext.markdown
@@ -808,6 +809,7 @@ contexts:
         - include: bold-italic-trailing
 
   bold-italic-trailing:
+    - include: tag-kbd
     - include: scope:text.html.basic
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown
@@ -1113,6 +1115,7 @@ contexts:
         - match: (?={{list_item}})
           pop: true
         - include: inline-bold-italic-linebreak
+        - include: tag-kbd
         - include: scope:text.html.basic
         - match: $
           pop: true
@@ -2095,6 +2098,21 @@ contexts:
       pop: true
     - include: disable-markdown
 
+  tag-kbd:
+    # A simple implementation to add dedicated `markup.kbd` scopes.
+    # Note: Doesn't (intent to) support bold/italic/striked content.
+    - match: ((<)(kbd)(>))([^<]+)((</)(kbd)(>))
+      captures:
+        1: markup.kbd.markdown meta.tag.inline.any.html
+        2: punctuation.definition.tag.begin.html
+        3: entity.name.tag.inline.any.html
+        4: punctuation.definition.tag.end.html
+        5: markup.kbd.content.markdown
+        6: markup.kbd.markdown meta.tag.inline.any.html
+        7: punctuation.definition.tag.begin.html
+        8: entity.name.tag.inline.any.html
+        9: punctuation.definition.tag.end.html
+
   link-text:
     - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
@@ -2109,6 +2127,7 @@ contexts:
     - include: bold
     - include: italic
     - include: hard-line-break
+    - include: tag-kbd
     - include: scope:text.html.basic
 
   link-text-allow-image:
@@ -2256,6 +2275,7 @@ contexts:
                         `+
                       scope: invalid.deprecated.unescaped-backticks.markdown
                     - include: inline
+                    - include: tag-kbd
                     - include: scope:text.html.basic
 
 ###[ PROTOTYPES ]#############################################################
