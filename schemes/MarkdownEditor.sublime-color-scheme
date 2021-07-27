@@ -219,6 +219,12 @@
 			"background": "#ECECEC"
 		},
 		{
+			"name": "Markup: Strikethrough (Punctuation)",
+			"scope": "markup.strikethrough punctuation",
+			"foreground": "#CECECE",
+			"background": "#ECECEC"
+		},
+		{
 			"name": "Markup: Strikethrough (Keyboard Shortcut)",
 			"scope": "markup.strikethrough markup.kbd.content, markup.strikethrough markup.kbd.content.markdown",
 			"foreground": "#B7B7B7",
