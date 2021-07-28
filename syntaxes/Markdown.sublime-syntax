@@ -1584,7 +1584,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:batch|cmd|dosbatch))
+          ((?i:bat|batch|cmd|dosbatch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
@@ -1873,7 +1873,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:ps|powershell))
+          ((?i:pwsh|powershell))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.powershell.markdown-gfm
