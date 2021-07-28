@@ -91,6 +91,7 @@ else:
         MdeReferenceNewReferenceCommand,
         MdeReferenceOrganizeCommand,
         MdeAddNumberedReferenceDefinitionCommand,
+        MdeReferenceCompletionsProvider,
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,

@@ -20,6 +20,7 @@ import re
 import operator
 
 from .view import MdeTextCommand
+from .view import MdeViewEventListener
 
 refname_scope_name = "constant.other.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
@@ -813,3 +814,44 @@ class MdeAddNumberedReferenceDefinitionCommand(MdeTextCommand):
                 view.insert(edit, sel.begin(), "\n%s[%s%d]: " % (indent, name, num))
             else:
                 view.erase(edit, line)
+
+
+def shorten(string, n):
+    return string if len(string) <= n else string[: n - 1] + "…"
+
+
+class MdeReferenceCompletionsProvider(MdeViewEventListener):
+    KIND_REFERENCE = (sublime.KIND_ID_MARKUP, "R", "Ref")
+
+    re_reflinks = re.compile(
+        r"^\[(?P<id>[^\^][^\]]*)\]:[ \t]+(?P<link>\S*)(?:[ \t]+(?P<desc>.*))?$",
+        re.MULTILINE,
+    )
+
+    def on_query_completions(self, prefix, locations):
+        if not self.view.match_selector(
+            locations[0],
+            "text.html.markdown meta.link.reference"
+            " (constant.other.reference.link | punctuation.definition.constant)",
+        ):
+            return None
+
+        completions = []
+        for ref in self.view.find_by_selector("meta.link.reference.def"):
+            match = self.re_reflinks.match(self.view.substr(ref))
+            if not match:
+                continue
+            completions.append(
+                sublime.CompletionItem(
+                    trigger=match.group("id"),
+                    completion=match.group("id"),
+                    completion_format=sublime.COMPLETION_FORMAT_TEXT,
+                    kind=self.KIND_REFERENCE,
+                    annotation=shorten((match.group("link") or "No link"), 30),
+                    details=(match.group("desc") or "No title").strip(" \t\v\f\r\n'\""),
+                )
+            )
+        return sublime.CompletionList(
+            completions,
+            sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS,
+        )
