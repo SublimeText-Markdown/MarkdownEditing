@@ -59,6 +59,18 @@
 			"foreground": "var(grey)",
 			"font_style": ""
 		},
+		{
+			"name": "Striked References",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"foreground": "var(grey)",
+			"font_style": ""
+		},
+		{
+			"name": "Striked Strings",
+			"scope": "text.html.markdown markup.strikethrough string",
+			"foreground": "var(grey)",
+			"font_style": ""
+		},
 
 		// Block Quotes
 		{
@@ -108,19 +120,19 @@
 		},
 		{
 			"name": "Keyboard Shortcut Content",
-			"scope": "markup.kbd.content",
+			"scope": "text.html.markdow markup.kbd.content",
 			"foreground": "var(blue)"
 		},
 
 		// Tables
 		{
 			"name": "Table Separators / Lines",
-			"scope": "meta.table.header-separator punctuation.section, meta.table.header-separator, punctuation.separator.table-cell",
+			"scope": "text.html.markdown meta.table.header-separator punctuation.section, text.html.markdown punctuation.section.table-header, text.html.markdown punctuation.separator.table-cell",
 			"foreground": "var(grey)"
 		},
 		{
 			"name": "Table Cell Content Alignment Operator",
-			"scope": "meta.table.header-separator punctuation.definition",
+			"scope": "text.html.markdown meta.table.header-separator punctuation.definition",
 			"foreground": "var(red2)"
 		}
 	]
