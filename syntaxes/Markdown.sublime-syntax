@@ -405,11 +405,12 @@ contexts:
               push:
                 - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
                 - include: list-content
-            - match: ([ ]{,3})([*+-])(\s)
+            - match: ([ ]{,3})([*+-])((?:[ ](\[[ xX]\]))?\s)
               captures:
                 1: markup.list.unnumbered.markdown
                 2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
                 3: markup.list.unnumbered.markdown
+                4: constant.language.checkbox.markdown-gfm
               push:
                 - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
                 - include: list-content
@@ -1072,7 +1073,7 @@ contexts:
       push:
         - match: ^\s*$
           pop: true
-        - match: ([ ]*)([*+-])( (\[[ xX]\]))?(?=\s)
+        - match: ([ ]*)([*+-])((?:[ ](\[[ xX]\]))?\s)
           captures:
             1: markup.list.unnumbered.markdown
             2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
