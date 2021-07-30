@@ -336,10 +336,6 @@ contexts:
             1: punctuation.definition.heading.setext.markdown
           pop: true
 
-  link-ref-def:
-    - meta_scope: meta.link.reference.def.markdown
-    - include: immediately-pop
-
   ampersand:
     - match: (?!{{html_entity}})&
       comment: |
