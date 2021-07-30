@@ -2041,7 +2041,7 @@ okay
 http://spec.commonmark.org/0.28/#example-148
 
 <!DOCTYPE html>
-| ^^^^^^^ meta.disable-markdown meta.tag.sgml.doctype.html entity.name.tag
+| ^^^^^^^ meta.disable-markdown meta.tag.sgml.doctype.html
 okay
 | <- - meta.disable-markdown
 
@@ -2084,9 +2084,6 @@ okay
  (/ 10 3.0)
 |<- source.clojure
 |^^^^^^^^^^ source.clojure
-| ^ variable.function
-|   ^^ meta.number
-|      ^^^ meta.number
 ```
 |^^ meta.code-fence.definition.end.clojure punctuation.definition.raw.code-fence.end
 
@@ -2109,9 +2106,8 @@ okay
 ```
 
 ```jsx
-  <Component>
-| <- markup.raw.code-fence.jsx.markdown-gfm source.jsx
-| ^^^^^^^^^^^ source.jsx meta.jsx.js
+
+| <- markup.raw.code-fence.jsx.markdown-gfm
 ```
 
 ```lisp
@@ -2140,9 +2136,8 @@ okay
 ```
 
 ```tsx
-  <Component>
-| <- markup.raw.code-fence.tsx.markdown-gfm source.tsx
-| ^^^^^^^^^^^ markup.raw.code-fence.tsx.markdown-gfm source.tsx meta.jsx.js
+
+| <- markup.raw.code-fence.tsx.markdown-gfm
 ```
 
 ```xml
