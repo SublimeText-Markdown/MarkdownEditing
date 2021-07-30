@@ -190,7 +190,7 @@ contexts:
       set: markdown
 
   front-matter:
-    - match: (---)\s*(coffee\b)
+    - match: (---)\s*((?i:coffee)\b)
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.coffee.markdown
@@ -200,7 +200,7 @@ contexts:
       escape: ^(---|\.{3})\s*$  # pandoc requires the remainder of the line to be blank
       escape_captures:
         1: meta.frontmatter.markdown punctuation.section.block.end.frontmatter.coffee.markdown
-    - match: (---)\s*(json\b)
+    - match: (---)\s*((?i:json)\b)
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.json.markdown
@@ -210,7 +210,7 @@ contexts:
       escape: ^(---|\.{3})\s*$  # pandoc requires the remainder of the line to be blank
       escape_captures:
         1: meta.frontmatter.markdown punctuation.section.block.end.frontmatter.json.markdown
-    - match: (---)\s*(yaml\b)?
+    - match: (---)\s*((?i:yaml)\b)?
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.yaml.markdown
