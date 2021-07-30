@@ -2078,6 +2078,18 @@ okay
 1. Test 2
 |^ markup.list.numbered.bullet punctuation.definition.list_item
 
+```clojure
+|^^^^^^^^^ meta.code-fence.definition.begin.clojure
+|  ^^^^^^^ constant.other.language-name
+ (/ 10 3.0)
+|<- source.clojure
+|^^^^^^^^^^ source.clojure
+| ^ variable.function
+|   ^^ meta.number
+|      ^^^ meta.number
+```
+|^^ meta.code-fence.definition.end.clojure punctuation.definition.raw.code-fence.end
+
 ```xml
 |^^^^^ meta.code-fence.definition.begin.xml
 |  ^^^ constant.other.language-name
