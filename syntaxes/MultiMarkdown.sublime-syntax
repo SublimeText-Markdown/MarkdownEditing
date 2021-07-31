@@ -3,9 +3,6 @@
 name: MultiMarkdown
 scope: text.html.markdown.multimarkdown
 
-file_extensions:
-  - mmd
-
 first_line_match: (?i:^format:\s*complete\s*$)
 
 variables:
