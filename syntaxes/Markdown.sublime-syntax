@@ -118,9 +118,9 @@ variables:
           )
           $\n?         # ... until EOL
         )
-    code_fence_escape: |-
+    code_fence_escape: ^{{code_fence_end}}
+    code_fence_end: |-
       (?x:
-        ^             # the beginning of the line
         [ \t]*
         (
           \2          # the backtick/tilde combination that opened the code fence
@@ -175,13 +175,7 @@ variables:
     tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
     tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
     tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
-    # code_fence_escape: |-
-    #   (?x:
-    #     ^         # the beginning of the line
-    #     [ ]{0,3}  # up to 3 spaces
-    #     (\1)      # the backtick/tilde combination that opened the code fence
-    #     \s*$      # any amount of whitespace until EOL
-    #   )
+
 contexts:
 
   main:
@@ -322,7 +316,7 @@ contexts:
                 )
             )
           pop: true
-        - include: fenced-code-blocks          
+        - include: fenced-code-blocks
         - include: inline-bold-italic-linebreak
         - include: tag-kbd
         - include: scope:text.html.basic
@@ -414,11 +408,39 @@ contexts:
             - match: ^
               pop: true
             - include: list-paragraph
+        - include: block-quote-code-blocks
         - match: ''
           push:
-            - match: $|^
+            - match: ^
               pop: true
             - include: inline-bold-italic-linebreak
+
+  block-quote-code-blocks:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ([\w-]*)     # any number of word characters or dashes
+          .*$\n?       # all characters until EOL
+      captures:
+        0: meta.code-fence.definition.begin.text.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      push: block-quote-code-block-content
+
+  block-quote-code-block-content:
+    - match: '{{code_fence_end}}'
+      captures:
+        0: meta.code-fence.definition.end.text.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+      pop: true
+    - match: '[ ]{,3}(>)[ ]?'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+    - match: ''
+      push:
+        - meta_content_scope: markup.raw.code-fence.markdown-gfm
+        - match: ^
+          pop: true
 
   indented-code-block:
     - match: '{{indented_code_block}}.*$\n?'
