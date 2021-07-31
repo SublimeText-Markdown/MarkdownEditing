@@ -29,7 +29,8 @@ HTML Header: <style>
              </style>
 T:           ^^^^^^^^ meta.header.multimarkdown string.unquoted.multimarkdown
 
-T: <- meta.content.multimarkdown - meta.header.multimarkdown
+T:
+| <- meta.content.multimarkdown - meta.header.multimarkdown
 # Heading
 | <- markup.heading punctuation.definition.heading
 |^^^^^^^^ markup.heading
