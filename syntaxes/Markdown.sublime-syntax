@@ -759,6 +759,7 @@ contexts:
   inline:
     - include: escape
     - include: ampersand
+    - include: critic-inline
     - include: ligatures
     - include: bracket
     - include: code-span
@@ -2407,6 +2408,98 @@ contexts:
                     - include: inline
                     - include: tag-kbd
                     - include: scope:text.html.basic
+
+###[ CRITIC MARKUP ]##########################################################
+
+  critic-inline:
+    # inline critic markup
+    # http://criticmarkup.com/spec.php
+    - include: critic-inline-additions
+    - include: critic-inline-comments
+    - include: critic-inline-deletions
+    - include: critic-inline-highlights
+    - include: critic-inline-substitutions
+
+  critic-inline-additions:
+    - match: \{\+\+
+      scope: punctuation.definition.critic.begin.markdown
+      push: critic-inline-addition-content
+
+  critic-inline-addition-content:
+    - meta_scope: markup.critic.addition.markdown
+    - meta_content_scope: markup.inserted.critic.markdown
+    - match: \+\+\}
+      scope: punctuation.definition.critic.end.markdown
+      pop: true
+    - include: critic-inline-common
+
+  critic-inline-comments:
+    - match: '{>>'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critic-inline-comment-content
+
+  critic-inline-comment-content:
+    - meta_scope: markup.critic.comment.markdown
+    - meta_content_scope: comment.critic.markdown
+    - match: '<<}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: true
+    - include: critic-inline-common
+
+  critic-inline-deletions:
+    - match: '{--'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critic-inline-deletion-content
+
+  critic-inline-deletion-content:
+    - meta_scope: markup.critic.deletion.markdown
+    - meta_content_scope: markup.deleted.critic.markdown
+    - match: '--}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: true
+    - include: critic-inline-common
+
+  critic-inline-highlights:
+    - match: '{=='
+      scope: punctuation.definition.critic.begin.markdown
+      push: critic-inline-highlight-content
+
+  critic-inline-highlight-content:
+    - meta_scope: markup.critic.highlight.markdown
+    - meta_content_scope: markup.info.critic.markdown
+    - match: '==}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: true
+    - include: critic-inline-common
+
+  critic-inline-substitutions:
+    - match: '{~~'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critic-inline-substitution-deleted
+
+  critic-inline-substitution-deleted:
+    - meta_scope: markup.critic.substitution.markdown
+    - meta_content_scope: markup.deleted.critic.markdown
+    - match: (?=~>)
+      set:
+        - meta_include_prototype: false
+        - match: '~>'
+          scope: punctuation.separator.critic.markdown
+          set: critic-inline-substitution-inserted
+    - include: critic-inline-substitution-inserted
+
+  critic-inline-substitution-inserted:
+    - meta_scope: markup.critic.substitution.markdown
+    - meta_content_scope: markup.inserted.critic.markdown
+    - match: '~~}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: true
+    - include: critic-inline-common
+
+  critic-inline-common:
+    - match: ^(?=\s*$)
+      pop: true
+    - include: inline-bold-italic
 
 ###[ PROTOTYPES ]#############################################################
 

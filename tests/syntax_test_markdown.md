@@ -2331,3 +2331,76 @@ link with a single underscore inside the text : [@_test](http://example.com)
 |     ^ punctuation.separator.key-value
 |       ^ punctuation.definition.link.begin
 |        ^ punctuation.definition.link.end
+
+# CriticMarkup ################################################################
+
+This is an {++additional++} word in {++**bold**++}.
+|          ^^^^^^^^^^^^^^^^ markup.critic.addition.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown - markup.inserted
+|             ^^^^^^^^^^ markup.inserted.critic.markdown
+|                       ^^^ punctuation.definition.critic.end.markdown - markup.inserted
+|                                   ^^^ markup.critic.addition.markdown - markup.inserted - markup.bold
+|                                      ^^^^^^^^ markup.critic.addition.markdown markup.inserted.critic.markdown markup.bold.markdown
+|                                              ^^^ markup.critic.addition.markdown - markup.inserted
+|                                   ^^^ punctuation.definition.critic.begin.markdown
+|                                      ^^ punctuation.definition.bold.begin.markdown
+|                                            ^^ punctuation.definition.bold.end.markdown 
+|                                              ^^^ punctuation.definition.critic.end.markdown
+
+This is an {++ multiline
+addition ++} test.
+| <- markup.critic.addition.markdown
+|^^^^^^^^ markup.critic.addition.markdown markup.inserted.critic.markdown
+|        ^^^ markup.critic.addition.markdown - markup.inserted
+|        ^^^ punctuation.definition.critic.end.markdown
+|           ^^^^^^ - markup.critic
+
+Additional {++[Link](https://foo.bar)++} and {++![Image](images/image.png)++}.
+| ^^^^^^^^^ - markup.critic
+|          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.critic.addition.markdown
+|                                        ^^^^ - markup.critic
+|                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.critic.addition.markdown
+|                                                                            ^^ - markup.critic
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^ meta.link.inline.markdown punctuation.definition.link.begin.markdown 
+|              ^^^^ meta.link.inline.description.markdown
+|                  ^ meta.link.inline.markdown punctuation.definition.link.end.markdown
+|                   ^^^^^^^^^^^^^^^^^ meta.link.inline.markdown
+|                                    ^^^ punctuation.definition.critic.end.markdown
+|                                            ^^^ punctuation.definition.critic.begin.markdown
+|                                               ^^ meta.image.inline.markdown punctuation.definition.image.begin.markdown
+|                                                 ^^^^^ meta.image.inline.description.markdown
+|                                                      ^ meta.image.inline.markdown punctuation.definition.image.end.markdown
+|                                                       ^^^^^^^^^^^^^^^^^^ meta.image.inline.markdown
+|                                                                         ^^^ punctuation.definition.critic.end.markdown
+
+This is a {-- deletion --} and {~~substitute~>with~~striked~~text~~}
+|         ^^^^^^^^^^^^^^^^ markup.critic.deletion.markdown
+|         ^^^ punctuation.definition.critic.begin.markdown - markup.deleted
+|            ^^^^^^^^^^ markup.deleted.critic.markdown
+|                      ^^^ punctuation.definition.critic.end.markdown - markup.deleted
+|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.critic.substitution.markdown
+|                              ^^^ punctuation.definition.critic.begin.markdown - markup.deleted
+|                                 ^^^^^^^^^^ markup.deleted.critic.markdown
+|                                           ^^ punctuation.separator.critic.markdown - markup.deleted - markup.inserted
+|                                              ^^^^^^^^^^^^^^^^^^ markup.inserted.critic.markdown
+|                                                  ^^^^^^^^^^ markup.strikethrough.markdown-gfm
+|                                                                ^^^ punctuation.definition.critic.end.markdown - markup.inserted
+
+This is a {>> comment <<}.
+|         ^^^^^^^^^^^^^^^ markup.critic.comment.markdown
+|         ^^^ punctuation.definition.critic.begin.markdown - comment
+|            ^^^^^^^^^ comment.critic.markdown
+|                     ^^^ punctuation.definition.critic.end.markdown - comment
+|                        ^ - markup.critic
+
+This is an {== information ==}{>> comment <<}.
+|          ^^^^^^^^^^^^^^^^^^^ markup.critic.highlight.markdown
+|                             ^^^^^^^^^^^^^^^ markup.critic.comment.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown -  markup.info
+|             ^^^^^^^^^^^^^ markup.info.critic.markdown
+|                          ^^^ punctuation.definition.critic.end.markdown -  markup.info
+|                             ^^^ punctuation.definition.critic.begin.markdown - comment
+|                                ^^^^^^^^^ comment.critic.markdown
+|                                         ^^^ punctuation.definition.critic.end.markdown - comment
+|                                            ^^ - markup.critic
