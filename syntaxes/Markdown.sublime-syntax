@@ -1803,13 +1803,15 @@ contexts:
         0: meta.code-fence.definition.begin.text.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
-      push:
-        - meta_content_scope: markup.raw.code-fence.markdown-gfm
-        - match: '{{code_fence_escape}}'
-          captures:
-            0: meta.code-fence.definition.end.text.markdown-gfm
-            1: punctuation.definition.raw.code-fence.end.markdown
-          pop: true
+      push: fenced-raw-content
+
+  fenced-raw-content:
+    - meta_content_scope: markup.raw.code-fence.markdown-gfm
+    - match: '{{code_fence_escape}}'
+      captures:
+        0: meta.code-fence.definition.end.text.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+      pop: true
 
   fenced-ada:
     - match: |-
