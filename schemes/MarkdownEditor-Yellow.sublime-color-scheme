@@ -156,6 +156,11 @@
 			"foreground": "#8496a1"
 		},
 		{
+			"name": "Hard Line Breaks",
+			"scope": "text.html.markdown punctuation.definition.hard-line-break",
+			"background": "#e2daab"
+		},
+		{
 			"name": "Markup: Emphasis",
 			"scope": "markup.italic, markup.italic.markdown",
 			"foreground": "#8c755c",

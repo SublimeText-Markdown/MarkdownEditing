@@ -2,6 +2,7 @@
 // while making use of well defined colors for code blocks.
 {
 	"variables": {
+		"line_break": "hsl(210, 15%, 20%)",
 		"raw_fg": "hsl(210, 10%, 60%)",
 		"raw_bg": "hsl(210, 15%, 20%)"
 	},
@@ -70,6 +71,11 @@
 			"scope": "text.html.markdown markup.strikethrough string",
 			"foreground": "var(grey)",
 			"font_style": ""
+		},
+		{
+			"name": "Hard Line Breaks",
+			"scope": "text.html.markdown punctuation.definition.hard-line-break",
+			"background": "var(line_break)"
 		},
 
 		// Block Quotes
