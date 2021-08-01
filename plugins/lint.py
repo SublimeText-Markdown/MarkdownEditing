@@ -43,11 +43,15 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
                 result = self.read_result(stdout)
                 outputtxt = result
                 sublime.status_message("MarkdownLint: %d error(s) found" % len(result.split("\n")))
-            window = sublime.active_window()
-            output = window.create_output_panel("mde")
-            output.run_command("erase_view")
-            output.run_command("append", {"characters": outputtxt})
-            window.run_command("show_panel", {"panel": "output.mde"})
+
+            window = self.view.window() or sublime.active_window()
+            if outputtxt:
+                output = window.create_output_panel("mde")
+                output.run_command("insert", {"characters": outputtxt})
+                window.run_command("show_panel", {"panel": "output.mde"})
+            else:
+                sublime.status_message("MarkdownLint: no errors found")
+                window.destroy_output_panel("mde")
 
         except OSError as e:
             print(e)
@@ -84,18 +88,20 @@ class MdeMarkdownLintCommand(MdeTextCommand):
                 mddef(st[mddef.__name__] if mddef.__name__ in st else None, self.view), text
             )
             result.extend(r)
-        sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
+        window = self.view.window() or sublime.active_window()
         if len(result) > 0:
+            sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
             result = sorted(result, key=lambda t: t[0])
             outputtxt = ""
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
                 outputtxt += "line %d: %s, %s\n" % (row + 1, t[1], t[2])
-            window = sublime.active_window()
             output = window.create_output_panel("mde")
-            output.run_command("erase_view")
-            output.run_command("append", {"characters": outputtxt})
+            output.run_command("insert", {"characters": outputtxt})
             window.run_command("show_panel", {"panel": "output.mde"})
+        else:
+            sublime.status_message("MarkdownLint: no errors found")
+            window.destroy_output_panel("mde")
 
     def test(self, tar, text):
         loc = tar.locator
