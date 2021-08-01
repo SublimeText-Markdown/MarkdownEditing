@@ -179,11 +179,11 @@ variables:
 contexts:
 
   main:
-    - include: front-matter
+    - include: frontmatter
     - match: ''
       set: markdown
 
-  front-matter:
+  frontmatter:
     - match: (---)\s*((?i:coffee)\b)
       captures:
         0: meta.frontmatter.markdown
