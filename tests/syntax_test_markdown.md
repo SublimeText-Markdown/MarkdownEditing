@@ -2374,18 +2374,31 @@ Additional {++[Link](https://foo.bar)++} and {++![Image](images/image.png)++}.
 |                                                       ^^^^^^^^^^^^^^^^^^ meta.image.inline.markdown
 |                                                                         ^^^ punctuation.definition.critic.end.markdown
 
-This is a {-- deletion --} and {~~substitute~>with~~striked~~text~~}
+This is a {-- deletion --} and {~~substitute~>with~~striked~~text~~} or {~~~~old~~~>~~new~~~~}.
 |         ^^^^^^^^^^^^^^^^ markup.critic.deletion.markdown
 |         ^^^ punctuation.definition.critic.begin.markdown - markup.deleted
 |            ^^^^^^^^^^ markup.deleted.critic.markdown
 |                      ^^^ punctuation.definition.critic.end.markdown - markup.deleted
 |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.critic.substitution.markdown
+|                                                                    ^^^ - markup.critic
+|                                                                       ^^^^^^^^^^^^^^^^^^^^^^ markup.critic.substitution.markdown
+|                                                                                             ^^ - markup.critic
 |                              ^^^ punctuation.definition.critic.begin.markdown - markup.deleted
 |                                 ^^^^^^^^^^ markup.deleted.critic.markdown
 |                                           ^^ punctuation.separator.critic.markdown - markup.deleted - markup.inserted
 |                                              ^^^^^^^^^^^^^^^^^^ markup.inserted.critic.markdown
 |                                                  ^^^^^^^^^^ markup.strikethrough.markdown-gfm
 |                                                                ^^^ punctuation.definition.critic.end.markdown - markup.inserted
+|                                                                       ^^^ punctuation.definition.critic.begin.markdown
+|                                                                          ^^ punctuation.definition.strikethrough.begin.markdown
+|                                                                          ^^^^^^^ markup.deleted.critic.markdown markup.strikethrough.markdown-gfm
+|                                                                               ^^ punctuation.definition.strikethrough.end.markdown
+|                                                                                 ^^ punctuation.separator.critic.markdown
+|                                                                                   ^^ punctuation.definition.strikethrough.begin.markdown
+|                                                                                   ^^^^^^^ markup.inserted.critic.markdown markup.strikethrough.markdown-gfm
+|                                                                                        ^^ punctuation.definition.strikethrough.end.markdown
+|                                                                                          ^^^ punctuation.definition.critic.end.markdown
+
 
 This is a {>> comment <<}.
 |         ^^^^^^^^^^^^^^^ markup.critic.comment.markdown

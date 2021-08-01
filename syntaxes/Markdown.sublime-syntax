@@ -817,17 +817,19 @@ contexts:
     - match: '[*_]+'
 
   strikethrough:
-    - match: '(~+)(?=\S)(?!~)'
+    - match: (?:~(?!~}|>|\s))+  # any number of ~ up to ~> or ~~} critic markers
       scope: punctuation.definition.strikethrough.begin.markdown
-      push:
-        - meta_scope: markup.strikethrough.markdown-gfm
-        - match: ~+
-          scope: punctuation.definition.strikethrough.end.markdown
-          pop: true
-        - include: inline
-        - include: bold
-        - include: italic
-        - include: bold-italic-trailing
+      push: strikethrough-content
+
+  strikethrough-content:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - match: (?:~(?!~}|>))+     # any number of ~ up to ~> or ~~} critic markers
+      scope: punctuation.definition.strikethrough.end.markdown
+      pop: true
+    - include: inline
+    - include: bold
+    - include: italic
+    - include: bold-italic-trailing
 
   bold-italic-trailing:
     - include: tag-kbd
