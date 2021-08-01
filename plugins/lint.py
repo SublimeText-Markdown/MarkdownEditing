@@ -66,6 +66,7 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
 class MdeMarkdownLintCommand(MdeTextCommand):
 
     blockdef = []
+    frontmatter = "meta.frontmatter"
     scope_block = "markup.raw.block.markdown"
 
     def run(self, edit):
@@ -104,7 +105,9 @@ class MdeMarkdownLintCommand(MdeTextCommand):
         ret = []
         for mr in it:
             # print('find %d,%d' % (mr.start(tar.gid), mr.end(tar.gid)))
-            if self.scope_block in self.view.scope_name(mr.start(0)):
+            if self.view.match_selector(mr.start(0), self.frontmatter):
+                continue
+            if self.view.match_selector(mr.start(0), self.scope_block):
                 if tar.__class__ not in self.blockdef:
                     continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
