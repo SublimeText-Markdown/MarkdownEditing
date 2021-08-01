@@ -1001,6 +1001,74 @@
 	},
 
 	//
+	// CriticMarkup
+	//
+
+	// insert new addition
+	{ "keys": ["super+alt+c", "super+alt+a"], "command": "insert_snippet", "args": {"contents": "{++ ${1:addition} ++}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+		]
+	},
+	// mark selection for addition
+	{ "keys": ["super+alt+c", "super+alt+a"], "command": "insert_snippet", "args": {"contents": "{++ $SELECTION ++}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// insert comment
+	{ "keys": ["super+alt+c", "super+alt+c"], "command": "insert_snippet", "args": {"contents": "{>> ${1:comment} <<}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+		]
+	},
+	// mark word for deletion
+	{ "keys": ["super+alt+c", "super+alt+d"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for deletion
+	{ "keys": ["super+alt+c", "super+alt+d"], "command": "insert_snippet", "args": {"contents": "{-- $SELECTION --}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// mark word for highlight
+	{ "keys": ["super+alt+c", "super+alt+h"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for highlighting
+	{ "keys": ["super+alt+c", "super+alt+h"], "command": "insert_snippet", "args": {"contents": "{== $SELECTION ==}{>> ${1:comment} <<}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// mark word for substitution
+	{ "keys": ["super+alt+c", "super+alt+s"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for substitution
+	{ "keys": ["super+alt+c", "super+alt+s"], "command": "insert_snippet", "args": {"contents": "{~~ $SELECTION ~> ${1:substitution} ~~}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+
+	//
 	// Wiki
 	//
 

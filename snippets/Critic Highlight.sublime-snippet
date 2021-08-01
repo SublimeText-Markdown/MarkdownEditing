@@ -1,0 +1,5 @@
+<snippet>
+    <content><![CDATA[{== ${1:$SELECTION} ==}{>> ${2:comment} <<}]]></content>
+    <scope>text.html.markdown</scope>
+    <description>Markdown Critic Highlight</description>
+</snippet>

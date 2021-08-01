@@ -248,6 +248,18 @@ Important functions are bound to following keys by default:
 | <kbd>Shift</kbd> + <kbd>Win</kbd> + <kbd>K</kbd> | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>6</kbd> | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>6</kbd> | Inserts a footnote.
 
+# Critic Markup
+
+Insert critic for a word or selection via key binding.
+
+| Linux/Windows | MacOS | Description
+|---------------|-------|-------------
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>a</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>a</kbd> | Convert word or selection into `{++ addition ++}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>c</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd> | Convert word or selection into `{>> comment <<}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>d</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>d</kbd> | Convert word or selection into `{-- deletion --}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>h</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>h</kbd> | Convert word or selection into `{== highlight==}{>> comment <<}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>s</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>s</kbd> | Convert word or selection into `{~~ substitution ~> by ~~}`.
+
 # Wiki
 
 Wiki links are defined by surrounding a (wiki) word with double square brackets, for example:

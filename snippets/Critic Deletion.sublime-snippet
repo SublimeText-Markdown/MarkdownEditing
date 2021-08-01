@@ -1,0 +1,5 @@
+<snippet>
+    <content><![CDATA[{-- ${1:$SELECTION} --}]]></content>
+    <scope>text.html.markdown</scope>
+    <description>Markdown Critic Deletion</description>
+</snippet>
