@@ -1191,6 +1191,7 @@ contexts:
     - include: fenced-docker
     - include: fenced-dosbatch
     - include: fenced-elixir
+    - include: fenced-graphql
     - include: fenced-ini
     - include: fenced-jade
     - include: fenced-julia
@@ -1958,6 +1959,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.elixir.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-graphql:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:graphql))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.graphql.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.graphql
+      embed_scope: markup.raw.code-fence.graphql.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.graphql.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-ini:
