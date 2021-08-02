@@ -184,34 +184,34 @@ contexts:
       set: markdown
 
   frontmatter:
-    - match: (---)\s*((?i:coffee)\b)
+    - match: (---)\s*(?i:(coffee)\s*)\n
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.coffee.markdown
         2: constant.other.language-name.markdown
       embed: scope:source.coffee
-      embed_scope: meta.frontmatter.markdown source.coffee.embedded
-      escape: ^(---|\.{3})\s*$  # pandoc requires the remainder of the line to be blank
+      embed_scope: meta.frontmatter.markdown source.coffee.embedded.markdown
+      escape: ^(---|\.{3})\s*\n  # pandoc requires the remainder of the line to be blank
       escape_captures:
         1: meta.frontmatter.markdown punctuation.section.block.end.frontmatter.coffee.markdown
-    - match: (---)\s*((?i:json)\b)
+    - match: (---)\s*(?i:(json)\s*)\n
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.json.markdown
         2: constant.other.language-name.markdown
       embed: scope:source.json
-      embed_scope: meta.frontmatter.markdown source.json.embedded
-      escape: ^(---|\.{3})\s*$  # pandoc requires the remainder of the line to be blank
+      embed_scope: meta.frontmatter.markdown source.json.embedded.markdown
+      escape: ^(---|\.{3})\s*\n # pandoc requires the remainder of the line to be blank
       escape_captures:
         1: meta.frontmatter.markdown punctuation.section.block.end.frontmatter.json.markdown
-    - match: (---)\s*((?i:yaml)\b)?
+    - match: (---)\s*(?i:(yaml)\s*)?\n
       captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.begin.frontmatter.yaml.markdown
         2: constant.other.language-name.markdown
       embed: scope:source.yaml
-      embed_scope: meta.frontmatter.markdown source.yaml.embedded
-      escape: ^(---|\.{3})\s*$  # pandoc requires the remainder of the line to be blank
+      embed_scope: meta.frontmatter.markdown source.yaml.embedded.markdown
+      escape: ^(---|\.{3})\s*\n  # pandoc requires the remainder of the line to be blank
       escape_captures:
         1: meta.frontmatter.markdown punctuation.section.block.end.frontmatter.yaml.markdown
 
