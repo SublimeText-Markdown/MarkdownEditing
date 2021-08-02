@@ -1197,8 +1197,6 @@ contexts:
     - include: fenced-julia
     - include: fenced-kotlin
     - include: fenced-less
-    - include: fenced-lisp
-    - include: fenced-lua
     - include: fenced-mermaid
     - include: fenced-nim
     - include: fenced-powershell
