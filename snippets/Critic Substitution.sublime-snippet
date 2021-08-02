@@ -1,5 +1,5 @@
 <snippet>
-    <content><![CDATA[{~~ ${1:$SELECTION} ~> ${2:substitution} ~~}]]></content>
+    <content><![CDATA[{~~ $SELECTION ~> ${1:substitution} ~~}]]></content>
     <scope>text.html.markdown</scope>
     <description>Markdown Critic Substitution</description>
 </snippet>

@@ -1004,18 +1004,10 @@
 	// CriticMarkup
 	//
 
-	// insert new addition
-	{ "keys": ["super+alt+c", "super+alt+a"], "command": "insert_snippet", "args": {"contents": "{++ ${1:addition} ++}"}, "context":
+	// insert new addition or mark selection for addition
+	{ "keys": ["super+alt+c", "super+alt+a"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Addition.sublime-snippet"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
-		]
-	},
-	// mark selection for addition
-	{ "keys": ["super+alt+c", "super+alt+a"], "command": "insert_snippet", "args": {"contents": "{++ $SELECTION ++}"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true }
 		]
 	},
 	// commit addition
@@ -1033,11 +1025,10 @@
 		]
 	},
 
-	// insert comment
-	{ "keys": ["super+alt+c", "super+alt+c"], "command": "insert_snippet", "args": {"contents": "{>> ${1:comment} <<}"}, "context":
+	// insert comment or convert selection into comment
+	{ "keys": ["super+alt+c", "super+alt+c"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Comment.sublime-snippet"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true }
 		]
 	},
 	// remove comment
@@ -1068,7 +1059,7 @@
 		]
 	},
 	// mark selection for deletion
-	{ "keys": ["super+alt+c", "super+alt+d"], "command": "insert_snippet", "args": {"contents": "{-- $SELECTION --}"}, "context":
+	{ "keys": ["super+alt+c", "super+alt+d"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Deletion.sublime-snippet"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
@@ -1097,7 +1088,7 @@
 		]
 	},
 	// mark selection for highlighting
-	{ "keys": ["super+alt+c", "super+alt+h"], "command": "insert_snippet", "args": {"contents": "{== $SELECTION ==}{>> ${1:comment} <<}"}, "context":
+	{ "keys": ["super+alt+c", "super+alt+h"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Highlight.sublime-snippet"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
@@ -1125,7 +1116,7 @@
 		]
 	},
 	// mark selection for substitution
-	{ "keys": ["super+alt+c", "super+alt+s"], "command": "insert_snippet", "args": {"contents": "{~~ $SELECTION ~> ${1:substitution} ~~}"}, "context":
+	{ "keys": ["super+alt+c", "super+alt+s"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Substitution.sublime-snippet"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
