@@ -1018,6 +1018,21 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
+	// commit addition
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Addition.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.addition", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard addition
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Addition.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.addition", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
 	// insert comment
 	{ "keys": ["alt+c", "alt+c"], "command": "insert_snippet", "args": {"contents": "{>> ${1:comment} <<}"}, "context":
 		[
@@ -1025,6 +1040,26 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true }
 		]
 	},
+	// remove comment
+	{ "keys": ["alt+c", "alt+c"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
 	// mark word for deletion
 	{ "keys": ["alt+c", "alt+d"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Deletion.sublime-macro"}, "context":
 		[
@@ -1039,6 +1074,21 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
+	// commit deletion
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard deletion
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
 	// mark word for highlight
 	{ "keys": ["alt+c", "alt+h"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Highlight.sublime-macro"}, "context":
 		[
@@ -1053,6 +1103,20 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
+	// remove highlight
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
 	// mark word for substitution
 	{ "keys": ["alt+c", "alt+s"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Substitution.sublime-macro"}, "context":
 		[
@@ -1065,6 +1129,20 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.critic - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// commit substitution
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard substitution
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
 		]
 	},
 

@@ -59,13 +59,14 @@ with...
 
 ### Critic Markup
 
-*   add critic via key bindings
-*   syntax highlighting for inline critic markup
+*   Syntax highlighting for inline critic markup
     -   `{++ addition ++}`
     -   `{>> comment <<}`
     -   `{-- deletion --}`
     -   `{== highlight==}{>> comment <<}`
     -   `{~~ substitution ~> by ~~}`
+*   Reviewers can add critic via key bindings
+*   Authors can accept or reject critic via key bindings
 
 ### Links and References
 

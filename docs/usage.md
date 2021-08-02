@@ -250,15 +250,31 @@ Important functions are bound to following keys by default:
 
 # Critic Markup
 
-Insert critic for a word or selection via key binding.
+MarkdownEditing supports document review by highlighting critic markup and enable adding critic or accepting and rejecting proposed changes via key bindings.
+
+## Reviewer
+
+A document reviewer can insert critic or propose changes for single words or selections with following key bindings:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>a</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>a</kbd> | Convert word or selection into `{++ addition ++}`.
-| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>c</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd> | Convert word or selection into `{>> comment <<}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>a</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>a</kbd> | Insert or convert selection into `{++ addition ++}`.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>c</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd> | Insert or convert selection into `{>> comment <<}`.
 | <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>d</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>d</kbd> | Convert word or selection into `{-- deletion --}`.
 | <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>h</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>h</kbd> | Convert word or selection into `{== highlight==}{>> comment <<}`.
 | <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>s</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>s</kbd> | Convert word or selection into `{~~ substitution ~> by ~~}`.
+
+## Author
+
+A document author can accept or reject suggestions with following key bindings once caret was moved into critic markup:
+
+| Linux/Windows | MacOS | Description
+|---------------|-------|-------------
+| <kbd>Alt</kbd> + <kbd>Enter</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Enter</kbd> | Accept critic and apply proposed change.
+| <kbd>Alt</kbd> + <kbd>Backspace</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Backspace</kbd> | Reject critic and discard proposed changes.
+
+!!!note "Note"
+    `{>> comment <<}` and `{== highlight==}` are removed by both bindings.
 
 # Wiki
 
