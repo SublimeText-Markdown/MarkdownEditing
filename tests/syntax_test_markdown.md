@@ -413,6 +413,11 @@ paragraph
 | <- punctuation.definition.blockquote
 |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
 
+> Next line is 
+    > continued text of quote block.
+|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown - markup.raw
+|   ^ - punctuation
+
 > Here are fenced code blocks
 > ```
 | <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
@@ -428,6 +433,7 @@ paragraph
 |^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
 | ^^^^ meta.block-level.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
 | ^^^ punctuation.definition.raw.code-fence.end.markdown
+
 > > 2nd level
 > > 
 > > ```
@@ -437,6 +443,27 @@ paragraph
 | <- meta.block-level.markdown markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
 |^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown - meta.code-fence
 |   ^^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
+
+> Quote block followed by fenced code block
+```
+| <- meta.paragraph.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown - meta.quote
+```
+| <- meta.paragraph.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown - meta.quote
+
+> Quote block followed by heading
+# heading
+| <- meta.block-level.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown - meta.quote
+| ^^^^^^^ entity.name.section.markdown
+
+> Quote block followed by list
+* list item
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
+
+> Quote block followed by thematic break
+- - -
+| <- meta.block-level.markdown meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
 
 >=
 | <- punctuation.definition.blockquote.markdown 
