@@ -611,63 +611,70 @@ contexts:
     - match: '{{escape}}'
       scope: constant.character.escape.markdown
 
-  atx-heading-terminator:
-    - match: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
-      captures:
-        1: punctuation.definition.heading.end.markdown
-        2: meta.whitespace.newline.markdown
-      pop: true
-
   atx-heading:
     # https://spec.commonmark.org/0.30/#atx-headings
     - match: '[ \t]{,3}(#)(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.1.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading1-content
     - match: '[ \t]{,3}(#{2})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.2.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading2-content
     - match: '[ \t]{,3}(#{3})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.3.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading3-content
     - match: '[ \t]{,3}(#{4})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.4.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading4-content
     - match: '[ \t]{,3}(#{5})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.5.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading5-content
     - match: '[ \t]{,3}(#{6})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
-      push:
-        - meta_scope: markup.heading.6.markdown
-        - meta_content_scope: entity.name.section.markdown
-        - include: atx-heading-terminator
-        - include: inline-bold-italic
+      push: atx-heading6-content
+
+  atx-heading1-content:
+    - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading2-content:
+    - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading3-content:
+    - meta_scope: markup.heading.3.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading4-content:
+    - meta_scope: markup.heading.4.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading5-content:
+    - meta_scope: markup.heading.5.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading6-content:
+    - meta_scope: markup.heading.6.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading-content:
+    - match: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
+      captures:
+        1: punctuation.definition.heading.end.markdown
+        2: meta.whitespace.newline.markdown
+      pop: true
+    - include: inline-bold-italic
 
   image-inline:
     - match: |-
