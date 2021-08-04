@@ -24,9 +24,9 @@ variables:
             )
             [ \t]*$                          # followed by any number of tabs or spaces, followed by the end of the line
         )
-    block_quote: (?:[ ]{,3}(>)[ ]?)          # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
-    atx_heading: (?:[#]{1,6}\s+)             # between 1 and 6 hashes, followed by at least one whitespace
-    indented_code_block: (?:[ ]{4}|\t)       # 4 spaces or a tab
+    block_quote: (?:[ ]{,3}(>)[ ]?)              # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
+    atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))  # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
+    indented_code_block: (?:[ ]{4}|\t)           # 4 spaces or a tab
     list_item: (?:[ ]{,3}(?=\d+[.)]|[*+-])\d*([*+.-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
     escape: '\\[-`*_#+.!(){}\[\]\\>|~<]'
     backticks: |-
@@ -612,14 +612,15 @@ contexts:
       scope: constant.character.escape.markdown
 
   atx-heading-terminator:
-    - match: '[ ]*(#*)[ ]*($\n?)' # \n is optional so ## is matched as end punctuation in new document (at eof)
+    - match: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
       captures:
         1: punctuation.definition.heading.end.markdown
         2: meta.whitespace.newline.markdown
       pop: true
 
   atx-heading:
-    - match: '(#)(?!#)\s*(?=\S)'
+    # https://spec.commonmark.org/0.30/#atx-headings
+    - match: '[ \t]{,3}(#)(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
@@ -627,7 +628,7 @@ contexts:
         - meta_content_scope: entity.name.section.markdown
         - include: atx-heading-terminator
         - include: inline-bold-italic
-    - match: '(#{2})(?!#)\s*(?=\S)'
+    - match: '[ \t]{,3}(#{2})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
@@ -635,7 +636,7 @@ contexts:
         - meta_content_scope: entity.name.section.markdown
         - include: atx-heading-terminator
         - include: inline-bold-italic
-    - match: '(#{3})(?!#)\s*(?=\S)'
+    - match: '[ \t]{,3}(#{3})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
@@ -643,7 +644,7 @@ contexts:
         - meta_content_scope: entity.name.section.markdown
         - include: atx-heading-terminator
         - include: inline-bold-italic
-    - match: '(#{4})(?!#)\s*(?=\S)'
+    - match: '[ \t]{,3}(#{4})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
@@ -651,7 +652,7 @@ contexts:
         - meta_content_scope: entity.name.section.markdown
         - include: atx-heading-terminator
         - include: inline-bold-italic
-    - match: '(#{5})(?!#)\s*(?=\S)'
+    - match: '[ \t]{,3}(#{5})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
@@ -659,7 +660,7 @@ contexts:
         - meta_content_scope: entity.name.section.markdown
         - include: atx-heading-terminator
         - include: inline-bold-italic
-    - match: '(#{6})(?!#)\s*(?=\S)'
+    - match: '[ \t]{,3}(#{6})(?=[ \t]|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push:
