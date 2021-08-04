@@ -849,6 +849,28 @@ because it doesn't begin with the number one:
 |                                                                           ^ punctuation.definition.string.end
 |                                                                            ^ punctuation.definition.metadata
 
+1) numberd item
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+ 2) numberd item
+| <- markup.list.numbered.markdown
+|^^ markup.list.numbered.bullet.markdown
+|  ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+  3) numberd item
+| <- markup.list.numbered.markdown
+|^ markup.list.numbered.markdown
+| ^^ markup.list.numbered.bullet.markdown
+|   ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+   4) numberd item
+| <- markup.list.numbered.markdown
+|^^ markup.list.numbered.markdown
+|  ^^ markup.list.numbered.bullet.markdown
+|    ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
   <!-- HTML comment -->
 | ^^^^^^^^^^^^^^^^^^^^^ comment.block.html
 

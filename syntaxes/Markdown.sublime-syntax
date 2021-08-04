@@ -27,7 +27,7 @@ variables:
     block_quote: (?:[ ]{,3}(>)[ ]?)          # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
     atx_heading: (?:[#]{1,6}\s+)             # between 1 and 6 hashes, followed by at least one whitespace
     indented_code_block: (?:[ ]{4}|\t)       # 4 spaces or a tab
-    list_item: (?:[ ]{,3}(?=\d+\.|[*+-])\d*([*+.-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
+    list_item: (?:[ ]{,3}(?=\d+[.)]|[*+-])\d*([*+.-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
     escape: '\\[-`*_#+.!(){}\[\]\\>|~<]'
     backticks: |-
         (?x:
@@ -248,7 +248,7 @@ contexts:
         - match: ^(?=\S)
           pop: true
         - include: list-paragraph
-    - match: '^([ ]{0,3})(\d+(\.))(?=\s)'
+    - match: ^([ ]{0,3})(\d+([.)]))(?=\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
@@ -418,7 +418,7 @@ contexts:
       pop: true
 
   block-quote-list-item:
-    - match: ([ ]{,3})(\d+)(\.)(\s)
+    - match: ([ ]{,3})(\d+)([.)])(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
@@ -1120,7 +1120,7 @@ contexts:
             - clear_scopes: 1
             - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
             - include: list-content
-        - match: '([ ]*)(\d+(\.))(?=\s)'
+        - match: ([ ]*)(\d+([.)]))(?=\s)
           captures:
             1: markup.list.numbered.markdown
             2: markup.list.numbered.bullet.markdown
