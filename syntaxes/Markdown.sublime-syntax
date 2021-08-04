@@ -418,11 +418,11 @@ contexts:
       pop: true
 
   block-quote-list-item:
-    - match: ([ ]{,3})(\d+)([.)])(\s)
+    - match: ([ ]{,3})(\d+([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
-        3: markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+        3: punctuation.definition.list_item.markdown
         4: markup.list.numbered.markdown
       set:
         - block-quote-ordered-list-content
