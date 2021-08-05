@@ -1,4 +1,5 @@
 import re
+import sublime
 
 from .view import MdeTextCommand
 
@@ -211,3 +212,56 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
 
                 mark = "X" if match.group(2) == " " else " "
                 self.view.replace(edit, region, mark)
+
+
+class MdeJoinLines(MdeTextCommand):
+    """
+    This class describes a `mde_join_lines` command.
+
+    It removes any leading list or blockquote punctuation from any line after a
+    caret and the linefeed separating it from a line a caret is placed within.
+
+    It is meant to be bound to `"delete"` key when caret is at eol.
+    """
+
+    def run(self, edit):
+        view = self.view
+        pattern = re.compile(
+            r"""(?x)
+            ^(
+                [ \t>]*                     # leading blockquote or whitespace
+                (?:
+                    (?:[-+*]|[0-9]+[.)])    # unordered or ordered list bullet
+                    (?:[ \t]+\[[ xX]\])?    # optional GFM task checkbox
+                    (?:[ \t]+|$)            # at least one space,tab or eol
+                )?
+            )
+            (\S|$)                          # first char of content, if any
+            """
+        )
+
+        for sel in view.sel():
+            if len(sel) == 0:
+                # join current with following line
+                lines = [view.line(sel)]
+            else:
+                # join all selected lines beginning with the one before the last
+                lines = reversed(view.split_by_newlines(view.line(sel))[:-1])
+
+            for line in lines:
+                eol = line.end()
+                eol_ws = view.substr(eol - 1) in (' ', '\t')
+
+                # mark newline for deletion
+                to_delete = 1
+
+                match = pattern.search(view.substr(view.line(eol + 1)))
+                if match:
+                    # mark blockquote and list bullets for deletion
+                    to_delete += match.end(1) - match.start(1)
+                    # maintain at least one space between tokens (convert newline to space so to say)
+                    if eol_ws is False and match.end(2) > match.start(2):
+                        view.replace(edit, sublime.Region(eol, eol + to_delete), " ")
+                        continue
+
+                view.erase(edit, sublime.Region(eol, eol + to_delete))

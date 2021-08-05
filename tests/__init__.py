@@ -14,6 +14,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         cls.window = sublime.active_window()
         cls.view = cls.window.create_output_panel("MarkdownUnitTests", unlisted=True)
         settings = cls.view.settings()
+        settings.set("auto_indent", False)
         settings.set("detect_indentation", False)
         settings.set("fold_buttons", False)
         settings.set("gutter", False)
@@ -48,7 +49,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
 
         :param text:  The triple quoted block text to put into scratch view.
         """
-        cls.setText(dedent(text.strip()))
+        cls.setText(dedent(text).strip())
 
     @classmethod
     def setText(cls, text):
@@ -60,6 +61,13 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         cls.view.run_command("select_all")
         cls.view.run_command("right_delete")
         cls.view.run_command("insert", {"characters": text})
+
+    @classmethod
+    def getText(cls):
+        """
+        Return view's text content
+        """
+        return cls.view.substr(sublime.Region(0, cls.view.size()))
 
     @classmethod
     def getRow(cls, row):
@@ -79,3 +87,21 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         :param col:  The natural 1-based column number. 1=first column
         """
         return cls.view.text_point(row - 1, col - 1)
+
+    def assertEqualBlockText(self, text):
+        """
+        Assert view containing `text` after detenting and stripping whitespace.
+
+        :param text:
+            Triple quoted text, which is detented and stripped
+            before being compared with view's content.
+        """
+        self.assertEqual(self.getText(), dedent(text).strip())
+
+    def assertEqualText(self, text):
+        """
+        Assert view containing `text`.
+
+        :param text:  The text expected to be equal with view's content.
+        """
+        self.assertEqual(self.getText(), text)

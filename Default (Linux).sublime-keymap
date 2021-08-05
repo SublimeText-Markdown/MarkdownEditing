@@ -757,6 +757,19 @@
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
+	// Join content of next into current line after removing its leading blockquote, list and GFM task punctuation
+	{ "keys": ["delete"], "command": "mde_join_lines", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote, text.html.markdown markup.list" },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^$", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+j"], "command": "mde_join_lines", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote, text.html.markdown markup.list" }
+		]
+	},
 	// Indent list item if caret is in front of bullets
 	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
