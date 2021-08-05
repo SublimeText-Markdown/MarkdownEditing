@@ -613,27 +613,32 @@ contexts:
 
   atx-heading:
     # https://spec.commonmark.org/0.30/#atx-headings
-    - match: '[ \t]{,3}(#)(?=[ \t]|$)'
+    # Note:
+    #   Consume spaces and tabs after opening hashes so entity.name
+    #   starts with first non-whitespace character,
+    #   but don't do so if directly followed by closing hashes
+    #   as terminator pattern requires them to match then.
+    - match: '[ \t]{,3}(#{1})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading1-content
-    - match: '[ \t]{,3}(#{2})(?=[ \t]|$)'
+    - match: '[ \t]{,3}(#{2})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading2-content
-    - match: '[ \t]{,3}(#{3})(?=[ \t]|$)'
+    - match: '[ \t]{,3}(#{3})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading3-content
-    - match: '[ \t]{,3}(#{4})(?=[ \t]|$)'
+    - match: '[ \t]{,3}(#{4})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading4-content
-    - match: '[ \t]{,3}(#{5})(?=[ \t]|$)'
+    - match: '[ \t]{,3}(#{5})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading5-content
-    - match: '[ \t]{,3}(#{6})(?=[ \t]|$)'
+    - match: '[ \t]{,3}(#{6})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading6-content

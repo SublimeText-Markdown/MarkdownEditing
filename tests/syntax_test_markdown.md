@@ -2,14 +2,17 @@
 
 # Heading
 | <- markup.heading.1 punctuation.definition.heading
-|^^^^^^^^ markup.heading
-|        ^ meta.whitespace.newline.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+|^ - entity.name.section
+|  ^^^^^^ entity.name.section
+|        ^ meta.whitespace.newline.markdown - entity.name.section
 
 ## Second Heading #
 | <- markup.heading.2 punctuation.definition.heading
-|^^^^^^^^^^^^^^^^ markup.heading
+|^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
+|^^ - entity.name.section
 |  ^^^^^^^^^^^^^^ entity.name.section
-|                ^ - entity.name.section
+|                ^^ - entity.name.section
 |                 ^ punctuation.definition.heading.end.markdown
 
 https://spec.commonmark.org/0.30/#example-71
@@ -21,7 +24,9 @@ https://spec.commonmark.org/0.30/#example-71
 |   ^^^^^^^^^ - punctuation
 |            ^^ punctuation.definition.heading.end.markdown
 |              ^ - punctuation
+|^^^^ - entity.name.section
 |    ^^^^^^^ entity.name.section.markdown
+|           ^^^^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-73
 ## Example 73 (trailing spaces!) #####    
@@ -30,22 +35,29 @@ https://spec.commonmark.org/0.30/#example-73
 
 https://spec.commonmark.org/0.30/#example-74
 ## Example 74 ####    >
-|^^^^^^^^^^^^^^^^^^^^^^ markup.heading
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
+|^^ - entity.name.section
+|  ^^^^^^^^^^^^^^^^^^^^ entity.name.section.markdown
+|                      ^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-75
 # #heading# #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown
+|^ - entity.name.section
 | ^^^^^^^^^ entity.name.section.markdown
+|          ^^ - entity.name.section
 |           ^ punctuation.definition.heading.end.markdown
 
 https://spec.commonmark.org/0.30/#example-76
 ## heading \##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^^^^^^^ meta.block-level.markdown markup.heading.2.markdown
-| ^^^^^^^^^^^^ entity.name.section.markdown
+|^^ - entity
+|  ^^^^^^^^^^^ entity.name.section.markdown
 |          ^^ constant.character.escape.markdown
 |          ^^^ - punctuation
+|             ^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-79
 #
@@ -53,35 +65,39 @@ https://spec.commonmark.org/0.30/#example-79
 
 # #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^ meta.block-level.markdown markup.heading.1.markdown
+|^^^ meta.block-level.markdown markup.heading.1.markdown - entity.name.section
 | ^ punctuation.definition.heading.end.markdown
 
 ## 
-| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
-|^ markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown - entity.name.section
+|^ markup.heading.2.markdown punctuation.definition.heading.begin.markdown - entity.name.section
 
 ## ##
-| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
-|^^^^^ meta.block-level.markdown markup.heading.2.markdown
+| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown - entity.name.section
+|^^^^^ meta.block-level.markdown markup.heading.2.markdown - entity.name.section
 |^ punctuation.definition.heading.begin.markdown
 |  ^^ punctuation.definition.heading.end.markdown
 
 ### ###
-| <- meta.block-level.markdown markup.heading.3.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^ meta.block-level.markdown markup.heading.3.markdown
+| <- meta.block-level.markdown markup.heading.3.markdown  - entity.name.sectionpunctuation.definition.heading.begin.markdown
+|^^^^^^^ meta.block-level.markdown markup.heading.3.markdown - entity.name.section
 |^^ punctuation.definition.heading.begin.markdown
 |   ^^^ punctuation.definition.heading.end.markdown
 
 # #### #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown
+|^ - entity.name.section
 | ^^^^ entity.name.section.markdown
+|     ^^ - entity.name.section
 |      ^ punctuation.definition.heading.end.markdown
 
 ## #### ##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^^^ meta.block-level.markdown markup.heading.2.markdown
+|^ - entity.name.section
 |  ^^^^ entity.name.section.markdown
+|      ^^^ - entity.name.section
 |       ^^ punctuation.definition.heading.end.markdown
 
 #NotAHeading
