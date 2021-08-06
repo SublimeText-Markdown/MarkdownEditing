@@ -26,6 +26,8 @@ variables:
         )
     block_quote: (?:[ ]{,3}(>)[ ]?)              # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
     atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))  # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
+    atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
+    atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
     indented_code_block: (?:[ ]{4}|\t)           # 4 spaces or a tab
     list_item: (?:[ ]{,3}(?=\d+[.)]|[*+-])\d*([*+.-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
     escape: '\\[-`*_#+.!(){}\[\]\\>|~<]'
@@ -618,27 +620,27 @@ contexts:
     #   starts with first non-whitespace character,
     #   but don't do so if directly followed by closing hashes
     #   as terminator pattern requires them to match then.
-    - match: '[ \t]{,3}(#{1})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{1}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading1-content
-    - match: '[ \t]{,3}(#{2})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{2}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading2-content
-    - match: '[ \t]{,3}(#{3})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{3}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading3-content
-    - match: '[ \t]{,3}(#{4})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{4}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading4-content
-    - match: '[ \t]{,3}(#{5})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{5}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading5-content
-    - match: '[ \t]{,3}(#{6})(?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)'
+    - match: '[ ]{,3}(#{6}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading6-content
@@ -674,7 +676,7 @@ contexts:
     - include: atx-heading-content
 
   atx-heading-content:
-    - match: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
+    - match: '{{atx_heading_end}}'
       captures:
         1: punctuation.definition.heading.end.markdown
         2: meta.whitespace.newline.markdown
