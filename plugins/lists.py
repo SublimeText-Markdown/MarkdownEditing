@@ -228,15 +228,14 @@ class MdeJoinLines(MdeTextCommand):
         view = self.view
         pattern = re.compile(
             r"""(?x)
-            ^(
-                [ \t>]*                     # leading blockquote or whitespace
-                (?:
-                    (?:[-+*]|[0-9]+[.)])    # unordered or ordered list bullet
-                    (?:[ \t]+\[[ xX]\])?    # optional GFM task checkbox
-                    (?:[ \t]+|$)            # at least one space,tab or eol
-                )?
-            )
-            (\S|$)                          # first char of content, if any
+            ^
+            ([ \t>]*)                   # leading blockquote or whitespace
+            (
+                (?:[-+*]|[0-9]+[.)])    # unordered or ordered list bullet
+                (?:[ \t]+\[[ xX]\])?    # optional GFM task checkbox
+                (?:[ \t]+|$)            # at least one space,tab or eol
+            )?
+            (\S|$)                      # first char of content, if any
             """
         )
 
@@ -244,23 +243,30 @@ class MdeJoinLines(MdeTextCommand):
             if len(sel) == 0:
                 # join current with following line
                 lines = [view.line(sel)]
+                _, col = view.rowcol(sel.begin())
             else:
                 # join all selected lines beginning with the one before the last
                 lines = reversed(view.split_by_newlines(view.line(sel))[:-1])
+                col = None
 
             for line in lines:
                 eol = line.end()
-                eol_ws = view.substr(eol - 1) in (' ', '\t')
+                eol_ws = eol == 0 or view.substr(eol - 1) in (" ", "\t", "\n")
 
                 # mark newline for deletion
                 to_delete = 1
 
-                match = pattern.search(view.substr(view.line(eol + 1)))
-                if match:
-                    # mark blockquote and list bullets for deletion
-                    to_delete += match.end(1) - match.start(1)
+                next_line_matches = pattern.search(view.substr(view.line(eol + 1)))
+                if next_line_matches:
+                    if col is None or col > next_line_matches.start(2) or sel.begin() < eol:
+                        # mark blockquote and list bullets for deletion
+                        to_delete += next_line_matches.start(3)
+                    else:
+                        # mark blockquote for deletion
+                        to_delete += next_line_matches.start(2)
+
                     # maintain at least one space between tokens (convert newline to space so to say)
-                    if eol_ws is False and match.end(2) > match.start(2):
+                    if eol_ws is False and next_line_matches.end(3) > next_line_matches.start(3):
                         view.replace(edit, sublime.Region(eol, eol + to_delete), " ")
                         continue
 
