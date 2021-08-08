@@ -29,7 +29,7 @@ variables:
     atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
     atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
     indented_code_block: (?:[ ]{4}|\t)           # 4 spaces or a tab
-    list_item: (?:[ ]{,3}(?=\d+[.)]|[*+-])\d*([*+.-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
+    list_item: (?:[ ]{,3}(?:\d+[.)]|[*+-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
     escape: '\\[-`*_#+.!(){}\[\]\\>|~<]'
     backticks: |-
         (?x:
