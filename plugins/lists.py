@@ -227,7 +227,7 @@ class MdeJoinLines(MdeTextCommand):
     def run(self, edit):
         view = self.view
         pattern = re.compile(
-            r"""(?x)
+            r"""
             ^
             ([ \t>]*)                   # leading blockquote or whitespace
             (
@@ -236,14 +236,16 @@ class MdeJoinLines(MdeTextCommand):
                 (?:[ \t]+|$)            # at least one space,tab or eol
             )?
             (\S|$)                      # first char of content, if any
-            """
+            """,
+            re.X
         )
 
         for sel in view.sel():
+            pt = sel.begin()
             if len(sel) == 0:
                 # join current with following line
                 lines = [view.line(sel)]
-                _, col = view.rowcol(sel.begin())
+                _, col = view.rowcol(pt)
             else:
                 # join all selected lines beginning with the one before the last
                 lines = reversed(view.split_by_newlines(view.line(sel))[:-1])
@@ -258,7 +260,16 @@ class MdeJoinLines(MdeTextCommand):
 
                 next_line_matches = pattern.search(view.substr(view.line(eol + 1)))
                 if next_line_matches:
-                    if col is None or col > next_line_matches.start(2) or sel.begin() < eol:
+                    if (
+                        # selected text block
+                        col is None
+                        or
+                        # caret is within list item paragraph
+                        col > next_line_matches.start(2)
+                        or
+                        # caret followed by content (not only whitespace or blockquote signs)
+                        any(ch not in " \t>" for ch in view.substr(sublime.Region(pt, eol)))
+                    ):
                         # mark blockquote and list bullets for deletion
                         to_delete += next_line_matches.start(3)
                     else:

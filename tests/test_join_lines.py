@@ -390,7 +390,7 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_join_lines")
         self.assertEqualText("> * item 1 bar baz item")
 
-    def test_join_lines_keep_ordered_list_bullet(self):
+    def test_join_lines_keep_ordered_list_bullet_if_caret_after_blockquote_sign(self):
         self.setBlockText(
             """
             > # Heading
@@ -409,7 +409,7 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
             """
         )
 
-    def test_join_lines_keep_unordered_list_bullet(self):
+    def test_join_lines_keep_unordered_list_bullet_if_caret_after_blockquote_sign(self):
         self.setBlockText(
             """
             > # Heading
@@ -419,6 +419,44 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
             """
         )
         self.setCaretTo(3, 3)
+        self.view.run_command("mde_join_lines")
+        self.assertEqualBlockText(
+            """
+            > # Heading
+            >\x20
+            > * item 1
+            """
+        )
+
+    def test_join_lines_keep_ordered_list_bullet_if_caret_at_bol(self):
+        self.setBlockText(
+            """
+            > # Heading
+            >\x20
+            >\x20
+            > 1. item 1
+            """
+        )
+        self.setCaretTo(3, 1)
+        self.view.run_command("mde_join_lines")
+        self.assertEqualBlockText(
+            """
+            > # Heading
+            >\x20
+            > 1. item 1
+            """
+        )
+
+    def test_join_lines_keep_unordered_list_bullet_if_caret_at_bol(self):
+        self.setBlockText(
+            """
+            > # Heading
+            >\x20
+            >\x20
+            > * item 1
+            """
+        )
+        self.setCaretTo(3, 1)
         self.view.run_command("mde_join_lines")
         self.assertEqualBlockText(
             """
