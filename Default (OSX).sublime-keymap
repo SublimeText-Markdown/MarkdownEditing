@@ -881,14 +881,14 @@
 		]
 	},
 	// Extend blockquote (ignore headings, lists and tasks)
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[^-+*>#\\s]|$)", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)+).*/\n$1/}"}, "context":
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[^-+*>#\\s]|$)", "match_all": true },
