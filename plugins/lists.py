@@ -4,7 +4,7 @@ import sublime
 from .view import MdeTextCommand
 
 
-class MdeUnIndentListItemCommand(MdeTextCommand):
+class MdeBaseUnIndentListItemCommand(MdeTextCommand):
     """
     This is an interanal text command class shared by `(un)indent_list_item` commands.
 
@@ -51,8 +51,11 @@ class MdeUnIndentListItemCommand(MdeTextCommand):
         for r, text in reversed(queue):
             view.replace(edit, r, text)
 
+    def compute_replacement(self, indent, tab_str, bullet, bullets):
+        raise RuntimeError
 
-class MdeIndentListItemCommand(MdeUnIndentListItemCommand):
+
+class MdeIndentListItemCommand(MdeBaseUnIndentListItemCommand):
     """
     The `mde_indent_list_item` command indents unordered list items.
 
@@ -71,7 +74,7 @@ class MdeIndentListItemCommand(MdeUnIndentListItemCommand):
         return text
 
 
-class MdeUnindentListItemCommand(MdeUnIndentListItemCommand):
+class MdeUnindentListItemCommand(MdeBaseUnIndentListItemCommand):
     """
     The `mde_unindent_list_item` command unindents unordered list items.
 
