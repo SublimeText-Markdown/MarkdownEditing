@@ -1567,6 +1567,12 @@ __test!*test__ Issue 1163
 |      ^ - punctuation.definition.italic
 |           ^^ punctuation.definition.bold.end
 
+Paragraph is terminated by fenced code blocks.
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
 ```js
 | <- punctuation.definition.raw.code-fence.begin
 |  ^^ constant.other.language-name

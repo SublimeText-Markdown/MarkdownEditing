@@ -333,15 +333,16 @@ contexts:
 
   paragraph-end:
     - match: |-
-        (?x)                       # pop out of this context if one of the following conditions are met:
+        (?x)                            # pop out of this context if one of the following conditions are met:
         ^(?=
-          \s*$                     # the line is blank (or only contains whitespace)
-          | {{atx_heading}}        # an ATX heading begins the line
-          | {{block_quote}}        # line is a blockquote
-          | {{thematic_break}}     # line is a thematic beak
-          | [ ]{,3}1[.)]\s         # an ordered list item with number "1" begins the line
-          | [ ]{,3}[*+-]\s         # an unordered list item begins the line
-          | [ ]{,3} < (?:          # all types of HTML blocks except type 7 may interrupt a paragraph
+          \s*$                          # the line is blank (or only contains whitespace)
+          | {{atx_heading}}             # an ATX heading begins the line
+          | {{block_quote}}             # a blockquote begins the line
+          | {{fenced_code_block_start}} # a fenced codeblock begins the line
+          | {{thematic_break}}          # line is a thematic beak
+          | [ ]{,3}1[.)]\s              # an ordered list item with number "1" begins the line
+          | [ ]{,3}[*+-]\s              # an unordered list item begins the line
+          | [ ]{,3}<(?:                 # all types of HTML blocks except type 7 may interrupt a paragraph
               {{html_tag_block_end_at_close_tag}}   # 1
             | !--                                   # 2
             | \?                                    # 3
