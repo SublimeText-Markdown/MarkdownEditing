@@ -2457,7 +2457,7 @@ end
 |^ constant.character.escape
 
   -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta - constant - keyword - variable - punctuation
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
 
     -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
 |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level markup.raw - constant - keyword - variable - punctuation

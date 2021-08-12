@@ -296,42 +296,58 @@ contexts:
         - include: inline-bold-italic
     - include: reference-link-definition
     - include: fenced-code-blocks
-    - match: '^(?=\S)(?![=-]{3,}\s*$)'
-      push:
-        - meta_scope: meta.paragraph.markdown
-        - match: |-
-            (?x)                         # pop out of this context when one of the following conditions are met:
-            ^(?:
-                \s*$                     # the line is blank (or only contains whitespace)
-            |   (?=
-                    {{block_quote}}      # a block quote begins the line
-                |   [ ]{,3}[*+-][ ]      # an unordered list item begins the line
-                |   [ ]{,3}1[.][ ]       # an ordered list item with number "1" begins the line
-                |   \#                   # an ATX heading begins the line
-                |   [ ]{,3}<(            # all types of HTML blocks except type 7 may interrupt a paragraph
-                      {{html_tag_block_end_at_close_tag}}   # 1
-                    | !--                                   # 2
-                    | \?                                    # 3
-                    | ![A-Z]                                # 4
-                    | !\[CDATA\[                            # 5
-                    | {{html_tag_block_end_at_blank_line}}  # 6
-                    )
-                )
-            )
-          pop: true
-        - include: inline-bold-italic-linebreak
-        - include: tag-kbd
-        - include: scope:text.html.basic
-        - match: '^(={3,})(?=[ \t]*$)'
-          scope: markup.heading.1.setext.markdown
-          captures:
-            1: punctuation.definition.heading.setext.markdown
-          pop: true
-        - match: '^(-{3,})(?=[ \t]*$)'
-          scope: markup.heading.2.setext.markdown
-          captures:
-            1: punctuation.definition.heading.setext.markdown
-          pop: true
+    - include: setext-heading-or-paragraph
+
+  setext-heading-or-paragraph:
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: ^[ ]{,3}(?:=+|(?=\S))
+      push: paragraph
+
+  setext-heading1:
+    - match: '^[ ]{,3}(=+)(?=[ \t]*$)'
+      scope: markup.heading.1.setext.markdown
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+      pop: true
+
+  setext-heading2:
+    - match: '^[ ]{,3}(-+)(?=[ \t]*$)'
+      scope: markup.heading.2.setext.markdown
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+      pop: true
+
+  paragraph:
+    - meta_scope: meta.paragraph.markdown
+    - include: setext-heading1
+    - include: setext-heading2
+    - include: paragraph-end
+    - include: inline-bold-italic-linebreak
+    - include: tag-kbd
+    - include: scope:text.html.basic
+
+  paragraph-end:
+    - match: |-
+        (?x)                       # pop out of this context if one of the following conditions are met:
+        ^(?=
+          \s*$                     # the line is blank (or only contains whitespace)
+          | {{atx_heading}}        # an ATX heading begins the line
+          | {{block_quote}}        # line is a blockquote
+          | {{thematic_break}}     # line is a thematic beak
+          | [ ]{,3}1[.)]\s         # an ordered list item with number "1" begins the line
+          | [ ]{,3}[*+-]\s         # an unordered list item begins the line
+          | [ ]{,3} < (?:          # all types of HTML blocks except type 7 may interrupt a paragraph
+              {{html_tag_block_end_at_close_tag}}   # 1
+            | !--                                   # 2
+            | \?                                    # 3
+            | ![A-Z]                                # 4
+            | !\[CDATA\[                            # 5
+            | {{html_tag_block_end_at_blank_line}}  # 6
+          ) )
+      pop: true
 
   ampersand:
     - match: (?!{{html_entity}})&
