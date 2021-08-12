@@ -307,17 +307,19 @@ contexts:
       push: paragraph
 
   setext-heading1:
-    - match: '^[ ]{,3}(=+)(?=[ \t]*$)'
+    - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
       scope: markup.heading.1.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
       pop: true
 
   setext-heading2:
-    - match: '^[ ]{,3}(-+)(?=[ \t]*$)'
+    - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
       scope: markup.heading.2.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
       pop: true
 
   paragraph:

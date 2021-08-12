@@ -107,6 +107,7 @@ https://spec.commonmark.org/0.30/#example-79
 Alternate Heading
 =================
 |^^^^^^^^^^^^^^^^ markup.heading.1 punctuation.definition
+|                ^ meta.whitespace.newline
 
 heading underlined with dashes
 ------------------------------
