@@ -295,6 +295,7 @@ contexts:
           pop: true
         - include: inline-bold-italic
     - include: reference-link-definition
+    - include: fenced-code-blocks
     - match: '^(?=\S)(?![=-]{3,}\s*$)'
       push:
         - meta_scope: meta.paragraph.markdown
@@ -318,7 +319,6 @@ contexts:
                 )
             )
           pop: true
-        - include: fenced-code-blocks
         - include: inline-bold-italic-linebreak
         - include: tag-kbd
         - include: scope:text.html.basic
