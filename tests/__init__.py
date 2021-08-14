@@ -32,9 +32,19 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         cls.view = cls.window.destroy_output_panel("MarkdownUnitTests")
 
     @classmethod
+    def addCaretAt(cls, row, col):
+        """
+        Add caret to given point (row, col)
+
+        :param row:  The natural 1-based row number. 1=first row
+        :param col:  The natural 1-based column number. 1=first column
+        """
+        cls.view.sel().add(cls.textPoint(row, col))
+
+    @classmethod
     def setCaretTo(cls, row, col):
         """
-        Move caret to given point
+        Move caret to given point (row, col)
 
         :param row:  The natural 1-based row number. 1=first row
         :param col:  The natural 1-based column number. 1=first column
