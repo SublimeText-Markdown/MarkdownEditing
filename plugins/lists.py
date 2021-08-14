@@ -108,7 +108,7 @@ class MdeSwitchListBulletTypeCommand(MdeTextCommand):
         auto_increment = self.view.settings().get("mde.auto_increment_ordered_list_number", True)
         bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
         pattern = re.compile(
-            r"^\s*(?:>\s*)*(?:([%s])|([0-9]+\.))(\s+)"
+            r"^\s*(?:>\s*)*(?:([%s])|(\d+[.)]))(\s+)"
             % "".join(re.escape(bullet) for bullet in bullets)
         )
 
@@ -144,28 +144,35 @@ class MdeSwitchListBulletTypeCommand(MdeTextCommand):
 
 
 class MdeNumberListCommand(MdeTextCommand):
+    """
+    This class describes the `mde_number_list` command.
+    """
+
     def run(self, edit):
         view = self.view
-        sel = view.sel()[0]
-        text = view.substr(view.full_line(sel))
-        num = re.search(r"\d", text).start()
-        dot = text.find(".")
-        additional_spaces = re.search(r"^\s*", text[dot + 1 :]).group()
-        increment = 0
-        if self.view.settings().get("mde.auto_increment_ordered_list_number", True):
-            increment = 1
-        if num == 0:
+        auto_increment = view.settings().get("mde.auto_increment_ordered_list_number", True)
+        pattern = re.compile(r"^([ \t>]*)(\d+)([.)])([ \t]+|$)")
+
+        for sel in view.sel():
+            to_insert = "\n"
+
+            line = view.line(sel)
+            col = sel.begin() - line.begin()
+
+            match = pattern.search(view.substr(line))
+            if match:
+                quote, number, punct, space = match.groups()
+                next_number = str(int(number) + 1) if auto_increment else number
+
+                num_spaces = max(1, len(space) - (len(next_number) - len(number)))
+                # caret is in front of item text
+                if col < match.end():
+                    num_spaces -= match.end() - col
+
+                to_insert += quote + next_number + punct + " " * num_spaces
+
             view.erase(edit, sel)
-            view.insert(
-                edit, sel.begin(), "\n%d.%s" % (int(text[:dot]) + increment, additional_spaces)
-            )
-        else:
-            view.erase(edit, sel)
-            view.insert(
-                edit,
-                sel.begin(),
-                "\n%s%d.%s" % (text[:num], int(text[num:dot]) + increment, additional_spaces),
-            )
+            view.insert(edit, sel.begin(), to_insert)
 
 
 class MdeToggleTaskListItemCommand(MdeTextCommand):
@@ -198,7 +205,7 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
     def run(self, edit):
         bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
         pattern = re.compile(
-            r"^(\s*(?:>\s*)*(?:[%s]|[0-9]+\.)\s+\[)([ xX])\]\s"
+            r"^(\s*(?:>\s*)*(?:[%s]|\d+[.)])\s+\[)([ xX])\]\s"
             % "".join(re.escape(bullet) for bullet in bullets)
         )
 
@@ -234,13 +241,13 @@ class MdeJoinLines(MdeTextCommand):
             ^
             ([ \t>]*)                   # leading blockquote or whitespace
             (
-                (?:[-+*]|[0-9]+[.)])    # unordered or ordered list bullet
+                (?:[-+*]|\d+[.)])       # unordered or ordered list bullet
                 (?:[ \t]+\[[ xX]\])?    # optional GFM task checkbox
                 (?:[ \t]+|$)            # at least one space,tab or eol
             )?
             (\S|$)                      # first char of content, if any
             """,
-            re.X
+            re.X,
         )
 
         for sel in view.sel():

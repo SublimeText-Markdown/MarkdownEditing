@@ -718,18 +718,18 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	// Extend Numbered Lists
+	// Extend Numbered Lists (also in block quotes)
 	{ "keys": ["enter"], "command": "mde_number_list", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d+\\.)\\s+)(?:\\S.*|$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["enter"], "command": "mde_number_list", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d+\\.)\\s+)(?:\\S.*|$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -737,7 +737,7 @@
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
@@ -745,7 +745,7 @@
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
@@ -753,7 +753,7 @@
 	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+\\.)(?:\\s+\\[[ xX]\\])?\\s?$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s?$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
@@ -884,14 +884,14 @@
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[^-+*>#\\s]|$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[^-+*>#\\s]|$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
