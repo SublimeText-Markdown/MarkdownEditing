@@ -29,7 +29,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         """
         Teardown global test environment once all tests finished.
         """
-        cls.view = cls.window.destroy_output_panel("MarkdownUnitTests")
+        cls.window.destroy_output_panel("MarkdownUnitTests")
 
     @classmethod
     def addCaretAt(cls, row, col):
