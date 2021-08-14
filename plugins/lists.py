@@ -273,12 +273,10 @@ class MdeJoinLines(MdeTextCommand):
                     if (
                         # selected text block
                         col is None
-                        or
                         # caret is within list item paragraph
-                        col > next_line_matches.start(2)
-                        or
+                        or col > next_line_matches.start(2)
                         # caret followed by content (not only whitespace or blockquote signs)
-                        any(ch not in " \t>" for ch in view.substr(sublime.Region(pt, eol)))
+                        or any(ch not in " \t>" for ch in view.substr(sublime.Region(pt, eol)))
                     ):
                         # mark blockquote and list bullets for deletion
                         to_delete += next_line_matches.start(3)
