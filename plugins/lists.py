@@ -203,10 +203,14 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
     """
 
     def run(self, edit):
-        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
         pattern = re.compile(
-            r"^(\s*(?:>\s*)*(?:[%s]|\d+[.)])\s+\[)([ xX])\]\s"
-            % "".join(re.escape(bullet) for bullet in bullets)
+            r"""
+            ^[ \t>]*                # leading blockquote or whitespace
+            (?: [-+*] | \d+[.)] )   # unordered or ordered list bullet
+            (?: [ \t]+\[([ xX])\] ) # GFM task checkbox
+            (?: [ \t]+ | $ )        # at least one space,tab or eol
+            """,
+            re.X,
         )
 
         for sel in self.view.sel():
@@ -217,11 +221,10 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
                     continue
 
                 # calculate text position of check mark
-                region.a += len(match.group(1))
+                region.a += match.start(1)
                 region.b = region.a + 1
 
-                mark = "X" if match.group(2) == " " else " "
-                self.view.replace(edit, region, mark)
+                self.view.replace(edit, region, "X" if match.group(1) == " " else " ")
 
 
 class MdeJoinLines(MdeTextCommand):
