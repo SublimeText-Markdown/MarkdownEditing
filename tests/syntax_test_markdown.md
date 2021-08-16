@@ -2684,3 +2684,8 @@ This is an {== information ==}{>> comment <<}.
 |                                ^^^^^^^^^ comment.critic.markdown
 |                                         ^^^ punctuation.definition.critic.end.markdown - comment
 |                                            ^^ - markup.critic
+
+This is a [[wiki link]].
+|         ^^ meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
+|           ^^^^^^^^^ meta.link.reference.wiki.description.markdown - punctuation
+|                    ^^ meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown

@@ -827,6 +827,7 @@ contexts:
     - include: autolink-inet
     - include: autolink-email
     - include: image-ref
+    - include: link-ref-wiki
     - include: link-ref-footnote
     - include: link-ref-literal
     - include: link-ref
@@ -1113,6 +1114,26 @@ contexts:
         1: punctuation.definition.link.begin.markdown
         2: meta.link.reference.literal.footnote-id.markdown
         3: punctuation.definition.link.end.markdown
+
+  link-ref-wiki:
+    - match: |-
+        (?x:
+          (\[\[)
+          (?=
+              {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
+              \]\]                         # Closing square bracket
+          )
+        )
+      captures:
+        1: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
+      push: link-ref-wiki-link-text
+
+  link-ref-wiki-link-text:
+    - meta_content_scope: meta.link.reference.wiki.description.markdown
+    - include: link-text-allow-image
+    - match: \]\]
+      scope: meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown
+      pop: true
 
   reference-link-definition:
     - match: |-
