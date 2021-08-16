@@ -517,6 +517,7 @@ contexts:
               pop: true
             - include: inline
             - include: bold
+            - include: strikethrough
             - include: bold-italic-trailing
         - match: \*
           scope: punctuation.definition.italic.end.markdown
@@ -532,8 +533,10 @@ contexts:
               pop: true
             - include: inline
             - include: italic
+            - include: strikethrough
             - include: bold-italic-trailing
         - include: inline
+        - include: strikethrough
         - include: bold-italic-trailing
     - match: '\*\*(?=\S)(?!\*\*|\*\s)'
       scope: punctuation.definition.bold.begin.markdown
@@ -552,6 +555,7 @@ contexts:
         - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
           comment: eat the underscore that has no corresponding underscore before the closing bold punctuation on the same line, as it won't be treated as italic by CommonMark
         - include: italic
+        - include: strikethrough
         - include: bold-italic-trailing
     - match: '\b(__)(_)(?=\S)(?!_)'
       captures:
@@ -584,6 +588,7 @@ contexts:
               pop: true
             - include: inline
             - include: italic
+            - include: strikethrough
             - include: bold-italic-trailing
         - match: __\b
           scope: punctuation.definition.bold.end.markdown
@@ -599,8 +604,10 @@ contexts:
               pop: true
             - include: inline
             - include: bold
+            - include: strikethrough
             - include: bold-italic-trailing
         - include: inline
+        - include: strikethrough
         - include: bold-italic-trailing
     - match: '\b__(?=\S)(?!_[_\s])'
       scope: punctuation.definition.bold.begin.markdown
@@ -619,6 +626,7 @@ contexts:
         - match: \*(?=[^\s*])(?=[^*_]*__\b)
           comment: eat the asterisk that has no corresponding asterisk before the closing bold punctuation on the same line, as it won't be treated as italic by CommonMark
         - include: italic
+        - include: strikethrough
         - include: bold-italic-trailing
 
   bracket:
@@ -849,6 +857,7 @@ contexts:
         - include: inline
         - include: bold
         - match: '\*+'
+        - include: strikethrough
         - include: bold-italic-trailing
     - match: '\b_(?=\S)(?!_)'
       scope: punctuation.definition.italic.begin.markdown
@@ -864,6 +873,7 @@ contexts:
           pop: true
         - include: inline
         - include: bold
+        - include: strikethrough
         - include: bold-italic-trailing
     - match: '[*_]+'
 

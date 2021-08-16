@@ -1567,6 +1567,98 @@ __test!*test__ Issue 1163
 |      ^ - punctuation.definition.italic
 |           ^^ punctuation.definition.bold.end
 
+# Strikethrough Tests
+
+__~~bold striked~~__
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.strikethrough
+| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
+|                 ^^ markup.bold.markdown - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.strikethrough.begin.markdown
+|               ^^ punctuation.definition.strikethrough.end.markdown 
+|                 ^^ punctuation.definition.bold.end.markdown
+
+**~~bold striked~~**
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.strikethrough
+| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
+|                 ^^ markup.bold.markdown - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.strikethrough.begin.markdown
+|               ^^ punctuation.definition.strikethrough.end.markdown 
+|                 ^^ punctuation.definition.bold.end.markdown
+
+_~~italic striked~~_
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
+|                  ^ markup.italic.markdown - markup.strikethrough
+|^^ punctuation.definition.strikethrough.begin.markdown
+|                ^^ punctuation.definition.strikethrough.end.markdown 
+|                  ^ punctuation.definition.italic.end.markdown
+
+*~~italic striked~~*
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
+|                  ^ markup.italic.markdown - markup.strikethrough
+|^^ punctuation.definition.strikethrough.begin.markdown
+|                ^^ punctuation.definition.strikethrough.end.markdown 
+|                  ^ punctuation.definition.italic.end.markdown
+
+___~~bold italic striked~~___
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.strikethrough
+| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
+|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.strikethrough.begin.markdown
+|                       ^^ punctuation.definition.strikethrough.end.markdown 
+|                         ^ punctuation.definition.italic.end.markdown
+|                          ^^ punctuation.definition.bold.end.markdown
+
+***~~bold italic striked~~***
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.strikethrough
+| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
+|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.strikethrough.begin.markdown
+|                       ^^ punctuation.definition.strikethrough.end.markdown 
+|                         ^ punctuation.definition.italic.end.markdown
+|                          ^^ punctuation.definition.bold.end.markdown
+
+~Hi~ Hello, world!
+| <- punctuation.definition.strikethrough.begin
+|^^^ meta.paragraph markup.strikethrough
+|  ^ punctuation.definition.strikethrough.end
+|   ^^^^^^^^^^^^^^^ meta.paragraph - markup
+
+This ~text~~~~ is ~~~~curious~.
+|    ^^^^^^^^^ meta.paragraph markup.strikethrough
+|                 ^^^^^^^^^^^^ meta.paragraph markup.strikethrough
+|                             ^^ meta.paragraph - markup
+|    ^ punctuation.definition.strikethrough.begin
+|         ^^^^ punctuation.definition.strikethrough.end
+|                 ^^^^ punctuation.definition.strikethrough.begin
+|                            ^ punctuation.definition.strikethrough.end
+
+This ~~has a
+|    ^^^^^^^^ meta.paragraph markup.strikethrough
+
+| <- meta.paragraph markup.strikethrough invalid.illegal.non-terminated.bold-italic
+new paragraph~~.
+|            ^^ meta.paragraph markup.strikethrough punctuation.definition.strikethrough.begin
+
+| <- invalid.illegal.non-terminated.bold-italic
+
+# Fenced Code Block Tests
+
 Paragraph is terminated by fenced code blocks.
 ```
 | <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
@@ -1648,33 +1740,6 @@ http://spec.commonmark.org/0.28/#example-318
 |  ^^^^ constant.other.language-name
   ```
 | ^^^ punctuation.definition.raw.code-fence.end
-
-https://github.github.com/gfm/#example-469
-~Hi~ Hello, world!
-| <- punctuation.definition.strikethrough.begin
-|^^^ meta.paragraph markup.strikethrough
-|  ^ punctuation.definition.strikethrough.end
-|   ^^^^^^^^^^^^^^^ meta.paragraph - markup
-
-https://github.github.com/gfm/#example-470
-This ~text~~~~ is ~~~~curious~.
-|    ^^^^^^^^^ meta.paragraph markup.strikethrough
-|                 ^^^^^^^^^^^^ meta.paragraph markup.strikethrough
-|                             ^^ meta.paragraph - markup
-|    ^ punctuation.definition.strikethrough.begin
-|         ^^^^ punctuation.definition.strikethrough.end
-|                 ^^^^ punctuation.definition.strikethrough.begin
-|                            ^ punctuation.definition.strikethrough.end
-
-https://github.github.com/gfm/#example-471
-This ~~has a
-|    ^^^^^^^^ meta.paragraph markup.strikethrough
-
-| <- meta.paragraph markup.strikethrough invalid.illegal.non-terminated.bold-italic
-new paragraph~~.
-|            ^^ meta.paragraph markup.strikethrough punctuation.definition.strikethrough.begin
-
-| <- invalid.illegal.non-terminated.bold-italic
 
 hello world ````test````
 |           ^^^^^^^^^^^^ markup.raw.inline
