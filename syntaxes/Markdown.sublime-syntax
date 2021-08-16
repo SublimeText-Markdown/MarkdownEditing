@@ -479,6 +479,8 @@ contexts:
         )
       pop: true
     - include: inline-bold-italic-linebreak
+    - include: tag-kbd
+    - include: scope:text.html.basic
 
   indented-code-block:
     - match: '{{indented_code_block}}.*$\n?'
