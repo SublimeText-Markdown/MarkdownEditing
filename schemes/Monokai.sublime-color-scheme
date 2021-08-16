@@ -73,7 +73,7 @@
 			"font_style": ""
 		},
 		{
-			"name": "Hard Line Breaks",
+			"name": "Markdown: Hard Line Breaks",
 			"scope": "text.html.markdown punctuation.definition.hard-line-break",
 			"background": "var(line_break)"
 		},

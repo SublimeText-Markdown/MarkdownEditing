@@ -40,18 +40,18 @@
 			"foreground": "#faefa0"
 		},
 		{
-			"name": "Operators",
-			"scope": "keyword.operator",
-			"foreground": "#7b6e9c"
-		},
-		{
 			"name": "Keywords",
 			"scope": "keyword, storage",
 			"foreground": "#7a8424"
 		},
 		{
+			"name": "Operators",
+			"scope": "keyword.operator",
+			"foreground": "#7b6e9c"
+		},
+		{
 			"name": "Types",
-			"scope": "storage.type, support.type",
+			"scope": "keyword.declaration, storage.type, support.type",
 			"foreground": "#7f008f"
 		},
 		{
@@ -71,15 +71,15 @@
 		},
 		{
 			"name": "Sections",
-			"scope": "entity.name.section,entity.name.section.markdown",
+			"scope": "entity.name.section",
 			"foreground": "#533228",
 			"font_style": "bold"
 		},
 		{
 			"name": "Numbers",
-			"scope": "constant.numeric, constant",
+			"scope": "constant, constant.numeric",
 			"foreground": "#8c5296",
-			"background": "#f5efc6"
+			// "background": "#f5efc6"
 		},
 		{
 			"name": "Punctuation",
@@ -88,7 +88,7 @@
 		},
 		{
 			"name": "Strings",
-			"scope": "constant.character, string",
+			"scope": "string, constant.character",
 			"foreground": "#c7660c",
 			"background": "#fce6861A"
 		},
@@ -121,74 +121,171 @@
 		},
 		{
 			"name": "HTML: Tags",
-			"scope": "text.html.markdown meta.disable-markdown entity.name.tag, text.html.markdown meta.disable-markdown meta.tag, text.html.markdown meta.disable-markdown meta.tag punctuation.definition.tag, text.html.markdown meta.disable-markdown meta.tag string.quoted meta.string-contents, text.html.markdown meta.disable-markdown meta.tag string.quoted punctuation.definition.string, text.html.markdown meta.disable-markdown meta.tag entity.other.attribute-name, text.html.markdown meta.paragraph.markdown entity.name.tag, text.html.markdown meta.paragraph.markdown meta.tag, text.html.markdown meta.paragraph.markdown meta.tag punctuation.definition.tag, text.html.markdown meta.paragraph.markdown meta.tag string.quoted meta.string-contents, text.html.markdown meta.paragraph.markdown meta.tag string.quoted punctuation.definition.string, text.html.markdown meta.paragraph.markdown meta.tag entity.other.attribute-name, text.html.markdown markup.list entity.name.tag, text.html.markdown markup.list meta.tag, text.html.markdown markup.list meta.tag punctuation.definition.tag, text.html.markdown markup.list meta.tag string.quoted meta.string-contents, text.html.markdown markup.list meta.tag string.quoted punctuation.definition.string, text.html.markdown markup.list meta.tag entity.other.attribute-name",
+			"scope": "meta.tag",
 			"foreground": "#b7a884",
 			"background": "#efe9b7"
 		},
 		{
-			"name": "HTML: Embedded",
-			"scope": "source.smarty.embedded.html",
-			"foreground": "#8c755c"
-		},
-		{
-			"name": "HTML: Attribute Punctuation",
-			"scope": "meta.tag string punctuation,punctuation.definition.entity.html",
+			"name": "HTML: Tag Punctuation",
+			"scope": "meta.tag punctuation.definition.tag - markup.raw",
 			"foreground": "#a2aaa1"
 		},
 		{
-			"name": "HTML: Tag Punctuation",
-			"scope": "punctuation.definition.tag",
+			"name": "HTML: Attribute Names",
+			"scope": "meta.tag entity.other.attribute-name",
+			"foreground": "#a99777"
+		},
+		{
+			"name": "HTML: Attribute Values Text",
+			"scope": "meta.tag string, meta.tag constant.character",
+			"foreground": "#8496a1"
+		},
+		{
+			"name": "HTML: Attribute Values Punctuation",
+			"scope": "meta.tag string punctuation.definition.string",
 			"foreground": "#a2aaa1"
 		},
 		{
 			"name": "HTML: Entities",
-			"scope": "constant.character.entity",
+			"scope": "constant.character.entity, constant.character.entity punctuation",
 			"foreground": "#8496a1"
 		},
 		{
-			"name": "HTML: Attribute Names",
-			"scope": "entity.other.attribute-name, text.html.markdown meta.disable-markdown meta.tag.block.any.html string.quoted.double.html, text.html.markdown meta.disable-markdown meta.tag.block.any.html string.quoted.double.html punctuation.definition",
-			"foreground": "#a99777"
-		},
-		{
-			"name": "HTML: Attribute Values",
-			"scope": "meta.tag string.quoted, meta.tag string.quoted constant.character.entity",
-			"foreground": "#8496a1"
-		},
-		{
-			"name": "Hard Line Breaks",
-			"scope": "text.html.markdown punctuation.definition.hard-line-break",
+			"name": "Markdown: Meta Data",
+			"scope": "meta.header.multimarkdown, meta.header.multimarkdown & (constant | keyword | string | punctuation.definition | punctuation.separator.key-value)",
+			"foreground": "#c6b991",
 			"background": "#e2daab"
 		},
 		{
+			"name": "Markdown: Heading",
+			"scope": "markup.heading",
+			"font_style": "bold"
+		},
+		{
+			"name": "Markdown: Blockquote",
+			"scope": "markup.quote",
+			"foreground": "#a99777"
+		},
+		{
+			"name": "Markdown: Blockquote (Tags)",
+			"scope": "markup.quote entity.name.tag, markup.quote meta.tag, markup.quote meta.tag punctuation.definition.tag, markup.quote meta.tag string, markup.quote meta.tag string punctuation.definition.string, markup.quote meta.tag entity.other.attribute-name",
+			"foreground": "#d6cba0",
+			"background": "#efe9b7"
+		},
+		{
+			"name": "Markdown: Blockquote (Keyboard Shortcut)",
+			"scope": "markup.quote markup.kbd.content",
+			"foreground": "#c2b58e",
+			"background": "#e2daab"
+		},
+		{
+			"name": "Markdown: Blockquote (Bold)",
+			"scope": "markup.quote markup.bold, markup.quote markup.italic, markup.quote markup.bold_italic",
+			"foreground": "#a99777"
+		},
+		{
+			"name": "Markdown: Blockquote Punctuation",
+			"scope": "markup.quote punctuation.definition.blockquote",
+			"foreground": "#d7cda1",
+			"background": "#d7cda1"
+		},
+		{
+			"name": "Markdown: Block code",
+			"scope": "markup.raw.block, markup.raw.code-fence",
+			"foreground": "#705442",
+			"background": "#e3dbac"
+		},
+		{
+			"name": "Markdown: Inline code",
+			"scope": "markup.raw.inline",
+			"background": "#e3dbac"
+		},
+		{
+			"name": "Markdown: Link Description",
+			"scope": "meta.link.inline.description, meta.link.reference.description, meta.image.reference.description",
+			"foreground": "#533228",
+			"background": "#e2daab00"
+		},
+		{
+			"name": "Markdown: Link URL",
+			"scope": "markup.underline.link, constant.other.reference.link",
+			"foreground": "#b7a884",
+			"background": "#ece5b4"
+		},
+		{
+			"name": "Markdown: Plain Link",
+			"scope": "meta.link.inet markup.underline.link, meta.link.email.lt-gt markup.underline.link",
+			"foreground": "#624369"
+		},
+		{
+			"name": "Markdown: Punctuation",
+			"scope": "(punctuation.definition | punctuation.section | punctuation.separator) - markup.raw",
+			"foreground": "#b7a884",
+			"background": "#f1ebb900"
+		},
+		{
+			"name": "Markdown: List Text",
+			"scope": "markup.list",
+			"foreground": "#7e654f",
+			"background": "#f1ebb900"
+		},
+		{
+			"name": "Markdown: Ordered List Bullets",
+			"scope": "markup.list.numbered.bullet, markup.list.numbered.bullet punctuation.definition",
+			"foreground": "#280000"
+		},
+		{
+			"name": "Markdown: Unordered List Bullets",
+			"scope": "markup.list.unnumbered.bullet, markup.list.unnumbered.bullet punctuation.definition",
+			"foreground": "#280000"
+		},
+		{
+			"name": "Markdown: Keyboard Shortcut",
+			"scope": "markup.kbd.content",
+			"foreground": "#38130f",
+			"background": "#dad0a4"
+		},
+		{
+			"name": "Markdown: Hard Line Breaks",
+			"scope": "punctuation.definition.hard-line-break",
+			"background": "#e2daab"
+		},
+		{
+			"name": "Markdown: Thematic Break",
+			"scope": "meta.separator.thematic-break, meta.separator.thematic-break punctuation.definition",
+			"foreground": "#b7a884",
+			"background": "#c6b99122"
+		},
+		{
 			"name": "Markup: Emphasis",
-			"scope": "markup.italic, markup.italic.markdown",
+			"scope": "markup.italic - markup.bold",
 			"foreground": "#8c755c",
 			"background": "#ece5b4",
 			"font_style": "italic"
 		},
 		{
-			"name": "Markdown: Link",
-			"scope": "string.other.link.title.markdown,string.other.link.description.markdown",
-			"foreground": "#533228",
-			"background": "#e2daab00"
+			"name": "Markup: Strong",
+			"scope": "markup.bold - markup.italic",
+			"foreground": "#705442",
+			"font_style": "bold"
 		},
 		{
-			"name": "Markdown: Punctuation",
-			"scope": "punctuation.definition.metadata.markdown,punctuation.definition.string.begin.markdown, punctuation.definition.string.end.markdown, punctuation.definition.constant.markdown, punctuation.separator.key-value.markdown, punctuation.definition.constant.begin.markdown, punctuation.definition.constant.end.markdown,punctuation.definition.bold.markdown, punctuation.definition.italic.markdown, punctuation.definition.strikethrough.markdown, punctuation.definition.heading.markdown",
-			"foreground": "#b7a884",
-			"background": "#f1ebb900"
+			"name": "Markup: StrongEmphasis",
+			"scope": "markup.bold_italic, markup.bold & markup.italic",
+			"foreground": "#705442",
+			"font_style": "bold italic"
 		},
 		{
-			"name": "Markdown: Lists",
-			"scope": "markup.list.unnumbered.markdown, markup.list.unnumbered.markdown meta.paragraph.list.markdown, markup.list.numbered.markdown, markup.list.numbered.markdown meta.paragraph.list.markdown",
-			"foreground": "#7e654f",
-			"background": "#f1ebb900"
+			"name": "Markup: Strikethrough",
+			"scope": "markup.strikethrough, markup.strikethrough & (markup.bold | markup.italic | meta.tag entity | meta.tag punctuation.definition.tag)",
+			"foreground": "#d6cba0",
+			"background": "#efe9b7"
 		},
 		{
-			"name": "Markdown: Lists",
-			"scope": "markup.list.unnumbered.markdown punctuation.definition.list_item.markdown, markup.list.numbered.markdown punctuation.definition.list_item.markdown",
-			"foreground": "#280000"
+			"name": "Markup: Strikethrough (Keyboard Shortcut)",
+			"scope": "markup.strikethrough markup.kbd.content",
+			"foreground": "#c2b58e",
+			"background": "#e2daab"
 		},
 		{
 			"name": "Markup: Output",
@@ -201,61 +298,9 @@
 			"foreground": "#705442"
 		},
 		{
-			"name": "Markup: Heading",
-			"scope": "markup.heading",
-			"font_style": "bold"
-		},
-		{
-			"name": "Markup: StrongEmphasis",
-			"scope": "markup.bold_italic, markup.bold_italic.markdown",
-			"foreground": "#705442",
-			"font_style": "bold italic"
-		},
-		{
-			"name": "Markup: Strong",
-			"scope": "markup.bold, markup.bold.markdown",
-			"foreground": "#705442",
-			"font_style": "bold"
-		},
-		{
-			"name": "Markup: Strikethrough",
-			"scope": "markup.strikethrough, markup.strikethrough.markdown, markup.strikethrough constant.other.reference.link.markdown, markup.strikethrough entity.name.tag, markup.strikethrough markup.bold, markup.strikethrough markup.bold.markdown, markup.strikethrough markup.italic, markup.strikethrough markup.italic.markdown, markup.strikethrough markup.raw.inline.markdown, markup.strikethrough markup.underline.link.image.markdown, markup.strikethrough markup.underline.link.markdown, markup.strikethrough meta.link.inet.markdown markup.underline.link.markdown, markup.strikethrough meta.link.email.lt-gt.markdown markup.underline.link.markdown, markup.strikethrough punctuation.definition.bold.markdown, markup.strikethrough punctuation.definition.italic.markdown, markup.strikethrough punctuation.definition.constant.begin.markdown, markup.strikethrough punctuation.definition.constant.end.markdown, markup.strikethrough punctuation.definition.constant.markdown, markup.strikethrough punctuation.definition.metadata.markdown, markup.strikethrough punctuation.definition.raw.markdown, markup.strikethrough punctuation.definition.strikethrough.markdown, markup.strikethrough punctuation.definition.string.begin.markdown, markup.strikethrough punctuation.definition.string.end.markdown, markup.strikethrough punctuation.definition.tag.begin.html, markup.strikethrough punctuation.definition.tag.end.html, markup.strikethrough string.other.link.description.markdown, markup.strikethrough string.other.link.description.title.markdown, markup.strikethrough string.other.link.title.markdown",
-			"foreground": "#d6cba0",
-			"background": "#efe9b7"
-		},
-		{
-			"name": "Markup: Strikethrough (Punctuation)",
-			"scope": "markup.strikethrough punctuation",
-			"foreground": "#d6cba0",
-			"background": "#efe9b7"
-		},
-		{
-			"name": "Markup: Strikethrough (Keyboard Shortcut)",
-			"scope": "markup.strikethrough markup.kbd.content, markup.strikethrough markup.kbd.content.markdown",
-			"foreground": "#c2b58e",
-			"background": "#e2daab"
-		},
-		{
-			"name": "Markup: Keyboard Shortcut",
-			"scope": "markup.kbd.content.markdown",
-			"foreground": "#38130f",
-			"background": "#dad0a4"
-		},
-		{
 			"name": "Markup: Traceback",
 			"scope": "markup.traceback",
 			"foreground": "#fa3127"
-		},
-		{
-			"name": "Markup: Underline",
-			"scope": "markup.underline,markup.underline.link.markdown,constant.other.reference.link.markdown,meta.image.reference.markdown,meta.image.inline.markdown",
-			"foreground": "#b7a884",
-			"background": "#ece5b4"
-		},
-		{
-			"name": "Markup: Plain Link",
-			"scope": "meta.link.inet.markdown markup.underline.link.markdown, meta.link.email.lt-gt.markdown markup.underline.link.markdown",
-			"foreground": "#624369"
 		},
 		{
 			"name": "Extra: Diff Range",
@@ -274,57 +319,6 @@
 			"scope": "meta.diff.header.to-file",
 			"foreground": "#614234",
 			"background": "#e2fcab"
-		},
-		{
-			"name": "Markdown Meta",
-			"scope": "meta.header.multimarkdown,keyword.other.multimarkdown,string.unquoted.multimarkdown,punctuation.separator.key-value.multimarkdown",
-			"foreground": "#c6b991",
-			"background": "#e2daab"
-		},
-		{
-			"name": "Markdown separator",
-			"scope": "meta.separator.markdown",
-			"foreground": "#b7a884",
-			"background": "#c6b99122"
-		},
-		{
-			"name": "Blockquote",
-			"scope": "markup.quote.markdown",
-			"foreground": "#a99777"
-		},
-		{
-			"name": "Blockquote (Tags)",
-			"scope": "text.html.markdown markup.quote.markdown entity.name.tag, text.html.markdown markup.quote.markdown meta.tag, text.html.markdown markup.quote.markdown meta.tag punctuation.definition.tag, text.html.markdown markup.quote.markdown meta.tag string.quoted meta.string-contents, text.html.markdown markup.quote.markdown meta.tag string.quoted punctuation.definition.string, text.html.markdown markup.quote.markdown meta.tag entity.other.attribute-name",
-			"foreground": "#d6cba0",
-			"background": "#efe9b7"
-		},
-		{
-			"name": "Blockquote (Keyboard Shortcut)",
-			"scope": "text.html.markdown markup.quote.markdown markup.kbd.content.markdown",
-			"foreground": "#877058",
-			"background": "#e9e2b2"
-		},
-		{
-			"name": "Blockquote (Bold)",
-			"scope": "text.html.markdown markup.quote.markdown markup.bold, text.html.markdown markup.quote.markdown markup.bold.markdown",
-			"foreground": "#a99777"
-		},
-		{
-			"name": "Blockquote punctuation",
-			"scope": "punctuation.definition.blockquote.markdown",
-			"foreground": "#d7cda1",
-			"background": "#d7cda1"
-		},
-		{
-			"name": "Block code",
-			"scope": "markup.raw.block.markdown",
-			"foreground": "#705442",
-			"background": "#e3dbac"
-		},
-		{
-			"name": "Inline code",
-			"scope": "markup.raw.inline.markdown",
-			"background": "#e3dbac"
 		},
 		{
 			"name": "Block Cursor",
@@ -350,42 +344,42 @@
 			"background": "#28bbc677"
 		},
 		{
-			"name": "GitGutter deleted",
+			"name": "GitGutter: deleted",
 			"scope": "markup.deleted.git_gutter",
 			"foreground": "#F92672"
 		},
 		{
-			"name": "GitGutter inserted",
+			"name": "GitGutter: inserted",
 			"scope": "markup.inserted.git_gutter",
 			"foreground": "#46A524"
 		},
 		{
-			"name": "GitGutter changed",
+			"name": "GitGutter: changed",
 			"scope": "markup.changed.git_gutter",
 			"foreground": "#700DDB"
 		},
 		{
-			"name": "GitGutter ignored",
+			"name": "GitGutter: ignored",
 			"scope": "markup.ignored.git_gutter",
 			"foreground": "#565656"
 		},
 		{
-			"name": "GitGutter untracked",
+			"name": "GitGutter: untracked",
 			"scope": "markup.untracked.git_gutter",
 			"foreground": "#565656"
 		},
 		{
-			"name": "Highlight Color Warm Blue",
+			"name": "Highlight: Color Warm Blue",
 			"scope": "highlight.color.ADD8E6",
 			"foreground": "#ADD8E6"
 		},
 		{
-			"name": "Highlight Color MistyRose",
+			"name": "Highlight: Color MistyRose",
 			"scope": "highlight.color.FFE4E1",
 			"foreground": "#FFE4E1"
 		},
 		{
-			"name": "Highlight Color Green Tea",
+			"name": "Highlight: Color Green Tea",
 			"scope": "highlight.color.D0F0C0",
 			"foreground": "#D0F0C0"
 		},
