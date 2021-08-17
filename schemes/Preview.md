@@ -89,6 +89,23 @@ function fibo(n) {
 }
 ```
 
+```diff
+diff --git a/schemes/Preview.md b/schemes/Preview.md
+index 3d4b1fe..a85a22a 100644
+--- a/schemes/Preview.md
++++ b/schemes/Preview.md
+@@ -89,6 +89,12 @@ function fibo(n) {
+ 
+-## Deleted
++## Inserted
+```
+
+## CriticMarkup
+
+This is {++ inserted ++} and {-- deleted --} or {== highlighted ==}{>> comment <<} text.
+
+We can also {~~ substitute ~> something ~~}.
+
 ## Reference Definitions
 
 [^1]: This is a footnote definition
