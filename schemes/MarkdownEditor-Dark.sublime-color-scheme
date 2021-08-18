@@ -299,6 +299,17 @@
 			"foreground": "#ffffff"
 		},
 		{
+			"name": "Markdown: Task Check Box",
+			"scope": "markup.checkbox, markup.checkbox punctuation.definition",
+			"foreground": "#ffffff",
+			"background": "color(white a(5%))"
+		},
+		{
+			"name": "Markdown: Task Check Mark",
+			"scope": "markup.checkbox.mark",
+			"foreground": "#BBBBBB"
+		},
+		{
 			"name": "Markdown: Keyboard Shortcut",
 			"scope": "markup.kbd.content",
 			"foreground": "#ECECEC",

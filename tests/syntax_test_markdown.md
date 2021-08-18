@@ -832,13 +832,21 @@ because it doesn't begin with the number one:
 * list continues
 * [ ] Unticked GitHub-flavored-markdown checkbox
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered
-| ^^^ constant.language.checkbox
+| ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|  ^ markup.checkbox.mark.markdown-gfm - punctuation
+|   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 * [x] Ticked GFM checkbox
-| ^^^ constant.language.checkbox
+| ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|  ^ markup.checkbox.mark.markdown-gfm - punctuation
+|   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 * [X] Another ticked checkbox
-| ^^^ constant.language.checkbox
+| ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|  ^ markup.checkbox.mark.markdown-gfm - punctuation
+|   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
     + [ ] Sub-item with checkbox
-|     ^^^ constant.language.checkbox
+|     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|      ^ markup.checkbox.mark.markdown-gfm - punctuation
+|       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 * [] Not a checkbox
 | ^^^^^^^^^^^^^^^^^ - storage - constant
 * [/] Not a checkbox
@@ -846,7 +854,9 @@ because it doesn't begin with the number one:
 * Not [ ] a [x] checkbox [X]
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^ - storage - constant
 * [ ] [Checkbox][] with next word linked
-| ^^^ constant.language.checkbox
+| ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|  ^ markup.checkbox.mark.markdown-gfm - punctuation
+|   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 |     ^^^^^^^^^^^^ meta.link
 * list has `unclosed code
 * list continues
@@ -857,26 +867,34 @@ because it doesn't begin with the number one:
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
-|   ^^^ constant.language.checkbox.markdown-gfm
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [x] task
 | ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
-|   ^^^ constant.language.checkbox.markdown-gfm
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [X] task
 | ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
-|   ^^^ constant.language.checkbox.markdown-gfm
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [X] task
 >   - [ ] task
 | ^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
 |   ^ markup.list.unnumbered.bullet.markdown
 |    ^^^^^^^^^^ markup.list.unnumbered.markdown
 |   ^ punctuation.definition.list_item.markdown
-|     ^^^ constant.language.checkbox.markdown-gfm
+|     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|      ^ markup.checkbox.mark.markdown-gfm - punctuation
+|       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 
 
 - `code` - <a name="demo"></a>
