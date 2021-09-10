@@ -28,8 +28,9 @@ variables:
     atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))  # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
     atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
     atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?) # \n is optional so ## is matched as end punctuation in new document (at eof)
+    setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)     # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
     indented_code_block: (?:[ ]{4}|\t)           # 4 spaces or a tab
-    list_item: (?:[ ]{,3}(?:\d+[.)]|[*+-])\s) # between 0 and 3 spaces, followed by either: at least one integer and a full stop, or (a star, plus or dash), followed by whitespace
+    list_item: (?:[ ]{,3}(?:\d+[.)]|[*+-])\s)    # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
     escape: '\\[-`*_#+.!(){}\[\]\\>|~<]'
     backticks: |-
         (?x:
@@ -905,6 +906,8 @@ contexts:
   bold-italic-trailing:
     - include: tag-kbd
     - include: scope:text.html.basic
+    - match: '{{setext_escape}}'
+      pop: true
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown
       pop: true
@@ -1731,7 +1734,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:regexp|regex))
+          ((?i:regexp?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.regexp.markdown-gfm
@@ -2336,14 +2339,13 @@ contexts:
           scope: punctuation.definition.raw.end.markdown
           pop: true
         - match: '`+'
-        - match: '^(?={{list_item}})'
-          pop: true
         - match: ^\s*$\n?
           scope: invalid.illegal.non-terminated.raw.markdown
           pop: true
+        - include: paragraph-end
 
   thematic-break:
-    - match: '(?={{thematic_break}})'
+    - match: (?={{thematic_break}})
       push:
         - meta_scope: meta.separator.thematic-break.markdown
         - match: '[-_*]+'
