@@ -49,6 +49,17 @@ Please visit [User Guide][UserGuide] to learn more about the full set of feature
 *   At the end of a blockquote line, pressing <kbd>Enter</kbd> will automatically extend blockquote.
 *   Selecting some text and pressing <kbd>&gt;</kbd> will convert it to blockquote. The first and the last line don't have to be fully selected; partial select works, too.
 
+### Critic Markup
+
+*   Syntax highlighting for inline critic markup
+    -   `{++ addition ++}`
+    -   `{>> comment <<}`
+    -   `{-- deletion --}`
+    -   `{== highlight==}{>> comment <<}`
+    -   `{~~ substitution ~> by ~~}`
+*   Reviewers can add critic via key bindings
+*   Authors can accept or reject critic via key bindings
+
 ### Links and References
 
 *   Left bracket pairing is modified to eliminate the selection and leave the cursor at a point where you can insert a `[]` or `()` pair for a link.
