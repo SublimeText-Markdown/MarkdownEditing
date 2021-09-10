@@ -104,6 +104,35 @@ https://spec.commonmark.org/0.30/#example-79
 | <- - markup.heading
 |^^^^^^^^^^^^ - markup.heading
 
+Headings terminate paragraphs
+# Heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold
+|^^^^^^^^ markup.heading.1.markdown
+
+Headings terminate **bold text
+# Heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold
+|^^^^^^^^ markup.heading.1.markdown
+this must not be bold**
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Headings terminate *italic text
+# Heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.italic
+|^^^^^^^^ markup.heading.1.markdown
+this must not be italic*
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
+
+Headings terminate ***bold italic text
+# Heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold - markup.italic
+|^^^^^^^^ markup.heading.1.markdown
+this must not be bold italic***
+| <- - meta.bold - markup.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - markup.italic
+
 Alternate Heading
 =================
 |^^^^^^^^^^^^^^^^ markup.heading.1 punctuation.definition
@@ -1675,6 +1704,7 @@ new paragraph~~.
 
 | <- invalid.illegal.non-terminated.bold-italic
 
+
 # Fenced Code Block Tests
 
 Paragraph is terminated by fenced code blocks.
@@ -1682,6 +1712,69 @@ Paragraph is terminated by fenced code blocks.
 | <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
 ```
 | <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+Code blocks terminate **bold text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold**
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Code blocks terminate __bold text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold__
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Code blocks terminate *italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be italic*
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
+
+Code blocks terminate _italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be italic_
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate ***bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic***
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate ___bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic___
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate **_bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic_**
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
 
 ```js
 | <- punctuation.definition.raw.code-fence.begin

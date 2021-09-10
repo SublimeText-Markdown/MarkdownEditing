@@ -525,10 +525,9 @@ contexts:
             - match: \*
               scope: markup.italic.markdown punctuation.definition.italic.end.markdown
               pop: true
-            - include: inline
+            - include: bold-italic-common
             - include: bold
             - include: strikethrough
-            - include: bold-italic-trailing
         - match: \*
           scope: punctuation.definition.italic.end.markdown
           set:
@@ -541,13 +540,11 @@ contexts:
             - match: \*\*
               scope: markup.bold.markdown punctuation.definition.bold.end.markdown
               pop: true
-            - include: inline
+            - include: bold-italic-common
             - include: italic
             - include: strikethrough
-            - include: bold-italic-trailing
-        - include: inline
+        - include: bold-italic-common
         - include: strikethrough
-        - include: bold-italic-trailing
     - match: '\*\*(?=\S)(?!\*\*|\*\s)'
       scope: punctuation.definition.bold.begin.markdown
       push:
@@ -561,12 +558,11 @@ contexts:
           captures:
             1: punctuation.definition.bold.end.markdown
           pop: true
-        - include: inline
+        - include: bold-italic-common
         - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
           comment: eat the underscore that has no corresponding underscore before the closing bold punctuation on the same line, as it won't be treated as italic by CommonMark
         - include: italic
         - include: strikethrough
-        - include: bold-italic-trailing
     - match: '\b(__)(_)(?=\S)(?!_)'
       captures:
         1: punctuation.definition.bold.begin.markdown
@@ -596,10 +592,9 @@ contexts:
             - match: __\b
               scope: markup.bold.markdown punctuation.definition.bold.end.markdown
               pop: true
-            - include: inline
+            - include: bold-italic-common
             - include: italic
             - include: strikethrough
-            - include: bold-italic-trailing
         - match: __\b
           scope: punctuation.definition.bold.end.markdown
           set:
@@ -612,13 +607,11 @@ contexts:
             - match: _\b
               scope: markup.italic.markdown punctuation.definition.italic.end.markdown
               pop: true
-            - include: inline
+            - include: bold-italic-common
             - include: bold
             - include: strikethrough
-            - include: bold-italic-trailing
-        - include: inline
+        - include: bold-italic-common
         - include: strikethrough
-        - include: bold-italic-trailing
     - match: '\b__(?=\S)(?!_[_\s])'
       scope: punctuation.definition.bold.begin.markdown
       push:
@@ -632,12 +625,11 @@ contexts:
           captures:
             1: punctuation.definition.bold.end.markdown
           pop: true
-        - include: inline
+        - include: bold-italic-common
         - match: \*(?=[^\s*])(?=[^*_]*__\b)
           comment: eat the asterisk that has no corresponding asterisk before the closing bold punctuation on the same line, as it won't be treated as italic by CommonMark
         - include: italic
         - include: strikethrough
-        - include: bold-italic-trailing
 
   bracket:
     - match: '<(?![A-Za-z/?!$])'
@@ -865,11 +857,10 @@ contexts:
         - match: \*(?!\*[^*])
           scope: punctuation.definition.italic.end.markdown
           pop: true
-        - include: inline
+        - include: bold-italic-common
         - include: bold
         - match: '\*+'
         - include: strikethrough
-        - include: bold-italic-trailing
     - match: '\b_(?=\S)(?!_)'
       scope: punctuation.definition.italic.begin.markdown
       push:
@@ -882,10 +873,9 @@ contexts:
         - match: _\b
           scope: punctuation.definition.italic.end.markdown
           pop: true
-        - include: inline
+        - include: bold-italic-common
         - include: bold
         - include: strikethrough
-        - include: bold-italic-trailing
     - match: '[*_]+'
 
   strikethrough:
@@ -898,22 +888,21 @@ contexts:
     - match: (?:~(?!~}|>))+     # any number of ~ up to ~> or ~~} critic markers
       scope: punctuation.definition.strikethrough.end.markdown
       pop: true
-    - include: inline
+    - include: bold-italic-common
     - include: bold
     - include: italic
-    - include: bold-italic-trailing
 
-  bold-italic-trailing:
-    - include: tag-kbd
-    - include: scope:text.html.basic
+  bold-italic-common:
     - match: '{{setext_escape}}'
       pop: true
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown
       pop: true
-    - match: '^(?={{list_item}})'
-      pop: true
+    - include: paragraph-end
     - include: hard-line-break
+    - include: inline
+    - include: tag-kbd
+    - include: scope:text.html.basic
 
   hard-line-break:
     - match: '[ ]{2,}$'
