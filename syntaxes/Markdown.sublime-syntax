@@ -112,6 +112,13 @@ variables:
           )
           \s*          # allow for whitespace between code block start and info string
         )
+    fenced_code_block_language: |-
+      (?x:             # first word of an infostring is used as language specifier
+        (
+          [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
+          [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
+        )
+      )
     fenced_code_block_trailing_infostring_characters: |-
         (?x:
           (
@@ -417,7 +424,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ([\w-]*)     # any number of word characters or dashes
+          {{fenced_code_block_language}}?
           .*$\n?       # all characters until EOL
       captures:
         0: meta.code-fence.definition.begin.text.markdown-gfm
@@ -1912,7 +1919,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ([\w-]*)     # any number of word characters or dashes
+          {{fenced_code_block_language}}?
           .*$\n?       # all characters until EOL
       captures:
         0: meta.code-fence.definition.begin.text.markdown-gfm
