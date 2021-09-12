@@ -4,17 +4,55 @@
 
 ### Preferences need manual update
 
-MarkdownEditing stores settings in ST's _Preferences.sublime-settings_.
-Thus all syntax specific settings or overrides which have been used to "remove" some of MarkdownEditings defaults can or must be removed.
+MarkdownEditing stores settings in _Preferences.sublime-settings_ as of version 3.0.0.
+
+Thus all user specific syntax specific settings or overrides can or must be removed:
+
+1. Open a Markdown file
+2. Open Command Palette <kbd>ctrl+shift+p</kbd>
+3. Execute `Preferences: Settings - Syntax Specific`
+4. Remove everything judjged useless from the right panel.
+
+The following syntax specific settings have been removed:
+
+```json
+{
+    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
+
+    "tab_size": 4,
+    "translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": false,
+    "auto_match_enabled": true,
+
+    // Layout
+    "draw_centered": true,
+    "word_wrap": true,
+    "wrap_width": 80,
+    "rulers": [],
+
+    // Line
+    "line_numbers": false,
+    "highlight_line": false,
+    "line_padding_top": 2,
+    "line_padding_bottom": 2,
+
+    // Caret
+    "caret_style": "wide",
+    "caret_extra_top": 3,
+    "caret_extra_bottom": 3,
+}
+```
 
 ### Custom key bindings need manual update
 
 Macro calls and key binding contexts have been changed heavily.
 
 Commands have been renamed in order to avoid possible conflicts with other packages.
-Others have been split to follow naming scheme of ST's built-in commands (e.g. indent/unindent commands).
+Others have been split to follow naming scheme of ST's built-in commands 
+(e.g. indent/unindent commands).
 
-Hints about required or optional arguments may be found in _MarkdownEditing/Default (...).sublime-keymap_.
+Hints about required or optional arguments may be found in
+_MarkdownEditing/Default (...).sublime-keymap_.
 
 | old names                          | new names
 |------------------------------------|--------------------------------------
@@ -67,7 +105,7 @@ Hints about required or optional arguments may be found in _MarkdownEditing/Defa
 !!! warning
     Error loading syntax file "Packages/Markdown/Markdown.sublime-syntax": Unable to open Packages/Markdown/Markdown.sublime-syntax
 
-MarkdownEditing does its best to reassign syntax of open files after installation.
+MarkdownEditing does its best to reassign syntax of open files after installation or during upgrade.
 
 However open markdown files at install time may cause this issue. You have to **manually change their syntax to your newly installed Markdown syntax** then.
 
