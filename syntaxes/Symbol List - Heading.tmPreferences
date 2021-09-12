@@ -9,29 +9,23 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string><![CDATA[
-			s/\!?\[([^]]+)\]\([^)]*\)/$1/g; 	# strip image or link urls
-			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
-			s/\[\^[^]]+\]//g; 					# strip footnotes
-			s/^\s*//g;							# strip leading whitespace
-			s/\s+#+\s*\z//g;					# strip trailing hashes
-			s/\s+/ /g;							# convert (multiple) whitespace to one space
-			s/^#{6}/          /g;				# indent atx heading 6
-			s/^#{5}/        /g;					# indent atx heading
-			s/^#{4}/      /g;					# indent atx heading
-			s/^#{3}/    /g;						# indent atx heading
-			s/^#{2}/  /g;						# indent atx heading
-			s/^#{1}//g;							# indent atx heading
+			s/\[([^]]+)\]\([^)]+\)/$1/g; # beautify links
+			s/\[([^]]+)\](?:\[[^]]+\])?/$1/g; # beautify references
+			s/^\s*//g;					# strip leading whitespace
+			s/\s*#+\s*\z//g;			# strip trailing hashes
+			s/(?<=#)#/ /g;				# change all but first # to m-space
+			s/^#( *)\s+(.*)/$1$2/;		# strip first # and space before title
+			s/^(.+?)=+\s*\z/$1/g;		# indent SETEXT heading 1
+			s/^(.+?)-+\s*\z/  $1/g;		# indent SETEXT heading 2
 		]]></string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string><![CDATA[
-			s/\!?\[([^]]+)\]\([^)]*\)/$1/g; 	# strip image or link urls
-			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
-			s/\[\^[^]]+\]//g; 					# strip footnotes
-			s/^\s*//g;							# strip leading whitespace
-			s/\s+#+\s*\z//g;					# strip trailing hashes
-			s/\s+/ /g;							# convert (multiple) whitespace to one space
+			s/^\s*//g;					# strip leading whitespace
+			s/\s*#+\s*$//g;				# strip trailing hashes
+			s/^(.+?)=+\s*$/# $1/g;		# convert SETEXT to ATX heading 1
+			s/^(.+?)-+\s*$/## $1/g;		# convert SETEXT to ATX heading 2
 		]]></string>
 	</dict>
 </dict>
