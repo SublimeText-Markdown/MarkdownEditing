@@ -1,0 +1,6 @@
+<snippet>
+	<content>### ${1:heading 3}</content>
+	<tabTrigger>mdh3</tabTrigger>
+	<scope>text.html.markdown - meta.frontmatter - meta.disable-markdown - meta.code-fence - markup.raw</scope>
+	<description>Markdown Heading 3</description>
+</snippet>

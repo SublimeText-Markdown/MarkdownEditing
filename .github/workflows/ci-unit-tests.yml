@@ -1,0 +1,41 @@
+name: CI Unit Tests
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '**/*.json'
+      - '**/*.py'
+      - '**/*.sublime-*'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '**/*.json'
+      - '**/*.py'
+      - '**/*.sublime-*'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Sublime Text ${{ matrix.st_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        st_version: [3, 4]
+    container:
+      image: sublimetext/unittesting
+      options: --cap-add=NET_ADMIN
+    env:
+      SUBLIME_TEXT_VERSION: ${{ matrix.st_version }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: sh -e /etc/init.d/xvfb start
+      - run: curl -OL https://raw.githubusercontent.com/SublimeText/UnitTesting/master/sbin/github.sh
+      - run: |
+          PATH="$HOME/.local/bin:$PATH"
+          sh github.sh bootstrap
+          sh github.sh install_package_control
+          sh github.sh run_tests

@@ -1,699 +1,1193 @@
 [
-    // selection pairing with *, _ and `
-    { "keys": ["*"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-         { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-     ]
-    },
-    { "keys": ["*"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
-     [
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-         { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-     ]
-    },
-    { "keys": ["*"], "command": "insert_snippet", "args": {"contents": "*${0:$SELECTION}*"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item Tab.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["tab"], "command": "indent_list_item", "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?[*+\\-]\\s+$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["tab"], "command": "indent_list_multiitem", "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "markup.list", "match_all": true }
-        ]
-    },
-    { "keys": ["shift+tab"], "command": "indent_list_item", "args": {"reverse": true}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?[*+\\-]\\s+$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["shift+tab"], "command": "indent_list_multiitem", "args": {"reverse": true}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "markup.list", "match_all": true }
-        ]
-    },
-    { "keys": ["_"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-         { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-     ]
-    },
-    { "keys": ["_"], "command": "insert_snippet", "args": {"contents": "_${0:$SELECTION}_"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["_"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
-     [
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-         { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-     ]
-    },
-    { "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "_$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\_$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\_", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["`"], "command": "insert_snippet", "args": {"contents": "`$0`"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_`]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["`"], "command": "insert_snippet", "args": {"contents": "`${0:$SELECTION}`"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["`"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Skip Closing Character.sublime-macro"}, "context":
-     [
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["~"], "command": "insert_snippet", "args": {"contents": "~~${0:$SELECTION}~~"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "`$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    // Bold on Alt + B
-    { "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}$1${MD_BOLD_MARKER}"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_BOLD_MARKER}"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    // italics on Alt + I
-    { "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}$0${MD_ITALIC_MARKER}"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "${MD_ITALIC_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_ITALIC_MARKER}"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
+	// Fix smart expand selection
+	// see: https://github.com/sublimehq/sublime_text/issues/4125
+	{ "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "smart"}, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown - text.html.markdown text.html - text.html.markdown text.xml - text.html.markdown meta.disable-markdown", "match_all": true }
+		]
+	},
 
-    // Unbold on Alt + B if already bold
-    { "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]{2}|[\\*_]{2}$)//g}"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "text", "operator": "regex_match", "operand": "^[*_]{2}.*[*_]{2}$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b__+\\S+__+$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
+	//
+	// Auto-Pairing Astersisks
+	//
 
-    // Unitalicize on Alt + I if already italic
-    { "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "${SELECTION/(^[\\*_]|[\\*_]$)//g}"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "text", "operator": "regex_match", "operand": "^[*_].*[*_]$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Unitalicize.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "\\b_(?!_)\\S+_$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
+	{ "keys": ["*"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["*"], "command": "insert_snippet", "args": {"contents": "*${0:$SELECTION}*"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	{ "keys": ["*"], "command": "move", "args": {"by": "characters", "forward": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
+		]
+	},
+	{ "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
+		]
+	},
+	{ "keys": ["tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item Tab.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\*", "match_all": true }
+		]
+	},
 
-    // Headers
-    { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g} }#"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#{6}", "match_all": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["#"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^ | $)//g}}"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#{6}", "match_all": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Padded Headline.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "#{6}", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "#+", "match_all": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["#"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Padded Headline.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "#{6}", "match_all": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": " ${TM_CURRENT_LINE/(#+?)[^#].*$/$1\n/}"}, "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^#+\\s+[^#]", "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_contains", "operand": "#+$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Extend lists
-    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)).*/\n$2$3/}"}, "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\S.*", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Extend lists with GFM tasks
-    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*([*\\-+])(\\s+)\\[[ x]\\](\\s+)).*/\n$2$3[ ]$4/}"}, "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*([*\\-+])\\s+)\\[[ x]\\]\\s+\\S.*", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Extend Numbered Lists
-    { "keys": ["enter"], "command": "number_list", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\d+\\.)\\s+)\\S.*", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Extend Numbered Reference
-    { "keys": ["enter"], "command": "number_list_reference", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*\\[(\\d+)\\]:\\s*)\\S.*", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Remove empty list item
-    { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^(\\s*(\\[\\d+\\]:|[*\\-+]|\\d+\\.)\\s+)$", "match_all": true },
-            { "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Extend blockquote
-    { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(\\s*((>+\\s+)+([*\\-+]\\s+)?)).*/\n$2/}"}, "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>+\\s+", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false }
-        ]
-    },
-    // Convert to blockquote
-    { "keys": [">"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert to Blockquote.sublime-macro"}, "context":
-        [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    { "keys": ["tab"], "command": "complete_underlined_header", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\-+$|^\\=+$", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
-        ]
-    },
-    // Surround with <> on URLs, regex copied from https://mathiasbynens.be/demo/url-regex, @diegoperini (502 chars)
-    { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "text", "operator": "regex_match", "operand": "(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?", "match_all": true }
-        ]
-    },
+	//
+	// Auto-Pairing Underscore
+	//
 
-    // inline image insertion
-    { "keys": ["super+shift+k"], "command": "reference_new_inline_image", "context":
-        [
-            { "key": "setting.mde.keymap_disable.reference_new_inline_image", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    // modify [] pairing so that selection is removed after pairing, ready for [] or ()
-    { "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$SELECTION]$0"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    // run paste as link command on selected text
-    { "keys": ["ctrl+alt+v"], "command": "reference_new_inline_link", "context":
-        [
-            { "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+alt+r"], "command": "reference_new_reference", "context":
-        [
-            { "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+alt+g"], "command": "reference_jump", "context":
-        [
-            { "key": "setting.mde.keymap_disable.reference_jump", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    // Set Headers Levels With Shortcuts
-    { "keys": ["ctrl+1"], "command": "insert_snippet", "args": {"contents": "# $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+1"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+1"], "command": "insert_snippet", "args": {"contents": "#${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }#$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+2"], "command": "insert_snippet", "args": {"contents": "## $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+2"], "command": "insert_snippet", "args": {"contents": "##${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+2"], "command": "insert_snippet", "args": {"contents": "##${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }##$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+3"], "command": "insert_snippet", "args": {"contents": "### $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+3"], "command": "insert_snippet", "args": {"contents": "###${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+3"], "command": "insert_snippet", "args": {"contents": "###${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }###$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+4"], "command": "insert_snippet", "args": {"contents": "#### $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+4"], "command": "insert_snippet", "args": {"contents": "####${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+4"], "command": "insert_snippet", "args": {"contents": "####${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }####$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+5"], "command": "insert_snippet", "args": {"contents": "##### $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+5"], "command": "insert_snippet", "args": {"contents": "#####${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+5"], "command": "insert_snippet", "args": {"contents": "#####${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }#####$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+6"], "command": "insert_snippet", "args": {"contents": "###### $0"}, "context":
-     [
-         { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-         { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-         { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true },
-         { "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
-         { "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
-         { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-     ]
-    },
-    { "keys": ["ctrl+6"], "command": "insert_snippet", "args": {"contents": "######${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g}}$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": false },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+6"], "command": "insert_snippet", "args": {"contents": "######${0: ${SELECTION/(^( +)?(#+)?\\s*|\\s*(#+)?( +)?$)//g} }######$1"}, "context":
-        [
-            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-            { "key": "setting.mde.match_header_hashes", "operator": "equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["alt+shift+6"], "command": "reference_new_footnote", "context":
-        [
-            { "key": "setting.mde.keymap_disable.reference_new_footnote", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+."], "command": "indent_quote", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+,"], "command": "deindent_quote", "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
-        ]
-    },
-    { "keys": ["shift+tab"], "command": "fold_section", "context":
-        [
-            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true },
-            { "key": "following_text", "operator": "not_regex_match", "operand": "^$", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["shift+tab"], "command": "fold_section", "context":
-        [
-            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-            { "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.list", "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["shift+tab"], "command": "fold_section", "context":
-        [
-            { "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"},
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+tab"], "command": "show_fold_all_sections", "context":
-        [
-            { "key": "setting.mde.keymap_disable.show_fold_all_sections", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+alt+pageup"], "command": "goto_previous_heading", "args": {"same_level": true}, "context":
-        [
-            { "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+alt+pagedown"], "command": "goto_next_heading", "args": {"same_level": true}, "context":
-        [
-            { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+pageup"], "command": "goto_previous_heading", "args": {"same_level": false}, "context":
-        [
-            { "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    { "keys": ["ctrl+shift+pagedown"], "command": "goto_next_heading", "args": {"same_level": false}, "context":
-        [
-            { "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]
-    },
-    {"keys": ["ctrl+alt+h"], "command": "open_home_page", "context":
-        [
-            { "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]    
-    },
-    {"keys": ["ctrl+alt+d"], "command": "open_page", "context":
-        [
-            { "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true }
-        ]    
-    },
-    {"keys": ["ctrl+alt+d"], "command": "make_page_reference", "context":
-        [
-            { "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "meta.link.wiki.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.underline.link.markdown", "match_all": true }            
-        ]    
-    },
-    {"keys": ["ctrl+alt+x"], "command": "list_back_links", "context":
-        [
-            { "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]    
-    },
-    {"keys": ["ctrl+alt+j"], "command": "open_journal", "context":
-        [
-            { "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
-        ]    
-    }
+	{ "keys": ["_"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["_"], "command": "insert_snippet", "args": {"contents": "_${0:$SELECTION}_"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	{ "keys": ["_"], "command": "move", "args": {"by": "characters", "forward": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "_$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^_", "match_all": true }
+		]
+	},
+	{ "keys": [" "], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\_$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\_", "match_all": true }
+		]
+	},
+	{ "keys": ["tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Start List Item Tab.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\_$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\_", "match_all": true }
+		]
+	},
+
+	//
+	// Auto-Pairing Inline Code
+	//
+
+	{ "keys": ["`"], "command": "insert_snippet", "args": {"contents": "`$0`"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "[\\w`]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|\\.|,|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["`"], "command": "insert_snippet", "args": {"contents": "`${0:$SELECTION}`"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	{ "keys": ["`"], "command": "move", "args": {"by": "characters", "forward": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Left Right.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "`$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^`", "match_all": true }
+		]
+	},
+
+	//
+	// Auto-Pairing Strike Through
+	//
+
+	{ "keys": ["~"], "command": "insert_snippet", "args": {"contents": "~~${0:$SELECTION}~~"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Left Right 2.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "~~$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^~~", "match_all": true }
+		]
+	},
+
+	//
+	// Text Formatting Bold
+	//
+
+	// auto-pair if not within a word
+	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "__$0__"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
+		]
+	},
+	// Transform selection to bold
+	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "**${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}**"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^\\*|^__", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}__"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^\\*|^__", "match_all": true }
+		]
+	},
+	// Unbold bold text
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+		]
+	},
+
+	//
+	// Text Formatting Italic
+	//
+
+	// auto-pair if not within a word
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "['a-zA-Z0-9_*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+		]
+	},
+	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
+	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
+		]
+	},
+	// Transform selection to italics
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*${SELECTION/(^[\\*_]*|[\\*_]*$)//g}*"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^\\*|^_", "match_all": true }
+		]
+	},
+	// Remove italics style from text
+	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION/(^[\\*_]*|[\\*_]*$)//g}_"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_contains", "operand": "^\\*|^_", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unitalicize.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+		]
+	},
+
+	//
+	// Headings
+	//
+
+	{ "keys": ["ctrl+alt+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+,"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	// If nothing is selected, pressing hash in front of heading label increases level by one
+	{ "keys": ["#"], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*\\s*$", "match_all": true }
+		]
+	},
+	// If nothing is selected, pressing backspace within or directly after leading hashes decreases heading level
+	{ "keys": ["backspace"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#+\\s?$", "match_all": true }
+		]
+	},
+	// If nothing is selected, pressing delete within or directly in front of leading hashes decreases heading level
+	{ "keys": ["delete"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^#", "match_all": true }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["tab"], "command": "mde_complete_underlined_headings", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\-+$|^\\=+$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+alt+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+alt+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": true}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+pageup"], "command": "mde_goto_previous_heading", "args": {"same_level": false}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_previous_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+pagedown"], "command": "mde_goto_next_heading", "args": {"same_level": false}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.goto_next_heading", "operator": "not_equal", "operand": true }
+		]
+	},
+
+	//
+	// Folding
+	//
+
+	{ "keys": ["ctrl+k", "ctrl+keypad0"], "command": "mde_unfold_all_sections", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+0"], "command": "mde_unfold_all_sections", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad1"], "command": "mde_fold_all_sections", "args": {"target_level": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+1"], "command": "mde_fold_all_sections", "args": {"target_level": 1}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad2"], "command": "mde_fold_all_sections", "args": {"target_level": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+2"], "command": "mde_fold_all_sections", "args": {"target_level": 2}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad3"], "command": "mde_fold_all_sections", "args": {"target_level": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+3"], "command": "mde_fold_all_sections", "args": {"target_level": 3}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad4"], "command": "mde_fold_all_sections", "args": {"target_level": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+4"], "command": "mde_fold_all_sections", "args": {"target_level": 4}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad5"], "command": "mde_fold_all_sections", "args": {"target_level": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+5"], "command": "mde_fold_all_sections", "args": {"target_level": 5}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad6"], "command": "mde_fold_all_sections", "args": {"target_level": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+6"], "command": "mde_fold_all_sections", "args": {"target_level": 6}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+keypad9"], "command": "mde_fold_all_sections", "args": {"target_level": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+k", "ctrl+9"], "command": "mde_fold_all_sections", "args": {"target_level": 0}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.list", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"}
+		]
+	},
+	{ "keys": ["ctrl+shift+tab"], "command": "mde_show_fold_all_sections", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.show_fold_all_sections", "operator": "not_equal", "operand": true }
+		]
+	},
+
+	//
+	// Lists
+	//
+
+	// Create new GFM Task
+	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ] $0"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ]\t$0"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	// Convert List Item to GFM Task
+	{ "keys": ["alt+t"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert List to Task.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": false },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+t"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert List to Task Tab.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	// Add line to current list item
+	{ "keys": ["shift+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1 $3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
+		]
+	},
+	// Extend lists (also in block quotes)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	// Extend lists with GFM tasks (also in block quotes)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	// Extend Numbered Lists (also in block quotes)
+	{ "keys": ["enter"], "command": "mde_number_list", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "mde_number_list", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	// Remove empty list item including GFM tasks
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s?$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	// Join content of next into current line after removing its leading blockquote, list and GFM task punctuation
+	{ "keys": ["delete"], "command": "mde_join_lines", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote, text.html.markdown markup.list" },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^$", "match_all": true }
+		]
+	},
+	{ "keys": ["ctrl+shift+j"], "command": "mde_join_lines", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote, text.html.markdown markup.list" }
+		]
+	},
+	// Indent list item if caret is in front of bullets
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "has_next_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s", "match_all": true }
+		]
+	},
+	// Indent list item, if caret is directly behind bullet only if followed by whitespace
+	// Hitting "tab" directly after new list bullet should insert \t otherwise
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "has_next_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s", "match_all": true }
+		]
+	},
+	// Indent list item if caret is behind bullets
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{ "key": "has_next_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_match", "operand": "(?:-{2,}|={2,}|[+*])", "match_all": true }
+		]
+	},
+	// Indent selected list items
+	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "has_next_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false }
+		]
+	},
+	// Unindent list item no matter of caret position if `shift_tab_unindent` is set
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.shift_tab_unindent", "operator": "equal", "operand": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s", "match_all": true }
+		]
+	},
+	// Unindent list item if caret is in front of bullets
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*[-+*]\\s", "match_all": true }
+		]
+	},
+	// Unindent list item if caret is behind bullets
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "not_regex_match", "operand": "(?:-{2,}|={2,})", "match_all": true }
+		]
+	},
+	// Unindent list item if caret is at eol
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^$" }
+		]
+	},
+	// Unindent selected list items
+	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "has_prev_field", "operator": "equal", "operand": false },
+			{ "key": "overlay_visible", "operator": "equal", "operand": false }
+		]
+	},
+	// Toggle GFM tasks
+	{ "keys": ["alt+x"], "command": "mde_toggle_task_list_item", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown & (markup.list | markup.quote)", "match_all": true }
+		]
+	},
+
+	//
+	// Quotes
+	//
+
+	// Convert to blockquote
+	{ "keys": [">"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert to Blockquote.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// Extend blockquote (ignore headings, lists and tasks)
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
+	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	// Remove empty blockquote line
+	// { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
+	// 	[
+	// 		{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+	// 		{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)+$", "match_all": true },
+	// 		{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+	// 		{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+	// 	]
+	// },
+	// { "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
+	// 	[
+	// 		{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+	// 		{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)+$", "match_all": true },
+	// 		{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+	// 		{ "key": "setting.auto_complete_commit_on_tab" }
+	// 	]
+	// },
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty Blockquote Line.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^\\s*(>\\s*)*(>\\s?)$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
+		]
+	},
+	// Indent blockquote
+	{ "keys": ["ctrl+shift+."], "command": "mde_indent_quote", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+		]
+	},
+	// Unindent blockquote
+	{ "keys": ["ctrl+shift+,"], "command": "mde_unindent_quote", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
+		]
+	},
+
+	//
+	// References
+	//
+
+	// Surround with <> on URLs, regex copied from https://mathiasbynens.be/demo/url-regex, @diegoperini (502 chars)
+	{ "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+			{ "key": "text", "operator": "regex_match", "operand": "(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?", "match_all": true }
+		]
+	},
+	// modify [] pairing so that selection is removed after pairing, ready for [] or ()
+	{ "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$SELECTION]$0"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// inline image insertion
+	{ "keys": ["ctrl+shift+k"], "command": "mde_reference_new_inline_image", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_new_inline_image", "operator": "not_equal", "operand": true }
+		]
+	},
+	// run paste as link command on selected text
+	{ "keys": ["ctrl+alt+v"], "command": "mde_reference_new_inline_link", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_new_inline_link", "operator": "not_equal", "operand": true }
+		]
+	},
+	// create new footnote
+	{ "keys": ["alt+shift+6"], "command": "mde_reference_new_footnote", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_new_footnote", "operator": "not_equal", "operand": true }
+		]
+	},
+	// create new reference
+	{ "keys": ["ctrl+alt+r"], "command": "mde_reference_new_reference", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_new_reference", "operator": "not_equal", "operand": true }
+		]
+	},
+	// extend numbered reference if auto completion panel is not visible
+	{ "keys": ["enter"], "command": "mde_add_numbered_reference_definition", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\[.*\\d+\\]:", "match_all": true },
+			{ "key": "auto_complete_visible", "operand": false }
+		]
+	},
+	// extend numbered reference if auto-completions are commited via tab only
+	{ "keys": ["enter"], "command": "mde_add_numbered_reference_definition", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\[.*\\d+\\]:", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	// jump to reference
+	{ "keys": ["ctrl+alt+g"], "command": "mde_reference_jump", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_jump", "operator": "not_equal", "operand": true }
+		]
+	},
+	// organize references
+	{ "keys": ["ctrl+alt+s"], "command": "mde_reference_organize", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.reference_organize", "operator": "not_equal", "operand": true }
+		]
+	},
+
+	//
+	// CriticMarkup
+	//
+
+	// insert new addition or mark selection for addition
+	{ "keys": ["alt+c", "alt+a"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Addition.sublime-snippet"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true }
+		]
+	},
+	// commit addition
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Addition.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.addition", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard addition
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Addition.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.addition", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	// insert comment or convert selection into comment
+	{ "keys": ["alt+c", "alt+c"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Comment.sublime-snippet"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true }
+		]
+	},
+	// remove comment
+	{ "keys": ["alt+c", "alt+c"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	// mark word for deletion
+	{ "keys": ["alt+c", "alt+d"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for deletion
+	{ "keys": ["alt+c", "alt+d"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Deletion.sublime-snippet"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// commit deletion
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard deletion
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	// mark word for highlight
+	{ "keys": ["alt+c", "alt+h"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for highlighting
+	{ "keys": ["alt+c", "alt+h"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Highlight.sublime-snippet"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// remove highlight
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	// mark word for substitution
+	{ "keys": ["alt+c", "alt+s"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// mark selection for substitution
+	{ "keys": ["alt+c", "alt+s"], "command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Substitution.sublime-snippet"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+		]
+	},
+	// commit substitution
+	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	// discard substitution
+	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	//
+	// Wiki
+	//
+
+	{ "keys": ["ctrl+alt+h"], "command": "mde_open_home_page", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+d"], "command": "mde_open_page", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+d"], "command": "mde_make_page_reference", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - (meta.link.wiki | markup.underline.link)", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+x"], "command": "mde_list_back_links", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["ctrl+alt+j"], "command": "mde_open_journal", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true }
+		]
+	}
 ]

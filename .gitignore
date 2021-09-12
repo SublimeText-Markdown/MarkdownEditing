@@ -1,4 +1,15 @@
+# python cache files
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.tox/
+.venv/
 *.pyc
+
+# other folders
+/site
+/_warehouse
+
+# files
 *.cache
 MarkdownEditing.taskpaper
-/_warehouse

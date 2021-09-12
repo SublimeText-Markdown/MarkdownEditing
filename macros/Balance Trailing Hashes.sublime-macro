@@ -1,0 +1,9 @@
+[
+	{"command": "move_to", "args": {"to": "eol", "extend": false}},
+	{"command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)(#+)(.*?)\\s*#*\\s*$/\n$1$2$3 $2\n$1/}"}},
+	{"command": "move", "args": {"by": "lines", "forward": false}},
+	{"command": "move", "args": {"by": "lines", "forward": false}},
+	{"command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"}},
+	{"command": "move", "args": {"by": "lines", "forward": true}},
+	{"command": "move_to", "args": {"to": "eol", "extend": false}}
+]

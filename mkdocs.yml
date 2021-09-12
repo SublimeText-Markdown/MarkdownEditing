@@ -1,0 +1,55 @@
+%YAML 1.2
+---
+site_name: "MarkdownEditing"
+site_description: MarkdownEditing User Manual
+site_author: DeathAxe
+site_url: "https://sublimetext-markdown.github.io/MarkdownEditing"
+repo_url: "https://github.com/SublimeText-Markdown/MarkdownEditing"
+docs_dir: "docs"
+
+nav:
+    - Home: "index.md"
+    - Installation: "install.md"
+    - Usage: "usage.md"
+    - Linting: "linting.md"
+    - Configuration: "config.md"
+    - Troubleshooting: "troubleshooting.md"
+
+extra:
+  collapse_toc: true
+
+extra_css:
+  - "css/styles.css"
+
+theme:
+  name: cinder
+  features:
+    - navigation.tabs
+
+plugins:
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - markdown.extensions.admonition:
+  - markdown.extensions.footnotes:
+  - pymdownx.superfences:
+      preserve_tabs: true
+  - pymdownx.highlight:
+      linenums_style: pymdownx-inline
+  - pymdownx.inlinehilite:
+  - pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.progressbar:
+  - pymdownx.arithmatex:
+  - pymdownx.mark:
+  - pymdownx.tilde:
+  - pymdownx.striphtml:
+  - pymdownx.keys:
+      separator: "\uff0b"
+  - pymdownx.details:
+  - pymdownx.tabbed:
+  - pymdownx.saneheaders:

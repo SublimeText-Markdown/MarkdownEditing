@@ -1,0 +1,14 @@
+# Configuration for Black.
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+exclude = '''
+      \.git
+    | \.github
+    | \.mypy_cache
+    | \.pytest_cache
+    | \.venv
+    | plugin\.py
+    | tests
+'''

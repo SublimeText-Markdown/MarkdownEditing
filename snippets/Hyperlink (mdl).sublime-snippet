@@ -1,0 +1,6 @@
+<snippet>
+	<content><![CDATA[[${1:${SELECTION:display text}}](${2:link})]]></content>
+	<tabTrigger>mdl</tabTrigger>
+	<scope> text.html.markdown - meta.frontmatter - meta.disable-markdown - meta.code-fence - markup.raw</scope>
+	<description>Markdown Hyperlink</description>
+</snippet>

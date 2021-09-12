@@ -1,0 +1,6 @@
+<snippet>
+	<content><![CDATA[<kbd>${1:key}</kbd>]]></content>
+	<tabTrigger>kbd</tabTrigger>
+	<scope>text.html.markdown - meta.frontmatter - meta.disable-markdown - meta.code-fence - markup.raw</scope>
+	<description>Markdown Keyboard Shortcut</description>
+</snippet>

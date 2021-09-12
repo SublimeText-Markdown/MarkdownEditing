@@ -1,176 +1,281 @@
 [
-    {
-        "caption": "MarkdownEditing: Fix Underlined Headers",
-        "command": "fix_all_underlined_headers"
-    },
-    {
-        "caption": "MarkdownEditing: Convert Underlined Headers to ATX",
-        "command": "convert_to_atx"
-    },
-    {
-        "caption": "MarkdownEditing: Add Missing Link Labels",
-        "command": "gather_missing_link_markers"
-    },
-    {
-        "caption": "Preferences: MarkdownEditing Settings – Default",
-        "command": "open_file", "args":
-        {
-            "file": "${packages}/MarkdownEditing/Markdown.sublime-settings"
-        }
-    },
-    {
-        "caption": "Preferences: MarkdownEditing Settings – User",
-        "command": "open_file", "args":
-        {
-            "file": "${packages}/User/Markdown.sublime-settings"
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Markdown Lint",
-        "command": "markdown_lint"
-    },
-    {
-        "caption": "MarkdownEditing: Switch List Bullet Type",
-        "command": "switch_list_bullet_type"
-    },
-    {
-        "caption": "MarkdownEditing: Magic Footnotes Command",
-        "command": "magic_footnotes"
-    },
-    {
-        "caption": "MarkdownEditing: Gather Missing Footnotes",
-        "command": "gather_missing_footnotes"
-    },
-    {
-        "caption": "MarkdownEditing: Jump Reference",
-        "command": "reference_jump"
-    },
-    {
-        "caption": "MarkdownEditing: New Reference",
-        "command": "reference_new_reference"
-    },
-    {
-        "caption": "MarkdownEditing: New Inline Link",
-        "command": "reference_new_inline_link"
-    },
-    {
-        "caption": "MarkdownEditing: New Inline Image",
-        "command": "reference_new_inline_image"
-    },
-    {
-        "caption": "MarkdownEditing: New Image",
-        "command": "reference_new_image"
-    },
-    {
-        "caption": "MarkdownEditing: New Footnote",
-        "command": "reference_new_footnote"
-    },
-    {
-        "caption": "MarkdownEditing: Delete Reference",
-        "command": "reference_delete_reference"
-    },
-    {
-        "caption": "MarkdownEditing: Organize References",
-        "command": "reference_organize"
-    },
-    {
-        "caption": "MarkdownEditing: Toggle Folding Current Section",
-        "command": "fold_section"
-    },
-    {
-        "caption": "MarkdownEditing: Fold Level 1 Sections",
-        "command": "fold_all_sections", "args" :
-        {
-            "target_level" : 1
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Fold Level 2 Sections",
-        "command": "fold_all_sections", "args" :
-        {
-            "target_level" : 2
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Fold Level 3 Sections",
-        "command": "fold_all_sections", "args" :
-        {
-            "target_level" : 3
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Fold Level 4 Sections",
-        "command": "fold_all_sections", "args" :
-        {
-            "target_level" : 4
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Fold All Sections",
-        "command": "fold_all_sections"
-    },
-    {
-        "caption": "MarkdownEditing: Unfold All Sections",
-        "command": "unfold_all_sections"
-    },
-    {
-        "caption": "MarkdownEditing: Find Next Heading (Same or higher level)",
-        "command": "goto_next_heading", "args" :
-        {
-            "same_level" : true
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Find Next Heading (Any level)",
-        "command": "goto_next_heading", "args" :
-        {
-            "same_level" : false
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Find Previous Heading (Same or higher level)",
-        "command": "goto_previous_heading", "args" :
-        {
-            "same_level" : true
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Find Previous Heading (Any level)",
-        "command": "goto_previous_heading", "args" :
-        {
-            "same_level" : false
-        }
-    },
-    {
-        "caption": "MarkdownEditing: Change color scheme...",
-        "command": "mde_color_activate"
-    },
-    {
-        "caption": "MarkdownEditing: Convert all inline links to references",
-        "command": "convert_inline_links_to_references"
-    },
-    {
-        "caption": "MarkdownEditing: Convert inline link to reference",
-        "command": "convert_inline_link_to_reference"
-    },
-    {
-        "caption": "MarkdownEditing: Open Home Page",
-        "command": "open_home_page"
-    },
-    {
-        "caption": "MarkdownEditing: Open Page",
-        "command": "open_page"
-    },
-    {
-        "caption": "MarkdownEditing: List Back Links",
-        "command": "list_back_links"
-    },
-    {
-        "caption": "MarkdownEditing: Open Journal",
-        "command": "open_journal"
-    },
-    {
-        "caption": "MarkdownEditing: Run markdownlint",
-        "command": "markdown_lint_mdl"
-    }
+	//
+	// Settings
+	//
+
+	{
+		"caption": "Preferences: MarkdownEditing Settings",
+		"command": "edit_settings",
+		"args": {
+			"base_file": "${packages}/MarkdownEditing/Preferences.sublime-settings",
+			"default": "// Settings in here override those in \"Default/Preferences.sublime-settings\",\n// and are overridden in turn by syntax-specific settings.\n{\n\t$0\n}\n"
+		}
+	},
+	{
+		"caption": "Preferences: MarkdownEditing Settings - Distraction Free",
+		"command": "edit_settings",
+		"args": {
+			"base_file": "${packages}/MarkdownEditing/Distraction Free.sublime-settings",
+			"default": "// Settings in here override those in \"Default/Distraction Free.sublime-settings\",\n// and are overridden in turn by syntax-specific settings.\n{\n\t$0\n}\n"
+		}
+	},
+	{
+		"caption": "Preferences: MarkdownEditing Key Bindings",
+		"command": "edit_settings",
+		"args": {
+			"base_file": "${packages}/MarkdownEditing/Default (${platform}).sublime-keymap",
+			"default": "// Bindings in here override those in \"Default/Default.sublime-keymap\"\n[\n\t$0\n]\n"
+		}
+	},
+	{
+		"caption": "MarkdownEditing: Select Color scheme",
+		"command": "mde_select_color_scheme"
+	},
+	{
+		"caption": "MarkdownEditing: Toggle Centered Line",
+		"command": "mde_toggle_centered_line"
+	},
+
+	//
+	// Linting
+	//
+
+	{
+		"caption": "MarkdownEditing: Markdown Lint",
+		"command": "mde_markdown_lint"
+	},
+	{
+		"caption": "MarkdownEditing: Run markdownlint",
+		"command": "mde_markdown_lint_mdl"
+	},
+
+	//
+	// Headings
+	//
+
+	{
+		"caption": "MarkdownEditing: Add Closing Heading Hashes",
+		"command": "mde_match_heading_hashes",
+		"args": { "enabled": true }
+	},
+	{
+		"caption": "MarkdownEditing: Remove Closing Heading Hashes",
+		"command": "mde_match_heading_hashes",
+		"args": { "enabled": false }
+	},
+	{
+		"caption": "MarkdownEditing: Fix Closing Heading Hashes",
+		"command": "mde_match_heading_hashes"
+	},
+	{
+		"caption": "MarkdownEditing: Fix Underlined Headings",
+		"command": "mde_fix_underlined_headings"
+	},
+	{
+		"caption": "MarkdownEditing: Convert Underlined Headings to ATX",
+		"command": "mde_convert_underlined_headings_to_atx"
+	},
+	{
+		"caption": "MarkdownEditing: Convert Heading to Text",
+		"command": "mde_change_headings_level",
+		"args": { "to": 0 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 1",
+		"command": "mde_change_headings_level",
+		"args": { "to": 1 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 2",
+		"command": "mde_change_headings_level",
+		"args": { "to": 2 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 3",
+		"command": "mde_change_headings_level",
+		"args": { "to": 3 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 4",
+		"command": "mde_change_headings_level",
+		"args": { "to": 4 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 5",
+		"command": "mde_change_headings_level",
+		"args": { "to": 5 }
+	},
+	{
+		"caption": "MarkdownEditing: Set Headings Level 6",
+		"command": "mde_change_headings_level",
+		"args": { "to": 6 }
+	},
+	{
+		"caption": "MarkdownEditing: Increase Headings Level",
+		"command": "mde_change_headings_level",
+		"args": { "by": 1 }
+	},
+	{
+		"caption": "MarkdownEditing: Decrease Headings Level",
+		"command": "mde_change_headings_level",
+		"args": { "by": -1 }
+	},
+	{
+		"caption": "MarkdownEditing: Goto Next Heading (same or higher level)",
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": true }
+	},
+	{
+		"caption": "MarkdownEditing: Goto Next Heading (any level)",
+		"command": "mde_goto_next_heading",
+		"args": { "same_level": false }
+	},
+	{
+		"caption": "MarkdownEditing: Goto Previous Heading (same or higher level)",
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": true }
+	},
+	{
+		"caption": "MarkdownEditing: Goto Previous Heading (any level)",
+		"command": "mde_goto_previous_heading",
+		"args": { "same_level": false }
+	},
+
+	//
+	// Folding
+	//
+
+	{
+		"caption": "MarkdownEditing: Toggle Folding Current Section",
+		"command": "mde_fold_section"
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 1 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 1 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 2 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 2 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 3 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 3 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 4 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 4 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 5 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 5 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold Level 6 Sections",
+		"command": "mde_fold_all_sections",
+		"args": { "target_level": 6 }
+	},
+	{
+		"caption": "MarkdownEditing: Fold All Sections",
+		"command": "mde_fold_all_sections"
+	},
+	{
+		"caption": "MarkdownEditing: Unfold All Sections",
+		"command": "mde_unfold_all_sections"
+	},
+	{
+		"caption": "MarkdownEditing: Auto Fold Link URLs",
+		"command": "mde_fold_links"
+	},
+
+	//
+	// Lists
+	//
+
+	{
+		"caption": "MarkdownEditing: Switch List Bullet Type",
+		"command": "mde_switch_list_bullet_type"
+	},
+
+	//
+	// References
+	//
+
+	{
+		"caption": "MarkdownEditing: Magic Footnotes",
+		"command": "mde_magic_footnotes"
+	},
+	{
+		"caption": "MarkdownEditing: Jump Reference",
+		"command": "mde_reference_jump"
+	},
+	{
+		"caption": "MarkdownEditing: New Reference",
+		"command": "mde_reference_new_reference"
+	},
+	{
+		"caption": "MarkdownEditing: New Inline Link",
+		"command": "mde_reference_new_inline_link"
+	},
+	{
+		"caption": "MarkdownEditing: New Inline Image",
+		"command": "mde_reference_new_inline_image"
+	},
+	{
+		"caption": "MarkdownEditing: New Image",
+		"command": "mde_reference_new_image"
+	},
+	{
+		"caption": "MarkdownEditing: New Footnote",
+		"command": "mde_reference_new_footnote"
+	},
+	{
+		"caption": "MarkdownEditing: Delete Reference",
+		"command": "mde_reference_delete_reference"
+	},
+	{
+		"caption": "MarkdownEditing: Convert all inline links to references",
+		"command": "mde_convert_inline_links_to_references"
+	},
+	{
+		"caption": "MarkdownEditing: Convert inline link to reference",
+		"command": "mde_convert_inline_link_to_reference"
+	},
+	{
+		"caption": "MarkdownEditing: Add Missing Link Labels",
+		"command": "mde_gather_missing_link_markers"
+	},
+	{
+		"caption": "MarkdownEditing: Gather Missing Footnotes",
+		"command": "mde_gather_missing_footnotes"
+	},
+	{
+		"caption": "MarkdownEditing: Organize References",
+		"command": "mde_reference_organize"
+	},
+
+	//
+	// Wiki
+	//
+
+	{
+		"caption": "MarkdownEditing: Open Home Page",
+		"command": "mde_open_home_page"
+	},
+	{
+		"caption": "MarkdownEditing: Open Page",
+		"command": "mde_open_page"
+	},
+	{
+		"caption": "MarkdownEditing: Open Journal",
+		"command": "mde_open_journal"
+	},
+	{
+		"caption": "MarkdownEditing: List Back Links",
+		"command": "mde_list_back_links"
+	}
 ]

@@ -1,4 +1,0 @@
-[
-    {"command": "custom_find_under_expand"},
-    {"command": "insert_snippet", "args": {"contents": "${MD_BOLD_MARKER}${SELECTION/(^[\\*_]*|[\\*_]*$)//g}${MD_BOLD_MARKER}"}}
-]

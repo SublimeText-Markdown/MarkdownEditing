@@ -1,0 +1,14 @@
+{
+	"tests_dir" : "tests",
+	"pattern" : "test*.py",
+	"async": false,
+	"deferred": true,
+	"verbosity": 1,
+	"capture_console": false,
+	"failfast": false,
+	"reload_package_on_testing": false,
+	"show_reload_progress": false,
+	"start_coverage_after_reload": false,
+	"output": null,
+	"generate_html_report": false
+}

@@ -1,0 +1,5 @@
+[
+	{"command": "expand_selection", "args": {"to": "word"}},
+	{"command": "insert_snippet", "args": {"contents": "**${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}**"}},
+	{"command": "move", "args": {"by": "words", "forward": false}}
+]

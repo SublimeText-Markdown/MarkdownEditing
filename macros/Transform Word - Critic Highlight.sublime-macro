@@ -1,0 +1,4 @@
+[
+	{"command": "expand_selection", "args": {"to": "word"}},
+	{"command": "insert_snippet", "args": {"name": "Packages/MarkdownEditing/snippets/Critic Highlight.sublime-snippet"}}
+]

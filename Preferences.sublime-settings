@@ -1,0 +1,168 @@
+{
+	// MarkdownEditing:
+	// Always keep current line vertically centered.
+	"mde.keep_centered": false,
+
+	// MarkdownEditing:
+	// set log level
+	// valid values are: "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG"
+	"mde.logging.level": "ERROR",
+
+	// MarkdownEditing (Formatting):
+	// If `true` asterisk is used to markup bold text, underscore otherwise.
+	"mde.bold_marker_asterisk": true,
+
+	// MarkdownEditing (Formatting):
+	// If `true` asterisk is used to markup italic text, underscore otherwise.
+	"mde.italic_marker_asterisk": false,
+
+	// MarkdownEditing (Headings):
+	// auto detect whether to add trailing #'s to headlines
+	// If `true` `mde.match_heading_hashes` is set per view depending on
+	// majority of first 10 headings containing trailing #'s or not.
+	"mde.detect_heading_style": true,
+
+	// MarkdownEditing (Headings):
+	// add trailing #'s to headlines
+	"mde.match_heading_hashes": false,
+
+	// MarkdownEditing (Headings):
+	// If `true`, trailing heading hashes are added or removed automatically,
+	// depending on a view's `mde.match_heading_hashes` setting value.
+	//
+	// Headings are fixed:
+	// a) when hitting enter at the end of a heading line
+	// b) after loading or before saving a file if `mde.auto_detect_match_heading_hashes` is `true`.
+	"mde.auto_match_heading_hashes": true,
+
+	// MarkdownEditing (Lists):
+	// Align list item text at indentation level.
+	// Adds <Tab> after list items instead of a single <space>.
+	"mde.list_align_text": false,
+
+	// MarkdownEditing:
+	// Automatically switches list bullet when indenting blank list item with <Tab>.
+	"mde.list_indent_auto_switch_bullet": true,
+
+	// MarkdownEditing:
+	// List bullets to be used for automatically switching. In their order.
+	"mde.list_indent_bullets": ["*", "-", "+"],
+
+	// MarkdownEditing:
+	// Auto increments ordered list number. Set to false if you want always "1".
+	"mde.auto_increment_ordered_list_number": true,
+
+	// MarkdownEditing:
+	"mde.lint": {
+		"mdl": {
+			// By default it is mdl.bat on windows and mdl otherwise. Leave it blank to use the default value
+			// If you are using a custom launcher, you may want to change this
+			"executable": "",
+			// Extra arguments passed to mdl. For all options, see here:
+			// https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/cli.rb
+			// You can also specify a config file with '-c ~/.mdlrc'
+			"additional_arguments": []
+		},
+		// disabled rules, e.g. "md001".
+		"disable": ["md013"],
+		// Options:
+		//      atx,        ## title    only
+		//      atx_closed, ## title ## only
+		//      setext,     title       only
+		//                  =====
+		//      any,        consistent within the document
+		"md003": "any",
+		// Options:
+		//      asterisk,   * only
+		//      plus,       + only
+		//      dash,       - only
+		//      cyclic,     different symbols on different levels
+		//                  and same symbol on same level
+		//      single,     same symbol on different levels
+		//      any,        same symbol on same level
+		"md004": "cyclic",
+		// Number of spaces per list indent. Set to 0 to use Sublime tab_size instead
+		"md007": 0,
+		// Maximum line length, Set to 0 to use Sublime wrap_width instead
+		"md013": 0,
+		// Disallowed trailing punctuation in headers
+		"md026": ".,;:!",
+		// Options:
+		//      one,        '1.' only
+		//      ordered,    ascending number
+		//      any,        consistent within one list
+		"md029": "any",
+		// Number of spaces after list markers depending on list type.
+		// (ordered vs unordered, single-line vs multi-line)
+		"md030": {
+			"ul_single": 1,
+			"ol_single": 1,
+			// optionally, 3
+			"ul_multi": 1,
+			// optionally, 2
+			"ol_multi": 1
+		}
+	},
+
+	// MarkdownEditing (Folding):
+	// Enable automatic folding of url parts of inline references or images
+	"mde.auto_fold_link.enabled": true,
+	// MarkdownEditing (Folding):
+	// Selector for urls to automatically fold
+	"mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
+
+	// MarkdownEditing (Wiki):
+	// wiki file extensions
+	"mde.wikilinks.markdown_extension": ".md",
+	// MarkdownEditing (Wiki):
+	// wiki home page
+	"mde.wikilinks.homepage": "HomePage",
+	// MarkdownEditing (Wiki):
+	// wiki templates
+	"mde.wikilinks.templates": {
+		"default_page": "templates/PageTemplate.md"
+	},
+
+	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
+	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
+	// Jump between link/image/footnote reference and definition
+	// Default keys: (OSX)super+ctrl+shift+l    (Linux/Win)ctrl+alt+g
+	"mde.keymap_disable.reference_jump": false,
+	// Add a new link
+	// Default keys: (OSX)super+alt+r   (Linux/Win)ctrl+super+r
+	"mde.keymap_disable.reference_new_reference": false,
+	// Add a new inline link
+	// Default keys: (OSX)super+alt+v   (Linux/Win)ctrl+super+v
+	"mde.keymap_disable.reference_new_inline_link": false,
+	// Add a new inline image
+	// Default keys: (OSX/Linux/Win)super+shift+k
+	"mde.keymap_disable.reference_new_inline_image": false,
+	// Add a new footnote
+	// Default keys: (OSX/Linux/Win)alt+shift+6
+	"mde.keymap_disable.reference_new_footnote": false,
+	// Reorganize footnotes footnote
+	// Default keys: (OSX)super+ctrl+s   (Linux/Win)alt+shift+s
+	"mde.keymap_disable.reference_organize": true,
+	// Fold current section
+	// Default keys: (OSX/Linux/Win)shift+tab
+	"mde.keymap_disable.fold_section": false,
+	// Open a panel showing all functions related to folding
+	// Default keys: (OSX/Linux/Win)ctrl+shift+tab
+	"mde.keymap_disable.show_fold_all_sections": false,
+	// Jump to the next heading (any level/same or higher level)
+	// Default keys: (OSX)super+ctrl/shift+pagedown (Linux/Win)ctrl+shift(+alt)+pagedown
+	"mde.keymap_disable.goto_next_heading": false,
+	// Jump to the previous heading (any level/same or higher level)
+	// Default keys: (OSX)super+ctrl/shift+pageup   (Linux/Win)ctrl+shift(+alt)+pageup
+	"mde.keymap_disable.goto_previous_heading": false,
+	// List pages the link to the current page
+	"mde.keymap_disable.list_back_links": true,
+	// Open the home page
+	"mde.keymap_disable.open_home_page": true,
+	// Open the journal
+	"mde.keymap_disable.open_journal": true,
+	// Open the page referenced
+	"mde.keymap_disable.open_page": true,
+	// Make page reference
+	"mde.keymap_disable.make_page_reference": true
+}
