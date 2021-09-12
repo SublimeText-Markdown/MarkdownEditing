@@ -317,28 +317,43 @@ contexts:
     # applies `meta.paragraph` scope as expected.
     # A line of dashes is already matched as thematic break and thus ignored.
     - match: ^[ ]{,3}(?:=+|(?=\S))
-      push: paragraph
+      branch_point: setext-heading-or-paragraph
+      branch:
+        - paragraph
+        - setext-heading2
+        - setext-heading1
 
   setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.markdown
     - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
-      scope: markup.heading.1.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: true
+    - include: setext-heading-content
 
   setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.markdown
     - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
-      scope: markup.heading.2.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: true
+    - include: setext-heading-content
+
+  setext-heading-content:
+    - match: '{{setext_escape}}'
+      fail: setext-heading-or-paragraph
+    - include: inline-bold-italic
+    - include: scope:text.html.basic
 
   paragraph:
+    # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
-    - include: setext-heading1
-    - include: setext-heading2
+    - match: '{{setext_escape}}'
+      fail: setext-heading-or-paragraph
     - include: paragraph-end
     - include: inline-bold-italic-linebreak
     - include: tag-kbd

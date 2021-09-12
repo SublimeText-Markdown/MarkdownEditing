@@ -133,24 +133,267 @@ this must not be bold italic***
 | <- - meta.bold - markup.italic
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - markup.italic
 
-Alternate Heading
+SETEXT Heading Level 1
+| <- markup.heading.1.markdown
 =================
-|^^^^^^^^^^^^^^^^ markup.heading.1 punctuation.definition
-|                ^ meta.whitespace.newline
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|^^^^^^^^^^^^^^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|                ^ markup.heading.1.markdown meta.whitespace.newline.markdown
 
-heading underlined with dashes
+SETEXT Heading Level 2
+| <- markup.heading.2.markdown
 ------------------------------
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2 punctuation.definition.heading
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|                             ^ markup.heading.2.markdown meta.whitespace.newline.markdown - punctuation
 
 underlined heading followed by a separator
 -------------------
 ------
-| <- meta.block-level meta.separator - markup.heading
+| <- meta.separator.thematic-break.markdown - markup.heading
 
 underlined heading followed by another one that should be treated as a normal paragraph
 ==================
 =====
-| <- - markup.heading
+| <- meta.paragraph.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-80
+
+Foo *bar*
+| <- markup.heading.1.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+|   ^^^^^ markup.italic.markdown
+=========
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|^^^^^^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|        ^ markup.heading.1.markdown meta.whitespace.newline.markdown
+
+Foo *bar*
+| <- markup.heading.2.markdown
+|^^^^^^^^^ markup.heading.2.markdown
+|   ^^^^^ markup.italic.markdown
+---------
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^^^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|        ^ markup.heading.2.markdown meta.whitespace.newline.markdown
+
+Foo *bar
+| <- markup.heading.1.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+|   ^^^^^ markup.italic.markdown
+=========
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown - markup.italic
+|^^^^^^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown - markup.italic
+|        ^ markup.heading.1.markdown meta.whitespace.newline.markdown - markup.italic
+
+Foo *bar
+| <- markup.heading.2.markdown
+|^^^^^^^^^ markup.heading.2.markdown
+|   ^^^^^ markup.italic.markdown
+---------
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown - markup.italic
+|^^^^^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown - markup.italic
+|        ^ markup.heading.2.markdown meta.whitespace.newline.markdown - markup.italic
+
+https://spec.commonmark.org/0.30/#example-81
+
+Foo *bar
+baz*
+| <- markup.heading.1.markdown markup.italic.markdown
+|^^^ markup.heading.1.markdown markup.italic.markdown
+|   ^ markup.heading.1.markdown - markup.italic
+====
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|   ^ markup.heading.1.markdown meta.whitespace.newline.markdown
+
+https://spec.commonmark.org/0.30/#example-82
+
+  Foo *bar
+baz*  
+| <- markup.heading.1.markdown markup.italic.markdown
+|^^^ markup.heading.1.markdown markup.italic.markdown
+|   ^^ markup.heading.1.markdown - markup.italic
+====
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|   ^ markup.heading.1.markdown meta.whitespace.newline.markdown
+
+https://spec.commonmark.org/0.30/#example-83
+
+Foo
+=
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|^ markup.heading.1.markdown meta.whitespace.newline.markdown
+
+Foo
+-
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^ markup.heading.2.markdown meta.whitespace.newline.markdown
+
+https://spec.commonmark.org/0.30/#example-84
+
+   Foo
+---
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|  ^ markup.heading.2.markdown meta.whitespace.newline.markdown
+
+  Foo
+-----
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|    ^ markup.heading.2.markdown meta.whitespace.newline.markdown
+
+  Foo
+  ===
+| <- markup.heading.1.markdown - punctuation
+|^ markup.heading.1.markdown - punctuation
+| ^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+|    ^ markup.heading.1.markdown meta.whitespace.newline.markdown
+
+https://spec.commonmark.org/0.30/#example-85
+
+    Foo
+    ---
+|^^^^^^^ markup.raw.block.markdown
+
+    Foo
+---
+| <- meta.separator.thematic-break.markdown - markup.heading
+|^^^ meta.separator.thematic-break.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-86
+
+Foo
+   ----      
+|^^^^^^^^^^^^^ markup.heading.2.markdown
+|^^ - punctuation
+|  ^^^^ punctuation.definition.heading.setext.markdown
+|      ^^^^^^^ - punctuation
+|            ^ meta.whitespace.newline.markdown
+
+https://spec.commonmark.org/0.30/#example-87
+
+Foo
+    ---
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^ meta.paragraph.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-88
+
+Foo
+= =
+| <- meta.paragraph.markdown - markup.heading
+|^^^ meta.paragraph.markdown - markup.heading
+
+Foo
+--- -
+| <- meta.separator.thematic-break.markdown - markup.heading
+|^^^^^ meta.separator.thematic-break.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-89
+
+Foo  
+|  ^^ markup.heading.2.markdown - meta.hard-line-break
+-----
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+https://spec.commonmark.org/0.30/#example-90
+
+Foo\
+|  ^ markup.heading.2.markdown - meta.hard-line-break
+----
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+https://spec.commonmark.org/0.30/#example-91
+
+`Foo
+----
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+`Foo`
+----
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+https://spec.commonmark.org/0.30/#example-92
+
+> Foo
+---
+| <- meta.separator.thematic-break.markdown - markup.heading
+|^^^ meta.separator.thematic-break.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-93
+
+> foo
+bar
+===
+| <- markup.quote.markdown - markup.heading
+|^^^ markup.quote.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-94
+- Foo
+---
+| <- meta.separator.thematic-break.markdown - markup.heading
+|^^^ meta.separator.thematic-break.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-95
+
+Foo
+Bar
+---
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+https://spec.commonmark.org/0.30/#example-96
+
+---
+Foo
+---
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+---
+Foo
+---
+Bar
+---
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+Baz
+
+---
+Foo
+---
+Bar
+---
+Baz
+| <- meta.paragraph.markdown
+|^^^ meta.paragraph.markdown
+
+https://spec.commonmark.org/0.30/#example-97
+
+====
+| <- meta.paragraph.markdown
+|^^^^ meta.paragraph.markdown
+
+https://spec.commonmark.org/0.30/#example-98
+
+---
+---
+| <- meta.separator.thematic-break.markdown - markup.heading
+|^^^ meta.separator.thematic-break.markdown - markup.heading
+
+https://spec.commonmark.org/0.30/#example-102
+
+\> foo
+------
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+|^^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 
 ```
 Fenced codeblocks are no no setext heading
