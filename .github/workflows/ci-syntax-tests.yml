@@ -25,8 +25,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - build: 3211
-            packages: st3
           - build: 4107
             packages: a147e3eb6210de480d0d9a6bd6bf54931a8ba7e9
           - build: latest
