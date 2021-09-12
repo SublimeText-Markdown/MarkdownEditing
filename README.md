@@ -82,12 +82,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Credits
 
-MarkdownEditing was originally created by [Brett Terpstra][] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. Current development is headed up by [Ali Ayas][] and [Felix Hao][].
+MarkdownEditing was originally created by [Brett Terpstra][] and has become a community project with the goal of consolidating the best features from the varied collection of Markdown packages for Sublime Text. 
 
 Related blog posts from Brett:
 
 *   http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings
 *   http://brettterpstra.com/2013/11/23/markdownediting-for-sublime-text-updates
+
+Development was headed by [Ali Ayas][] and [Felix Hao][] until early 2021.
+
+Current development is headed up by [DeathAxe][].
 
 This plugin contains portions of code from [Knockdown][].
 
@@ -110,5 +114,6 @@ MarkdownEditing is released under the [MIT License][opensource].
 
 [Ali Ayas]: https://github.com/maliayas
 [Brett Terpstra]: http://brettterpstra.com
+[DeathAxe]: https://github.com/deathaxe
 [Felix Hao]: https://github.com/felixhao28
 [J. Nicholas Geist]: https://github.com/jngeist
