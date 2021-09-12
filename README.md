@@ -86,8 +86,8 @@ MarkdownEditing was originally created by [Brett Terpstra][] and has become a co
 
 Related blog posts from Brett:
 
-*   http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings/
-*   http://brettterpstra.com/2013/11/23/markdownediting-for-sublime-text-updates/
+*   http://brettterpstra.com/2012/05/17/markdown-editing-for-sublime-text-2-humble-beginnings
+*   http://brettterpstra.com/2013/11/23/markdownediting-for-sublime-text-updates
 
 This plugin contains portions of code from [Knockdown][].
 
@@ -99,10 +99,10 @@ MarkdownEditing is released under the [MIT License][opensource].
 
 
 [preview]: docs/img/preview.png
-[Knockdown]: https://github.com/aziz/knockdown/
+[Knockdown]: https://github.com/aziz/knockdown
 [geekabouttown]: http://geekabouttown.com/posts/sublime-text-2-markdown-footnote-goodness
 [opensource]: http://www.opensource.org/licenses/MIT
-[UserGuide]: https://sublimetext-markdown.github.io/MarkdownEditing/
+[UserGuide]: https://sublimetext-markdown.github.io/MarkdownEditing
 [AtxHeadings]: docs/usage.md#atx-style
 [HeadingsLevels]: docs/usage.md#headings-levels
 [SeHeadings]: docs/usage.md#setext-style
