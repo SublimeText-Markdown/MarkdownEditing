@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'st3176'
     paths:
       - '**/*.json'
       - '**/*.py'
