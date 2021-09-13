@@ -961,7 +961,7 @@
 		]
 	},
 	// inline image insertion
-	{ "keys": ["ctrl+shift+k"], "command": "mde_reference_new_inline_image", "context":
+	{ "keys": ["super+shift+k"], "command": "mde_reference_new_inline_image", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_new_inline_image", "operator": "not_equal", "operand": true }

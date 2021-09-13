@@ -308,6 +308,7 @@ contexts:
           pop: true
         - include: inline-bold-italic
     - include: reference-link-definition
+    - include: latex-blocks
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
 
@@ -377,7 +378,9 @@ contexts:
             | ![A-Z]                                # 4
             | !\[CDATA\[                            # 5
             | {{html_tag_block_end_at_blank_line}}  # 6
-          ) )
+          )
+          | [ ]{,3}\$\$                 # a latex math block
+          )
       pop: true
 
   ampersand:
@@ -857,6 +860,7 @@ contexts:
     - include: link-ref-footnote
     - include: link-ref-literal
     - include: link-ref
+    - include: latex-inline
 
   inline-bold-italic:
     - include: inline
@@ -1194,6 +1198,7 @@ contexts:
       push:
         - block-quote-meta
         - block-quote-content
+    - include: latex-blocks
     - include: fenced-code-blocks
     - include: reference-link-definition
     - match: \s+(?=\S)
@@ -1232,6 +1237,7 @@ contexts:
 
   list-content:
     - meta_content_scope: meta.paragraph.list.markdown
+    - include: latex-blocks
     - include: fenced-code-blocks
     - match: ^
       pop: true
@@ -2681,6 +2687,47 @@ contexts:
     - match: ^(?=\s*$)
       pop: true
     - include: inline-bold-italic
+
+###[ LATEX ]##################################################################
+
+  latex-inline:
+    - match: \\\$
+    - match: |-
+        (?x)
+        (\$)(?=\S)
+        (?=
+          (?:
+            \\\\
+            |\\\$
+            |[^\$]
+          )*?
+          \S\$(?:[^a-zA-Z0-9]|$)
+        )
+      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      push: latex-inline-content
+
+  latex-inline-content:
+    - meta_scope: text.tex.latex meta.environment.math.inline.dollar.latex
+    - match: \$
+      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      pop: true
+    - include: latex-content
+
+  latex-blocks:
+    - match: \$\$
+      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      push: latex-block-content
+
+  latex-block-content:
+    - meta_scope: text.tex.latex meta.environment.math.block.dollar.latex
+    - match: \$\$
+      scope: string.other.math.latex punctuation.definition.string.end.latex
+      pop: true
+    - include: latex-content
+
+  latex-content:
+    - include: scope:text.tex.latex#macros
+    - include: scope:text.tex.latex#math-content
 
 ###[ PROTOTYPES ]#############################################################
 

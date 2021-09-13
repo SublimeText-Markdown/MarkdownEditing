@@ -4,12 +4,14 @@ import sublime
 
 from .color_schemes import clear_color_schemes, select_color_scheme
 
+BOOTSTRAP_VERSION = 3.0
+
 package_name = "MarkdownEditing"
 
 
 def get_ingored_packages():
     settings = sublime.load_settings("Preferences.sublime-settings")
-    return settings.get("ignored_packages", [])
+    return settings.get("ignored_packages") or []
 
 
 def save_ingored_packages(ignored_packages):
@@ -61,14 +63,18 @@ def reassign_syntax(current_syntax, new_syntax):
 
 
 def on_after_install():
-    if "package_control" in sys.modules:
-        from package_control import events
+    mde_settings = sublime.load_settings("MarkdownEditing.sublime-syntax")
+    bootstrapped = mde_settings.get("bootstrapped")
+    if bootstrapped is not None and bootstrapped == BOOTSTRAP_VERSION:
+        return
 
-        if events.install(package_name):
-            # Native package causes some conflicts.
-            disable_native_markdown_package()
-            # Prompts to select a color scheme.
-            select_color_scheme()
+    # Native package causes some conflicts.
+    disable_native_markdown_package()
+    # Prompts to select a color scheme.
+    select_color_scheme()
+
+    mde_settings.set("bootstrapped", BOOTSTRAP_VERSION)
+    sublime.save_settings("MarkdownEditing.sublime-syntax")
 
 
 def on_before_uninstall():
