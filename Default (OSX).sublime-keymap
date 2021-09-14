@@ -1168,13 +1168,13 @@
 	},
 	{ "keys": ["super+shift+d"], "command": "mde_open_page", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "meta.link.wiki.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "meta.link.reference.wiki.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true }
 		]
 	},
 	{ "keys": ["super+shift+d"], "command": "mde_make_page_reference", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - (meta.link.wiki | markup.underline.link)", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - (meta.link | markup.underline.link)", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true }
 		]
 	},
