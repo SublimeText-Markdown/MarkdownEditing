@@ -188,7 +188,7 @@
 		"command": "mde_unfold_all_sections"
 	},
 	{
-		"caption": "MarkdownEditing: Auto Fold Link URLs",
+		"caption": "MarkdownEditing: Toggle Automatic Link URL Folding",
 		"command": "mde_fold_links"
 	},
 
