@@ -28,7 +28,7 @@ class MdeMakePageReferenceCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if  is on a wiki page reference."""
         for sel in self.view.sel():
-            if not self.view.match_selector(sel.end(), "meta.link.wiki.markdown"):
+            if self.view.match_selector(sel.begin(), "meta.link.reference.wiki"):
                 return False
         return True
 
@@ -66,9 +66,9 @@ class MdeOpenPageCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if caret is on a wiki page reference."""
         for sel in self.view.sel():
-            if not self.view.match_selector(sel.end(), "meta.link.wiki.markdown"):
-                return False
-        return True
+            if self.view.match_selector(sel.begin(), "meta.link.reference.wiki"):
+                return True
+        return False
 
     def run(self, edit):
         wiki_page = WikiPage(self.view)

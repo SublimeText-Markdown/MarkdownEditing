@@ -1,10 +1,12 @@
+import os
+import shutil
 import sys
 
 import sublime
 
 from .color_schemes import clear_color_schemes, select_color_scheme
 
-BOOTSTRAP_VERSION = 3.0
+BOOTSTRAP_VERSION = "3.0.2"
 
 package_name = "MarkdownEditing"
 
@@ -63,18 +65,33 @@ def reassign_syntax(current_syntax, new_syntax):
 
 
 def on_after_install():
-    mde_settings = sublime.load_settings("MarkdownEditing.sublime-syntax")
-    bootstrapped = mde_settings.get("bootstrapped")
-    if bootstrapped is not None and bootstrapped == BOOTSTRAP_VERSION:
-        return
+    cache_path = os.path.join(sublime.cache_path(), "MarkdownEditing")
+    bootstrapped = os.path.join(cache_path, "bootstrapped")
+
+    # Check bootstrapped cookie.
+    try:
+        if open(bootstrapped).read() == BOOTSTRAP_VERSION:
+            return
+    except FileNotFoundError:
+        pass
+
+    # Clear previous syntax caches.
+    shutil.rmtree(cache_path, ignore_errors=True)
+    os.makedirs(cache_path, exist_ok=True)
+
+    # remove wrong bootstrapped cookie file created by 3.0.1
+    try:
+        os.remove(os.path.join(sublime.packages_path(), "User", "MarkdownEditing.sublime-syntax"))
+    except FileNotFoundError:
+        pass
 
     # Native package causes some conflicts.
     disable_native_markdown_package()
     # Prompts to select a color scheme.
-    select_color_scheme()
+    sublime.set_timeout_async(select_color_scheme, 500)
 
-    mde_settings.set("bootstrapped", BOOTSTRAP_VERSION)
-    sublime.save_settings("MarkdownEditing.sublime-syntax")
+    # Update bootstrap cookie.
+    open(bootstrapped, "w").write(BOOTSTRAP_VERSION)
 
 
 def on_before_uninstall():
