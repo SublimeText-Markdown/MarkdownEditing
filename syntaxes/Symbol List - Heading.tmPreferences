@@ -8,7 +8,7 @@
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 		<key>symbolTransformation</key>
-		<string>
+		<string><![CDATA[
 			s/\!?\[([^]]+)\]\([^)]*\)/$1/g; 	# strip image or link urls
 			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
 			s/\[\^[^]]+\]//g; 					# strip footnotes
@@ -20,14 +20,17 @@
 			s/^#{3}/    /g;						# indent atx heading
 			s/^#{2}/  /g;						# indent atx heading
 			s/^#{1}//g;							# indent atx heading
-		</string>
+		]]></string>
 		<key>showInIndexedSymbolList</key>
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
-		<string>
+		<string><![CDATA[
+			s/\!?\[([^]]+)\]\([^)]*\)/$1/g; 	# strip image or link urls
+			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
+			s/\[\^[^]]+\]//g; 					# strip footnotes
 			s/^\s*//g;							# strip leading whitespace
 			s/\s*#+\s*\z//g;					# strip trailing hashes
-		</string>
+		]]></string>
 	</dict>
 </dict>
 </plist>
