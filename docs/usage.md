@@ -159,6 +159,26 @@ Folding is bound to following keys by default:
 | <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold/Unfold current section.
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 
+## Automatic Link Url Folding
+
+MarkdownEditing folds image/link/reference urls automatically if the caret is not within the url brackets, in order to improve a document's readability.
+
+This feature can be temporarily enabled or disabled for the active view via Command Palette
+
+*   **MarkdownEditing: Toggle Automatic Link URL Folding**
+
+To globally disable it, add the following setting to _Perferences.sublime-settings_
+
+```jsonc
+    "mde.auto_fold_link.enabled": false,
+```
+
+The folding selector can be tweaked in order to add or remove certain kinds of urls from being automatically folded.
+
+```jsonc
+    "mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
+```
+
 ## Navigation
 
 MarkdownEditing provides various ways to navigate between sections.

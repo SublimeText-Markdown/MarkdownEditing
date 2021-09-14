@@ -76,19 +76,16 @@ class MdeMatchHeadingHashesDetector(MdeViewEventListener):
             view.settings().set("mde.auto_match_heading_hashes", False)
             return
 
-        num_leading = 0
-        num_trailing = 0
-
-        for h1, h2 in zip(
-            view.find_by_selector("markup.heading")[:10],
-            view.find_by_selector("markup.heading - punctuation.definition.heading")[:10],
-        ):
-            num_leading += 1
-            if h1.end() > h2.end():
-                num_trailing += 1
-
+        num_leading = len(
+            view.find_by_selector("markup.heading punctuation.definition.heading.begin")
+        )
         if num_leading:
+            num_trailing = len(
+                view.find_by_selector("markup.heading punctuation.definition.heading.end")
+            )
             view.settings().set("mde.match_heading_hashes", num_trailing / num_leading > 0.5)
+        else:
+            view.settings().erase("mde.match_heading_hashes")
 
         if view.settings().get("mde.auto_match_heading_hashes", False):
             view.run_command("mde_match_heading_hashes")

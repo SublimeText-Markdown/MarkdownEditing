@@ -27,6 +27,9 @@
 		<integer>1</integer>
 		<key>symbolIndexTransformation</key>
 		<string><![CDATA[
+			s/\!?\[([^]]+)\]\([^)]*\)/$1/g; 	# strip image or link urls
+			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
+			s/\[\^[^]]+\]//g; 					# strip footnotes
 			s/^\s*//g;							# strip leading whitespace
 			s/\s*#+\s*\z//g;					# strip trailing hashes
 			s/^(.+?)=+\s*$/# $1/g;				# convert SETEXT to ATX heading 1
