@@ -349,84 +349,100 @@
 	// Headings
 	//
 
-	{ "keys": ["super+ctrl+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+	{ "keys": ["alt+k", "alt+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+	{ "keys": ["alt+k", "alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+	{ "keys": ["alt+k", "alt+keypad1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+	{ "keys": ["alt+k", "alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+	{ "keys": ["alt+k", "alt+keypad2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+	{ "keys": ["alt+k", "alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+	{ "keys": ["alt+k", "alt+keypad3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+	{ "keys": ["alt+k", "alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+	{ "keys": ["alt+k", "alt+keypad4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+	{ "keys": ["alt+k", "alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+	{ "keys": ["alt+k", "alt+keypad5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+	{ "keys": ["alt+k", "alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+	{ "keys": ["alt+k", "alt+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["super+ctrl+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+	{ "keys": ["alt+k", "alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	{ "keys": ["ctrl+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	{ "keys": ["ctrl+alt+,"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	// If nothing is selected, pressing hash in front of heading label increases level by one

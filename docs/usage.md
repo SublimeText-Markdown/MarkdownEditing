@@ -107,10 +107,12 @@ or use one of the following bindings:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>0</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
-| <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>1..6</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
+| <kbd>alt</kbd> + <kbd>k</kbd>, <kbd>alt</kbd> + <kbd>0</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
+| <kbd>alt</kbd> + <kbd>k</kbd>, <kbd>alt</kbd> + <kbd>1..6</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
 | <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>,</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
 | <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>.</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
+
+Key bindings can be disabled via `"mde.keymap_disable.set_heading_level": true`.
 
 Adding or removing `#` at the beginning of lines also modifies heading levels implicitly while maintaining open or closed heading styles.
 
