@@ -725,16 +725,8 @@ contexts:
     - include: inline-bold-italic
 
   image-inline:
-    - match: |-
-        (?x:
-            (\!\[)                             # Images start with ![
-            (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                  \]                           # Closing square bracket
-                  \(                           # Open paren
-            )
-         )
-      captures:
-        1: meta.image.inline.markdown punctuation.definition.image.begin.markdown
+    - match: \!\[(?={{balance_square_brackets}}?\]\()
+      scope: meta.image.inline.markdown punctuation.definition.image.begin.markdown
       push: [image-inline-attr, image-inline-after-text, image-link-text]
 
   image-link-text:
@@ -784,18 +776,8 @@ contexts:
     - include: immediately-pop
 
   image-ref:
-    - match: |-
-        (?x:
-          (\!\[)                             # Images start with ![
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]                           # Closing square bracket
-                \[                           # [
-                [^\]]+                       # anything other than ]
-                \]                           # ]
-          )
-        )
-      captures:
-        1: meta.image.reference.markdown punctuation.definition.image.begin.markdown
+    - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+      scope: meta.image.reference.markdown punctuation.definition.image.begin.markdown
       push: [image-ref-attr, image-ref-after-text, image-ref-text]
 
   image-ref-text:
@@ -956,17 +938,8 @@ contexts:
           scope: markup.underline.link.markdown-gfm
 
   link-inline:
-    - match: |-
-        (?x:
-            (\[)
-            (?=
-                {{balance_square_brackets}}?
-                \]
-                \(
-            )
-        )
-      captures:
-        1: meta.link.inline.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\()
+      scope: meta.link.inline.markdown punctuation.definition.link.begin.markdown
       push: [link-inline-attr, link-inline-after-text, link-inline-link-text]
 
   link-inline-after-text:
@@ -1015,28 +988,11 @@ contexts:
       pop: true
 
   link-ref:
-    - match: |-
-        (?x:
-          (\[)
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]                           # Closing square bracket
-                \[                           # [
-                [^\]]+                       # anything other than ]
-                \]                           # ]
-          )
-        )
-      captures:
-        1: meta.link.reference.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
       push: [link-ref-attr, link-ref-after-text, link-ref-link-text]
-    - match: |-
-        (?x:
-          (\[)(?!\^)
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]
-          )
-        )
-      captures:
-        1: meta.link.reference.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?=(?!\^){{balance_square_brackets}}?\])
+      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
       push: link-ref-link-text
 
   link-ref-link-text:
@@ -1065,18 +1021,8 @@ contexts:
     - include: immediately-pop
 
   link-ref-literal:
-    - match: |-
-        (?x:
-          (\[)
-          (?=
-              {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-              \]                           # Closing square bracket
-              \[                           # [
-              \]                           # ]
-          )
-        )
-      captures:
-        1: meta.link.reference.literal.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\[\])
+      scope: meta.link.reference.literal.markdown punctuation.definition.link.begin.markdown
       push: [link-ref-literal-attr, link-ref-literal-after-text, link-ref-literal-link-text]
 
   link-ref-literal-link-text:
@@ -1104,12 +1050,7 @@ contexts:
     - include: immediately-pop
 
   link-ref-footnote:
-    - match: |-
-        (?x:
-          (\[\^)
-          ([^]]+)
-          (\])
-        )
+    - match: (\[\^)([^]]+)(\])
       captures:
         0: meta.link.reference.footnote.markdown-extra
         1: punctuation.definition.link.begin.markdown
@@ -1117,16 +1058,8 @@ contexts:
         3: punctuation.definition.link.end.markdown
 
   link-ref-wiki:
-    - match: |-
-        (?x:
-          (\[\[)
-          (?=
-              {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-              \]\]                         # Closing square bracket
-          )
-        )
-      captures:
-        1: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
+    - match: \[\[(?={{balance_square_brackets}}?\]\])
+      scope: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
       push: link-ref-wiki-link-text
 
   link-ref-wiki-link-text:
