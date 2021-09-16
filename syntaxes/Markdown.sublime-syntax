@@ -730,7 +730,9 @@ contexts:
       push: [image-inline-attr, image-inline-after-text, image-link-text]
 
   image-link-text:
-    - meta_content_scope: meta.image.inline.description.markdown
+    - meta_content_scope:
+        meta.image.inline.description.markdown
+        string.other.link.title.markdown
     - include: link-text
     - match: \]
       scope: meta.image.inline.markdown punctuation.definition.image.end.markdown
@@ -781,7 +783,9 @@ contexts:
       push: [image-ref-attr, image-ref-after-text, image-ref-text]
 
   image-ref-text:
-    - meta_content_scope: meta.image.reference.description.markdown
+    - meta_content_scope:
+        meta.image.reference.description.markdown
+        string.other.link.title.markdown
     - include: link-text
     - match: \]
       scope: meta.image.reference.markdown punctuation.definition.image.end.markdown
@@ -981,7 +985,9 @@ contexts:
     - include: immediately-pop
 
   link-inline-link-text:
-    - meta_content_scope: meta.link.inline.description.markdown
+    - meta_content_scope:
+        meta.link.inline.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.inline.markdown punctuation.definition.link.end.markdown
@@ -996,7 +1002,9 @@ contexts:
       push: link-ref-link-text
 
   link-ref-link-text:
-    - meta_content_scope: meta.link.reference.description.markdown
+    - meta_content_scope:
+        meta.link.reference.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.reference.markdown punctuation.definition.link.end.markdown
@@ -1026,7 +1034,9 @@ contexts:
       push: [link-ref-literal-attr, link-ref-literal-after-text, link-ref-literal-link-text]
 
   link-ref-literal-link-text:
-    - meta_content_scope: meta.link.reference.literal.description.markdown
+    - meta_content_scope:
+        meta.link.reference.literal.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.reference.literal.markdown punctuation.definition.link.end.markdown
@@ -1063,7 +1073,9 @@ contexts:
       push: link-ref-wiki-link-text
 
   link-ref-wiki-link-text:
-    - meta_content_scope: meta.link.reference.wiki.description.markdown
+    - meta_content_scope:
+        meta.link.reference.wiki.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]\]
       scope: meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown
