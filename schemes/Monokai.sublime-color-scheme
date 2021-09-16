@@ -94,12 +94,6 @@
 			"background": "var(raw_bg)"
 		},
 		{
-			"name": "Inline Code Block Punctuation",
-			"scope": "text.html.markdown markup.raw.inline punctuation.definition.raw",
-			"foreground": "var(raw_bg)",
-			"background": "var(raw_bg)"
-		},
-		{
 			"name": "Raw Code Block",
 			"scope": "text.html.markdown markup.raw, text.html.markdown meta.code-fence",
 			"foreground": "var(raw_fg)",
