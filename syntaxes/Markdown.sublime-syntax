@@ -740,31 +740,22 @@ contexts:
     - include: inline-bold-italic
 
   image-inline:
-    - match: |-
-        (?x:
-            (\!\[)                             # Images start with ![
-            (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                  \]                           # Closing square bracket
-                  [ ]?                         # Space not allowed, but we check for it anyway to mark it as invalid
-                  \(                           # Open paren
-            )
-         )
-      captures:
-        1: meta.image.inline.markdown punctuation.definition.image.begin.markdown
+    - match: \!\[(?={{balance_square_brackets}}?\]\()
+      scope: meta.image.inline.markdown punctuation.definition.image.begin.markdown
       push: [image-inline-attr, image-inline-after-text, image-link-text]
 
   image-link-text:
-    - meta_content_scope: meta.image.inline.description.markdown
+    - meta_content_scope:
+        meta.image.inline.description.markdown
+        string.other.link.title.markdown
     - include: link-text
     - match: \]
       scope: meta.image.inline.markdown punctuation.definition.image.end.markdown
       pop: true
 
   image-inline-after-text:
-    - match: '([ ]*)(\()' # spaces not allowed before the open paren, but we check for it anyway to mark it as invalid
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.metadata.begin.markdown
+    - match: \(
+      scope: punctuation.definition.metadata.begin.markdown
       set:
         - meta_scope: meta.image.inline.markdown
         - match: \)
@@ -791,54 +782,43 @@ contexts:
               scope: invalid.illegal.unexpected-whitespace.markdown
             - match: (?=\s*(?!\)))
               push: link-title
+    - include: immediately-pop
 
   image-inline-attr:
-    - match: '([ ]*)(\{)(?=[^}]*\})'
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.attributes.begin.markdown
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
       set:
         - meta_scope: meta.image.inline.markdown
         - include: tag-attributes
     - include: immediately-pop
 
   image-ref:
-    - match: |-
-        (?x:
-          (\!\[)                             # Images start with ![
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]                           # Closing square bracket
-                [ ]?                         # Space
-                \[                           # [
-                [^\]]+                       # anything other than ]
-                \]                           # ]
-          )
-        )
-      captures:
-        1: meta.image.reference.markdown punctuation.definition.image.begin.markdown
+    - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+      scope: meta.image.reference.markdown punctuation.definition.image.begin.markdown
       push: [image-ref-attr, image-ref-after-text, image-ref-text]
 
   image-ref-text:
-    - meta_content_scope: meta.image.reference.description.markdown
+    - meta_content_scope:
+        meta.image.reference.description.markdown
+        string.other.link.title.markdown
     - include: link-text
     - match: \]
       scope: meta.image.reference.markdown punctuation.definition.image.end.markdown
       pop: true
 
   image-ref-after-text:
-    - match: '[ ]?(\[)([^\]]+)(\])'
+    - match: (\[)([^\]]+)(\])
       captures:
         1: punctuation.definition.constant.begin.markdown
         2: constant.other.reference.link.markdown
         3: punctuation.definition.constant.end.markdown
       scope: meta.image.reference.markdown
       pop: true
+    - include: immediately-pop
 
   image-ref-attr:
-    - match: '([ ]*)(\{)(?=[^}]*\})'
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.attributes.begin.markdown
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
       set:
         - meta_scope: meta.image.reference.markdown
         - include: tag-attributes
@@ -977,24 +957,13 @@ contexts:
           scope: markup.underline.link.markdown-gfm
 
   link-inline:
-    - match: |-
-        (?x:
-            (\[)
-            (?=
-                {{balance_square_brackets}}?
-                \]
-                [ ]?\(
-            )
-        )
-      captures:
-        1: meta.link.inline.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\()
+      scope: meta.link.inline.markdown punctuation.definition.link.begin.markdown
       push: [link-inline-attr, link-inline-after-text, link-inline-link-text]
 
   link-inline-after-text:
-    - match: '([ ]*)(\()' # spaces not allowed before the open paren, but we check for it anyway to mark it as invalid
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.metadata.begin.markdown
+    - match: \(
+      scope: punctuation.definition.metadata.begin.markdown
       set:
         - meta_scope: meta.link.inline.markdown
         - match: \)
@@ -1020,124 +989,93 @@ contexts:
               scope: invalid.illegal.unexpected-whitespace.markdown
             - match: (?=\s*(?!\)))
               push: link-title
+    - include: immediately-pop
 
   link-inline-attr:
-    - match: '([ ]*)(\{)(?=[^}]*\})'
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.attributes.begin.markdown
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
       set:
         - meta_scope: meta.link.inline.markdown
         - include: tag-attributes
     - include: immediately-pop
 
   link-inline-link-text:
-    - meta_content_scope: meta.link.inline.description.markdown
+    - meta_content_scope:
+        meta.link.inline.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.inline.markdown punctuation.definition.link.end.markdown
       pop: true
 
   link-ref:
-    - match: |-
-        (?x:
-          (\[)
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]                           # Closing square bracket
-                [ ]?                         # Space
-                \[                           # [
-                [^\]]+                       # anything other than ]
-                \]                           # ]
-          )
-        )
-      captures:
-        1: meta.link.reference.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
       push: [link-ref-attr, link-ref-after-text, link-ref-link-text]
-    - match: |-
-        (?x:
-          (\[)(?!\^)
-          (?=   {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-                \]
-          )
-        )
-      captures:
-        1: meta.link.reference.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?=(?!\^){{balance_square_brackets}}?\])
+      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
       push: link-ref-link-text
 
   link-ref-link-text:
-    - meta_content_scope: meta.link.reference.description.markdown
+    - meta_content_scope:
+        meta.link.reference.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.reference.markdown punctuation.definition.link.end.markdown
       pop: true
 
   link-ref-after-text:
-    - match: '[ ]?(\[)([^\]]+)(\])'
+    - match: (\[)([^\]]+)(\])
+      scope: meta.link.reference.markdown
       captures:
         1: punctuation.definition.constant.begin.markdown
         2: constant.other.reference.link.markdown
         3: punctuation.definition.constant.end.markdown
-      scope: meta.link.reference.markdown
       pop: true
+    - include: immediately-pop
 
   link-ref-attr:
-    - match: '([ ]*)(\{)(?=[^}]*\})'
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.attributes.begin.markdown
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
       set:
         - meta_scope: meta.link.reference.markdown
         - include: tag-attributes
     - include: immediately-pop
 
   link-ref-literal:
-    - match: |-
-        (?x:
-          (\[)
-          (?=
-              {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-              \]                           # Closing square bracket
-              [ ]?                         # Space
-              \[                           # [
-              \]                           # ]
-          )
-        )
-      captures:
-        1: meta.link.reference.literal.markdown punctuation.definition.link.begin.markdown
+    - match: \[(?={{balance_square_brackets}}?\]\[\])
+      scope: meta.link.reference.literal.markdown punctuation.definition.link.begin.markdown
       push: [link-ref-literal-attr, link-ref-literal-after-text, link-ref-literal-link-text]
 
   link-ref-literal-link-text:
-    - meta_content_scope: meta.link.reference.literal.description.markdown
+    - meta_content_scope:
+        meta.link.reference.literal.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]
       scope: meta.link.reference.literal.markdown punctuation.definition.link.end.markdown
       pop: true
 
   link-ref-literal-after-text:
-    - match: '[ ]?(\[)(\])'
+    - match: (\[)(\])
       scope: meta.link.reference.literal.markdown
       captures:
         1: punctuation.definition.constant.begin.markdown
         2: punctuation.definition.constant.end.markdown
       pop: true
+    - include: immediately-pop
 
   link-ref-literal-attr:
-    - match: '([ ]*)(\{)(?=[^}]*\})'
-      captures:
-        1: invalid.illegal.whitespace.markdown
-        2: punctuation.definition.attributes.begin.markdown
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
       set:
         - meta_scope: meta.link.reference.literal.markdown
         - include: tag-attributes
     - include: immediately-pop
 
   link-ref-footnote:
-    - match: |-
-        (?x:
-          (\[\^)
-          ([^]]+)
-          (\])
-        )
+    - match: (\[\^)([^]]+)(\])
       captures:
         0: meta.link.reference.footnote.markdown-extra
         1: punctuation.definition.link.begin.markdown
@@ -1145,20 +1083,14 @@ contexts:
         3: punctuation.definition.link.end.markdown
 
   link-ref-wiki:
-    - match: |-
-        (?x:
-          (\[\[)
-          (?=
-              {{balance_square_brackets}}? # balanced square brackets, backticks, taking into account escapes etc.
-              \]\]                         # Closing square bracket
-          )
-        )
-      captures:
-        1: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
+    - match: \[\[(?={{balance_square_brackets}}?\]\])
+      scope: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
       push: link-ref-wiki-link-text
 
   link-ref-wiki-link-text:
-    - meta_content_scope: meta.link.reference.wiki.description.markdown
+    - meta_content_scope:
+        meta.link.reference.wiki.description.markdown
+        string.other.link.title.markdown
     - include: link-text-allow-image
     - match: \]\]
       scope: meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown

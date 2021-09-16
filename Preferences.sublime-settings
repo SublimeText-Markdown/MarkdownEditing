@@ -125,6 +125,10 @@
 
 	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
+
+	// Set Heading Level
+	// Default keys: (OSX/Linux/Win): alt+k, alt+0..9
+	"mde.keymap_disable.set_heading_level": false,
 	// Jump between link/image/footnote reference and definition
 	// Default keys: (OSX)super+ctrl+shift+l    (Linux/Win)ctrl+alt+g
 	"mde.keymap_disable.reference_jump": false,

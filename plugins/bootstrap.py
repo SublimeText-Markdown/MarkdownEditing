@@ -6,7 +6,7 @@ import sublime
 
 from .color_schemes import clear_color_schemes, select_color_scheme
 
-BOOTSTRAP_VERSION = "3.0.2"
+BOOTSTRAP_VERSION = "3.0.3"
 
 package_name = "MarkdownEditing"
 
@@ -26,11 +26,11 @@ def disable_native_markdown_package():
     ignored_packages = get_ingored_packages()
     if "Markdown" not in ignored_packages:
         reassign_syntax(
-            "Packages/Markdown/Markdown.sublime-syntax",
+            "Markdown.sublime-syntax",
             "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
         )
         reassign_syntax(
-            "Packages/Markdown/MultiMarkdown.sublime-syntax",
+            "MultiMarkdown.sublime-syntax",
             "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
         )
         ignored_packages.append("Markdown")
@@ -45,11 +45,11 @@ def enable_native_markdown_package():
 
         def reassign():
             reassign_syntax(
-                "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
+                "Markdown.sublime-syntax",
                 "Packages/Markdown/Markdown.sublime-syntax",
             )
             reassign_syntax(
-                "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
+                "MultiMarkdown.sublime-syntax",
                 "Packages/Markdown/MultiMarkdown.sublime-syntax",
             )
 
@@ -60,7 +60,7 @@ def reassign_syntax(current_syntax, new_syntax):
     for window in sublime.windows():
         for view in window.views():
             syntax = view.settings().get("syntax")
-            if syntax and syntax == current_syntax:
+            if syntax and syntax.endswith(current_syntax) and syntax != new_syntax:
                 view.assign_syntax(new_syntax)
 
 
