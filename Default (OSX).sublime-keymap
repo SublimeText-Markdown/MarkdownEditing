@@ -184,7 +184,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -194,7 +194,7 @@
 	},
 	{ "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "__$0__"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -205,7 +205,7 @@
 	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -213,7 +213,7 @@
 	},
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -221,7 +221,7 @@
 	},
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -229,7 +229,7 @@
 	},
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -238,7 +238,7 @@
 	// Transform selection to bold
 	{ "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "**${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}**"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
@@ -247,7 +247,7 @@
 	},
 	{ "keys": ["super+alt+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}__"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
@@ -257,7 +257,7 @@
 	// Unbold bold text
 	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold.sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - punctuation", "match_all": true }
 		]
 	},
 
@@ -268,7 +268,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -278,7 +278,7 @@
 	},
 	{ "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -289,7 +289,7 @@
 	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -297,7 +297,7 @@
 	},
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -305,7 +305,7 @@
 	},
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -313,7 +313,7 @@
 	},
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -322,7 +322,7 @@
 	// Transform selection to italics
 	{ "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "*${SELECTION/(^[\\*_]*|[\\*_]*$)//g}*"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
@@ -332,7 +332,7 @@
 	// Remove italics style from text
 	{ "keys": ["super+alt+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION/(^[\\*_]*|[\\*_]*$)//g}_"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
@@ -341,7 +341,7 @@
 	},
 	{ "keys": ["super+alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unitalicize.sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic - punctuation", "match_all": true }
 		]
 	},
 
