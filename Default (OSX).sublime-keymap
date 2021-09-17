@@ -255,9 +255,14 @@
 		]
 	},
 	// Unbold bold text
-	{ "keys": ["super+alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold.sublime-macro"}, "context":
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold.sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - punctuation", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - markup.italic - punctuation", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Bold Italics.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold markup.italic - punctuation", "match_all": true }
 		]
 	},
 
