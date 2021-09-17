@@ -63,6 +63,7 @@ else:
         MdeUnindentListItemCommand,
         MdeNumberListCommand,
         MdeSwitchListBulletTypeCommand,
+        MdeInsertTaskListItemCommand,
         MdeToggleTaskListItemCommand,
         MdeJoinLines,
     )

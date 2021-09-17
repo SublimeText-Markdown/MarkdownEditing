@@ -667,21 +667,10 @@
 	//
 
 	// Create new GFM Task
-	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ] $0"}, "context":
+	{ "keys": ["alt+t"], "command": "mde_insert_task_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": false },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
-		]
-	},
-	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ]\t$0"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
-			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
