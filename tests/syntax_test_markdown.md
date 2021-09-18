@@ -823,7 +823,7 @@ _ _ _ _ _ _ _
 ###[ GFM AUTOLINKS ]##########################################################
 
 Visit ftp://intra%20net
-|     ^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|     ^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |        ^^^ punctuation.separator.path.markdown
 |               ^ - constant
 |                ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
@@ -831,7 +831,7 @@ Visit ftp://intra%20net
 |                   ^^^ - constant
 
 Visit http://intra%20net
-|     ^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|     ^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |         ^^^ punctuation.separator.path.markdown
 |                ^ - constant
 |                 ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
@@ -839,7 +839,7 @@ Visit http://intra%20net
 |                    ^^^ - constant
 
 Visit https://intra%20net
-|     ^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|     ^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |          ^^^ punctuation.separator.path.markdown
 |                 ^ - constant
 |                  ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
@@ -847,79 +847,98 @@ Visit https://intra%20net
 |                     ^^^ - constant
 
 Visit www.intra%20net
-|     ^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|     ^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |             ^ - constant
 |              ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
 |               ^^ constant.character.escape.url.markdown - punctuation
 |                 ^^^ - constant
 
 Visit www.commonmark.org/help for more information.
-|     ^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |                       ^ punctuation.separator.path.markdown
 |                            ^^^^^^^^^^^^^^^^^^^^^^^ - markup.underline.link
 
 Visit www.commonmark.org.
-|     ^^^^^^^^^^^^^^^^^^ meta.paragraph markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
 |                       ^^ - markup.underline.link
 
 Visit www.commonmark.org/a.b.
-|     ^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
 |                           ^ - markup.underline.link
 |                       ^ punctuation.separator.path.markdown
 
 www.google.com/search?q=(business))+ok
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |             ^ punctuation.separator.path.markdown
 |                    ^ punctuation.separator.path.markdown
 |                                     ^ - markup.underline.link
 
 www.google.com/search?q=Markup+(business)
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |             ^ punctuation.separator.path.markdown
 |                    ^ punctuation.separator.path.markdown
 
 www.commonmark.org/he<lp>
-|^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |                 ^ punctuation.separator.path.markdown
 |                    ^ - markup.underline.link
 
 http://commonmark.org
-|^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |   ^^^ punctuation.separator.path.markdown
 
 www.google.com/search?q=commonmark&hl=en
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |             ^ punctuation.separator.path.markdown
 |                    ^ punctuation.separator.path.markdown
 |                                 ^ punctuation.separator.path.markdown
 |                                       ^ - markup.underline.link
 
 www.google.com/search?q=commonmark&hl;
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |             ^ punctuation.separator.path.markdown
 |                    ^ punctuation.separator.path.markdown
 |                                 ^^^^ constant.character.entity.named.html - markup.underline.link
 
+www.google.com/search?q=commonmark&hl;&hl;
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                 ^^^^^^^^ constant.character.entity.named.html - markup.underline.link
+
+www.google.com/search?q=commonmark&hl;!
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
+|                                 ^^^^^^ - meta.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                 ^^^^ constant.character.entity.named.html - markup.underline.link
+
+www.google.com/search?q=commonmark&hl;f
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
+|                                      ^ - meta.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                 ^^^^ - constant.character
+
 (Visit https://encrypted.google.com/search?q=Markup+(business))
-|      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |           ^^^ punctuation.separator.path.markdown
 |                                  ^ punctuation.separator.path.markdown
 |                                         ^ punctuation.separator.path.markdown
 |                                                             ^^ - markup.underline.link
 
 Anonymous FTP is available at ftp://foo.bar.baz.
-|                             ^^^^^^^^^^^^^^^^^ markup.underline.link
+|                             ^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |                                ^^^ punctuation.separator.path.markdown
 |                                              ^^ - markup.underline.link
 
 (see http://www.google.com/search?q=commonmark&hl=en)
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
 |        ^^^ punctuation.separator.path.markdown
 |                         ^ punctuation.separator.path.markdown
 |                                ^ punctuation.separator.path.markdown
 |                                             ^ punctuation.separator.path.markdown
 |                                                   ^^ - markup.underline.link
-
 
 foo@bar.baz
 | <- meta.link.email.markdown markup.underline.link.markdown

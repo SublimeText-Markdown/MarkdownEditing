@@ -2575,32 +2575,30 @@ contexts:
 
   autolink-inet-unquoted-content:
     - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
-    # Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not be
-    # considered part of the autolink, though they may be included in the interior
-    # of the link
-    - match: (?=[?!.,:*_~]*[\s<])
+    # 1. When an autolink ends in ), we scan the entire autolink for the total
+    #    number of parentheses. If there is a greater number of closing parentheses
+    #    than opening ones, we don’t consider the last character part of the
+    #    autolink, in order to facilitate including an autolink inside a parenthesis
+    # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
+    #    resemble an entity reference; if the preceding text is & followed by one
+    #    or more alphanumeric characters. If so, it is excluded from the autolink
+    # 3. Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not
+    #    be considered part of the autolink, though they may be included in the
+    #    interior # of the link
+    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:*_~]*[\s<])
       pop: true
-    # If an autolink ends in a semicolon (;), we check to see if it appears to
-    # resemble an entity reference; if the preceding text is & followed by one
-    # or more alphanumeric characters. If so, it is excluded from the autolink
-    - match: (?={{html_entity}})
-      pop: true
-    # When an autolink ends in ), we scan the entire autolink for the total number
-    # of parentheses. If there is a greater number of closing parentheses than
-    # opening ones, we don’t consider the last character part of the autolink,
-    # in order to facilitate including an autolink inside a parenthesis
-    - match: (?=\)[?!.,:*_~]*[\s<])
-      pop: true
-    - match: \(
-      push: autolink-inet-group
     - include: autolink-inet-common
 
   autolink-inet-group:
     - match: \)
       pop: true
-    - include: autolink-inet-unquoted-content
+    - match: (?=(?:{{html_entity}})*[?!.,:*_~]*[\s<])
+      pop: true
+    - include: autolink-inet-common
 
   autolink-inet-common:
+    - match: \(
+      push: autolink-inet-group
     - include: link-url-path-separators
     - include: link-url-escapes
 
