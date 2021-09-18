@@ -1080,6 +1080,13 @@ contexts:
         8: markup.underline.link.markdown
       push: [link-ref-def-expect-end, link-title]
 
+  link-ref-def-expect-end:
+    - meta_scope: meta.link.reference.def.markdown
+    - match: $
+      pop: true
+    - match: \s*\S+
+      scope: invalid.illegal.expected-eol.markdown
+
   list-paragraph:
     - match: '^(?=(?:[ ]{4}|\t){2,}(?![>+*\s-]))(?={{indented_code_block}})'
       push:
@@ -2343,6 +2350,8 @@ contexts:
         8: entity.name.tag.inline.any.html
         9: punctuation.definition.tag.end.html
 
+###[ LINK/IMAGE PROTOTYPES ]##################################################
+
   link-text:
     - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
@@ -2368,44 +2377,41 @@ contexts:
   link-title:
     - match: \'
       scope: punctuation.definition.string.begin.markdown
-      set:
-        - meta_scope: string.other.link.description.title.markdown
-        - match: \'
-          scope: punctuation.definition.string.end.markdown
-          pop: true
-        - include: non-terminated-link-title
+      set: link-title-single-quoted-content
     - match: \"
       scope: punctuation.definition.string.begin.markdown
-      set:
-        - meta_scope: string.other.link.description.title.markdown
-        - match: \"
-          scope: punctuation.definition.string.end.markdown
-          pop: true
-        - include: non-terminated-link-title
+      set: link-title-double-quoted-content
     - match: \(
       scope: punctuation.definition.string.begin.markdown
-      set:
-        - meta_scope: string.other.link.description.title.markdown
-        - match: \)
-          scope: punctuation.definition.string.end.markdown
-          pop: true
-        - include: non-terminated-link-title
+      set: link-title-other-quoted-content
     - match: $|(?=\S)
       pop: true
 
-  non-terminated-link-title:
+  link-title-double-quoted-content:
+    - meta_scope: string.other.link.description.title.markdown
+    - match: \"
+      scope: punctuation.definition.string.end.markdown
+      pop: true
+    - include: link-title-common
+
+  link-title-single-quoted-content:
+    - meta_scope: string.other.link.description.title.markdown
+    - match: \'
+      scope: punctuation.definition.string.end.markdown
+      pop: true
+    - include: link-title-common
+
+  link-title-other-quoted-content:
+    - meta_scope: string.other.link.description.title.markdown
+    - match: \)
+      scope: punctuation.definition.string.end.markdown
+      pop: true
+    - include: link-title-common
+
+  link-title-common:
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.link-title.markdown
       pop: true
-
-  link-ref-def-expect-end:
-    - meta_scope: meta.link.reference.def.markdown
-    - match: $
-      pop: true
-    - match: \s*\S+
-      scope: invalid.illegal.expected-eol.markdown
-
-###[ LINK/IMAGE URLS ]########################################################
 
   link-url:
     - match: <
