@@ -327,6 +327,7 @@ contexts:
   setext-heading1:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
     - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
       captures:
         1: punctuation.definition.heading.setext.markdown
@@ -337,6 +338,7 @@ contexts:
   setext-heading2:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
     - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
       captures:
         1: punctuation.definition.heading.setext.markdown
