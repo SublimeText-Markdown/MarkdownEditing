@@ -134,14 +134,14 @@ this must not be bold italic***
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - markup.italic
 
 SETEXT Heading Level 1
-| <- markup.heading.1.markdown
+| <- markup.heading.1.markdown entity.name.section.markdown
 =================
 | <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
 |^^^^^^^^^^^^^^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
 |                ^ markup.heading.1.markdown meta.whitespace.newline.markdown
 
 SETEXT Heading Level 2
-| <- markup.heading.2.markdown
+| <- markup.heading.2.markdown entity.name.section.markdown
 ------------------------------
 | <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
@@ -160,8 +160,8 @@ underlined heading followed by another one that should be treated as a normal pa
 https://spec.commonmark.org/0.30/#example-80
 
 Foo *bar*
-| <- markup.heading.1.markdown
-|^^^^^^^^^ markup.heading.1.markdown
+| <- markup.heading.1.markdown entity.name.section.markdown
+|^^^^^^^^^ markup.heading.1.markdown entity.name.section.markdown
 |   ^^^^^ markup.italic.markdown
 =========
 | <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
@@ -169,8 +169,8 @@ Foo *bar*
 |        ^ markup.heading.1.markdown meta.whitespace.newline.markdown
 
 Foo *bar*
-| <- markup.heading.2.markdown
-|^^^^^^^^^ markup.heading.2.markdown
+| <- markup.heading.2.markdown entity.name.section.markdown
+|^^^^^^^^^ markup.heading.2.markdown entity.name.section.markdown
 |   ^^^^^ markup.italic.markdown
 ---------
 | <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
@@ -178,8 +178,8 @@ Foo *bar*
 |        ^ markup.heading.2.markdown meta.whitespace.newline.markdown
 
 Foo *bar
-| <- markup.heading.1.markdown
-|^^^^^^^^^ markup.heading.1.markdown
+| <- markup.heading.1.markdown entity.name.section.markdown
+|^^^^^^^^^ markup.heading.1.markdown entity.name.section.markdown
 |   ^^^^^ markup.italic.markdown
 =========
 | <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown - markup.italic
@@ -187,8 +187,8 @@ Foo *bar
 |        ^ markup.heading.1.markdown meta.whitespace.newline.markdown - markup.italic
 
 Foo *bar
-| <- markup.heading.2.markdown
-|^^^^^^^^^ markup.heading.2.markdown
+| <- markup.heading.2.markdown entity.name.section.markdown
+|^^^^^^^^^ markup.heading.2.markdown entity.name.section.markdown
 |   ^^^^^ markup.italic.markdown
 ---------
 | <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown - markup.italic
@@ -199,9 +199,9 @@ https://spec.commonmark.org/0.30/#example-81
 
 Foo *bar
 baz*
-| <- markup.heading.1.markdown markup.italic.markdown
-|^^^ markup.heading.1.markdown markup.italic.markdown
-|   ^ markup.heading.1.markdown - markup.italic
+| <- markup.heading.1.markdown entity.name.section.markdown markup.italic.markdown
+|^^^ markup.heading.1.markdown entity.name.section.markdown markup.italic.markdown
+|   ^ markup.heading.1.markdown entity.name.section.markdown - markup.italic
 ====
 | <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
 |^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
@@ -211,9 +211,9 @@ https://spec.commonmark.org/0.30/#example-82
 
   Foo *bar
 baz*  
-| <- markup.heading.1.markdown markup.italic.markdown
-|^^^ markup.heading.1.markdown markup.italic.markdown
-|   ^^ markup.heading.1.markdown - markup.italic
+| <- markup.heading.1.markdown entity.name.section.markdown markup.italic.markdown
+|^^^ markup.heading.1.markdown entity.name.section.markdown markup.italic.markdown
+|   ^^ markup.heading.1.markdown entity.name.section.markdown - markup.italic
 ====
 | <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
 |^^^ markup.heading.1.markdown punctuation.definition.heading.setext.markdown
@@ -295,7 +295,7 @@ Foo
 https://spec.commonmark.org/0.30/#example-89
 
 Foo  
-|  ^^ markup.heading.2.markdown - meta.hard-line-break
+|  ^^ markup.heading.2.markdown entity.name.section.markdown - meta.hard-line-break
 -----
 | <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 |^^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
@@ -303,7 +303,7 @@ Foo
 https://spec.commonmark.org/0.30/#example-90
 
 Foo\
-|  ^ markup.heading.2.markdown - meta.hard-line-break
+|  ^ markup.heading.2.markdown entity.name.section.markdown - meta.hard-line-break
 ----
 | <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 |^^^ markup.heading.2.markdown punctuation.definition.heading.setext.markdown
