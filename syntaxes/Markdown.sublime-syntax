@@ -943,55 +943,44 @@ contexts:
 
   link-inline:
     - match: \[(?={{balance_square_brackets}}?\]\()
-      scope: meta.link.inline.markdown punctuation.definition.link.begin.markdown
-      push: [link-inline-attr, link-inline-after-text, link-inline-link-text]
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-inline-metadata
+        - link-inline-text
 
-  link-inline-after-text:
+  link-inline-text:
+    - meta_scope: meta.link.inline.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
+    - match: \]
+      scope: punctuation.definition.link.end.markdown
+      pop: true
+    - include: link-text-allow-image
+
+  link-inline-metadata:
     - match: \(
       scope: punctuation.definition.metadata.begin.markdown
       set:
-        - meta_scope: meta.link.inline.markdown
-        - match: \)
-          scope: punctuation.definition.metadata.end.markdown
-          pop: true
-        - match: <(?=[^>)]*>)
-          scope: punctuation.definition.link.begin.markdown
-          push:
-            - match: \>
-              scope: punctuation.definition.link.end.markdown
-              set: link-title
-            - match: \s+
-              scope: invalid.illegal.unexpected-whitespace.markdown
-        - match: (?=\S)
-          set:
-            - meta_scope: meta.link.inline.markdown
-            - match: '[^\s)]+'
-              scope: markup.underline.link.markdown
-            - match: \)
-              scope: punctuation.definition.metadata.end.markdown
-              pop: true
-            - match: (?!\n)\s+(?!\s*(?:[)('"]|$))
-              scope: invalid.illegal.unexpected-whitespace.markdown
-            - match: (?=\s*(?!\)))
-              push: link-title
+        - link-inline-metadata-end
+        - link-title
+        - link-url
     - include: immediately-pop
+
+  link-inline-metadata-end:
+    - meta_scope: meta.link.inline.metadata.markdown
+    - match: \)
+      scope: punctuation.definition.metadata.end.markdown
+      set: link-inline-attr
+    - include: else-pop
 
   link-inline-attr:
     - match: \{(?=[^}]*\})
       scope: punctuation.definition.attributes.begin.markdown
-      set:
-        - meta_scope: meta.link.inline.markdown
-        - include: tag-attributes
+      set: link-inline-attr-body
     - include: immediately-pop
 
-  link-inline-link-text:
-    - meta_content_scope:
-        meta.link.inline.description.markdown
-        string.other.link.title.markdown
-    - include: link-text-allow-image
-    - match: \]
-      scope: meta.link.inline.markdown punctuation.definition.link.end.markdown
-      pop: true
+  link-inline-attr-body:
+    - meta_scope: meta.link.inline.attributes.markdown
+    - include: tag-attributes
 
   link-ref:
     - match: \[(?={{balance_square_brackets}}?\]\[[^\]]+\])
@@ -2427,6 +2416,37 @@ contexts:
       pop: true
     - match: \s*\S+
       scope: invalid.illegal.expected-eol.markdown
+
+###[ LINK/IMAGE URLS ]########################################################
+
+  link-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: link-url-angled
+    - match: (?=\S)
+      set: link-url-unquoted
+
+  link-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - match: \>
+      scope: punctuation.definition.link.end.markdown
+      pop: true
+    - include: link-url-common
+
+  link-url-unquoted:
+    - meta_scope: markup.underline.link.markdown
+    - match: (?=[ \t)])
+      pop: true
+    - include: link-url-common
+
+  link-url-common:
+    - match: (%)\h{2}
+      scope: constant.character.escape.url.markdown
+      captures:
+        1: punctuation.definition.escape.markdown
+    - match: '[/&?#]|://'
+      scope: punctuation.separator.path.markdown
+    - include: paragraph-end
 
 ###[ LINK/IMAGE/REFERENCE ATTRIBUTES ]########################################
 

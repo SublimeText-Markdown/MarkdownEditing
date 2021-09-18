@@ -163,7 +163,7 @@ Fenced codeblocks are no no setext heading
 Paragraph of text that should be scoped as meta.paragraph.
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph
 A [link](https://example.com){ :_attr = value }, *italic text* and **bold**.
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline
+| ^^^^^^ meta.link.inline.description.markdown
 | ^ punctuation.definition.link.begin
 |      ^ punctuation.definition.link.end
 |       ^ punctuation.definition.metadata
@@ -208,6 +208,10 @@ Here is a [](https://example.com){_attr="value"}.
 |                                      ^ punctuation.separator.key-value.markdown
 |                                       ^^^^^^^ string.quoted.double.markdown
 |                                              ^ punctuation.definition.attributes.end.markdown
+
+Not a [link] (url) due to space.
+|     ^^^^^^ meta.link.reference
+|           ^^^^^^^^^^^^^^^^^^^^^ - meta.link
 
 Here is a [reference link][name].
 |         ^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference
@@ -338,12 +342,9 @@ now you can access the [The Ever Cool Site: Documentation about Sites](
 
 now you can access the [The Ever Cool Site: Documentation about Sites](
   www.thecoolsite.com.ca /documentations/about/cool ) for more information about...
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inline
-| ^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                       ^ invalid.illegal.unexpected-whitespace
-|                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                                  ^ - invalid
-|                                                   ^ punctuation.definition.metadata.end
+| ^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inline markup.underline.link
+|                       ^ meta.paragraph meta.link.inline - markup.underline.link
+|                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - meta.link.inline
 
 now you can access the [The Ever Cool Site: Documentation about Sites](
   www.thecoolsite.com.ca/documentations/about/cool
@@ -2815,10 +2816,8 @@ Additional {++[Link](https://foo.bar)++} and {++![Image](images/image.png)++}.
 |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.critic.addition.markdown
 |                                                                            ^^ - markup.critic
 |          ^^^ punctuation.definition.critic.begin.markdown
-|             ^ meta.link.inline.markdown punctuation.definition.link.begin.markdown 
-|              ^^^^ meta.link.inline.description.markdown
-|                  ^ meta.link.inline.markdown punctuation.definition.link.end.markdown
-|                   ^^^^^^^^^^^^^^^^^ meta.link.inline.markdown
+|             ^^^^^^ meta.link.inline.description.markdown
+|                   ^^^^^^^^^^^^^^^^^ meta.link.inline.metadata.markdown
 |                                    ^^^ punctuation.definition.critic.end.markdown
 |                                            ^^^ punctuation.definition.critic.begin.markdown
 |                                               ^^ meta.image.inline.markdown punctuation.definition.image.begin.markdown
