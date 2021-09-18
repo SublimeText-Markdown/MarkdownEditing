@@ -210,20 +210,32 @@ Here is a [](https://example.com){_attr="value"}.
 |                                              ^ punctuation.definition.attributes.end.markdown
 
 Not a [link] (url) due to space.
-|     ^^^^^^ meta.link.reference
+|     ^^^^^^ meta.link.reference.description.markdown
 |           ^^^^^^^^^^^^^^^^^^^^^ - meta.link
 
 Here is a [reference link][name].
-|         ^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference
-|                         ^ punctuation.definition.constant.begin
-|                          ^^^^ constant.other.reference.link
-|                              ^ punctuation.definition.constant.end
+|         ^^^^^^^^^^^^^^^^ meta.link.reference.description.markdown
+|                         ^^^^^^ meta.link.reference.metadata.markdown
+|         ^ punctuation.definition.link.begin.markdown
+|          ^^^^^^^^^^^^^^ string.other.link.title.markdown
+|                        ^ punctuation.definition.link.end.markdown
+|                         ^ punctuation.definition.metadata.begin.markdown
+|                          ^^^^ constant.other.reference.link.markdown
+|                              ^ punctuation.definition.metadata.end.markdown
 
 Here is a [reference link][name]{_attr='value' :att2}.
-|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference
-|                         ^ punctuation.definition.constant.begin
-|                          ^^^^ constant.other.reference.link
-|                              ^ punctuation.definition.constant.end
+|         ^^^^^^^^^^^^^^^^ meta.link.reference.description.markdown
+|                         ^^^^^^ meta.link.reference.metadata.markdown
+|                               ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.attributes.markdown
+|                                ^^^^^^^^^^^^^ meta.attribute-with-value.markdown
+|                                             ^ - meta.attribute-with-value
+|                                              ^^^^^ meta.attribute-with-value.markdown
+|         ^ punctuation.definition.link.begin.markdown
+|          ^^^^^^^^^^^^^^ string.other.link.title.markdown
+|                        ^ punctuation.definition.link.end.markdown
+|                         ^ punctuation.definition.metadata.begin.markdown
+|                          ^^^^ constant.other.reference.link.markdown
+|                              ^ punctuation.definition.metadata.end.markdown
 |                               ^ punctuation.definition.attributes.begin.markdown
 |                                ^^^^^ entity.other.attribute-name.markdown
 |                                     ^ punctuation.separator.key-value.markdown
@@ -232,15 +244,21 @@ Here is a [reference link][name]{_attr='value' :att2}.
 |                                                   ^ punctuation.definition.attributes.end.markdown
 
 Here is a [blank reference link][]{}.
-|         ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference
-|                               ^ punctuation.definition.constant.begin
-|                                ^ punctuation.definition.constant.end
+|         ^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.literal.description.markdown
+|                               ^^ meta.link.reference.literal.metadata.markdown
+|                                 ^^ meta.link.reference.literal.attributes.markdown
+|         ^ punctuation.definition.link.begin.markdown
+|          ^^^^^^^^^^^^^^^^^^^^ string.other.link.title.markdown
+|                              ^ punctuation.definition.link.end.markdown
+|                               ^ punctuation.definition.metadata.begin.markdown
+|                                ^ punctuation.definition.metadata.end.markdown
 |                                 ^ punctuation.definition.attributes.begin.markdown
 |                                  ^ punctuation.definition.attributes.end.markdown
 
 Here is a footnote[^1][link][] or long[^longnote][link][].
 |                 ^^^^ meta.link.reference.footnote.markdown-extra
-|                     ^^^^^^^^ meta.link.reference.literal
+|                     ^^^^^^ meta.link.reference.literal.description.markdown
+|                           ^^ meta.link.reference.literal.metadata.markdown
 |                                     ^^^^^^^^^^^ meta.link.reference.footnote.markdown-extra
 |                                                ^^^^^^^^ meta.link.reference.literal
 
@@ -2880,6 +2898,7 @@ This is an {== information ==}{>> comment <<}.
 |                                            ^^ - markup.critic
 
 This is a [[wiki link]].
-|         ^^ meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
-|           ^^^^^^^^^ meta.link.reference.wiki.description.markdown - punctuation
-|                    ^^ meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown
+|         ^^^^^^^^^^^^^ meta.link.reference.wiki.description.markdown
+|         ^^ punctuation.definition.link.begin.markdown
+|           ^^^^^^^^^ string.other.link.title.markdown
+|                    ^^ punctuation.definition.link.end.markdown

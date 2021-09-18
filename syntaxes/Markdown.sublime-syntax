@@ -972,69 +972,77 @@ contexts:
 
   link-ref:
     - match: \[(?={{balance_square_brackets}}?\]\[[^\]]+\])
-      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
-      push: [link-ref-attr, link-ref-after-text, link-ref-link-text]
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-ref-attr
+        - link-ref-metadata
+        - link-ref-link-text
     - match: \[(?=(?!\^){{balance_square_brackets}}?\])
-      scope: meta.link.reference.markdown punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.markdown
       push: link-ref-link-text
 
   link-ref-link-text:
-    - meta_content_scope:
-        meta.link.reference.description.markdown
-        string.other.link.title.markdown
-    - include: link-text-allow-image
+    - meta_scope: meta.link.reference.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
     - match: \]
-      scope: meta.link.reference.markdown punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.markdown
       pop: true
+    - include: link-text-allow-image
 
-  link-ref-after-text:
+  link-ref-metadata:
     - match: (\[)([^\]]+)(\])
-      scope: meta.link.reference.markdown
+      scope: meta.link.reference.metadata.markdown
       captures:
-        1: punctuation.definition.constant.begin.markdown
+        1: punctuation.definition.metadata.begin.markdown
         2: constant.other.reference.link.markdown
-        3: punctuation.definition.constant.end.markdown
+        3: punctuation.definition.metadata.end.markdown
       pop: true
     - include: immediately-pop
 
   link-ref-attr:
     - match: \{(?=[^}]*\})
       scope: punctuation.definition.attributes.begin.markdown
-      set:
-        - meta_scope: meta.link.reference.markdown
-        - include: tag-attributes
+      set: link-ref-attr-body
     - include: immediately-pop
+
+  link-ref-attr-body:
+    - meta_scope: meta.link.reference.attributes.markdown
+    - include: tag-attributes
 
   link-ref-literal:
     - match: \[(?={{balance_square_brackets}}?\]\[\])
-      scope: meta.link.reference.literal.markdown punctuation.definition.link.begin.markdown
-      push: [link-ref-literal-attr, link-ref-literal-after-text, link-ref-literal-link-text]
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-ref-literal-attr
+        - link-ref-literal-metadata
+        - link-ref-literal-link-text
 
   link-ref-literal-link-text:
-    - meta_content_scope:
-        meta.link.reference.literal.description.markdown
-        string.other.link.title.markdown
-    - include: link-text-allow-image
+    - meta_scope: meta.link.reference.literal.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
     - match: \]
-      scope: meta.link.reference.literal.markdown punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.markdown
       pop: true
+    - include: link-text-allow-image
 
-  link-ref-literal-after-text:
+  link-ref-literal-metadata:
     - match: (\[)(\])
-      scope: meta.link.reference.literal.markdown
+      scope: meta.link.reference.literal.metadata.markdown
       captures:
-        1: punctuation.definition.constant.begin.markdown
-        2: punctuation.definition.constant.end.markdown
+        1: punctuation.definition.metadata.begin.markdown
+        2: punctuation.definition.metadata.end.markdown
       pop: true
     - include: immediately-pop
 
   link-ref-literal-attr:
     - match: \{(?=[^}]*\})
       scope: punctuation.definition.attributes.begin.markdown
-      set:
-        - meta_scope: meta.link.reference.literal.markdown
-        - include: tag-attributes
+      set: link-ref-literal-attr-body
     - include: immediately-pop
+
+  link-ref-literal-attr-body:
+    - meta_scope: meta.link.reference.literal.attributes.markdown
+    - include: tag-attributes
 
   link-ref-footnote:
     - match: (\[\^)([^]]+)(\])
@@ -1046,17 +1054,16 @@ contexts:
 
   link-ref-wiki:
     - match: \[\[(?={{balance_square_brackets}}?\]\])
-      scope: meta.link.reference.wiki.markdown punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.markdown
       push: link-ref-wiki-link-text
 
   link-ref-wiki-link-text:
-    - meta_content_scope:
-        meta.link.reference.wiki.description.markdown
-        string.other.link.title.markdown
-    - include: link-text-allow-image
+    - meta_scope: meta.link.reference.wiki.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
     - match: \]\]
-      scope: meta.link.reference.wiki.markdown punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.markdown
       pop: true
+    - include: link-text-allow-image
 
   reference-link-definition:
     - match: |-
