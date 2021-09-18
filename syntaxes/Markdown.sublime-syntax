@@ -724,83 +724,6 @@ contexts:
       pop: true
     - include: inline-bold-italic
 
-  image-inline:
-    - match: \!\[(?={{balance_square_brackets}}?\]\()
-      scope: punctuation.definition.image.begin.markdown
-      push:
-        - image-inline-metadata
-        - image-inline-text
-
-  image-inline-text:
-    - meta_scope: meta.image.inline.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
-    - match: \]
-      scope: punctuation.definition.image.end.markdown
-      pop: true
-    - include: link-text
-
-  image-inline-metadata:
-    - match: \(
-      scope: punctuation.definition.metadata.begin.markdown
-      set:
-        - image-inline-metadata-end
-        - link-title
-        - link-url
-    - include: immediately-pop
-
-  image-inline-metadata-end:
-    - meta_scope: meta.image.inline.metadata.markdown
-    - match: \)
-      scope: punctuation.definition.metadata.end.markdown
-      set: image-inline-attr
-    - include: else-pop
-
-  image-inline-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: image-inline-attr-body
-    - include: immediately-pop
-
-  image-inline-attr-body:
-    - meta_scope: meta.image.inline.attributes.markdown
-    - include: tag-attributes
-
-  image-ref:
-    - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
-      scope: punctuation.definition.image.begin.markdown
-      push:
-        - image-ref-attr
-        - image-ref-metadata
-        - image-ref-text
-
-  image-ref-text:
-    - meta_scope: meta.image.reference.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
-    - match: \]
-      scope: punctuation.definition.image.end.markdown
-      pop: true
-    - include: link-text
-
-  image-ref-metadata:
-    - match: (\[)([^\]]+)(\])
-      scope: meta.image.reference.metadata.markdown
-      captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: constant.other.reference.link.markdown
-        3: punctuation.definition.metadata.end.markdown
-      pop: true
-    - include: immediately-pop
-
-  image-ref-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: image-ref-attr-body
-    - include: immediately-pop
-
-  image-ref-attr-body:
-    - meta_scope: meta.image.reference.markdown
-    - include: tag-attributes
-
   inline:
     - include: escape
     - include: ampersand
@@ -2224,6 +2147,87 @@ contexts:
         7: punctuation.definition.tag.begin.html
         8: entity.name.tag.inline.any.html
         9: punctuation.definition.tag.end.html
+
+###[ INLINE IMAGES ]##########################################################
+
+  image-inline:
+    - match: \!\[(?={{balance_square_brackets}}?\]\()
+      scope: punctuation.definition.image.begin.markdown
+      push:
+        - image-inline-metadata
+        - image-inline-text
+
+  image-inline-text:
+    - meta_scope: meta.image.inline.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
+    - match: \]
+      scope: punctuation.definition.image.end.markdown
+      pop: true
+    - include: link-text
+
+  image-inline-metadata:
+    - match: \(
+      scope: punctuation.definition.metadata.begin.markdown
+      set:
+        - image-inline-metadata-end
+        - link-title
+        - link-url
+    - include: immediately-pop
+
+  image-inline-metadata-end:
+    - meta_scope: meta.image.inline.metadata.markdown
+    - match: \)
+      scope: punctuation.definition.metadata.end.markdown
+      set: image-inline-attr
+    - include: else-pop
+
+  image-inline-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: image-inline-attr-body
+    - include: immediately-pop
+
+  image-inline-attr-body:
+    - meta_scope: meta.image.inline.attributes.markdown
+    - include: tag-attributes
+
+###[ IMAGE REFERENCES ]#######################################################
+
+  image-ref:
+    - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+      scope: punctuation.definition.image.begin.markdown
+      push:
+        - image-ref-attr
+        - image-ref-metadata
+        - image-ref-text
+
+  image-ref-text:
+    - meta_scope: meta.image.reference.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
+    - match: \]
+      scope: punctuation.definition.image.end.markdown
+      pop: true
+    - include: link-text
+
+  image-ref-metadata:
+    - match: (\[)([^\]]+)(\])
+      scope: meta.image.reference.metadata.markdown
+      captures:
+        1: punctuation.definition.metadata.begin.markdown
+        2: constant.other.reference.link.markdown
+        3: punctuation.definition.metadata.end.markdown
+      pop: true
+    - include: immediately-pop
+
+  image-ref-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: image-ref-attr-body
+    - include: immediately-pop
+
+  image-ref-attr-body:
+    - meta_scope: meta.image.reference.markdown
+    - include: tag-attributes
 
 ###[ INLINE LINKS ]###########################################################
 
