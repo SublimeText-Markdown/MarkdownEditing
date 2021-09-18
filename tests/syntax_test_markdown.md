@@ -356,12 +356,14 @@ Here is a ![Image Alt Text](
 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.image - markup.underline
 
 Here is a ![Image Ref Alt][1].
-|         ^^^^^^^^^^^^^^^^^^^ meta.image.reference
-|         ^^ punctuation.definition.image.begin
-|                        ^ punctuation.definition.image.end
-|                         ^ punctuation.definition.constant
-|                          ^ constant.other.reference.link
-|                           ^ punctuation.definition.constant
+|         ^^^^^^^^^^^^^^^^ meta.image.reference.description.markdown
+|                         ^^^ meta.image.reference.metadata.markdown
+|         ^^ punctuation.definition.image.begin.markdown
+|           ^^^^^^^^^^^^^ string.other.link.title.markdown
+|                        ^ punctuation.definition.image.end.markdown
+|                         ^ punctuation.definition.metadata.begin.markdown
+|                          ^ constant.other.reference.link.markdown
+|                           ^ punctuation.definition.metadata.end.markdown
 
 now you can access the [The Ever Cool Site: Documentation about Sites](
   www.thecoolsite.com.ca/documentations/about/cool ) for more information about...

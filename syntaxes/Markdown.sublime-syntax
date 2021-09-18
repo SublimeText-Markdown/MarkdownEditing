@@ -767,35 +767,39 @@ contexts:
 
   image-ref:
     - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
-      scope: meta.image.reference.markdown punctuation.definition.image.begin.markdown
-      push: [image-ref-attr, image-ref-after-text, image-ref-text]
+      scope: punctuation.definition.image.begin.markdown
+      push:
+        - image-ref-attr
+        - image-ref-metadata
+        - image-ref-text
 
   image-ref-text:
-    - meta_content_scope:
-        meta.image.reference.description.markdown
-        string.other.link.title.markdown
-    - include: link-text
+    - meta_scope: meta.image.reference.description.markdown
+    - meta_content_scope: string.other.link.title.markdown
     - match: \]
-      scope: meta.image.reference.markdown punctuation.definition.image.end.markdown
+      scope: punctuation.definition.image.end.markdown
       pop: true
+    - include: link-text
 
-  image-ref-after-text:
+  image-ref-metadata:
     - match: (\[)([^\]]+)(\])
+      scope: meta.image.reference.metadata.markdown
       captures:
-        1: punctuation.definition.constant.begin.markdown
+        1: punctuation.definition.metadata.begin.markdown
         2: constant.other.reference.link.markdown
-        3: punctuation.definition.constant.end.markdown
-      scope: meta.image.reference.markdown
+        3: punctuation.definition.metadata.end.markdown
       pop: true
     - include: immediately-pop
 
   image-ref-attr:
     - match: \{(?=[^}]*\})
       scope: punctuation.definition.attributes.begin.markdown
-      set:
-        - meta_scope: meta.image.reference.markdown
-        - include: tag-attributes
+      set: image-ref-attr-body
     - include: immediately-pop
+
+  image-ref-attr-body:
+    - meta_scope: meta.image.reference.markdown
+    - include: tag-attributes
 
   inline:
     - include: escape
