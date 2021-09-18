@@ -974,67 +974,231 @@ _ _ _ _ _ _ _
 |  ^ punctuation
 |        ^ punctuation
 
+###[ COMMONMARK AUTOLINKS ]###################################################
+
 <mailto:test+test@test.com>
-| ^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.email.lt-gt markup.underline.link
+| <- meta.link.email.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+|                         ^ meta.link.email.markdown - markup.underline
+|      ^ punctuation.separator.path.markdown
+|                ^ punctuation.separator.path.markdown
+|                         ^ punctuation.definition.link.end.markdown
+
+<foo#bar?@mail.test.com>
+| <- meta.link.email.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+|                      ^ meta.link.email.markdown - markup.underline
+|        ^ punctuation.separator.path.markdown
+|                      ^ punctuation.definition.link.end.markdown
+
 <http://www.test.com/>
-| ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet markup.underline.link
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                    ^ meta.link.inet.markdown - markup.underline
+|    ^^^ punctuation.separator.path.markdown
+|                   ^ punctuation.separator.path.markdown
+|                    ^ punctuation.definition.link.end.markdown
+
 <https://test.com/>
-| ^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet markup.underline.link
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                 ^ meta.link.inet.markdown - markup.underline
+|     ^^^ punctuation.separator.path.markdown
+|                ^ punctuation.separator.path.markdown
+|                 ^ punctuation.definition.link.end.markdown
+
 <ftp://test.com/>
-| ^^^^^^^^^^^^^^ meta.paragraph meta.link.inet markup.underline.link
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|               ^ meta.link.inet.markdown - markup.underline
+|   ^^^ punctuation.separator.path.markdown
+|              ^ punctuation.separator.path.markdown
+|               ^ punctuation.definition.link.end.markdown
+
+<irc://foo%20bar.com:2233/baz>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown - markup.underline
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                            ^ meta.link.inet.markdown - markup.underline
+|   ^^^ punctuation.separator.path.markdown
+|         ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
+|          ^^ constant.character.escape.url.markdown - punctuation
+|                        ^ punctuation.separator.path.markdown
+
+<a+b+c:d>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|       ^ meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.end.markdown
+
+<made-up-scheme://foo,bar>
+| <- meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown
+|                        ^ meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.end.markdown
+|              ^^^ punctuation.separator.path.markdown
+
+<http://../>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|          ^ meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.end.markdown
+|    ^^^ punctuation.separator.path.markdown
+|         ^ punctuation.separator.path.markdown
+
+<localhost:5001/foo>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                  ^ meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.end.markdown
+|         ^ punctuation.separator.path.markdown
+|              ^ punctuation.separator.path.markdown
+
+<http://foo.bar/baz bim>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                  ^^^^^^ - meta.link
+|    ^^^ punctuation.separator.path.markdown
+|              ^ punctuation.separator.path.markdown
+
+<http://example.com/\[\>
+| <- meta.link.inet.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link.markdown
+|                      ^ meta.paragraph.markdown meta.link.inet.markdown punctuation.definition.link.end.markdown
+|    ^^^ punctuation.separator.path.markdown
+|                  ^ punctuation.separator.path.markdown
+
+###[ GFM AUTOLINKS ]##########################################################
+
+Visit ftp://intra%20net
+|     ^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|        ^^^ punctuation.separator.path.markdown
+|               ^ - constant
+|                ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
+|                 ^^ constant.character.escape.url.markdown - punctuation
+|                   ^^^ - constant
+
+Visit http://intra%20net
+|     ^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|         ^^^ punctuation.separator.path.markdown
+|                ^ - constant
+|                 ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
+|                  ^^ constant.character.escape.url.markdown - punctuation
+|                    ^^^ - constant
+
+Visit https://intra%20net
+|     ^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|          ^^^ punctuation.separator.path.markdown
+|                 ^ - constant
+|                  ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
+|                   ^^ constant.character.escape.url.markdown - punctuation
+|                     ^^^ - constant
+
+Visit www.intra%20net
+|     ^^^^^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|             ^ - constant
+|              ^ constant.character.escape.url.markdown punctuation.definition.escape.markdown
+|               ^^ constant.character.escape.url.markdown - punctuation
+|                 ^^^ - constant
 
 Visit www.commonmark.org/help for more information.
 |     ^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|                       ^ punctuation.separator.path.markdown
 |                            ^^^^^^^^^^^^^^^^^^^^^^^ - markup.underline.link
+
 Visit www.commonmark.org.
 |     ^^^^^^^^^^^^^^^^^^ meta.paragraph markup.underline.link
 |                       ^^ - markup.underline.link
+
 Visit www.commonmark.org/a.b.
 |     ^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.underline.link
 |                           ^ - markup.underline.link
+|                       ^ punctuation.separator.path.markdown
+
 www.google.com/search?q=(business))+ok
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
 |                                     ^ - markup.underline.link
+
 www.google.com/search?q=Markup+(business)
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+
 www.commonmark.org/he<lp>
 |^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|                 ^ punctuation.separator.path.markdown
 |                    ^ - markup.underline.link
+
 http://commonmark.org
 |^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|   ^^^ punctuation.separator.path.markdown
+
 www.google.com/search?q=commonmark&hl=en
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                 ^ punctuation.separator.path.markdown
 |                                       ^ - markup.underline.link
+
 www.google.com/search?q=commonmark&hl;
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
 |                                 ^^^^ constant.character.entity.named.html - markup.underline.link
+
 (Visit https://encrypted.google.com/search?q=Markup+(business))
 |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|           ^^^ punctuation.separator.path.markdown
+|                                  ^ punctuation.separator.path.markdown
+|                                         ^ punctuation.separator.path.markdown
 |                                                             ^^ - markup.underline.link
+
 Anonymous FTP is available at ftp://foo.bar.baz.
 |                             ^^^^^^^^^^^^^^^^^ markup.underline.link
+|                                ^^^ punctuation.separator.path.markdown
 |                                              ^^ - markup.underline.link
+
 (see http://www.google.com/search?q=commonmark&hl=en)
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|        ^^^ punctuation.separator.path.markdown
+|                         ^ punctuation.separator.path.markdown
+|                                ^ punctuation.separator.path.markdown
+|                                             ^ punctuation.separator.path.markdown
 |                                                   ^^ - markup.underline.link
 
+
 foo@bar.baz
-|^^^^^^^^^^ markup.underline.link
+| <- meta.link.email.markdown markup.underline.link.markdown
+|^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+|  ^ punctuation.separator.path.markdown
+|          ^ - meta.link - markup.underline.link
+
 hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - markup.underline.link
-|                                       ^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.link - markup.underline.link
+|                                       ^^^^^^^^^^^^^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+
+ test@test.test.me
+| <- - meta.link - markup.underline
+|^^^^^^^^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+|    ^ punctuation.separator.path.markdown
+|                 ^ - meta.link - markup.underline.link
+
  a.b-c_d@a.b
-|^^^^^^^^^^^ markup.underline.link
-|           ^ - markup.underline.link
+| <- - meta.link - markup.underline
+|^^^^^^^^^^^ meta.link.email.markdown markup.underline.link.markdown
+|       ^ punctuation.separator.path.markdown
+|           ^ - meta.link - markup.underline.link
+
 a.b-c_d@a.b.
 |^^^^^^^^^^ markup.underline.link
 |          ^^ - markup.underline.link
+
  a.b-c_d@a.b-
-|^^^^^^^^^^^^^ - markup.underline.link
+| <- - meta.link - markup.underline
+|^^^^^^^^^^^^^ - meta.link - markup.underline.link
+
  a.b-c_d@a.b_
-|^^^^^^^^^^^^^ - markup.underline.link
- test@test.test.me
-|^^^^^^^^^^^^^^^^^ markup.underline.link
+| <- - meta.link - markup.underline
+|^^^^^^^^^^^^^ - meta.link - markup.underline.link
+
+###[ LIGATURES ]##############################################################
 
 this is a raw ampersand & does not require HTML escaping
 |                       ^ meta.other.valid-ampersand
