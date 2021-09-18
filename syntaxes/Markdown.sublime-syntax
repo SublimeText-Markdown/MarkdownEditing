@@ -1023,6 +1023,7 @@ contexts:
     - include: fenced-stata
     - include: fenced-swift
     - include: fenced-toml
+    - include: fenced-xonsh
 
   fenced-clojure:
     - match: |-
@@ -2064,6 +2065,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.toml.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-xonsh:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:xonsh|xsh))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.xonsh.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.python
+      embed_scope: markup.raw.code-fence.xonsh.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.xonsh.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   code-span:
