@@ -42,8 +42,11 @@ def select_color_scheme(view=None):
     schemes_display = []
     selected_index = 0
     for i, s in enumerate(schemes):
-        m = re.search(r"[^/]+(?=\.(sublime-color-scheme|tmTheme)$)", s)
-        theme_display = m.group(0)
+        if s == "auto":
+            theme_display = "Auto"
+        else:
+            m = re.search(r"[^/]+(?=\.(sublime-color-scheme|tmTheme)$)", s)
+            theme_display = m.group(0)
         if s == global_scheme:
             theme_display += " (Global)"
             if not md_scheme:
