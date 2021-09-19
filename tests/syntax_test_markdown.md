@@ -465,8 +465,8 @@ Paragraph break.
 |^^^^^^^ punctuation.definition.thematic-break
 
 [1]: https://google.com
-| <- meta.link.reference.def
-|^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def
+| <- meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |^ entity.name.reference.link
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^ markup.underline.link
@@ -1015,8 +1015,8 @@ these are raw ligatures - -- --- ---- ----- ===== ==== === == =
 |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
 
 [2]: https://github.com/sublimehq/Packages "Packages Repo"
-| <- meta.link.reference.def
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def
+| <- meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |^ entity.name.reference.link
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
@@ -1025,8 +1025,8 @@ these are raw ligatures - -- --- ---- ----- ===== ==== === == =
 |                                                        ^ punctuation.definition.string.end
 
 [3]: https://github.com/sublimehq/Packages/issues/ 'Issues on Packages Repo'
-| <- meta.link.reference.def
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def
+| <- meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |^ entity.name.reference.link
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
@@ -2273,18 +2273,18 @@ _foo [**bar**](/url)_
 |                                                                                                                                          ^ punctuation.definition.metadata.end
 
 [img-example]: http://www.sublimetext.com/anim/rename2_packed.png
-|^^^^^^^^^^^ meta.link.reference.def entity.name.reference.link
+|^^^^^^^^^^^ meta.link.reference.def.markdown entity.name.reference.link
 |            ^ punctuation.separator.key-value
 |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
 |                                                                ^ - meta.link - markup
 
 [//]: # (This is a comment without a line-break.)
-|     ^ meta.link.reference.def markup.underline.link
+|     ^ meta.link.reference.def.markdown markup.underline.link
 |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.link.description.title
 |                                                ^ - meta.link
 
 [//]: # (This is a comment with a
-|     ^ meta.link.reference.def markup.underline.link
+|     ^ meta.link.reference.def.markdown markup.underline.link
 |       ^ punctuation.definition.string.begin
         line-break.)
 |                  ^ punctuation.definition.string.end
@@ -2299,11 +2299,11 @@ _foo [**bar**](/url)_
 
 [//]: # (testing
 blah
-| <- meta.link.reference.def string.other.link.description.title
+| <- meta.link.reference.def.markdown string.other.link.description.title
 
 | <- invalid.illegal.non-terminated.link-title
 text
-| <- meta.paragraph - meta.link.reference.def
+| <- meta.paragraph - meta.link.reference.def.markdown
 
 [foo]: <bar> "test" 
 |^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
@@ -2326,16 +2326,16 @@ text
 https://michelf.ca/projects/php-markdown/extra/#footnotes
 That's some text with a footnote.[^1]
 |                                ^^^^ meta.paragraph meta.link.reference.footnote.markdown-extra
-|                                ^^ punctuation.definition.link.begin
-|                                  ^ meta.link.reference.literal.footnote-id
+|                                ^ punctuation.definition.link.begin
+|                                 ^^ meta.link.reference.literal.footnote-id
 |                                   ^ punctuation.definition.link.end
 
  [^1]: And that's the footnote.
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra
-|^ punctuation.definition.constant.begin
-|   ^ punctuation.definition.constant.end
-| ^^ entity.name.reference.link
-|    ^ punctuation.separator.key-value
+|^ punctuation.definition.reference.begin.markdown
+| ^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
 
 [^1]:
     And that's the footnote.
@@ -2971,11 +2971,11 @@ link with a single underscore inside the text : [@_test](http://example.com)
 |            ^^^^^ - meta.link
 
   [001]: https://en.wikipedia.org/wiki/Root-mean-square_deviation "Wikipedia - RMSE"
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.link.reference.def
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.link.reference.def.markdown
 1. another list item
 
 [foo]: /url "title"
-|^^^^^^^^^^^^^^^^^^ meta.link.reference.def
+|^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |    ^ punctuation.separator.key-value
 |      ^^^^ markup.underline.link
 |           ^^^^^^^ string.other.link.description.title
@@ -2985,17 +2985,27 @@ link with a single underscore inside the text : [@_test](http://example.com)
 |^^^ meta.paragraph meta.link.reference
 |   ^ meta.link.reference punctuation.definition.link.end
 
+This is literal [Foo*bar\]] but [ref][Foo*bar\]]
+|               ^^^^^^^^^^^ meta.link.reference.description.markdown
+|               ^ punctuation.definition.link.begin.markdown
+|                ^^^^^^^ string.other.link.title.markdown - constant
+|                       ^^ string.other.link.title.markdown constant.character.escape.markdown
+|                         ^ punctuation.definition.link.end.markdown
+|                               ^^^^^ meta.link.reference.description.markdown
+|                                    ^^^^^^^^^^^ meta.link.reference.metadata.markdown
+
  [Foo*bar\]]:my_(url) 'title (with parens)'
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def
-|^ punctuation.definition.constant.begin
-| ^^^^^^^^^ entity.name.reference.link - punctuation
-|          ^ punctuation.definition.constant.end
-|           ^ punctuation.separator.key-value
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^ punctuation.definition.reference.begin.markdown
+| ^^^^^^^^^ entity.name.reference.link.markdown - punctuation
+|          ^ punctuation.definition.reference.end.markdown
+|           ^ punctuation.separator.key-value.markdown
 |            ^^^^^^^^ markup.underline.link
+|                    ^ - markup - string
 |                     ^^^^^^^^^^^^^^^^^^^^^ string.other.link.description.title
 
  [foo]: <>
-|^^^^^^^^^ meta.link.reference.def
+|^^^^^^^^^ meta.link.reference.def.markdown
 |     ^ punctuation.separator.key-value
 |       ^ punctuation.definition.link.begin
 |        ^ punctuation.definition.link.end

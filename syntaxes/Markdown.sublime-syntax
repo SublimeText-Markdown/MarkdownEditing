@@ -191,6 +191,9 @@ variables:
     tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
     tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
+    footnote_name: (?:\^(?:\\\]|[^]])+)
+    reference_name: (?:(?:\\\]|[^]])+)
+
 contexts:
 
   main:
@@ -296,23 +299,7 @@ contexts:
     - match: '^[ ]{0,3}(?=(?:{{html_tag_open_commonmark}}|{{html_tag_close_commonmark}})\s*$|<{{html_tag_block_end_at_blank_line}})'
       comment: Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
       push: [disabled-markdown-pop-at-eol, disable-markdown-pop-at-blank-line]
-    - match: |-
-        (?x:
-            \s*                        # Leading whitespace
-            (\[)(\^[^]]*)(\])(:)       # Reference name
-            [ \t]*                     # Optional whitespace
-        )
-      captures:
-        1: punctuation.definition.constant.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.constant.end.markdown
-        4: punctuation.separator.key-value.markdown
-      push:
-        - meta_scope: meta.link.reference.def.footnote.markdown-extra
-        - match: ^(?![ ]{4}|$)
-          pop: true
-        - include: inline-bold-italic
-    - include: reference-link-definition
+    - include: reference-definitions
     - include: latex-blocks
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
@@ -825,35 +812,6 @@ contexts:
       captures:
         1: constant.character.escape.markdown
 
-  reference-link-definition:
-    - match: |-
-        (?x:
-            [ ]{0,3}                     # Leading whitespace
-            (\[)(|(?:\\\]|[^]])+)(\])(:) # Reference name
-            [ \t]*                       # Optional whitespace
-            (?:
-              (<)([^>]*)(>)              # The url
-            | (\S+)                      # The url
-            )
-        )
-      captures:
-        1: punctuation.definition.constant.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.constant.end.markdown
-        4: punctuation.separator.key-value.markdown
-        5: punctuation.definition.link.begin.markdown
-        6: markup.underline.link.markdown
-        7: punctuation.definition.link.end.markdown
-        8: markup.underline.link.markdown
-      push: [link-ref-def-expect-end, link-title]
-
-  link-ref-def-expect-end:
-    - meta_scope: meta.link.reference.def.markdown
-    - match: $
-      pop: true
-    - match: \s*\S+
-      scope: invalid.illegal.expected-eol.markdown
-
   list-paragraph:
     - match: '^(?=(?:[ ]{4}|\t){2,}(?![>+*\s-]))(?={{indented_code_block}})'
       push:
@@ -868,7 +826,7 @@ contexts:
         - block-quote-content
     - include: latex-blocks
     - include: fenced-code-blocks
-    - include: reference-link-definition
+    - include: reference-definitions
     - match: \s+(?=\S)
       push:
         - match: ^\s*$
@@ -2135,6 +2093,73 @@ contexts:
         8: entity.name.tag.inline.any.html
         9: punctuation.definition.tag.end.html
 
+###[ LEAF BLOCKS: LINK REFERENCE DEFINITIONS ]################################
+
+  reference-definitions:
+    - include: footnote-definitions
+    - include: link-definitions
+
+  footnote-definitions:
+    # Mardown Extras Footnotes
+    - match: '[ ]{0,3}(\[)({{footnote_name}})(\])(:)'
+      captures:
+        1: punctuation.definition.reference.begin.markdown
+        2: entity.name.reference.link.markdown
+        3: punctuation.definition.reference.end.markdown
+        4: punctuation.separator.key-value.markdown
+      push: footnote-def-body
+
+  footnote-def-body:
+    - meta_scope: meta.link.reference.def.footnote.markdown-extra
+    - match: ^(?![ ]{4}|$)
+      pop: true
+    - include: inline-bold-italic
+
+  link-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definition
+    - match: '[ ]{0,3}(\[)({{reference_name}})(\])(:)'
+      captures:
+        1: punctuation.definition.reference.begin.markdown
+        2: entity.name.reference.link.markdown
+        3: punctuation.definition.reference.end.markdown
+        4: punctuation.separator.key-value.markdown
+      push:
+        - link-def-end
+        - link-title
+        - link-def-url
+
+  link-def-end:
+    - meta_scope: meta.link.reference.def.markdown
+    - include: eol-pop
+    - match: \s*\S+
+      scope: invalid.illegal.expected-eol.markdown
+
+  link-def-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: link-def-url-angled
+    - match: (?=\S)
+      set: link-def-url-unquoted
+    - include: eol-pop
+
+  link-def-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - match: \>
+      scope: punctuation.definition.link.end.markdown
+      pop: true
+    - include: link-def-url-common
+
+  link-def-url-unquoted:
+    - meta_scope: markup.underline.link.markdown
+    - include: link-def-url-common
+
+  link-def-url-common:
+    # URLs are terminated by whitespace or newline in reference definitions
+    # Note: \s includes \n
+    - match: (?=\s)
+      pop: true
+    - include: link-url-common
+
 ###[ INLINE IMAGES ]##########################################################
 
   image-inline:
@@ -2181,7 +2206,7 @@ contexts:
 ###[ IMAGE REFERENCES ]#######################################################
 
   image-ref:
-    - match: \!\[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+    - match: \!\[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
       scope: punctuation.definition.image.begin.markdown
       push:
         - image-ref-attr
@@ -2197,7 +2222,7 @@ contexts:
     - include: link-text
 
   image-ref-metadata:
-    - match: (\[)([^\]]+)(\])
+    - match: (\[)({{reference_name}})(\])
       scope: meta.image.reference.metadata.markdown
       captures:
         1: punctuation.definition.metadata.begin.markdown
@@ -2262,7 +2287,7 @@ contexts:
 ###[ LINK REFERENCES ]########################################################
 
   link-ref:
-    - match: \[(?={{balance_square_brackets}}?\]\[[^\]]+\])
+    - match: \[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
       scope: punctuation.definition.link.begin.markdown
       push:
         - link-ref-attr
@@ -2281,7 +2306,7 @@ contexts:
     - include: link-text-allow-image
 
   link-ref-metadata:
-    - match: (\[)([^\]]+)(\])
+    - match: (\[)({{reference_name}})(\])
       scope: meta.link.reference.metadata.markdown
       captures:
         1: punctuation.definition.metadata.begin.markdown
@@ -2336,7 +2361,7 @@ contexts:
     - include: tag-attributes
 
   link-ref-footnote:
-    - match: (\[\^)([^]]+)(\])
+    - match: (\[)({{footnote_name}})(\])
       captures:
         0: meta.link.reference.footnote.markdown-extra
         1: punctuation.definition.link.begin.markdown
@@ -2787,6 +2812,10 @@ contexts:
 
   else-pop:
     - match: (?=\S)
+      pop: true
+
+  eol-pop:
+    - match: $
       pop: true
 
   immediately-pop:
