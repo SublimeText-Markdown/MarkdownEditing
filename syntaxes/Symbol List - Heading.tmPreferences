@@ -13,7 +13,8 @@
 			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
 			s/\[\^[^]]+\]//g; 					# strip footnotes
 			s/^\s*//g;							# strip leading whitespace
-			s/\s*#+\s*\z//g;					# strip trailing hashes
+			s/\s+#+\s*\z//g;					# strip trailing hashes
+			s/\s+/ /g;							# convert (multiple) whitespace to one space
 			s/^#{6}/          /g;				# indent atx heading 6
 			s/^#{5}/        /g;					# indent atx heading
 			s/^#{4}/      /g;					# indent atx heading
@@ -29,7 +30,8 @@
 			s/\[([^]]+)\]\[[^]]*\]/$1/g; 		# strip reference urls
 			s/\[\^[^]]+\]//g; 					# strip footnotes
 			s/^\s*//g;							# strip leading whitespace
-			s/\s*#+\s*\z//g;					# strip trailing hashes
+			s/\s+#+\s*\z//g;					# strip trailing hashes
+			s/\s+/ /g;							# convert (multiple) whitespace to one space
 		]]></string>
 	</dict>
 </dict>

@@ -109,7 +109,7 @@
 	"mde.auto_fold_link.enabled": true,
 	// MarkdownEditing (Folding):
 	// Selector for urls to automatically fold
-	"mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
+	"mde.auto_fold_link.selector": "( meta.image.inline.metadata.markdown | meta.image.reference.metadata.markdown | meta.link.inline.metadata.markdown | meta.link.reference.metadata.markdown ) - punctuation.definition.metadata",
 
 	// MarkdownEditing (Wiki):
 	// wiki file extensions
@@ -125,6 +125,10 @@
 
 	// You can opt out some keybinds by setting the corresponding value from 'false' to 'true' (without single-quotes).
 	// Super key references to a key next to left Alt key. It usually has a Windows logo or "win" or "Command" on it.
+
+	// Set Heading Level
+	// Default keys: (OSX/Linux/Win): alt+k, alt+0..9
+	"mde.keymap_disable.set_heading_level": false,
 	// Jump between link/image/footnote reference and definition
 	// Default keys: (OSX)super+ctrl+shift+l    (Linux/Win)ctrl+alt+g
 	"mde.keymap_disable.reference_jump": false,

@@ -175,6 +175,27 @@ class MdeNumberListCommand(MdeTextCommand):
             view.insert(edit, sel.begin(), to_insert)
 
 
+class MdeInsertTaskListItemCommand(MdeTextCommand):
+    """
+    The `mde_insert_task_list_item` command inserts a new GFM task.
+
+    It respects the primary bullet set via `"mde.list_indent_bullets"` setting.
+    """
+
+    def run(self, edit):
+        align_text = self.view.settings().get("mde.list_align_text", True)
+        bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
+
+        to_insert = "{} [ ]".format(bullets[0])
+        if align_text:
+            to_insert += "\t"
+        else:
+            to_insert += " "
+
+        for sel in self.view.sel():
+            self.view.insert(edit, sel.begin(), to_insert)
+
+
 class MdeToggleTaskListItemCommand(MdeTextCommand):
     """
     The `mde_toggle_task_list_item` command toggles the check mark of task list items.

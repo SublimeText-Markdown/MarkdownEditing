@@ -22,18 +22,18 @@ import operator
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
 
-refname_scope_name = "constant.other.reference.link.markdown"
+refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
-footnote_scope_name = "meta.link.reference.footnote.markdown"
-marker_scope_name = "meta.link.reference.markdown"
-marker_literal_scope_name = "meta.link.reference.literal.markdown"
-marker_image_scope_name = "meta.image.reference.markdown"
+footnote_scope_name = "meta.link.reference.footnote.markdown-extra"
+marker_scope_name = "meta.link.reference.description.markdown"
+marker_literal_scope_name = "meta.link.reference.literal.description.markdown"
+marker_image_scope_name = "meta.image.reference.description.markdown"
 ref_link_scope_name = "markup.underline.link.markdown"
-marker_begin_scope_name = "punctuation.definition.string.begin.markdown"
-marker_text_end_scope_name = "punctuation.definition.string.end.markdown"
+marker_begin_scope_name = "punctuation.definition.link.begin.markdown"
+marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
 marker_text_scope_name = "string.other.link.title.markdown"
-refname_start_scope_name = "punctuation.definition.constant.begin.markdown"
-marker_end_scope_name = "punctuation.definition.constant.end.markdown"
+refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
+marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
 
 
 def hasScope(scope_name, to_find):

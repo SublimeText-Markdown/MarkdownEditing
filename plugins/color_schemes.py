@@ -42,8 +42,11 @@ def select_color_scheme(view=None):
     schemes_display = []
     selected_index = 0
     for i, s in enumerate(schemes):
-        m = re.search(r"[^/]+(?=\.(sublime-color-scheme|tmTheme)$)", s)
-        theme_display = m.group(0)
+        if s == "auto":
+            theme_display = "Auto"
+        else:
+            m = re.search(r"[^/]+(?=\.(sublime-color-scheme|tmTheme)$)", s)
+            theme_display = m.group(0)
         if s == global_scheme:
             theme_display += " (Global)"
             if not md_scheme:
@@ -95,3 +98,21 @@ def clear_color_scheme(filename):
     settings = sublime.load_settings(filename)
     settings.erase("color_scheme")
     sublime.save_settings(filename)
+
+
+def clear_invalid_color_schemes():
+    clear_invalid_color_scheme("Markdown.sublime-settings")
+    clear_invalid_color_scheme("Markdown GFM.sublime-settings")
+    clear_invalid_color_scheme("MultiMarkdown.sublime-settings")
+
+
+def clear_invalid_color_scheme(filename):
+    settings = sublime.load_settings(filename)
+    color_scheme = settings.get("color_scheme")
+    if not color_scheme:
+        return
+    try:
+        sublime.load_resource(color_scheme)
+    except FileNotFoundError:
+        settings.erase("color_scheme")
+        sublime.save_settings(filename)

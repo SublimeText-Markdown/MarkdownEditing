@@ -4,9 +4,9 @@ import sys
 
 import sublime
 
-from .color_schemes import clear_color_schemes, select_color_scheme
+from .color_schemes import clear_color_schemes, clear_invalid_color_schemes, select_color_scheme
 
-BOOTSTRAP_VERSION = "3.0.2"
+BOOTSTRAP_VERSION = "3.0.3"
 
 package_name = "MarkdownEditing"
 
@@ -25,14 +25,6 @@ def save_ingored_packages(ignored_packages):
 def disable_native_markdown_package():
     ignored_packages = get_ingored_packages()
     if "Markdown" not in ignored_packages:
-        reassign_syntax(
-            "Packages/Markdown/Markdown.sublime-syntax",
-            "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
-        )
-        reassign_syntax(
-            "Packages/Markdown/MultiMarkdown.sublime-syntax",
-            "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
-        )
         ignored_packages.append("Markdown")
         save_ingored_packages(ignored_packages)
 
@@ -45,11 +37,11 @@ def enable_native_markdown_package():
 
         def reassign():
             reassign_syntax(
-                "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax",
+                "Markdown.sublime-syntax",
                 "Packages/Markdown/Markdown.sublime-syntax",
             )
             reassign_syntax(
-                "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax",
+                "MultiMarkdown.sublime-syntax",
                 "Packages/Markdown/MultiMarkdown.sublime-syntax",
             )
 
@@ -60,8 +52,37 @@ def reassign_syntax(current_syntax, new_syntax):
     for window in sublime.windows():
         for view in window.views():
             syntax = view.settings().get("syntax")
-            if syntax and syntax == current_syntax:
+            if syntax and syntax.endswith(current_syntax) and syntax != new_syntax:
                 view.assign_syntax(new_syntax)
+
+
+def bootstrap_syntax_assignments():
+    """
+    Reassign syntax to all open Markdown, MultiMarkdown or Plain Text files.
+
+    Repair syntax assignments of open views after install or upgrade, in case
+    old ones no longer exist.
+    """
+    markdown = "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"
+    multimarkdown = "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax"
+
+    for window in sublime.windows():
+        for view in window.views():
+            syntax = view.settings().get("syntax")
+            if syntax:
+                syntax = os.path.basename(syntax)
+                if syntax in ("Markdown.tmLanguage", "Markdown.sublime-syntax"):
+                    view.assign_syntax(markdown)
+                    continue
+                if syntax in ("MultiMarkdown.tmLanguage", "MultiMarkdown.sublime-syntax"):
+                    view.assign_syntax(multimarkdown)
+                    continue
+
+            file_name = view.file_name()
+            if file_name:
+                _, ext = os.path.splitext(file_name)
+                if ext in (".md", ".mdown", ".markdown"):
+                    view.assign_syntax(markdown)
 
 
 def on_after_install():
@@ -79,19 +100,16 @@ def on_after_install():
     shutil.rmtree(cache_path, ignore_errors=True)
     os.makedirs(cache_path, exist_ok=True)
 
-    # remove wrong bootstrapped cookie file created by 3.0.1
-    try:
-        os.remove(os.path.join(sublime.packages_path(), "User", "MarkdownEditing.sublime-syntax"))
-    except FileNotFoundError:
-        pass
+    def async_worker():
+        bootstrap_syntax_assignments()
+        disable_native_markdown_package()
+        clear_invalid_color_schemes()
+        # Update bootstrap cookie.
+        open(bootstrapped, "w").write(BOOTSTRAP_VERSION)
 
-    # Native package causes some conflicts.
-    disable_native_markdown_package()
-    # Prompts to select a color scheme.
-    sublime.set_timeout_async(select_color_scheme, 500)
+        select_color_scheme()
 
-    # Update bootstrap cookie.
-    open(bootstrapped, "w").write(BOOTSTRAP_VERSION)
+    sublime.set_timeout_async(async_worker, 200)
 
 
 def on_before_uninstall():

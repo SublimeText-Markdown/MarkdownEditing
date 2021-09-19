@@ -236,8 +236,9 @@ class WikiPage:
         link_text = PAGE_REF_FORMAT % page_name
 
         try:
-            if link_text in open(filename).read():
-                return True
+            return bool(link_text in open(filename).read())
+        except UnicodeDecodeError:
+            return bool(link_text in open(filename, encoding="utf-8").read())
         except OSError:
             pass
 
