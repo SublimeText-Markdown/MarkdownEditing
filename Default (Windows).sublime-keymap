@@ -184,7 +184,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "**$0**"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -194,7 +194,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "__$0__"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -205,7 +205,7 @@
 	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
 	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -213,7 +213,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -221,7 +221,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -229,7 +229,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Bold (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -238,7 +238,7 @@
 	// Transform selection to bold
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "**${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}**"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
@@ -247,7 +247,7 @@
 	},
 	{ "keys": ["alt+b"], "command": "insert_snippet", "args": {"contents": "__${SELECTION/^\\*\\*|^__|\\*\\*$|__$//g}__"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.bold", "match_all": true },
 			{ "key": "setting.mde.bold_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|__$", "match_all": true },
@@ -257,7 +257,12 @@
 	// Unbold bold text
 	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold.sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold - markup.italic - punctuation", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+b"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unbold Bold Italics.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.bold markup.italic - punctuation", "match_all": true }
 		]
 	},
 
@@ -268,7 +273,7 @@
 	// auto-pair if not within a word
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*$0*"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -278,7 +283,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_$0_"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "eol_selector", "operator": "not_equal", "operand": "string.quoted.single", "match_all": true },
@@ -289,7 +294,7 @@
 	// Transform a word to bold if caret is at the beginning, in the middle of or at the end of a word
 	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -297,7 +302,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Asterisk).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -305,7 +310,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "\\w$", "match_all": true }
@@ -313,7 +318,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Italic (Underscore).sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\w", "match_all": true }
@@ -322,7 +327,7 @@
 	// Transform selection to italics
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "*${SELECTION/(^[\\*_]*|[\\*_]*$)//g}*"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
@@ -332,7 +337,7 @@
 	// Remove italics style from text
 	{ "keys": ["alt+i"], "command": "insert_snippet", "args": {"contents": "_${SELECTION/(^[\\*_]*|[\\*_]*$)//g}_"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic - markup.bold_italic", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - markup.italic", "match_all": true },
 			{ "key": "setting.mde.italic_marker_asterisk", "operator": "equal", "operand": false },
 			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\*$|_$", "match_all": true },
@@ -341,7 +346,7 @@
 	},
 	{ "keys": ["alt+i"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Transform Word - Unitalicize.sublime-macro"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic - punctuation, text.html.markdown markup.bold_italic - punctuation", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.italic - punctuation", "match_all": true }
 		]
 	},
 
@@ -349,84 +354,100 @@
 	// Headings
 	//
 
-	{ "keys": ["ctrl+alt+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+	{ "keys": ["alt+k", "alt+keypad0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
+	{ "keys": ["alt+k", "alt+0"], "command": "mde_change_headings_level", "args": {"to": 0}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+	{ "keys": ["alt+k", "alt+keypad1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
+	{ "keys": ["alt+k", "alt+1"], "command": "mde_change_headings_level", "args": {"to": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+	{ "keys": ["alt+k", "alt+keypad2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
+	{ "keys": ["alt+k", "alt+2"], "command": "mde_change_headings_level", "args": {"to": 2}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+	{ "keys": ["alt+k", "alt+keypad3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
+	{ "keys": ["alt+k", "alt+3"], "command": "mde_change_headings_level", "args": {"to": 3}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+	{ "keys": ["alt+k", "alt+keypad4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
+	{ "keys": ["alt+k", "alt+4"], "command": "mde_change_headings_level", "args": {"to": 4}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+	{ "keys": ["alt+k", "alt+keypad5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
+	{ "keys": ["alt+k", "alt+5"], "command": "mde_change_headings_level", "args": {"to": 5}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+	{ "keys": ["alt+k", "alt+keypad6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
+	{ "keys": ["alt+k", "alt+6"], "command": "mde_change_headings_level", "args": {"to": 6}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	{ "keys": ["ctrl+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	{ "keys": ["ctrl+alt+,"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
 	// If nothing is selected, pressing hash in front of heading label increases level by one
@@ -646,21 +667,10 @@
 	//
 
 	// Create new GFM Task
-	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ] $0"}, "context":
+	{ "keys": ["alt+t"], "command": "mde_insert_task_list_item", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": false },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
-		]
-	},
-	{ "keys": ["alt+t"], "command": "insert_snippet", "args": {"contents": "* [ ]\t$0"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd - meta.table", "match_all": true },
-			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
-			{ "key": "setting.mde.list_align_text", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
@@ -1168,7 +1178,7 @@
 	},
 	{ "keys": ["ctrl+alt+d"], "command": "mde_open_page", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "meta.link.reference.wiki.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "meta.link.reference.wiki.description.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true }
 		]
 	},
