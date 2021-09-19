@@ -98,3 +98,21 @@ def clear_color_scheme(filename):
     settings = sublime.load_settings(filename)
     settings.erase("color_scheme")
     sublime.save_settings(filename)
+
+
+def clear_invalid_color_schemes():
+    clear_invalid_color_scheme("Markdown.sublime-settings")
+    clear_invalid_color_scheme("Markdown GFM.sublime-settings")
+    clear_invalid_color_scheme("MultiMarkdown.sublime-settings")
+
+
+def clear_invalid_color_scheme(filename):
+    settings = sublime.load_settings(filename)
+    color_scheme = settings.get("color_scheme")
+    if not color_scheme:
+        return
+    try:
+        sublime.load_resource(color_scheme)
+    except FileNotFoundError:
+        settings.erase("color_scheme")
+        sublime.save_settings(filename)
