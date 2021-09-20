@@ -475,10 +475,6 @@ contexts:
     - include: tag-kbd
     - include: scope:text.html.basic
 
-  indented-code-block:
-    - match: '{{indented_code_block}}.*$\n?'
-      scope: markup.raw.block.markdown
-
   bold:
     - include: ligatures
     - match: '(\*\*)(\*)(?=\S)(?!\*)'
@@ -860,6 +856,13 @@ contexts:
         - include: scope:text.html.basic
         - match: $
           pop: true
+
+###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
+
+  indented-code-block:
+    # https://spec.commonmark.org/0.30/#indented-code-blocks
+    - match: '{{indented_code_block}}.*$\n?'
+      scope: markup.raw.block.markdown
 
 ###[ LEAF BLOCKS: FENCED CODE BLOCKS ]########################################
 
