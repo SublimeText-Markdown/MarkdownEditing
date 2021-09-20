@@ -255,7 +255,7 @@ contexts:
         - include: ligatures
         - include: indented-code-block
         - include: atx-heading
-        - include: thematic-break
+        - include: thematic-breaks
         - include: tables
         - include: immediately-pop
     - match: ^([ ]{0,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
@@ -394,7 +394,7 @@ contexts:
     - include: block-quote-list-item
     - include: atx-heading
     - include: indented-code-block
-    - include: thematic-break
+    - include: thematic-breaks
     - match: ''
       set: block-quote-text
 
@@ -850,7 +850,7 @@ contexts:
     - include: fenced-code-blocks
     - match: ^
       pop: true
-    - include: thematic-break
+    - include: thematic-breaks
     - match: (?=\S)(?!{{list_item}})
       push:
         - match: (?={{list_item}})
@@ -2030,15 +2030,6 @@ contexts:
         0: meta.code-fence.definition.end.xonsh.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
-  thematic-break:
-    - match: (?={{thematic_break}})
-      push:
-        - meta_scope: meta.separator.thematic-break.markdown
-        - match: '[-_*]+'
-          scope: punctuation.definition.thematic-break.markdown
-        - match: '$\n?'
-          pop: true
-
 ###[ LEAF BLOCKS: HTML BLOCKS ]###############################################
 
   html-blocks:
@@ -2199,6 +2190,20 @@ contexts:
     - match: (?=\s)
       pop: true
     - include: link-url-common
+
+###[ LEAF BLOCKS: THEMATIC BREAKS ]###########################################
+
+  thematic-breaks:
+    # https://spec.commonmark.org/0.30/#thematic-breaks
+    - match: (?={{thematic_break}})
+      push: thematic-break-body
+
+  thematic-break-body:
+    - meta_scope: meta.separator.thematic-break.markdown
+    - match: '[-_*]+'
+      scope: punctuation.definition.thematic-break.markdown
+    - match: \n
+      pop: true
 
 ###[ INLINE: CODE SPANS ]#####################################################
 
