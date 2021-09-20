@@ -705,7 +705,7 @@ contexts:
     - include: critic-inline
     - include: ligatures
     - include: bracket
-    - include: code-span
+    - include: code-spans
     - include: autolink-email
     - include: autolink-inet
     - include: image-inline
@@ -2030,20 +2030,6 @@ contexts:
         0: meta.code-fence.definition.end.xonsh.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
-  code-span:
-    - match: (`+)(?!`)
-      scope: punctuation.definition.raw.begin.markdown
-      push:
-        - meta_scope: markup.raw.inline.markdown
-        - match: \1(?!`)
-          scope: punctuation.definition.raw.end.markdown
-          pop: true
-        - match: '`+'
-        - match: ^\s*$\n?
-          scope: invalid.illegal.non-terminated.raw.markdown
-          pop: true
-        - include: paragraph-end
-
   thematic-break:
     - match: (?={{thematic_break}})
       push:
@@ -2213,6 +2199,25 @@ contexts:
     - match: (?=\s)
       pop: true
     - include: link-url-common
+
+###[ INLINE: CODE SPANS ]#####################################################
+
+  code-spans:
+    # https://spec.commonmark.org/0.30/#code-spans
+    - match: (`+)(?!`)
+      scope: punctuation.definition.raw.begin.markdown
+      push: code-span-body
+
+  code-span-body:
+    - meta_scope: markup.raw.inline.markdown
+    - match: \1(?!`)
+      scope: punctuation.definition.raw.end.markdown
+      pop: true
+    - match: '`+'
+    - match: ^\s*$\n?
+      scope: invalid.illegal.non-terminated.raw.markdown
+      pop: true
+    - include: paragraph-end
 
 ###[ INLINE IMAGES ]##########################################################
 
@@ -2472,7 +2477,7 @@ contexts:
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
     - include: escape
     - include: ampersand
-    - include: code-span
+    - include: code-spans
     - match: \[ # nested square brackets are allowed
       push:
         - include: link-text
