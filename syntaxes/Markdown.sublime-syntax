@@ -281,26 +281,9 @@ contexts:
         - match: ^(?=\S)
           pop: true
         - include: list-paragraph
-    - match: '^[ ]{0,3}(?=<((?i:pre))\b)'
-      comment: Markdown formatting is disabled inside block-level tags.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-at-tag]
-    - match: '^[ ]{0,3}(?=<{{html_tag_block_end_at_close_tag}})'
-      comment: Markdown formatting is disabled inside block-level tags.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-after-tag]
-    - match: '^[ ]{0,3}(?=<\?)'
-      comment: Markdown formatting is disabled inside preprocessor instructions.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-at-php]
-    - match: '^[ ]{0,3}(?=<!(?:[A-Z]|--))'
-      comment: Markdown formatting is disabled inside doctype declarations and comments.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-after-html-doctype]
-    - match: '^[ ]{0,3}(?=<!\[CDATA\[)'
-      comment: Markdown formatting is disabled inside CDATA.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-after-cdata]
-    - match: '^[ ]{0,3}(?=(?:{{html_tag_open_commonmark}}|{{html_tag_close_commonmark}})\s*$|<{{html_tag_block_end_at_blank_line}})'
-      comment: Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
-      push: [disabled-markdown-pop-at-eol, disable-markdown-pop-at-blank-line]
     - include: reference-definitions
     - include: latex-blocks
+    - include: html-blocks
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
 
@@ -2070,49 +2053,84 @@ contexts:
         - match: '$\n?'
           pop: true
 
-  disable-markdown:
-    - include: scope:text.html.basic
+###[ LEAF BLOCKS: HTML BLOCKS ]###############################################
 
-  disable-markdown-pop-at-tag:
+  html-blocks:
+    # https://spec.commonmark.org/0.30/#html-blocks
+    - match: ^[ ]{0,3}(?=<((?i:pre))\b)
+      comment: Markdown formatting is disabled inside block-level tags.
+      push:
+        - html-block-pop-at-eol
+        - html-block-pop-at-tag
+    - match: ^[ ]{0,3}(?=<{{html_tag_block_end_at_close_tag}})
+      comment: Markdown formatting is disabled inside block-level tags.
+      push:
+        - html-block-pop-at-eol
+        - html-block-pop-after-tag
+    - match: ^[ ]{0,3}(?=<\?)
+      comment: Markdown formatting is disabled inside preprocessor instructions.
+      push:
+        - html-block-pop-at-eol
+        - html-block-pop-at-php
+    - match: ^[ ]{0,3}(?=<!(?:[A-Z]|--))
+      comment: Markdown formatting is disabled inside doctype declarations and comments.
+      push:
+        - html-block-pop-at-eol
+        - html-block-pop-after-html-doctype
+    - match: ^[ ]{0,3}(?=<!\[CDATA\[)
+      comment: Markdown formatting is disabled inside CDATA.
+      push:
+        - html-block-pop-at-eol
+        - html-block-pop-after-cdata
+    - match: ^[ ]{0,3}(?=(?:{{html_tag_open_commonmark}}|{{html_tag_close_commonmark}})\s*$|<{{html_tag_block_end_at_blank_line}})
+      comment: Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
+      push: html-block-pop-at-blank-line
+
+  html-block-pop-at-tag:
     - match: (</)(\1)(>)
       captures:
         1: meta.tag.block.any.html punctuation.definition.tag.begin.html
         2: meta.tag.block.any.html entity.name.tag.block.any.html
         3: meta.tag.block.any.html punctuation.definition.tag.end.html
       pop: true
-    - include: disable-markdown
+    - include: html-content
 
-  disable-markdown-pop-after-tag:
+  html-block-pop-after-tag:
     - match: (?!</?(?i:script|style)\b)
       pop: true
-    - include: disable-markdown
+    - include: html-content
 
-  disable-markdown-pop-at-blank-line:
-    - match: ^\s*$
-      pop: true
-    - include: disable-markdown
-
-  disable-markdown-pop-after-cdata:
+  html-block-pop-after-cdata:
     - match: (?!<!\[CDATA\[)
       pop: true
-    - include: disable-markdown
+    - include: html-content
 
-  disable-markdown-pop-at-php:
-    - match: \?>
-      pop: true
-    - include: disable-markdown
-
-  disable-markdown-pop-after-html-doctype:
+  html-block-pop-after-html-doctype:
     - match: (?!<!([A-Z]|--))
       pop: true
-    - include: disable-markdown
+    - include: html-content
 
-  disabled-markdown-pop-at-eol:
+  html-block-pop-at-php:
+    - match: \?>
+      pop: true
+    - include: html-content
+
+  html-block-pop-at-blank-line:
+    - meta_content_scope: meta.disable-markdown
+    - match: ^\s*$\n
+      scope: meta.disable-markdown
+      pop: true
+    - include: html-content
+
+  html-block-pop-at-eol:
     - meta_content_scope: meta.disable-markdown
     - match: $\n?
       scope: meta.disable-markdown
       pop: true
-    - include: disable-markdown
+    - include: html-content
+
+  html-content:
+    - include: scope:text.html.basic
 
   tag-kbd:
     # A simple implementation to add dedicated `markup.kbd` scopes.
