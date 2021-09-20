@@ -258,29 +258,7 @@ contexts:
         - include: thematic-breaks
         - include: tables
         - include: immediately-pop
-    - match: ^([ ]{0,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
-      captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      push:
-        - meta_content_scope: markup.list.unnumbered.markdown
-        - match: ^(?=\S)
-          pop: true
-        - include: list-paragraph
-    - match: ^([ ]{0,3})(\d+([.)]))(?=\s)
-      captures:
-        1: markup.list.numbered.markdown
-        2: markup.list.numbered.bullet.markdown
-        3: punctuation.definition.list_item.markdown
-      push:
-        - meta_content_scope: markup.list.numbered.markdown
-        - match: ^(?=\S)
-          pop: true
-        - include: list-paragraph
+    - include: list-blocks
     - include: reference-definitions
     - include: latex-blocks
     - include: html-blocks
@@ -791,6 +769,37 @@ contexts:
       captures:
         1: constant.character.escape.markdown
 
+###[ CONTAINER BLOCKS: LISTS ]################################################
+
+  list-blocks:
+    - match: ^([ ]{0,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
+      captures:
+        1: markup.list.unnumbered.markdown
+        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+        3: markup.list.unnumbered.markdown
+        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+        5: markup.checkbox.mark.markdown-gfm
+        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+      push: unordered-list-paragraph
+    - match: ^([ ]{0,3})(\d+([.)]))(?=\s)
+      captures:
+        1: markup.list.numbered.markdown
+        2: markup.list.numbered.bullet.markdown
+        3: punctuation.definition.list_item.markdown
+      push: ordered-list-paragraph
+
+  unordered-list-paragraph:
+    - meta_content_scope: markup.list.unnumbered.markdown
+    - match: ^(?=\S)
+      pop: true
+    - include: list-paragraph
+
+  ordered-list-paragraph:
+    - meta_content_scope: markup.list.numbered.markdown
+    - match: ^(?=\S)
+      pop: true
+    - include: list-paragraph
+
   list-paragraph:
     - match: '^(?=(?:[ ]{4}|\t){2,}(?![>+*\s-]))(?={{indented_code_block}})'
       push:
@@ -835,9 +844,9 @@ contexts:
           scope: meta.paragraph.list.markdown
         - match: (?=^{{atx_heading}})
           pop: true
-        - match: '(?=\S)'
+        - match: (?=\S)
           push: list-content
-    - match: '(?=\S)'
+    - match: (?=\S)
       pop: true
 
   list-content:
