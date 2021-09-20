@@ -861,7 +861,10 @@ contexts:
         - match: $
           pop: true
 
+###[ LEAF BLOCKS: FENCED CODE BLOCKS ]########################################
+
   fenced-code-blocks:
+    # https://spec.commonmark.org/0.30/#fenced-code-blocks
     - match: ^(?={{fenced_code_block_start}})
       push: fenced-code-block-content
 
