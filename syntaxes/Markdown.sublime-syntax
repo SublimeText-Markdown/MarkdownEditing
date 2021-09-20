@@ -256,7 +256,7 @@ contexts:
         - include: indented-code-block
         - include: atx-heading
         - include: thematic-break
-        - include: table
+        - include: tables
         - include: immediately-pop
     - match: ^([ ]{0,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
       captures:
@@ -2684,53 +2684,68 @@ contexts:
     - include: link-url-path-separators
     - include: link-url-escapes
 
-###[ TABLE ]##################################################################
+###[ LEAF BLOCKS: TABLES ]####################################################
 
-  table:
+  tables:
     - match: ^(?={{table_first_row}})
-      push:
-        - meta_content_scope: meta.table.header.markdown-gfm
-        - match: \|
-          scope: punctuation.separator.table-cell.markdown
-        - include: inline-bold-italic
-        - match: $\n?
-          set:
-            - match: ^
-              set:
-                - meta_content_scope: meta.table.header-separator.markdown-gfm
-                - match: \|
-                  scope: punctuation.separator.table-cell.markdown
-                - match: ':'
-                  scope: punctuation.definition.table-cell-alignment.markdown
-                - match: -+
-                  scope: punctuation.section.table-header.markdown
-                - match: $\n?
-                  set:
-                    - meta_content_scope: meta.table.markdown-gfm
-                    - match: |- # The table is broken at the first empty line, or beginning of another block-level structure
-                          (?x)^
-                          (?=  {{block_quote}}
-                          |    {{indented_code_block}}(?!$)
-                          |    {{atx_heading}}
-                          |    {{thematic_break}}
-                          |    \s*$
-                          )
-                      pop: true
-                    - match: \|
-                      scope: punctuation.separator.table-cell.markdown
-                    - match: (?={{balanced_emphasis}})
-                      push:
-                        - include: bold
-                        - include: italic
-                        - include: immediately-pop
-                    - match: |-
-                        (?x)
-                        (?!{{backticks}})
-                        `+
-                      scope: invalid.deprecated.unescaped-backticks.markdown
-                    - include: inline
-                    - include: tag-kbd
-                    - include: scope:text.html.basic
+      push: table-header
+
+  table-header:
+    - meta_content_scope: meta.table.header.markdown-gfm
+    - match: \n
+      set: table-header-separator
+    - include: table-cell-content
+
+  table-header-separator:
+    - meta_content_scope: meta.table.header-separator.markdown-gfm
+    - match: \n
+      set: table-body
+    - match: -+
+      scope: punctuation.section.table-header.markdown
+    - match: ':'
+      scope: punctuation.definition.table-cell-alignment.markdown
+    - include: table-cell-separators
+    - include: table-end
+
+  table-body:
+    - meta_content_scope: meta.table.markdown-gfm
+    - include: table-end
+    - include: table-cell-content
+
+  table-end:
+    # The table is broken at the first empty line, or beginning of another block-level structure
+    - match: |-
+          (?x)^
+          (?= \s*$
+          |   {{atx_heading}}
+          |   {{block_quote}}
+          |   {{fenced_code_block_start}}
+          |   {{indented_code_block}}
+          |   {{thematic_break}}
+          )
+      pop: true
+
+  table-cell-content:
+    - match: (?={{balanced_emphasis}})
+      push: table-cell-bold-italic
+    - match: |-
+        (?x)
+        (?!{{backticks}})
+        `+
+      scope: invalid.deprecated.unescaped-backticks.markdown
+    - include: table-cell-separators
+    - include: inline
+    - include: tag-kbd
+    - include: scope:text.html.basic
+
+  table-cell-bold-italic:
+    - include: bold
+    - include: italic
+    - include: immediately-pop
+
+  table-cell-separators:
+    - match: \|
+      scope: punctuation.separator.table-cell.markdown
 
 ###[ CRITIC MARKUP ]##########################################################
 

@@ -2488,6 +2488,30 @@ not a table |
 |^ invalid.deprecated.unescaped-backticks
 |      ^ punctuation.separator.table-cell
 
+| table | followed by
+# heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+
+| table | followed by
+> quote
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^ markup.quote.markdown
+
+| table | followed by
+    quote
+| <- markup.raw.block.markdown
+|^^^^^^^^^ markup.raw.block.markdown
+
+| table | followed by
+```fenced
+| <- meta.code-fence.definition.begin.text.markdown-gfm
+|^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
+code block
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm
+|^^ meta.code-fence.definition.end.text.markdown-gfm
+
 A line without bolded |
 |                     ^ - punctuation.separator.table-cell
 
