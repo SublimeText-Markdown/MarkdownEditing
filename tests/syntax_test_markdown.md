@@ -18,7 +18,7 @@
 https://spec.commonmark.org/0.30/#example-71
 
   ## Heading ##
-|^^^^^^^^^^^^^^^ meta.block-level.markdown markup.heading.2.markdown
+|^^^^^^^^^^^^^^^ markup.heading.2.markdown
 |^ - punctuation
 | ^^ punctuation.definition.heading.begin.markdown
 |   ^^^^^^^^^ - punctuation
@@ -43,7 +43,7 @@ https://spec.commonmark.org/0.30/#example-74
 https://spec.commonmark.org/0.30/#example-75
 # #heading# #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown
+|^^^^^^^^^^^^^ markup.heading.1.markdown
 |^ - entity.name.section
 | ^^^^^^^^^ entity.name.section.markdown
 |          ^^ - entity.name.section
@@ -52,7 +52,7 @@ https://spec.commonmark.org/0.30/#example-75
 https://spec.commonmark.org/0.30/#example-76
 ## heading \##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^^^^^ meta.block-level.markdown markup.heading.2.markdown
+|^^^^^^^^^^^^^^ markup.heading.2.markdown
 |^^ - entity
 |  ^^^^^^^^^^^ entity.name.section.markdown
 |          ^^ constant.character.escape.markdown
@@ -65,7 +65,7 @@ https://spec.commonmark.org/0.30/#example-79
 
 # #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^ meta.block-level.markdown markup.heading.1.markdown - entity.name.section
+|^^^ markup.heading.1.markdown - entity.name.section
 | ^ punctuation.definition.heading.end.markdown
 
 ## 
@@ -74,19 +74,19 @@ https://spec.commonmark.org/0.30/#example-79
 
 ## ##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown - entity.name.section
-|^^^^^ meta.block-level.markdown markup.heading.2.markdown - entity.name.section
+|^^^^^ markup.heading.2.markdown - entity.name.section
 |^ punctuation.definition.heading.begin.markdown
 |  ^^ punctuation.definition.heading.end.markdown
 
 ### ###
-| <- meta.block-level.markdown markup.heading.3.markdown  - entity.name.sectionpunctuation.definition.heading.begin.markdown
-|^^^^^^^ meta.block-level.markdown markup.heading.3.markdown - entity.name.section
+| <- markup.heading.3.markdown  - entity.name.sectionpunctuation.definition.heading.begin.markdown
+|^^^^^^^ markup.heading.3.markdown - entity.name.section
 |^^ punctuation.definition.heading.begin.markdown
 |   ^^^ punctuation.definition.heading.end.markdown
 
 # #### #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown
+|^^^^^^^^ markup.heading.1.markdown
 |^ - entity.name.section
 | ^^^^ entity.name.section.markdown
 |     ^^ - entity.name.section
@@ -94,7 +94,7 @@ https://spec.commonmark.org/0.30/#example-79
 
 ## #### ##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^ meta.block-level.markdown markup.heading.2.markdown
+|^^^^^^^^^^ markup.heading.2.markdown
 |^ - entity.name.section
 |  ^^^^ entity.name.section.markdown
 |      ^^^ - entity.name.section
@@ -145,7 +145,7 @@ heading underlined with dashes
 underlined heading followed by a separator
 -------------------
 ------
-| <- meta.block-level meta.separator - markup.heading
+| <- meta.separator - markup.heading
 
 underlined heading followed by another one that should be treated as a normal paragraph
 ==================
@@ -462,13 +462,13 @@ Paragraph break.
 Paragraph break.
 
 ---
-|^^^ meta.block-level meta.separator.thematic-break
+|^^^ meta.separator.thematic-break
 |^^ punctuation.definition.thematic-break
 
 Paragraph break.
 
 --------
-|^^^^^^^^ meta.block-level meta.separator.thematic-break
+|^^^^^^^^ meta.separator.thematic-break
 |^^^^^^^ punctuation.definition.thematic-break
 
 [1]: https://google.com
@@ -554,41 +554,41 @@ non-disabled markdown
 |   ^^ - punctuation.definition.blockquote.markdown
 
 > Block quote
-| <- meta.block-level markup.quote punctuation.definition.blockquote
-| ^^^^^^^^^^^ meta.block-level markup.quote
+| <- markup.quote punctuation.definition.blockquote
+| ^^^^^^^^^^^ markup.quote
 
 > Block quote followed by an empty block quote line
 >
-| <- meta.block-level markup.quote punctuation.definition.blockquote
+| <- markup.quote punctuation.definition.blockquote
 
 > Block quote followed by an empty block quote line
 >
 > Followed by more quoted text
-| <- meta.block-level markup.quote punctuation.definition.blockquote
+| <- markup.quote punctuation.definition.blockquote
 
 > > Nested block quote
-| <- meta.block-level markup.quote punctuation.definition.blockquote
-| ^^^^^^^^^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown
+| <- markup.quote punctuation.definition.blockquote
+| ^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
 |^ - punctuation
 | ^ punctuation.definition.blockquote
 |  ^ - punctuation
 
 > > Nested quote
 > Followed by more quoted text that is not nested
-| <- meta.block-level markup.quote punctuation.definition.blockquote - markup.quote markup.quote
+| <- markup.quote punctuation.definition.blockquote - markup.quote markup.quote
 
 > Here is a block quote
 This quote continues on. Line breaking is OK in markdown
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level markup.quote
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
 > Here it is again
 | <- punctuation.definition.blockquote
 
 paragraph
-| <- meta.paragraph - meta.block-level
+| <- meta.paragraph
 
 >    > this is a nested quote but no code in a block quote
 | <- punctuation.definition.blockquote
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
 
 >     > this is code in a block quote, not a nested quote
 | <- punctuation.definition.blockquote
@@ -596,53 +596,53 @@ paragraph
 
 > CommonMark expects following line to be indented code block (see: example 326)
     > but all common parsers handle it as continued text.
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown - markup.raw
+|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
 |   ^ - punctuation
 
 > Quoted fenced code block begin
 > ```
-| <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
-| ^^^^ meta.block-level.markdown markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
 | ^^^ punctuation.definition.raw.code-fence.begin.markdown
 
 > Quoted fenced code block language identifier
 > ```C++
-| <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
-| ^^^^^^^ meta.block-level.markdown markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
 |    ^^^ constant.other.language-name.markdown
 
 > Quoted fenced code block language identifier
 > ```C++ info string
-| <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
-| ^^^^^^^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
 |    ^^^ constant.other.language-name.markdown
 |       ^^^^^^^^^^^^^ - constant
 
 > Quoted fenced code block content
 > ```
 > code block
-| <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
-| ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown markup.raw.code-fence.markdown-gfm
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^^^^^ markup.quote.markdown markup.raw.code-fence.markdown-gfm
 
 > Quoted fenced code block end
 > ```
 > ```
-| <- meta.block-level.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ meta.block-level.markdown markup.quote.markdown - meta.code-fence
-| ^^^^ meta.block-level.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^ markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
 | ^^^ punctuation.definition.raw.code-fence.end.markdown
 
 > > 2nd level quoted fenced code block
 > > ```
 > > code block ```
 > > ```
-| <- meta.block-level.markdown markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown - meta.code-fence
-|   ^^^^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
+| <- markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^ markup.quote.markdown markup.quote.markdown - meta.code-fence
+|   ^^^^ markup.quote.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
 
 > Block quote followed by fenced code block
 ```
@@ -672,8 +672,8 @@ no code block
 
 > Block quote followed by heading
 # heading
-| <- meta.block-level.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^ meta.block-level.markdown markup.heading.1.markdown - meta.quote
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ markup.heading.1.markdown - meta.quote
 | ^^^^^^^ entity.name.section.markdown
 
 > Block quote followed by list
@@ -699,41 +699,41 @@ no code block
 
 > Block quote followed by thematic break
 ***
-| <- meta.block-level.markdown meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
 
 > Block quote followed by thematic break
 - - -
-| <- meta.block-level.markdown meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
 
 Code block below:
 
     this is code!
-| ^^^^^^^^^^^^^^^^ meta.block-level markup.raw.block
+| ^^^^^^^^^^^^^^^^ markup.raw.block
 
     more code
     spanning multiple lines
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level markup.raw.block
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block
 
 paragraph
-| <- meta.paragraph - meta.block-level
+| <- meta.paragraph
 
 - - - -
-| ^^^^^^ meta.block-level meta.separator
+| ^^^^^^ meta.separator
 | ^ punctuation.definition.thematic-break
 |   ^ punctuation.definition.thematic-break
 |     ^ punctuation.definition.thematic-break
 |  ^ - punctuation
 * * * * *
-| ^^^^^^^^ meta.block-level meta.separator
+| ^^^^^^^^ meta.separator
 
 _ _ _ _ _ _ _
-| ^^^^^^^^^^^^ meta.block-level meta.separator
+| ^^^^^^^^^^^^ meta.separator
 | ^ punctuation.definition.thematic-break
 |   ^ punctuation.definition.thematic-break
 |  ^ - punctuation
 
 -  -  -  - 
-| <- meta.block-level meta.separator.thematic-break punctuation.definition.thematic-break
+| <- meta.separator.thematic-break punctuation.definition.thematic-break
 |^^ - punctuation
 |  ^ punctuation
 |        ^ punctuation
@@ -1064,21 +1064,21 @@ because it doesn't begin with the number one:
 
 > Block quote with list items
 > - list item 1
-| ^ meta.block-level markup.quote punctuation.definition.list_item
+| ^ markup.quote punctuation.definition.list_item
 > - list item 2
 | ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-| ^^^^^^^^^^^^^^ meta.block-level markup.quote markup.list.unnumbered
+| ^^^^^^^^^^^^^^ markup.quote markup.list.unnumbered
 |   ^^^^^^^^^^^^ meta.paragraph.list
 >   1. sub list item
-| <- meta.block-level markup.quote punctuation.definition.blockquote
-|^^^^^^^^^^^^^^^^^^^^ meta.block-level markup.quote
+| <- markup.quote punctuation.definition.blockquote
+|^^^^^^^^^^^^^^^^^^^^ markup.quote
 |    ^ punctuation.definition.list_item
 |   ^^ markup.list.numbered.bullet
 | ^^^^^^^^^^^^^^^^^^^ markup.list.numbered
 |      ^^^^^^^^^^^^^^ meta.paragraph.list
 > - list item 3
   continued
-| ^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
+| ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
 
 * this is a list
 
@@ -1129,7 +1129,7 @@ because it doesn't begin with the number one:
 | ^^^^^^^^^^^^^^^ - markup.raw
 
 > * [ ] task
-| ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
+| ^^^^^^^^^^^ markup.quote.markdown
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
@@ -1137,7 +1137,7 @@ because it doesn't begin with the number one:
 |    ^ markup.checkbox.mark.markdown-gfm - punctuation
 |     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [x] task
-| ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
+| ^^^^^^^^^^^ markup.quote.markdown
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
@@ -1145,7 +1145,7 @@ because it doesn't begin with the number one:
 |    ^ markup.checkbox.mark.markdown-gfm - punctuation
 |     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [X] task
-| ^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
+| ^^^^^^^^^^^ markup.quote.markdown
 | ^ markup.list.unnumbered.bullet.markdown
 |  ^^^^^^^^^^ markup.list.unnumbered.markdown
 | ^ punctuation.definition.list_item.markdown
@@ -1154,7 +1154,7 @@ because it doesn't begin with the number one:
 |     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 > * [X] task
 >   - [ ] task
-| ^^^^^^^^^^^^^ meta.block-level.markdown markup.quote.markdown
+| ^^^^^^^^^^^^^ markup.quote.markdown
 |   ^ markup.list.unnumbered.bullet.markdown
 |    ^^^^^^^^^^ markup.list.unnumbered.markdown
 |   ^ punctuation.definition.list_item.markdown
@@ -2385,51 +2385,51 @@ abc
 | <- meta.paragraph - markup.list
 
 | foo | bar |
-|^^^^^^^^^^^^^ meta.block-level meta.table.header
+|^^^^^^^^^^^^^ meta.table.header
 | <- punctuation.separator.table-cell
 |     ^ punctuation.separator.table-cell
 |           ^ punctuation.separator.table-cell
 | ^^^^ - punctuation.separator.table-cell
 | --- | --- |
 | baz | bim <kbd>Ctrl+C</kbd> |
-| <- meta.block-level meta.table punctuation.separator.table-cell
+| <- meta.table punctuation.separator.table-cell
 |           ^^^^^ meta.tag.inline.any
 |                             ^ punctuation.separator.table-cell
 
-| <- - meta.block-level - meta.table
+| <- - meta.table
 
 | abc | defghi |
 :-: | -----------:
-|^^^^^^^^^^^^^^^^^ meta.block-level meta.table.header-separator
+|^^^^^^^^^^^^^^^^^ meta.table.header-separator
 | <- punctuation.definition.table-cell-alignment
 |^ punctuation.section.table-header
 |   ^ punctuation.separator.table-cell
 |     ^^^^^^^^^^^ punctuation.section.table-header
 |                ^ punctuation.definition.table-cell-alignment - punctuation.section.table-header
 bar | baz
-|   ^ meta.block-level meta.table punctuation.separator.table-cell
+|   ^ meta.table punctuation.separator.table-cell
 
 | f\|oo  |
-| <- meta.block-level meta.table punctuation.separator.table-cell
-|  ^^ meta.block-level meta.table constant.character.escape - punctuation.separator.table-cell
-|        ^ meta.block-level meta.table punctuation.separator.table-cell
+| <- meta.table punctuation.separator.table-cell
+|  ^^ meta.table constant.character.escape - punctuation.separator.table-cell
+|        ^ meta.table punctuation.separator.table-cell
 | ------ |
 | b `|` az |
-|   ^^^ meta.block-level meta.table markup.raw.inline - meta.table.header-separator
-|          ^ meta.block-level meta.table punctuation.separator.table-cell
+|   ^^^ meta.table markup.raw.inline - meta.table.header-separator
+|          ^ meta.table punctuation.separator.table-cell
 | b **|** im |
-| <- meta.block-level meta.table punctuation.separator.table-cell
-|   ^^^^^ meta.block-level meta.table markup.bold - punctuation.separator.table-cell
-|            ^ meta.block-level meta.table punctuation.separator.table-cell
+| <- meta.table punctuation.separator.table-cell
+|   ^^^^^ meta.table markup.bold - punctuation.separator.table-cell
+|            ^ meta.table punctuation.separator.table-cell
 
 | abc | def |
 | --- | --- |
 | bar | baz |
-|^^^^^^^^^^^^^ meta.block-level meta.table
+|^^^^^^^^^^^^^ meta.table
 test
-|^^^^ meta.block-level meta.table
+|^^^^ meta.table
 > bar
-| <- meta.block-level markup.quote punctuation.definition.blockquote - meta.table
+| <- markup.quote punctuation.definition.blockquote - meta.table
 
 `|` this `|` example `|` is not a table `|`
 | ^ punctuation.definition.raw.end - meta.table
@@ -2441,7 +2441,7 @@ test
 | First row     | Data          | Very long data entry |
 | Second row    | **Cell**      | *Cell*               |
 | Third row     | Cell that spans across two columns  ||
-| ^^^^^^^^^^^^^^ meta.block-level meta.table
+| ^^^^^^^^^^^^^^ meta.table
 |                                                     ^^ punctuation.separator.table-cell
 
  | table that doesn't start at column 0 |
@@ -2456,26 +2456,26 @@ not a table |
  abc | def
  --- | ---
  --- | ---
-| ^^^^ meta.block-level meta.table - meta.table.header
+| ^^^^ meta.table - meta.table.header
 
  a | b
  - | -
-|^^^^^^ meta.block-level.markdown meta.table.header-separator.markdown-gfm
+|^^^^^^ meta.table.header-separator.markdown-gfm
 |^ punctuation.section.table-header.markdown
 |  ^ punctuation.separator.table-cell.markdown
 |    ^ punctuation.section.table-header.markdown
  - | -
-|^^^^^^ meta.block-level.markdown meta.table.markdown-gfm
+|^^^^^^ meta.table.markdown-gfm
 
  a | b
  -:| -
-|^^^^^^ meta.block-level.markdown meta.table.header-separator.markdown-gfm
+|^^^^^^ meta.table.header-separator.markdown-gfm
 |^ punctuation.section.table-header.markdown
 | ^ punctuation.definition.table-cell-alignment.markdown
 |  ^ punctuation.separator.table-cell.markdown
 |    ^ punctuation.section.table-header.markdown
  - | -
-|^^^^^^ meta.block-level.markdown meta.table.markdown-gfm
+|^^^^^^ meta.table.markdown-gfm
 
 | test | me |
 |------|----|
@@ -2964,14 +2964,14 @@ end
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
 
     -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level markup.raw - constant - keyword - variable - punctuation
+|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw - constant - keyword - variable - punctuation
 
 >  -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level - constant - keyword - variable
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
 
 > > -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^ meta.block-level.markdown markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block-level - constant - keyword - variable
+| ^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
 
 \<div>
 |<- constant.character.escape

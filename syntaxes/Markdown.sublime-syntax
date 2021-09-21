@@ -237,27 +237,12 @@ contexts:
         1: punctuation.section.block.end.frontmatter.markdown
 
   markdown:
-    - match: |-
-        (?x)^
-        (?=  {{block_quote}}
-        |    {{indented_code_block}}(?!$)
-        |    {{atx_heading}}
-        |    {{thematic_break}}
-        |    {{table_first_row}}
-        )
-      comment: |
-        We could also use an empty end match and set
-                        applyEndPatternLast, but then we must be sure that the begin
-                        pattern will only match stuff matched by the sub-patterns.
-      push:
-        - meta_scope: meta.block-level.markdown
-        - include: block-quotes
-        - include: ligatures
-        - include: indented-code-block
-        - include: atx-heading
-        - include: thematic-breaks
-        - include: tables
-        - include: immediately-pop
+    - include: indented-code-block
+    - include: block-quotes
+    - include: ligatures
+    - include: atx-heading
+    - include: thematic-breaks
+    - include: tables
     - include: list-blocks
     - include: reference-definitions
     - include: latex-blocks
