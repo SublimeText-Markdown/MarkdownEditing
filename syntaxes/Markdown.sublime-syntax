@@ -250,62 +250,6 @@ contexts:
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
 
-  setext-heading-or-paragraph:
-    # A paragraph may start with a line of equal signs which must not be matched
-    # as heading underline. This is achieved by consuming them here, which also
-    # applies `meta.paragraph` scope as expected.
-    # A line of dashes is already matched as thematic break and thus ignored.
-    - match: ^[ ]{,3}(?:=+|(?=\S))
-      push: paragraph
-
-  setext-heading1:
-    - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
-      scope: markup.heading.1.setext.markdown
-      captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
-      pop: true
-
-  setext-heading2:
-    - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
-      scope: markup.heading.2.setext.markdown
-      captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
-      pop: true
-
-  paragraph:
-    - meta_scope: meta.paragraph.markdown
-    - include: setext-heading1
-    - include: setext-heading2
-    - include: paragraph-end
-    - include: inline-bold-italic-linebreak
-    - include: tag-kbd
-    - include: scope:text.html.basic
-
-  paragraph-end:
-    - match: |-
-        (?x)                            # pop out of this context if one of the following conditions are met:
-        ^(?=
-          \s*$                          # the line is blank (or only contains whitespace)
-          | {{atx_heading}}             # an ATX heading begins the line
-          | {{block_quote}}             # a blockquote begins the line
-          | {{fenced_code_block_start}} # a fenced codeblock begins the line
-          | {{thematic_break}}          # line is a thematic beak
-          | [ ]{,3}1[.)]\s              # an ordered list item with number "1" begins the line
-          | [ ]{,3}[*+-]\s              # an unordered list item begins the line
-          | [ ]{,3}<(?:                 # all types of HTML blocks except type 7 may interrupt a paragraph
-              {{html_tag_block_end_at_close_tag}}   # 1
-            | !--                                   # 2
-            | \?                                    # 3
-            | ![A-Z]                                # 4
-            | !\[CDATA\[                            # 5
-            | {{html_tag_block_end_at_blank_line}}  # 6
-          )
-          | [ ]{,3}\$\$                 # a latex math block
-          )
-      pop: true
-
   ampersand:
     - match: (?!{{html_entity}})&
       comment: |
@@ -588,76 +532,6 @@ contexts:
     - match: '{{escape}}'
       scope: constant.character.escape.markdown
 
-  atx-heading:
-    # https://spec.commonmark.org/0.30/#atx-headings
-    # Note:
-    #   Consume spaces and tabs after opening hashes so entity.name
-    #   starts with first non-whitespace character,
-    #   but don't do so if directly followed by closing hashes
-    #   as terminator pattern requires them to match then.
-    - match: '[ ]{,3}(#{1}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading1-content
-    - match: '[ ]{,3}(#{2}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading2-content
-    - match: '[ ]{,3}(#{3}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading3-content
-    - match: '[ ]{,3}(#{4}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading4-content
-    - match: '[ ]{,3}(#{5}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading5-content
-    - match: '[ ]{,3}(#{6}){{atx_heading_space}}'
-      captures:
-        1: punctuation.definition.heading.begin.markdown
-      push: atx-heading6-content
-
-  atx-heading1-content:
-    - meta_scope: markup.heading.1.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading2-content:
-    - meta_scope: markup.heading.2.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading3-content:
-    - meta_scope: markup.heading.3.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading4-content:
-    - meta_scope: markup.heading.4.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading5-content:
-    - meta_scope: markup.heading.5.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading6-content:
-    - meta_scope: markup.heading.6.markdown
-    - meta_content_scope: entity.name.section.markdown
-    - include: atx-heading-content
-
-  atx-heading-content:
-    - match: '{{atx_heading_end}}'
-      captures:
-        1: punctuation.definition.heading.end.markdown
-        2: meta.whitespace.newline.markdown
-      pop: true
-    - include: inline-bold-italic
-
   italic:
     - match: '\*(?=\S)(?!\*)'
       scope: punctuation.definition.italic.begin.markdown
@@ -822,6 +696,137 @@ contexts:
         - include: scope:text.html.basic
         - match: $
           pop: true
+
+###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
+
+  atx-heading:
+    # https://spec.commonmark.org/0.30/#atx-headings
+    # Note:
+    #   Consume spaces and tabs after opening hashes so entity.name
+    #   starts with first non-whitespace character,
+    #   but don't do so if directly followed by closing hashes
+    #   as terminator pattern requires them to match then.
+    - match: '[ ]{,3}(#{1}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading1-content
+    - match: '[ ]{,3}(#{2}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading2-content
+    - match: '[ ]{,3}(#{3}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading3-content
+    - match: '[ ]{,3}(#{4}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading4-content
+    - match: '[ ]{,3}(#{5}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading5-content
+    - match: '[ ]{,3}(#{6}){{atx_heading_space}}'
+      captures:
+        1: punctuation.definition.heading.begin.markdown
+      push: atx-heading6-content
+
+  atx-heading1-content:
+    - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading2-content:
+    - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading3-content:
+    - meta_scope: markup.heading.3.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading4-content:
+    - meta_scope: markup.heading.4.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading5-content:
+    - meta_scope: markup.heading.5.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading6-content:
+    - meta_scope: markup.heading.6.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - include: atx-heading-content
+
+  atx-heading-content:
+    - match: '{{atx_heading_end}}'
+      captures:
+        1: punctuation.definition.heading.end.markdown
+        2: meta.whitespace.newline.markdown
+      pop: true
+    - include: inline-bold-italic
+
+###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
+
+  setext-heading-or-paragraph:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: ^[ ]{,3}(?:=+|(?=\S))
+      push: paragraph
+
+  setext-heading1:
+    - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
+      scope: markup.heading.1.setext.markdown
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: true
+
+  setext-heading2:
+    - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
+      scope: markup.heading.2.setext.markdown
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: true
+
+  paragraph:
+    - meta_scope: meta.paragraph.markdown
+    - include: setext-heading1
+    - include: setext-heading2
+    - include: paragraph-end
+    - include: inline-bold-italic-linebreak
+    - include: tag-kbd
+    - include: scope:text.html.basic
+
+  paragraph-end:
+    - match: |-
+        (?x)                            # pop out of this context if one of the following conditions are met:
+        ^(?=
+          \s*$                          # the line is blank (or only contains whitespace)
+          | {{atx_heading}}             # an ATX heading begins the line
+          | {{block_quote}}             # a blockquote begins the line
+          | {{fenced_code_block_start}} # a fenced codeblock begins the line
+          | {{thematic_break}}          # line is a thematic beak
+          | [ ]{,3}1[.)]\s              # an ordered list item with number "1" begins the line
+          | [ ]{,3}[*+-]\s              # an unordered list item begins the line
+          | [ ]{,3}<(?:                 # all types of HTML blocks except type 7 may interrupt a paragraph
+              {{html_tag_block_end_at_close_tag}}   # 1
+            | !--                                   # 2
+            | \?                                    # 3
+            | ![A-Z]                                # 4
+            | !\[CDATA\[                            # 5
+            | {{html_tag_block_end_at_blank_line}}  # 6
+          )
+          | [ ]{,3}\$\$                 # a latex math block
+          )
+      pop: true
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
