@@ -658,34 +658,6 @@ contexts:
       pop: true
     - include: inline-bold-italic
 
-  inline:
-    - include: escape
-    - include: ampersand
-    - include: critic-inline
-    - include: ligatures
-    - include: bracket
-    - include: code-spans
-    - include: autolink-email
-    - include: autolink-inet
-    - include: image-inline
-    - include: image-ref
-    - include: link-ref-wiki
-    - include: link-ref-footnote
-    - include: link-ref-literal
-    - include: link-inline
-    - include: link-ref
-    - include: latex-inline
-
-  inline-bold-italic:
-    - include: inline
-    - include: bold
-    - include: italic
-    - include: strikethrough
-
-  inline-bold-italic-linebreak:
-    - include: inline-bold-italic
-    - include: hard-line-break
-
   italic:
     - match: '\*(?=\S)(?!\*)'
       scope: punctuation.definition.italic.begin.markdown
@@ -2205,6 +2177,36 @@ contexts:
     - match: \n
       pop: true
 
+###[ INLINE ]#################################################################
+
+  inline:
+    - include: escape
+    - include: ampersand
+    - include: critic-inline
+    - include: ligatures
+    - include: bracket
+    - include: code-spans
+    - include: autolink-email
+    - include: autolink-inet
+    - include: image-inline
+    - include: image-ref
+    - include: link-ref-wiki
+    - include: link-ref-footnote
+    - include: link-ref-literal
+    - include: link-inline
+    - include: link-ref
+    - include: latex-inline
+
+  inline-bold-italic:
+    - include: inline
+    - include: bold
+    - include: italic
+    - include: strikethrough
+
+  inline-bold-italic-linebreak:
+    - include: inline-bold-italic
+    - include: hard-line-break
+
 ###[ INLINE: CODE SPANS ]#####################################################
 
   code-spans:
@@ -2224,7 +2226,7 @@ contexts:
       pop: true
     - include: paragraph-end
 
-###[ INLINE IMAGES ]##########################################################
+###[ INLINE: IMAGES ]#########################################################
 
   image-inline:
     - match: \!\[(?={{balance_square_brackets}}?\]\()
@@ -2282,8 +2284,6 @@ contexts:
     - meta_scope: meta.image.inline.attributes.markdown
     - include: tag-attributes
 
-###[ IMAGE REFERENCES ]#######################################################
-
   image-ref:
     - match: \!\[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
       scope: punctuation.definition.image.begin.markdown
@@ -2320,7 +2320,7 @@ contexts:
     - meta_scope: meta.image.reference.markdown
     - include: tag-attributes
 
-###[ INLINE LINKS ]###########################################################
+###[ INLINE: LINKS ]##########################################################
 
   link-inline:
     - match: \[(?={{balance_square_brackets}}?\]\()
@@ -2377,8 +2377,6 @@ contexts:
   link-inline-attr-body:
     - meta_scope: meta.link.inline.attributes.markdown
     - include: tag-attributes
-
-###[ LINK REFERENCES ]########################################################
 
   link-ref:
     - match: \[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
@@ -2475,7 +2473,7 @@ contexts:
       pop: true
     - include: link-text-allow-image
 
-###[ LINK/IMAGE PROTOTYPES ]##################################################
+###[ INLINE: LINK/IMAGE PROTOTYPES ]##########################################
 
   link-text:
     - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
@@ -2574,7 +2572,7 @@ contexts:
       scope: punctuation.separator.path.markdown
       pop: true
 
-###[ LINK/IMAGE/REFERENCE ATTRIBUTES ]########################################
+###[ INLINE: LINK/IMAGE/REFERENCE ATTRIBUTES ]################################
 
   tag-attributes:
     # https://kramdown.gettalong.org/syntax.html#span-ials
@@ -2629,7 +2627,7 @@ contexts:
           scope: invalid.illegal.attribute-value.markdown
     - include: else-pop
 
-###[ AUTOLINKS ]##############################################################
+###[ INLINE: AUTOLINKS ]######################################################
 
   autolink-email:
     # CommonMark
