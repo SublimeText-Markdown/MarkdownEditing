@@ -250,22 +250,6 @@ contexts:
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
 
-  ampersand:
-    - match: (?!{{html_entity}})&
-      comment: |
-        Markdown will convert this for us. We match it so that the
-                        HTML grammar will not mark it up as invalid.
-      scope: meta.other.valid-ampersand.markdown
-
-  ligatures:
-    - match: '<?(-+|=+)<'     # -< --< ---< ----< <-< <--< <---< <----<
-                              # =< ==< ===< ====< <=< <==< <===< <====<
-    - match: '<(-+|=+)>?'     # <- <-- <--- <-> <--> <--->
-                              # <= <== <=== <=> <==> <===>
-    - match: '>(-+|=+)[<>]?'  # >- >-- >--- >-> >--> >---> >-< >--< >---<
-                              # >= >== >=== >=> >==> >===> >=< >==< >===<
-    - match: '<<+|<>|>>+'     # << <<< <<<< <> >>>> >>> >>
-
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
     - match: ^{{block_quote}}
@@ -521,17 +505,6 @@ contexts:
         - include: italic
         - include: strikethrough
 
-  bracket:
-    - match: '<(?![A-Za-z/?!$])'
-      comment: |
-        Markdown will convert this for us. We match it so that the
-                        HTML grammar will not mark it up as invalid.
-      scope: meta.other.valid-bracket.markdown
-
-  escape:
-    - match: '{{escape}}'
-      scope: constant.character.escape.markdown
-
   italic:
     - match: '\*(?=\S)(?!\*)'
       scope: punctuation.definition.italic.begin.markdown
@@ -587,18 +560,10 @@ contexts:
       scope: invalid.illegal.non-terminated.bold-italic.markdown
       pop: true
     - include: paragraph-end
-    - include: hard-line-break
+    - include: hard-line-breaks
     - include: inline
     - include: tag-kbd
     - include: scope:text.html.basic
-
-  hard-line-break:
-    - match: '[ ]{2,}$'
-      scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
-    - match: '(\\)$\n'
-      scope: meta.hard-line-break.markdown
-      captures:
-        1: constant.character.escape.markdown
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
@@ -2185,11 +2150,11 @@ contexts:
 ###[ INLINE ]#################################################################
 
   inline:
-    - include: escape
-    - include: ampersand
+    - include: escapes
+    - include: ampersands
     - include: critic-inline
     - include: ligatures
-    - include: bracket
+    - include: brackets
     - include: code-spans
     - include: autolink-email
     - include: autolink-inet
@@ -2210,7 +2175,7 @@ contexts:
 
   inline-bold-italic-linebreak:
     - include: inline-bold-italic
-    - include: hard-line-break
+    - include: hard-line-breaks
 
 ###[ INLINE: CODE SPANS ]#####################################################
 
@@ -2483,7 +2448,7 @@ contexts:
   link-text:
     - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
-    - include: escape
+    - include: escapes
     - include: ampersand
     - include: code-spans
     - match: \[ # nested square brackets are allowed
@@ -2493,7 +2458,7 @@ contexts:
           pop: true
     - include: bold
     - include: italic
-    - include: hard-line-break
+    - include: hard-line-breaks
     - include: tag-kbd
     - include: scope:text.html.basic
 
@@ -2714,6 +2679,41 @@ contexts:
       push: autolink-inet-group
     - include: link-url-path-separators
     - include: link-url-escapes
+
+###[ INLINE: OTHER ]##########################################################
+
+  ampersands:
+    # Markdown will convert this for us. We match it so that the
+    # HTML grammar will not mark it up as invalid.
+    - match: (?!{{html_entity}})&
+      scope: meta.other.valid-ampersand.markdown
+
+  brackets:
+    # Markdown will convert this for us. We match it so that the
+    # HTML grammar will not mark it up as invalid.
+    - match: <(?![A-Za-z/?!$])
+      scope: meta.other.valid-bracket.markdown
+
+  escapes:
+    - match: '{{escape}}'
+      scope: constant.character.escape.markdown
+
+  ligatures:
+    - match: '<?(-+|=+)<'     # -< --< ---< ----< <-< <--< <---< <----<
+                              # =< ==< ===< ====< <=< <==< <===< <====<
+    - match: '<(-+|=+)>?'     # <- <-- <--- <-> <--> <--->
+                              # <= <== <=== <=> <==> <===>
+    - match: '>(-+|=+)[<>]?'  # >- >-- >--- >-> >--> >---> >-< >--< >---<
+                              # >= >== >=== >=> >==> >===> >=< >==< >===<
+    - match: '<<+|<>|>>+'     # << <<< <<<< <> >>>> >>> >>
+
+  hard-line-breaks:
+    - match: '[ ]{2,}$'
+      scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
+    - match: (\\)\n
+      captures:
+        0: meta.hard-line-break.markdown
+        1: constant.character.escape.markdown
 
 ###[ LEAF BLOCKS: TABLES ]####################################################
 
