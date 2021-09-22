@@ -2183,7 +2183,7 @@ contexts:
       set:
         - image-inline-metadata-end
         - link-title
-        - link-url
+        - image-inline-url
     - include: immediately-pop
 
   image-inline-metadata-end:
@@ -2192,6 +2192,21 @@ contexts:
       scope: punctuation.definition.metadata.end.markdown
       set: image-inline-attr
     - include: else-pop
+
+  image-inline-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: image-inline-url-angled
+    - match: (?=\S)
+      set: image-inline-url-unquoted
+
+  image-inline-url-angled:
+    - meta_content_scope: markup.underline.link.image.markdown
+    - include: link-url-angled
+
+  image-inline-url-unquoted:
+    - meta_scope: markup.underline.link.image.markdown
+    - include: link-url-unquoted
 
   image-inline-attr:
     - match: \{(?=[^}]*\})
@@ -2264,7 +2279,7 @@ contexts:
       set:
         - link-inline-metadata-end
         - link-title
-        - link-url
+        - link-inline-url
     - include: immediately-pop
 
   link-inline-metadata-end:
@@ -2273,6 +2288,21 @@ contexts:
       scope: punctuation.definition.metadata.end.markdown
       set: link-inline-attr
     - include: else-pop
+
+  link-inline-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: link-inline-url-angled
+    - match: (?=\S)
+      set: link-inline-url-unquoted
+
+  link-inline-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - include: link-url-angled
+
+  link-inline-url-unquoted:
+    - meta_scope: markup.underline.link.markdown
+    - include: link-url-unquoted
 
   link-inline-attr:
     - match: \{(?=[^}]*\})
@@ -2444,22 +2474,13 @@ contexts:
       scope: invalid.illegal.non-terminated.link-title.markdown
       pop: true
 
-  link-url:
-    - match: <
-      scope: punctuation.definition.link.begin.markdown
-      set: link-url-angled
-    - match: (?=\S)
-      set: link-url-unquoted
-
   link-url-angled:
-    - meta_content_scope: markup.underline.link.markdown
     - match: \>
       scope: punctuation.definition.link.end.markdown
       pop: true
     - include: link-url-common
 
   link-url-unquoted:
-    - meta_scope: markup.underline.link.markdown
     - match: (?=[ \t)])
       pop: true
     - include: link-url-common
