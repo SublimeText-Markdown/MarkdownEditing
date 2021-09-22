@@ -54,7 +54,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 return
 
             def calc_level(start):
-                return (int(start.count("#") + by)) % self.MAX_LEVEL
+                return (start.count("#") + by) % (self.MAX_LEVEL + 1)
 
             self._set_level(edit, calc_level, select)
 
@@ -77,7 +77,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
         view = self.view
         vsels = view.sel()
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
-        pattern = re.compile(r"^([ \t>]*)(?:(\#{1,6})[ \t]+?|(?![-+*#]))(.*?)(?:[ \t]+\#+)?[ \t]*$")
+        pattern = re.compile(r"^([ \t>]*)(?:(#+)[ \t]+?|(?![-+*#]))(.*?)(?:[ \t]+#+)?[ \t]*$")
 
         # One or more selections may span multiple lines each of them to change heading level for.
         # To correctly handle caret placements split all selections into single lines first.
