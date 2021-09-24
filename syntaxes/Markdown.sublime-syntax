@@ -2515,9 +2515,17 @@ contexts:
   link-url-unquoted:
     - match: (?=[ \t)])
       pop: true
+    - match: \(
+      push: link-url-unquoted-parens
     - include: link-url-common
 
+  link-url-unquoted-parens:
+    - match: \)
+      pop: true
+    - include: link-url-unquoted
+
   link-url-common:
+    - include: escapes
     - include: link-url-path-separators
     - include: link-url-scheme-separators
     - include: link-url-escapes

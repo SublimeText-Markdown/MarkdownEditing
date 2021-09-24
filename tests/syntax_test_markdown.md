@@ -209,6 +209,54 @@ Here is a [](https://example.com){_attr="value"}.
 |                                       ^^^^^^^ string.quoted.double.markdown
 |                                              ^ punctuation.definition.attributes.end.markdown
 
+Here is a [link](#with_(parens/inside)_urls).
+|         ^^^^^^ meta.link.inline.description.markdown
+|               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline.metadata.markdown
+|                                           ^^ - meta.link
+|               ^ punctuation.definition.metadata.begin.markdown
+|                ^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                                          ^ punctuation.definition.metadata.end.markdown
+
+Here is a [link](\(foo\)).
+|         ^^^^^^ meta.link.inline.description.markdown
+|               ^^^^^^^^^ meta.link.inline.metadata.markdown
+|                        ^^ - meta.link
+|               ^ punctuation.definition.metadata.begin.markdown
+|                ^^^^^^^ markup.underline.link.markdown
+|                ^^ constant.character.escape.markdown
+|                     ^^ constant.character.escape.markdown
+|                       ^ punctuation.definition.metadata.end.markdown
+
+Here is a [link](foo\)\:).
+|         ^^^^^^ meta.link.inline.description.markdown
+|               ^^^^^^^^^ meta.link.inline.metadata.markdown
+|                        ^^ - meta.link
+|               ^ punctuation.definition.metadata.begin.markdown
+|                ^^^^^^^ markup.underline.link.markdown
+|                   ^^ constant.character.escape.markdown
+|                       ^ punctuation.definition.metadata.end.markdown
+
+Here is a [link](<foo(and(bar)>).
+|         ^^^^^^ meta.link.inline.description.markdown
+|               ^^^^^^^^^^^^^^^^ meta.link.inline.metadata.markdown
+|                               ^^ - meta.link
+|               ^ punctuation.definition.metadata.begin.markdown
+|                ^ punctuation.definition.link.begin.markdown
+|                 ^^^^^^^^^^^^ markup.underline.link.markdown
+|                             ^ punctuation.definition.link.end.markdown
+|                              ^ punctuation.definition.metadata.end.markdown
+
+Here is a [link](http://example.com?foo=3#frag).
+|         ^^^^^^ meta.link.inline.description.markdown
+|               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline.metadata.markdown
+|                                              ^^ - meta.link
+|               ^ punctuation.definition.metadata.begin.markdown
+|                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                    ^^^ punctuation.separator.path.markdown
+|                                  ^ punctuation.separator.path.markdown
+|                                        ^ punctuation.separator.path.markdown
+|                                             ^ punctuation.definition.metadata.end.markdown
+
 Not a [link] (url) due to space.
 |     ^^^^^^ meta.link.reference.description.markdown
 |           ^^^^^^^^^^^^^^^^^^^^^ - meta.link
