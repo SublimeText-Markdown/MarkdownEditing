@@ -115,3 +115,12 @@ class DereferrablePanelTestCase(DeferrableTestCase):
         :param text:  The text expected to be equal with view's content.
         """
         self.assertEqual(self.getText(), text)
+
+    def assertCaretAt(self, row, col):
+        """
+        Assert caret to be located at a certain position.
+
+        :param row:  The natural 1-based row number. 1=first row
+        :param col:  The natural 1-based column number. 1=first column
+        """
+        self.assertEqual(self.view.sel()[0].begin(), self.textPoint(row, col))
