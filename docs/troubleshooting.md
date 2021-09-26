@@ -11,7 +11,7 @@ Thus all user specific syntax specific settings or overrides can or must be remo
 1. Open a Markdown file
 2. Open Command Palette <kbd>ctrl+shift+p</kbd>
 3. Execute `Preferences: Settings - Syntax Specific`
-4. Remove everything judjged useless from the right panel.
+4. Remove everything judged useless from the right panel.
 
 The following syntax specific settings have been removed:
 
