@@ -1,4 +1,5 @@
 import re
+import sublime
 
 from ..logging import logger
 from ..view import MdeTextCommand
@@ -53,8 +54,8 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 logger.error("Invalid headings level step size specified!")
                 return
 
-            def calc_level(start):
-                return (int(start.count("#") + by)) % self.MAX_LEVEL
+            def calc_level(level):
+                return (level + by) % (self.MAX_LEVEL + 1)
 
             self._set_level(edit, calc_level, select)
 
@@ -65,7 +66,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 logger.error("Invalid headings level specified!")
                 return
 
-            def calc_level(start):
+            def calc_level(level):
                 return to
 
             self._set_level(edit, calc_level, select)
@@ -75,12 +76,28 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
 
     def _set_level(self, edit, calc_level, select):
         view = self.view
-        vsels = view.sel()
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
-        pattern = re.compile(r"^([ \t>]*)(?:(\#{1,6})[ \t]+?|(?![-+*#]))(.*?)(?:[ \t]+\#+)?[ \t]*$")
+        pattern = re.compile(
+            r"""
+            (?x)
+            ^([ \t>]*)                   # block quotes
+            (?:
+                (\#+)                    # leading hashes
+                (?:                      # optionally followed by ...
+                    [ \t]+?              # at least one space
+                    ( .*? )              # tokens not looking like trailing hashes
+                    ([ \t]+\#+[ \t]*$)?  # maybe trailing hashes
+                )?
+            |
+                ([^-+*].*?)? [ \t]*      # no heading nor list item
+            )
+            $
+            """
+        )
 
         # One or more selections may span multiple lines each of them to change heading level for.
         # To correctly handle caret placements split all selections into single lines first.
+        vsels = view.sel()
         regions = [region for sel in vsels for region in view.split_by_newlines(sel)]
         vsels.clear()
         vsels.add_all(regions)
@@ -98,25 +115,37 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 )
                 continue
 
-            quote, hashes, text = match.groups()
-            to = calc_level(hashes or "")
-            new_text = quote + "#" * to + " " * bool(to) + text
-            if match_heading_hashes and to > 0:
-                new_text += " " + "#" * to
-            view.replace(edit, line, new_text)
-            if select:
-                line.a += len(quote) + bool(to) + to
-                line.b = line.a + len(text) * bool(select)
-            else:
-                line = view.line(line.a)
-                if hashes:
-                    line.a = min(line.b, max(line.a, sel.a + to - len(hashes) - int(not to)))
-                else:
-                    line.a = min(line.b, max(line.a, sel.a + to + bool(to)))
-                line.b = line.a
-            regions.append(line)
+            bol = line.begin()
+            col = view.rowcol(sel.begin())[1]
 
-        # fix caret positions and selections
-        if regions:
-            vsels.clear()
-            vsels.add_all(regions)
+            quote, _, heading, _, text = match.groups()
+
+            old_level = match.end(2) - match.start(2)
+            new_level = calc_level(old_level)
+
+            leading = "#" * new_level + " " * bool(new_level)
+            heading = heading or text or ""
+            new_string = quote + leading + heading
+            if match_heading_hashes and new_level:
+                new_string += " " + "#" * new_level
+
+            view.replace(edit, line, new_string)
+
+            # convert to heading
+            if old_level < 1:
+                pt = bol + col + len(leading)
+            # caret was in front of heading
+            elif col <= match.end(1):
+                pt = bol + col
+            # caret after heading text
+            elif col > match.end(3):
+                pt = bol + len(leading) + len(heading)
+            # keep caret in relative horizontal position
+            else:
+                pt = bol + col + len(leading) - max(0, match.start(3) - match.start(2))
+                pt = min(max(bol, pt), view.line(bol).end())
+
+            regions.append(sublime.Region(pt, pt))
+
+        vsels.clear()
+        vsels.add_all(regions)

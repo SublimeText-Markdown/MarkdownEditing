@@ -269,7 +269,7 @@ Here is a ![](https://example.com/cat.gif).
 |         ^^ punctuation.definition.image.begin.markdown
 |           ^ punctuation.definition.image.end.markdown - string
 |            ^ punctuation.definition.metadata.begin.markdown
-|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                        ^ punctuation.definition.metadata.end.markdown
 
 Here is a ![](https://example.com/cat.gif){_at"r=value :att2}.
@@ -280,7 +280,7 @@ Here is a ![](https://example.com/cat.gif){_at"r=value :att2}.
 |         ^^ punctuation.definition.image.begin.markdown
 |           ^ punctuation.definition.image.end.markdown - string
 |            ^ punctuation.definition.metadata.begin.markdown
-|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                        ^ punctuation.definition.metadata
 |                                         ^ punctuation.definition.attributes.begin.markdown
 |                                          ^^^^^ entity.other.attribute-name.markdown
@@ -297,7 +297,7 @@ Here is a ![Image Alt Text](https://example.com/cat.gif).
 |         ^^ punctuation.definition.image.begin.markdown
 |                         ^ punctuation.definition.image.end.markdown - string
 |                          ^ punctuation.definition.metadata.begin.markdown
-|                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                      ^ punctuation.definition.metadata.end.markdown
 
 Here is a ![Image Alt Text](  https://example.com/cat.gif  ).
@@ -308,13 +308,13 @@ Here is a ![Image Alt Text](  https://example.com/cat.gif  ).
 |                         ^ punctuation.definition.image.end - string
 |                          ^ punctuation.definition.metadata.begin.markdown
 |                           ^^ - markup.underline
-|                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                        ^^ - markup.underline
 |                                                          ^ punctuation.definition.metadata.end.markdown
 
 Here is a ![Image Alt Text](
   https://example.com/cat.gif  ).
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                              ^ punctuation.definition.metadata.end.markdown
 
 Here is a ![Image Alt Text](
@@ -329,7 +329,7 @@ Here is a ![Image Alt Text](
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.image.inline.metadata.markdown
 |                                          ^^ meta.paragraph.markdown - meta.image
 | ^ punctuation.definition.link.begin.markdown
-|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                             ^ punctuation.definition.link.end.markdown
 |                               ^^^^^^^ string.other.link.description.title.markdown
 |                               ^ punctuation.definition.string.begin.markdown
@@ -341,7 +341,7 @@ Here is a ![Image Alt Text](
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.image.inline.metadata.markdown
 |                                            ^^ meta.paragraph.markdown - meta.image
 | ^ punctuation.definition.link.begin.markdown
-|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                               ^ punctuation.definition.link.end.markdown
 |                                 ^^^^^^^ string.other.link.description.title.markdown
 |                                 ^ punctuation.definition.string.begin.markdown
@@ -351,7 +351,7 @@ Here is a ![Image Alt Text](
 Here is a ![Image Alt Text](
   https://example .com /cat.gif (hello)   ).
 |^ meta.paragraph.markdown meta.image.inline.metadata.markdown - markup.underline
-| ^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.image.inline.metadata.markdown markup.underline.link.markdown
+| ^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.image.inline.metadata.markdown markup.underline.link.image.markdown
 |                ^ meta.paragraph.markdown meta.image.inline.metadata.markdown - markup.underline
 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.image - markup.underline
 
@@ -1187,7 +1187,7 @@ because it doesn't begin with the number one:
 |               ^^^^^^^^^^^^^ meta.image.inline.description
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
@@ -1198,7 +1198,7 @@ because it doesn't begin with the number one:
 |               ^^^^^^^^^^^^^ meta.image.inline.description
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
@@ -1209,7 +1209,7 @@ because it doesn't begin with the number one:
 |               ^^^^^^^^^^^^^ meta.image.inline.description
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
@@ -2266,7 +2266,7 @@ _foo [**bar**](/url)_
 [![Cool ★ Image - Click to Enlarge](http://www.sublimetext.com/anim/rename2_packed.png)](http://www.sublimetext.com/anim/rename2_packed.png)
 |^ punctuation.definition.image.begin
 |                                  ^ punctuation.definition.metadata.begin
-|                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                                                                                     ^ punctuation.definition.metadata.end
 |                                                                                       ^ punctuation.definition.metadata.begin
 |                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
