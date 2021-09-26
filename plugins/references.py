@@ -28,6 +28,7 @@ footnote_scope_name = "meta.link.reference.footnote.markdown-extra"
 marker_scope_name = "meta.link.reference.description.markdown"
 marker_literal_scope_name = "meta.link.reference.literal.description.markdown"
 marker_image_scope_name = "meta.image.reference.description.markdown"
+marker_ref_scope_name = "constant.other.reference.link.markdown"
 ref_link_scope_name = "markup.underline.link.markdown"
 marker_begin_scope_name = "punctuation.definition.link.begin.markdown"
 marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
@@ -75,7 +76,7 @@ def getMarkers(view, name=""):
     for x in markers:
         scope_name = view.scope_name(x.begin())
         if (
-            hasScope(scope_name, refname_scope_name) or hasScope(scope_name, marker_text_scope_name)
+            hasScope(scope_name, marker_ref_scope_name) or hasScope(scope_name, marker_text_scope_name)
         ) and not hasScope(view.scope_name(x.begin()), definition_scope_name):
             regions.append(x)
     ids = {}
