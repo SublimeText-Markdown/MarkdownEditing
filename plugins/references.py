@@ -76,7 +76,8 @@ def getMarkers(view, name=""):
     for x in markers:
         scope_name = view.scope_name(x.begin())
         if (
-            hasScope(scope_name, marker_ref_scope_name) or hasScope(scope_name, marker_text_scope_name)
+            hasScope(scope_name, marker_ref_scope_name)
+            or hasScope(scope_name, marker_text_scope_name)
         ) and not hasScope(view.scope_name(x.begin()), definition_scope_name):
             regions.append(x)
     ids = {}

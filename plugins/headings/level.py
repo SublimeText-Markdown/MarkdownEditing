@@ -127,7 +127,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
             heading = heading or text or ""
             new_string = quote + leading + heading
             if match_heading_hashes and new_level:
-                new_string +=  " " + "#" * new_level
+                new_string += " " + "#" * new_level
 
             view.replace(edit, line, new_string)
 
@@ -142,7 +142,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 pt = bol + len(leading) + len(heading)
             # keep caret in relative horizontal position
             else:
-                pt = bol + col+ len(leading) - max(0, match.start(3) - match.start(2))
+                pt = bol + col + len(leading) - max(0, match.start(3) - match.start(2))
                 pt = min(max(bol, pt), view.line(bol).end())
 
             regions.append(sublime.Region(pt, pt))
