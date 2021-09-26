@@ -453,29 +453,31 @@
 	// If nothing is selected, pressing hash in front of heading label increases level by one
 	{ "keys": ["#"], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.heading", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*\\s*$", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^#*\\s\\S", "match_all": true }
 		]
 	},
 	// If nothing is selected, pressing backspace within or directly after leading hashes decreases heading level
 	{ "keys": ["backspace"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.heading", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#+\\s?$", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#+$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^#*\\s\\S", "match_all": true }
 		]
 	},
 	// If nothing is selected, pressing delete within or directly in front of leading hashes decreases heading level
 	{ "keys": ["delete"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.heading", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*\\s*$", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^#", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*#*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^#+\\s\\S", "match_all": true }
 		]
 	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
