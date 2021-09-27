@@ -269,6 +269,8 @@ Important functions are bound to following keys by default:
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
 | <kbd>Shift</kbd> + <kbd>Win</kbd> + <kbd>K</kbd> | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>6</kbd> | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>6</kbd> | Inserts a footnote.
+| <kbd>f12</kbd> | <kbd>f12</kbd> | Jump to reference/footnote definition.
+| <kbd>shift+f12</kbd> | <kbd>shift+f12</kbd> | Jump from definition to reference(s).
 
 # Critic Markup
 

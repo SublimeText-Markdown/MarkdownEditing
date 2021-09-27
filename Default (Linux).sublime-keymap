@@ -1016,18 +1016,33 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	// jump to reference
-	{ "keys": ["ctrl+alt+g"], "command": "mde_reference_jump", "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.reference_jump", "operator": "not_equal", "operand": true }
-		]
-	},
 	// organize references
 	{ "keys": ["ctrl+alt+s"], "command": "mde_reference_organize", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.reference_organize", "operator": "not_equal", "operand": true }
+		]
+	},
+	// jump to reference
+	{ "keys": ["f12"], "command": "mde_reference_jump", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference string.other.link", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+f12"], "command": "mde_reference_jump", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference.def.markdown entity.name.reference.link", "match_all": true }
+		]
+	},
+	// jump to footnote
+	{ "keys": ["f12"], "command": "mde_magic_footnotes", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference.footnote", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+f12"], "command": "mde_magic_footnotes", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference.def.footnote entity.name.reference.link", "match_all": true }
 		]
 	},
 
