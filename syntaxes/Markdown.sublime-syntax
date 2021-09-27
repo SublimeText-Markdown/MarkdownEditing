@@ -943,6 +943,7 @@ contexts:
     - include: fenced-mermaid
     - include: fenced-nim
     - include: fenced-powershell
+    - include: fenced-protobuf
     - include: fenced-reason
     - include: fenced-sass
     - include: fenced-scheme
@@ -1873,6 +1874,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.powershell.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-protobuf:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:protobuf))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.protobuf.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.proto
+      embed_scope: markup.raw.code-fence.protobuf.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.protobuf.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-reason:
