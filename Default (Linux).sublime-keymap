@@ -490,7 +490,27 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -510,7 +530,27 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": false },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -706,6 +746,12 @@
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
 		]
 	},
+	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1 $3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
+		]
+	},
 	// Extend lists (also in block quotes)
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
@@ -714,7 +760,21 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
@@ -729,7 +789,21 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)\\[[ xX]\\](\\s+)).*/\n$1$2$3[ ]$4/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
@@ -744,7 +818,21 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "mde_number_list", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "mde_number_list", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "mde_number_list", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*\\d+[.)]", "match_all": true },
@@ -760,7 +848,23 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
@@ -899,7 +1003,21 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
+			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
+		]
+	},
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(?:>\\s*)+(?![-+*>#\\s]|\\d+[.)])", "match_all": true },
@@ -1025,8 +1143,22 @@
 			{ "key": "auto_complete_visible", "operand": false }
 		]
 	},
+	{ "keys": ["keypad_enter"], "command": "mde_add_numbered_reference_definition", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\[.*\\d+\\]:", "match_all": true },
+			{ "key": "auto_complete_visible", "operand": false }
+		]
+	},
 	// extend numbered reference if auto-completions are commited via tab only
 	{ "keys": ["enter"], "command": "mde_add_numbered_reference_definition", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\[.*\\d+\\]:", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["keypad_enter"], "command": "mde_add_numbered_reference_definition", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\[.*\\d+\\]:", "match_all": true },
@@ -1080,6 +1212,12 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
 		]
 	},
+	{ "keys": ["alt+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Addition.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.addition", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
 	// discard addition
 	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Addition.sublime-macro"}, "context":
 		[
@@ -1102,6 +1240,12 @@
 		]
 	},
 	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Comment.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.comment", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
@@ -1130,6 +1274,12 @@
 	},
 	// commit deletion
 	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Deletion.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Deletion.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.deletion", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
@@ -1164,6 +1314,12 @@
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
 		]
 	},
+	{ "keys": ["alt+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
 	{ "keys": ["alt+backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Discard Critic Highlight.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.highlight", "match_all": true },
@@ -1187,6 +1343,12 @@
 	},
 	// commit substitution
 	{ "keys": ["alt+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Substitution.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+	{ "keys": ["alt+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Commit Critic Substitution.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
