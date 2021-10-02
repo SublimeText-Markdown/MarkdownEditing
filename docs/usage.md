@@ -205,6 +205,24 @@ Navigation is bound to following keys by default:
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>PageUp/PageDown</kbd> | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>PageUp/PageDown</kbd> | Go to the previous/next heading of any level
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>PageUp/PageDown</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>PageUp/PageDown</kbd> | Go to the previous/next heading of the same or higher level
 
+# Block Quotes
+
+MarkdownEditing cretes a natural natural editing experience of block quotes.
+
+1. To convert selected text to a block quote just hit <kbd>></kbd>.
+2. By hitting <kbd>Enter</kbd> a new empty block quote line is added.
+3. By hitting <kbd>Del</kbd> at the end of a block quote line,
+   the following line is merged by removing its leading quotes.
+4. Quoted text can be indented (<kbd>tab</kbd>) and unindent (<kbd>shift</kbd> + <kbd>tab</kbd>) as it wasn't quoted.
+
+Further available key bindings:
+
+| Linux/Windows | MacOS | Description
+|---------------|-------|-------------
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>.</kbd>  | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>.</kbd> | Increase block quote level (add one more `> `)
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>,</kbd>  | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>,</kbd> | Decrease block quote level (remove a `> `)
+| <kbd>Ctrl</kbd> + <kbd>Enter</kbd>  | <kbd>⌘</kbd> + <kbd>Enterkbd> | Terminate block quote by adding two newline's.<br/>If the current line is empty, block quote signs are removed.
+
 # Lists and Tasks
 
 List bullets are automatically changed when indenting or unindenting list items by default. This behaviour can be disabled via `"mde.list_indent_auto_switch_bullet": false`.
