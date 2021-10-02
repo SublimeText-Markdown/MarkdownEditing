@@ -75,7 +75,7 @@ In that case you can manually enforce a style via `"mde.match_heading_hashes"` i
 
 MarkdownEditing assists with maintaining width of underlined headings during typing.
 
-Just hit <kbd>tab</kbd> after `-` or `=` and underline width is adjusted to headings text length.
+Just hit <kbd>Tab</kbd> after `-` or `=` and underline width is adjusted to headings text length.
 
 ![headings-setext](img/headings-setext.png)
 
@@ -107,10 +107,10 @@ or use one of the following bindings:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>alt</kbd> + <kbd>k</kbd>, <kbd>alt</kbd> + <kbd>0</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
-| <kbd>alt</kbd> + <kbd>k</kbd>, <kbd>alt</kbd> + <kbd>1..6</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
-| <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>,</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
-| <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>.</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
+| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>0</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
+| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>1..6</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>,</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
+| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>.</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
 
 Key bindings can be disabled via `"mde.keymap_disable.set_heading_level": true`.
 
@@ -155,9 +155,9 @@ Folding is bound to following keys by default:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
-| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
-| <kbd>ctrl</kbd> + <kbd>k</kbd>, <kbd>ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
 | <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold/Unfold current section.
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 
@@ -213,7 +213,7 @@ MarkdownEditing cretes a natural natural editing experience of block quotes.
 2. By hitting <kbd>Enter</kbd> a new empty block quote line is added.
 3. By hitting <kbd>Del</kbd> at the end of a block quote line,
    the following line is merged by removing its leading quotes.
-4. Quoted text can be indented (<kbd>tab</kbd>) and unindent (<kbd>shift</kbd> + <kbd>tab</kbd>) as it wasn't quoted.
+4. Quoted text can be indented (<kbd>Tab</kbd>) and unindent (<kbd>Shift</kbd> + <kbd>Tab</kbd>) as it wasn't quoted.
 
 Further available key bindings:
 
@@ -287,8 +287,8 @@ Important functions are bound to following keys by default:
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>R</kbd> | Creates or pastes the contents of the clipboard as a reference link.
 | <kbd>Shift</kbd> + <kbd>Win</kbd> + <kbd>K</kbd> | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>K</kbd> | Creates or pastes the contents of the clipboard as an inline image on selected text.
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>6</kbd> | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>6</kbd> | Inserts a footnote.
-| <kbd>f12</kbd> | <kbd>f12</kbd> | Jump to reference/footnote definition.
-| <kbd>shift+f12</kbd> | <kbd>shift+f12</kbd> | Jump from definition to reference(s).
+| <kbd>F12</kbd> | <kbd>F12</kbd> | Jump to reference/footnote definition.
+| <kbd>Shift+F12</kbd> | <kbd>Shift+F12</kbd> | Jump from definition to reference(s).
 
 # Critic Markup
 
