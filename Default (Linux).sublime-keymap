@@ -891,13 +891,6 @@
 	// Quotes
 	//
 
-	// Convert to blockquote
-	{ "keys": [">"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Convert to Blockquote.sublime-macro"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
-		]
-	},
 	// Extend blockquote (ignore headings, lists and tasks)
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*(?:>\\s?)).*/\n$1/}"}, "context":
 		[
@@ -937,17 +930,24 @@
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
-	// Indent blockquote
-	{ "keys": ["ctrl+shift+."], "command": "mde_indent_quote", "context":
+	// Convert to or increase block quote level (selected text)
+	{ "keys": [">"], "command": "mde_indent_quote", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
 		]
 	},
-	// Unindent blockquote
+	// Increase block quote level
+	{ "keys": ["ctrl+shift+."], "command": "mde_indent_quote", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true }
+		]
+	},
+	// Decrease block quote level
 	{ "keys": ["ctrl+shift+,"], "command": "mde_unindent_quote", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "(> )+", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(> )+", "match_all": true }
 		]
 	},
 
