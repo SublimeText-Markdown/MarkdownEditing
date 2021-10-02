@@ -741,16 +741,29 @@
 		]
 	},
 	// Add line to current list item
-	{ "keys": ["shift+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1 $3/}"}, "context":
+	{ "keys": ["shift+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1 $3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1 $3/}"}, "context":
+	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1 $3/}"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
+		]
+	},
+	// Add line to current GFM task
+	{ "keys": ["shift+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1     $3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true }
+		]
+	},
+	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1     $3/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true }
 		]
 	},
 	// Extend lists (also in block quotes)
