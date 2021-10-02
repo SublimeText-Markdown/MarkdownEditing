@@ -840,7 +840,7 @@
 		]
 	},
 	// Remove empty list item including GFM tasks
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
@@ -848,7 +848,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
@@ -856,7 +856,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
@@ -864,7 +864,7 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s*$", "match_all": true },
@@ -872,7 +872,7 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Empty List Item.sublime-macro"}, "context":
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Empty List Item.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*([-+*]|\\d+[.)])(?:\\s+\\[[ xX]\\])?\\s?$", "match_all": true },
