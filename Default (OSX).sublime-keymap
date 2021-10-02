@@ -908,7 +908,7 @@
 	// Hitting "tab" directly after new list bullet should insert \t otherwise
 	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.heading - meta.separator", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "has_next_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
@@ -919,12 +919,11 @@
 	// Indent list item if caret is behind bullets
 	{ "keys": ["tab"], "command": "mde_indent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.heading - meta.separator", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "has_next_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
-			{ "key": "following_text", "operator": "not_regex_match", "operand": "(?:-{2,}|={2,}|[+*])", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s+$", "match_all": true }
 		]
 	},
 	// Indent selected list items
