@@ -1,0 +1,5 @@
+[
+	{"command": "expand_selection", "args": {"to": "line"}},
+	{"command": "move", "args": {"by": "characters", "extend": true, "forward": false}},
+	{"command": "insert_snippet", "args": {"contents": "${TM_SELECTED_TEXT/^(\\s*(?:>\\s*)*)(#+)(.*?)\\s*#*\\s*$/$1$2$3 $2\n$1/}"}}
+]

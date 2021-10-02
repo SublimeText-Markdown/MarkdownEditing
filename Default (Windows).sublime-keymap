@@ -480,7 +480,7 @@
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^#+\\s\\S", "match_all": true }
 		]
 	},
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -490,7 +490,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -500,17 +500,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
-			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
-			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
-			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
-			{ "key": "setting.auto_complete_commit_on_tab" }
-		]
-	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Balance Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Balance Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -520,7 +510,17 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Balance Trailing Hashes.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
+			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "setting.mde.match_heading_hashes", "operator": "equal", "operand": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*#+\\s+", "match_all": true },
+			{ "key": "following_text", "operator": "regex_contains", "operand": "^\\s*$", "match_all": true },
+			{ "key": "setting.auto_complete_commit_on_tab" }
+		]
+	},
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Delete Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -530,7 +530,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Delete Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -540,7 +540,7 @@
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Delete Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
@@ -550,7 +550,7 @@
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
-	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Remove Trailing Hashes.sublime-macro"}, "context":
+	{ "keys": ["keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Add Line and Delete Trailing Hashes.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.kbd", "match_all": true },
 			{ "key": "setting.mde.auto_match_heading_hashes", "operator": "equal", "operand": true },
