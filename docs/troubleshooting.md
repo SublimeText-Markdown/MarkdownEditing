@@ -6,36 +6,44 @@
 
 MarkdownEditing stores settings in _Preferences.sublime-settings_ as of version 3.0.0.
 
-Thus all user specific syntax specific settings or overrides can or must be removed:
+The reasons/benefits are:
+
+1. All settings can be set globally, per project, per syntax or per view.
+2. It is easier to add syntax specific settings than to override them.
+3. ST's distraction free mode already provides a good writer mode out of the box.
+
+This change however requires some manual work to...
+
+1. clean up syntax specific user overrides for those who tried to eliminate
+   MarkdownEditing's visual changes.
+2. restore syntax specific settings for those who want them back.
+
+To clean up or restore syntax specific settings...
 
 1. Open a Markdown file
 2. Open Command Palette <kbd>ctrl+shift+p</kbd>
 3. Execute `Preferences: Settings - Syntax Specific`
-4. Remove everything judged useless from the right panel.
-
-The following syntax specific settings have been removed:
+4. Do required changes to your needs.  
+   a) To clean up, remove no longer needed overrides.  
+   b) To restore, paste desired settings from following code block.
 
 ```json
 {
-    "color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
-
+    "color_scheme": "MarkdownEditor.sublime-color-scheme",
     "tab_size": 4,
     "translate_tabs_to_spaces": true,
     "trim_trailing_white_space_on_save": false,
     "auto_match_enabled": true,
-
     // Layout
     "draw_centered": true,
     "word_wrap": true,
     "wrap_width": 80,
     "rulers": [],
-
     // Line
     "line_numbers": false,
     "highlight_line": false,
     "line_padding_top": 2,
     "line_padding_bottom": 2,
-
     // Caret
     "caret_style": "wide",
     "caret_extra_top": 3,
