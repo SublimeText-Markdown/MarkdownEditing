@@ -1052,14 +1052,14 @@
 	{ "keys": ["super+enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Terminate Empty Blockquote.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*>\\s*(?:[-+*](?:\\s+\\[[ xX]\\])?|\\d+[.)])\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*>(?:\\s*[-+*](?:\\s+\\[[ xX]\\])?|\\d+[.)])?\\s*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
 	{ "keys": ["super+keypad_enter"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Terminate Empty Blockquote.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
-			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*>\\s*(?:[-+*](?:\\s+\\[[ xX]\\])?|\\d+[.)])\\s*$", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*>(?:\\s*[-+*](?:\\s+\\[[ xX]\\])?|\\d+[.)])?\\s*$", "match_all": true },
 			{ "key": "following_text", "operator": "regex_match", "operand": "^\\s*$", "match_all": true }
 		]
 	},
