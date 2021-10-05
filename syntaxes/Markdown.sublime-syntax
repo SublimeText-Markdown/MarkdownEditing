@@ -1872,6 +1872,7 @@ contexts:
 ###[ LEAF BLOCKS: LINK REFERENCE DEFINITIONS ]################################
 
   reference-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definitions
     - include: footnote-definitions
     - include: link-definitions
 
