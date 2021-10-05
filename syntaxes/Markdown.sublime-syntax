@@ -2786,7 +2786,7 @@ contexts:
     - match: \|
       scope: punctuation.separator.table-cell.markdown
 
-###[ CRITIC MARKUP ]##########################################################
+###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
   critic-inline:
     # inline critic markup
@@ -2878,7 +2878,7 @@ contexts:
       pop: true
     - include: inline-bold-italic
 
-###[ LATEX ]##################################################################
+###[ EXTENSIONS: LATEX ]######################################################
 
   latex-inline:
     - match: \\\$
