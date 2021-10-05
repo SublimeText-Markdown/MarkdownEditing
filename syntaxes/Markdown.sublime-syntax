@@ -250,6 +250,8 @@ contexts:
     - include: fenced-code-blocks
     - include: setext-heading-or-paragraph
 
+###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
+
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
     - match: ^{{block_quote}}
