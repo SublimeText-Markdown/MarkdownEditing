@@ -723,14 +723,14 @@ contexts:
     - include: ligatures
     - include: bracket
     - include: code-span
-    - include: image-inline
-    - include: link-inline
     - include: autolink-email
     - include: autolink-inet
+    - include: image-inline
     - include: image-ref
     - include: link-ref-wiki
     - include: link-ref-footnote
     - include: link-ref-literal
+    - include: link-inline
     - include: link-ref
     - include: latex-inline
 
@@ -2341,7 +2341,7 @@ contexts:
         - link-ref-attr
         - link-ref-metadata
         - link-ref-link-text
-    - match: \[(?=(?!\^){{balance_square_brackets}}?\])
+    - match: \[(?={{balance_square_brackets}}?\])
       scope: punctuation.definition.link.begin.markdown
       push: link-ref-link-text
 
