@@ -194,6 +194,8 @@ variables:
     footnote_name: (?:\^(?:\\\]|[^]])+)
     reference_name: (?:(?:\\\]|[^]])+)
 
+##############################################################################
+
 contexts:
 
   main:
@@ -1937,6 +1939,69 @@ contexts:
       pop: true
     - include: link-url-common
 
+###[ LEAF BLOCKS: TABLES ]####################################################
+
+  tables:
+    - match: ^(?={{table_first_row}})
+      push: table-header
+
+  table-header:
+    - meta_content_scope: meta.table.header.markdown-gfm
+    - match: \n
+      set: table-header-separator
+    - include: table-cell-content
+
+  table-header-separator:
+    - meta_content_scope: meta.table.header-separator.markdown-gfm
+    - match: \n
+      set: table-body
+    - match: -+
+      scope: punctuation.section.table-header.markdown
+    - match: ':'
+      scope: punctuation.definition.table-cell-alignment.markdown
+    - include: table-cell-separators
+    - include: table-end
+
+  table-body:
+    - meta_content_scope: meta.table.markdown-gfm
+    - include: table-end
+    - include: table-cell-content
+
+  table-end:
+    # The table is broken at the first empty line, or beginning of another block-level structure
+    - match: |-
+          (?x)^
+          (?= \s*$
+          |   {{atx_heading}}
+          |   {{block_quote}}
+          |   {{fenced_code_block_start}}
+          |   {{indented_code_block}}
+          |   {{thematic_break}}
+          )
+      pop: true
+
+  table-cell-content:
+    - match: (?={{balanced_emphasis}})
+      push: table-cell-bold-italic
+    - match: |-
+        (?x)
+        (?!{{backticks}})
+        `+
+      scope: invalid.deprecated.unescaped-backticks.markdown
+    - include: table-cell-separators
+    - include: inline
+    - include: tag-kbd
+    - include: scope:text.html.basic
+
+  table-cell-bold-italic:
+    - include: bold
+    - include: italic
+    - include: immediately-pop
+
+  table-cell-separators:
+    - match: \|
+      scope: punctuation.separator.table-cell.markdown
+
 ###[ LEAF BLOCKS: THEMATIC BREAKS ]###########################################
 
   thematic-breaks:
@@ -2742,69 +2807,6 @@ contexts:
       captures:
         0: meta.hard-line-break.markdown
         1: constant.character.escape.markdown
-
-###[ LEAF BLOCKS: TABLES ]####################################################
-
-  tables:
-    - match: ^(?={{table_first_row}})
-      push: table-header
-
-  table-header:
-    - meta_content_scope: meta.table.header.markdown-gfm
-    - match: \n
-      set: table-header-separator
-    - include: table-cell-content
-
-  table-header-separator:
-    - meta_content_scope: meta.table.header-separator.markdown-gfm
-    - match: \n
-      set: table-body
-    - match: -+
-      scope: punctuation.section.table-header.markdown
-    - match: ':'
-      scope: punctuation.definition.table-cell-alignment.markdown
-    - include: table-cell-separators
-    - include: table-end
-
-  table-body:
-    - meta_content_scope: meta.table.markdown-gfm
-    - include: table-end
-    - include: table-cell-content
-
-  table-end:
-    # The table is broken at the first empty line, or beginning of another block-level structure
-    - match: |-
-          (?x)^
-          (?= \s*$
-          |   {{atx_heading}}
-          |   {{block_quote}}
-          |   {{fenced_code_block_start}}
-          |   {{indented_code_block}}
-          |   {{thematic_break}}
-          )
-      pop: true
-
-  table-cell-content:
-    - match: (?={{balanced_emphasis}})
-      push: table-cell-bold-italic
-    - match: |-
-        (?x)
-        (?!{{backticks}})
-        `+
-      scope: invalid.deprecated.unescaped-backticks.markdown
-    - include: table-cell-separators
-    - include: inline
-    - include: tag-kbd
-    - include: scope:text.html.basic
-
-  table-cell-bold-italic:
-    - include: bold
-    - include: italic
-    - include: immediately-pop
-
-  table-cell-separators:
-    - match: \|
-      scope: punctuation.separator.table-cell.markdown
 
 ###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
