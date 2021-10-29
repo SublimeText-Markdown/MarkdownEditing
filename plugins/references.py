@@ -18,6 +18,7 @@ Exported commands:
 import sublime
 import re
 import operator
+import urllib.parse
 
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
@@ -280,7 +281,7 @@ def append_reference_link(edit, view, name, url):
     return sublime.Region(edit_position, edit_position + len(name))
 
 
-def suggest_default_link_name(name, image):
+def suggest_default_link_name(name, link, image):
     """Suggest default link name in camel case."""
     ret = ""
     name_segs = name.split()
@@ -290,8 +291,16 @@ def suggest_default_link_name(name, image):
             if len(ret) > 30:
                 break
         return ("image" if image else "") + ret
-    else:
-        return name
+    elif len(name) < 4:
+        try:
+            webpath = urllib.parse.urlparse(re.sub(r'/$', '', link)).path
+            doc_name = webpath.split("/")[-1]
+            if doc_name:
+                return doc_name
+        except Exception as e:
+            print("Couldn't parse url", name, image, e)
+            return name
+    return name
 
 
 def check_for_link(view, link):
@@ -323,7 +332,7 @@ class MdeReferenceNewReferenceCommand(MdeTextCommand):
         for sel in view.sel():
             text = view.substr(sel)
             if not suggested_name:
-                suggested_link_name = suggest_default_link_name(text, image)
+                suggested_link_name = suggest_default_link_name(text, link, image)
                 suggested_name = suggested_link_name if suggested_link_name != text else ""
             edit_position = sel.end() + 3
             if image:
@@ -720,7 +729,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
                     suggested_name = check_for_link(view, link)
                     if suggested_name is None:
                         is_image = view.substr(start - 1) == "!" if start > 0 else False
-                        suggested_name = suggest_default_link_name(text, is_image)
+                        suggested_name = suggest_default_link_name(text, link, is_image)
 
                 _name = name if name is not None else suggested_name
                 link_spans.append((link_span, _name, _name == text))
