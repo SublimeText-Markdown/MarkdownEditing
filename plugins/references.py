@@ -115,10 +115,10 @@ def getCurrentScopeRegion(view, pt):
     """Extend the region under current scope."""
     scope = view.scope_name(pt)
     start = pt
-    while start > 0 and view.scope_name(start - 1) == scope:
+    while start > 0 and view.scope_name(start - 1).startswith(scope):
         start -= 1
     end = pt
-    while end < view.size() and view.scope_name(end) == scope:
+    while end < view.size() and view.scope_name(end).startswith(scope):
         end += 1
     return sublime.Region(start, end)
 
