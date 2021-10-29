@@ -284,7 +284,9 @@ def append_reference_link(edit, view, name, url):
 def suggest_default_link_name(name, link, image):
     """Suggest default link name in camel case."""
     ret = ""
-    name_segs = name.split()
+    # string.punctuation minus -.:;<=>_
+    no_punctuation = str.maketrans('', '', "!\"#$%&'()*+,/?@[\\]^`{|}~")
+    name_segs = name.translate(no_punctuation).split()
     if len(name_segs) > 1:
         for word in name_segs:
             ret += word.capitalize()
