@@ -295,10 +295,12 @@ def suggest_default_link_name(name, link, image):
         return ("image" if image else "") + ret
     elif len(name) < 4:
         try:
-            webpath = urllib.parse.urlparse(re.sub(r'/$', '', link)).path
-            doc_name = webpath.split("/")[-1]
+            parseresult = urllib.parse.urlparse(re.sub(r'/$', '', link))
+            doc_name = parseresult.path.split("/")[-1]
             if doc_name:
                 return doc_name
+            elif parseresult.netloc:
+                return parseresult.netloc
         except Exception as e:
             print("Couldn't parse url", name, image, e)
             return name
