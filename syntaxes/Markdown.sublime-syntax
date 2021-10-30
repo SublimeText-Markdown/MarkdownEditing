@@ -280,6 +280,7 @@ contexts:
         - block-quote-content
 
   block-quote-meta:
+    - meta_include_prototype: false
     - meta_scope: markup.quote.markdown
     - include: immediately-pop
 
@@ -320,6 +321,7 @@ contexts:
       push: block-quote-code-block-text
 
   block-quote-code-block-text:
+    - meta_include_prototype: false
     - meta_content_scope: markup.raw.code-fence.markdown-gfm
     - match: ^
       pop: true
