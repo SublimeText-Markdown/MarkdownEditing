@@ -34,7 +34,6 @@ ref_link_scope_name = "markup.underline.link.markdown"
 marker_begin_scope_name = "punctuation.definition.link.begin.markdown"
 marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
 marker_text_scope_name = "string.other.link.title.markdown"
-marker_link_reference_scope_name = "meta.link.reference.metadata.markdown"
 refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
 marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
 
@@ -71,7 +70,7 @@ def getMarkers(view, name=""):
             markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])(?!\s*\]:)" % name, 0))
     regions = []
 
-    selector = marker_text_scope_name + ", " + marker_link_reference_scope_name
+    selector = marker_ref_scope_name + ", " + marker_text_scope_name
     for x in markers:
         if view.match_selector(x.begin(), selector):
             regions.append(x)
