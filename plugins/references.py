@@ -113,13 +113,17 @@ def isMarkerDefined(view, name):
 
 def getCurrentScopeRegion(view, pt):
     """Extend the region under current scope."""
-    scope = view.scope_name(pt)
+    orig_scope = set(view.scope_name(pt).split())
+    cur_scope = set(view.scope_name(pt).split())
     start = pt
-    while start > 0 and view.scope_name(start - 1) == scope:
+    while start > 0 and orig_scope.issubset(cur_scope):
         start -= 1
+        cur_scope = set(view.scope_name(start - 1).split())
+    cur_scope = orig_scope
     end = pt
-    while end < view.size() and view.scope_name(end) == scope:
+    while end < view.size() and orig_scope.issubset(cur_scope):
         end += 1
+        cur_scope = set(view.scope_name(end).split())
     return sublime.Region(start, end)
 
 
