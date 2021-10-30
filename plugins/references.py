@@ -18,6 +18,7 @@ Exported commands:
 import sublime
 import re
 import operator
+import urllib.parse
 
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
@@ -69,7 +70,7 @@ def getMarkers(view, name=""):
             markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])(?!\s*\]:)" % name, 0))
     regions = []
 
-    selector = marker_text_scope_name + ", " + marker_text_scope_name
+    selector = marker_ref_scope_name + ", " + marker_text_scope_name
     for x in markers:
         if view.match_selector(x.begin(), selector):
             regions.append(x)
@@ -284,18 +285,30 @@ def append_reference_link(edit, view, name, url):
     return sublime.Region(edit_position, edit_position + len(name))
 
 
-def suggest_default_link_name(name, image):
+def suggest_default_link_name(name, link, image):
     """Suggest default link name in camel case."""
     ret = ""
-    name_segs = name.split()
+    # string.punctuation minus -.:;<=>_
+    no_punctuation = str.maketrans("", "", "!\"#$%&'()*+,/?@[\\]^`{|}~")
+    name_segs = name.translate(no_punctuation).split()
     if len(name_segs) > 1:
         for word in name_segs:
             ret += word.capitalize()
             if len(ret) > 30:
                 break
         return ("image" if image else "") + ret
-    else:
-        return name
+    elif len(name) < 4:
+        try:
+            parseresult = urllib.parse.urlparse(re.sub(r"/$", "", link))
+            doc_name = parseresult.path.split("/")[-1]
+            if doc_name:
+                return doc_name
+            elif parseresult.netloc:
+                return parseresult.netloc
+        except Exception as e:
+            print("Couldn't parse url", name, image, e)
+            return name
+    return name
 
 
 def check_for_link(view, link):
@@ -327,7 +340,7 @@ class MdeReferenceNewReferenceCommand(MdeTextCommand):
         for sel in view.sel():
             text = view.substr(sel)
             if not suggested_name:
-                suggested_link_name = suggest_default_link_name(text, image)
+                suggested_link_name = suggest_default_link_name(text, link, image)
                 suggested_name = suggested_link_name if suggested_link_name != text else ""
             edit_position = sel.end() + 3
             if image:
@@ -588,9 +601,15 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if ref not in marker_order:
                 missings.append(refs[ref].label)
         if len(missings) > 0:
-            output += "Error: Definition [%s] %s no reference\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "Definitions", "have"
+            else:
+                noun, verb = "Definition", "has"
+
+            output += "Error: %s %s %s no reference\n" % (
+                noun,
+                repr(missings),
+                verb,
             )
 
         missings = []
@@ -598,9 +617,15 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if marker not in lower_refs:
                 missings.append(markers[marker].label)
         if len(missings) > 0:
-            output += "Error: [%s] %s no definition\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "References", "have"
+            else:
+                noun, verb = "Reference", "has"
+
+            output += "Error: %s %s %s no definition\n" % (
+                noun,
+                repr(missings),
+                verb,
             )
 
         # sel.clear()
@@ -724,7 +749,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
                     suggested_name = check_for_link(view, link)
                     if suggested_name is None:
                         is_image = view.substr(start - 1) == "!" if start > 0 else False
-                        suggested_name = suggest_default_link_name(text, is_image)
+                        suggested_name = suggest_default_link_name(text, link, is_image)
 
                 _name = name if name is not None else suggested_name
                 link_spans.append((link_span, _name, _name == text))
