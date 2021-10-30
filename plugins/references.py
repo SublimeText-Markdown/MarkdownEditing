@@ -34,6 +34,7 @@ ref_link_scope_name = "markup.underline.link.markdown"
 marker_begin_scope_name = "punctuation.definition.link.begin.markdown"
 marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
 marker_text_scope_name = "string.other.link.title.markdown"
+marker_link_reference_scope_name = "meta.link.reference.metadata.markdown"
 refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
 marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
 
@@ -70,7 +71,7 @@ def getMarkers(view, name=""):
             markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])(?!\s*\]:)" % name, 0))
     regions = []
 
-    selector = marker_text_scope_name + ", " + marker_text_scope_name
+    selector = marker_text_scope_name + ", " + marker_link_reference_scope_name
     for x in markers:
         if view.match_selector(x.begin(), selector):
             regions.append(x)
@@ -597,9 +598,13 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if ref not in marker_order:
                 missings.append(refs[ref].label)
         if len(missings) > 0:
-            output += "Error: Definition [%s] %s no reference\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "Definitions", "have"
+            else:
+                noun, verb = "Definition", "has"
+
+            output += "Error: %s %s %s no reference\n" % (
+                noun, repr(missings), verb,
             )
 
         missings = []
@@ -607,9 +612,13 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if marker not in lower_refs:
                 missings.append(markers[marker].label)
         if len(missings) > 0:
-            output += "Error: [%s] %s no definition\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "References", "have"
+            else:
+                noun, verb = "Reference", "has"
+
+            output += "Error: %s %s %s no definition\n" % (
+                noun, repr(missings), verb,
             )
 
         # sel.clear()
