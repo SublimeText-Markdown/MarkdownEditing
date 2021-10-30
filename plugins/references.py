@@ -285,7 +285,7 @@ def suggest_default_link_name(name, link, image):
     """Suggest default link name in camel case."""
     ret = ""
     # string.punctuation minus -.:;<=>_
-    no_punctuation = str.maketrans('', '', "!\"#$%&'()*+,/?@[\\]^`{|}~")
+    no_punctuation = str.maketrans("", "", "!\"#$%&'()*+,/?@[\\]^`{|}~")
     name_segs = name.translate(no_punctuation).split()
     if len(name_segs) > 1:
         for word in name_segs:
@@ -295,7 +295,7 @@ def suggest_default_link_name(name, link, image):
         return ("image" if image else "") + ret
     elif len(name) < 4:
         try:
-            parseresult = urllib.parse.urlparse(re.sub(r'/$', '', link))
+            parseresult = urllib.parse.urlparse(re.sub(r"/$", "", link))
             doc_name = parseresult.path.split("/")[-1]
             if doc_name:
                 return doc_name
@@ -603,7 +603,9 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
                 noun, verb = "Definition", "has"
 
             output += "Error: %s %s %s no reference\n" % (
-                noun, repr(missings), verb,
+                noun,
+                repr(missings),
+                verb,
             )
 
         missings = []
@@ -617,7 +619,9 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
                 noun, verb = "Reference", "has"
 
             output += "Error: %s %s %s no definition\n" % (
-                noun, repr(missings), verb,
+                noun,
+                repr(missings),
+                verb,
             )
 
         # sel.clear()
