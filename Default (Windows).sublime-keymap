@@ -438,13 +438,13 @@
 			{ "key": "setting.mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
+	{ "keys": ["shift+alt+."], "command": "mde_change_headings_level", "args": {"by": 1}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.set_heading_level", "operand": false }
 		]
 	},
-	{ "keys": ["ctrl+alt+,"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
+	{ "keys": ["shift+alt+,"], "command": "mde_change_headings_level", "args": {"by": -1}, "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.set_heading_level", "operand": false }
