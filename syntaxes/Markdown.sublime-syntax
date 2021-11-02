@@ -404,70 +404,80 @@ contexts:
     - include: list-paragraph
 
   list-paragraph:
-    - match: '^(?=(?:[ ]{4}|\t){2,}(?![>+*\s-]))(?={{indented_code_block}})'
-      push:
-        - include: indented-code-block
-        - match: $
-          pop: true
+    - include: list-indended-code-blocks
+    - include: list-block-quotes
+    - include: latex-blocks
+    - include: fenced-code-blocks
+    - include: reference-definitions
+    - match: (?=\S)
+      push: list-items
+
+  list-block-quotes:
     - match: ^[ ]*{{block_quote}}
       captures:
         1: punctuation.definition.blockquote.markdown
       push:
         - block-quote-meta
         - block-quote-content
-    - include: latex-blocks
-    - include: fenced-code-blocks
-    - include: reference-definitions
-    - match: \s+(?=\S)
-      push:
-        - match: ^\s*$
-          pop: true
-        - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
-          captures:
-            1: markup.list.unnumbered.markdown
-            2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-            3: markup.list.unnumbered.markdown
-            4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-            5: markup.checkbox.mark.markdown-gfm
-            6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-          push:
-            - clear_scopes: 1
-            - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
-            - include: list-content
-        - match: ([ ]*)(\d+([.)]))(?=\s)
-          captures:
-            1: markup.list.numbered.markdown
-            2: markup.list.numbered.bullet.markdown
-            3: punctuation.definition.list_item.markdown
-          push:
-            - clear_scopes: 1
-            - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
-            - include: list-content
-        - match: \s+
-          scope: meta.paragraph.list.markdown
-        - match: (?=^{{atx_heading}})
-          pop: true
-        - match: (?=\S)
-          push: list-content
-    - match: (?=\S)
+
+  list-indended-code-blocks:
+    # at least 8 chars / 2 tabs
+    - match: ^{{indented_code_block}}{2,}[^>+*\s-].*$\n?
+      scope: markup.raw.block.markdown
+
+  list-items:
+    - match: ^\s*$
       pop: true
+    - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
+      captures:
+        1: markup.list.unnumbered.markdown
+        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+        3: markup.list.unnumbered.markdown
+        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+        5: markup.checkbox.mark.markdown-gfm
+        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+      push: unordered-list-content
+    - match: ([ ]*)(\d+([.)]))(?=\s)
+      captures:
+        1: markup.list.numbered.markdown
+        2: markup.list.numbered.bullet.markdown
+        3: punctuation.definition.list_item.markdown
+      push: ordered-list-content
+    - match: \s+
+      scope: meta.paragraph.list.markdown
+    - match: (?=^{{atx_heading}})
+      pop: true
+    - match: (?=\S)
+      push: list-content
+
+  unordered-list-content:
+    - clear_scopes: 1
+    - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
+    - include: list-content
+
+  ordered-list-content:
+    - clear_scopes: 1
+    - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
+    - include: list-content
 
   list-content:
     - meta_content_scope: meta.paragraph.list.markdown
     - include: latex-blocks
     - include: fenced-code-blocks
+    - include: thematic-breaks
     - match: ^
       pop: true
-    - include: thematic-breaks
-    - match: (?=\S)(?!{{list_item}})
-      push:
-        - match: (?={{list_item}})
-          pop: true
-        - include: inline-bold-italic-linebreak
-        - include: tag-kbd
-        - include: scope:text.html.basic
-        - match: $
-          pop: true
+    - match: (?=\S)
+      push: list-text
+
+  list-text:
+    - include: inline-bold-italic-linebreak
+    - include: tag-kbd
+    - include: scope:text.html.basic
+    - match: $
+      pop: true
+    - match: (?={{list_item}})
+      pop: true
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
