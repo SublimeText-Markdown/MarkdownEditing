@@ -175,10 +175,10 @@ class WikiPage:
 
     def select_page(self, pagename):
         logger.debug("Open page: %s" % (pagename))
+        if not pagename:
+            return
 
-        if pagename:
-            self.file_list = self.find_files_with_name(pagename)
-
+        self.file_list = self.find_files_with_name(pagename)
         if len(self.file_list) > 1:
             self.view.window().show_quick_panel(self.file_list, self.open_selected_file)
         elif len(self.file_list) == 1:
