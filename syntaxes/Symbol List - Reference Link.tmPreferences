@@ -9,7 +9,9 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string><![CDATA[
-		s/\s*\z//g; # strip all trailing whitespace
+			s/^\s*//g;			# strip leading whitespace
+			s/\s*$//g; 			# strip all trailing whitespace
+			s/\s+/ /g;			# convert (multiple) whitespace to one space
 		]]></string>
 	</dict>
 </dict>

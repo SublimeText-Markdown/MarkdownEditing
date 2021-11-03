@@ -27,6 +27,8 @@ class MdeListBackLinksCommand(MdeTextCommand):
 class MdeMakePageReferenceCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if  is on a wiki page reference."""
+        if not super().is_visible():
+            return False
         for sel in self.view.sel():
             if self.view.match_selector(sel.begin(), "meta.link.reference.wiki"):
                 return False

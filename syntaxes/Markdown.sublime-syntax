@@ -723,14 +723,14 @@ contexts:
     - include: ligatures
     - include: bracket
     - include: code-span
-    - include: image-inline
-    - include: link-inline
     - include: autolink-email
     - include: autolink-inet
+    - include: image-inline
     - include: image-ref
     - include: link-ref-wiki
     - include: link-ref-footnote
     - include: link-ref-literal
+    - include: link-inline
     - include: link-ref
     - include: latex-inline
 
@@ -949,6 +949,7 @@ contexts:
     - include: fenced-scheme
     - include: fenced-scss
     - include: fenced-stata
+    - include: fenced-svelte
     - include: fenced-swift
     - include: fenced-toml
     - include: fenced-xonsh
@@ -1978,6 +1979,23 @@ contexts:
         0: meta.code-fence.definition.end.stata.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  fenced-svelte:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:svelte))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.svelte.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:text.html.svelte
+      embed_scope: markup.raw.code-fence.svelte.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.svelte.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-swift:
     - match: |-
          (?x)
@@ -2341,7 +2359,7 @@ contexts:
         - link-ref-attr
         - link-ref-metadata
         - link-ref-link-text
-    - match: \[(?=(?!\^){{balance_square_brackets}}?\])
+    - match: \[(?={{balance_square_brackets}}?\])
       scope: punctuation.definition.link.begin.markdown
       push: link-ref-link-text
 
