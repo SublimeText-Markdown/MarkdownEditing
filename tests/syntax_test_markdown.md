@@ -505,6 +505,13 @@ Here is a footnote[^1][link][] or long[^longnote][link][].
 |                                     ^^^^^^^^^^^ meta.link.reference.footnote.markdown-extra
 |                                                ^^^^^^^^ meta.link.reference.literal
 
+Here is a footnote [^footnote](not_link_dest).
+|                  ^^^^^^^^^^^ meta.paragraph.markdown meta.link.reference.footnote.markdown-extra
+|                  ^ punctuation.definition.link.begin.markdown
+|                   ^^^^^^^^^ meta.link.reference.literal.footnote-id.markdown
+|                            ^ punctuation.definition.link.end.markdown
+|                             ^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.link
+
 Here is a ![](https://example.com/cat.gif).
 |         ^^^ meta.image.inline.description.markdown
 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.image.inline.metadata.markdown

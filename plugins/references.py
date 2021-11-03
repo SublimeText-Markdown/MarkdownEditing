@@ -18,6 +18,7 @@ Exported commands:
 import sublime
 import re
 import operator
+import urllib.parse
 
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
@@ -35,11 +36,6 @@ marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
 marker_text_scope_name = "string.other.link.title.markdown"
 refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
 marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
-
-
-def hasScope(scope_name, to_find):
-    """Test to_find's existence in scope_name."""
-    return to_find in scope_name.split(" ")
 
 
 class Obj(object):
@@ -73,13 +69,12 @@ def getMarkers(view, name=""):
             # [(^)name]
             markers.extend(view.find_all(r"(?<=\[)(%s)(?=\])(?!\s*\]:)" % name, 0))
     regions = []
+
+    selector = marker_ref_scope_name + ", " + marker_text_scope_name
     for x in markers:
-        scope_name = view.scope_name(x.begin())
-        if (
-            hasScope(scope_name, marker_ref_scope_name)
-            or hasScope(scope_name, marker_text_scope_name)
-        ) and not hasScope(view.scope_name(x.begin()), definition_scope_name):
+        if view.match_selector(x.begin(), selector):
             regions.append(x)
+
     ids = {}
     for reg in regions:
         name = view.substr(reg).strip()
@@ -119,30 +114,25 @@ def isMarkerDefined(view, name):
 
 def getCurrentScopeRegion(view, pt):
     """Extend the region under current scope."""
-    scope = view.scope_name(pt)
+    orig_scope = set(view.scope_name(pt).split())
+    cur_scope = set(view.scope_name(pt).split())
     start = pt
-    while start > 0 and view.scope_name(start - 1) == scope:
+    while start > 0 and orig_scope.issubset(cur_scope):
         start -= 1
+        cur_scope = set(view.scope_name(start - 1).split())
+    cur_scope = orig_scope
     end = pt
-    while end < view.size() and view.scope_name(end) == scope:
+    while end < view.size() and orig_scope.issubset(cur_scope):
         end += 1
+        cur_scope = set(view.scope_name(end).split())
     return sublime.Region(start, end)
 
 
-def findScopeFrom(view, pt, scope, backwards=False, char=None):
-    """Find the nearest position of a scope from given position."""
-    if backwards:
-        while pt >= 0 and (
-            not hasScope(view.scope_name(pt), scope)
-            or (char is not None and view.substr(pt) != char)
-        ):
-            pt -= 1
-    else:
-        while pt < view.size() and (
-            not hasScope(view.scope_name(pt), scope)
-            or (char is not None and view.substr(pt) != char)
-        ):
-            pt += 1
+def findScopeFrom(view, pt, selector, backwards=False, char=None):
+    """Find the nearest position of a selector from given position."""
+    for pt in range(pt, 0, -1) if backwards else range(pt, view.size()):
+        if view.match_selector(pt, selector) and (char is None or view.substr(pt) != char):
+            break
     return pt
 
 
@@ -182,9 +172,9 @@ def get_reference(view, pos):
             ):
                 return (False, None, None)
             marker_text_end = findScopeFrom(view, pos, marker_text_end_scope_name) + 1
-            if hasScope(
-                view.scope_name(marker_text_end), refname_start_scope_name
-            ) and not hasScope(view.scope_name(marker_text_end + 1), marker_end_scope_name):
+            if view.match_selector(
+                marker_text_end, refname_start_scope_name
+            ) and not view.match_selector(marker_text_end + 1, marker_end_scope_name):
                 # of [Text][name] struct
                 marker_pt = marker_text_end + 1
                 marker_pt_end = findScopeFrom(view, marker_pt, marker_end_scope_name)
@@ -295,18 +285,30 @@ def append_reference_link(edit, view, name, url):
     return sublime.Region(edit_position, edit_position + len(name))
 
 
-def suggest_default_link_name(name, image):
+def suggest_default_link_name(name, link, image):
     """Suggest default link name in camel case."""
     ret = ""
-    name_segs = name.split()
+    # string.punctuation minus -.:;<=>_
+    no_punctuation = str.maketrans("", "", "!\"#$%&'()*+,/?@[\\]^`{|}~")
+    name_segs = name.translate(no_punctuation).split()
     if len(name_segs) > 1:
         for word in name_segs:
             ret += word.capitalize()
             if len(ret) > 30:
                 break
         return ("image" if image else "") + ret
-    else:
-        return name
+    elif len(name) < 4:
+        try:
+            parseresult = urllib.parse.urlparse(re.sub(r"/$", "", link))
+            doc_name = parseresult.path.split("/")[-1]
+            if doc_name:
+                return doc_name
+            elif parseresult.netloc:
+                return parseresult.netloc
+        except Exception as e:
+            print("Couldn't parse url", name, image, e)
+            return name
+    return name
 
 
 def check_for_link(view, link):
@@ -338,7 +340,7 @@ class MdeReferenceNewReferenceCommand(MdeTextCommand):
         for sel in view.sel():
             text = view.substr(sel)
             if not suggested_name:
-                suggested_link_name = suggest_default_link_name(text, image)
+                suggested_link_name = suggest_default_link_name(text, link, image)
                 suggested_name = suggested_link_name if suggested_link_name != text else ""
             edit_position = sel.end() + 3
             if image:
@@ -472,7 +474,7 @@ class MdeReferenceDeleteReferenceCommand(MdeTextCommand):
                                 edit_regions.append(sublime.Region(left - 1, left + 1))
                             else:
                                 edit_regions.append(sublime.Region(left, left + 1))
-                            if hasScope(view.scope_name(marker.end()), marker_text_end_scope_name):
+                            if view.match_selector(marker.end(), marker_text_end_scope_name):
                                 if (
                                     view.substr(sublime.Region(marker.end() + 1, marker.end() + 2))
                                     == "["
@@ -599,9 +601,15 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if ref not in marker_order:
                 missings.append(refs[ref].label)
         if len(missings) > 0:
-            output += "Error: Definition [%s] %s no reference\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "Definitions", "have"
+            else:
+                noun, verb = "Definition", "has"
+
+            output += "Error: %s %s %s no reference\n" % (
+                noun,
+                repr(missings),
+                verb,
             )
 
         missings = []
@@ -609,9 +617,15 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
             if marker not in lower_refs:
                 missings.append(markers[marker].label)
         if len(missings) > 0:
-            output += "Error: [%s] %s no definition\n" % (
-                ", ".join(missings),
-                "have" if len(missings) > 1 else "has",
+            if len(missings) > 1:
+                noun, verb = "References", "have"
+            else:
+                noun, verb = "Reference", "has"
+
+            output += "Error: %s %s %s no definition\n" % (
+                noun,
+                repr(missings),
+                verb,
             )
 
         # sel.clear()
@@ -696,8 +710,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
     def is_visible(self):
         """Return True if cursor is on a marker or reference."""
         for sel in self.view.sel():
-            scope_name = self.view.scope_name(sel.b)
-            if hasScope(scope_name, "meta.link.inline.markdown"):
+            if self.view.match_selector(sel.b, "meta.link.inline"):
                 return True
         return False
 
@@ -717,13 +730,10 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
         link_spans = []
 
         for sel in view.sel():
-            scope_name = view.scope_name(sel.b)
-            if not hasScope(scope_name, "meta.link.inline.markdown"):
+            if not view.match_selector(sel.b, "meta.link.inline"):
                 continue
             start = findScopeFrom(view, sel.b, marker_begin_scope_name, backwards=True)
-            end = (
-                findScopeFrom(view, sel.b, "punctuation.definition.metadata.markdown", char=")") + 1
-            )
+            end = findScopeFrom(view, sel.b, marker_end_scope_name) + 1
             text = view.substr(sublime.Region(start, end))
             m = re.match(pattern, text)
             if m is None:
@@ -739,7 +749,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
                     suggested_name = check_for_link(view, link)
                     if suggested_name is None:
                         is_image = view.substr(start - 1) == "!" if start > 0 else False
-                        suggested_name = suggest_default_link_name(text, is_image)
+                        suggested_name = suggest_default_link_name(text, link, is_image)
 
                 _name = name if name is not None else suggested_name
                 link_spans.append((link_span, _name, _name == text))

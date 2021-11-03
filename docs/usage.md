@@ -109,8 +109,8 @@ or use one of the following bindings:
 |---------------|-------|-------------
 | <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>0</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
 | <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>1..6</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>,</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>.</kbd> | <kbd>⌘</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>,</kbd> | <kbd>⇧</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>.</kbd> | <kbd>⇧</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
 
 Key bindings can be disabled via `"mde.keymap_disable.set_heading_level": true`.
 
