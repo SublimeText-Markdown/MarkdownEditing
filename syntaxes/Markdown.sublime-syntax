@@ -2545,19 +2545,21 @@ contexts:
   link-text:
     - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
+    - match: \[
+      push: link-text-nested
     - include: escapes
     - include: ampersand
     - include: code-spans
-    - match: \[ # nested square brackets are allowed
-      push:
-        - include: link-text
-        - match: \]
-          pop: true
     - include: bold
     - include: italic
     - include: hard-line-breaks
     - include: tag-kbd
     - include: scope:text.html.basic
+
+  link-text-nested:
+    - include: link-text
+    - match: \]
+      pop: true
 
   link-text-allow-image:
     - include: link-text
