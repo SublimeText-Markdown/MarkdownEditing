@@ -368,9 +368,7 @@ contexts:
         |   {{thematic_break}}
         )
       pop: true
-    - include: inline-bold-italic-linebreak
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - include: inline
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
@@ -471,9 +469,7 @@ contexts:
       push: list-text
 
   list-text:
-    - include: inline-bold-italic-linebreak
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - include: inline
     - match: $
       pop: true
     - match: (?={{list_item}})
@@ -549,7 +545,10 @@ contexts:
         1: punctuation.definition.heading.end.markdown
         2: meta.whitespace.newline.markdown
       pop: true
-    - include: inline-bold-italic
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
@@ -583,9 +582,7 @@ contexts:
     - include: setext-heading1
     - include: setext-heading2
     - include: paragraph-end
-    - include: inline-bold-italic-linebreak
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - include: inline
 
   paragraph-end:
     - match: |-
@@ -1904,7 +1901,10 @@ contexts:
     - meta_scope: meta.link.reference.def.footnote.markdown-extra
     - match: ^(?![ ]{4}|$)
       pop: true
-    - include: inline-bold-italic
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
 
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
@@ -1994,20 +1994,17 @@ contexts:
 
   table-cell-content:
     - match: (?={{balanced_emphasis}})
-      push: table-cell-bold-italic
-    - match: |-
-        (?x)
-        (?!{{backticks}})
-        `+
+      push: table-cell-emphasis
+    - match: (?!{{backticks}})`+
       scope: invalid.deprecated.unescaped-backticks.markdown
     - include: table-cell-separators
-    - include: inline
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - include: images
+    - include: literals
+    - include: links
+    - include: markup
 
-  table-cell-bold-italic:
-    - include: bold
-    - include: italic
+  table-cell-emphasis:
+    - include: emphasis
     - include: immediately-pop
 
   table-cell-separators:
@@ -2031,32 +2028,43 @@ contexts:
 ###[ INLINE ]#################################################################
 
   inline:
+    - include: hard-line-breaks
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
+    - include: markup
+
+  emphasis:
+    - include: bold
+    - include: italic
+    - include: strikethrough
+
+  images:
+    - include: image-inline
+    - include: image-ref
+
+  literals:
     - include: escapes
     - include: ampersands
-    - include: critic-inline
+    - include: critics
     - include: ligatures
     - include: brackets
     - include: code-spans
+
+  links:
     - include: autolink-email
     - include: autolink-inet
-    - include: image-inline
-    - include: image-ref
     - include: link-ref-wiki
     - include: link-ref-footnote
     - include: link-ref-literal
     - include: link-inline
     - include: link-ref
+
+  markup:
+    - include: tag-kbd
+    - include: html-content
     - include: latex-inline
-
-  inline-bold-italic:
-    - include: inline
-    - include: bold
-    - include: italic
-    - include: strikethrough
-
-  inline-bold-italic-linebreak:
-    - include: inline-bold-italic
-    - include: hard-line-breaks
 
 ###[ INLINE: CODE SPANS ]#####################################################
 
@@ -2150,7 +2158,7 @@ contexts:
     - match: \*
       scope: punctuation.definition.italic.end.markdown
       set: bold-after-bold-italic-asterisk
-    - include: format-common
+    - include: emphasis-common
     - include: strikethrough
 
   bold-after-bold-italic-asterisk:
@@ -2196,7 +2204,7 @@ contexts:
     - match: __\b
       scope: punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-underscore
-    - include: format-common
+    - include: emphasis-common
     - include: strikethrough
 
   bold-after-bold-italic-underscore:
@@ -2224,7 +2232,7 @@ contexts:
     - include: italic-common
 
   bold-common:
-    - include: format-common
+    - include: emphasis-common
     - include: italic
     - include: strikethrough
 
@@ -2263,7 +2271,7 @@ contexts:
     - include: italic-common
 
   italic-common:
-    - include: format-common
+    - include: emphasis-common
     - include: bold
     - include: strikethrough
 
@@ -2277,11 +2285,11 @@ contexts:
     - match: (?:~(?!~}|>))+     # any number of ~ up to ~> or ~~} critic markers
       scope: punctuation.definition.strikethrough.end.markdown
       pop: true
-    - include: format-common
+    - include: emphasis-common
     - include: bold
     - include: italic
 
-  format-common:
+  emphasis-common:
     - match: '{{setext_escape}}'
       pop: true
     - match: ^\s*$\n?
@@ -2289,9 +2297,10 @@ contexts:
       pop: true
     - include: paragraph-end
     - include: hard-line-breaks
-    - include: inline
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - include: images
+    - include: literals
+    - include: links
+    - include: markup
 
 ###[ INLINE: IMAGES ]#########################################################
 
@@ -2543,18 +2552,13 @@ contexts:
 ###[ INLINE: LINK/IMAGE PROTOTYPES ]##########################################
 
   link-text:
-    - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
-    - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
     - match: \[
       push: link-text-nested
-    - include: escapes
-    - include: ampersand
-    - include: code-spans
-    - include: bold
-    - include: italic
-    - include: hard-line-breaks
-    - include: tag-kbd
-    - include: scope:text.html.basic
+    - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
+    - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
+    - include: emphasis
+    - include: literals
+    - include: markup
 
   link-text-nested:
     - include: link-text
@@ -2563,8 +2567,7 @@ contexts:
 
   link-text-allow-image:
     - include: link-text
-    - include: image-inline
-    - include: image-ref
+    - include: images
 
   link-title:
     - match: \'
@@ -2824,73 +2827,73 @@ contexts:
 
 ###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
-  critic-inline:
+  critics:
     # inline critic markup
     # http://criticmarkup.com/spec.php
-    - include: critic-inline-additions
-    - include: critic-inline-comments
-    - include: critic-inline-deletions
-    - include: critic-inline-highlights
-    - include: critic-inline-substitutions
+    - include: critics-additions
+    - include: critics-comments
+    - include: critics-deletions
+    - include: critics-highlights
+    - include: critics-substitutions
 
-  critic-inline-additions:
+  critics-additions:
     - match: \{\+\+
       scope: punctuation.definition.critic.begin.markdown
-      push: critic-inline-addition-content
+      push: critics-addition-content
 
-  critic-inline-addition-content:
+  critics-addition-content:
     - meta_scope: markup.critic.addition.markdown
     - meta_content_scope: markup.inserted.critic.markdown
     - match: \+\+\}
       scope: punctuation.definition.critic.end.markdown
       pop: true
-    - include: critic-inline-common
+    - include: critics-common
 
-  critic-inline-comments:
+  critics-comments:
     - match: '{>>'
       scope: punctuation.definition.critic.begin.markdown
-      push: critic-inline-comment-content
+      push: critics-comment-content
 
-  critic-inline-comment-content:
+  critics-comment-content:
     - meta_scope: markup.critic.comment.markdown
     - meta_content_scope: comment.critic.markdown
     - match: '<<}'
       scope: punctuation.definition.critic.end.markdown
       pop: true
-    - include: critic-inline-common
+    - include: critics-common
 
-  critic-inline-deletions:
+  critics-deletions:
     - match: '{--'
       scope: punctuation.definition.critic.begin.markdown
-      push: critic-inline-deletion-content
+      push: critics-deletion-content
 
-  critic-inline-deletion-content:
+  critics-deletion-content:
     - meta_scope: markup.critic.deletion.markdown
     - meta_content_scope: markup.deleted.critic.markdown
     - match: '--}'
       scope: punctuation.definition.critic.end.markdown
       pop: true
-    - include: critic-inline-common
+    - include: critics-common
 
-  critic-inline-highlights:
+  critics-highlights:
     - match: '{=='
       scope: punctuation.definition.critic.begin.markdown
-      push: critic-inline-highlight-content
+      push: critics-highlight-content
 
-  critic-inline-highlight-content:
+  critics-highlight-content:
     - meta_scope: markup.critic.highlight.markdown
     - meta_content_scope: markup.info.critic.markdown
     - match: '==}'
       scope: punctuation.definition.critic.end.markdown
       pop: true
-    - include: critic-inline-common
+    - include: critics-common
 
-  critic-inline-substitutions:
+  critics-substitutions:
     - match: '{~~'
       scope: punctuation.definition.critic.begin.markdown
-      push: critic-inline-substitution-deleted
+      push: critics-substitution-deleted
 
-  critic-inline-substitution-deleted:
+  critics-substitution-deleted:
     - meta_scope: markup.critic.substitution.markdown
     - meta_content_scope: markup.deleted.critic.markdown
     - match: (?=~>)
@@ -2898,21 +2901,24 @@ contexts:
         - meta_include_prototype: false
         - match: '~>'
           scope: punctuation.separator.critic.markdown
-          set: critic-inline-substitution-inserted
-    - include: critic-inline-substitution-inserted
+          set: critics-substitution-inserted
+    - include: critics-substitution-inserted
 
-  critic-inline-substitution-inserted:
+  critics-substitution-inserted:
     - meta_scope: markup.critic.substitution.markdown
     - meta_content_scope: markup.inserted.critic.markdown
     - match: '~~}'
       scope: punctuation.definition.critic.end.markdown
       pop: true
-    - include: critic-inline-common
+    - include: critics-common
 
-  critic-inline-common:
+  critics-common:
     - match: ^(?=\s*$)
       pop: true
-    - include: inline-bold-italic
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
 
 ###[ EXTENSIONS: LATEX ]######################################################
 
