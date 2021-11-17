@@ -1,18 +1,23 @@
 %YAML 1.2
 ---
-# http://www.sublimetext.com/docs/3/syntax.html
+# This definition aims to meet CommonMark specifications
+#   http://spec.commonmark.org/
+# with GitHub Formatted Markdown extensions
+#   https://github.github.com/gfm/
+# and has a few extras like Markdown Extra's footnotes
+#   https://michelf.ca/projects/php-markdown/extra/#footnotes
+#
+# The scope suffix should indicate which flavor of Markdown the feature came from,
+# to help make this syntax definition easier to maintain.
 name: Markdown
+scope: text.html.markdown
+
 file_extensions:
   - md
   - mdown
   - markdown
   - markdn
-scope: text.html.markdown
-comment: |-
-  this definition aims to meet CommonMark specifications http://spec.commonmark.org/
-  with GitHub Formatted Markdown extensions              https://github.github.com/gfm/
-  and has a few extras like Markdown Extra's footnotes   https://michelf.ca/projects/php-markdown/extra/#footnotes
-  the scope suffix should indicate which flavor of Markdown the feature came from, to help make this syntax definition easier to maintain
+
 variables:
     thematic_break: |-
         (?x:
