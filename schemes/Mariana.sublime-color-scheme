@@ -128,7 +128,7 @@
 		{
 			"name": "Table Separators / Lines",
 			"scope": "text.html.markdown meta.table.header-separator punctuation.section, text.html.markdown punctuation.section.table-header, text.html.markdown punctuation.separator.table-cell",
-			"foreground": "var(grey)"
+			"foreground": "var(blue4)"
 		},
 		{
 			"name": "Table Cell Content Alignment Operator",
