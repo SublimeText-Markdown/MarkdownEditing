@@ -2802,6 +2802,11 @@ http://spec.commonmark.org/0.28/#example-148
 okay
 | <- - meta.disable-markdown
 
+<!ENTITY html>
+| ^^^^^^^^^^^^^ meta.disable-markdown
+okay
+| <- - meta.disable-markdown
+
 http://spec.commonmark.org/0.28/#example-149
 
 <![CDATA[

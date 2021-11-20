@@ -148,7 +148,12 @@ variables:
     email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
     email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
 
-    html_tag_open_commonmark: |-
+    # https://spec.commonmark.org/0.30/#html-blocks
+    html_block_comment: <!--
+    html_block_cdata: <!\[CDATA\[
+    html_block_decl: <![a-zA-Z]
+    html_block_preprocessor: <\?
+    html_block_open_tag: |-
       (?xi:
         <
         [a-z]             # A tag name consists of an ASCII letter
@@ -171,25 +176,32 @@ variables:
         \s*
         /?
         >
+        \s*$
       )
-    html_tag_close_commonmark: |-
+    html_block_close_tag: |-
       (?xi:
         </
         [a-z]             # A tag name consists of an ASCII letter
         [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
         \s*
         >
+        \s*$
       )
     html_tag_block_end_at_close_tag: |-
-      (?xi:
-        (script|style|pre)\b
-      )
+      <(?xi: pre | script | style | textarea ){{html_tag_break_char}}
     html_tag_block_end_at_blank_line: |-
-      (?x:
-        /?
-        (?i:address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)
-        (?:\s|$|/?>)
-      )
+      <(?xi:
+        address | article | aside | base | basefont | blockquote | body | caption
+      | c enter | col | colgroup | dd | details | dialog | dir | div | dl | dt
+      | fieldset | figcaption | figure | footer | form | frame | frameset | h1 | h2
+      | h3 | h4 | h5 | h6 | head | header | hr | html | iframe | legend | li | link
+      | main | menu | menuitem | nav | noframes | ol | optgroup | option | p | param
+      | section | source | summary | table | tbody | td | tfoot | th
+      | thead | title | tr | track | ul
+      ){{html_tag_maybe_selfclosing_break_char}}
+    html_tag_break_char: (?:[ \t>]|$)
+    html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
+
     ascii_space: '\t\n\f '
     tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
     tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
@@ -591,24 +603,27 @@ contexts:
 
   paragraph-end:
     - match: |-
-        (?x)                            # pop out of this context if one of the following conditions are met:
-        ^(?=
-          \s*$                          # the line is blank (or only contains whitespace)
+        (?x)
+        ^(?= # pop out of this context if one of the following conditions are met:
+            \s*$                        # the line is blank (or only contains whitespace)
           | {{atx_heading}}             # an ATX heading begins the line
           | {{block_quote}}             # a blockquote begins the line
           | {{fenced_code_block_start}} # a fenced codeblock begins the line
           | {{thematic_break}}          # line is a thematic beak
-          | [ ]{,3}1[.)]\s              # an ordered list item with number "1" begins the line
-          | [ ]{,3}[*+-]\s              # an unordered list item begins the line
-          | [ ]{,3}<(?:                 # all types of HTML blocks except type 7 may interrupt a paragraph
-              {{html_tag_block_end_at_close_tag}}   # 1
-            | !--                                   # 2
-            | \?                                    # 3
-            | ![A-Z]                                # 4
-            | !\[CDATA\[                            # 5
-            | {{html_tag_block_end_at_blank_line}}  # 6
-          )
-          | [ ]{,3}\$\$                 # a latex math block
+          | [ ]{,3}
+            (?:
+              1[.)]\s                   # an ordered list item with number "1" begins the line
+            | [*+-]\s                   # an unordered list item begins the line
+            | \$\$                      # a latex math block begins the line
+            | {{html_tag_block_end_at_close_tag}}  # html block type 1
+            | {{html_tag_block_end_at_blank_line}} # html block type 6
+            | {{html_block_open_tag}}              # html block type 7
+            | {{html_block_close_tag}}             # html block type 7
+            | {{html_block_comment}}               # html block type 2
+            | {{html_block_decl}}                  # html block type 4
+            | {{html_block_cdata}}                 # html block type 5
+            | {{html_block_preprocessor}}          # html block type 3
+            )
           )
       pop: true
 
@@ -1793,77 +1808,91 @@ contexts:
 
 ###[ LEAF BLOCKS: HTML BLOCKS ]###############################################
 
+  # https://spec.commonmark.org/0.30/#html-blocks
   html-blocks:
-    # https://spec.commonmark.org/0.30/#html-blocks
-    - match: ^[ ]{0,3}(?=<((?i:pre))\b)
-      comment: Markdown formatting is disabled inside block-level tags.
+    # Markdown formatting is disabled inside block-level tags.
+    - match: ^[ ]{0,3}(?=<((?i:pre|textarea)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
-        - html-block-pop-at-tag
-    - match: ^[ ]{0,3}(?=<{{html_tag_block_end_at_close_tag}})
-      comment: Markdown formatting is disabled inside block-level tags.
+        - html-block-type-1a
+    # Markdown formatting is disabled inside block-level tags.
+    - match: ^[ ]{0,3}(?=<((?i:script|style)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
-        - html-block-pop-after-tag
-    - match: ^[ ]{0,3}(?=<\?)
-      comment: Markdown formatting is disabled inside preprocessor instructions.
+        - html-block-type-1b
+    # Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
+    - match: ^[ ]{0,3}(?={{html_tag_block_end_at_blank_line}}|{{html_block_open_tag}}|{{html_block_close_tag}})
+      push: html-block-type-6
+    # Markdown formatting is disabled inside comments.
+    - match: ^[ ]{0,3}(?={{html_block_comment}})
       push:
         - html-block-pop-at-eol
-        - html-block-pop-at-php
-    - match: ^[ ]{0,3}(?=<!(?:[A-Z]|--))
-      comment: Markdown formatting is disabled inside doctype declarations and comments.
+        - html-block-type-2
+    # Markdown formatting is disabled inside preprocessor instructions.
+    - match: ^[ ]{0,3}(?={{html_block_preprocessor}})
       push:
         - html-block-pop-at-eol
-        - html-block-pop-after-html-doctype
-    - match: ^[ ]{0,3}(?=<!\[CDATA\[)
-      comment: Markdown formatting is disabled inside CDATA.
+        - html-block-type-3
+    # Markdown formatting is disabled inside doctype declarations.
+    - match: ^[ ]{0,3}(?={{html_block_decl}})
       push:
         - html-block-pop-at-eol
-        - html-block-pop-after-cdata
-    - match: ^[ ]{0,3}(?=(?:{{html_tag_open_commonmark}}|{{html_tag_close_commonmark}})\s*$|<{{html_tag_block_end_at_blank_line}})
-      comment: Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
-      push: html-block-pop-at-blank-line
+        - html-block-type-4
+    # Markdown formatting is disabled inside CDATA.
+    - match: ^[ ]{0,3}(?={{html_block_cdata}})
+      push:
+        - html-block-pop-at-eol
+        - html-block-type-5
 
-  html-block-pop-at-tag:
+  html-block-type-1a:
     - match: (</)(\1)(>)
       captures:
-        1: meta.tag.block.any.html punctuation.definition.tag.begin.html
-        2: meta.tag.block.any.html entity.name.tag.block.any.html
-        3: meta.tag.block.any.html punctuation.definition.tag.end.html
+        0: meta.tag.block.any.html
+        1: punctuation.definition.tag.begin.html
+        2: entity.name.tag.block.any.html
+        3: punctuation.definition.tag.end.html
       pop: true
     - include: html-content
 
-  html-block-pop-after-tag:
-    - match: (?!</?(?i:script|style)\b)
+  html-block-type-1b:
+    - match: (?!</?\1>)
       pop: true
     - include: html-content
 
-  html-block-pop-after-cdata:
-    - match: (?!<!\[CDATA\[)
+  html-block-type-2:
+    - match: (?!{{html_block_comment}})
       pop: true
     - include: html-content
 
-  html-block-pop-after-html-doctype:
-    - match: (?!<!([A-Z]|--))
-      pop: true
-    - include: html-content
-
-  html-block-pop-at-php:
+  html-block-type-3:
     - match: \?>
       pop: true
+
+  html-block-type-4:
+    - match: (?!{{html_block_decl}})
+      pop: true
+    - include: html-content
+    - match: '{{html_block_decl}}'
+      set: html-block-type-4-other
+
+  html-block-type-4-other:
+    - match: '>'
+      pop: true
+
+  html-block-type-5:
+    - match: (?!{{html_block_cdata}})
+      pop: true
     - include: html-content
 
-  html-block-pop-at-blank-line:
-    - meta_content_scope: meta.disable-markdown
-    - match: ^\s*$\n
-      scope: meta.disable-markdown
+  html-block-type-6:
+    - meta_scope: meta.disable-markdown
+    - match: ^\s*\n
       pop: true
     - include: html-content
 
   html-block-pop-at-eol:
-    - meta_content_scope: meta.disable-markdown
+    - meta_scope: meta.disable-markdown
     - match: $\n?
-      scope: meta.disable-markdown
       pop: true
     - include: html-content
 
