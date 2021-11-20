@@ -1032,12 +1032,10 @@ a.b-c_d@a.b.
 ###[ LIGATURES ]##############################################################
 
 this is a raw ampersand & does not require HTML escaping
-|                       ^ meta.other.valid-ampersand
+|                       ^ - entity - illegal
 
 this is a raw bracket < > does not require HTML escaping
-|                     ^^^ - meta.tag 
-|                     ^ meta.other.valid-bracket
-|                       ^ - meta.other.valid-bracket
+|                     ^^^ - meta.tag - punctuation
 
 these are raw ligatures << <<< <<<< <<<<< >>>>> >>>> >>> >>
 |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag

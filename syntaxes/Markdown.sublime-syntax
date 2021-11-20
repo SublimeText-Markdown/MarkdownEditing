@@ -257,16 +257,15 @@ contexts:
 
   markdown:
     - include: indented-code-block
-    - include: block-quotes
-    - include: ligatures
-    - include: atx-heading
     - include: thematic-breaks
-    - include: tables
+    - include: block-quotes
     - include: list-blocks
-    - include: reference-definitions
-    - include: latex-blocks
-    - include: html-blocks
+    - include: tables
     - include: fenced-code-blocks
+    - include: html-blocks
+    - include: latex-blocks
+    - include: reference-definitions
+    - include: atx-heading
     - include: setext-heading-or-paragraph
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
@@ -2080,12 +2079,10 @@ contexts:
     - include: image-ref
 
   literals:
-    - include: escapes
-    - include: ampersands
-    - include: critics
-    - include: ligatures
-    - include: brackets
     - include: code-spans
+    - include: critics
+    - include: escapes
+    - include: latex-inline
 
   links:
     - include: autolink-email
@@ -2097,9 +2094,15 @@ contexts:
     - include: link-ref
 
   markup:
+    # Markdown will convert this for us. We match it so that the
+    # HTML grammar will not mark it up as invalid.
+    - match: '[<>](-+|=+)[<>]?'
+    - match: '[<>]?(-+|=+)[<>]'
+    - match: '<<+|<>|>>+'
+    - match: <(?![A-Za-z/?!])
+    - match: (?!{{html_entity}})&
     - include: tag-kbd
     - include: html-content
-    - include: latex-inline
 
 ###[ INLINE: CODE SPANS ]#####################################################
 
@@ -2124,7 +2127,6 @@ contexts:
 
   bold:
     # https://spec.commonmark.org/0.30/#emphasis-and-strong-emphasis
-    - include: ligatures
     - match: (\*\*)(\*)(?=\S)(?!\*)
       captures:
         1: punctuation.definition.bold.begin.markdown
@@ -2827,30 +2829,9 @@ contexts:
 
 ###[ INLINE: OTHER ]##########################################################
 
-  ampersands:
-    # Markdown will convert this for us. We match it so that the
-    # HTML grammar will not mark it up as invalid.
-    - match: (?!{{html_entity}})&
-      scope: meta.other.valid-ampersand.markdown
-
-  brackets:
-    # Markdown will convert this for us. We match it so that the
-    # HTML grammar will not mark it up as invalid.
-    - match: <(?![A-Za-z/?!$])
-      scope: meta.other.valid-bracket.markdown
-
   escapes:
     - match: '{{escape}}'
       scope: constant.character.escape.markdown
-
-  ligatures:
-    - match: '<?(-+|=+)<'     # -< --< ---< ----< <-< <--< <---< <----<
-                              # =< ==< ===< ====< <=< <==< <===< <====<
-    - match: '<(-+|=+)>?'     # <- <-- <--- <-> <--> <--->
-                              # <= <== <=== <=> <==> <===>
-    - match: '>(-+|=+)[<>]?'  # >- >-- >--- >-> >--> >---> >-< >--< >---<
-                              # >= >== >=== >=> >==> >===> >=< >==< >===<
-    - match: '<<+|<>|>>+'     # << <<< <<<< <> >>>> >>> >>
 
   hard-line-breaks:
     - match: '[ ]{2,}$'
