@@ -1210,6 +1210,16 @@ because it doesn't begin with the number one:
 |      ^ markup.checkbox.mark.markdown-gfm - punctuation
 |       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 
+* list item
+  
+  <p>*no-markdown*</p>
+| ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown
+|                 ^^^^ meta.tag
+  - list item
+
+    <p>*no-markdown*</p>
+|   ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown
+|                   ^^^^ meta.tag
 
 - `code` - <a name="demo"></a>
 | ^ markup.list.unnumbered meta.paragraph.list markup.raw.inline punctuation.definition.raw

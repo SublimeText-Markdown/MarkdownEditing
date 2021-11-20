@@ -421,9 +421,10 @@ contexts:
   list-paragraph:
     - include: list-indended-code-blocks
     - include: list-block-quotes
-    - include: latex-blocks
     - include: fenced-code-blocks
     - include: reference-definitions
+    - include: html-blocks
+    - include: latex-blocks
     - match: (?=\S)
       push: list-items
 
@@ -1811,35 +1812,35 @@ contexts:
   # https://spec.commonmark.org/0.30/#html-blocks
   html-blocks:
     # Markdown formatting is disabled inside block-level tags.
-    - match: ^[ ]{0,3}(?=<((?i:pre|textarea)){{html_tag_break_char}})
+    - match: ^[ ]*(?=<((?i:pre|textarea)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
         - html-block-type-1a
     # Markdown formatting is disabled inside block-level tags.
-    - match: ^[ ]{0,3}(?=<((?i:script|style)){{html_tag_break_char}})
+    - match: ^[ ]*(?=<((?i:script|style)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
         - html-block-type-1b
     # Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
-    - match: ^[ ]{0,3}(?={{html_tag_block_end_at_blank_line}}|{{html_block_open_tag}}|{{html_block_close_tag}})
+    - match: ^[ ]*(?={{html_tag_block_end_at_blank_line}}|{{html_block_open_tag}}|{{html_block_close_tag}})
       push: html-block-type-6
     # Markdown formatting is disabled inside comments.
-    - match: ^[ ]{0,3}(?={{html_block_comment}})
+    - match: ^[ ]*(?={{html_block_comment}})
       push:
         - html-block-pop-at-eol
         - html-block-type-2
     # Markdown formatting is disabled inside preprocessor instructions.
-    - match: ^[ ]{0,3}(?={{html_block_preprocessor}})
+    - match: ^[ ]*(?={{html_block_preprocessor}})
       push:
         - html-block-pop-at-eol
         - html-block-type-3
     # Markdown formatting is disabled inside doctype declarations.
-    - match: ^[ ]{0,3}(?={{html_block_decl}})
+    - match: ^[ ]*(?={{html_block_decl}})
       push:
         - html-block-pop-at-eol
         - html-block-type-4
     # Markdown formatting is disabled inside CDATA.
-    - match: ^[ ]{0,3}(?={{html_block_cdata}})
+    - match: ^[ ]*(?={{html_block_cdata}})
       push:
         - html-block-pop-at-eol
         - html-block-type-5
