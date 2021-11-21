@@ -389,7 +389,7 @@ contexts:
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
   list-blocks:
-    - match: ^([ ]{0,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
+    - match: ^([ ]{,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
       captures:
         1: markup.list.unnumbered.markdown
         2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
@@ -398,7 +398,7 @@ contexts:
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
       push: unordered-list-paragraph
-    - match: ^([ ]{0,3})(\d+([.)]))(?=\s)
+    - match: ^([ ]{,3})(\d+([.)]))(?=\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
@@ -1923,7 +1923,7 @@ contexts:
 
   footnote-definitions:
     # Mardown Extras Footnotes
-    - match: '[ ]{0,3}(\[)({{footnote_name}})(\])(:)'
+    - match: '[ ]{,3}(\[)({{footnote_name}})(\])(:)'
       captures:
         1: punctuation.definition.reference.begin.markdown
         2: entity.name.reference.link.markdown
@@ -1942,7 +1942,7 @@ contexts:
 
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
-    - match: '[ ]{0,3}(\[)({{reference_name}})(\])(:)'
+    - match: '[ ]{,3}(\[)({{reference_name}})(\])(:)'
       captures:
         1: punctuation.definition.reference.begin.markdown
         2: entity.name.reference.link.markdown
