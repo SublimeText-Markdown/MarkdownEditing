@@ -272,7 +272,7 @@ contexts:
 
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
-    - match: ^{{block_quote}}
+    - match: '{{block_quote}}'
       comment: |-
         We terminate the block quote when seeing an empty line, a
         separator or a line with leading > characters. The latter is
@@ -407,33 +407,24 @@ contexts:
 
   unordered-list-paragraph:
     - meta_content_scope: markup.list.unnumbered.markdown
-    - match: ^(?=\S)
-      pop: true
     - include: list-paragraph
 
   ordered-list-paragraph:
     - meta_content_scope: markup.list.numbered.markdown
-    - match: ^(?=\S)
-      pop: true
     - include: list-paragraph
 
   list-paragraph:
+    - match: ^(?=\S|{{atx_heading}})
+      pop: true
     - include: list-indended-code-blocks
-    - include: list-block-quotes
+    - include: block-quotes
     - include: fenced-code-blocks
-    - include: reference-definitions
     - include: html-blocks
     - include: latex-blocks
+    - include: reference-definitions
+    - include: thematic-breaks
     - match: (?=\S)
       push: list-items
-
-  list-block-quotes:
-    - match: ^[ ]*{{block_quote}}
-      captures:
-        1: punctuation.definition.blockquote.markdown
-      push:
-        - block-quote-meta
-        - block-quote-content
 
   list-indended-code-blocks:
     # at least 8 chars / 2 tabs
@@ -441,7 +432,7 @@ contexts:
       scope: markup.raw.block.markdown
 
   list-items:
-    - match: ^\s*$
+    - match: ^(?=\s*$|{{atx_heading}})
       pop: true
     - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
@@ -460,8 +451,6 @@ contexts:
       push: ordered-list-content
     - match: \s+
       scope: meta.paragraph.list.markdown
-    - match: (?=^{{atx_heading}})
-      pop: true
     - match: (?=\S)
       push: list-content
 
@@ -477,8 +466,11 @@ contexts:
 
   list-content:
     - meta_content_scope: meta.paragraph.list.markdown
-    - include: latex-blocks
+    - include: list-block-quotes
     - include: fenced-code-blocks
+    - include: html-blocks
+    - include: latex-blocks
+    - include: reference-definitions
     - include: thematic-breaks
     - match: ^
       pop: true
