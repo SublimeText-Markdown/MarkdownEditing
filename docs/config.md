@@ -36,8 +36,8 @@ You can use your global color scheme or one of those shipped with MarkdownEditin
 
 #### Additional Color Schemes:
 
-- [Blackboard theme](linkBlackboardTheme) by [@mdesantis](https://github.com/mdesantis)
-- [monokaiC](https://github.com/avivace/monokaiC) by [@avivace](https://github.com/avivace)
+- [Blackboard theme](https://github.com/mdesantis/MarkdownEditing/blob/blackboard-theme/MarkdownEditor-Blackboard.tmTheme) by [@mdesantis](https://github.com/mdesantis)
+- [monokaiC](https://github.com/avivace/MonokaiC/blob/master/themes/ME-MonokaiC.tmTheme) by [@avivace](https://github.com/avivace)
 
 !!!note "Custom Color Schemes"
     MarkdownEditing lists all color schemes named like `MarkdownEditor-<The Name>.sublime-color-scheme`, no matter which package they are placed in.
