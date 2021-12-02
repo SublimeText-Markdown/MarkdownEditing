@@ -2446,6 +2446,8 @@ abc
 |     ^ punctuation.separator.table-cell
 |           ^ punctuation.separator.table-cell
 | ^^^^ - punctuation.separator.table-cell
+
+| foo | bar |
 | --- | --- |
 | baz | bim <kbd>Ctrl+C</kbd> |
 | <- meta.table punctuation.separator.table-cell
@@ -2469,6 +2471,8 @@ bar | baz
 | <- meta.table punctuation.separator.table-cell
 |  ^^ meta.table constant.character.escape - punctuation.separator.table-cell
 |        ^ meta.table punctuation.separator.table-cell
+
+| f\|oo  |
 | ------ |
 | b `|` az |
 |   ^^^ meta.table markup.raw.inline - meta.table.header-separator
@@ -2543,6 +2547,16 @@ not a table |
 |`test | me |
 |^ invalid.deprecated.unescaped-backticks
 |      ^ punctuation.separator.table-cell
+
+| table | followed by
+paragraph
+| <- meta.paragraph.markdown
+|^^^^^^^^^ meta.paragraph.markdown
+
+| table | followed by
+https://foo.bar/baz
+| <- meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
+|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
 
 | table | followed by
 # heading

@@ -1986,8 +1986,14 @@ contexts:
   table-header:
     - meta_content_scope: meta.table.header.markdown-gfm
     - match: \n
-      set: table-header-separator
+      set: table-header-separator-begin
     - include: table-cell-content
+
+  table-header-separator-begin:
+    - match: ^(?=[-|:\s]+$)
+      set: table-header-separator
+    - match: ^
+      pop: true
 
   table-header-separator:
     - meta_content_scope: meta.table.header-separator.markdown-gfm
@@ -1998,7 +2004,6 @@ contexts:
     - match: ':'
       scope: punctuation.definition.table-cell-alignment.markdown
     - include: table-cell-separators
-    - include: table-end
 
   table-body:
     - meta_content_scope: meta.table.markdown-gfm
