@@ -2611,21 +2611,21 @@ contexts:
       pop: true
 
   link-title-double-quoted-content:
-    - meta_scope: string.other.link.description.title.markdown
+    - meta_scope: meta.string.title.markdown string.quoted.double.markdown
     - match: \"
       scope: punctuation.definition.string.end.markdown
       pop: true
     - include: link-title-common
 
   link-title-single-quoted-content:
-    - meta_scope: string.other.link.description.title.markdown
+    - meta_scope: meta.string.title.markdown string.quoted.single.markdown
     - match: \'
       scope: punctuation.definition.string.end.markdown
       pop: true
     - include: link-title-common
 
   link-title-other-quoted-content:
-    - meta_scope: string.other.link.description.title.markdown
+    - meta_scope: meta.string.title.markdown string.quoted.other.markdown
     - match: \)
       scope: punctuation.definition.string.end.markdown
       pop: true

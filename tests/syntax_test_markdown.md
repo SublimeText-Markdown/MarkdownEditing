@@ -372,7 +372,7 @@ Here is a ![Image Alt Text](
 Here is a ![Image Alt Text](
   https://example.com/cat.gif
  "hello"   ).
-|^^^^^^^ meta.image.inline string.other.link.description.title
+|^^^^^^^ meta.image.inline string.quoted.double
 |       ^^^^ meta.image.inline
 |          ^ punctuation.definition.metadata.end
 
@@ -383,7 +383,7 @@ Here is a ![Image Alt Text](
 | ^ punctuation.definition.link.begin.markdown
 |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                             ^ punctuation.definition.link.end.markdown
-|                               ^^^^^^^ string.other.link.description.title.markdown
+|                               ^^^^^^^ string.quoted.double.markdown
 |                               ^ punctuation.definition.string.begin.markdown
 |                                     ^ punctuation.definition.string.end.markdown
 |                                         ^ punctuation.definition.metadata.end.markdown
@@ -395,7 +395,7 @@ Here is a ![Image Alt Text](
 | ^ punctuation.definition.link.begin.markdown
 |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
 |                               ^ punctuation.definition.link.end.markdown
-|                                 ^^^^^^^ string.other.link.description.title.markdown
+|                                 ^^^^^^^ string.quoted.other.markdown
 |                                 ^ punctuation.definition.string.begin.markdown
 |                                       ^ punctuation.definition.string.end.markdown
 |                                           ^ punctuation.definition.metadata.end.markdown
@@ -433,7 +433,7 @@ now you can access the [The Ever Cool Site: Documentation about Sites](
   (title)) for more information about...
 | ^^^^^^^^ meta.paragraph meta.link.inline
 |        ^ punctuation.definition.metadata.end
-| ^^^^^^^ string.other.link.description.title.markdown
+| ^^^^^^^ string.quoted.other.markdown
 
   1. Ordered list item
 | ^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered
@@ -1069,7 +1069,7 @@ these are raw ligatures - -- --- ---- ----- ===== ==== === == =
 |^ entity.name.reference.link
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                          ^^^^^^^^^^^^^^^ string.other.link.description.title
+|                                          ^^^^^^^^^^^^^^^ string.quoted.double
 |                                          ^ punctuation.definition.string.begin
 |                                                        ^ punctuation.definition.string.end
 
@@ -1079,7 +1079,7 @@ these are raw ligatures - -- --- ---- ----- ===== ==== === == =
 |^ entity.name.reference.link
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single
 |                                                  ^ punctuation.definition.string.begin
 |                                                                          ^ punctuation.definition.string.end
 
@@ -1247,7 +1247,7 @@ because it doesn't begin with the number one:
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
 |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.double
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
 |                                                                            ^ punctuation.definition.metadata
@@ -1258,7 +1258,7 @@ because it doesn't begin with the number one:
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
 |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.single
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
 |                                                                            ^ punctuation.definition.metadata
@@ -1269,7 +1269,7 @@ because it doesn't begin with the number one:
 |                            ^ punctuation.definition.image.end
 |                             ^ punctuation.definition.metadata
 |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.other
 |                                                           ^ punctuation.definition.string.begin
 |                                                                           ^ punctuation.definition.string.end
 |                                                                            ^ punctuation.definition.metadata
@@ -2339,7 +2339,7 @@ _foo [**bar**](/url)_
 
 [//]: # (This is a comment without a line-break.)
 |     ^ meta.link.reference.def.markdown markup.underline.link
-|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.other
 |                                                ^ - meta.link
 
 [//]: # (This is a comment with a
@@ -2358,7 +2358,7 @@ _foo [**bar**](/url)_
 
 [//]: # (testing
 blah
-| <- meta.link.reference.def.markdown string.other.link.description.title
+| <- meta.link.reference.def.markdown string.quoted.other
 
 | <- invalid.illegal.non-terminated.link-title
 text
@@ -2370,7 +2370,7 @@ text
 |      ^ punctuation.definition.link.begin
 |       ^^^ markup.underline.link
 |          ^ punctuation.definition.link.end
-|            ^^^^^^ string.other.link.description.title
+|            ^^^^^^ string.quoted.double
 |                  ^ - invalid.illegal.expected-eol
 
 [foo]: <bar>> "test" 
@@ -3079,7 +3079,7 @@ link with a single underscore inside the text : [@_test](http://example.com)
 |^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |    ^ punctuation.separator.key-value
 |      ^^^^ markup.underline.link
-|           ^^^^^^^ string.other.link.description.title
+|           ^^^^^^^ string.quoted.double
 
 [foo]
 |<- meta.link.reference punctuation.definition.link.begin
@@ -3103,7 +3103,7 @@ This is literal [Foo*bar\]] but [ref][Foo*bar\]]
 |           ^ punctuation.separator.key-value.markdown
 |            ^^^^^^^^ markup.underline.link
 |                    ^ - markup - string
-|                     ^^^^^^^^^^^^^^^^^^^^^ string.other.link.description.title
+|                     ^^^^^^^^^^^^^^^^^^^^^ string.quoted.single
 
  [foo]: <>
 |^^^^^^^^^ meta.link.reference.def.markdown
