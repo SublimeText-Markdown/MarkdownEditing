@@ -267,7 +267,7 @@ Here is a [reference link][name].
 |         ^ punctuation.definition.link.begin.markdown
 |                        ^ punctuation.definition.link.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
-|                          ^^^^ constant.other.reference.link.markdown
+|                          ^^^^ markup.underline.link.markdown
 |                              ^ punctuation.definition.metadata.end.markdown
 
 Here is a [reference link][name]{_attr='value' :att2}.
@@ -280,7 +280,7 @@ Here is a [reference link][name]{_attr='value' :att2}.
 |         ^ punctuation.definition.link.begin.markdown
 |                        ^ punctuation.definition.link.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
-|                          ^^^^ constant.other.reference.link.markdown
+|                          ^^^^ markup.underline.link.markdown
 |                              ^ punctuation.definition.metadata.end.markdown
 |                               ^ punctuation.definition.attributes.begin.markdown
 |                                ^^^^^ entity.other.attribute-name.markdown
@@ -413,7 +413,7 @@ Here is a ![Image Ref Alt][1].
 |         ^^ punctuation.definition.image.begin.markdown
 |                        ^ punctuation.definition.image.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
-|                          ^ constant.other.reference.link.markdown
+|                          ^ markup.underline.link.markdown
 |                           ^ punctuation.definition.metadata.end.markdown
 
 now you can access the [The Ever Cool Site: Documentation about Sites](
@@ -2304,23 +2304,23 @@ _foo [**bar**](/url)_
 |^^ punctuation.definition.bold.begin
 |            ^^^^^^^ constant.character.entity.decimal.html
 |                   ^^ punctuation.definition.bold.end
-|                       ^^^^^^^ constant.other.reference.link
+|                       ^^^^^^^ markup.underline.link
 
 [Read more &#8594;][details]
 |          ^^^^^^^ constant.character.entity.decimal.html
-|                   ^^^^^^^ constant.other.reference.link
+|                   ^^^^^^^ markup.underline.link
 
 [Read more <span style="font-weight: bold;">&#8594;</span>][details]
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.description
 |                       ^^^^^^^^^^^^^^^^^^ source.css
 |                                           ^^^^^^^ constant.character.entity.decimal.html
-|                                                           ^^^^^^^ constant.other.reference.link
+|                                                           ^^^^^^^ markup.underline.link
 
 [![Cool ★ Image - Click to Enlarge][img-example]][img-example]
 |^ punctuation.definition.image.begin
-|                                   ^^^^^^^^^^^ constant.other.reference.link
+|                                   ^^^^^^^^^^^ markup.underline.link
 |                                               ^ punctuation.definition.link.end
-|                                                 ^^^^^^^^^^^ constant.other.reference.link
+|                                                 ^^^^^^^^^^^ markup.underline.link
 
 [![Cool ★ Image - Click to Enlarge](http://www.sublimetext.com/anim/rename2_packed.png)](http://www.sublimetext.com/anim/rename2_packed.png)
 |^ punctuation.definition.image.begin
