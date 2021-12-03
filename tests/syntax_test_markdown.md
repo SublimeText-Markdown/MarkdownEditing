@@ -265,7 +265,6 @@ Here is a [reference link][name].
 |         ^^^^^^^^^^^^^^^^ meta.link.reference.description.markdown
 |                         ^^^^^^ meta.link.reference.metadata.markdown
 |         ^ punctuation.definition.link.begin.markdown
-|          ^^^^^^^^^^^^^^ string.other.link.title.markdown
 |                        ^ punctuation.definition.link.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
 |                          ^^^^ constant.other.reference.link.markdown
@@ -279,7 +278,6 @@ Here is a [reference link][name]{_attr='value' :att2}.
 |                                             ^ - meta.attribute-with-value
 |                                              ^^^^^ meta.attribute-with-value.markdown
 |         ^ punctuation.definition.link.begin.markdown
-|          ^^^^^^^^^^^^^^ string.other.link.title.markdown
 |                        ^ punctuation.definition.link.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
 |                          ^^^^ constant.other.reference.link.markdown
@@ -296,7 +294,6 @@ Here is a [blank reference link][]{}.
 |                               ^^ meta.link.reference.literal.metadata.markdown
 |                                 ^^ meta.link.reference.literal.attributes.markdown
 |         ^ punctuation.definition.link.begin.markdown
-|          ^^^^^^^^^^^^^^^^^^^^ string.other.link.title.markdown
 |                              ^ punctuation.definition.link.end.markdown
 |                               ^ punctuation.definition.metadata.begin.markdown
 |                                ^ punctuation.definition.metadata.end.markdown
@@ -414,7 +411,6 @@ Here is a ![Image Ref Alt][1].
 |         ^^^^^^^^^^^^^^^^ meta.image.reference.description.markdown
 |                         ^^^ meta.image.reference.metadata.markdown
 |         ^^ punctuation.definition.image.begin.markdown
-|           ^^^^^^^^^^^^^ string.other.link.title.markdown
 |                        ^ punctuation.definition.image.end.markdown
 |                         ^ punctuation.definition.metadata.begin.markdown
 |                          ^ constant.other.reference.link.markdown
@@ -3093,8 +3089,8 @@ link with a single underscore inside the text : [@_test](http://example.com)
 This is literal [Foo*bar\]] but [ref][Foo*bar\]]
 |               ^^^^^^^^^^^ meta.link.reference.description.markdown
 |               ^ punctuation.definition.link.begin.markdown
-|                ^^^^^^^ string.other.link.title.markdown - constant
-|                       ^^ string.other.link.title.markdown constant.character.escape.markdown
+|                ^^^^^^^ - constant
+|                       ^^ constant.character.escape.markdown
 |                         ^ punctuation.definition.link.end.markdown
 |                               ^^^^^ meta.link.reference.description.markdown
 |                                    ^^^^^^^^^^^ meta.link.reference.metadata.markdown
@@ -3200,5 +3196,4 @@ This is an {== information ==}{>> comment <<}.
 This is a [[wiki link]].
 |         ^^^^^^^^^^^^^ meta.link.reference.wiki.description.markdown
 |         ^^ punctuation.definition.link.begin.markdown
-|           ^^^^^^^^^ string.other.link.title.markdown
 |                    ^^ punctuation.definition.link.end.markdown

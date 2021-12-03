@@ -33,7 +33,7 @@ marker_ref_scope_name = "constant.other.reference.link.markdown"
 ref_link_scope_name = "markup.underline.link.markdown"
 marker_begin_scope_name = "punctuation.definition.link.begin.markdown"
 marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
-marker_text_scope_name = "string.other.link.title.markdown"
+marker_text_scope_name = "meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown"
 refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
 marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
 

@@ -2347,7 +2347,6 @@ contexts:
 
   image-inline-text:
     - meta_scope: meta.image.inline.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]
       scope: punctuation.definition.image.end.markdown
       pop: true
@@ -2404,7 +2403,6 @@ contexts:
 
   image-ref-text:
     - meta_scope: meta.image.reference.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]
       scope: punctuation.definition.image.end.markdown
       pop: true
@@ -2415,7 +2413,7 @@ contexts:
       scope: meta.image.reference.metadata.markdown
       captures:
         1: punctuation.definition.metadata.begin.markdown
-        2: constant.other.reference.link.markdown
+        2: markup.underline.link.markdown
         3: punctuation.definition.metadata.end.markdown
       pop: true
     - include: immediately-pop
@@ -2441,7 +2439,6 @@ contexts:
 
   link-inline-text:
     - meta_scope: meta.link.inline.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
       pop: true
@@ -2501,7 +2498,6 @@ contexts:
 
   link-ref-link-text:
     - meta_scope: meta.link.reference.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
       pop: true
@@ -2512,7 +2508,7 @@ contexts:
       scope: meta.link.reference.metadata.markdown
       captures:
         1: punctuation.definition.metadata.begin.markdown
-        2: constant.other.reference.link.markdown
+        2: markup.underline.link.markdown
         3: punctuation.definition.metadata.end.markdown
       pop: true
     - include: immediately-pop
@@ -2537,7 +2533,6 @@ contexts:
 
   link-ref-literal-link-text:
     - meta_scope: meta.link.reference.literal.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
       pop: true
@@ -2577,7 +2572,6 @@ contexts:
 
   link-ref-wiki-link-text:
     - meta_scope: meta.link.reference.wiki.description.markdown
-    - meta_content_scope: string.other.link.title.markdown
     - match: \]\]
       scope: punctuation.definition.link.end.markdown
       pop: true
