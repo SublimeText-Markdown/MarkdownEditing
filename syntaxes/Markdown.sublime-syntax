@@ -683,6 +683,7 @@ contexts:
     # 3rd-party syntaxes
     - include: fenced-ada
     - include: fenced-akh
+    - include: fenced-arduino
     - include: fenced-coffee
     - include: fenced-dart
     - include: fenced-docker
@@ -1444,6 +1445,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.akh.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-arduino:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:arduino|ino))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.arduino.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.arduino
+      embed_scope: markup.raw.code-fence.arduino.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.arduino.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-coffee:
