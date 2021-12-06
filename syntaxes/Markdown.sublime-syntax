@@ -640,6 +640,7 @@ contexts:
     - include: fenced-raw
 
   fenced-syntaxes:
+    - include: fenced-applescript
     - include: fenced-clojure
     - include: fenced-c
     - include: fenced-cpp
@@ -709,6 +710,23 @@ contexts:
     - include: fenced-twig
     - include: fenced-verilog
     - include: fenced-xonsh
+
+  fenced-applescript:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:applescript|osascript))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.applescript.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.applescript
+      embed_scope: markup.raw.code-fence.applescript.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.applescript.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-clojure:
     - match: |-
