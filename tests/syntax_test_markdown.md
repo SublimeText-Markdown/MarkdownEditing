@@ -2867,6 +2867,11 @@ okay
 ```
 |^^ meta.code-fence.definition.end.clojure punctuation.definition.raw.code-fence.end
 
+```css
+
+| <- markup.raw.code-fence.css.markdown-gfm source.css
+```
+
 ```diff
 + inserted
 | <- source.diff markup.inserted.diff punctuation.definition.inserted.diff
