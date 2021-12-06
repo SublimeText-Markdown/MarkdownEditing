@@ -646,6 +646,7 @@ contexts:
     - include: fenced-csharp
     - include: fenced-css
     - include: fenced-diff
+    - include: fenced-dosbatch
     - include: fenced-erlang
     - include: fenced-graphviz
     - include: fenced-golang
@@ -683,7 +684,6 @@ contexts:
     - include: fenced-coffee
     - include: fenced-dart
     - include: fenced-docker
-    - include: fenced-dosbatch
     - include: fenced-elixir
     - include: fenced-fish
     - include: fenced-graphql
@@ -806,6 +806,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.diff.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-dosbatch:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:bat|cmd|dos))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.dosbatch
+      embed_scope: markup.raw.code-fence.dosbatch.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.dosbatch.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-erlang:
@@ -1387,23 +1404,6 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.akh.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
-
-  fenced-dosbatch:
-    - match: |-
-         (?x)
-          {{fenced_code_block_start}}
-          ((?i:bat|batch|cmd|dosbatch))
-          {{fenced_code_block_trailing_infostring_characters}}
-      captures:
-        0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
-      embed: scope:source.dosbatch
-      embed_scope: markup.raw.code-fence.dosbatch.markdown-gfm
-      escape: '{{code_fence_escape}}'
-      escape_captures:
-        0: meta.code-fence.definition.end.dosbatch.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-coffee:

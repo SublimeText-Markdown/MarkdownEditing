@@ -2867,6 +2867,11 @@ okay
 ```
 |^^ meta.code-fence.definition.end.clojure punctuation.definition.raw.code-fence.end
 
+```cmd
+
+| <- markup.raw.code-fence.dosbatch.markdown-gfm source.dosbatch
+```
+
 ```css
 
 | <- markup.raw.code-fence.css.markdown-gfm source.css
