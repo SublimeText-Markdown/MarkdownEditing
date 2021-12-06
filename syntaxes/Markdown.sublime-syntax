@@ -2858,26 +2858,32 @@ contexts:
   tag-attr-value:
     - match: \"
       scope: punctuation.definition.string.begin.markdown
-      set:
-        - meta_scope: string.quoted.double.markdown
-        - match: \"
-          scope: punctuation.definition.string.end.markdown
-          pop: true
+      set: tag-attr-value-double-quoted
     - match: \'
       scope: punctuation.definition.string.begin.markdown
-      set:
-        - meta_scope: string.quoted.single.markdown
-        - match: \'
-          scope: punctuation.definition.string.end.markdown
-          pop: true
+      set: tag-attr-value-single-quoted
     - match: '{{tag_unquoted_attribute_start}}'
-      set:
-        - meta_scope: string.unquoted.markdown
-        - match: '{{tag_unquoted_attribute_break}}'
-          pop: true
-        - match: '["''`<]'
-          scope: invalid.illegal.attribute-value.markdown
+      set: tag-attr-value-unquoted
     - include: else-pop
+
+  tag-attr-value-double-quoted:
+    - meta_scope: string.quoted.double.markdown
+    - match: \"
+      scope: punctuation.definition.string.end.markdown
+      pop: true
+
+  tag-attr-value-single-quoted:
+    - meta_scope: string.quoted.single.markdown
+    - match: \'
+      scope: punctuation.definition.string.end.markdown
+      pop: true
+
+  tag-attr-value-unquoted:
+    - meta_scope: string.unquoted.markdown
+    - match: '{{tag_unquoted_attribute_break}}'
+      pop: true
+    - match: '["''`<]'
+      scope: invalid.illegal.attribute-value.markdown
 
 ###[ INLINE: AUTOLINKS ]######################################################
 
