@@ -705,6 +705,7 @@ contexts:
     - include: fenced-svelte
     - include: fenced-swift
     - include: fenced-toml
+    - include: fenced-twig
     - include: fenced-xonsh
 
   fenced-clojure:
@@ -1815,6 +1816,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.toml.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-twig:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:twig|craftcms))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.twig.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:text.html.twig
+      embed_scope: markup.raw.code-fence.twig.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.twig.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-xonsh:
