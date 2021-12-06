@@ -707,6 +707,7 @@ contexts:
     - include: fenced-terraform
     - include: fenced-toml
     - include: fenced-twig
+    - include: fenced-verilog
     - include: fenced-xonsh
 
   fenced-clojure:
@@ -1851,6 +1852,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.twig.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-verilog:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:verilog|v))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.verilog.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.verilog
+      embed_scope: markup.raw.code-fence.verilog.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.verilog.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-xonsh:
