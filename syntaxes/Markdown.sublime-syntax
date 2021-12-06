@@ -731,7 +731,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:c))
+          ((?i:c|h))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.c.markdown-gfm
@@ -748,7 +748,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:c\+\+|cpp))
+          ((?i:c\+\+|cc|cpp|cxx|h\+\+|hpp|hxx))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.c++.markdown-gfm
