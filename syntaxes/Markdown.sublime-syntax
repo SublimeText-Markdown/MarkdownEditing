@@ -687,6 +687,7 @@ contexts:
     - include: fenced-elixir
     - include: fenced-fish
     - include: fenced-graphql
+    - include: fenced-http
     - include: fenced-ini
     - include: fenced-jade
     - include: fenced-julia
@@ -1506,6 +1507,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.graphql.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-http:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:http))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.http.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:text.http-request-response
+      embed_scope: markup.raw.code-fence.http.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.http.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-ini:
