@@ -1127,6 +1127,10 @@ because it doesn't begin with the number one:
    > This is a blockquote.
 |  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
 
+  - this is a list
+    > This is a blockquote.
+|   ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
+
  This is a paragraph still part of the 
  list item
 | ^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - meta.paragraph.list meta.paragraph.list

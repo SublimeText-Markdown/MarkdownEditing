@@ -466,7 +466,7 @@ contexts:
 
   list-content:
     - meta_content_scope: meta.paragraph.list.markdown
-    - include: list-block-quotes
+    - include: block-quotes
     - include: fenced-code-blocks
     - include: html-blocks
     - include: latex-blocks
