@@ -427,7 +427,6 @@ contexts:
     - include: block-quotes
     - include: fenced-code-blocks
     - include: html-blocks
-    - include: latex-blocks
     - include: reference-definitions
     - include: thematic-breaks
     - match: (?=\S)
