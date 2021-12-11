@@ -18,8 +18,8 @@ $$
 |^ text.tex.latex meta.environment.math.block.dollar.latex string.other.math.latex punctuation.definition.string.end.latex
 
     $$
-| <- meta.block-level.markdown markup.raw.block.markdown    
-|^^^^^^ meta.block-level.markdown markup.raw.block.markdown
+| <- markup.raw.block.markdown    
+|^^^^^^ markup.raw.block.markdown
 
 1. Numbered List
 

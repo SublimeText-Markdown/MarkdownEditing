@@ -35,9 +35,11 @@ def select_color_scheme(view=None):
     global_scheme = global_settings.get("color_scheme")
     schemes = [global_scheme, "MarkdownEditor.sublime-color-scheme"]
     for scheme in sublime.find_resources("MarkdownEditor*.sublime-color-scheme"):
-        file_name = scheme.split("/")[-1]
-        if file_name not in schemes:
-            schemes.append(file_name)
+        if scheme not in schemes:
+            schemes.append(scheme)
+    for scheme in sublime.find_resources("MarkdownEditor*.tmTheme"):
+        if scheme not in schemes:
+            schemes.append(scheme)
 
     schemes_display = []
     selected_index = 0
@@ -59,6 +61,8 @@ def select_color_scheme(view=None):
 
     def set_scheme(scheme):
         if scheme:
+            if scheme.endswith(".sublime-color-scheme"):
+                scheme = scheme.split("/")[-1]
             md_settings.set("color_scheme", scheme)
         else:
             md_settings.erase("color_scheme")
@@ -77,7 +81,10 @@ def select_color_scheme(view=None):
         pre_view.close()
 
     def on_highlighted(index):
-        pre_view.settings().set("color_scheme", schemes[index])
+        scheme = schemes[index]
+        if scheme.endswith(".sublime-color-scheme"):
+            scheme = scheme.split("/")[-1]
+        pre_view.settings().set("color_scheme", scheme)
 
     window.show_quick_panel(
         schemes_display,
