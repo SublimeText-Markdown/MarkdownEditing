@@ -263,7 +263,7 @@ contexts:
         1: punctuation.section.block.end.frontmatter.markdown
 
   markdown:
-    - include: indented-code-block
+    - include: indented-code-blocks
     - include: thematic-breaks
     - include: block-quotes
     - include: list-blocks
@@ -272,7 +272,7 @@ contexts:
     - include: html-blocks
     - include: latex-blocks
     - include: reference-definitions
-    - include: atx-heading
+    - include: atx-headings
     - include: setext-heading-or-paragraph
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
@@ -311,8 +311,8 @@ contexts:
     - include: block-quote-nested
     - include: block-quote-code-block
     - include: block-quote-list-item
-    - include: atx-heading
-    - include: indented-code-block
+    - include: atx-headings
+    - include: indented-code-blocks
     - include: thematic-breaks
     - match: ''
       set: block-quote-text
@@ -391,7 +391,7 @@ contexts:
         |   {{thematic_break}}
         )
       pop: true
-    - include: inline
+    - include: inlines
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
@@ -427,7 +427,6 @@ contexts:
     - include: block-quotes
     - include: fenced-code-blocks
     - include: html-blocks
-    - include: latex-blocks
     - include: reference-definitions
     - include: thematic-breaks
     - match: (?=\S)
@@ -485,7 +484,7 @@ contexts:
       push: list-text
 
   list-text:
-    - include: inline
+    - include: inlines
     - match: $
       pop: true
     - match: (?={{list_item}})
@@ -493,7 +492,7 @@ contexts:
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
-  atx-heading:
+  atx-headings:
     # https://spec.commonmark.org/0.30/#atx-headings
     # Note:
     #   Consume spaces and tabs after opening hashes so entity.name
@@ -617,7 +616,7 @@ contexts:
     - match: '{{setext_escape}}'
       fail: setext-heading-or-paragraph
     - include: paragraph-end
-    - include: inline
+    - include: inlines
 
   paragraph-end:
     - match: |-
@@ -647,7 +646,7 @@ contexts:
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
-  indented-code-block:
+  indented-code-blocks:
     # https://spec.commonmark.org/0.30/#indented-code-blocks
     - match: '{{indented_code_block}}.*$\n?'
       scope: markup.raw.block.markdown
@@ -2061,7 +2060,7 @@ contexts:
   html-content:
     - include: scope:text.html.basic
 
-  tag-kbd:
+  html-kbd-tags:
     # A simple implementation to add dedicated `markup.kbd` scopes.
     # Note: Doesn't (intent to) support bold/italic/striked content.
     - match: ((<)(kbd)(>))([^<]+)((</)(kbd)(>))
@@ -2202,7 +2201,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
   table-cell-emphasis:
     - include: emphasis
@@ -2228,13 +2227,13 @@ contexts:
 
 ###[ INLINE ]#################################################################
 
-  inline:
+  inlines:
     - include: hard-line-breaks
     - include: emphasis
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
   emphasis:
     - include: bold
@@ -2260,7 +2259,7 @@ contexts:
     - include: link-inline
     - include: link-ref
 
-  markup:
+  markups:
     # Markdown will convert this for us. We match it so that the
     # HTML grammar will not mark it up as invalid.
     - match: '[<>](-+|=+)[<>]?'
@@ -2268,7 +2267,7 @@ contexts:
     - match: '<<+|<>|>>+'
     - match: <(?![A-Za-z/?!])
     - match: (?!{{html_entity}})&
-    - include: tag-kbd
+    - include: html-kbd-tags
     - include: html-content
 
 ###[ INLINE: CODE SPANS ]#####################################################
@@ -2504,7 +2503,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
 ###[ INLINE: IMAGES ]#########################################################
 
@@ -2756,7 +2755,7 @@ contexts:
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
     - include: emphasis
     - include: literals
-    - include: markup
+    - include: markups
 
   link-text-nested:
     - include: link-text
