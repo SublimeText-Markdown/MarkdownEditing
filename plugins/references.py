@@ -13,6 +13,7 @@ Exported commands:
     MdeReferenceOrganizeCommand
     MdeGatherMissingLinkMarkersCommand
     MdeConvertInlineLinkToReferenceCommand
+    MdeConvertRawLinkToMdLinkCommand
     MdeConvertInlineLinksToReferencesCommand
 """
 import sublime
@@ -25,6 +26,7 @@ from .view import MdeViewEventListener
 
 refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
+rawlink_scope_name = "meta.link.inet.markdown"
 footnote_scope_name = "meta.link.reference.footnote.markdown-extra"
 marker_scope_name = "meta.link.reference.description.markdown"
 marker_literal_scope_name = "meta.link.reference.literal.description.markdown"
@@ -36,6 +38,11 @@ marker_text_end_scope_name = "punctuation.definition.link.end.markdown"
 marker_text_scope_name = "meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown"
 refname_start_scope_name = "punctuation.definition.metadata.begin.markdown"
 marker_end_scope_name = "punctuation.definition.metadata.end.markdown"
+
+re_match_urls = re.compile(
+    r"""((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.‌​][a-z]{2,4}/)(?:[^\s()<>]+|(([^\s()<>]+|(([^\s()<>]+)))*))+(?:(([^\s()<>]+|(‌​([^\s()<>]+)))*)|[^\s`!()[]{};:'".,<>?«»“”‘’]))""",
+    re.DOTALL,
+)
 
 
 class Obj(object):
@@ -257,10 +264,6 @@ class MdeReferenceJumpContextCommand(MdeReferenceJumpCommand):
 
 def is_url(contents):
     """Return if contents contains an URL."""
-    re_match_urls = re.compile(
-        r"""((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.‌​][a-z]{2,4}/)(?:[^\s()<>]+|(([^\s()<>]+|(([^\s()<>]+)))*))+(?:(([^\s()<>]+|(‌​([^\s()<>]+)))*)|[^\s`!()[]{};:'".,<>?«»“”‘’]))""",
-        re.DOTALL,
-    )
     m = re_match_urls.search(contents)
     return True if m else False
 
@@ -286,7 +289,16 @@ def append_reference_link(edit, view, name, url):
 
 
 def suggest_default_link_name(name, link, image):
-    """Suggest default link name in camel case."""
+    """Suggest default link name in camel case, if `name` is small.
+
+    Args:
+        name (str): An existing name, used as a fallback
+        link (str): The link href
+        image (bool): Whether the link points to an image or not. Used for fallback.
+
+    Returns:
+        str: A suggested reference name in CamelCase, or `name`.
+    """
     ret = ""
     # string.punctuation minus -.:;<=>_
     no_punctuation = str.maketrans("", "", "!\"#$%&'()*+,/?@[\\]^`{|}~")
@@ -758,6 +770,63 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
         for link_span in link_spans:
             _link_span = sublime.Region(link_span[0].a + offset, link_span[0].b + offset)
             offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
+
+
+class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
+    """Convert an inline link to reference."""
+
+    def is_visible(self):
+        """Return True if selection contains links"""
+        view = self.view
+        for sel in view.find_by_selector(rawlink_scope_name):
+            if any(s.intersects(sel) for s in view.sel()):
+                return True
+        return False
+
+    def run(self, edit, name=None):
+        """Run command callback."""
+        # import queue
+        # import threading
+
+        # thread_queue = queue.Queue()
+
+        url_titles = {}
+        url_redirects = {}
+
+        def getTitleFromUrlJob(link_href):
+            import urllib.request
+            resp = urllib.request.urlopen(link_href)
+            match = re.search(rb"<title>(.+?)</title>", resp.read())
+            if match:
+                url_titles[link_href] = re.sub(r'([\[\]])', r'\\\g<1>', match.group(1).decode())
+
+            real_url = resp.geturl()
+            if real_url != link_href:
+                print(link_href, "=/=", real_url, "Redirect?")
+                url_redirects[link_href] = real_url
+
+        view = self.view
+        valid_regions = []
+
+        for sel in view.find_by_selector(rawlink_scope_name)[::-1]:
+            if any(s.intersects(sel) for s in view.sel()):
+                assert view.match_selector(sel.a, rawlink_scope_name)
+                assert view.extract_scope(sel.a) == sel
+                valid_regions.append(sublime.Region(*view.extract_scope(sel.a)))
+
+        for link_region in valid_regions:
+            link_href = view.substr(link_region)
+            suggested_title = suggest_default_link_name('', link_href, False)
+            try:
+                getTitleFromUrlJob(link_href)
+                title = url_titles[link_href] + " (" + suggested_title + ")"
+                link_href = url_redirects.get(link_href) or link_href
+            except Exception as e:
+                print(e)
+                title = suggested_title
+            finally:
+                view.erase_status("rawlinktomd")
+            view.replace(edit, link_region, "[" + title + "](" + link_href + ")")
 
 
 class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):
