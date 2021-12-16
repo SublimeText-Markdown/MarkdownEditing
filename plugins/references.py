@@ -722,15 +722,20 @@ def convert2ref(view, edit, link_span, name, omit_name=False):
     view.show_at_center(link_span)
 
 
-    if isMarkerDefined(view, name):
-        print("inserted def for", name, "which existed")
-
-    _viewsize = view.size()
-    view.insert(edit, _viewsize, "[%s]: %s\n" % (name, link))
-    reference_span = sublime.Region(_viewsize + 1, _viewsize + 1 + len(name))
-    view.sel().add(reference_span)
+    link_for_name = getReferences2(view).get(name)
+    if link_for_name:
+        if link_for_name != link:
+            raise Exception("Tried to insert a different link with the same name")
+        else:
+            # Skip insertion (no need, name already exists with same link)
+            return 0  # No insertion, no offset.
+    else:
+        _viewsize = view.size()
+        view.insert(edit, _viewsize, "[%s]: %s\n" % (name, link))
+        reference_span = sublime.Region(_viewsize + 1, _viewsize + 1 + len(name))
+        view.sel().add(reference_span)
     
-    return offset
+        return offset
 
 
 class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
