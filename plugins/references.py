@@ -786,9 +786,10 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
     def run(self, edit, name=None):
         """Run command callback."""
         # import queue
-        # import threading
+        import threading
+        import time
 
-        # thread_queue = queue.Queue()
+        thread_queue = []
 
         url_titles = {}
         url_redirects = {}
@@ -816,6 +817,24 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
 
         for link_region in valid_regions:
             link_href = view.substr(link_region)
+            thread_queue.append(threading.Thread(target=getTitleFromUrlJob, args=(link_href,)))
+
+        while True:
+            left = len([
+                thread
+                for thread in thread_queue
+                if thread.is_alive()
+            ])
+            view.set_status("rawlinktomd", "Fetching " + str(left) + " pages")
+            if left == 0:
+                break
+            import time
+            time.sleep(0.2)
+        
+        view.erase_status("rawlinktomd")
+
+        for link_region in valid_regions:
+            link_href = view.substr(link_region)
             suggested_title = suggest_default_link_name('', link_href, False)
             try:
                 getTitleFromUrlJob(link_href)
@@ -824,8 +843,6 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
             except Exception as e:
                 print(e)
                 title = suggested_title
-            finally:
-                view.erase_status("rawlinktomd")
             view.replace(edit, link_region, "[" + title + "](" + link_href + ")")
 
 
