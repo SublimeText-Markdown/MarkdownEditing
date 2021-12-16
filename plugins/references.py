@@ -93,6 +93,15 @@ def getMarkers(view, name=""):
     return ids
 
 
+def find_by_selector_in_regions(view, regions, selector):
+    def _gen():
+        for sel in view.find_by_selector(selector):
+            if any(s.intersects(sel) for s in regions):
+                yield sel
+
+    return list(_gen())
+
+
 def getReferences(view, name=""):
     """Find all reference definitions."""
     # returns {name -> Region}
@@ -808,13 +817,7 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
                 url_redirects[link_href] = real_url
 
         view = self.view
-        valid_regions = []
-
-        for sel in view.find_by_selector(barelink_scope_name)[::-1]:
-            if any(s.intersects(sel) for s in view.sel()):
-                assert view.match_selector(sel.a, barelink_scope_name)
-                assert view.extract_scope(sel.a) == sel
-                valid_regions.append(sublime.Region(*view.extract_scope(sel.a)))
+        valid_regions = find_by_selector_in_regions(view, view.sel(), barelink_scope_name)
 
         for link_region in valid_regions:
             link_href = view.substr(link_region)
@@ -829,7 +832,7 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
 
         view.erase_status("rawlinktomd")
 
-        for link_region in valid_regions:
+        for link_region in valid_regions[::-1]:
             link_href = view.substr(link_region)
             suggested_title = suggest_default_link_name("", link_href, False)
             try:
