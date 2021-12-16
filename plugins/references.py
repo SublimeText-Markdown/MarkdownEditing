@@ -91,27 +91,41 @@ def find_by_selector_in_regions(view, regions, selector):
         for sel in view.find_by_selector(selector):
             if any(s.intersects(sel) for s in regions):
                 yield sel
+
     return list(_gen())
 
+
 def getReferences2(view):
+    """Get a dictionary of all references in the document.
+
+    Returns:
+        dict: {name: link} mapping
+    """
     ret = {}
     for definition_line in view.find_by_selector(definition_scope_name):
-        
+
         def substr(scope, i):
-            return list(map(
-                view.substr, 
-                find_by_selector_in_regions(view, [definition_line], scope))
+            return list(
+                map(view.substr, find_by_selector_in_regions(view, [definition_line], scope))
             )[i]
 
-        name = substr("entity.name.reference.link.markdown", 0)        
+        name = substr("entity.name.reference.link.markdown", 0)
         link = substr("markup.underline.link", -1)
         assert not ret.get(name)
         ret[name] = link
     return ret
 
+
 def getReferences(view, name=""):
-    """Find all reference definitions."""
-    # returns {name -> Region}
+    """Find all reference definitions.
+
+    Args:
+        name (str, optional): Specific name to filter for
+
+    Returns:
+        dict: {name -> Obj} mapping where Objs have a
+              regions attribute with a list of regions
+    """
 
     refs = []
     name = re.escape(name)
@@ -133,7 +147,7 @@ def getReferences(view, name=""):
 
 def isMarkerDefined(view, name):
     """Return True if a marker is defined by that name."""
-    return len(getReferences(view, name)) > 0
+    return getReferences2(view).get(name) is not None
 
 
 def getCurrentScopeRegion(view, pt):
@@ -337,15 +351,9 @@ def suggest_default_link_name(name, link, image):
 
 def check_for_link(view, link):
     """Check if the link already defined. Return the name if so."""
-    refs = getReferences(view)
-    link = link.strip()
-    for name in refs:
-        link_begin = findScopeFrom(view, refs[name].regions[0].begin(), ref_link_scope_name)
-        reg = getCurrentScopeRegion(view, link_begin)
-        found_link = view.substr(reg).strip()
-        if found_link == link:
-            return name
-    return None
+    links_by_name = getReferences2(view)
+    names_by_link = {v: k for k, v in links_by_name.items()}
+    return names_by_link.get(link)
 
 
 class MdeReferenceNewReferenceCommand(MdeTextCommand):
@@ -416,13 +424,13 @@ class MdeReferenceNewImageCommand(MdeTextCommand):
 
 def get_next_footnote_marker(view):
     """Get the number of the next footnote."""
-    refs = getReferences(view)
+    refs = getReferences2(view)
 
     footnotes = []
-    for ref in refs:
-        if ref[0] == "^":
+    for refname in refs.keys():
+        if refname[0] == "^":
             try:
-                footnotes.append(int(ref[1:]))
+                footnotes.append(int(refname[1:]))
             except ValueError:
                 pass
 
@@ -721,7 +729,6 @@ def convert2ref(view, edit, link_span, name, omit_name=False):
     view.sel().add(link_span)
     view.show_at_center(link_span)
 
-
     link_for_name = getReferences2(view).get(name)
     if link_for_name:
         if link_for_name != link:
@@ -734,7 +741,7 @@ def convert2ref(view, edit, link_span, name, omit_name=False):
         view.insert(edit, _viewsize, "[%s]: %s\n" % (name, link))
         reference_span = sublime.Region(_viewsize + 1, _viewsize + 1 + len(name))
         view.sel().add(reference_span)
-    
+
         return offset
 
 
