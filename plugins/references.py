@@ -86,9 +86,33 @@ def getMarkers(view, name=""):
     return ids
 
 
+def find_by_selector_in_regions(view, regions, selector):
+    def _gen():
+        for sel in view.find_by_selector(selector):
+            if any(s.intersects(sel) for s in regions):
+                yield sel
+    return list(_gen())
+
+def getReferences2(view):
+    ret = {}
+    for definition_line in view.find_by_selector(definition_scope_name):
+        
+        def substr(scope, i):
+            return list(map(
+                view.substr, 
+                find_by_selector_in_regions(view, [definition_line], scope))
+            )[i]
+
+        name = substr("entity.name.reference.link.markdown", 0)        
+        link = substr("markup.underline.link", -1)
+        assert not ret.get(name)
+        ret[name] = link
+    return ret
+
 def getReferences(view, name=""):
     """Find all reference definitions."""
     # returns {name -> Region}
+
     refs = []
     name = re.escape(name)
     if name == "":
@@ -697,10 +721,15 @@ def convert2ref(view, edit, link_span, name, omit_name=False):
     view.sel().add(link_span)
     view.show_at_center(link_span)
 
+
+    if isMarkerDefined(view, name):
+        print("inserted def for", name, "which existed")
+
     _viewsize = view.size()
     view.insert(edit, _viewsize, "[%s]: %s\n" % (name, link))
     reference_span = sublime.Region(_viewsize + 1, _viewsize + 1 + len(name))
     view.sel().add(reference_span)
+    
     return offset
 
 
@@ -728,6 +757,8 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
             view.insert(edit, view.size(), "\n")
 
         link_spans = []
+        links_by_name = getReferences2(view)
+        names_by_link = {v: k for k, v in links_by_name.items()}
 
         for sel in view.sel():
             if not view.match_selector(sel.b, "meta.link.inline"):
@@ -743,16 +774,27 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
             link_span = sublime.Region(start + m.span(2)[0] - 1, start + m.span(2)[1] + 1)
             if is_url(link):
                 link = mangle_url(link)
-            if len(link) > 0:
-                if name is None:
-                    # If link already exists, reuse existing reference
-                    suggested_name = check_for_link(view, link)
-                    if suggested_name is None:
-                        is_image = view.substr(start - 1) == "!" if start > 0 else False
-                        suggested_name = suggest_default_link_name(text, link, is_image)
+            if len(link) <= 0:
+                continue
+            # Set name based on link.
+            # If link already exists, reuse existing reference
+            if names_by_link.get(link):
+                name = names_by_link.get(link)
+            else:
+                # Link is not referenced. Generate name.
+                is_image = view.substr(start - 1) == "!" if start > 0 else False
+                name = name or suggest_default_link_name(text, link, is_image)
+            # If name is already in use by a different link, change our name.
+            i = 1
+            name_ = name
+            while links_by_name.get(name, link) != link and i < 999:
+                i += 1
+                name = name_ + str(i)
 
-                _name = name if name is not None else suggested_name
-                link_spans.append((link_span, _name, _name == text))
+            link_spans.append((link_span, name, name == text))
+            # Update local dict for batch operations
+            links_by_name[name] = link
+            names_by_link[link] = name
 
         offset = 0
         for link_span in link_spans:
