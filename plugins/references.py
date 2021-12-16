@@ -13,7 +13,7 @@ Exported commands:
     MdeReferenceOrganizeCommand
     MdeGatherMissingLinkMarkersCommand
     MdeConvertInlineLinkToReferenceCommand
-    MdeConvertRawLinkToMdLinkCommand
+    MdeConvertBareLinkToMdLinkCommand
     MdeConvertInlineLinksToReferencesCommand
 """
 import sublime
@@ -26,7 +26,7 @@ from .view import MdeViewEventListener
 
 refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
-rawlink_scope_name = "meta.link.inet.markdown"
+barelink_scope_name = "meta.link.inet.markdown"
 footnote_scope_name = "meta.link.reference.footnote.markdown-extra"
 marker_scope_name = "meta.link.reference.description.markdown"
 marker_literal_scope_name = "meta.link.reference.literal.description.markdown"
@@ -772,13 +772,13 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
             offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
 
 
-class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
+class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
     """Convert an inline link to reference."""
 
     def is_visible(self):
         """Return True if selection contains links"""
         view = self.view
-        for sel in view.find_by_selector(rawlink_scope_name):
+        for sel in view.find_by_selector(barelink_scope_name):
             if any(s.intersects(sel) for s in view.sel()):
                 return True
         return False
@@ -796,10 +796,11 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
 
         def getTitleFromUrlJob(link_href):
             import urllib.request
+
             resp = urllib.request.urlopen(link_href)
             match = re.search(rb"<title>(.+?)</title>", resp.read())
             if match:
-                url_titles[link_href] = re.sub(r'([\[\]])', r'\\\g<1>', match.group(1).decode())
+                url_titles[link_href] = re.sub(r"([\[\]])", r"\\\g<1>", match.group(1).decode())
 
             real_url = resp.geturl()
             if real_url != link_href:
@@ -809,9 +810,9 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
         view = self.view
         valid_regions = []
 
-        for sel in view.find_by_selector(rawlink_scope_name)[::-1]:
+        for sel in view.find_by_selector(barelink_scope_name)[::-1]:
             if any(s.intersects(sel) for s in view.sel()):
-                assert view.match_selector(sel.a, rawlink_scope_name)
+                assert view.match_selector(sel.a, barelink_scope_name)
                 assert view.extract_scope(sel.a) == sel
                 valid_regions.append(sublime.Region(*view.extract_scope(sel.a)))
 
@@ -820,22 +821,17 @@ class MdeConvertRawLinkToMdLinkCommand(MdeTextCommand):
             thread_queue.append(threading.Thread(target=getTitleFromUrlJob, args=(link_href,)))
 
         while True:
-            left = len([
-                thread
-                for thread in thread_queue
-                if thread.is_alive()
-            ])
+            left = len([thread for thread in thread_queue if thread.is_alive()])
             view.set_status("rawlinktomd", "Fetching " + str(left) + " pages")
             if left == 0:
                 break
-            import time
             time.sleep(0.2)
-        
+
         view.erase_status("rawlinktomd")
 
         for link_region in valid_regions:
             link_href = view.substr(link_region)
-            suggested_title = suggest_default_link_name('', link_href, False)
+            suggested_title = suggest_default_link_name("", link_href, False)
             try:
                 getTitleFromUrlJob(link_href)
                 title = url_titles[link_href] + " (" + suggested_title + ")"

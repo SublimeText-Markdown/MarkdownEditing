@@ -94,7 +94,7 @@ else:
         MdeReferenceOrganizeCommand,
         MdeAddNumberedReferenceDefinitionCommand,
         MdeReferenceCompletionsProvider,
-        MdeConvertRawLinkToMdLinkCommand,
+        MdeConvertBareLinkToMdLinkCommand,
     )
     from .plugins.view import (
         MdeReplaceSelectedCommand,

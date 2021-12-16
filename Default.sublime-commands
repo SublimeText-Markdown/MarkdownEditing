@@ -246,8 +246,8 @@
 		"command": "mde_convert_inline_link_to_reference"
 	},
 	{
-		"caption": "MarkdownEditing: Convert base link to markdown",
-		"command": "mde_convert_raw_link_to_md_link"
+		"caption": "MarkdownEditing: Convert bare link to markdown",
+		"command": "mde_convert_bare_link_to_md_link"
 	},
 	{
 		"caption": "MarkdownEditing: Add Missing Link Labels",
