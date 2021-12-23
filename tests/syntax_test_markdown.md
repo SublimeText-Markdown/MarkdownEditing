@@ -2003,19 +2003,25 @@ ___~~bold italic striked~~___
 |                          ^^ punctuation.definition.bold.end.markdown
 
 ~Hi~ Hello, world!
-| <- punctuation.definition.strikethrough.begin
-|^^^ meta.paragraph markup.strikethrough
-|  ^ punctuation.definition.strikethrough.end
-|   ^^^^^^^^^^^^^^^ meta.paragraph - markup
+| <- - punctuation.definition.strikethrough
+|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|  ^ - punctuation.definition.strikethrough
 
 This ~text~~~~ is ~~~~curious~.
-|    ^^^^^^^^^ meta.paragraph markup.strikethrough
-|                 ^^^^^^^^^^^^ meta.paragraph markup.strikethrough
-|                             ^^ meta.paragraph - markup
-|    ^ punctuation.definition.strikethrough.begin
-|         ^^^^ punctuation.definition.strikethrough.end
-|                 ^^^^ punctuation.definition.strikethrough.begin
-|                            ^ punctuation.definition.strikethrough.end
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|    ^ - punctuation.definition.strikethrough
+|         ^^^^ - punctuation.definition.strikethrough
+|                 ^^^^ - punctuation.definition.strikethrough
+|                            ^ - punctuation.definition.strikethrough
+
+This ~~text~~~~ is ~~~~curious~~.
+|^^^^ meta.paragraph - markup
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.strikethrough
+|                               ^^ meta.paragraph - markup
+|    ^^ punctuation.definition.strikethrough.begin
+|          ^^^^ - punctuation.definition.strikethrough
+|                  ^^^^ - punctuation.definition.strikethrough
+|                             ^^ punctuation.definition.strikethrough.end
 
 This ~~has a
 |    ^^^^^^^^ meta.paragraph markup.strikethrough
@@ -3188,6 +3194,48 @@ This is a {-- deletion --} and {~~substitute~>with~~striked~~text~~} or {~~~~old
 |                                                                                        ^^ punctuation.definition.strikethrough.end.markdown
 |                                                                                          ^^^ punctuation.definition.critic.end.markdown
 
+No striked {~~~>~~} critics.
+|          ^^^^^^^^ markup.critic.substitution.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^^ punctuation.separator.critic.markdown
+|               ^^^ punctuation.definition.critic.end.markdown
+|                  ^^^^^^^^^^ - markup.critic
+
+No striked {~~~~>~~~} critics.
+|          ^^^^^^^^^^ markup.critic.substitution.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^ - punctuation
+|              ^^ punctuation.separator.critic.markdown
+|                ^ - punctuation
+|                 ^^^ punctuation.definition.critic.end.markdown
+|                    ^^^^^^^^^^ - markup.critic
+
+No striked {~~~~~>~~~~} critics.
+|          ^^^^^^^^^^^^ markup.critic.substitution.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^^ - punctuation
+|               ^^ punctuation.separator.critic.markdown
+|                 ^^ - punctuation
+|                   ^^^ punctuation.definition.critic.end.markdown
+|                      ^^^^^^^^^^ - markup.critic
+
+No striked {~~~~~~>~~~~~} critics.
+|          ^^^^^^^^^^^^^^ markup.critic.substitution.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^^^ - punctuation
+|                ^^ punctuation.separator.critic.markdown
+|                  ^^^ - punctuation
+|                     ^^^ punctuation.definition.critic.end.markdown
+|                        ^^^^^^^^^^ - markup.critic
+
+No striked {~~~~~~~>~~~~~~} critics.
+|          ^^^^^^^^^^^^^^^^ markup.critic.substitution.markdown
+|          ^^^ punctuation.definition.critic.begin.markdown
+|             ^^^^ - punctuation
+|                 ^^ punctuation.separator.critic.markdown
+|                   ^^^^ - punctuation
+|                       ^^^ punctuation.definition.critic.end.markdown
+|                          ^^^^^^^^^^ - markup.critic
 
 This is a {>> comment <<}.
 |         ^^^^^^^^^^^^^^^ markup.critic.comment.markdown

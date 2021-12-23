@@ -2460,15 +2460,18 @@ contexts:
     - include: strikethrough
 
   strikethrough:
-    - match: (?:~(?!~}|>|\s))+  # any number of ~ up to ~> or ~~} critic markers
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: ~~(?![~}>\s])  # 2x ~ but no ~> or ~~}
       scope: punctuation.definition.strikethrough.begin.markdown
       push: strikethrough-content
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
 
   strikethrough-content:
     - meta_scope: markup.strikethrough.markdown-gfm
-    - match: (?:~(?!~}|>))+     # any number of ~ up to ~> or ~~} critic markers
+    - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
       scope: punctuation.definition.strikethrough.end.markdown
       pop: true
+    - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
     - include: bold
     - include: italic
