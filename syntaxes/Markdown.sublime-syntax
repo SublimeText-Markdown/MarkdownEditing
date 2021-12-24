@@ -118,7 +118,6 @@ variables:
           (?![^`]*`)   #   not followed by any more backticks on the same line
         |              # or
           (~){3,}      #   3 or more tildas
-          (?![^~]*~)   #   not followed by any more tildas on the same line
         )
         \s*            # allow for whitespace between code block start and info string
       )

@@ -2183,13 +2183,29 @@ http://spec.commonmark.org/0.28/#example-318
 | ^^^ punctuation.definition.raw.code-fence.end
 
 ~~~~~test~
-| ^^^^^^^^^ meta.paragraph - constant - markup.raw
+|^^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|    ^^^^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
+
+~~~~~
+|^^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
 ~~~~~~test
 | ^^^^ punctuation.definition.raw.code-fence.begin
 |     ^^^^ constant.other.language-name
 ~~~~~~
 | ^^^^ punctuation.definition.raw.code-fence.end
+
+# https://spec.commonmark.org/0.30/#example-146
+
+~~~ aa ``` ~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
+|     ^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+foo
+~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
 ```test
 |  ^^^^ constant.other.language-name
