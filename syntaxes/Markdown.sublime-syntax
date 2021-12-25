@@ -31,9 +31,9 @@ variables:
       (?x:
         [ ]{,3}                    # between 0 to 3 spaces
         (?:                        # followed by one of the following:
-          [-](?:[ ]{,2}[-]){2,}    # - a dash,        followed by the following at least twice: between 0 to 2 spaces followed by a dash
-        | [*](?:[ ]{,2}[*]){2,}    # - a star,        followed by the following at least twice: between 0 to 2 spaces followed by a star
-        | [_](?:[ ]{,2}[_]){2,}    # - an underscore, followed by the following at least twice: between 0 to 2 spaces followed by an underscore
+          [-](?:[ \t]*[-]){2,}     # - a dash,        followed by the following at least twice: any number of spaces or tabs followed by a dash
+        | [*](?:[ \t]*[*]){2,}     # - a star,        followed by the following at least twice: any number of spaces or tabs followed by a star
+        | [_](?:[ \t]*[_]){2,}     # - an underscore, followed by the following at least twice: any number of spaces or tabs followed by an underscore
         )
         [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
       )
