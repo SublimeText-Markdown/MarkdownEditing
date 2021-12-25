@@ -667,7 +667,7 @@ non-disabled markdown
 | <- - meta.disable-markdown
 
 
-# Block Quote Tests ###########################################################
+# TEST: BLOCK QUOTES ##########################################################
 
 >=
 | <- punctuation.definition.blockquote.markdown 
@@ -835,6 +835,9 @@ no code block
 - - -
 | <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
 
+
+# TEST: INDENTED CODE BLOCKS ##################################################
+
 Code block below:
 
     this is code!
@@ -846,6 +849,9 @@ Code block below:
 
 paragraph
 | <- meta.paragraph
+
+
+# TEST: THEMATIC BREAKS #######################################################
 
 - - - -
 | ^^^^^^ meta.separator
@@ -868,7 +874,8 @@ _ _ _ _ _ _ _
 |  ^ punctuation
 |        ^ punctuation
 
-###[ COMMONMARK AUTOLINKS ]###################################################
+
+# TEST: COMMONMARK AUTOLINKS ##################################################
 
 <mailto:test+test@test.com>
 | <- meta.link.email.markdown punctuation.definition.link.begin.markdown - markup.underline
@@ -957,7 +964,8 @@ _ _ _ _ _ _ _
 |    ^^^ punctuation.separator.path.markdown
 |                  ^ punctuation.separator.path.markdown
 
-###[ GFM AUTOLINKS ]##########################################################
+
+# TEST: GFM AUTOLINKS #########################################################
 
 Visit ftp://intra%20net
 |     ^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
@@ -1111,7 +1119,8 @@ a.b-c_d@a.b.
 | <- - meta.link - markup.underline
 |^^^^^^^^^^^^^ - meta.link - markup.underline.link
 
-###[ LIGATURES ]##############################################################
+
+# TEST: LIGATURES #############################################################
 
 this is a raw ampersand & does not require HTML escaping
 |                       ^ - entity - illegal
@@ -2022,7 +2031,7 @@ __test!*test__ Issue 1163
 |      ^ - punctuation.definition.italic
 |           ^^ punctuation.definition.bold.end
 
-# Strikethrough Tests
+# TEST: STRIKETHROUGH #########################################################
 
 __~~bold striked~~__
 | <- markup.bold.markdown punctuation.definition.bold.begin.markdown
@@ -2119,7 +2128,7 @@ new paragraph~~.
 | <- invalid.illegal.non-terminated.bold-italic
 
 
-# Fenced Code Block Tests
+# TEST: FENCED CODE BLOCKS ####################################################
 
 Paragraph is terminated by fenced code blocks.
 ```
@@ -3233,7 +3242,7 @@ This is literal [Foo*bar\]] but [ref][Foo*bar\]]
 |       ^ punctuation.definition.link.begin
 |        ^ punctuation.definition.link.end
 
-# CriticMarkup ################################################################
+# TEST: CRITIC MARKUP #########################################################
 
 This is an {++additional++} word in {++**bold**++}.
 |          ^^^^^^^^^^^^^^^^ markup.critic.addition.markdown
