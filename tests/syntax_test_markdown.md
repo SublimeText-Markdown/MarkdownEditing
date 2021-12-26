@@ -253,11 +253,13 @@ https://spec.commonmark.org/0.30/#example-71
 |           ^^^^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-73
+
 ## Example 73 (trailing spaces!) #####    
 |                                    ^ punctuation.definition.heading.end.markdown
 |                                         ^ meta.whitespace.newline.markdown
 
 https://spec.commonmark.org/0.30/#example-74
+
 ## Example 74 ####    >
 |^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
 |^^ - entity.name.section
@@ -265,6 +267,7 @@ https://spec.commonmark.org/0.30/#example-74
 |                      ^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-75
+
 # #heading# #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^^^^^^ markup.heading.1.markdown
@@ -274,6 +277,7 @@ https://spec.commonmark.org/0.30/#example-75
 |           ^ punctuation.definition.heading.end.markdown
 
 https://spec.commonmark.org/0.30/#example-76
+
 ## heading \##
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
 |^^^^^^^^^^^^^^ markup.heading.2.markdown
@@ -284,6 +288,7 @@ https://spec.commonmark.org/0.30/#example-76
 |             ^ - entity.name.section
 
 https://spec.commonmark.org/0.30/#example-79
+
 #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
 
