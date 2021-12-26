@@ -45,12 +45,12 @@ variables:
       | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
       | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
       )
-    escape: \\[-`*_#+.!(){}\[\]\\>|~<]
+    escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
     balance_square_brackets: |-
       (?x:
         (?:
-          {{escape}}+                       # escape characters
+          (?:{{escapes}})+                  # escape characters
         | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
         | {{backticks}}                     # inline code
         | \[(?:                             # nested square brackets (one level deep)
@@ -62,7 +62,7 @@ variables:
     balance_square_brackets_and_emphasis: |-
       (?x:
         (?:
-          {{escape}}+                       # escape characters
+          (?:{{escapes}})+                  # escape characters
         | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
         | {{backticks}}                     # inline code
         | \[(?:                             # nested square brackets (one level deep)
@@ -74,7 +74,7 @@ variables:
     balance_square_brackets_pipes_and_emphasis: |-
       (?x:
         (?:
-          {{escape}}+                       # escape characters
+          (?:{{escapes}})+                  # escape characters
         | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
         | {{backticks}}                     # inline code
         | \[(?:                             # nested square brackets (one level deep)
@@ -2787,6 +2787,7 @@ contexts:
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.link-title.markdown
       pop: true
+    - include: escapes
 
   link-url-angled:
     - match: \>
@@ -2979,7 +2980,8 @@ contexts:
 ###[ INLINE: OTHER ]##########################################################
 
   escapes:
-    - match: '{{escape}}'
+    # https://spec.commonmark.org/0.30/#backslash-escapes
+    - match: '{{escapes}}'
       scope: constant.character.escape.markdown
 
   hard-line-breaks:

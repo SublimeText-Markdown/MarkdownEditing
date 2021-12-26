@@ -84,6 +84,144 @@
 |   ^ punctuation.definition.thematic-break.markdown
 
 
+# TEST: BACKSLASH ESCAPES #####################################################
+
+## https://spec.commonmark.org/0.30/#example-12
+
+\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~
+| <- constant.character.escape.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.character.escape.markdown
+
+## https://spec.commonmark.org/0.30/#example-13
+
+\	\A\a\ \3\φ\«
+| <- - constant.character.escape
+|^^^^^^^^^^^^^ - constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-14
+
+\*not emphasized*
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^^^^^^^^ - markup.italic
+
+\<br/> not a tag
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^ - markup.tag
+
+\<br/\> not a tag
+| <- constant.character.escape.markdown
+|^^^^^^ - meta.tag
+|    ^^ constant.character.escape
+
+\[not a link](/foo)
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^^^^^^^^^^ - markup.link
+
+\`not code`
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^ - markup.raw
+
+1\. not a list
+|^^ constant.character.escape.markdown
+|^^^^^^^^^^^^^ - markup.list
+
+\* not a list
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^^^^ - markup.list
+
+\# not a heading
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^^^^^^^ - markup.heading
+
+\[foo]: /url "not a reference"
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.link
+
+\&ouml; not a character entity
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+|^^^^^^ - entity
+
+\~/.bashrc
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+
+## https://spec.commonmark.org/0.30/#example-15
+
+\\*emphasis*
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+| ^^^^^^^^^^ markup.italic.markdown
+
+\\_emphasis_
+| <- constant.character.escape.markdown
+|^ constant.character.escape.markdown
+| ^^^^^^^^^^ markup.italic.markdown
+
+## https://spec.commonmark.org/0.30/#example-16
+
+foo\
+|  ^ meta.hard-line-break.markdown constant.character.escape.markdown
+|   ^ meta.hard-line-break.markdown - constant
+bar
+
+## https://spec.commonmark.org/0.30/#example-17
+
+`` \[\` ``
+|^^^^^^^^^ markup.raw.inline.markdown - constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-18
+
+    \[\]
+|^^^^^^^^ markup.raw.block.markdown - constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-19
+
+~~~
+\[\]
+|^^^^ markup.raw.code-fence.markdown-gfm - constant.character.escape
+~~~
+
+## https://spec.commonmark.org/0.30/#example-20
+
+<http://example.com?find=\*>
+|                        ^^ - constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-21
+
+<a href="/bar\/)">
+|            ^^ - constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-22
+
+[foo](/bar\* "ti\*tle")
+|         ^^ markup.underline.link.markdown constant.character.escape
+|               ^^ constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-23
+
+[foo]
+
+[foo]: /bar\* "ti\*tle"
+|          ^^ markup.underline.link.markdown constant.character.escape
+|                ^^ constant.character.escape
+
+## https://spec.commonmark.org/0.30/#example-24
+
+Note: current design doesn't support highlighting escapes in info strings
+``` foo\+bar
+|      ^^ - constant.character.escape
+foo
+```
+
+
 # TEST: ATX HEADINGS ##########################################################
 
 # Heading
@@ -3450,9 +3588,6 @@ end
 ~~~~~~~
 | <- meta.code-fence.definition.end.ruby punctuation.definition.raw.code-fence.end
 
-\~/.bashrc
-|^ constant.character.escape
-
   -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
 
@@ -3465,16 +3600,6 @@ end
 > > -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
 | ^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
 |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
-
-\<div>
-|<- constant.character.escape
-|^ constant.character.escape
-|^^^^^^ - meta.tag
-
-\<div\>
-|^ constant.character.escape
-|^^^^^^ - meta.tag
-|    ^^ constant.character.escape
 
 link with a single underscore inside the text : [@_test](http://example.com)
 |                                                ^^^^^^ meta.paragraph meta.link.inline.description - punctuation.definition
