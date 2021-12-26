@@ -1,5 +1,91 @@
 | SYNTAX TEST "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"
 
+# TEST: Tabs ##################################################################
+
+## https://spec.commonmark.org/0.30/#example-1
+
+	foo	baz		bim
+| <- markup.raw.block.markdown
+|^^^^^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-2
+
+  	foo	baz		bim
+| <- markup.raw.block.markdown
+|^^^^^^^^^^^^^ markup.raw.block.markdown
+
+   	foo	baz		bim
+| <- markup.raw.block.markdown
+|^^^^^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-3
+
+    a	a
+    ὐ	a
+| <- markup.raw.block.markdown
+|^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-4
+
+  - foo
+
+	bar
+| <- markup.list.unnumbered.markdown
+|^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+## https://spec.commonmark.org/0.30/#example-5
+
+- foo
+
+		bar
+| <- markup.list.unnumbered.markdown markup.raw.block.markdown
+|^^^^^ markup.list.unnumbered.markdown markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-6
+
+>		foo
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^ markup.quote.markdown markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-7
+
+-		foo
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+
+## https://spec.commonmark.org/0.30/#example-8
+
+    foo
+	bar
+| <- markup.raw.block.markdown
+|^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-9
+
+ - foo
+   - bar
+	 - baz
+|^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+| ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|   ^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+## https://spec.commonmark.org/0.30/#example-10
+
+#	Foo
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^ markup.heading.1.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-11
+
+*	*	*	
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^ meta.separator.thematic-break.markdown
+| ^ punctuation.definition.thematic-break.markdown
+|   ^ punctuation.definition.thematic-break.markdown
+
+
+# TEST: ATX HEADINGS ##########################################################
+
 # Heading
 | <- markup.heading.1 punctuation.definition.heading
 |^^^^^^^^^ markup.heading.1.markdown
