@@ -222,6 +222,181 @@ foo
 ```
 
 
+# TEST: HTML ENTITIES #########################################################
+
+## https://spec.commonmark.org/0.30/#example-25
+
+  &nbsp; &amp; &copy; &AElig; &Dcaron;
+| ^^^^^^ constant.character.entity.named.html
+|       ^ - constant
+|        ^^^^^ constant.character.entity.named.html
+|             ^ - constant
+|              ^^^^^^ constant.character.entity.named.html
+|                    ^ - constant
+|                     ^^^^^^^ constant.character.entity.named.html
+|                            ^ - constant
+|                             ^^^^^^^^ constant.character.entity.named.html
+|                                     ^ - constant
+  
+  &frac34; &HilbertSpace; &DifferentialD;
+| ^^^^^^^^ constant.character.entity.named.html
+|         ^ - constant
+|          ^^^^^^^^^^^^^^ constant.character.entity.named.html
+|                        ^ - constant
+|                         ^^^^^^^^^^^^^^^ constant.character.entity.named.html
+|                                        ^ - constant
+
+  &ClockwiseContourIntegral; &ngE;
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.character.entity.named.html
+|                           ^ - constant
+|                            ^^^^^ constant.character.entity.named.html
+|                                 ^ - constant
+
+## https://spec.commonmark.org/0.30/#example-26
+
+  &#35; &#1234; &#992; &#0;
+| ^^^^^ constant.character.entity.decimal.html
+|      ^ - constant
+|       ^^^^^^^ constant.character.entity.decimal.html
+|              ^ - constant
+|               ^^^^^^ constant.character.entity.decimal.html
+|                     ^ - constant
+|                      ^^^^ constant.character.entity.decimal.html
+|                          ^ - constant
+
+## https://spec.commonmark.org/0.30/#example-27
+
+  &#X22; &#XD06; &#xcab;
+| ^^^^^^ constant.character.entity.hexadecimal.html
+|       ^ - constant
+|        ^^^^^^^ constant.character.entity.hexadecimal.html
+|               ^ - constant
+|                ^^^^^^^ constant.character.entity.hexadecimal.html
+|                       ^ - constant
+
+## https://spec.commonmark.org/0.30/#example-28
+
+  &
+| ^ - constant - invalid
+
+  &nbsp &x; &#; &#x;
+| ^^^^^^ - constant
+|       ^^^ constant.character.entity.named.html
+|          ^^^^^^^^^ - constant
+
+  &#87654321;
+
+  &#abcdef0;
+| ^^^^^^^^^^ - constant
+
+  &hi?;
+| ^^^^^ - constant
+
+Note: ST's HTML or Markdown don't maintain a full list of valid html5 entities
+      for simplicity reasons and therefore invalid entities are highlighted.
+
+## https://spec.commonmark.org/0.30/#example-29
+
+Although HTML5 does accept some entity references without a trailing semicolon
+(such as &copy), these are not recognized here, because it makes the grammar
+too ambiguous:
+
+  &copy
+| ^^^^^ - constant
+
+## https://spec.commonmark.org/0.30/#example-30
+
+Strings that are not on the list of HTML5 named entities are not recognized as
+entity references either:
+
+  &MadeUpEntity;
+| ^^^^^^^^^^^^^^ constant.character.entity.named.html
+
+Note: ST's HTML or Markdown don't maintain a full list of valid html5 entities
+      for simplicity reasons and therefore invalid entities are highlighted.
+
+## https://spec.commonmark.org/0.30/#example-31
+
+<a href="&ouml;&ouml;.html">
+|        ^^^^^^^^^^^^ constant.character.entity.named.html
+
+## https://spec.commonmark.org/0.30/#example-32
+
+[foo](/f&ouml;&ouml; "f&ouml;&ouml;")
+|       ^^^^^^^^^^^^ constant.character.entity.named.html
+|                      ^^^^^^^^^^^^ constant.character.entity.named.html
+
+## https://spec.commonmark.org/0.30/#example-33
+
+[foo]
+
+[foo]: /f&ouml;&ouml; "f&ouml;&ouml;"
+|        ^^^^^^^^^^^^ constant.character.entity.named.html
+|                       ^^^^^^^^^^^^ constant.character.entity.named.html
+
+## https://spec.commonmark.org/0.30/#example-34
+
+``` f&ouml;&ouml;
+foo
+```
+Note: current design doesn't support highlighting entities in info strings
+
+## https://spec.commonmark.org/0.30/#example-35
+
+`f&ouml;&ouml;`
+|^^^^^^^^^^^^^ - constant.character.entity
+
+## https://spec.commonmark.org/0.30/#example-36
+
+    f&ouml;f&ouml;
+|   ^^^^^^^^^^^^^^ - constant.character.entity
+
+## https://spec.commonmark.org/0.30/#example-37
+
+&#42;foo&#42;
+| <- meta.paragraph.markdown constant.character.entity.decimal.html
+|^^^^^^^^^^^^^ meta.paragraph.markdown - markup.italic
+|^^^^ constant.character.entity.decimal.html
+|       ^^^^^ constant.character.entity.decimal.html
+
+*foo*
+| <- meta.paragraph.markdown markup.italic.markdown
+|^^^^ meta.paragraph.markdown markup.italic.markdown
+
+## https://spec.commonmark.org/0.30/#example-38
+
+&#42; foo
+| <- meta.paragraph.markdown constant.character.entity.decimal.html
+|^^^^^^^^^ meta.paragraph.markdown
+|^^^^ constant.character.entity.decimal.html
+
+* foo
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-39
+
+foo&#10;&#10;bar
+| <- meta.paragraph.markdown
+|^^^^^^^^^^^^^^^^ meta.paragraph.markdown
+|  ^^^^^^^^^^ constant.character.entity.decimal.html
+
+## https://spec.commonmark.org/0.30/#example-40
+
+&#9;foo
+| <- meta.paragraph.markdown constant.character.entity.decimal.html
+|^^^ meta.paragraph.markdown constant.character.entity.decimal.html
+|   ^^^^ meta.paragraph.markdown - constant
+
+## https://spec.commonmark.org/0.30/#example-41
+
+[a](url &quot;tit&quot;)
+|       ^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.link
+|       ^^^^^^ constant.character.entity.named.html
+|             ^^^ - constant
+|                ^^^^^^ constant.character.entity.named.html
+
+
 # TEST: ATX HEADINGS ##########################################################
 
 # Heading

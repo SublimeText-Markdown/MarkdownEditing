@@ -206,7 +206,7 @@ variables:
     html_tag_break_char: (?:[ \t>]|$)
     html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
 
-    html_entity: '&([a-zA-Z0-9]+|#\d+|#x\h+);'
+    html_entity: '&([a-zA-Z0-9]+|#\d+|#[Xx]\h+);'
 
     ascii_space: '\t\n\f '
     tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
@@ -2040,6 +2040,10 @@ contexts:
   html-content:
     - include: scope:text.html.basic
 
+  html-entities:
+    # https://spec.commonmark.org/0.30/#entity-and-numeric-character-references
+    - include: scope:text.html.basic#entities
+
   html-kbd-tags:
     # A simple implementation to add dedicated `markup.kbd` scopes.
     # Note: Doesn't (intent to) support bold/italic/striked content.
@@ -2246,7 +2250,6 @@ contexts:
     - match: '[<>]?(-+|=+)[<>]'
     - match: '<<+|<>|>>+'
     - match: <(?![A-Za-z/?!])
-    - match: (?!{{html_entity}})&
     - include: html-kbd-tags
     - include: html-content
 
@@ -2788,6 +2791,7 @@ contexts:
       scope: invalid.illegal.non-terminated.link-title.markdown
       pop: true
     - include: escapes
+    - include: html-entities
 
   link-url-angled:
     - match: \>
@@ -2809,6 +2813,7 @@ contexts:
 
   link-url-common:
     - include: escapes
+    - include: html-entities
     - include: link-url-path-separators
     - include: link-url-scheme-separators
     - include: link-url-escapes
