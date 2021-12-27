@@ -83,6 +83,18 @@
 | ^ punctuation.definition.thematic-break.markdown
 |   ^ punctuation.definition.thematic-break.markdown
 
+-	-	-	
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^ meta.separator.thematic-break.markdown
+| ^ punctuation.definition.thematic-break.markdown
+|   ^ punctuation.definition.thematic-break.markdown
+
+_	_	_	
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^ meta.separator.thematic-break.markdown
+| ^ punctuation.definition.thematic-break.markdown
+|   ^ punctuation.definition.thematic-break.markdown
+
 
 # TEST: BACKSLASH ESCAPES #####################################################
 
@@ -395,6 +407,314 @@ foo&#10;&#10;bar
 |       ^^^^^^ constant.character.entity.named.html
 |             ^^^ - constant
 |                ^^^^^^ constant.character.entity.named.html
+
+
+# TEST: THEMATIC BREAKS #######################################################
+
+## https://spec.commonmark.org/0.30/#example-43
+
+***
+|^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+
+---
+|^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+
+___
+|^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+
+## https://spec.commonmark.org/0.30/#example-44
+
++++
+| <- - meta.separator
+|^^^ - meta.separator
+
+## https://spec.commonmark.org/0.30/#example-45
+
+===
+| <- - meta.separator
+|^^^ - meta.separator
+
+## https://spec.commonmark.org/0.30/#example-46
+
+**
+| <- - meta.separator
+|^ - meta.separator
+
+--
+| <- - meta.separator
+|^ - meta.separator
+
+__
+| <- - meta.separator
+|^ - meta.separator
+
+## https://spec.commonmark.org/0.30/#example-47
+
+ ***
+|<- meta.separator.thematic-break.markdown - punctuation
+|^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+  ***
+|<- meta.separator.thematic-break.markdown - punctuation
+|^ meta.separator.thematic-break.markdown - punctuation
+| ^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+   ***
+|<- meta.separator.thematic-break.markdown - punctuation
+|^^ meta.separator.thematic-break.markdown - punctuation
+|  ^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+## https://spec.commonmark.org/0.30/#example-48
+
+    ***
+|<- markup.raw.block.markdown
+|^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-49
+
+Foo
+    ***
+| <- meta.paragraph.markdown
+|^^^^^^^ meta.paragraph.markdown
+
+## https://spec.commonmark.org/0.30/#example-50
+
+**************************************
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+--------------------------------------
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+_____________________________________
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+## https://spec.commonmark.org/0.30/#example-51
+
+ * * *
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^ meta.separator.thematic-break.markdown
+|^ punctuation.definition.thematic-break.markdown
+| ^ - punctuation
+|  ^ punctuation.definition.thematic-break.markdown
+|   ^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+
+ - - -
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^ meta.separator.thematic-break.markdown
+|^ punctuation.definition.thematic-break.markdown
+| ^ - punctuation
+|  ^ punctuation.definition.thematic-break.markdown
+|   ^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+
+ _ _ _
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^ meta.separator.thematic-break.markdown
+|^ punctuation.definition.thematic-break.markdown
+| ^ - punctuation
+|  ^ punctuation.definition.thematic-break.markdown
+|   ^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+
+## https://spec.commonmark.org/0.30/#example-52
+
+ **  * ** * ** * **
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+|  ^^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+|      ^^ punctuation.definition.thematic-break.markdown
+|        ^ - punctuation
+|         ^ punctuation.definition.thematic-break.markdown
+|          ^ - punctuation
+|           ^^ punctuation.definition.thematic-break.markdown
+|             ^ - punctuation
+|              ^ punctuation.definition.thematic-break.markdown
+|               ^ - punctuation
+|                ^^ punctuation.definition.thematic-break.markdown
+|                  ^ - punctuation
+
+ --  - -- - -- - --
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+|  ^^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+|      ^^ punctuation.definition.thematic-break.markdown
+|        ^ - punctuation
+|         ^ punctuation.definition.thematic-break.markdown
+|          ^ - punctuation
+|           ^^ punctuation.definition.thematic-break.markdown
+|             ^ - punctuation
+|              ^ punctuation.definition.thematic-break.markdown
+|               ^ - punctuation
+|                ^^ punctuation.definition.thematic-break.markdown
+|                  ^ - punctuation
+
+ __  _ __ _ __ _ __
+| <- meta.separator.thematic-break.markdown - punctuation
+|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^ punctuation.definition.thematic-break.markdown
+|  ^^ - punctuation
+|    ^ punctuation.definition.thematic-break.markdown
+|     ^ - punctuation
+|      ^^ punctuation.definition.thematic-break.markdown
+|        ^ - punctuation
+|         ^ punctuation.definition.thematic-break.markdown
+|          ^ - punctuation
+|           ^^ punctuation.definition.thematic-break.markdown
+|             ^ - punctuation
+|              ^ punctuation.definition.thematic-break.markdown
+|               ^ - punctuation
+|                ^^ punctuation.definition.thematic-break.markdown
+|                  ^ - punctuation
+
+## https://spec.commonmark.org/0.30/#example-53
+
+*     *      *      *
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^^^^ - punctuation
+|     ^ punctuation.definition.thematic-break.markdown 
+|      ^^^^^^ - punctuation
+|            ^ punctuation.definition.thematic-break.markdown 
+|             ^^^^^^ - punctuation
+|                   ^ punctuation.definition.thematic-break.markdown 
+|                    ^ - punctuation
+
+-     -      -      -
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^^^^ - punctuation
+|     ^ punctuation.definition.thematic-break.markdown 
+|      ^^^^^^ - punctuation
+|            ^ punctuation.definition.thematic-break.markdown 
+|             ^^^^^^ - punctuation
+|                   ^ punctuation.definition.thematic-break.markdown 
+|                    ^ - punctuation
+
+_     _      _      _
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
+|^^^^^ - punctuation
+|     ^ punctuation.definition.thematic-break.markdown 
+|      ^^^^^^ - punctuation
+|            ^ punctuation.definition.thematic-break.markdown 
+|             ^^^^^^ - punctuation
+|                   ^ punctuation.definition.thematic-break.markdown 
+|                    ^ - punctuation
+
+## https://spec.commonmark.org/0.30/#example-54
+
+* * * *
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^ meta.separator.thematic-break.markdown
+|^ - punctuation
+| ^ punctuation.definition.thematic-break
+|  ^ - punctuation
+|   ^ punctuation.definition.thematic-break
+|    ^ - punctuation
+|     ^ punctuation.definition.thematic-break
+|      ^ - punctuation
+
+- - - -
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^ meta.separator.thematic-break.markdown
+|^ - punctuation
+| ^ punctuation.definition.thematic-break
+|  ^ - punctuation
+|   ^ punctuation.definition.thematic-break
+|    ^ - punctuation
+|     ^ punctuation.definition.thematic-break
+|      ^ - punctuation
+
+_ _ _ _
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^^^ meta.separator.thematic-break.markdown
+|^ - punctuation
+| ^ punctuation.definition.thematic-break
+|  ^ - punctuation
+|   ^ punctuation.definition.thematic-break
+|    ^ - punctuation
+|     ^ punctuation.definition.thematic-break
+|      ^ - punctuation
+
+## https://spec.commonmark.org/0.30/#example-55
+
+_ _ _ _ a
+| <- meta.paragraph.markdown - meta.separator
+|^^^^^^^^^ meta.paragraph.markdown - meta.separator
+
+a------
+| <- meta.paragraph.markdown - meta.separator
+|^^^^^^^ meta.paragraph.markdown - meta.separator
+
+---a---
+| <- meta.paragraph.markdown - meta.separator
+|^^^^^^^ meta.paragraph.markdown - meta.separator
+
+## https://spec.commonmark.org/0.30/#example-56
+
+ *-*
+| <- meta.paragraph.markdown - meta.separator
+|^^^ meta.paragraph.markdown - meta.separator
+
+## https://spec.commonmark.org/0.30/#example-57
+
+- foo
+***
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+- bar
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+## https://spec.commonmark.org/0.30/#example-58
+
+Foo
+***
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+bar
+| <- meta.paragraph.markdown
+
+## https://spec.commonmark.org/0.30/#example-59
+
+Foo
+---
+| <- markup.heading.2.setext.markdown punctuation.definition.heading.setext.markdown
+|^^ markup.heading.2.setext.markdown punctuation.definition.heading.setext.markdown
+bar
+| <- meta.paragraph.markdown
+
+## https://spec.commonmark.org/0.30/#example-60
+
+* Foo
+* * *
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^^^ meta.separator.thematic-break.markdown
+| ^ punctuation.definition.thematic-break.markdown
+|   ^ punctuation.definition.thematic-break.markdown
+* Bar
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+## https://spec.commonmark.org/0.30/#example-61
+
+- Foo
+- * * *
+| ^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.separator.thematic-break.markdown
 
 
 # TEST: ATX HEADINGS ##########################################################
@@ -1299,334 +1619,6 @@ Code block below:
 
 paragraph
 | <- meta.paragraph
-
-
-# TEST: THEMATIC BREAKS #######################################################
-
-## https://spec.commonmark.org/0.30/#example-11
-
-*	*	*	
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^ meta.separator.thematic-break.markdown
-| ^ punctuation.definition.thematic-break.markdown
-|   ^ punctuation.definition.thematic-break.markdown
-
--	-	-	
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^ meta.separator.thematic-break.markdown
-| ^ punctuation.definition.thematic-break.markdown
-|   ^ punctuation.definition.thematic-break.markdown
-
-_	_	_	
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^ meta.separator.thematic-break.markdown
-| ^ punctuation.definition.thematic-break.markdown
-|   ^ punctuation.definition.thematic-break.markdown
-
-## https://spec.commonmark.org/0.30/#example-43
-
-***
-|^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-
----
-|^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-
-___
-|^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-
-## https://spec.commonmark.org/0.30/#example-44
-
-+++
-| <- - meta.separator
-|^^^ - meta.separator
-
-## https://spec.commonmark.org/0.30/#example-45
-
-===
-| <- - meta.separator
-|^^^ - meta.separator
-
-## https://spec.commonmark.org/0.30/#example-46
-
-**
-| <- - meta.separator
-|^ - meta.separator
-
---
-| <- - meta.separator
-|^ - meta.separator
-
-__
-| <- - meta.separator
-|^ - meta.separator
-
-## https://spec.commonmark.org/0.30/#example-47
-
- ***
-|<- meta.separator.thematic-break.markdown - punctuation
-|^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
-  ***
-|<- meta.separator.thematic-break.markdown - punctuation
-|^ meta.separator.thematic-break.markdown - punctuation
-| ^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
-   ***
-|<- meta.separator.thematic-break.markdown - punctuation
-|^^ meta.separator.thematic-break.markdown - punctuation
-|  ^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
-## https://spec.commonmark.org/0.30/#example-48
-
-    ***
-|<- markup.raw.block.markdown
-|^^^^^^^ markup.raw.block.markdown
-
-## https://spec.commonmark.org/0.30/#example-49
-
-Foo
-    ***
-| <- meta.paragraph.markdown
-|^^^^^^^ meta.paragraph.markdown
-
-## https://spec.commonmark.org/0.30/#example-50
-
-**************************************
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
---------------------------------------
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
-_____________________________________
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-
-## https://spec.commonmark.org/0.30/#example-51
-
- * * *
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^ meta.separator.thematic-break.markdown
-|^ punctuation.definition.thematic-break.markdown
-| ^ - punctuation
-|  ^ punctuation.definition.thematic-break.markdown
-|   ^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-
- - - -
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^ meta.separator.thematic-break.markdown
-|^ punctuation.definition.thematic-break.markdown
-| ^ - punctuation
-|  ^ punctuation.definition.thematic-break.markdown
-|   ^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-
- _ _ _
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^ meta.separator.thematic-break.markdown
-|^ punctuation.definition.thematic-break.markdown
-| ^ - punctuation
-|  ^ punctuation.definition.thematic-break.markdown
-|   ^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-
-## https://spec.commonmark.org/0.30/#example-52
-
- **  * ** * ** * **
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-|  ^^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-|      ^^ punctuation.definition.thematic-break.markdown
-|        ^ - punctuation
-|         ^ punctuation.definition.thematic-break.markdown
-|          ^ - punctuation
-|           ^^ punctuation.definition.thematic-break.markdown
-|             ^ - punctuation
-|              ^ punctuation.definition.thematic-break.markdown
-|               ^ - punctuation
-|                ^^ punctuation.definition.thematic-break.markdown
-|                  ^ - punctuation
-
- --  - -- - -- - --
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-|  ^^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-|      ^^ punctuation.definition.thematic-break.markdown
-|        ^ - punctuation
-|         ^ punctuation.definition.thematic-break.markdown
-|          ^ - punctuation
-|           ^^ punctuation.definition.thematic-break.markdown
-|             ^ - punctuation
-|              ^ punctuation.definition.thematic-break.markdown
-|               ^ - punctuation
-|                ^^ punctuation.definition.thematic-break.markdown
-|                  ^ - punctuation
-
- __  _ __ _ __ _ __
-| <- meta.separator.thematic-break.markdown - punctuation
-|^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^ punctuation.definition.thematic-break.markdown
-|  ^^ - punctuation
-|    ^ punctuation.definition.thematic-break.markdown
-|     ^ - punctuation
-|      ^^ punctuation.definition.thematic-break.markdown
-|        ^ - punctuation
-|         ^ punctuation.definition.thematic-break.markdown
-|          ^ - punctuation
-|           ^^ punctuation.definition.thematic-break.markdown
-|             ^ - punctuation
-|              ^ punctuation.definition.thematic-break.markdown
-|               ^ - punctuation
-|                ^^ punctuation.definition.thematic-break.markdown
-|                  ^ - punctuation
-
-## https://spec.commonmark.org/0.30/#example-53
-
-*     *      *      *
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^^^^ - punctuation
-|     ^ punctuation.definition.thematic-break.markdown 
-|      ^^^^^^ - punctuation
-|            ^ punctuation.definition.thematic-break.markdown 
-|             ^^^^^^ - punctuation
-|                   ^ punctuation.definition.thematic-break.markdown 
-|                    ^ - punctuation
-
--     -      -      -
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^^^^ - punctuation
-|     ^ punctuation.definition.thematic-break.markdown 
-|      ^^^^^^ - punctuation
-|            ^ punctuation.definition.thematic-break.markdown 
-|             ^^^^^^ - punctuation
-|                   ^ punctuation.definition.thematic-break.markdown 
-|                    ^ - punctuation
-
-_     _      _      _
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^^^^^^^^^^^^^^^ meta.separator.thematic-break.markdown
-|^^^^^ - punctuation
-|     ^ punctuation.definition.thematic-break.markdown 
-|      ^^^^^^ - punctuation
-|            ^ punctuation.definition.thematic-break.markdown 
-|             ^^^^^^ - punctuation
-|                   ^ punctuation.definition.thematic-break.markdown 
-|                    ^ - punctuation
-
-## https://spec.commonmark.org/0.30/#example-54
-
-* * * *
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^ meta.separator.thematic-break.markdown
-|^ - punctuation
-| ^ punctuation.definition.thematic-break
-|  ^ - punctuation
-|   ^ punctuation.definition.thematic-break
-|    ^ - punctuation
-|     ^ punctuation.definition.thematic-break
-|      ^ - punctuation
-
-- - - -
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^ meta.separator.thematic-break.markdown
-|^ - punctuation
-| ^ punctuation.definition.thematic-break
-|  ^ - punctuation
-|   ^ punctuation.definition.thematic-break
-|    ^ - punctuation
-|     ^ punctuation.definition.thematic-break
-|      ^ - punctuation
-
-_ _ _ _
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^^^ meta.separator.thematic-break.markdown
-|^ - punctuation
-| ^ punctuation.definition.thematic-break
-|  ^ - punctuation
-|   ^ punctuation.definition.thematic-break
-|    ^ - punctuation
-|     ^ punctuation.definition.thematic-break
-|      ^ - punctuation
-
-## https://spec.commonmark.org/0.30/#example-55
-
-_ _ _ _ a
-| <- meta.paragraph.markdown - meta.separator
-|^^^^^^^^^ meta.paragraph.markdown - meta.separator
-
-a------
-| <- meta.paragraph.markdown - meta.separator
-|^^^^^^^ meta.paragraph.markdown - meta.separator
-
----a---
-| <- meta.paragraph.markdown - meta.separator
-|^^^^^^^ meta.paragraph.markdown - meta.separator
-
-## https://spec.commonmark.org/0.30/#example-56
-
- *-*
-| <- meta.paragraph.markdown - meta.separator
-|^^^ meta.paragraph.markdown - meta.separator
-
-## https://spec.commonmark.org/0.30/#example-57
-
-- foo
-***
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-- bar
-| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-
-## https://spec.commonmark.org/0.30/#example-58
-
-Foo
-***
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-bar
-| <- meta.paragraph.markdown
-
-## https://spec.commonmark.org/0.30/#example-59
-
-Foo
----
-| <- markup.heading.2.setext.markdown punctuation.definition.heading.setext.markdown
-|^^ markup.heading.2.setext.markdown punctuation.definition.heading.setext.markdown
-bar
-| <- meta.paragraph.markdown
-
-## https://spec.commonmark.org/0.30/#example-60
-
-* Foo
-* * *
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
-|^^^^^ meta.separator.thematic-break.markdown
-| ^ punctuation.definition.thematic-break.markdown
-|   ^ punctuation.definition.thematic-break.markdown
-* Bar
-| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-
-## https://spec.commonmark.org/0.30/#example-61
-
-- Foo
-- * * *
-| ^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.separator.thematic-break.markdown
 
 
 # TEST: COMMONMARK AUTOLINKS ##################################################
