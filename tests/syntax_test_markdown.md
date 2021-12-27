@@ -399,70 +399,244 @@ foo&#10;&#10;bar
 
 # TEST: ATX HEADINGS ##########################################################
 
-# Heading
-| <- markup.heading.1 punctuation.definition.heading
-|^^^^^^^^^ markup.heading.1.markdown
-|^ - entity.name.section
-|  ^^^^^^ entity.name.section
-|        ^ meta.whitespace.newline.markdown - entity.name.section
+## https://spec.commonmark.org/0.30/#example-62
 
-## Second Heading #
-| <- markup.heading.2 punctuation.definition.heading
-|^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
-|^^ - entity.name.section
-|  ^^^^^^^^^^^^^^ entity.name.section
-|                ^^ - entity.name.section
-|                 ^ punctuation.definition.heading.end.markdown
-
-https://spec.commonmark.org/0.30/#example-71
-
-  ## Heading ##
-|^^^^^^^^^^^^^^^ markup.heading.2.markdown
-|^ - punctuation
-| ^^ punctuation.definition.heading.begin.markdown
-|   ^^^^^^^^^ - punctuation
-|            ^^ punctuation.definition.heading.end.markdown
-|              ^ - punctuation
-|^^^^ - entity.name.section
-|    ^^^^^^^ entity.name.section.markdown
-|           ^^^^ - entity.name.section
-
-https://spec.commonmark.org/0.30/#example-73
-
-## Example 73 (trailing spaces!) #####    
-|                                    ^ punctuation.definition.heading.end.markdown
-|                                         ^ meta.whitespace.newline.markdown
-
-https://spec.commonmark.org/0.30/#example-74
-
-## Example 74 ####    >
-|^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
-|^^ - entity.name.section
-|  ^^^^^^^^^^^^^^^^^^^^ entity.name.section.markdown
-|                      ^ - entity.name.section
-
-https://spec.commonmark.org/0.30/#example-75
-
-# #heading# #
+# foo
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^^^^ markup.heading.1.markdown
-|^ - entity.name.section
-| ^^^^^^^^^ entity.name.section.markdown
-|          ^^ - entity.name.section
-|           ^ punctuation.definition.heading.end.markdown
+|^^^^^ markup.heading.1.markdown - punctuation
 
-https://spec.commonmark.org/0.30/#example-76
-
-## heading \##
+## foo
 | <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^^^^^ markup.heading.2.markdown
-|^^ - entity
-|  ^^^^^^^^^^^ entity.name.section.markdown
-|          ^^ constant.character.escape.markdown
-|          ^^^ - punctuation
-|             ^ - entity.name.section
+|^ markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+| ^^^^^ markup.heading.2.markdown - punctuation
 
-https://spec.commonmark.org/0.30/#example-79
+### foo
+| <- markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+|^^ markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+|  ^^^^^ markup.heading.3.markdown - punctuation
+
+#### foo
+| <- markup.heading.4.markdown punctuation.definition.heading.begin.markdown
+|^^^ markup.heading.4.markdown punctuation.definition.heading.begin.markdown
+|   ^^^^^ markup.heading.4.markdown - punctuation
+
+##### foo
+| <- markup.heading.5.markdown punctuation.definition.heading.begin.markdown
+|^^^^ markup.heading.5.markdown punctuation.definition.heading.begin.markdown
+|    ^^^^^ markup.heading.5.markdown - punctuation
+
+###### foo
+| <- markup.heading.6.markdown punctuation.definition.heading.begin.markdown
+|^^^^^ markup.heading.6.markdown punctuation.definition.heading.begin.markdown
+|     ^^^^^ markup.heading.6.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-63
+
+####### foo
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^^^^^ meta.paragraph.markdown - markup.heading
+
+## https://spec.commonmark.org/0.30/#example-64
+
+#5 bolt
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^ meta.paragraph.markdown - markup.heading
+
+#hashtag
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^^ meta.paragraph.markdown - markup.heading
+
+## https://spec.commonmark.org/0.30/#example-65
+
+\## foo
+| <- meta.paragraph.markdown constant.character.escape.markdown - markup
+|^ meta.paragraph.markdown constant.character.escape.markdown - markup
+| ^^^^^^ meta.paragraph.markdown - constant - markup
+
+## https://spec.commonmark.org/0.30/#example-66
+
+# foo *bar* \*baz\*
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^ markup.heading.1.markdown - entity.name - markup.italic
+| ^^^^ markup.heading.1.markdown entity.name.section.markdown - markup.italic
+|     ^^^^^ markup.heading.1.markdown entity.name.section.markdown markup.italic.markdown
+|          ^^^^^^^^ markup.heading.1.markdown entity.name.section.markdown - markup.italic
+
+## https://spec.commonmark.org/0.30/#example-67
+
+#                  foo                     
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown - entity.name
+|                  ^^^ markup.heading.1.markdown entity.name.section.markdown
+|                     ^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown - entity.name
+
+## https://spec.commonmark.org/0.30/#example-68
+
+ ### foo
+| <- markup.heading.3.markdown
+|^^^^^^^^ markup.heading.3.markdown 
+  ## foo
+| <- markup.heading.2.markdown
+|^^^^^^^^ markup.heading.2.markdown  
+   # foo
+| <- markup.heading.1.markdown
+|^^^^^^^^ markup.heading.1.markdown   
+
+## https://spec.commonmark.org/0.30/#example-69
+
+    # foo
+| <- markup.raw.block.markdown
+|^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-70
+
+foo
+    # bar
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^^^ meta.paragraph.markdown - markup.heading
+
+## https://spec.commonmark.org/0.30/#example-71
+
+## foo ##
+  ###   bar    ###
+| <- markup.heading.3.markdown
+|^^^^^^^^^^^^^^^^^^ markup.heading.3.markdown
+| ^^^ punctuation.definition.heading.begin.markdown
+|    ^^^ - entity - punctuation 
+|       ^^^ entity.name.section.markdown
+|          ^^^^ - entity - punctuation 
+|              ^^^ punctuation.definition.heading.end.markdown
+|                 ^ - punctuation 
+
+## https://spec.commonmark.org/0.30/#example-72
+
+# foo ##################################
+##### foo ##
+| <- markup.heading.5.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^ markup.heading.5.markdown
+|^^^^ punctuation.definition.heading.begin.markdown
+|    ^ - entity - punctuation 
+|     ^^^ entity.name.section.markdown
+|        ^ - entity - punctuation 
+|         ^^ punctuation.definition.heading.end.markdown
+|           ^ - punctuation 
+
+## https://spec.commonmark.org/0.30/#example-73
+
+### foo ###     
+| <- markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^ markup.heading.3.markdown
+|^^ punctuation.definition.heading.begin.markdown
+|  ^ - entity - punctuation 
+|   ^^^ entity.name.section.markdown
+|      ^ - entity - punctuation 
+|       ^^^ punctuation.definition.heading.end.markdown
+|          ^^^^^^ - punctuation 
+
+## https://spec.commonmark.org/0.30/#example-74
+
+### foo ### b
+| <- markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^ markup.heading.3.markdown
+|^^ punctuation.definition.heading.begin.markdown
+|  ^ - entity - punctuation 
+|   ^^^^^^^^^ entity.name.section.markdown
+|            ^ - entity
+
+## https://spec.commonmark.org/0.30/#example-75
+
+# foo#
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^ markup.heading.1.markdown
+|^ - entity - punctuation 
+| ^^^^ entity.name.section.markdown
+|     ^ - entity
+
+# foo# #
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^ markup.heading.1.markdown
+|^ - entity - punctuation 
+| ^^^^ entity.name.section.markdown
+|     ^ - entity - punctuation 
+|      ^ punctuation.definition.heading.end.markdown
+|       ^ - punctuation
+
+## https://spec.commonmark.org/0.30/#example-76
+
+### foo \###
+| <- markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^ markup.heading.3.markdown
+|^^ punctuation.definition.heading.begin.markdown
+|   ^^^^^^^^ entity.name.section.markdown
+|       ^^ constant.character.escape.markdown
+|           ^ - constant - entity - punctuation
+
+## foo #\##
+| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^ markup.heading.2.markdown
+|^ punctuation.definition.heading.begin.markdown
+|  ^^^^^^^^ entity.name.section.markdown
+|       ^^ constant.character.escape.markdown
+|          ^ - constant - entity - punctuation
+
+# foo \#
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^ markup.heading.1.markdown
+| ^^^^^^ entity.name.section.markdown
+|     ^^ constant.character.escape.markdown
+|       ^ - constant - entity - punctuation
+
+## https://spec.commonmark.org/0.30/#example-77
+
+****
+## foo
+| <- markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^ markup.heading.2.markdown
+
+****
+## foo
+****
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+|^^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+
+## https://spec.commonmark.org/0.30/#example-78
+
+Foo bar
+# baz
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^ markup.heading.1.markdown
+
+Foo bar
+# baz
+Bar foo
+| <- meta.paragraph.markdown - markup.heading
+|^^^^^^^ meta.paragraph.markdown - markup.heading
+
+Foo **bar
+# baz
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold
+|^^^^^ markup.heading.1.markdown
+this must not be bold**
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Foo *bar
+# baz
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.italic
+|^^^^ markup.heading.1.markdown
+this must not be italic*
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
+
+Foo ***bar
+# baz
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold - markup.italic
+|^^^^^ markup.heading.1.markdown
+this must not be bold italic***
+| <- - meta.bold - markup.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - markup.italic
+
+## https://spec.commonmark.org/0.30/#example-79
 
 #
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
@@ -504,38 +678,8 @@ https://spec.commonmark.org/0.30/#example-79
 |      ^^^ - entity.name.section
 |       ^^ punctuation.definition.heading.end.markdown
 
-#NotAHeading
-| <- - markup.heading
-|^^^^^^^^^^^^ - markup.heading
 
-Headings terminate paragraphs
-# Heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold
-|^^^^^^^^ markup.heading.1.markdown
-
-Headings terminate **bold text
-# Heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold
-|^^^^^^^^ markup.heading.1.markdown
-this must not be bold**
-| <- - meta.bold
-|^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
-
-Headings terminate *italic text
-# Heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.italic
-|^^^^^^^^ markup.heading.1.markdown
-this must not be italic*
-| <- - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
-
-Headings terminate ***bold italic text
-# Heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.bold - markup.italic
-|^^^^^^^^ markup.heading.1.markdown
-this must not be bold italic***
-| <- - meta.bold - markup.italic
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - markup.italic
+# TEST: SETEXT HEADINGS #######################################################
 
 Alternate Heading
 =================
@@ -3784,14 +3928,6 @@ end
 link with a single underscore inside the text : [@_test](http://example.com)
 |                                                ^^^^^^ meta.paragraph meta.link.inline.description - punctuation.definition
 |                                                      ^ meta.paragraph meta.link.inline punctuation.definition.link.end
-
-# h1
-- list
-## h2
-|^ punctuation.definition.heading.begin
-1. list
-### h3
-|^^ punctuation.definition.heading.begin
 
 1. list [001]blah
 |       ^^^^^ meta.link.reference
