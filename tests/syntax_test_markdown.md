@@ -1080,182 +1080,6 @@ Fenced codeblocks are no no setext heading
 |^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
 
 
-
-
-# TEST: BLOCK QUOTES ##########################################################
-
-> This is a block quote. It contains markup.
-> Including things like *italics*
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
-|                       ^^^^^^^^^ markup.italic
-
->=
-| <- punctuation.definition.blockquote.markdown 
-
->==
-| <- punctuation.definition.blockquote.markdown
-
-  >=
-| ^ punctuation.definition.blockquote.markdown
-    >=
-|   ^^ - punctuation.definition.blockquote.markdown
-
-    >=
-|   ^^ - punctuation.definition.blockquote.markdown
-
-> Block quote
-| <- markup.quote punctuation.definition.blockquote
-| ^^^^^^^^^^^ markup.quote
-
-> Block quote followed by an empty block quote line
->
-| <- markup.quote punctuation.definition.blockquote
-
-> Block quote followed by an empty block quote line
->
-> Followed by more quoted text
-| <- markup.quote punctuation.definition.blockquote
-
-> > Nested block quote
-| <- markup.quote punctuation.definition.blockquote
-| ^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
-|^ - punctuation
-| ^ punctuation.definition.blockquote
-|  ^ - punctuation
-
-> > Nested quote
-> Followed by more quoted text that is not nested
-| <- markup.quote punctuation.definition.blockquote - markup.quote markup.quote
-
-> Here is a block quote
-This quote continues on. Line breaking is OK in markdown
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
-> Here it is again
-| <- punctuation.definition.blockquote
-
-paragraph
-| <- meta.paragraph
-
->    > this is a nested quote but no code in a block quote
-| <- punctuation.definition.blockquote
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
-
->     > this is code in a block quote, not a nested quote
-| <- punctuation.definition.blockquote
-|     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
-
-> CommonMark expects following line to be indented code block (see: example 326)
-    > but all common parsers handle it as continued text.
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
-|   ^ - punctuation
-
-> Quoted fenced code block begin
-> ```
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ markup.quote.markdown - meta.code-fence
-| ^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
-| ^^^ punctuation.definition.raw.code-fence.begin.markdown
-
-> Quoted fenced code block language identifier
-> ```C++
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ markup.quote.markdown - meta.code-fence
-| ^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
-|    ^^^ constant.other.language-name.markdown
-
-> Quoted fenced code block language identifier
-> ```C++ info string
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ markup.quote.markdown - meta.code-fence
-| ^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
-|    ^^^ constant.other.language-name.markdown
-|       ^^^^^^^^^^^^^ - constant
-
-> Quoted fenced code block content
-> ```
-> code block
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ markup.quote.markdown - meta.code-fence
-| ^^^^^^^^^^^ markup.quote.markdown markup.raw.code-fence.markdown-gfm
-
-> Quoted fenced code block end
-> ```
-> ```
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^ markup.quote.markdown - meta.code-fence
-| ^^^^ markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
-| ^^^ punctuation.definition.raw.code-fence.end.markdown
-
-> > 2nd level quoted fenced code block
-> > ```
-> > code block ```
-> > ```
-| <- markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|^^^ markup.quote.markdown markup.quote.markdown - meta.code-fence
-|   ^^^^ markup.quote.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
-
-> Block quote followed by fenced code block
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown - meta.quote
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown - meta.quote
-
-> Quoted fenced code block is terminated by missing > at bol
-> ```
-no code block
-| <- meta.paragraph.markdown - meta.quote - meta.code-fence
-|^^^^^^^^^^^^^ meta.paragraph.markdown - meta.quote - meta.code-fence
-
-> Quoted fenced code block is terminated by missing > at bol
-> ```
-> content
-no code block
-| <- meta.paragraph.markdown - meta.quote - meta.code-fence
-|^^^^^^^^^^^^^ meta.paragraph.markdown - meta.quote - meta.code-fence
-
-> Unterminated quoted fenced code block followed by unquoted fenced code block
-> ```
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm - markup.quote
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm - markup.quote
-
-> Block quote followed by heading
-# heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^ markup.heading.1.markdown - meta.quote
-| ^^^^^^^ entity.name.section.markdown
-
-> Block quote followed by list
-* list item
-| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
-
-> Block quote followed by list
-+ list item
-| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
-
-> Block quote followed by list
-- list item
-| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
-
-> Block quote followed by list
-1. list item
-| <- markup.list.numbered.bullet.markdown - punctuation
-|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
-| ^^^^^^^^^^ markup.list.numbered.markdown - meta.quote
-
-> Block quote followed by thematic break
-***
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
-
-> Block quote followed by thematic break
-- - -
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
-
-
 # TEST: INDENTED CODE BLOCKS ##################################################
 
 Code block below:
@@ -2852,6 +2676,233 @@ A line with bolded **|**
 |                    ^ - punctuation.separator.table-cell
 
 
+# TEST: BLOCK QUOTES ##########################################################
+
+> This is a block quote. It contains markup.
+> Including things like *italics*
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
+|                       ^^^^^^^^^ markup.italic
+
+>=
+| <- punctuation.definition.blockquote.markdown 
+
+>==
+| <- punctuation.definition.blockquote.markdown
+
+  >=
+| ^ punctuation.definition.blockquote.markdown
+    >=
+|   ^^ - punctuation.definition.blockquote.markdown
+
+    >=
+|   ^^ - punctuation.definition.blockquote.markdown
+
+> Block quote
+| <- markup.quote punctuation.definition.blockquote
+| ^^^^^^^^^^^ markup.quote
+
+> Block quote followed by an empty block quote line
+>
+| <- markup.quote punctuation.definition.blockquote
+
+> Block quote followed by an empty block quote line
+>
+> Followed by more quoted text
+| <- markup.quote punctuation.definition.blockquote
+
+> > Nested block quote
+| <- markup.quote punctuation.definition.blockquote
+| ^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
+|^ - punctuation
+| ^ punctuation.definition.blockquote
+|  ^ - punctuation
+
+> > Nested quote
+> Followed by more quoted text that is not nested
+| <- markup.quote punctuation.definition.blockquote - markup.quote markup.quote
+
+> Here is a block quote
+This quote continues on. Line breaking is OK in markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
+> Here it is again
+| <- punctuation.definition.blockquote
+
+paragraph
+| <- meta.paragraph
+
+>    > this is a nested quote but no code in a block quote
+| <- punctuation.definition.blockquote
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
+
+>     > this is code in a block quote, not a nested quote
+| <- punctuation.definition.blockquote
+|     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
+
+> CommonMark expects following line to be indented code block (see: example 326)
+    > but all common parsers handle it as continued text.
+|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
+|   ^ - punctuation
+
+> Quoted fenced code block begin
+> ```
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+| ^^^ punctuation.definition.raw.code-fence.begin.markdown
+
+> Quoted fenced code block language identifier
+> ```C++
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+|    ^^^ constant.other.language-name.markdown
+
+> Quoted fenced code block language identifier
+> ```C++ info string
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.code-fence.definition.begin.text.markdown-gfm
+|    ^^^ constant.other.language-name.markdown
+|       ^^^^^^^^^^^^^ - constant
+
+> Quoted fenced code block content
+> ```
+> code block
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^^^^^^^^ markup.quote.markdown markup.raw.code-fence.markdown-gfm
+
+> Quoted fenced code block end
+> ```
+> ```
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.code-fence
+| ^^^^ markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
+| ^^^ punctuation.definition.raw.code-fence.end.markdown
+
+> > 2nd level quoted fenced code block
+> > ```
+> > code block ```
+> > ```
+| <- markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^ markup.quote.markdown markup.quote.markdown - meta.code-fence
+|   ^^^^ markup.quote.markdown markup.quote.markdown meta.code-fence.definition.end.text.markdown-gfm
+
+> Block quote followed by fenced code block
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown - meta.quote
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown - meta.quote
+
+> Quoted fenced code block is terminated by missing > at bol
+> ```
+no code block
+| <- meta.paragraph.markdown - meta.quote - meta.code-fence
+|^^^^^^^^^^^^^ meta.paragraph.markdown - meta.quote - meta.code-fence
+
+> Quoted fenced code block is terminated by missing > at bol
+> ```
+> content
+no code block
+| <- meta.paragraph.markdown - meta.quote - meta.code-fence
+|^^^^^^^^^^^^^ meta.paragraph.markdown - meta.quote - meta.code-fence
+
+> Unterminated quoted fenced code block followed by unquoted fenced code block
+> ```
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm - markup.quote
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm - markup.quote
+
+> Block quote followed by heading
+# heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ markup.heading.1.markdown - meta.quote
+| ^^^^^^^ entity.name.section.markdown
+
+> Block quote followed by list
+* list item
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
+
+> Block quote followed by list
++ list item
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
+
+> Block quote followed by list
+- list item
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
+
+> Block quote followed by list
+1. list item
+| <- markup.list.numbered.bullet.markdown - punctuation
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^ markup.list.numbered.markdown - meta.quote
+
+> Block quote followed by thematic break
+***
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
+
+> Block quote followed by thematic break
+- - -
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
+
+> Block quote with list items
+> - list item 1
+| ^ markup.quote punctuation.definition.list_item
+> - list item 2
+| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
+| ^^^^^^^^^^^^^^ markup.quote markup.list.unnumbered
+|   ^^^^^^^^^^^^ meta.paragraph.list
+>   1. sub list item
+| <- markup.quote punctuation.definition.blockquote
+|^^^^^^^^^^^^^^^^^^^^ markup.quote
+|    ^ punctuation.definition.list_item
+|   ^^ markup.list.numbered.bullet
+| ^^^^^^^^^^^^^^^^^^^ markup.list.numbered
+|      ^^^^^^^^^^^^^^ meta.paragraph.list
+> - list item 3
+  continued
+| ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+> Block quote with GFM tasks
+> * [ ] task
+| ^^^^^^^^^^^ markup.quote.markdown
+| ^ markup.list.unnumbered.bullet.markdown
+|  ^^^^^^^^^^ markup.list.unnumbered.markdown
+| ^ punctuation.definition.list_item.markdown
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+> * [x] task
+| ^^^^^^^^^^^ markup.quote.markdown
+| ^ markup.list.unnumbered.bullet.markdown
+|  ^^^^^^^^^^ markup.list.unnumbered.markdown
+| ^ punctuation.definition.list_item.markdown
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+> * [X] task
+| ^^^^^^^^^^^ markup.quote.markdown
+| ^ markup.list.unnumbered.bullet.markdown
+|  ^^^^^^^^^^ markup.list.unnumbered.markdown
+| ^ punctuation.definition.list_item.markdown
+|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|    ^ markup.checkbox.mark.markdown-gfm - punctuation
+|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+> * [X] task
+>   - [ ] task
+| ^^^^^^^^^^^^^ markup.quote.markdown
+|   ^ markup.list.unnumbered.bullet.markdown
+|    ^^^^^^^^^^ markup.list.unnumbered.markdown
+|   ^ punctuation.definition.list_item.markdown
+|     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+|      ^ markup.checkbox.mark.markdown-gfm - punctuation
+|       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
+
 # TEST: LIST BLOKCKS ##########################################################
 
 Paragraph of text that should be scoped as meta.paragraph.
@@ -2975,24 +3026,6 @@ Paragraph break.
 	```
 |^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
-> Block quote with list items
-> - list item 1
-| ^ markup.quote punctuation.definition.list_item
-> - list item 2
-| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-| ^^^^^^^^^^^^^^ markup.quote markup.list.unnumbered
-|   ^^^^^^^^^^^^ meta.paragraph.list
->   1. sub list item
-| <- markup.quote punctuation.definition.blockquote
-|^^^^^^^^^^^^^^^^^^^^ markup.quote
-|    ^ punctuation.definition.list_item
-|   ^^ markup.list.numbered.bullet
-| ^^^^^^^^^^^^^^^^^^^ markup.list.numbered
-|      ^^^^^^^^^^^^^^ meta.paragraph.list
-> - list item 3
-  continued
-| ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
-
 * this is a list
 
    > This is a blockquote.
@@ -3048,40 +3081,6 @@ Paragraph break.
 * list has `unclosed code
 * list continues
 | ^^^^^^^^^^^^^^^ - markup.raw
-
-> * [ ] task
-| ^^^^^^^^^^^ markup.quote.markdown
-| ^ markup.list.unnumbered.bullet.markdown
-|  ^^^^^^^^^^ markup.list.unnumbered.markdown
-| ^ punctuation.definition.list_item.markdown
-|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-|    ^ markup.checkbox.mark.markdown-gfm - punctuation
-|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-> * [x] task
-| ^^^^^^^^^^^ markup.quote.markdown
-| ^ markup.list.unnumbered.bullet.markdown
-|  ^^^^^^^^^^ markup.list.unnumbered.markdown
-| ^ punctuation.definition.list_item.markdown
-|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-|    ^ markup.checkbox.mark.markdown-gfm - punctuation
-|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-> * [X] task
-| ^^^^^^^^^^^ markup.quote.markdown
-| ^ markup.list.unnumbered.bullet.markdown
-|  ^^^^^^^^^^ markup.list.unnumbered.markdown
-| ^ punctuation.definition.list_item.markdown
-|   ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-|    ^ markup.checkbox.mark.markdown-gfm - punctuation
-|     ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-> * [X] task
->   - [ ] task
-| ^^^^^^^^^^^^^ markup.quote.markdown
-|   ^ markup.list.unnumbered.bullet.markdown
-|    ^^^^^^^^^^ markup.list.unnumbered.markdown
-|   ^ punctuation.definition.list_item.markdown
-|     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-|      ^ markup.checkbox.mark.markdown-gfm - punctuation
-|       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 
 * list item
   
