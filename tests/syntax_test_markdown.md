@@ -1621,6 +1621,725 @@ paragraph
 | <- meta.paragraph
 
 
+# TEST: FENCED CODE BLOCKS ####################################################
+
+## https://spec.commonmark.org/0.30/#example-119
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+<
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+ >
+|^^ markup.raw.code-fence.markdown-gfm - punctuation
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-120
+
+~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+<
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+ >
+|^^ markup.raw.code-fence.markdown-gfm - punctuation
+~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-121
+
+``
+foo
+``
+| <- - meta.code-fence - punctuation.definition.raw.code-fence
+|^ - meta.code-fence - punctuation.definition.raw.code-fence
+
+## https://spec.commonmark.org/0.30/#example-122
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+~~~
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-123
+
+~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+```
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+~~~~ 
+| <- punctuation.definition.raw.code-fence.begin
+ ~~~~
+| ^^^ punctuation.definition.raw.code-fence.end
+
+## https://spec.commonmark.org/0.30/#example-124
+
+````
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+```
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+``````
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|     ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-125
+
+~~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+|
+aaa
+~~~
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+~~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|   ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-128
+
+> ```
+> aaa
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - markup.raw
+| ^^^^ markup.quote.markdown markup.raw.code-fence.markdown-gfm
+
+bbb
+| <- meta.paragraph.markdown - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-129
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+
+  
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-130
+
+```
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-131
+
+ ```
+ aaa
+aaa
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-132
+
+  ```
+aaa
+  aaa
+aaa
+  ```
+| <- meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+| ^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|    ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-133
+
+   ```
+   aaa
+    aaa
+  aaa
+   ```
+| <- meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|^^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|  ^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|     ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-134
+
+    ```
+    aaa
+    ```
+| <- markup.raw.block.markdown
+|^^^^^^^ markup.raw.block.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-135
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+| <- markup.raw.code-fence.markdown-gfm
+  ```
+| <- meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+| ^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|    ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-136
+
+   ```
+| <- meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+|^^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+|  ^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|     ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+| <- markup.raw.code-fence.markdown-gfm
+  ```
+| <- meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+| ^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|    ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-137
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+aaa
+| <- markup.raw.code-fence.markdown-gfm
+    ```
+| <- meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|^^^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+|   ^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|      ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-138
+
+``` ```
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^ markup.raw.inline.markdown
+
+``` ```
+aaa
+| <- meta.paragraph.markdown - meta.code-fence - markup
+|^^ meta.paragraph.markdown - meta.code-fence - markup
+
+## https://spec.commonmark.org/0.30/#example-139
+
+~~~~~~
+aaa
+~~~ ~~
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+|^^^^^^ markup.raw.code-fence.markdown-gfm - punctuation
+
+~~~~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|     ^ meta.code-fence.definition.end.text.markdown-gfm - punctuation
+
+## https://spec.commonmark.org/0.30/#example-140
+
+foo
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+bar
+```
+baz
+| <- meta.paragraph.markdown - meta.code-fence - markup
+|^^ meta.paragraph.markdown - meta.code-fence - markup
+
+## https://spec.commonmark.org/0.30/#example-140-including-emphasis-termination
+
+Paragraph is terminated by fenced code blocks.
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+Code blocks terminate **bold text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold**
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Code blocks terminate __bold text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold__
+| <- - meta.bold
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
+
+Code blocks terminate *italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be italic*
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
+
+Code blocks terminate _italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be italic_
+| <- - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate ***bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic***
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate ___bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic___
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+Code blocks terminate **_bold italic text
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+this must not be bold italic_**
+| <- - meta.bold - meta.italic
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
+
+## https://spec.commonmark.org/0.30/#example-141
+
+foo
+---
+~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+bar
+|^^^ markup.raw.code-fence.markdown-gfm
+~~~
+# baz
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^ markup.heading.1.markdown
+
+## https://spec.commonmark.org/0.30/#example-142
+
+```ruby
+| <- meta.code-fence.definition.begin.ruby.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.ruby.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm constant.other.language-name.markdown
+|      ^ meta.code-fence.definition.begin.ruby.markdown-gfm - constant
+def foo(x)
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function.ruby keyword.declaration.function.ruby
+  return 3
+end
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword.control.block.end.ruby
+```
+| <- meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-143
+
+~~~~    ruby startline=3 $%@#$
+| <- meta.code-fence.definition.begin.ruby.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^^ meta.code-fence.definition.begin.ruby.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm - punctuation - constant
+|       ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm constant.other.language-name.markdown
+|           ^^^^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm - constant
+def foo(x)
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function.ruby keyword.declaration.function.ruby
+  return 3
+end
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword.control.block.end.ruby
+~~~~~~~
+| <- meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^^^^^ meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-144
+
+````;
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^^ meta.code-fence.definition.begin.text.markdown-gfm
+````
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-145
+
+``` aa ```
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^^^^ meta.paragraph.markdown markup.raw.inline.markdown
+|^^ punctuation.definition.raw.begin.markdown
+|      ^^^ punctuation.definition.raw.end.markdown
+foo
+| <- meta.paragraph.markdown - markup
+
+## https://spec.commonmark.org/0.30/#example-146
+
+~~~ aa ``` ~~~
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|   ^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
+|     ^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
+foo
+~~~
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+~~~~~foo~
+|^^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|    ^^^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
+
+~~~~~
+|^^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-147
+
+```
+| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+``` aaa
+| <- markup.raw.code-fence.markdown-gfm - punctuation
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://fenced-code-block-embedded-syntaxes-tests
+
+```bash
+# test
+| ^^^^^ source.shell comment.line.number-sign
+echo hello, \
+|           ^^ punctuation.separator.continuation.line
+echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
+|                       ^^ constant.character.escape
+```
+| <- meta.code-fence.definition.end.shell-script punctuation.definition.raw.code-fence.end
+|^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```clojure
+|^^^^^^^^^ meta.code-fence.definition.begin.clojure
+|  ^^^^^^^ constant.other.language-name
+ (/ 10 3.0)
+| <- source.clojure
+|^^^^^^^^^^ source.clojure
+```
+| <- meta.code-fence.definition.end.clojure.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.clojure.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```cmd
+
+| <- markup.raw.code-fence.dosbatch.markdown-gfm source.dosbatch
+```
+| <- meta.code-fence.definition.end.dosbatch.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.dosbatch.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```css
+
+| <- markup.raw.code-fence.css.markdown-gfm source.css
+```
+| <- meta.code-fence.definition.end.css.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.css.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```diff
++ inserted
+| <- source.diff markup.inserted.diff punctuation.definition.inserted.diff
+- deleted
+| <- source.diff markup.deleted.diff punctuation.definition.deleted.diff
+```
+| <- meta.code-fence.definition.end.diff.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.diff.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```Graphviz
+graph n {}
+| ^^^ storage.type.dot
+```
+| <- meta.code-fence.definition.end.graphviz.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.graphviz.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```haskell
+
+| <- markup.raw.code-fence.haskell.markdown-gfm source.haskell
+```
+| <- meta.code-fence.definition.end.haskell.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.haskell.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```html
+  <html>
+| <- markup.raw.code-fence.html.markdown-gfm text.html
+| ^^^^^^ text.html meta.tag
+```
+| <- meta.code-fence.definition.end.html.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.html.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```html+php
+<div></div>
+|^^^ entity.name.tag.block.any.html
+<?php
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html.basic meta.embedded.block.php punctuation.section.embedded.begin.php
+var_dump(expression);
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html.basic meta.embedded.block.php source.php meta.function-call
+```
+| <- meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```js
+| <- punctuation.definition.raw.code-fence.begin
+|  ^^ constant.other.language-name
+for (var i = 0; i < 10; i++) {
+| ^ source.js keyword.control.loop
+    console.log(i);
+}
+```
+| <- meta.code-fence.definition.end.javascript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.javascript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```jsx
+
+| <- markup.raw.code-fence.jsx.markdown-gfm
+```
+| <- meta.code-fence.definition.end.jsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.jsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```lisp
+
+| <- markup.raw.code-fence.lisp.markdown-gfm source.lisp
+```
+| <- meta.code-fence.definition.end.lisp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.lisp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```lua
+
+| <- markup.raw.code-fence.lua.markdown-gfm source.lua
+```
+| <- meta.code-fence.definition.end.lua.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.lua.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```matlab
+
+| <- markup.raw.code-fence.matlab.markdown-gfm source.matlab
+```
+| <- meta.code-fence.definition.end.matlab.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.matlab.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```ocaml
+
+| <- markup.raw.code-fence.ocaml.markdown-gfm source.ocaml
+```
+| <- meta.code-fence.definition.end.ocaml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.ocaml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```php
+var_dump(expression);
+| <- markup.raw.code-fence.php.markdown-gfm source.php meta.function-call.php
+```
+| <- meta.code-fence.definition.end.php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```python
+|^^ punctuation.definition.raw.code-fence.begin
+|^^^^^^^^^ meta.code-fence.definition.begin.python - markup
+|  ^^^^^^ constant.other.language-name
+def function():
+    pass
+|   ^^^^ keyword.control.flow
+unclosed_paren = (
+|                ^ meta.group.python punctuation.section.group.begin.python
+```
+| <- meta.code-fence.definition.end.python.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.python.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```regex
+(?x)
+\s+
+| <- markup.raw.code-fence.regexp.markdown-gfm source.regexp meta.mode.extended.regexp keyword.control
+```
+| <- meta.code-fence.definition.end.regexp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.regexp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```scala
+
+| <- markup.raw.code-fence.scala.markdown-gfm source.scala
+```
+| <- meta.code-fence.definition.end.scala.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.scala.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```sh
+
+| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
+```
+| <- meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```shell
+
+| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
+```
+| <- meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```shell-script
+
+| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
+```
+| <- meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```sql
+|^^^^^ meta.code-fence.definition.begin.sql
+|  ^^^ constant.other.language-name
+SELECT TOP 10 *
+|^^^^^^^^^^^^^^^ markup.raw.code-fence.sql source.sql
+FROM TableName
+```
+| <- meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```ts
+declare type foo = 'bar'
+| <- markup.raw.code-fence.typescript.markdown-gfm source.ts
+```
+| <- meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```tsx
+
+| <- markup.raw.code-fence.tsx.markdown-gfm
+```
+| <- meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```xml
+|^^^^^ meta.code-fence.definition.begin.xml
+|  ^^^ constant.other.language-name
+<?xml version="1.0" ?>
+|^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.xml
+|     ^^^^^^^ meta.tag.preprocessor.xml entity.other.attribute-name.localname.xml
+<example>
+    <foobar />
+</example>
+```
+| <- meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```R%&?! weired language name
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
+|  ^^^^^ constant.other.language-name.markdown
+|        ^^^^^^^^^^^^^^^^^^^^^ - constant
+```
+
+```{key: value}
+|^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
+|  ^^^^^^^^^^^^ - constant
+```
+
+``` {key: value}
+|^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
+|   ^^^^^^^^^^^^ - constant
+```
+
+
+# TEST: CODE SPANS ############################################################
+
+```testing``123```
+| <- punctuation.definition.raw.begin
+|         ^^ - punctuation
+|              ^^^ punctuation.definition.raw.end
+
+```testing``123````
+| <- punctuation.definition.raw.begin
+|        ^ - punctuation
+|            ^^^^ - punctuation
+```
+| <- punctuation.definition.raw.end
+
+``testing`123````
+| <- punctuation.definition.raw.begin
+|        ^ - punctuation
+|            ^^^^ - punctuation
+more text``
+|        ^^ punctuation.definition.raw.end
+
+``text
+
+| <- invalid.illegal.non-terminated.raw
+text
+| <- - markup.raw
+
+## http://spec.commonmark.org/0.28/#example-315
+
+`` foo ` bar  ``
+|^ punctuation.definition.raw.begin
+|^^^^^^^^^^^^^^^ markup.raw.inline
+|      ^ - punctuation
+|             ^^ punctuation.definition.raw.end
+
+## http://spec.commonmark.org/0.28/#example-316
+
+` `` `
+|<- punctuation.definition.raw.begin
+|^^^^^ markup.raw.inline
+| ^^ - punctuation
+|    ^ punctuation.definition.raw.end
+
+## http://spec.commonmark.org/0.28/#example-318
+
+`foo   bar
+  baz`
+|^^^^^ markup.raw.inline
+|    ^ punctuation.definition.raw.end
+
+hello world ````test````
+|           ^^^^^^^^^^^^ markup.raw.inline
+|                       ^ - markup.raw
+
+`foo `` bar`
+|    ^^^^^^ markup.raw.inline - punctuation
+|          ^ punctuation.definition.raw.end
+
+
 # TEST: COMMONMARK AUTOLINKS ##################################################
 
 <mailto:test+test@test.com>
@@ -2873,194 +3592,6 @@ new paragraph~~.
 
 | <- invalid.illegal.non-terminated.bold-italic
 
-
-# TEST: FENCED CODE BLOCKS ####################################################
-
-Paragraph is terminated by fenced code blocks.
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-
-Code blocks terminate **bold text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be bold**
-| <- - meta.bold
-|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
-
-Code blocks terminate __bold text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be bold__
-| <- - meta.bold
-|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold
-
-Code blocks terminate *italic text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be italic*
-| <- - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^ - meta.italic
-
-Code blocks terminate _italic text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be italic_
-| <- - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
-
-Code blocks terminate ***bold italic text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be bold italic***
-| <- - meta.bold - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
-
-Code blocks terminate ___bold italic text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be bold italic___
-| <- - meta.bold - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
-
-Code blocks terminate **_bold italic text
-```
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-this must not be bold italic_**
-| <- - meta.bold - meta.italic
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.bold - meta.italic
-
-```js
-| <- punctuation.definition.raw.code-fence.begin
-|  ^^ constant.other.language-name
-for (var i = 0; i < 10; i++) {
-| ^ source.js keyword.control.loop
-    console.log(i);
-}
-```
-| <- punctuation.definition.raw.code-fence.end
-
-```ts
-|  ^^ constant.other.language-name
-declare type foo = 'bar'
-```
-
-```R%&?! weired language name
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
-|  ^^^^^ constant.other.language-name.markdown
-|        ^^^^^^^^^^^^^^^^^^^^^ - constant
-```
-
-```{key: value}
-|^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
-|  ^^^^^^^^^^^^ - constant
-```
-
-``` {key: value}
-|^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
-|   ^^^^^^^^^^^^ - constant
-```
-
-```testing``123```
-| <- punctuation.definition.raw.begin
-|         ^^ - punctuation
-|              ^^^ punctuation.definition.raw.end
-```testing``123````
-| <- punctuation.definition.raw.begin
-|        ^ - punctuation
-|            ^^^^ - punctuation
-```
-| <- punctuation.definition.raw.end
-``testing`123````
-| <- punctuation.definition.raw.begin
-|        ^ - punctuation
-|            ^^^^ - punctuation
-more text``
-|        ^^ punctuation.definition.raw.end
-``text
-
-| <- invalid.illegal.non-terminated.raw
-text
-| <- - markup.raw
-
-http://spec.commonmark.org/0.28/#example-315
-`` foo ` bar  ``
-|^ punctuation.definition.raw.begin
-|^^^^^^^^^^^^^^^ markup.raw.inline
-|      ^ - punctuation
-|             ^^ punctuation.definition.raw.end
-
-http://spec.commonmark.org/0.28/#example-316
-` `` `
-|<- punctuation.definition.raw.begin
-|^^^^^ markup.raw.inline
-| ^^ - punctuation
-|    ^ punctuation.definition.raw.end
-
-http://spec.commonmark.org/0.28/#example-318
-`foo   bar
-  baz`
-|^^^^^ markup.raw.inline
-|    ^ punctuation.definition.raw.end
-
-~~~~ 
-| <- punctuation.definition.raw.code-fence.begin
- ~~~~
-| ^^^ punctuation.definition.raw.code-fence.end
-
-~~~~~test~
-|^^^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-|    ^^^^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
-
-~~~~~
-|^^^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-
-~~~~~~test
-| ^^^^ punctuation.definition.raw.code-fence.begin
-|     ^^^^ constant.other.language-name
-~~~~~~
-| ^^^^ punctuation.definition.raw.code-fence.end
-
-# https://spec.commonmark.org/0.30/#example-146
-
-~~~ aa ``` ~~~
-| <- meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-|^^ meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-|   ^^ meta.code-fence.definition.begin.text.markdown-gfm constant.other.language-name.markdown
-|     ^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm - punctuation
-foo
-~~~
-| <- meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-|^^ meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-
-```test
-|  ^^^^ constant.other.language-name
-  ```
-| ^^^ punctuation.definition.raw.code-fence.end
-
-hello world ````test````
-|           ^^^^^^^^^^^^ markup.raw.inline
-|                       ^ - markup.raw
-
-`foo `` bar`
-|    ^^^^^^ markup.raw.inline - punctuation
-|          ^ punctuation.definition.raw.end
-
 hard line break  
 |              ^^ meta.hard-line-break punctuation.definition.hard-line-break
 hard line break\
@@ -3725,186 +4256,7 @@ okay
 1. Test 2
 |^ markup.list.numbered.bullet punctuation.definition.list_item
 
-```clojure
-|^^^^^^^^^ meta.code-fence.definition.begin.clojure
-|  ^^^^^^^ constant.other.language-name
- (/ 10 3.0)
-|<- source.clojure
-|^^^^^^^^^^ source.clojure
-```
-|^^ meta.code-fence.definition.end.clojure punctuation.definition.raw.code-fence.end
-
-```cmd
-
-| <- markup.raw.code-fence.dosbatch.markdown-gfm source.dosbatch
-```
-
-```css
-
-| <- markup.raw.code-fence.css.markdown-gfm source.css
-```
-
-```diff
-+ inserted
-| <- source.diff markup.inserted.diff punctuation.definition.inserted.diff
-- deleted
-| <- source.diff markup.deleted.diff punctuation.definition.deleted.diff
-```
-
-```haskell
-
-| <- markup.raw.code-fence.haskell.markdown-gfm source.haskell
-```
-
-```html
-  <html>
-| <- markup.raw.code-fence.html.markdown-gfm text.html
-| ^^^^^^ text.html meta.tag
-```
-
-```jsx
-
-| <- markup.raw.code-fence.jsx.markdown-gfm
-```
-
-```lisp
-
-| <- markup.raw.code-fence.lisp.markdown-gfm source.lisp
-```
-
-```lua
-
-| <- markup.raw.code-fence.lua.markdown-gfm source.lua
-```
-
-```matlab
-
-| <- markup.raw.code-fence.matlab.markdown-gfm source.matlab
-```
-
-```ocaml
-
-| <- markup.raw.code-fence.ocaml.markdown-gfm source.ocaml
-```
-
-```scala
-
-| <- markup.raw.code-fence.scala.markdown-gfm source.scala
-```
-
-```sh
-
-| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
-```
-
-```shell
-
-| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
-```
-
-```shell-script
-
-| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
-```
-
-```tsx
-
-| <- markup.raw.code-fence.tsx.markdown-gfm
-```
-
-```xml
-|^^^^^ meta.code-fence.definition.begin.xml
-|  ^^^ constant.other.language-name
-<?xml version="1.0" ?>
-|^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.xml
-|     ^^^^^^^ meta.tag.preprocessor.xml entity.other.attribute-name.localname.xml
-<example>
-    <foobar />
-</example>
-```
-|^^ punctuation.definition.raw.code-fence.end
-
-```sql
-|^^^^^ meta.code-fence.definition.begin.sql
-|  ^^^ constant.other.language-name
-SELECT TOP 10 *
-|^^^^^^^^^^^^^^^ markup.raw.code-fence.sql source.sql
-FROM TableName
-```
-|^^ meta.code-fence.definition.end.sql punctuation.definition.raw.code-fence.end - markup
-
-```python
-|^^ punctuation.definition.raw.code-fence.begin
-|^^^^^^^^^ meta.code-fence.definition.begin.python - markup
-|  ^^^^^^ constant.other.language-name
-def function():
-    pass
-|   ^^^^ keyword.control.flow
-unclosed_paren = (
-|                ^ meta.group.python punctuation.section.group.begin.python
-```
-|^^ meta.code-fence.definition.end.python punctuation.definition.raw.code-fence.end
-
-```Graphviz
-graph n {}
-| ^^^ storage.type.dot
-```
-
-| <- - markup.raw
-
-```php
-var_dump(expression);
-| ^^^^^^ support.function.var.php
-```
-
-```html+php
-<div></div>
-|^^^ entity.name.tag.block.any.html
-<?php
-|^^^^ punctuation.section.embedded.begin.php
-var_dump(expression);
-| ^^^^^^ support.function.var.php
-```
-|^^ punctuation.definition.raw.code-fence.end.markdown
-
-```regex
-(?x)
-\s+
-```
-|^^^ meta.code-fence.definition.end.regexp - markup
-|^^ punctuation.definition.raw.code-fence.end
-
-```bash
-# test
-| ^^^^^ source.shell comment.line.number-sign
-echo hello, \
-|           ^^ punctuation.separator.continuation.line
-echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
-|                       ^^ constant.character.escape
-```
-| <- meta.code-fence.definition.end.shell-script punctuation.definition.raw.code-fence.end
-
-```     bash
-| <- punctuation.definition.raw.code-fence.begin
-|  ^^^^^ meta.code-fence.definition.begin.shell-script.markdown-gfm
-|       ^^^^ constant.other.language-name
-# test
-| ^^^^^ source.shell comment.line.number-sign
-```
-| <- meta.code-fence.definition.end.shell-script punctuation.definition.raw.code-fence.end
-
-~~~~    ruby startline=3 $%@#$
-| <- punctuation.definition.raw.code-fence.begin
-|   ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm
-|       ^^^^ constant.other.language-name
-|           ^^^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm
-def foo(x)
-  return 3
-end
-~~~~~~~
-| <- meta.code-fence.definition.end.ruby punctuation.definition.raw.code-fence.end
-
-  -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
+-= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
 
     -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
