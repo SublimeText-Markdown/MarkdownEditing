@@ -96,6 +96,58 @@ _	_	_
 |   ^ punctuation.definition.thematic-break.markdown
 
 
+# TEST: LIGATURES #############################################################
+
+this is a raw ampersand & does not require HTML escaping
+|                       ^ - entity - illegal
+
+this is a raw bracket < > does not require HTML escaping
+|                     ^^^ - meta.tag - punctuation
+
+these are raw ligatures << <<< <<<< <<<<< >>>>> >>>> >>> >>
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures <- <-- <--- <---- <-< <--< <---< <----<
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures -> --> ---> ----> >-> >--> >---> >---->
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures >- >-- >--- >---- ----< ---< --< -<
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures >< >-< >--< >---< <---> <--> <-> <>
+|                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures <= <== <=== <==== <=< <==< <===< <====<
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures => ==> ===> ====> >=> >==> >===> >====>
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures >= >== >=== >==== ====< ===< ==< =<
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures >< >=< >==< >===< <===> <==> <=> <>
+|                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+these are raw ligatures - -- --- ---- ----- ===== ==== === == =
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
+
+-= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
+
+    -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
+|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw - constant - keyword - variable - punctuation
+
+>  -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
+
+> > -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
+| ^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
+
+
 # TEST: BACKSLASH ESCAPES #####################################################
 
 ## https://spec.commonmark.org/0.30/#example-12
@@ -2715,44 +2767,6 @@ a.b-c_d@a.b.
 |^^^^^^^^^^^^^ - meta.link - markup.underline.link
 
 
-# TEST: LIGATURES #############################################################
-
-this is a raw ampersand & does not require HTML escaping
-|                       ^ - entity - illegal
-
-this is a raw bracket < > does not require HTML escaping
-|                     ^^^ - meta.tag - punctuation
-
-these are raw ligatures << <<< <<<< <<<<< >>>>> >>>> >>> >>
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures <- <-- <--- <---- <-< <--< <---< <----<
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures -> --> ---> ----> >-> >--> >---> >---->
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures >- >-- >--- >---- ----< ---< --< -<
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures >< >-< >--< >---< <---> <--> <-> <>
-|                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures <= <== <=== <==== <=< <==< <===< <====<
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures => ==> ===> ====> >=> >==> >===> >====>
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures >= >== >=== >==== ====< ===< ==< =<
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures >< >=< >==< >===< <===> <==> <=> <>
-|                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
-these are raw ligatures - -- --- ---- ----- ===== ==== === == =
-|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - meta.other.valid-bracket - meta.tag
-
 [2]: https://github.com/sublimehq/Packages "Packages Repo"
 | <- meta.link.reference.def.markdown
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
@@ -4345,19 +4359,6 @@ okay
 
 1. Test 2
 |^ markup.list.numbered.bullet punctuation.definition.list_item
-
--= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  - constant - keyword - variable
-
-    -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw - constant - keyword - variable - punctuation
-
->  -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
-
-> > -= += /= %= -- ++ ** !~ =~ ~~ <= >= => <=> // && == !=
-| ^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
-|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - constant - keyword - variable
 
 link with a single underscore inside the text : [@_test](http://example.com)
 |                                                ^^^^^^ meta.paragraph meta.link.inline.description - punctuation.definition
