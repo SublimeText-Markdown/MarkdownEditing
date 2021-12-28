@@ -1050,11 +1050,6 @@ A [link](https://example.com){ :_attr = value }, *italic text* and **bold**.
 |                                                                  ^^^^^^^^ markup.bold
 |                                                                        ^^ punctuation.definition.bold
 
-Inline `code sample`.
-|      ^^^^^^^^^^^^^ markup.raw.inline
-|      ^ punctuation.definition.raw
-|                  ^ punctuation.definition.raw
-
 Here is a [](https://example.com).
 |         ^^ meta.link.inline
 |         ^ punctuation.definition.link.begin
@@ -2308,36 +2303,171 @@ more text``
 text
 | <- - markup.raw
 
-## http://spec.commonmark.org/0.28/#example-315
+## https://spec.commonmark.org/0.30/#example-327
+
+`hi`lo`
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^ markup.raw.inline.markdown
+|  ^ punctuation.definition.raw.end.markdown
+|   ^^ - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-328
+
+`foo`
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^ meta.paragraph.markdown markup.raw.inline.markdown
+|   ^ punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-329
 
 `` foo ` bar  ``
-|^ punctuation.definition.raw.begin
-|^^^^^^^^^^^^^^^ markup.raw.inline
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^^^^^^^^^^ markup.raw.inline.markdown
+|^ punctuation.definition.raw.begin.markdown
 |      ^ - punctuation
-|             ^^ punctuation.definition.raw.end
+|             ^^ punctuation.definition.raw.end.markdown
 
-## http://spec.commonmark.org/0.28/#example-316
+## https://spec.commonmark.org/0.30/#example-330
 
 ` `` `
-|<- punctuation.definition.raw.begin
-|^^^^^ markup.raw.inline
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^ markup.raw.inline.markdown
 | ^^ - punctuation
-|    ^ punctuation.definition.raw.end
+|    ^ punctuation.definition.raw.end.markdown
 
-## http://spec.commonmark.org/0.28/#example-318
+## https://spec.commonmark.org/0.30/#example-331
+
+`  ``  `
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^^ markup.raw.inline.markdown
+|  ^^ - punctuation
+|      ^ punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-332
+
+` a`
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^ markup.raw.inline.markdown
+|  ^ punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-333
+
+` b `
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^ markup.raw.inline.markdown
+|   ^ punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-334
+
+` `
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^ markup.raw.inline.markdown
+| ^ punctuation.definition.raw.end.markdown
+|  ^ - markup 
+
+`  `
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^ markup.raw.inline.markdown
+|  ^ punctuation.definition.raw.end.markdown
+|   ^ - markup 
+
+## https://spec.commonmark.org/0.30/#example-335
+
+``
+foo
+bar  
+baz
+``
+| <- markup.raw.inline.markdown punctuation.definition.raw.end.markdown
+|^ markup.raw.inline.markdown punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-336
+
+``
+foo 
+``
+| <- markup.raw.inline.markdown punctuation.definition.raw.end.markdown
+|^ markup.raw.inline.markdown punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-337
 
 `foo   bar
   baz`
-|^^^^^ markup.raw.inline
-|    ^ punctuation.definition.raw.end
+|^^^^^ markup.raw.inline.markdown
+|    ^ punctuation.definition.raw.end.markdown
 
-hello world ````test````
-|           ^^^^^^^^^^^^ markup.raw.inline
-|                       ^ - markup.raw
+## https://spec.commonmark.org/0.30/#example-338
+
+`foo\`bar`
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^ markup.raw.inline.markdown
+|     ^^^ - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-339
+
+``foo`bar``
+| <- meta.paragraph.markdown markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^^^^^ meta.paragraph.markdown markup.raw.inline.markdown
+|^ punctuation.definition.raw.begin.markdown
+| ^^^^^^^ - punctuation
+|        ^^ punctuation.definition.raw.end.markdown
+
+````bar```` baz
+|^^^^^^^^^^ markup.raw.inline.markdown
+|          ^^^^^ - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-340
 
 `foo `` bar`
-|    ^^^^^^ markup.raw.inline - punctuation
-|          ^ punctuation.definition.raw.end
+| <- markup.raw.inline.markdown punctuation.definition.raw.begin.markdown
+|^^^^^^^^^^ markup.raw.inline.markdown - punctuation
+|          ^ markup.raw.inline.markdown punctuation.definition.raw.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-341
+
+*foo`*`
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|   ^^^ markup.italic.markdown markup.raw.inline.markdown
+
+| <- invalid.illegal.non-terminated.bold-italic
+
+## https://spec.commonmark.org/0.30/#example-342
+
+[not a `link](/foo`)
+|^^^^^^^^^^^^^^^^^^^ - meta.link
+|      ^^^^^^^^^^^^ markup.raw.inline.markdown
+
+## https://spec.commonmark.org/0.30/#example-343
+
+`<a href="`">`
+|^^^^^^^^^^ markup.raw.inline.markdown
+|          ^^ - markup.raw
+
+| <- invalid.illegal.non-terminated.raw
+
+## https://spec.commonmark.org/0.30/#example-344
+
+<a href="`">`
+| ^^^^^^^^^ meta.tag.inline.a
+|           ^ punctuation.definition.raw.begin
+
+| <- invalid.illegal.non-terminated.raw
+
+## https://spec.commonmark.org/0.30/#example-345
+
+`<http://foo.bar.`baz>`
+|^^^^^^^^^^^^^^^^^ markup.raw.inline
+|                     ^ punctuation.definition.raw.begin
+
+| <- invalid.illegal.non-terminated.raw
+
+## https://spec.commonmark.org/0.30/#example-346
+
+<http://foo.bar.`baz>`
+|^^^^^^^^^^^^^^^^^^^ markup.underline.link
+|                    ^ punctuation.definition.raw.begin
+
+| <- invalid.illegal.non-terminated.raw
 
 
 # TEST: COMMONMARK AUTOLINKS ##################################################
@@ -2949,46 +3079,6 @@ This is a ![reference] []
 |          ^^^^^^^^^^^ meta.link.reference
 |                     ^ - meta.link
 |                      ^^ meta.link.reference
-
-http://spec.commonmark.org/0.28/#example-322
-*foo`*`
-|^^^^^^^ markup.italic
-|   ^^^ markup.raw.inline
-
-| <- invalid.illegal.non-terminated.bold-italic
-
-http://spec.commonmark.org/0.28/#example-323
-[not a `link](/foo`)
-|^^^^^^^^^^^^^^^^^^^ - meta.link
-|      ^^^^^^^^^^^^ markup.raw.inline
-
-http://spec.commonmark.org/0.28/#example-324
-`<a href="`">`
-|^^^^^^^^^^ markup.raw.inline
-|          ^^ - markup.raw
-
-| <- invalid.illegal.non-terminated.raw
-
-http://spec.commonmark.org/0.28/#example-325
-<a href="`">`
-| ^^^^^^^^^ meta.tag.inline.a
-|           ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
-
-http://spec.commonmark.org/0.28/#example-326
-`<http://foo.bar.`baz>`
-|^^^^^^^^^^^^^^^^^ markup.raw.inline
-|                     ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
-
-http://spec.commonmark.org/0.28/#example-327
-<http://foo.bar.`baz>`
-|^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                    ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
 
 http://spec.commonmark.org/0.27/#example-328
 *foo bar*
