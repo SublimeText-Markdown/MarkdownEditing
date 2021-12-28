@@ -1411,15 +1411,13 @@ Paragraph break.
 	```
 |^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
-Paragraph break.
+
+# TEST: BLOCK QUOTES ##########################################################
 
 > This is a block quote. It contains markup.
 > Including things like *italics*
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
 |                       ^^^^^^^^^ markup.italic
-
-
-# TEST: BLOCK QUOTES ##########################################################
 
 >=
 | <- punctuation.definition.blockquote.markdown 
