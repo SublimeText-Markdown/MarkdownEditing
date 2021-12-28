@@ -3030,6 +3030,158 @@ text
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra - markup.raw
 |              ^^^^^^^^ markup.italic
 
+
+# TEST: TABLES ################################################################
+
+| foo | bar |
+|^^^^^^^^^^^^^ meta.table.header
+| <- punctuation.separator.table-cell
+|     ^ punctuation.separator.table-cell
+|           ^ punctuation.separator.table-cell
+| ^^^^ - punctuation.separator.table-cell
+
+| foo | bar |
+| --- | --- |
+| baz | bim <kbd>Ctrl+C</kbd> |
+| <- meta.table punctuation.separator.table-cell
+|           ^^^^^ meta.tag.inline.any
+|                             ^ punctuation.separator.table-cell
+
+| <- - meta.table
+
+| abc | defghi |
+:-: | -----------:
+|^^^^^^^^^^^^^^^^^ meta.table.header-separator
+| <- punctuation.definition.table-cell-alignment
+|^ punctuation.section.table-header
+|   ^ punctuation.separator.table-cell
+|     ^^^^^^^^^^^ punctuation.section.table-header
+|                ^ punctuation.definition.table-cell-alignment - punctuation.section.table-header
+bar | baz
+|   ^ meta.table punctuation.separator.table-cell
+
+| f\|oo  |
+| <- meta.table punctuation.separator.table-cell
+|  ^^ meta.table constant.character.escape - punctuation.separator.table-cell
+|        ^ meta.table punctuation.separator.table-cell
+
+| f\|oo  |
+| ------ |
+| b `|` az |
+|   ^^^ meta.table markup.raw.inline - meta.table.header-separator
+|          ^ meta.table punctuation.separator.table-cell
+| b **|** im |
+| <- meta.table punctuation.separator.table-cell
+|   ^^^^^ meta.table markup.bold - punctuation.separator.table-cell
+|            ^ meta.table punctuation.separator.table-cell
+
+| abc | def |
+| --- | --- |
+| bar | baz |
+|^^^^^^^^^^^^^ meta.table
+test
+|^^^^ meta.table
+> bar
+| <- markup.quote punctuation.definition.blockquote - meta.table
+
+`|` this `|` example `|` is not a table `|`
+| ^ punctuation.definition.raw.end - meta.table
+| nor is this | because it is not at block level, it immediately follows a paragraph |
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - meta.table
+
+| First Header  | Second Header | Third Header         |
+| :------------ | :-----------: | -------------------: |
+| First row     | Data          | Very long data entry |
+| Second row    | **Cell**      | *Cell*               |
+| Third row     | Cell that spans across two columns  ||
+| ^^^^^^^^^^^^^^ meta.table
+|                                                     ^^ punctuation.separator.table-cell
+
+ | table that doesn't start at column 0 |
+  | ---- |
+  | blah |
+| ^^^^^^^^ meta.table
+| ^ punctuation.separator.table-cell
+
+not a table | 
+| ^^^^^^^^^^^^^ - meta.table
+
+ abc | def
+ --- | ---
+ --- | ---
+| ^^^^ meta.table - meta.table.header
+
+ a | b
+ - | -
+|^^^^^^ meta.table.header-separator.markdown-gfm
+|^ punctuation.section.table-header.markdown
+|  ^ punctuation.separator.table-cell.markdown
+|    ^ punctuation.section.table-header.markdown
+ - | -
+|^^^^^^ meta.table.markdown-gfm
+
+ a | b
+ -:| -
+|^^^^^^ meta.table.header-separator.markdown-gfm
+|^ punctuation.section.table-header.markdown
+| ^ punctuation.definition.table-cell-alignment.markdown
+|  ^ punctuation.separator.table-cell.markdown
+|    ^ punctuation.section.table-header.markdown
+ - | -
+|^^^^^^ meta.table.markdown-gfm
+
+| test | me |
+|------|----|
+|^^^^^^ punctuation.section.table-header
+|*test | me |
+|^^^^^^ - markup.bold
+|      ^ punctuation.separator.table-cell
+|           ^ punctuation.separator.table-cell
+|`test | me |
+|^ invalid.deprecated.unescaped-backticks
+|      ^ punctuation.separator.table-cell
+
+| table | followed by
+paragraph
+| <- meta.paragraph.markdown
+|^^^^^^^^^ meta.paragraph.markdown
+
+| table | followed by
+https://foo.bar/baz
+| <- meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
+|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
+
+| table | followed by
+# heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+
+| table | followed by
+> quote
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^ markup.quote.markdown
+
+| table | followed by
+    quote
+| <- markup.raw.block.markdown
+|^^^^^^^^^ markup.raw.block.markdown
+
+| table | followed by
+```fenced
+| <- meta.code-fence.definition.begin.text.markdown-gfm
+|^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
+code block
+```
+| <- meta.code-fence.definition.end.text.markdown-gfm
+|^^ meta.code-fence.definition.end.text.markdown-gfm
+
+A line without bolded |
+|                     ^ - punctuation.separator.table-cell
+
+A line with bolded **|**
+|                    ^ - punctuation.separator.table-cell
+
+
 # TEST: CODE SPANS ############################################################
 
 ```testing``123```
@@ -4551,154 +4703,6 @@ That's some text with a footnote.[^1]
 
 abc
 | <- meta.paragraph - markup.list
-
-| foo | bar |
-|^^^^^^^^^^^^^ meta.table.header
-| <- punctuation.separator.table-cell
-|     ^ punctuation.separator.table-cell
-|           ^ punctuation.separator.table-cell
-| ^^^^ - punctuation.separator.table-cell
-
-| foo | bar |
-| --- | --- |
-| baz | bim <kbd>Ctrl+C</kbd> |
-| <- meta.table punctuation.separator.table-cell
-|           ^^^^^ meta.tag.inline.any
-|                             ^ punctuation.separator.table-cell
-
-| <- - meta.table
-
-| abc | defghi |
-:-: | -----------:
-|^^^^^^^^^^^^^^^^^ meta.table.header-separator
-| <- punctuation.definition.table-cell-alignment
-|^ punctuation.section.table-header
-|   ^ punctuation.separator.table-cell
-|     ^^^^^^^^^^^ punctuation.section.table-header
-|                ^ punctuation.definition.table-cell-alignment - punctuation.section.table-header
-bar | baz
-|   ^ meta.table punctuation.separator.table-cell
-
-| f\|oo  |
-| <- meta.table punctuation.separator.table-cell
-|  ^^ meta.table constant.character.escape - punctuation.separator.table-cell
-|        ^ meta.table punctuation.separator.table-cell
-
-| f\|oo  |
-| ------ |
-| b `|` az |
-|   ^^^ meta.table markup.raw.inline - meta.table.header-separator
-|          ^ meta.table punctuation.separator.table-cell
-| b **|** im |
-| <- meta.table punctuation.separator.table-cell
-|   ^^^^^ meta.table markup.bold - punctuation.separator.table-cell
-|            ^ meta.table punctuation.separator.table-cell
-
-| abc | def |
-| --- | --- |
-| bar | baz |
-|^^^^^^^^^^^^^ meta.table
-test
-|^^^^ meta.table
-> bar
-| <- markup.quote punctuation.definition.blockquote - meta.table
-
-`|` this `|` example `|` is not a table `|`
-| ^ punctuation.definition.raw.end - meta.table
-| nor is this | because it is not at block level, it immediately follows a paragraph |
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - meta.table
-
-| First Header  | Second Header | Third Header         |
-| :------------ | :-----------: | -------------------: |
-| First row     | Data          | Very long data entry |
-| Second row    | **Cell**      | *Cell*               |
-| Third row     | Cell that spans across two columns  ||
-| ^^^^^^^^^^^^^^ meta.table
-|                                                     ^^ punctuation.separator.table-cell
-
- | table that doesn't start at column 0 |
-  | ---- |
-  | blah |
-| ^^^^^^^^ meta.table
-| ^ punctuation.separator.table-cell
-
-not a table | 
-| ^^^^^^^^^^^^^ - meta.table
-
- abc | def
- --- | ---
- --- | ---
-| ^^^^ meta.table - meta.table.header
-
- a | b
- - | -
-|^^^^^^ meta.table.header-separator.markdown-gfm
-|^ punctuation.section.table-header.markdown
-|  ^ punctuation.separator.table-cell.markdown
-|    ^ punctuation.section.table-header.markdown
- - | -
-|^^^^^^ meta.table.markdown-gfm
-
- a | b
- -:| -
-|^^^^^^ meta.table.header-separator.markdown-gfm
-|^ punctuation.section.table-header.markdown
-| ^ punctuation.definition.table-cell-alignment.markdown
-|  ^ punctuation.separator.table-cell.markdown
-|    ^ punctuation.section.table-header.markdown
- - | -
-|^^^^^^ meta.table.markdown-gfm
-
-| test | me |
-|------|----|
-|^^^^^^ punctuation.section.table-header
-|*test | me |
-|^^^^^^ - markup.bold
-|      ^ punctuation.separator.table-cell
-|           ^ punctuation.separator.table-cell
-|`test | me |
-|^ invalid.deprecated.unescaped-backticks
-|      ^ punctuation.separator.table-cell
-
-| table | followed by
-paragraph
-| <- meta.paragraph.markdown
-|^^^^^^^^^ meta.paragraph.markdown
-
-| table | followed by
-https://foo.bar/baz
-| <- meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
-|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
-
-| table | followed by
-# heading
-| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^ markup.heading.1.markdown
-
-| table | followed by
-> quote
-| <- markup.quote.markdown punctuation.definition.blockquote.markdown
-|^^^^^^^ markup.quote.markdown
-
-| table | followed by
-    quote
-| <- markup.raw.block.markdown
-|^^^^^^^^^ markup.raw.block.markdown
-
-| table | followed by
-```fenced
-| <- meta.code-fence.definition.begin.text.markdown-gfm
-|^^^^^^^^^ meta.code-fence.definition.begin.text.markdown-gfm
-code block
-```
-| <- meta.code-fence.definition.end.text.markdown-gfm
-|^^ meta.code-fence.definition.end.text.markdown-gfm
-
-A line without bolded |
-|                     ^ - punctuation.separator.table-cell
-
-A line with bolded **|**
-|                    ^ - punctuation.separator.table-cell
 
 1. test
 |  ^^^^^ markup.list.numbered meta.paragraph.list
