@@ -2095,14 +2095,20 @@ contexts:
         4: punctuation.separator.key-value.markdown
       push:
         - link-def-end
-        - link-title
+        - link-def-title
         - link-def-url
 
   link-def-end:
     - meta_scope: meta.link.reference.def.markdown
-    - include: eol-pop
+    - match: ^
+      pop: true
     - match: \s*\S+
       scope: invalid.illegal.expected-eol.markdown
+
+  link-def-title:
+    - include: link-title-begin
+    - include: paragraph-end
+    - include: else-pop
 
   link-def-url:
     - match: <
@@ -2110,25 +2116,20 @@ contexts:
       set: link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
-    - include: eol-pop
+    - include: paragraph-end
 
   link-def-url-angled:
     - meta_content_scope: markup.underline.link.markdown
-    - match: \>
-      scope: punctuation.definition.link.end.markdown
-      pop: true
-    - include: link-def-url-common
+    - include: link-url-angled
 
   link-def-url-unquoted:
     - meta_scope: markup.underline.link.markdown
-    - include: link-def-url-common
-
-  link-def-url-common:
     # URLs are terminated by whitespace or newline in reference definitions
     # Note: \s includes \n
     - match: (?=\s)
       pop: true
     - include: link-url-common
+
 
 ###[ LEAF BLOCKS: TABLES ]####################################################
 
@@ -2753,6 +2754,11 @@ contexts:
     - include: images
 
   link-title:
+    - include: link-title-begin
+    - include: eol-pop
+    - include: else-pop
+
+  link-title-begin:
     - match: \'
       scope: punctuation.definition.string.begin.markdown
       set: link-title-single-quoted-content
@@ -2762,8 +2768,6 @@ contexts:
     - match: \(
       scope: punctuation.definition.string.begin.markdown
       set: link-title-other-quoted-content
-    - match: $|(?=\S)
-      pop: true
 
   link-title-double-quoted-content:
     - meta_scope: meta.string.title.markdown string.quoted.double.markdown

@@ -2738,6 +2738,14 @@ non-disabled markdown
 |      ^^^^ markup.underline.link
 |           ^^^^^^^ string.quoted.double
 
+## https://spec.commonmark.org/0.30/#example-193
+
+   [foo]: 
+      /url  
+           'the title'  
+|^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|          ^^^^^^^^^^^ string.quoted.single
+
 ## https://spec.commonmark.org/0.30/#example-194
 
  [Foo*bar\]]:my_(url) 'title (with parens)'
@@ -2750,6 +2758,60 @@ non-disabled markdown
 |                    ^ - markup - string
 |                     ^^^^^^^^^^^^^^^^^^^^^ string.quoted.single
 
+## https://spec.commonmark.org/0.30/#example-195
+
+[Foo bar]:
+<my url>
+| <- meta.link.reference.def.markdown punctuation.definition.link.begin.markdown
+|^^^^^^ meta.link.reference.def.markdown markup.underline.link.markdown
+|      ^ meta.link.reference.def.markdown punctuation.definition.link.end.markdown
+
+[Foo bar]:
+<my url>
+'title'
+| <- meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+|^^^^^^ meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+
+## https://spec.commonmark.org/0.30/#example-196
+
+[foo]: /url '
+|           ^ meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown punctuation.definition.string.begin.markdown
+title
+| <- meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+|^^^^^ meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+line1
+| <- meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+|^^^^^ meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+line2
+| <- meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+|^^^^^ meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown
+'
+| <- meta.link.reference.def.markdown meta.string.title.markdown string.quoted.single.markdown punctuation.definition.string.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-197
+
+[foo]: /url 'title
+
+with blank line'
+| <- meta.paragraph.markdown - meta.link
+|^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.link
+
+## https://spec.commonmark.org/0.30/#example-198
+
+[foo]:
+/url
+| <- meta.link.reference.def.markdown markup.underline.link.markdown punctuation.separator.path.markdown
+|^^^ meta.link.reference.def.markdown markup.underline.link.markdown
+
+## https://spec.commonmark.org/0.30/#example-199
+
+[foo]:
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^ meta.link.reference.def.markdown entity.name.reference.link.markdown
+|   ^ meta.link.reference.def.markdown punctuation.definition.reference.end.markdown
+|    ^ meta.link.reference.def.markdown punctuation.separator.key-value.markdown
+|     ^ meta.link.reference.def.markdown - punctuation
+
 ## https://spec.commonmark.org/0.30/#example-200
 
 [foo]: <>
@@ -2758,76 +2820,182 @@ non-disabled markdown
 |      ^ punctuation.definition.link.begin
 |       ^ punctuation.definition.link.end
 
-[foo]: <bar> "test" 
-|^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
-|                   ^ - meta.link
+## https://spec.commonmark.org/0.30/#example-201
+
+[foo]: <bar>(baz)
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^ punctuation.definition.link.begin.markdown
+|       ^^^ markup.underline.link.markdown
+|          ^ punctuation.definition.link.end.markdown
+|           ^^^^^ meta.string.title.markdown string.quoted.other.markdown
+|           ^ punctuation.definition.string.begin.markdown
+|               ^ punctuation.definition.string.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-202
+
+[foo]: /url\bar\*baz "foo\"bar\baz"
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^^^^^^^^^^^^^ markup.underline.link.markdown
+|      ^ punctuation.separator.path.markdown
+|          ^^ - constant.character.escape
+|              ^^ constant.character.escape.markdown
+|                    ^^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+|                    ^ punctuation.definition.string.begin.markdown
+|                        ^^ constant.character.escape.markdown
+|                             ^^ - constant.character.escape
+|                                 ^ punctuation.definition.string.end.markdown
+
+## https://spec.commonmark.org/0.30/#example-203
+
+[foo]: url
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^^^ markup.underline.link.markdown
+
+## https://spec.commonmark.org/0.30/#example-204
+
+[foo]: first
+[foo]: second
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^^^^^^ markup.underline.link.markdown
+
+
+## https://spec.commonmark.org/0.30/#example-205
+
+[FOO]: /url
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^^^^ markup.underline.link.markdown
+
+## https://spec.commonmark.org/0.30/#example-206
+
+[ΑΓΩ]: /φου
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^ entity.name.reference.link.markdown
+|   ^ punctuation.definition.reference.end.markdown
+|    ^ punctuation.separator.key-value.markdown
+|      ^^^^ markup.underline.link.markdown
+
+## https://spec.commonmark.org/0.30/#example-208
+
+[
+foo
+]: /url
+bar
+| <- meta.paragraph.markdown - meta.link
+|^^^ meta.paragraph.markdown - meta.link
+
+## https://spec.commonmark.org/0.30/#example-209
+
+This is not a link reference definition, because there are characters other than spaces or tabs after the title:
+
+[foo]: /url "title" ok
+|^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|                   ^^ invalid.illegal.expected-eol.markdown
+
+## https://spec.commonmark.org/0.30/#example-210
+
+This is a link reference definition, but it has no title:
+
+[foo]: /url
+"title" ok
+|^^^^^^^^^^ meta.link.reference.def.markdown
+|       ^^ invalid.illegal.expected-eol.markdown
+
+[foo]: <bar> "baz" 
+|^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |      ^ punctuation.definition.link.begin
 |       ^^^ markup.underline.link
 |          ^ punctuation.definition.link.end
-|            ^^^^^^ string.quoted.double
+|            ^^^^^ string.quoted.double
+|                 ^ - invalid.illegal.expected-eol
+
+[foo]: <bar>> "baz" 
+|^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|      ^ punctuation.definition.link.begin
+|       ^^^ markup.underline.link
+|          ^ punctuation.definition.link.end
+|           ^^^^^^^ invalid.illegal.expected-eol
 |                  ^ - invalid.illegal.expected-eol
 
-[foo]: <bar>> "test" 
-|^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
-|                    ^ - meta.link
-|      ^ punctuation.definition.link.begin
-|       ^^^ markup.underline.link
-|          ^ punctuation.definition.link.end
-|           ^^^^^^^^ invalid.illegal.expected-eol
-|                   ^ - invalid.illegal.expected-eol
+## https://spec.commonmark.org/0.30/#example-211
 
-[1]: https://google.com
-| <- meta.link.reference.def.markdown
-|^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
-|^ entity.name.reference.link
-|  ^ punctuation.separator.key-value
-|    ^^^^^^^^^^^^^^^^^^ markup.underline.link
+This is not a link reference definition, because it is indented four spaces:
 
+    [foo]: /url "title"
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block.markdown - meta.link
 
-[2]: https://github.com/sublimehq/Packages "Packages Repo"
-| <- meta.link.reference.def.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
-|^ entity.name.reference.link
-|  ^ punctuation.separator.key-value
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                          ^^^^^^^^^^^^^^^ string.quoted.double
-|                                          ^ punctuation.definition.string.begin
-|                                                        ^ punctuation.definition.string.end
+## https://spec.commonmark.org/0.30/#example-212
 
-[3]: https://github.com/sublimehq/Packages/issues/ 'Issues on Packages Repo'
-| <- meta.link.reference.def.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
-|^ entity.name.reference.link
-|  ^ punctuation.separator.key-value
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single
-|                                                  ^ punctuation.definition.string.begin
-|                                                                          ^ punctuation.definition.string.end
+This is not a link reference definition, because it occurs inside a code block:
 
-[img-example]: http://www.sublimetext.com/anim/rename2_packed.png
-|^^^^^^^^^^^ meta.link.reference.def.markdown entity.name.reference.link
-|            ^ punctuation.separator.key-value
-|              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                                                                ^ - meta.link - markup
+```
+[foo]: /url
+| <- markup.raw.code-fence.markdown-gfm - meta.link
+|^^^^^^^^^^^ markup.raw.code-fence.markdown-gfm - meta.link
+```
+
+## https://spec.commonmark.org/0.30/#example-213
+
+A link reference definition cannot interrupt a paragraph.
+
+Foo
+[bar]: /baz
+| <- meta.paragraph.markdown meta.link.reference.description.markdown punctuation.definition.link.begin.markdown
+|^^^^^^^^^^^ meta.paragraph.markdown
+|^^^^ meta.link.reference.description.markdown
+|    ^^^^^^^ - punctuation - markup.underline
+
+## https://spec.commonmark.org/0.30/#example-214
+
+### [Foo]
+[foo]: /url
+| <- meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^^ meta.link.reference.def.markdown
+
+### [Foo]
+[foo]: /url
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://custom-tests/link-reference-definitions
 
 [//]: # (This is a comment without a line-break.)
 |     ^ meta.link.reference.def.markdown markup.underline.link
 |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.other
-|                                                ^ - meta.link
 
 [//]: # (This is a comment with a
 |     ^ meta.link.reference.def.markdown markup.underline.link
 |       ^ punctuation.definition.string.begin
         line-break.)
 |                  ^ punctuation.definition.string.end
-|                   ^ - meta.link
 
 [//]: # (testing)blah
 |^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |       ^ punctuation.definition.string.begin
 |               ^ punctuation.definition.string.end
 |                ^^^^ invalid.illegal.expected-eol
-|                    ^ - meta.link - invalid
+|                    ^ - invalid
 
 [//]: # (testing
 blah
@@ -2847,6 +3015,8 @@ text
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.link.reference.def.markdown
 1. another list item
 | <- markup.list.numbered.bullet.markdown
+
+## https://custom-tests/footnote-reference-definitions
 
  [^1]: And that's the footnote.
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra
