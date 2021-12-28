@@ -2994,6 +2994,7 @@ contexts:
       scope: constant.character.escape.markdown
 
   hard-line-breaks:
+    # https://spec.commonmark.org/0.30/#hard-line-breaks
     - match: '[ ]{2,}$'
       scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
     - match: (\\)\n

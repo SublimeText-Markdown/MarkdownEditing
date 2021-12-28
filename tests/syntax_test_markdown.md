@@ -4914,6 +4914,9 @@ a.b-c_d@a.b.
 | <- - meta.link - markup.underline
 |^^^^^^^^^^^^^ - meta.link - markup.underline.link
 
+
+# TEST: HARD LINE BREAKS ######################################################
+
 hard line break  
 |              ^^ meta.hard-line-break punctuation.definition.hard-line-break
 hard line break\
