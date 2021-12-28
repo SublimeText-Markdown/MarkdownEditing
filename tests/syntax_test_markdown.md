@@ -1425,64 +1425,6 @@ Paragraph break.
 |  ^ punctuation.separator.key-value
 |    ^^^^^^^^^^^^^^^^^^ markup.underline.link
 
-<div>this is HTML until <span>there are two</span> blank lines</div>
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-disabled markdown
-| <- meta.disable-markdown
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
-<div>this is HTML until there are two blank lines
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-still <span>HTML</span>
-|      ^^^^ meta.tag.inline.any.html entity.name.tag.inline.any.html
-</div>
-| ^^^^ meta.disable-markdown
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
-<pre>nested tags don't count <pre>test</pre>
-|                                     ^^^^^^ meta.disable-markdown meta.tag.block.any.html
-non-disabled markdown
-| <- - meta.disable-markdown
-
-<div>nested tags don't count <div>test
-|                                 ^^^^^ meta.disable-markdown
-</div>
-| ^^^ meta.disable-markdown entity.name.tag.block.any.html
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
-<div>two blank lines needed</div> to stop disabled markdown
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-disabled markdown
-| <- meta.disable-markdown
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
-<div>another</div> <span>disable</span> test
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-|                  ^^^^^^ meta.tag.inline.any.html
-disabled markdown
-| <- meta.disable-markdown
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
-*a*
-| ^ markup.italic
-<p>*a*</p>
-| ^^^^^^^^^ meta.disable-markdown - markup.italic
-*a*
-| ^^ meta.disable-markdown
-
-non-disabled markdown
-| <- - meta.disable-markdown
-
 
 # TEST: BLOCK QUOTES ##########################################################
 
@@ -2328,6 +2270,471 @@ declare type foo = 'bar'
 ```
 
 
+# TEST: HTML BLOCKS ###########################################################
+
+## https://spec.commonmark.org/0.30/#example-148
+
+<table><tr><td>
+<pre>
+**Hello**,
+| ^^^^^^^^^ meta.disable-markdown - markup
+
+_world_.
+| ^^^^ markup.italic - meta.disable-markdown
+</pre>
+</td></tr></table>
+
+## https://spec.commonmark.org/0.30/#example-149
+
+<table>
+  <tr>
+    <td>
+           hi
+|^^^^^^^^^^^^^ meta.disable-markdown
+    </td>
+  </tr>
+</table>
+
+okay.
+| <- meta.paragraph.markdown
+|^^^^^ meta.paragraph.markdown
+
+## https://spec.commonmark.org/0.30/#example-150
+
+ <div>
+  *hello*
+         <foo><a>
+| <- meta.disable-markdown
+|^^^^^^^^^^^^^^^^^ meta.disable-markdown
+|        ^^^^^^^^ meta.tag
+
+## https://spec.commonmark.org/0.30/#example-151
+
+</div>
+*foo*
+| <- meta.disable-markdown - markup.italic
+|^^^^^ meta.disable-markdown - markup.italic
+
+## https://spec.commonmark.org/0.30/#example-152
+
+<DIV CLASS="foo">
+| ^^^^^^^^^^^^^^^^ meta.disable-markdown
+
+*Markdown*
+| ^^^^^^^ meta.paragraph markup.italic - meta.disable-markdown
+
+</DIV>
+| ^^^ meta.disable-markdown meta.tag.block.any.html
+
+## https://spec.commonmark.org/0.30/#example-153
+
+<div id="foo"
+  class="bar">
+|^^^^^^^^^^^^^ meta.disable-markdown meta.tag.block  
+</div>
+|^^^^^ meta.disable-markdown meta.tag.block
+
+## https://spec.commonmark.org/0.30/#example-154
+
+<div id="foo" class="bar
+  baz">
+|^^^^^^ meta.disable-markdown meta.tag.block  
+</div>
+|^^^^^ meta.disable-markdown meta.tag.block
+
+## https://spec.commonmark.org/0.30/#example-155
+
+<div>
+*foo*
+| <- meta.disable-markdown - markup.italic
+
+<div>
+*foo*
+
+*bar*
+| <- meta.paragraph.markdown markup.italic.markdown punctuation.definition.italic.begin.markdown
+
+## https://spec.commonmark.org/0.30/#example-159
+
+<div><a href="bar">*foo*</a></div>
+|                  ^^^^^ meta.disable-markdown - markup.italic
+
+## https://spec.commonmark.org/0.30/#example-161
+
+<div></div>
+``` c
+int x = 33;
+```
+|^^^ meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-162
+
+<a href="foo">
+*bar*
+| <- meta.disable-markdown - markup.italic - punctuation
+|^^^^^ meta.disable-markdown - markup.italic
+</a>
+
+## https://spec.commonmark.org/0.30/#example-163
+
+<Warning>
+*bar*
+| <- meta.disable-markdown - markup.italic - punctuation
+|^^^^^ meta.disable-markdown - markup.italic
+</Warning>
+| ^^^^^^^ meta.disable-markdown meta.tag.other.html entity.name.tag.other.html
+
+## https://spec.commonmark.org/0.30/#example-164
+
+<i class="foo">
+*bar*
+| <- meta.disable-markdown - markup.italic - punctuation
+|^^^^^ meta.disable-markdown - markup.italic
+</i>
+| <- meta.disable-markdown meta.tag punctuation.definition.tag
+|^^^ meta.disable-markdown meta.tag
+|   ^ meta.disable-markdown - meta.tag
+
+## https://spec.commonmark.org/0.30/#example-165
+
+</ins>
+*bar*
+| <- meta.disable-markdown - markup.italic - punctuation
+|^^^^^ meta.disable-markdown - markup.italic
+
+## https://spec.commonmark.org/0.30/#example-166
+
+<del>
+*foo*
+| <- meta.disable-markdown - markup.italic - punctuation
+|^^^^^ meta.disable-markdown - markup.italic
+</del>
+| <- meta.disable-markdown meta.tag punctuation.definition.tag
+|^^^^^ meta.disable-markdown meta.tag
+|     ^ meta.disable-markdown - meta.tag
+
+## https://spec.commonmark.org/0.30/#example-167
+
+<del>
+| <- meta.disable-markdown meta.tag punctuation.definition.tag
+|^^^^ meta.disable-markdown meta.tag
+|    ^ meta.disable-markdown - meta.tag
+
+*foo*
+| <- meta.paragraph.markdown markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^ meta.paragraph.markdown markup.italic.markdown - punctuation
+|   ^ meta.paragraph.markdown markup.italic.markdown punctuation.definition.italic.end.markdown
+
+</del>
+| <- meta.disable-markdown meta.tag punctuation.definition.tag
+|^^^^^ meta.disable-markdown meta.tag
+|     ^ meta.disable-markdown - meta.tag
+
+## https://spec.commonmark.org/0.30/#example-168
+
+<del>*foo*</del>
+|^^^^^^^^^^^^^^^ meta.paragraph - meta.disable-markdown
+|^^^^ meta.tag.inline
+|    ^^^^^ markup.italic
+|         ^^^^^^ meta.tag.inline
+
+## https://spec.commonmark.org/0.30/#example-169
+
+<pre language="haskell"><code>
+| ^^ meta.disable-markdown meta.tag.block.any.html entity.name.tag.block.any.html
+import Text.HTML.TagSoup
+
+main :: IO ()
+| ^^^^^^^^^^^^ meta.disable-markdown
+main = print $ parseTags tags
+</code></pre>
+| ^^^^^^^^^^^ meta.disable-markdown
+|        ^^^ meta.tag.block.any.html entity.name.tag.block.any.html
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-170
+
+<script type="text/javascript">
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.script.begin.html
+// JavaScript example
+| ^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown source.js.embedded.html comment.line.double-slash.js
+
+document.getElementById("demo").innerHTML = "Hello JavaScript!";
+| ^^^^^^ meta.disable-markdown source.js.embedded.html support.type.object.dom.js
+</script>
+| ^^^^^^ meta.disable-markdown meta.tag.script.end.html entity.name.tag.script.html
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-171
+
+<style
+  type="text/css">
+| ^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.style.begin.html meta.attribute-with-value.html
+h1 {color:red;}
+|   ^^^^^ meta.disable-markdown source.css.embedded.html meta.property-list.css meta.property-name.css support.type.property-name.css
+
+p {color:blue;}
+|  ^^^^^ meta.disable-markdown source.css.embedded.html meta.property-list.css meta.property-name.css support.type.property-name.css
+</style>
+| ^^^^^ meta.disable-markdown meta.tag.style.end.html entity.name.tag.style.html
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-172
+
+<style
+  type="text/css">
+h1 {color:red;}
+| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag.html.css
+
+p {color:blue;}
+| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag.html.css
+</style>
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-174
+
+> <div>
+> foo
+
+bar
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-175
+
+- <div>
+- foo
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-176
+
+<style>p{color:red;}</style>
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
+*foo*
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-177
+
+<!-- foo -->*bar*
+| ^^^^^^^^^^ comment.block.html
+|           ^^^^^ meta.disable-markdown
+*baz*
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-178
+
+<script>
+foo
+</script>1. *bar*
+| ^^^^^^^^^^^^^^^^ meta.disable-markdown
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-179
+
+<!-- Foo
+| ^^ meta.disable-markdown comment.block.html punctuation.definition.comment
+
+bar
+   baz -->
+| ^^^^^^^^ meta.disable-markdown comment.block.html
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-180
+
+<?php
+| ^^^^ meta.disable-markdown
+
+  echo '>';
+
+?>
+|^^ meta.disable-markdown
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-181
+
+<!DOCTYPE html>
+| ^^^^^^^ meta.disable-markdown meta.tag.sgml.doctype.html
+okay
+| <- - meta.disable-markdown
+
+<!ENTITY html>
+| ^^^^^^^^^^^^^ meta.disable-markdown
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-182
+
+<![CDATA[
+| ^^^^^^^^ meta.disable-markdown meta.tag.sgml
+function matchwo(a,b)
+{
+  if (a < b && a < 0) then {
+    return 1;
+
+  } else {
+
+    return 0;
+  }
+}
+]]>
+|^^ meta.disable-markdown meta.tag.sgml
+okay
+| <- - meta.disable-markdown
+
+## https://spec.commonmark.org/0.30/#example-183
+
+  <!-- foo -->
+| ^^^^^^^^^^^^ meta.disable-markdown comment.block.html
+
+    <!-- foo -->
+|^^^^^^^^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-184
+
+  <div>
+
+    <div>
+|^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-188
+
+<div>
+
+*Emphasized* text.
+|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^ markup.italic.markdown
+
+</div>
+| <- meta.disable-markdown meta.tag.block
+|^^^^^ meta.disable-markdown meta.tag.block
+
+## https://spec.commonmark.org/0.30/#example-189
+
+<div>
+*Emphasized* text.
+| <- meta.disable-markdown - markup.italic
+|^^^^^^^^^^^^^^^^^^ meta.disable-markdown - markup.italic
+</div>
+| <- meta.disable-markdown meta.tag.block
+|^^^^^ meta.disable-markdown meta.tag.block
+
+## https://spec.commonmark.org/0.30/#example-190
+
+<table>
+| <- meta.disable-markdown meta.tag
+|^^^^^^ meta.disable-markdown meta.tag
+
+<tr>
+| <- meta.disable-markdown meta.tag
+|^^^ meta.disable-markdown meta.tag
+
+<td>
+Hi
+</td>
+| <- meta.disable-markdown meta.tag
+|^^^^ meta.disable-markdown meta.tag
+
+</tr>
+| <- meta.disable-markdown meta.tag
+|^^^^ meta.disable-markdown meta.tag
+
+</table>
+| <- meta.disable-markdown meta.tag
+|^^^^^^^ meta.disable-markdown meta.tag
+
+## https://spec.commonmark.org/0.30/#example-191
+
+<table>
+| <- meta.disable-markdown meta.tag
+|^^^^^^ meta.disable-markdown meta.tag
+
+  <tr>
+| <- meta.disable-markdown
+|^^^^^^^ meta.disable-markdown
+
+    <td>
+      Hi
+    </td>
+| <- markup.raw.block.markdown
+|^^^^^^^^^ markup.raw.block.markdown
+
+  </tr>
+| <- meta.disable-markdown
+|^^^^^^^ meta.disable-markdown
+
+</table>
+| <- meta.disable-markdown meta.tag
+|^^^^^^^ meta.disable-markdown meta.tag
+
+## https://custom-tests/html-blocks
+
+<div>this is HTML until <span>there are two</span> blank lines</div>
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
+disabled markdown
+| <- meta.disable-markdown
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+<div>this is HTML until there are two blank lines
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
+still <span>HTML</span>
+|      ^^^^ meta.tag.inline.any.html entity.name.tag.inline.any.html
+</div>
+| ^^^^ meta.disable-markdown
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+<pre>nested tags don't count <pre>test</pre>
+|                                     ^^^^^^ meta.disable-markdown meta.tag.block.any.html
+non-disabled markdown
+| <- - meta.disable-markdown
+
+<div>nested tags don't count <div>test
+|                                 ^^^^^ meta.disable-markdown
+</div>
+| ^^^ meta.disable-markdown entity.name.tag.block.any.html
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+<div>two blank lines needed</div> to stop disabled markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
+disabled markdown
+| <- meta.disable-markdown
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+<div>another</div> <span>disable</span> test
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
+|                  ^^^^^^ meta.tag.inline.any.html
+disabled markdown
+| <- meta.disable-markdown
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+*a*
+| ^ markup.italic
+<p>*a*</p>
+| ^^^^^^^^^ meta.disable-markdown - markup.italic
+*a*
+| ^^ meta.disable-markdown
+
+non-disabled markdown
+| <- - meta.disable-markdown
+
+
 # TEST: CODE SPANS ############################################################
 
 ```testing``123```
@@ -3003,9 +3410,6 @@ because it doesn't begin with the number one:
 |^^ markup.list.numbered.markdown
 |  ^^ markup.list.numbered.bullet.markdown
 |    ^^^^^^^^^^^^^^ markup.list.numbered.markdown
-
-  <!-- HTML comment -->
-| ^^^^^^^^^^^^^^^^^^^^^ comment.block.html
 
 *italic text <span>HTML element</span> end of italic text*
 | <- punctuation.definition.italic
@@ -4148,203 +4552,6 @@ Normal paragraph
 
 Test
 | <- meta.paragraph - markup.list
-
-http://spec.commonmark.org/0.28/#example-116
-
-<table><tr><td>
-<pre>
-**Hello**,
-| ^^^^^^^^^ meta.disable-markdown
-
-_world_.
-| ^^^^ markup.italic - meta.disable-markdown
-</pre>
-</td></tr></table>
-
-http://spec.commonmark.org/0.28/#example-120
-
-<DIV CLASS="foo">
-| ^^^^^^^^^^^^^^^^ meta.disable-markdown
-
-*Markdown*
-| ^^^^^^^ meta.paragraph markup.italic - meta.disable-markdown
-
-</DIV>
-| ^^^ meta.disable-markdown meta.tag.block.any.html
-
-http://spec.commonmark.org/0.28/#example-127
-
-<div><a href="bar">*foo*</a></div>
-|                  ^^^^^ meta.disable-markdown - markup.italic
-
-http://spec.commonmark.org/0.28/#example-129
-
-<div></div>
-``` c
-int x = 33;
-```
-| ^^ meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-130
-
-<a href="foo">
-*bar*
-|^^^^^ meta.disable-markdown
-</a>
-
-http://spec.commonmark.org/0.28/#example-131
-
-<Warning>
-*bar*
-|^^^^^ meta.disable-markdown
-</Warning>
-| ^^^^^^^ meta.disable-markdown meta.tag.other.html entity.name.tag.other.html
-
-http://spec.commonmark.org/0.28/#example-135
-
-<del>
-| ^^ meta.disable-markdown meta.tag.inline.any.html entity.name.tag.inline.any.html
-
-*foo*
-| ^^ meta.paragraph markup.italic
-
-</del>
-| ^^^ meta.disable-markdown meta.tag.inline.any.html entity.name.tag.inline.any.html
-
-<del>
-*foo*
-|^^^^^ meta.disable-markdown
-</del>
-
-http://spec.commonmark.org/0.28/#example-136
-
-<del>*foo*</del>
-| ^^ meta.tag.inline.any.html entity.name.tag.inline.any.html
-|    ^^^^^ markup.italic
-|           ^^^ meta.tag.inline.any.html entity.name.tag.inline.any.html
-|^^^^^^^^^^^^^^^ meta.paragraph - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-137
-
-<pre language="haskell"><code>
-| ^^ meta.disable-markdown meta.tag.block.any.html entity.name.tag.block.any.html
-import Text.HTML.TagSoup
-
-main :: IO ()
-| ^^^^^^^^^^^^ meta.disable-markdown
-main = print $ parseTags tags
-</code></pre>
-| ^^^^^^^^^^^ meta.disable-markdown
-|        ^^^ meta.tag.block.any.html entity.name.tag.block.any.html
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-138
-
-<script type="text/javascript">
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.script.begin.html
-// JavaScript example
-| ^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown source.js.embedded.html comment.line.double-slash.js
-
-document.getElementById("demo").innerHTML = "Hello JavaScript!";
-| ^^^^^^ meta.disable-markdown source.js.embedded.html support.type.object.dom.js
-</script>
-| ^^^^^^ meta.disable-markdown meta.tag.script.end.html entity.name.tag.script.html
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-139
-
-<style
-  type="text/css">
-| ^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.style.begin.html meta.attribute-with-value.html
-h1 {color:red;}
-|   ^^^^^ meta.disable-markdown source.css.embedded.html meta.property-list.css meta.property-name.css support.type.property-name.css
-
-p {color:blue;}
-|  ^^^^^ meta.disable-markdown source.css.embedded.html meta.property-list.css meta.property-name.css support.type.property-name.css
-</style>
-| ^^^^^ meta.disable-markdown meta.tag.style.end.html entity.name.tag.style.html
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-143
-
-<style>p{color:red;}</style>
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-*foo*
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-144
-
-<!-- foo -->*bar*
-| ^^^^^^^^^^ comment.block.html
-|           ^^^^^ meta.disable-markdown
-*baz*
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-145
-
-<script>
-foo
-</script>1. *bar*
-| ^^^^^^^^^^^^^^^^ meta.disable-markdown
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-146
-
-<!-- Foo
-| ^^ meta.disable-markdown comment.block.html punctuation.definition.comment
-
-bar
-   baz -->
-| ^^^^^^^^ meta.disable-markdown comment.block.html
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-147
-
-<?php
-| ^^^^ meta.disable-markdown
-
-  echo '>';
-
-?>
-|^^ meta.disable-markdown
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-148
-
-<!DOCTYPE html>
-| ^^^^^^^ meta.disable-markdown meta.tag.sgml.doctype.html
-okay
-| <- - meta.disable-markdown
-
-<!ENTITY html>
-| ^^^^^^^^^^^^^ meta.disable-markdown
-okay
-| <- - meta.disable-markdown
-
-http://spec.commonmark.org/0.28/#example-149
-
-<![CDATA[
-| ^^^^^^^^ meta.disable-markdown meta.tag.sgml
-function matchwo(a,b)
-{
-  if (a < b && a < 0) then {
-    return 1;
-
-  } else {
-
-    return 0;
-  }
-}
-]]>
-|^ meta.disable-markdown meta.tag.sgml
-okay
-| <- - meta.disable-markdown
 
 1. Test
 
