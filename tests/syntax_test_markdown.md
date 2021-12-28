@@ -3501,6 +3501,770 @@ foo
 | <- invalid.illegal.non-terminated.raw
 
 
+# TEST: EMPHASIS ##############################################################
+
+## https://spec.commonmark.org/0.27/#example-328
+
+*foo bar*
+| <- punctuation.definition.italic.begin
+|       ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-329
+
+This is not emphasis, because the opening `*` is followed by whitespace, and hence not part of a left-flanking delimiter run:
+a * foo bar*
+| ^^^^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-332
+
+Intraword emphasis with `*` is permitted:
+foo*bar*
+|  ^ punctuation.definition.italic.begin
+|      ^ punctuation.definition.italic.end
+## https://spec.commonmark.org/0.27/#example-333
+
+5*6*78
+|^ punctuation.definition.italic.begin
+|  ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-334
+
+_foo bar_
+| <- punctuation.definition.italic.begin
+|       ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-335
+
+This is not emphasis, because the opening `_` is followed by whitespace:
+_ foo bar_
+| <- - punctuation
+| ^^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-336
+
+This is not emphasis, because the opening `_` is preceded by an alphanumeric and followed by punctuation:
+a_"foo"_
+|^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-337
+
+Emphasis with `_` is not allowed inside words:
+foo_bar_
+|  ^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-338
+
+5_6_78
+|^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-339
+
+пристаням_стремятся_
+|        ^^^^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-341
+
+foo-_(bar)_
+|   ^ punctuation.definition.italic.begin
+|         ^ punctuation.definition.italic.end
+
+*foo bar *
+| <- punctuation.definition.italic.begin
+|        ^ - punctuation
+*
+| <- - punctuation
+abc*
+|  ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-347
+
+*foo*bar
+| <- punctuation.definition.italic.begin
+|   ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-348
+
+_foo bar _
+| <- punctuation.definition.italic.begin
+|        ^ - punctuation
+_
+| <- - punctuation
+abc_
+|  ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-351
+
+Intraword emphasis is disallowed for `_`:
+_foo_bar
+| <- punctuation.definition.italic.begin
+|   ^ - punctuation
+abc_
+|  ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-353
+
+_foo_bar_baz_
+| <- punctuation.definition.italic.begin
+|   ^^^^^ - punctuation
+|           ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-354
+
+_(bar)_.
+| <-  punctuation.definition.italic.begin
+|     ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-355
+
+ **foo bar**
+|^^ punctuation.definition.bold.begin
+|         ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-356
+
+** foo bar**
+| <- - punctuation
+|         ^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-358
+
+foo**bar**
+|  ^^ punctuation.definition.bold.begin
+|       ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-359
+
+ __foo bar__
+|^^ punctuation.definition.bold.begin
+|         ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-360
+
+This is not strong emphasis, because the opening delimiter is followed by whitespace:
+__ foo bar__
+| <- - punctuation
+|         ^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-361
+
+__
+| <- - punctuation
+
+## https://spec.commonmark.org/0.27/#example-362
+
+a__"foo"__
+|^^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-363
+
+Intraword strong emphasis is forbidden with `__`:
+foo__bar__
+|  ^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-364
+
+5__6__78
+|^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-367
+
+foo-__(bar)__
+|   ^^ punctuation.definition.bold.begin
+|          ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-368
+
+**foo bar **
+| <- punctuation.definition.bold.begin
+|         ^^ - punctuation
+abc**
+|  ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-373
+
+Intraword emphasis:
+ **foo**bar
+|^^ punctuation.definition.bold.begin
+|     ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-374
+
+ __foo bar __
+|^^ punctuation.definition.bold.begin
+|          ^^ - punctuation
+abc__
+|  ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-376
+
+_(__foo__)_
+| <- punctuation.definition.italic.begin
+| ^^ punctuation.definition.bold.begin
+|      ^^ punctuation.definition.bold.end
+|         ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-377
+
+Intraword strong emphasis is forbidden with `__`:
+__foo__bar
+| <- punctuation.definition.bold.begin
+|    ^^ - punctuation
+abc__
+|  ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-379
+
+__foo__bar__baz__
+| <- punctuation.definition.bold.begin
+|              ^^ punctuation.definition.bold.end
+|    ^^^^^^^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-380
+
+This is strong emphasis, even though the closing delimiter is both left- and right-flanking, because it is followed by punctuation:
+__(bar)__.
+| <- punctuation.definition.bold.begin
+|      ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-381
+
+*foo [bar](/url)*
+| <- punctuation.definition.italic.begin
+|               ^ punctuation.definition.italic.end
+|    ^^^^^^^^^^^ meta.link.inline
+
+## https://spec.commonmark.org/0.27/#example-382
+
+*foo
+| <- punctuation.definition.italic.begin
+bar*
+|  ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-383
+
+_foo __bar__ baz_
+| <- punctuation.definition.italic.begin
+|    ^^ punctuation.definition.bold.begin
+|         ^^ punctuation.definition.bold.end
+|               ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-394
+
+** is not an empty emphasis
+| <- - punctuation
+|^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-395
+
+**** is not an empty strong emphasis
+| <- - punctuation
+|^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-396
+
+**foo [bar](/url)**
+| <- punctuation.definition.bold.begin
+|     ^^^^^^^^^^^ meta.link.inline
+|                ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-397
+
+**foo
+| <- punctuation.definition.bold.begin
+bar**
+|  ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-398
+
+__foo _bar_ baz__
+| <- punctuation.definition.bold.begin
+|     ^ punctuation.definition.italic.begin
+|         ^ punctuation.definition.italic.end
+|              ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-408
+
+__ is not an empty emphasis
+| <- - punctuation
+|^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-409
+
+____ is not an empty strong emphasis
+| <- - punctuation
+|^^^ - punctuation
+
+
+## https://spec.commonmark.org/0.27/#example-410
+
+foo ***
+|   ^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-411
+
+foo *\**
+|   ^ punctuation.definition.italic.begin
+|    ^^ constant.character.escape
+|      ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-412
+
+foo *_*
+|   ^ punctuation.definition.italic.begin
+|    ^ - punctuation
+|     ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-414
+
+foo **\***
+|   ^^ punctuation.definition.bold.begin
+|     ^^ constant.character.escape
+|       ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-415
+
+foo **_**
+|   ^^ punctuation.definition.bold.begin
+|     ^ - punctuation
+|      ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-422
+
+foo ___
+|   ^^^^ - punctuation
+
+## https://spec.commonmark.org/0.27/#example-423
+
+foo _\__
+|   ^ punctuation.definition.italic.begin
+|    ^^ constant.character.escape
+|      ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-424
+
+foo _*_
+|   ^ punctuation.definition.italic.begin
+|    ^ - punctuation
+|     ^ punctuation.definition.italic.end
+
+## https://spec.commonmark.org/0.27/#example-426
+
+foo __\___
+|   ^^ punctuation.definition.bold.begin
+|     ^^ constant.character.escape
+|       ^^ punctuation.definition.bold.end
+
+## https://spec.commonmark.org/0.27/#example-427
+
+foo __*__
+|   ^^ punctuation.definition.bold.begin
+|     ^ - punctuation
+|      ^^ punctuation.definition.bold.end
+
+This text is _italic_, but this__text__is neither bold_nor_italic
+|            ^ punctuation.definition.italic
+|             ^^^^^^ markup.italic
+|                   ^ punctuation.definition.italic
+|                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - markup.bold - markup.italic
+
+the following is italic *and doesn't end here * but does end here*
+|                       ^ punctuation.definition.italic.begin
+|                                             ^ - punctuation.definition.italic
+|                                                                ^ punctuation.definition.italic.end
+
+the following is bold **and doesn't end here ** but does end here**
+|                     ^^ punctuation.definition.bold.begin
+|                                            ^^ - punctuation.definition.bold
+|                                                                ^^ punctuation.definition.bold.end
+
+the following is not bold ** test ****
+|                         ^^ - punctuation.definition.bold.begin
+|                                 ^^^^ - punctuation.definition.bold
+
+the following is not italic _ test ____
+|                           ^ - punctuation.definition.italic.begin
+|                                  ^^^^ - punctuation.definition.italic
+
+more **tests *** ** here**
+|    ^^ punctuation.definition.bold.begin
+|            ^^^^^^ - punctuation.definition
+|                       ^^ punctuation.definition.bold.end
+
+more __tests *** ** example __ here__
+|    ^^ punctuation.definition.bold.begin
+|            ^^^^^^^^^^^^^^^^^^^^^^ - punctuation.definition
+|                                  ^^ punctuation.definition.bold.end
+
+more _tests <span class="test_">here</span>_
+|    ^ punctuation.definition.italic.begin
+|                            ^ - punctuation.definition
+|                                          ^ punctuation.definition.italic.end
+
+more _tests <span class="test_">_here</span>_
+|    ^ punctuation.definition.italic.begin
+|                            ^ - punctuation.definition
+|                               ^ - punctuation
+|                                           ^ punctuation.definition.italic.end
+
+_more `tests_` here_
+| <- punctuation.definition.italic.begin
+|     ^^^^^^^^ markup.raw.inline
+|                  ^ punctuation.definition.italic.end
+
+__more `tests__` here__
+| <- punctuation.definition.bold.begin
+|      ^^^^^^^^^ markup.raw.inline
+|                    ^^ punctuation.definition.bold.end
+
+**more `tests__` here**
+| <- punctuation.definition.bold.begin
+|      ^^^^^^^^^ markup.raw.inline
+|                    ^^ punctuation.definition.bold.end
+
+**more `tests**` here**
+| <- punctuation.definition.bold.begin
+|      ^^^^^^^^^ markup.raw.inline
+|                    ^^ punctuation.definition.bold.end
+
+*more `tests__` here**
+| <- punctuation.definition.italic.begin
+|                   ^^ - punctuation
+abc*
+|  ^ punctuation.definition.italic.end
+
+This is ***bold italic***
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^ punctuation.definition.bold.end
+
+This is ***bold italic* and just bold**
+|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^^^^^^^^^^^^^^^ - markup.italic
+|                                    ^^ punctuation.definition.bold.end
+
+The next scope overlap funny because we have to pick one order
+to scope three indicators in a row
+This is ***bold italic** and just italic*
+|       ^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic
+|         ^ punctuation.definition.italic.begin
+|                     ^^ punctuation.definition.bold.end
+|                       ^^^^^^^^^^^^^^^^^ - markup.bold
+|                                       ^ punctuation.definition.italic.end
+
+This is **_bold italic_**
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^ punctuation.definition.bold.end
+
+This is __*bold italic*__
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^ punctuation.definition.bold.end
+
+This is ___bold italic___
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^ punctuation.definition.bold.end
+
+This is ___bold italic_ and just bold__
+|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|                     ^ punctuation.definition.italic.end
+|                      ^^^^^^^^^^^^^^^^ - markup.italic
+|                                    ^^ punctuation.definition.bold.end
+
+The next scope overlap funny because we have to pick one order
+to scope three indicators in a row
+This is ___bold italic__ and just italic_
+|       ^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic
+|         ^ punctuation.definition.italic.begin
+|                     ^^ punctuation.definition.bold.end
+|                       ^^^^^^^^^^^^^^^^^ - markup.bold
+|                                       ^ punctuation.definition.italic.end
+
+This is _**italic bold**_
+|       ^^^^^^^^^^^^^^^^^ markup.italic
+|       ^ punctuation.definition.italic.begin
+|        ^^^^^^^^^^^^^^^ markup.bold
+|        ^^ punctuation.definition.bold.begin
+|                     ^^ punctuation.definition.bold.end
+|                       ^ punctuation.definition.italic.end
+
+This is *__italic bold__*
+|       ^^^^^^^^^^^^^^^^^ markup.italic
+|       ^ punctuation.definition.italic.begin
+|        ^^^^^^^^^^^^^^^ markup.bold
+|        ^^ punctuation.definition.bold.begin
+|                     ^^ punctuation.definition.bold.end
+|                       ^ punctuation.definition.italic.end
+
+**test!_test** Issue 1163
+|^^^^^^^^^^^^^ markup.bold
+|      ^ - punctuation.definition.italic
+|           ^^ punctuation.definition.bold.end
+
+__test!*test__ Issue 1163
+|^^^^^^^^^^^^^ markup.bold
+|      ^ - punctuation.definition.italic
+|           ^^ punctuation.definition.bold.end
+
+*test
+
+| <- invalid.illegal.non-terminated.bold-italic
+abc*
+|  ^ - punctuation
+
+_test
+
+| <- invalid.illegal.non-terminated.bold-italic
+abc_
+|  ^ - punctuation
+
+**test
+
+| <- invalid.illegal.non-terminated.bold-italic
+abc**
+|  ^^ - punctuation
+
+__test
+
+| <- invalid.illegal.non-terminated.bold-italic
+abc__
+|  ^^ - punctuation
+
+__test\
+|     ^ meta.hard-line-break constant.character.escape
+testing__
+
+## https://spec.commonmark.org/0.27/#example-407
+
+
+**foo [*bar*](/url)**
+| <- punctuation.definition.bold.begin
+|     ^^^^^^^^^^^^^ markup.bold meta.link.inline
+|                  ^^ punctuation.definition.bold.end
+|      ^ punctuation.definition.italic.begin
+|          ^ punctuation.definition.italic.end
+
+**foo [_bar_](/url)**
+| <- punctuation.definition.bold.begin
+|     ^^^^^^^^^^^^^ markup.bold meta.link.inline
+|                  ^^ punctuation.definition.bold.end
+|      ^ punctuation.definition.italic.begin
+|          ^ punctuation.definition.italic.end
+
+_foo [**bar**](/url)_
+| <- punctuation.definition.italic.begin
+|    ^^^^^^^^^^^^^^^ markup.italic meta.link.inline
+|                   ^ punctuation.definition.italic.end
+|     ^^ punctuation.definition.bold.begin
+|          ^^ punctuation.definition.bold.end
+
+*italic text <span>HTML element</span> end of italic text*
+| <- punctuation.definition.italic
+|                                                        ^ punctuation.definition.italic
+|            ^^^^^^ meta.tag.inline.any.html
+|                              ^^^^^^^ meta.tag.inline.any.html
+
+_italic text <SPAN>HTML element</SPAN> end of italic text_
+| <- punctuation.definition.italic
+|                                                        ^ punctuation.definition.italic
+|            ^^^^^^ meta.tag.inline.any.html
+|                              ^^^^^^^ meta.tag.inline.any.html
+
+**bold text <span>HTML element</span> end of bold text**
+| <- punctuation.definition.bold
+|                                                     ^^ punctuation.definition.bold
+|           ^^^^^^ meta.tag.inline.any.html
+|                             ^^^^^^^ meta.tag.inline.any.html
+
+__bold text <span>HTML element</span> end of bold text__
+| <- punctuation.definition.bold
+|                                                     ^^ punctuation.definition.bold
+|           ^^^^^^ meta.tag.inline.any.html
+|                             ^^^^^^^ meta.tag.inline.any.html
+
+*italic text <span>HTML element</span> end of italic text*
+| <- punctuation.definition.italic
+|                                                        ^ punctuation.definition.italic
+|            ^^^^^^ meta.tag.inline.any.html
+|                              ^^^^^^^ meta.tag.inline.any.html
+
+_italic text <span>HTML element</span> end of italic text_
+| <- punctuation.definition.italic
+|                                                        ^ punctuation.definition.italic
+|            ^^^^^^ meta.tag.inline.any.html
+|                              ^^^^^^^ meta.tag.inline.any.html
+
+_test <span>text_ foobar</span>
+| <- punctuation
+|               ^ punctuation.definition.italic.end
+
+__test <span>text__ not formatted</span>
+| <- punctuation
+|                ^^ punctuation.definition.bold.end
+
+*test <span>text* not formatted</span>
+| <- punctuation
+|               ^ punctuation.definition.italic.end
+
+**test <span>text** not formatted</span>
+| <- punctuation
+|                ^^ punctuation.definition.bold.end
+
+_test <span>text **formatted**</span>_
+| <- punctuation
+|                ^^ punctuation
+|                           ^^ punctuation
+|                                    ^ punctuation
+
+*test <span>text __formatted__</span>*
+| <- punctuation
+|                ^^ punctuation
+|                           ^^ punctuation
+|                                    ^ punctuation
+
+*test <span>text __formatted__</span>* **more** _text_
+| <- punctuation
+|                ^^ punctuation
+|                           ^^ punctuation
+|                                    ^ punctuation
+|                                      ^^ punctuation
+|                                            ^^ punctuation
+|                                               ^ punctuation
+|                                                    ^ punctuation
+
+*test <span>text* __formatted</span>__
+| <- punctuation
+|               ^ punctuation
+|                 ^^ punctuation
+|                                   ^^ punctuation
+
+__test <span>text__ *formatted</span>*
+| <- punctuation
+|                ^^ punctuation
+|                   ^ punctuation
+|                                    ^ punctuation
+
+# TEST: STRIKETHROUGH #########################################################
+
+__~~bold striked~~__
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.strikethrough
+| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
+|                 ^^ markup.bold.markdown - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.strikethrough.begin.markdown
+|               ^^ punctuation.definition.strikethrough.end.markdown 
+|                 ^^ punctuation.definition.bold.end.markdown
+
+**~~bold striked~~**
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.strikethrough
+| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
+|                 ^^ markup.bold.markdown - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.strikethrough.begin.markdown
+|               ^^ punctuation.definition.strikethrough.end.markdown 
+|                 ^^ punctuation.definition.bold.end.markdown
+
+_~~italic striked~~_
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
+|                  ^ markup.italic.markdown - markup.strikethrough
+|^^ punctuation.definition.strikethrough.begin.markdown
+|                ^^ punctuation.definition.strikethrough.end.markdown 
+|                  ^ punctuation.definition.italic.end.markdown
+
+*~~italic striked~~*
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
+|                  ^ markup.italic.markdown - markup.strikethrough
+|^^ punctuation.definition.strikethrough.begin.markdown
+|                ^^ punctuation.definition.strikethrough.end.markdown 
+|                  ^ punctuation.definition.italic.end.markdown
+
+___~~bold italic striked~~___
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.strikethrough
+| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
+|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.strikethrough.begin.markdown
+|                       ^^ punctuation.definition.strikethrough.end.markdown 
+|                         ^ punctuation.definition.italic.end.markdown
+|                          ^^ punctuation.definition.bold.end.markdown
+
+***~~bold italic striked~~***
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.strikethrough
+| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
+|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
+|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.strikethrough.begin.markdown
+|                       ^^ punctuation.definition.strikethrough.end.markdown 
+|                         ^ punctuation.definition.italic.end.markdown
+|                          ^^ punctuation.definition.bold.end.markdown
+
+~Hi~ Hello, world!
+| <- - punctuation.definition.strikethrough
+|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|  ^ - punctuation.definition.strikethrough
+
+This ~text~~~~ is ~~~~curious~.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|    ^ - punctuation.definition.strikethrough
+|         ^^^^ - punctuation.definition.strikethrough
+|                 ^^^^ - punctuation.definition.strikethrough
+|                            ^ - punctuation.definition.strikethrough
+
+This ~~text~~~~ is ~~~~curious~~.
+|^^^^ meta.paragraph - markup
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.strikethrough
+|                               ^^ meta.paragraph - markup
+|    ^^ punctuation.definition.strikethrough.begin
+|          ^^^^ - punctuation.definition.strikethrough
+|                  ^^^^ - punctuation.definition.strikethrough
+|                             ^^ punctuation.definition.strikethrough.end
+
+This ~~has a
+|    ^^^^^^^^ meta.paragraph markup.strikethrough
+
+| <- meta.paragraph markup.strikethrough invalid.illegal.non-terminated.bold-italic
+new paragraph~~.
+|            ^^ meta.paragraph markup.strikethrough punctuation.definition.strikethrough.begin
+
+| <- invalid.illegal.non-terminated.bold-italic
+
+
 # TEST: LINKS #################################################################
 
 A [link](https://example.com){ :_attr = value }, *italic text* and **bold**.
@@ -3883,7 +4647,6 @@ Here is a ![Image Ref Alt][1].
 
 # TEST: FOOTNOTES #############################################################
 
-
 ## https://michelf.ca/projects/php-markdown/extra/#footnotes
 
 That's some text with a footnote.[^1]
@@ -4151,645 +4914,6 @@ a.b-c_d@a.b.
 | <- - meta.link - markup.underline
 |^^^^^^^^^^^^^ - meta.link - markup.underline.link
 
-
-*italic text <span>HTML element</span> end of italic text*
-| <- punctuation.definition.italic
-|                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
-
-_italic text <SPAN>HTML element</SPAN> end of italic text_
-| <- punctuation.definition.italic
-|                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
-
-**bold text <span>HTML element</span> end of bold text**
-| <- punctuation.definition.bold
-|                                                     ^^ punctuation.definition.bold
-|           ^^^^^^ meta.tag.inline.any.html
-|                             ^^^^^^^ meta.tag.inline.any.html
-
-__bold text <span>HTML element</span> end of bold text__
-| <- punctuation.definition.bold
-|                                                     ^^ punctuation.definition.bold
-|           ^^^^^^ meta.tag.inline.any.html
-|                             ^^^^^^^ meta.tag.inline.any.html
-
-*italic text <span>HTML element</span> end of italic text*
-| <- punctuation.definition.italic
-|                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
-
-_italic text <span>HTML element</span> end of italic text_
-| <- punctuation.definition.italic
-|                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
-
-http://spec.commonmark.org/0.27/#example-328
-*foo bar*
-| <- punctuation.definition.italic.begin
-|       ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-329
-This is not emphasis, because the opening `*` is followed by whitespace, and hence not part of a left-flanking delimiter run:
-a * foo bar*
-| ^^^^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-332
-Intraword emphasis with `*` is permitted:
-foo*bar*
-|  ^ punctuation.definition.italic.begin
-|      ^ punctuation.definition.italic.end
-http://spec.commonmark.org/0.27/#example-333
-5*6*78
-|^ punctuation.definition.italic.begin
-|  ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-334
-_foo bar_
-| <- punctuation.definition.italic.begin
-|       ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-335
-This is not emphasis, because the opening `_` is followed by whitespace:
-_ foo bar_
-| <- - punctuation
-| ^^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-336
-This is not emphasis, because the opening `_` is preceded by an alphanumeric and followed by punctuation:
-a_"foo"_
-|^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-337
-Emphasis with `_` is not allowed inside words:
-foo_bar_
-|  ^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-338
-5_6_78
-|^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-339
-пристаням_стремятся_
-|        ^^^^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-341
-foo-_(bar)_
-|   ^ punctuation.definition.italic.begin
-|         ^ punctuation.definition.italic.end
-
-*foo bar *
-| <- punctuation.definition.italic.begin
-|        ^ - punctuation
-*
-| <- - punctuation
-abc*
-|  ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-347
-*foo*bar
-| <- punctuation.definition.italic.begin
-|   ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-348
-_foo bar _
-| <- punctuation.definition.italic.begin
-|        ^ - punctuation
-_
-| <- - punctuation
-abc_
-|  ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-351
-Intraword emphasis is disallowed for `_`:
-_foo_bar
-| <- punctuation.definition.italic.begin
-|   ^ - punctuation
-abc_
-|  ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-353
-_foo_bar_baz_
-| <- punctuation.definition.italic.begin
-|   ^^^^^ - punctuation
-|           ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-354
-_(bar)_.
-| <-  punctuation.definition.italic.begin
-|     ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-355
- **foo bar**
-|^^ punctuation.definition.bold.begin
-|         ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-356
-** foo bar**
-| <- - punctuation
-|         ^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-358
-foo**bar**
-|  ^^ punctuation.definition.bold.begin
-|       ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-359
- __foo bar__
-|^^ punctuation.definition.bold.begin
-|         ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-360
-This is not strong emphasis, because the opening delimiter is followed by whitespace:
-__ foo bar__
-| <- - punctuation
-|         ^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-361
-__
-| <- - punctuation
-
-http://spec.commonmark.org/0.27/#example-362
-a__"foo"__
-|^^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-363
-Intraword strong emphasis is forbidden with `__`:
-foo__bar__
-|  ^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-364
-5__6__78
-|^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-367
-foo-__(bar)__
-|   ^^ punctuation.definition.bold.begin
-|          ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-368
-**foo bar **
-| <- punctuation.definition.bold.begin
-|         ^^ - punctuation
-abc**
-|  ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-373
-Intraword emphasis:
- **foo**bar
-|^^ punctuation.definition.bold.begin
-|     ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-374
- __foo bar __
-|^^ punctuation.definition.bold.begin
-|          ^^ - punctuation
-abc__
-|  ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-376
-_(__foo__)_
-| <- punctuation.definition.italic.begin
-| ^^ punctuation.definition.bold.begin
-|      ^^ punctuation.definition.bold.end
-|         ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-377
-Intraword strong emphasis is forbidden with `__`:
-__foo__bar
-| <- punctuation.definition.bold.begin
-|    ^^ - punctuation
-abc__
-|  ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-379
-__foo__bar__baz__
-| <- punctuation.definition.bold.begin
-|              ^^ punctuation.definition.bold.end
-|    ^^^^^^^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-380
-This is strong emphasis, even though the closing delimiter is both left- and right-flanking, because it is followed by punctuation:
-__(bar)__.
-| <- punctuation.definition.bold.begin
-|      ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-381
-*foo [bar](/url)*
-| <- punctuation.definition.italic.begin
-|               ^ punctuation.definition.italic.end
-|    ^^^^^^^^^^^ meta.link.inline
-
-http://spec.commonmark.org/0.27/#example-382
-*foo
-| <- punctuation.definition.italic.begin
-bar*
-|  ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-383
-_foo __bar__ baz_
-| <- punctuation.definition.italic.begin
-|    ^^ punctuation.definition.bold.begin
-|         ^^ punctuation.definition.bold.end
-|               ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-394
-** is not an empty emphasis
-| <- - punctuation
-|^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-395
-**** is not an empty strong emphasis
-| <- - punctuation
-|^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-396
-**foo [bar](/url)**
-| <- punctuation.definition.bold.begin
-|     ^^^^^^^^^^^ meta.link.inline
-|                ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-397
-**foo
-| <- punctuation.definition.bold.begin
-bar**
-|  ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-398
-__foo _bar_ baz__
-| <- punctuation.definition.bold.begin
-|     ^ punctuation.definition.italic.begin
-|         ^ punctuation.definition.italic.end
-|              ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-408
-__ is not an empty emphasis
-| <- - punctuation
-|^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-409
-____ is not an empty strong emphasis
-| <- - punctuation
-|^^^ - punctuation
-
-
-http://spec.commonmark.org/0.27/#example-410
-foo ***
-|   ^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-411
-foo *\**
-|   ^ punctuation.definition.italic.begin
-|    ^^ constant.character.escape
-|      ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-412
-foo *_*
-|   ^ punctuation.definition.italic.begin
-|    ^ - punctuation
-|     ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-414
-foo **\***
-|   ^^ punctuation.definition.bold.begin
-|     ^^ constant.character.escape
-|       ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-415
-foo **_**
-|   ^^ punctuation.definition.bold.begin
-|     ^ - punctuation
-|      ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-422
-foo ___
-|   ^^^^ - punctuation
-
-http://spec.commonmark.org/0.27/#example-423
-foo _\__
-|   ^ punctuation.definition.italic.begin
-|    ^^ constant.character.escape
-|      ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-424
-foo _*_
-|   ^ punctuation.definition.italic.begin
-|    ^ - punctuation
-|     ^ punctuation.definition.italic.end
-
-http://spec.commonmark.org/0.27/#example-426
-foo __\___
-|   ^^ punctuation.definition.bold.begin
-|     ^^ constant.character.escape
-|       ^^ punctuation.definition.bold.end
-
-http://spec.commonmark.org/0.27/#example-427
-foo __*__
-|   ^^ punctuation.definition.bold.begin
-|     ^ - punctuation
-|      ^^ punctuation.definition.bold.end
-
-This text is _bold_, but this__text__is neither bold_nor_italic
-|            ^ punctuation.definition.italic
-|             ^^^^ markup.italic
-|                 ^ punctuation.definition.italic
-|                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - markup.bold - markup.italic
-
-the following is italic *and doesn't end here * but does end here*
-|                       ^ punctuation.definition.italic.begin
-|                                             ^ - punctuation.definition.italic
-|                                                                ^ punctuation.definition.italic.end
-the following is bold **and doesn't end here ** but does end here**
-|                     ^^ punctuation.definition.bold.begin
-|                                            ^^ - punctuation.definition.bold
-|                                                                ^^ punctuation.definition.bold.end
-the following is not bold ** test ****
-|                         ^^ - punctuation.definition.bold.begin
-|                                 ^^^^ - punctuation.definition.bold
-the following is not italic _ test ____
-|                           ^ - punctuation.definition.italic.begin
-|                                  ^^^^ - punctuation.definition.italic
-
-more **tests *** ** here**
-|    ^^ punctuation.definition.bold.begin
-|            ^^^^^^ - punctuation.definition
-|                       ^^ punctuation.definition.bold.end
-more __tests *** ** example __ here__
-|    ^^ punctuation.definition.bold.begin
-|            ^^^^^^^^^^^^^^^^^^^^^^ - punctuation.definition
-|                                  ^^ punctuation.definition.bold.end
-more _tests <span class="test_">here</span>_
-|    ^ punctuation.definition.italic.begin
-|                            ^ - punctuation.definition
-|                                          ^ punctuation.definition.italic.end
-more _tests <span class="test_">_here</span>_
-|    ^ punctuation.definition.italic.begin
-|                            ^ - punctuation.definition
-|                               ^ - punctuation
-|                                           ^ punctuation.definition.italic.end
-_more `tests_` here_
-| <- punctuation.definition.italic.begin
-|     ^^^^^^^^ markup.raw.inline
-|                  ^ punctuation.definition.italic.end
-__more `tests__` here__
-| <- punctuation.definition.bold.begin
-|      ^^^^^^^^^ markup.raw.inline
-|                    ^^ punctuation.definition.bold.end
-**more `tests__` here**
-| <- punctuation.definition.bold.begin
-|      ^^^^^^^^^ markup.raw.inline
-|                    ^^ punctuation.definition.bold.end
-**more `tests**` here**
-| <- punctuation.definition.bold.begin
-|      ^^^^^^^^^ markup.raw.inline
-|                    ^^ punctuation.definition.bold.end
-*more `tests__` here**
-| <- punctuation.definition.italic.begin
-|                   ^^ - punctuation
-abc*
-|  ^ punctuation.definition.italic.end
-
-_test <span>text_ foobar</span>
-| <- punctuation
-|               ^ punctuation.definition.italic.end
-__test <span>text__ not formatted</span>
-| <- punctuation
-|                ^^ punctuation.definition.bold.end
-*test <span>text* not formatted</span>
-| <- punctuation
-|               ^ punctuation.definition.italic.end
-**test <span>text** not formatted</span>
-| <- punctuation
-|                ^^ punctuation.definition.bold.end
-_test <span>text **formatted**</span>_
-| <- punctuation
-|                ^^ punctuation
-|                           ^^ punctuation
-|                                    ^ punctuation
-*test <span>text __formatted__</span>*
-| <- punctuation
-|                ^^ punctuation
-|                           ^^ punctuation
-|                                    ^ punctuation
-*test <span>text __formatted__</span>* **more** _text_
-| <- punctuation
-|                ^^ punctuation
-|                           ^^ punctuation
-|                                    ^ punctuation
-|                                      ^^ punctuation
-|                                            ^^ punctuation
-|                                               ^ punctuation
-|                                                    ^ punctuation
-*test <span>text* __formatted</span>__
-| <- punctuation
-|               ^ punctuation
-|                 ^^ punctuation
-|                                   ^^ punctuation
-
-__test <span>text__ *formatted</span>*
-| <- punctuation
-|                ^^ punctuation
-|                   ^ punctuation
-|                                    ^ punctuation
-
-This is ***bold italic***
-|       ^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^ punctuation.definition.bold.end
-
-This is ***bold italic* and just bold**
-|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^^^^^^^^^^^^^^^ - markup.italic
-|                                    ^^ punctuation.definition.bold.end
-
-The next scope overlap funny because we have to pick one order
-to scope three indicators in a row
-This is ***bold italic** and just italic*
-|       ^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic
-|         ^ punctuation.definition.italic.begin
-|                     ^^ punctuation.definition.bold.end
-|                       ^^^^^^^^^^^^^^^^^ - markup.bold
-|                                       ^ punctuation.definition.italic.end
-
-This is **_bold italic_**
-|       ^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^ punctuation.definition.bold.end
-
-This is __*bold italic*__
-|       ^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^ punctuation.definition.bold.end
-
-This is ___bold italic___
-|       ^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^ punctuation.definition.bold.end
-
-This is ___bold italic_ and just bold__
-|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^ punctuation.definition.italic.begin
-|         ^^^^^^^^^^^^^ markup.italic
-|                     ^ punctuation.definition.italic.end
-|                      ^^^^^^^^^^^^^^^^ - markup.italic
-|                                    ^^ punctuation.definition.bold.end
-
-The next scope overlap funny because we have to pick one order
-to scope three indicators in a row
-This is ___bold italic__ and just italic_
-|       ^^^^^^^^^^^^^^^ markup.bold
-|       ^^ punctuation.definition.bold.begin
-|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic
-|         ^ punctuation.definition.italic.begin
-|                     ^^ punctuation.definition.bold.end
-|                       ^^^^^^^^^^^^^^^^^ - markup.bold
-|                                       ^ punctuation.definition.italic.end
-
-This is _**italic bold**_
-|       ^^^^^^^^^^^^^^^^^ markup.italic
-|       ^ punctuation.definition.italic.begin
-|        ^^^^^^^^^^^^^^^ markup.bold
-|        ^^ punctuation.definition.bold.begin
-|                     ^^ punctuation.definition.bold.end
-|                       ^ punctuation.definition.italic.end
-
-This is *__italic bold__*
-|       ^^^^^^^^^^^^^^^^^ markup.italic
-|       ^ punctuation.definition.italic.begin
-|        ^^^^^^^^^^^^^^^ markup.bold
-|        ^^ punctuation.definition.bold.begin
-|                     ^^ punctuation.definition.bold.end
-|                       ^ punctuation.definition.italic.end
-
-**test!_test** Issue 1163
-|^^^^^^^^^^^^^ markup.bold
-|      ^ - punctuation.definition.italic
-|           ^^ punctuation.definition.bold.end
-
-__test!*test__ Issue 1163
-|^^^^^^^^^^^^^ markup.bold
-|      ^ - punctuation.definition.italic
-|           ^^ punctuation.definition.bold.end
-
-# TEST: STRIKETHROUGH #########################################################
-
-__~~bold striked~~__
-| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
-|^ markup.bold.markdown - markup.strikethrough
-| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
-|                 ^^ markup.bold.markdown - markup.strikethrough
-|^ punctuation.definition.bold.begin.markdown
-| ^^ punctuation.definition.strikethrough.begin.markdown
-|               ^^ punctuation.definition.strikethrough.end.markdown 
-|                 ^^ punctuation.definition.bold.end.markdown
-
-**~~bold striked~~**
-| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
-|^ markup.bold.markdown - markup.strikethrough
-| ^^^^^^^^^^^^^^^^ markup.bold.markdown markup.strikethrough.markdown-gfm
-|                 ^^ markup.bold.markdown - markup.strikethrough
-|^ punctuation.definition.bold.begin.markdown
-| ^^ punctuation.definition.strikethrough.begin.markdown
-|               ^^ punctuation.definition.strikethrough.end.markdown 
-|                 ^^ punctuation.definition.bold.end.markdown
-
-_~~italic striked~~_
-| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
-|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
-|                  ^ markup.italic.markdown - markup.strikethrough
-|^^ punctuation.definition.strikethrough.begin.markdown
-|                ^^ punctuation.definition.strikethrough.end.markdown 
-|                  ^ punctuation.definition.italic.end.markdown
-
-*~~italic striked~~*
-| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
-|^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.strikethrough.markdown-gfm
-|                  ^ markup.italic.markdown - markup.strikethrough
-|^^ punctuation.definition.strikethrough.begin.markdown
-|                ^^ punctuation.definition.strikethrough.end.markdown 
-|                  ^ punctuation.definition.italic.end.markdown
-
-___~~bold italic striked~~___
-| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
-|^ markup.bold.markdown - markup.italic - markup.strikethrough
-| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
-|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
-|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
-|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
-|^ punctuation.definition.bold.begin.markdown
-| ^ punctuation.definition.italic.begin.markdown
-|  ^^ punctuation.definition.strikethrough.begin.markdown
-|                       ^^ punctuation.definition.strikethrough.end.markdown 
-|                         ^ punctuation.definition.italic.end.markdown
-|                          ^^ punctuation.definition.bold.end.markdown
-
-***~~bold italic striked~~***
-| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
-|^ markup.bold.markdown - markup.italic - markup.strikethrough
-| ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
-|  ^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.strikethrough.markdown-gfm
-|                         ^ markup.bold.markdown markup.italic.markdown - markup.strikethrough
-|                          ^^ markup.bold.markdown - markup.italic - markup.strikethrough
-|^ punctuation.definition.bold.begin.markdown
-| ^ punctuation.definition.italic.begin.markdown
-|  ^^ punctuation.definition.strikethrough.begin.markdown
-|                       ^^ punctuation.definition.strikethrough.end.markdown 
-|                         ^ punctuation.definition.italic.end.markdown
-|                          ^^ punctuation.definition.bold.end.markdown
-
-~Hi~ Hello, world!
-| <- - punctuation.definition.strikethrough
-|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
-|  ^ - punctuation.definition.strikethrough
-
-This ~text~~~~ is ~~~~curious~.
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
-|    ^ - punctuation.definition.strikethrough
-|         ^^^^ - punctuation.definition.strikethrough
-|                 ^^^^ - punctuation.definition.strikethrough
-|                            ^ - punctuation.definition.strikethrough
-
-This ~~text~~~~ is ~~~~curious~~.
-|^^^^ meta.paragraph - markup
-|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.strikethrough
-|                               ^^ meta.paragraph - markup
-|    ^^ punctuation.definition.strikethrough.begin
-|          ^^^^ - punctuation.definition.strikethrough
-|                  ^^^^ - punctuation.definition.strikethrough
-|                             ^^ punctuation.definition.strikethrough.end
-
-This ~~has a
-|    ^^^^^^^^ meta.paragraph markup.strikethrough
-
-| <- meta.paragraph markup.strikethrough invalid.illegal.non-terminated.bold-italic
-new paragraph~~.
-|            ^^ meta.paragraph markup.strikethrough punctuation.definition.strikethrough.begin
-
-| <- invalid.illegal.non-terminated.bold-italic
-
 hard line break  
 |              ^^ meta.hard-line-break punctuation.definition.hard-line-break
 hard line break\
@@ -4809,54 +4933,6 @@ soft line break
 `inline code with trailing spaces  
 |                                ^^^ - meta.hard-line-break
 not a hard line break`
-
-*test
-
-| <- invalid.illegal.non-terminated.bold-italic
-abc*
-|  ^ - punctuation
-
-_test
-
-| <- invalid.illegal.non-terminated.bold-italic
-abc_
-|  ^ - punctuation
-
-**test
-
-| <- invalid.illegal.non-terminated.bold-italic
-abc**
-|  ^^ - punctuation
-
-__test
-
-| <- invalid.illegal.non-terminated.bold-italic
-abc__
-|  ^^ - punctuation
-
-__test\
-|     ^ meta.hard-line-break constant.character.escape
-testing__
-
-http://spec.commonmark.org/0.27/#example-407
-**foo [*bar*](/url)**
-| <- punctuation.definition.bold.begin
-|     ^^^^^^^^^^^^^ markup.bold meta.link.inline
-|                  ^^ punctuation.definition.bold.end
-|      ^ punctuation.definition.italic.begin
-|          ^ punctuation.definition.italic.end
-**foo [_bar_](/url)**
-| <- punctuation.definition.bold.begin
-|     ^^^^^^^^^^^^^ markup.bold meta.link.inline
-|                  ^^ punctuation.definition.bold.end
-|      ^ punctuation.definition.italic.begin
-|          ^ punctuation.definition.italic.end
-_foo [**bar**](/url)_
-| <- punctuation.definition.italic.begin
-|    ^^^^^^^^^^^^^^^ markup.italic meta.link.inline
-|                   ^ punctuation.definition.italic.end
-|     ^^ punctuation.definition.bold.begin
-|          ^^ punctuation.definition.bold.end
 
 
 # TEST: CRITIC MARKUP #########################################################
