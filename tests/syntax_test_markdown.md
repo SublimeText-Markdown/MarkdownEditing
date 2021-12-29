@@ -31,15 +31,17 @@
 
 	bar
 | <- markup.list.unnumbered.markdown
-|^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+|^^^^ markup.list.unnumbered.markdown
 
 ## https://spec.commonmark.org/0.30/#example-5
 
 - foo
 
 		bar
-| <- markup.list.unnumbered.markdown markup.raw.block.markdown
-|^^^^^ markup.list.unnumbered.markdown markup.raw.block.markdown
+| <- markup.list.unnumbered.markdown - markup.raw.block.markdown
+|^^^^^ markup.list.unnumbered.markdown - markup.raw.block.markdown
+
+> Note: `bar` should be indented code block, but ST can't reliably highlight it!
 
 ## https://spec.commonmark.org/0.30/#example-6
 
@@ -65,9 +67,9 @@
  - foo
    - bar
 	 - baz
-|^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+|^ markup.list.unnumbered.markdown
 | ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-|   ^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+|   ^^^^ markup.list.unnumbered.markdown
 
 ## https://spec.commonmark.org/0.30/#example-10
 
@@ -766,7 +768,7 @@ bar
 
 - Foo
 - * * *
-| ^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.separator.thematic-break.markdown
+| ^^^^^^ markup.list.unnumbered.markdown meta.separator.thematic-break.markdown
 
 
 # TEST: ATX HEADINGS ##########################################################
@@ -2483,17 +2485,6 @@ blah
 text
 | <- meta.paragraph - meta.link.reference.def.markdown
 
-1. list [001]blah
-|       ^^^^^ meta.link.reference
-|       ^ punctuation.definition.link.begin
-|           ^ punctuation.definition.link.end
-|            ^^^^^ - meta.link
-
-  [001]: https://en.wikipedia.org/wiki/Root-mean-square_deviation "Wikipedia - RMSE"
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.link.reference.def.markdown
-1. another list item
-| <- markup.list.numbered.bullet.markdown
-
 ## https://custom-tests/footnote-reference-definitions
 
  [^1]: And that's the footnote.
@@ -3037,26 +3028,37 @@ no code block
 |^^^^^^^^^ markup.heading.1.markdown - meta.quote
 | ^^^^^^^ entity.name.section.markdown
 
-> Block quote followed by list
+> Block quote followed by unordered list
 * list item
 | <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
 |^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
 
-> Block quote followed by list
+> Block quote followed by unordered list
 + list item
 | <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
 |^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
 
-> Block quote followed by list
+> Block quote followed by unordered list
 - list item
 | <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
 |^^^^^^^^^^^ markup.list.unnumbered.markdown - meta.quote
 
-> Block quote followed by list
+> Block quote followed by ordered list
 1. list item
 | <- markup.list.numbered.bullet.markdown - punctuation
 |^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
 | ^^^^^^^^^^ markup.list.numbered.markdown - meta.quote
+
+> Block quote followed by ordered list
+2. list item
+| <- markup.list.numbered.bullet.markdown - punctuation
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^ markup.list.numbered.markdown - meta.quote
+
+> Block quote followed by invalid list
+1234567890. no list item
+| <- markup.quote.markdown - markup.list
+|^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.list
 
 ## https://custom-tests/block-quotes#list-items
 
@@ -3066,17 +3068,15 @@ no code block
 > - list item 2
 | ^ markup.list.unnumbered.bullet punctuation.definition.list_item
 | ^^^^^^^^^^^^^^ markup.quote markup.list.unnumbered
-|   ^^^^^^^^^^^^ meta.paragraph.list
 >   1. sub list item
 | <- markup.quote punctuation.definition.blockquote
 |^^^^^^^^^^^^^^^^^^^^ markup.quote
 |    ^ punctuation.definition.list_item
 |   ^^ markup.list.numbered.bullet
 | ^^^^^^^^^^^^^^^^^^^ markup.list.numbered
-|      ^^^^^^^^^^^^^^ meta.paragraph.list
 > - list item 3
   continued
-| ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
+| ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown
 
 ## https://custom-tests/block-quotes#gfm-tasks
 
@@ -3130,408 +3130,1241 @@ no code block
 |                                                 ^^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
 
 
-# TEST: LIST BLOKCKS ##########################################################
+# TEST: LIST BLOCKS ###########################################################
 
-Paragraph of text that should be scoped as meta.paragraph.
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph
+## https://spec.commonmark.org/0.30/#example-253
 
-Paragraph followed immediately by a list, no blank line in between
-- list item 1
-| <- markup.list.unnumbered punctuation.definition.list_item
+A paragraph
+with two lines.
 
-Paragraph followed immediately by a numbered list, no blank line in between
-1. list item 1
+    indented code
+
+> A block quote.
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown - markup.raw
+|^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-254
+
+1.  A paragraph
+    with two lines.
+
+        indented code
+
+    > A block quote.
+| <- markup.list.numbered.markdown - markup.quote - markup.raw
+|^^^ markup.list.numbered.markdown - markup.quote - markup.raw
+|   ^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown
+|   ^ punctuation.definition.blockquote.markdown
+
+## https://spec.commonmark.org/0.30/#example-255
+
+- one
+
+ two
+| <- markup.list.unnumbered.markdown
+|^^^^ markup.list.unnumbered.markdown
+
+> Note: `two` is not a part of the list item, but ST can't handle it!
+
+## https://spec.commonmark.org/0.30/#example-256
+
+- one
+
+  two
+| <- markup.list.unnumbered.markdown
+|^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-257
+
+ -    one
+
+     two
+| <- markup.list.unnumbered.markdown
+|^^^^^^^^ markup.list.unnumbered.markdown
+
+> Note: `two` is not a part of the list item, but ST can't handle it!
+
+## https://spec.commonmark.org/0.30/#example-258
+
+ -    one
+
+      two
+| <- markup.list.unnumbered.markdown
+|^^^^^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-261
+
+Note that at least one space or tab is needed between the list marker
+and any following content, so these are not list items:
+
+-one
+| <- meta.paragraph.markdown - markup.list
+|^^^^ meta.paragraph.markdown - markup.list
+
+2.two
+| <- meta.paragraph.markdown - markup.list
+|^^^^^ meta.paragraph.markdown - markup.list
+
+## https://spec.commonmark.org/0.30/#example-262
+
+A list item may contain blocks that are separated by more than one blank line.
+
+- foo
+
+
+  bar
+  | <- markup.list.unnumbered.markdown
+  |^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-263
+
+1.  foo
+
+    ```
+    | <- markup.list.numbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+    bar
+    | <- markup.list.numbered.markdown markup.raw.code-fence.markdown-gfm - punctuation
+    ```
+    | <- markup.list.numbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+    baz
+    | <- markup.list.numbered.markdown
+
+    > bam
+    | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+    |^^^^^ markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-265
+
+Note that ordered list start numbers must be nine digits or less:
+
+123456789. ok
 | <- markup.list.numbered.bullet.markdown
-|^^^^^^^^^^^^^ markup.list.numbered
-|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
-|   ^^^^^^^^^^^^ meta.paragraph.list
-  more text - this punctuation should be ignored 2.
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.paragraph.list
-|           ^ - punctuation.definition.list_item
-|                                                 ^ - punctuation.definition.list_item
+|^^^^^^^^^ markup.list.numbered.bullet.markdown
+|         ^^^^ markup.list.numbered.markdown
 
-Paragraph not followed immediately by a numbered list,
-because it doesn't begin with the number one:
-2. text
-| <- - markup.list.numbered
-|^^^^^^ - markup.list.numbered
+## https://spec.commonmark.org/0.30/#example-266
 
-  1. Ordered list item
-| ^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered
-| ^^ markup.list.numbered.bullet - markup.list.numbered markup.list.numbered
-|  ^ punctuation.definition.list_item
-  2. Ordered list item #2
-| ^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered - markup.list.numbered markup.list.numbered
-| ^^ markup.list.numbered.bullet
-|  ^ punctuation.definition.list_item
-     1. Subitem
-     2. Another subitem
-|^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered
-|    ^^ markup.list.numbered.bullet
-|     ^ punctuation.definition.list_item
-|       ^^^^^^^^^^^^^^^^ meta.paragraph.list - meta.paragraph.list meta.paragraph.list
+1234567890. not ok
+| <- meta.paragraph.markdown - markup.list
+|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.list
 
-Paragraph break.
+## https://spec.commonmark.org/0.30/#example-267
 
-1) numberd item
+0. ok
 | <- markup.list.numbered.bullet.markdown
 |^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
-| ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+| ^^^^ markup.list.numbered.markdown
 
- 2) numberd item
+## https://spec.commonmark.org/0.30/#example-268
+
+003. ok
+| <- markup.list.numbered.bullet.markdown
+|^^^ markup.list.numbered.bullet.markdown
+|  ^ punctuation.definition.list_item.markdown
+|   ^^^^ markup.list.numbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-269
+
+-1. not ok
+| <- meta.paragraph.markdown - markup.list
+|^^^^^^^^^^ meta.paragraph.markdown - markup.list
+
+## https://spec.commonmark.org/0.30/#example-282
+
+- foo
+-   
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^ markup.list.unnumbered.markdown
+
+- foo
+-   
+- bar
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-283
+
+1. foo
+2.
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^ markup.list.numbered.markdown - punctuation
+
+1. foo
+2.
+3. bar
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^ markup.list.numbered.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-284
+
+*
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^ markup.list.unnumbered.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-285
+
+foo
+*
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^ markup.list.unnumbered.markdown - punctuation
+
+foo
+1.
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^ markup.list.numbered.markdown - punctuation 
+
+## https://spec.commonmark.org/0.30/#example-286
+
+ 1.  A paragraph
+     with two lines.
+     |^^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+         indented code (but ST can't reliably highlight it!)
+     |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown - markup.raw
+     
+     > A block quote.
+     |^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-287
+
+  1.  A paragraph
+      with two lines.
+      |^^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+          indented code (but ST can't reliably highlight it!)
+      |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown - markup.raw
+
+      > A block quote.
+      | ^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-288
+
+   1.  A paragraph
+       with two lines.
+       |^^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+            indented code (but ST can't reliably highlight it!)
+       |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown - markup.raw
+
+       > A block quote.
+       |^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-289
+
+    1.  A paragraph
+        with two lines.
+        |^^^^^^^^^^^^^^^ markup.raw.block.markdown - markup.list
+
+            indented code
+        |^^^^^^^^^^^^^^^^^ markup.raw.block.markdown - markup.list
+
+        > A block quote.
+        |^^^^^^^^^^^^^^^^ markup.raw.block.markdown - markup.list
+
+## https://spec.commonmark.org/0.30/#example-290
+
+  1.  A paragraph
+with two lines.
 | <- markup.list.numbered.markdown
-|^^ markup.list.numbered.bullet.markdown
-|  ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+|^^^^^^^^^^^^^^^ markup.list.numbered.markdown
 
-  3) numberd item
-| <- markup.list.numbered.markdown
-|^ markup.list.numbered.markdown
-| ^^ markup.list.numbered.bullet.markdown
-|   ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+          indented code (but ST can't reliably highlight it!)
+      |^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown - markup.raw
 
-   4) numberd item
-| <- markup.list.numbered.markdown
-|^^ markup.list.numbered.markdown
-|  ^^ markup.list.numbered.bullet.markdown
-|    ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+      > A block quote.
+      | ^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown
 
-    5) numberd item
+## https://spec.commonmark.org/0.30/#example-291
+
+  1.  A paragraph
+    with two lines.
+    |^^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-292
+
+> 1. > Blockquote
+continued here.
+| <- markup.quote.markdown markup.list.numbered.markdown markup.quote.markdown
+|^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-293
+
+> 1. > Blockquote
+> continued here.
+| <- markup.quote.markdown markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-294
+
+So, in this case we need two spaces indent:
+
+- foo
+  - bar
+    - baz
+      - boo
+| <- markup.list.unnumbered.markdown
+|^^^^^ markup.list.unnumbered.markdown
+|     ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|      ^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-295
+
+One is not enough:
+
+- foo
+ - bar
+  - baz
+   - boo
+| <- markup.list.unnumbered.markdown
+|^^ markup.list.unnumbered.markdown
+|  ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|   ^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-296
+
+Here we need four, because the list marker is wider:
+
+10) foo
+    - bar
 | <- markup.list.numbered.markdown
 |^^^ markup.list.numbered.markdown
-|   ^^ markup.list.numbered.bullet.markdown
-|     ^^^^^^^^^^^^^^ markup.list.numbered.markdown
+|   ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|    ^^^^^ markup.list.numbered.markdown
 
-Paragraph break.
+## https://spec.commonmark.org/0.30/#example-297
 
-    5) code block
-| <- markup.raw.block.markdown - markup.list
-|^^^^^^^^^^^^^^^^^ markup.raw.block.markdown - markup.list
+Three is not enough:
 
-Paragraph break.
+10) foo
+   - bar
+| <- markup.list.numbered.markdown
+|^^ markup.list.numbered.markdown
+|  ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|   ^^^^^ markup.list.numbered.markdown
 
-  - Unordered list item
-| ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered - markup.list.unnumbered markup.list.unnumbered
-| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-  - Unordered list item #2
-| ^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered - markup.list.unnumbered markup.list.unnumbered
-| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
+## https://spec.commonmark.org/0.30/#example-298
 
-Paragraph break.
+A list may be the first block in a list item:
 
-- `<Logo>` | `<logo>` (components/Logo.vue)
-- `<MyComponent>` | `<my-component>` | (components/my-component.vue)
+- - foo
 | <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+|^ markup.list.unnumbered.markdown
+| ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|  ^^^^^ markup.list.unnumbered.markdown
 
-Paragraph break.
+## https://spec.commonmark.org/0.30/#example-299
 
-  * Unordered list item
-| ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered - markup.list.unnumbered markup.list.unnumbered
-| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-  + Unordered list item #2
-| ^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered - markup.list.unnumbered markup.list.unnumbered
-| ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-    + Subitem 1
-|   ^ punctuation.definition.list_item
-  + Item
-    + Subitem
-    + Another subitem
-|   ^ markup.list.unnumbered.bullet punctuation.definition.list_item - meta.paragraph.list
-|     ^^^^^^^^^^^^^^^ meta.paragraph.list
-      + Nested Subitem
-|     ^ markup.list.unnumbered.bullet punctuation.definition.list_item - markup.list.unnumbered markup.list.unnumbered
-        + Nested + Subitem
-|       ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-|                ^ - punctuation.definition.list_item
+A list may be the first block in a list item:
 
-  * Unsorted list item
-	```xml
-|^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.code-fence.definition.begin.xml.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
-|    ^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.code-fence.definition.begin.xml.markdown-gfm constant.other.language-name.markdown
-	<tag>
-|^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.raw.code-fence.xml.markdown-gfm text.xml meta.tag.xml
-	```
-|^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+1. - 2. foo 3. bar
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^ markup.list.numbered.markdown
+|  ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|   ^ markup.list.unnumbered.markdown
+|    ^^ markup.list.numbered.bullet.markdown
+|      ^^^^^^^^^^^^^ markup.list.numbered.markdown - punctuation
 
-* this is a list
+## https://spec.commonmark.org/0.30/#example-300
 
-   > This is a blockquote.
-|  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
+A list item can contain a heading:
 
-  - this is a list
-    > This is a blockquote.
-|   ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
+- # Foo
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^ markup.list.unnumbered.markdown
+| ^^^^^^ markup.heading.1.markdown
+| ^ punctuation.definition.heading.begin.markdown
+|   ^^^ entity.name.section.markdown
 
- This is a paragraph still part of the 
- list item
-| ^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - meta.paragraph.list meta.paragraph.list
 
-* Lorem ipsum
+- Should be a setext heading!
+  ---
+| ^^^ markup.list.unnumbered.markdown meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
 
-        This is a code block
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered markup.raw.block
-* list continues
-| <- markup.list.unnumbered punctuation.definition.list_item - markup.raw.block
-* list continues
+- Bar
+  ---
+  baz
+| <- markup.list.unnumbered.markdown
+|^^^^^ markup.list.unnumbered.markdown
 
-Paragraph break.
-| <- meta.paragraph - markup
+## https://spec.commonmark.org/0.30/#example-301
+
+Changing the bullet or ordered list delimiter starts a new list:
+
+- foo
+- bar
++ baz
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-302
+
+Changing the bullet or ordered list delimiter starts a new list:
+
+1. foo
+2. bar
+3) baz
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^ markup.list.numbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-303
+
+In CommonMark, a list can interrupt a paragraph. 
+That is, no blank line is needed to separate a paragraph from a following list:
+
+Foo
+- bar
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+Foo
+- bar
+- baz
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+## https://spec.commonmark.org/0.30/#example-304
+
+In order to solve of unwanted lists in paragraphs with hard-wrapped numerals, 
+we allow only lists starting with 1 to interrupt paragraphs.
+
+The number of windows in my house is
+14.  The number of doors is 6.
+| <- meta.paragraph.markdown - markup.list
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.list
+
+## https://spec.commonmark.org/0.30/#example-305
+
+We may still get an unintended result in cases like
+
+The number of windows in my house is
+1.  The number of doors is 6.
+| <- markup.list.numbered.bullet.markdown
+|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-306
+
+There can be any number of blank lines between items:
+
+- foo
+
+- bar
+  |^^^ markup.list.unnumbered.markdown
+
+
+- baz
+  |^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-307
+
+- foo
+  - bar
+    - baz
+
+
+      bim
+      |^^^ markup.list.unnumbered.markdown - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-308
+
+To separate consecutive lists of the same type,
+you can insert a blank HTML comment:
+
+- foo
+- bar
+
+<!-- -->
+| <- meta.disable-markdown comment.block.html
+|^^^^^^^ meta.disable-markdown comment.block.html
+
+- baz
+- bim
+
+## https://spec.commonmark.org/0.30/#example-309
+
+To separate a list from an indented code block that would otherwise 
+be parsed as a subparagraph of the final list item,
+you can insert a blank HTML comment:
+
+-   foo
+
+    notcode
+    |^^^^^^^ markup.list.unnumbered.markdown - markup.raw
+
+-   foo
+
+<!-- -->
+
+    code
+    |^^^^ markup.raw.block.markdown - markup.list
+
+## https://spec.commonmark.org/0.30/#example-311
+
+List items need not be indented to the same level.
+
+1. a
+   | <- markup.list.numbered.markdown - markup.raw
+
+ 2. b
+    | <- markup.list.numbered.markdown - markup.raw
+
+  3. c
+     | <- markup.list.numbered.markdown - markup.raw
+
+1) a
+   | <- markup.list.numbered.markdown - markup.raw
+
+ 2) b
+    | <- markup.list.numbered.markdown - markup.raw
+
+  3) c
+     | <- markup.list.numbered.markdown - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-313
+
+And here, `3. c` should be treated as in indented code block, 
+because it is indented four spaces and preceded by a blank line.
+
+1. a
+   | <- markup.list.numbered.markdown - markup.raw
+
+  2. b
+     | <- markup.list.numbered.markdown - markup.raw
+
+    3. c
+       | <- markup.list.numbered.markdown - markup.raw
+
+1) a
+   | <- markup.list.numbered.markdown - markup.raw
+
+  2) b
+     | <- markup.list.numbered.markdown - markup.raw
+
+    3) c
+       | <- markup.list.numbered.markdown - markup.raw
+
+> Note: ST's syntax engine and the implementation of this syntax don't support that.
+
+## https://spec.commonmark.org/0.30/#example-314
+
+This is a loose list, because there is a blank line between two of the list items:
+
+- a
+- b
+
+- c
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-315
+
+So is this, with a empty second item:
+
+* a
+*
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^ markup.list.unnumbered.markdown
+* c
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^ markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-317
+
+- a
+- b [ref]
+  | ^^^^^ markup.list.unnumbered.markdown meta.link.reference.description.markdown
+
+  [ref]: /url
+  | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+  |^^^^^^^^^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown
+  |^^^ entity.name.reference.link.markdown
+  |   ^ punctuation.definition.reference.end.markdown
+  |    ^ punctuation.separator.key-value.markdown
+  |      ^^^^ markup.underline.link.markdown
+- d
+  | <- markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-318
+
+- a
+- ```
+  | <- markup.list.unnumbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+  |^^ markup.list.unnumbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+  b
+  | <- markup.list.unnumbered.markdown markup.raw.code-fence.markdown-gfm
+
+
+  ```
+  | <- markup.list.unnumbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+  |^^ markup.list.unnumbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+- a
+- ```
+  b
+
+
+  ```
+- c
+  | <- markup.list.unnumbered.markdown - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-319
+
+- a
+  - b
+
+    c
+    | <- markup.list.unnumbered.markdown
+- d
+  | <- markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-320
+
+* a
+  > b
+  >
+  | <- markup.list.unnumbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+  |^ markup.list.unnumbered.markdown markup.quote.markdown - punctuation
+
+* a
+  > b
+  >
+* c
+  | <- markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-321
+
+- a
+  > b
+  ```
+  | <- markup.list.unnumbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+  |^^ markup.list.unnumbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+  c
+  ```
+  | <- markup.list.unnumbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+  |^^ markup.list.unnumbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+- a
+  > b
+  ```
+  c
+  ```
+- d
+  | <- markup.list.unnumbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-324
+
+1. ```
+   | <- markup.list.numbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+   |^^ markup.list.numbered.markdown meta.code-fence.definition.begin.text.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+   foo
+   | <- markup.list.numbered.markdown markup.raw.code-fence.markdown-gfm
+   ```
+   | <- markup.list.numbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+   |^^ markup.list.numbered.markdown meta.code-fence.definition.end.text.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   bar
+   | <- markup.list.numbered.markdown
+
+## https://spec.commonmark.org/0.30/#example-325
+
+* foo
+  * bar
+
+  baz
+  | <- markup.list.unnumbered.markdown
+  |^^^ markup.list.unnumbered.markdown
+
+## https://custom-tests/list-blocks/gfm-tasks
 
 * [ ] Unticked GitHub-flavored-markdown checkbox
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered
 | ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |  ^ markup.checkbox.mark.markdown-gfm - punctuation
 |   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
 * [x] Ticked GFM checkbox
 | ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |  ^ markup.checkbox.mark.markdown-gfm - punctuation
 |   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
 * [X] Another ticked checkbox
 | ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |  ^ markup.checkbox.mark.markdown-gfm - punctuation
 |   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
+* [X] Another ticked checkbox
     + [ ] Sub-item with checkbox
 |     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |      ^ markup.checkbox.mark.markdown-gfm - punctuation
 |       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
 * [] Not a checkbox
-| ^^^^^^^^^^^^^^^^^ - storage - constant
+| ^^ - markup.checkbox
+
 * [/] Not a checkbox
-| ^^^^^^^^^^^^^^^^^^ - storage
+| ^^^ - markup.checkbox
+
 * Not [ ] a [x] checkbox [X]
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^ - storage - constant
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^ - markup.checkbox
+
 * [ ] [Checkbox][] with next word linked
 | ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |  ^ markup.checkbox.mark.markdown-gfm - punctuation
 |   ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
 |     ^^^^^^^^^^^^ meta.link
-* list has `unclosed code
-* list continues
-| ^^^^^^^^^^^^^^^ - markup.raw
+
+## https://custom-tests/list-blocks/items-with-thematic-breaks
+
+- * * * * * * *
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.separator.thematic-break.markdown
+| ^ punctuation.definition.thematic-break
+|  ^ - punctuation
+|   ^ punctuation.definition.thematic-break
+|    ^ - punctuation
+|     ^ punctuation.definition.thematic-break
+|      ^ - punctuation
+|       ^ punctuation.definition.thematic-break
+|        ^ - punctuation
+|         ^ punctuation.definition.thematic-break
+|          ^ - punctuation
+|           ^ punctuation.definition.thematic-break
+|            ^ - punctuation
+|             ^ punctuation.definition.thematic-break
+|              ^ - punctuation
+
+- * * * * * * *
+  still a list item
+| ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered
+
+- - * * * * * *
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|  ^ - punctuation
+|   ^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.separator.thematic-break.markdown
+|   ^ punctuation.definition.thematic-break
+|    ^ - punctuation
+|     ^ punctuation.definition.thematic-break
+|      ^ - punctuation
+|       ^ punctuation.definition.thematic-break
+|        ^ - punctuation
+|         ^ punctuation.definition.thematic-break
+|          ^ - punctuation
+|           ^ punctuation.definition.thematic-break
+|            ^ - punctuation
+|             ^ punctuation.definition.thematic-break
+|              ^ - punctuation
+
+- - * * * * * *
+    still a list item
+|   ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered
+
+1. * * * * * * *
+| <- markup.list.numbered.bullet.markdown
+|  ^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.separator.thematic-break.markdown
+|  ^ punctuation.definition.thematic-break
+|   ^ - punctuation
+|    ^ punctuation.definition.thematic-break
+|     ^ - punctuation
+|      ^ punctuation.definition.thematic-break
+|       ^ - punctuation
+|        ^ punctuation.definition.thematic-break
+|         ^ - punctuation
+|          ^ punctuation.definition.thematic-break
+|           ^ - punctuation
+|            ^ punctuation.definition.thematic-break
+|             ^ - punctuation
+|              ^ punctuation.definition.thematic-break
+|               ^ - punctuation
+
+1. * * * * * * *
+   still a list item
+|  ^^^^^^^^^^^^^^^^^^ markup.list.numbered
+
+## https://custom-tests/list-blocks/subitems-with-second-line
+
+* list item
+second line
+| <- markup.list.unnumbered.markdown
+  + subitem
+second line
+| <- markup.list.unnumbered.markdown
+    - subitem
+second line
+| <- markup.list.unnumbered.markdown
+      - subitem
+second line
+| <- markup.list.unnumbered.markdown
+
+paragraph
+| <- meta.paragraph.markdown
+
+1. list item
+second line
+| <- markup.list.numbered.markdown
+   2. subitem
+second line
+| <- markup.list.numbered.markdown
+      3. subitem
+second line
+| <- markup.list.numbered.markdown
+         4. subitem
+second line
+| <- markup.list.numbered.markdown
+
+paragraph
+| <- meta.paragraph.markdown
+
+1. list item
+second line
+| <- markup.list.numbered.markdown
+   + subitem
+second line
+| <- markup.list.numbered.markdown
+     - subitem
+second line
+| <- markup.list.numbered.markdown
+       - subitem
+second line
+| <- markup.list.numbered.markdown
+
+paragraph
+| <- meta.paragraph.markdown
+
+## https://custom-tests/list-blocks/subitems-with-atx-headings
+
+* list item
+# global heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.list
+|^^^^^^^^^^^^^^^^ markup.heading.1.markdown - markup.list
+
+* list item
+ # global heading (matched as list item heading)
+ | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+ |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown
+
+* list item
+  # list item heading
+  | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+  |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown
+* list item
+  ## list item heading
+  | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+  |^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.2.markdown
+  + list item
+    ### list item heading
+    | <- markup.list.unnumbered.markdown markup.heading.3.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.3.markdown
+    + list item
+      #### list item heading
+      | <- markup.list.unnumbered.markdown markup.heading.4.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.4.markdown
+
+* 
+  # list item heading
+  | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+  |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+  + 
+    # list item heading
+    | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+    - 
+      # list item heading 1
+      | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+
+      ## list item heading 2
+      | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.2.markdown
+
+* 
+
+  # list item heading
+  | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+  |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+
+  + 
+
+    # list item heading
+    | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+
+    - 
+
+      # list item heading 1
+      | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.1.markdown  
+
+      ## list item heading 2
+      | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown markup.heading.2.markdown
+
+1. list item
+# global heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - markup.list
+|^^^^^^^^^^^^^^^^ markup.heading.1.markdown - markup.list
+
+2. list item
+ # global heading (matched as list item heading)
+ | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+ |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+3. list item
+   # list item heading
+   | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+   |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+   1. list item
+      # list item heading
+      | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+      1. list item
+         # list item heading
+         | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+   2. list item
+      # list item heading
+      | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+      1. list item
+         # list item heading
+         | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+1. 
+   # list item heading
+   | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+   |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+   1. 
+      # list item heading
+      | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+      1. 
+         # list item heading
+         | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+         ## list item heading 2
+         | <- markup.list.numbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.2.markdown
+
+1. 
+
+   # list item heading
+   | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+   |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+   1. 
+
+      # list item heading
+      | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+      |^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+      1. 
+
+         # list item heading 1
+         | <- markup.list.numbered.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+         ## list item heading 2
+         | <- markup.list.numbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
+         |^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.2.markdown
+
+## https://custom-tests/list-blocks/subitems-with-reference-definitions
+
+* list item [ref]
+  |         ^^^^^ markup.list.unnumbered.markdown meta.link.reference.description.markdown
+
+  + sub item [ref]
+    |        ^^^^^ markup.list.unnumbered.markdown meta.link.reference.description.markdown
+  
+    [ref]: /url
+    | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+    |^^^^^^^^^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown
+    |^^^ entity.name.reference.link.markdown
+    |   ^ punctuation.definition.reference.end.markdown
+    |    ^ punctuation.separator.key-value.markdown
+    |      ^^^^ markup.underline.link.markdown
+
+    - sub item [ref]
+      |        ^^^^^ markup.list.unnumbered.markdown meta.link.reference.description.markdown
+    
+      [ref]: /url
+      | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+      |^^^^^^^^^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown
+      |^^^ entity.name.reference.link.markdown
+      |   ^ punctuation.definition.reference.end.markdown
+      |    ^ punctuation.separator.key-value.markdown
+      |      ^^^^ markup.underline.link.markdown
+
+  [ref]: /url
+  | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+  |^^^^^^^^^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown
+  |^^^ entity.name.reference.link.markdown
+  |   ^ punctuation.definition.reference.end.markdown
+  |    ^ punctuation.separator.key-value.markdown
+  |      ^^^^ markup.underline.link.markdown
+
+1. list item [ref]
+   |         ^^^^^ markup.list.numbered.markdown meta.link.reference.description.markdown
+
+   2. sub item [ref]
+      |        ^^^^^ markup.list.numbered.markdown meta.link.reference.description.markdown
+    
+      [ref]: /url
+      | <- markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+      |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.reference.def.markdown
+      |^^^ entity.name.reference.link.markdown
+      |   ^ punctuation.definition.reference.end.markdown
+      |    ^ punctuation.separator.key-value.markdown
+      |      ^^^^ markup.underline.link.markdown
+
+      3. sub item [ref]
+         |        ^^^^^ markup.list.numbered.markdown meta.link.reference.description.markdown
+       
+         [ref]: /url
+         | <- markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+         |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.reference.def.markdown
+         |^^^ entity.name.reference.link.markdown
+         |   ^ punctuation.definition.reference.end.markdown
+         |    ^ punctuation.separator.key-value.markdown
+         |      ^^^^ markup.underline.link.markdown
+
+   [ref]: /url
+   | <- markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
+   |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.reference.def.markdown
+   |^^^ entity.name.reference.link.markdown
+   |   ^ punctuation.definition.reference.end.markdown
+   |    ^ punctuation.separator.key-value.markdown
+   |      ^^^^ markup.underline.link.markdown
+
+## https://custom-tests/list-blocks/subitems-with-block-quotes
+
+* list item
+
+   > This is a blockquote.
+   | <- markup.list.unnumbered markup.quote punctuation.definition.blockquote
+
+  + subitem
+
+    > This is a blockquote.
+    | <- markup.list.unnumbered markup.quote punctuation.definition.blockquote
+
+    - subitem
+  
+      > This is a blockquote.
+      | <- markup.list.unnumbered markup.quote punctuation.definition.blockquote
+
+      - subitem
+    
+        > This is a blockquote.
+        | <- markup.list.unnumbered markup.quote punctuation.definition.blockquote
+
+  This is a paragraph still part of the 
+  list item
+ |^^^^^^^^^^ markup.list.unnumbered.markdown - meta.paragraph meta.paragraph
+
+1. list item
+
+   > This is a blockquote.
+   | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+
+   2. subitem
+
+      > This is a blockquote.
+      | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+    
+      3. subitem
+    
+         > This is a blockquote.
+         | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+
+   This is a paragraph still part of the 
+   list item
+   |^^^^^^^^^ markup.list.numbered.markdown - meta.paragraph meta.paragraph
+
+## https://custom-tests/list-blocks/items-with-fenced-code-blocks-indented-by-tabs
+
+  * foo
+	```xml
+|^^^ markup.list.unnumbered.markdown meta.code-fence.definition.begin.xml.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|    ^^ markup.list.unnumbered.markdown meta.code-fence.definition.begin.xml.markdown-gfm constant.other.language-name.markdown
+	<tag>
+|^^^^^ markup.list.unnumbered.markdown markup.raw.code-fence.xml.markdown-gfm text.xml meta.tag.xml
+	```
+|^^^ markup.list.unnumbered.markdown meta.code-fence.definition.end.xml.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+## https://custom-tests/list-blocks/items-with-html-blocks
 
 * list item
   
   <p>*no-markdown*</p>
-| ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown
-|                 ^^^^ meta.tag
-  - list item
+  |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown - meta.paragraph
+  |               ^^^^ meta.tag
+
+  + sub item
 
     <p>*no-markdown*</p>
-|   ^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown
-|                   ^^^^ meta.tag
+    |^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown - meta.paragraph
+    |               ^^^^ meta.tag
 
-- `code` - <a name="demo"></a>
-| ^ markup.list.unnumbered meta.paragraph.list markup.raw.inline punctuation.definition.raw
-|          ^^^^^^^^^^^^^^^^^^^ meta.tag.inline.a.html
- 3. [see `demo`](#demo "demo")
-| ^ punctuation.definition.list_item
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline
-|    ^^^^^^^^^^ meta.link.inline.description
-|               ^ punctuation.definition.metadata.begin
-|                      ^ punctuation.definition.string.begin
-|                           ^ punctuation.definition.string.end
-|                            ^ punctuation.definition.metadata.end
-    [see `demo`](#demo (demo))
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline
-|    ^^^^^^^^^^ meta.link.inline.description
-|               ^ punctuation.definition.metadata.begin
-|                      ^ punctuation.definition.string.begin
-|                           ^ punctuation.definition.string.end
-|                            ^ punctuation.definition.metadata.end
-    [see `demo`](#demo 'demo')
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inline
-|    ^^^^^^^^^^ meta.link.inline.description
-|               ^ punctuation.definition.metadata.begin
-|                      ^ punctuation.definition.string.begin
-|                           ^ punctuation.definition.string.end
-|                            ^ punctuation.definition.metadata.end
-    Here is a ![example image](https://test.com/sublime.png "A demonstration").
-|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list meta.image.inline
-|             ^^ punctuation.definition.image.begin
-|               ^^^^^^^^^^^^^ meta.image.inline.description
-|                            ^ punctuation.definition.image.end
-|                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.double
-|                                                           ^ punctuation.definition.string.begin
-|                                                                           ^ punctuation.definition.string.end
-|                                                                            ^ punctuation.definition.metadata
-    Here is a ![example image](https://test.com/sublime.png 'A demonstration').
-|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list meta.image.inline
-|             ^^ punctuation.definition.image.begin
-|               ^^^^^^^^^^^^^ meta.image.inline.description
-|                            ^ punctuation.definition.image.end
-|                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.single
-|                                                           ^ punctuation.definition.string.begin
-|                                                                           ^ punctuation.definition.string.end
-|                                                                            ^ punctuation.definition.metadata
-    Here is a ![example image](https://test.com/sublime.png (A demonstration)).
-|             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list meta.image.inline
-|             ^^ punctuation.definition.image.begin
-|               ^^^^^^^^^^^^^ meta.image.inline.description
-|                            ^ punctuation.definition.image.end
-|                             ^ punctuation.definition.metadata
-|                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
-|                                                           ^^^^^^^^^^^^^^^^^ string.quoted.other
-|                                                           ^ punctuation.definition.string.begin
-|                                                                           ^ punctuation.definition.string.end
-|                                                                            ^ punctuation.definition.metadata
+    <style>
+        h1 {
+            font-family: Helvetica;
+        |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css meta.block.css
+        }
+
+        p {
+            font-family: "Ubuntu Sans";
+        |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css meta.block.css
+        }
+    </style>
+    | <- markup.list.unnumbered.markdown meta.disable-markdown meta.tag.style.end.html punctuation.definition.tag.begin.html
+    |^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown meta.tag.style.end.html
+    |       ^ markup.list.unnumbered.markdown meta.disable-markdown - mata.tag
+
+    Further sub item text.
+    | <- markup.list.unnumbered.markdown
+    |^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown
+
+  + sub item
+    <p>
+    | <- markup.list.unnumbered.markdown meta.disable-markdown meta.tag
+    |^^ markup.list.unnumbered.markdown meta.disable-markdown meta.tag
+      *no-markodwn*
+    |^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown - markup.italic
+    </p>
+    - not a list item
+    | <- markup.list.unnumbered.markdown meta.disable-markdown - punctuation
+    |^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown - punctuation
+
+## https://custom-tests/list-blocks/items-with-code-spans
+
+- `<foo>` | `<bar>` (foo/bar.baz)
+- `<foo>` | `<my-bar>` | (foo/bar-baz.foo)
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown - markup.table
+
+1. Open `Command Palette` using menu item `Tools → Command Palette...`
+   |    ^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.raw.inline.markdown
+   |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.raw.inline.markdown
+2. Choose `Package Control: Install Package`
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.raw.inline.markdown
+
+## https://custom-tests/list-blocks/items-with-emphasis
 
 - test *testing
 blah*
-|   ^ markup.list.unnumbered meta.paragraph.list markup.italic punctuation.definition.italic.end - meta.paragraph.list meta.paragraph.list
+|   ^ markup.list.unnumbered markup.italic punctuation.definition.italic.end
 - fgh
 - *ghgh
-| ^ markup.list.unnumbered meta.paragraph.list markup.italic punctuation.definition.italic.begin - meta.paragraph.list meta.paragraph.list
+| ^ markup.list.unnumbered markup.italic punctuation.definition.italic.begin
 - fgfg
 | <- markup.list.unnumbered.bullet punctuation.definition.list_item
 - _test
 
-| <- markup.list.unnumbered meta.paragraph.list markup.italic invalid.illegal.non-terminated.bold-italic
+| <- markup.list.unnumbered markup.italic invalid.illegal.non-terminated.bold-italic
   still a list item
-| ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list
-- * * * * * * *
-| <- punctuation.definition.list_item
-| ^^^^^^^^ markup.list.unnumbered meta.paragraph.list meta.separator.thematic-break - meta.paragraph.list meta.paragraph.list
-| ^ punctuation.definition.thematic-break
-|   ^ punctuation.definition.thematic-break
-|     ^ punctuation.definition.thematic-break
-|       ^ punctuation.definition.thematic-break
-|         ^ punctuation.definition.thematic-break
-|           ^ punctuation.definition.thematic-break
-|             ^ punctuation.definition.thematic-break
-|  ^ - punctuation.definition.thematic-break
-|    ^ - punctuation.definition.thematic-break
-|      ^ - punctuation.definition.thematic-break
-|        ^ - punctuation.definition.thematic-break
-|          ^ - punctuation.definition.thematic-break
-|            ^ - punctuation.definition.thematic-break
-  still a list item
-| ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - meta.paragraph.list meta.paragraph.list
+| ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered
 
-Paragraph break.
+## https://custom-tests/list-blocks/items-with-inline-html-tags
 
-1. Open `Command Palette` using menu item `Tools → Command Palette...`
-|^ markup.list.numbered punctuation.definition.list_item
-|                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered meta.paragraph.list markup.raw.inline
-2. Choose `Package Control: Install Package`
-|^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
-|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.raw.inline.markdown
+- `code` - <a name="demo"></a>
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown
+| ^^^^^^ markup.raw.inline.markdown
+| ^ punctuation.definition.raw.begin.markdown
+|      ^ punctuation.definition.raw.end.markdown
+|        ^ - punctuation
+|          ^^^^^^^^^^^^^^^^^^^ meta.tag.inline.a.html 
 
-Paragraph break.
+- list item
 
-- a
-  - b
-    - c
-      - d
-|     ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-        text here
-|       ^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - markup.raw.block - meta.paragraph.list meta.paragraph.list
+  <span>*no-markdown*</span>
+  |^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+  |                  ^^^^^^^ meta.tag
 
-            code here
-            | ^^^^^^^^ markup.raw.block
+  - list item
+  
+    <span>*no-markdown*</span>
+    |^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+    |                  ^^^^^^^ meta.tag
 
-      - e
-|     ^ markup.list.unnumbered.bullet punctuation.definition.list_item
+    - list item
+      
+      <span>*no-markdown*</span>
+      |^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+      |                  ^^^^^^^ meta.tag
 
-            code here
+## https://custom-tests/list-blocks/items-with-links-and-references
 
-            >     block quote code here
-         |  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
-         |        ^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered markup.quote markup.raw.block
+ 1. [see `demo`](#demo "demo")
+    | <- markup.list.numbered.markdown meta.link.inline.description.markdown punctuation.definition.link.begin.markdown
+    |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.description.markdown
+    |           ^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.metadata.markdown
+    |           ^ punctuation.definition.metadata.begin.markdown
+    |                  ^ punctuation.definition.string.begin.markdown
+    |                       ^ punctuation.definition.string.end.markdown
+    |                        ^ punctuation.definition.metadata.end.markdown
 
-            > > test
-         |  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
-         |    ^ markup.list.unnumbered markup.quote markup.quote punctuation.definition.blockquote - markup.raw.block
+    [see `demo`](#demo (demo))
+    | <- markup.list.numbered.markdown meta.link.inline.description.markdown punctuation.definition.link.begin.markdown
+    |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.description.markdown
+    |           ^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.metadata.markdown
+    |           ^ punctuation.definition.metadata.begin.markdown
+    |                  ^ punctuation.definition.string.begin.markdown
+    |                       ^ punctuation.definition.string.end.markdown
+    |                        ^ punctuation.definition.metadata.end.markdown
 
-      - f
-|     ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-        1. test
-|       ^^ markup.list.numbered.bullet
-|        ^ punctuation.definition.list_item
+    [see `demo`](#demo 'demo')
+    | <- markup.list.numbered.markdown meta.link.inline.description.markdown punctuation.definition.link.begin.markdown
+    |^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.description.markdown
+    |           ^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.link.inline.metadata.markdown
+    |           ^ punctuation.definition.metadata.begin.markdown
+    |                  ^ punctuation.definition.string.begin.markdown
+    |                       ^ punctuation.definition.string.end.markdown
+    |                        ^ punctuation.definition.metadata.end.markdown
 
-Paragraph break.
-| <- meta.paragraph - markup
+    Here is a ![example image](https://test.com/sublime.png "A demonstration").
+    |         ^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.description.markdown
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.metadata.markdown
+    |                                                                         ^^ markup.list.numbered.markdown - meta.image
+    |         ^^ punctuation.definition.image.begin.markdown
+    |                        ^ punctuation.definition.image.end.markdown
+    |                         ^ punctuation.definition.metadata.begin.markdown
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+    |                                                       ^^^^^^^^^^^^^^^^^ string.quoted.double.markdown
+    |                                                       ^ punctuation.definition.string.begin.markdown
+    |                                                                       ^ punctuation.definition.string.end.markdown
+    |                                                                        ^ punctuation.definition.metadata.end.markdown
 
-1. test
-|  ^^^^^ markup.list.numbered meta.paragraph.list
-   - test
-|^^^^^^^^^ markup.list.unnumbered
-|  ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-|    ^^^^^ meta.paragraph.list
-   - test
-|^^^^^^^^^ markup.list.unnumbered
-|  ^ markup.list.unnumbered.bullet punctuation.definition.list_item
-|    ^^^^^ meta.paragraph.list
-   test
-|^^^^^^^ markup.list.numbered meta.paragraph.list
- ****test****
-|^^^^^^^^^^^^^ markup.list.numbered meta.paragraph.list - punctuation
+    Here is a ![example image](https://test.com/sublime.png 'A demonstration').
+    |         ^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.description.markdown
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.metadata.markdown
+    |                                                                         ^^ markup.list.numbered.markdown - meta.image
+    |         ^^ punctuation.definition.image.begin.markdown
+    |                        ^ punctuation.definition.image.end.markdown
+    |                         ^ punctuation.definition.metadata.begin.markdown
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+    |                                                       ^^^^^^^^^^^^^^^^^ string.quoted.single.markdown
+    |                                                       ^ punctuation.definition.string.begin.markdown
+    |                                                                       ^ punctuation.definition.string.end.markdown
+    |                                                                        ^ punctuation.definition.metadata.end.markdown
 
- - - test
-|^ punctuation.definition.list_item
-|  ^^^^^^^ markup.list.unnumbered meta.paragraph.list - punctuation
-- - - - test
-| <- punctuation.definition.list_item
-| ^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - punctuation
-
-Paragraph break.
-| <- meta.paragraph - markup
-
-  * List Item 1
-    Text under Item 1
-  * List Item 2
-    Text under Item 2
-
-  * List Item 3
-    Text under Item 3
-|   ^^^^^^^^^^^^^^^^^^ markup.list.unnumbered meta.paragraph.list - markup.raw
-
- 1. fenced code block inside a list item
-| ^ punctuation.definition.list_item
-    ```language
-|^^^^^^^^^^^^^^^ meta.paragraph.list
-|   ^^^ punctuation.definition.raw.code-fence.begin
-|      ^^^^^^^^ constant.other.language-name
-|   ^^^^^^^^^^^ meta.code-fence
-    
-|^^^^ meta.paragraph.list markup.raw.code-fence
-    ```
-|   ^^^ punctuation.definition.raw.code-fence.end
-    test
-|   ^^^^^ meta.paragraph.list - markup.raw.code-fence
-
- 2. test
-| ^ punctuation.definition.list_item
-
-Paragraph break.
-| <- meta.paragraph - markup
-
-1. List
-    1. Nested list
-    2. Second item
-
-    This line is still list item 1
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered - markup.raw.block
-
-Paragraph break.
-| <- meta.paragraph - markup
-
-1. Test
-
-   ```python
-|  ^^^ markup.list.numbered meta.code-fence punctuation.definition.raw.code-fence.begin
-       Test
-
-| <- - invalid
-       Test
-   ```
-|  ^^^ punctuation.definition.raw.code-fence.end
-
-1. Test 2
-|^ markup.list.numbered.bullet punctuation.definition.list_item
+    Here is a ![example image](https://test.com/sublime.png (A demonstration)).
+    |         ^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.description.markdown
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.image.inline.metadata.markdown
+    |                                                                         ^^ markup.list.numbered.markdown - meta.image
+    |         ^^ punctuation.definition.image.begin.markdown
+    |                        ^ punctuation.definition.image.end.markdown
+    |                         ^ punctuation.definition.metadata.begin.markdown
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+    |                                                       ^^^^^^^^^^^^^^^^^ string.quoted.other.markdown
+    |                                                       ^ punctuation.definition.string.begin.markdown
+    |                                                                       ^ punctuation.definition.string.end.markdown
+    |                                                                        ^ punctuation.definition.metadata.end.markdown
 
 
 # TEST: CODE SPANS ############################################################

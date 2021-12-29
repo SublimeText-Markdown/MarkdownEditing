@@ -24,17 +24,16 @@ $$
 1. Numbered List
 
    $$
-| <- markup.list.numbered.markdown
-|^^^^^ markup.list.numbered.markdown
-|  ^^ string.other.math.latex punctuation.definition.string.begin.latex
+   | <- markup.list.numbered.markdown string.other.math.latex punctuation.definition.string.begin.latex
+   |^ markup.list.numbered.markdown string.other.math.latex punctuation.definition.string.begin.latex
    foo = 1 + 2
-| <- markup.list.numbered.markdown text.tex.latex
+   | <- markup.list.numbered.markdown text.tex.latex
    $$
-| <- markup.list.numbered.markdown
-|^^^^^ markup.list.numbered.markdown
-|  ^^ string.other.math.latex punctuation.definition.string.end.latex
+   | <- markup.list.numbered.markdown string.other.math.latex punctuation.definition.string.end.latex
+   |^ markup.list.numbered.markdown string.other.math.latex punctuation.definition.string.end.latex
 
-    $$1+1$$
-|   ^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown text.tex.latex meta.environment.math.block.dollar.latex
-|   ^^ string.other.math.latex punctuation.definition.string.begin.latex
-|        ^^ string.other.math.latex punctuation.definition.string.end.latex
+   $$1+1$$
+   | <- markup.list.numbered.markdown string.other.math.latex punctuation.definition.string.begin.latex
+   |^^^^^^ markup.list.numbered.markdown text.tex.latex meta.environment.math.block.dollar.latex
+   |^ string.other.math.latex punctuation.definition.string.begin.latex
+   |    ^^ string.other.math.latex punctuation.definition.string.end.latex

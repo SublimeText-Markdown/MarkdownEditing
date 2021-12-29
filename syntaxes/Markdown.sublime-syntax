@@ -26,7 +26,28 @@ variables:
 
     block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
     indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
-    list_item: (?:[ ]{,3}(?:\d+[.)]|[*+-])\s)           # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+
+    list_item: (?:[ ]{,3}(?:\d{1,9}[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+    list_item_paragraph_end: |-
+      \s*(?x:
+        $
+      | {{atx_heading}}             # an ATX heading begins the line
+      | {{block_quote}}             # a blockquote begins the line
+      | {{fenced_code_block_start}} # a fenced codeblock begins the line
+      | {{thematic_break}}          # line is a thematic beak
+      | \d{1,9}[.)]\s               # an ordered list item begins the line
+      | [*+-]\s                     # an unordered list item begins the line
+      | \$\$                        # a latex math block begins the line
+      | {{html_tag_block_end_at_close_tag}}  # html block type 1
+      | {{html_tag_block_end_at_blank_line}} # html block type 6
+      | {{html_block_open_tag}}              # html block type 7
+      | {{html_block_close_tag}}             # html block type 7
+      | {{html_block_comment}}               # html block type 2
+      | {{html_block_decl}}                  # html block type 4
+      | {{html_block_cdata}}                 # html block type 5
+      | {{html_block_preprocessor}}          # html block type 3
+      )
+
     thematic_break: |-
       (?x:
         [ ]{,3}                    # between 0 to 3 spaces
@@ -354,7 +375,7 @@ contexts:
       pop: true
 
   block-quote-list-item:
-    - match: ([ ]{,3})(\d+([.)]))(\s)
+    - match: ([ ]{,3})(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
@@ -400,50 +421,6 @@ contexts:
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
   list-blocks:
-    - match: ^([ ]{,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
-      captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      push: unordered-list-paragraph
-    - match: ^([ ]{,3})(\d+([.)]))(?=\s)
-      captures:
-        1: markup.list.numbered.markdown
-        2: markup.list.numbered.bullet.markdown
-        3: punctuation.definition.list_item.markdown
-      push: ordered-list-paragraph
-
-  unordered-list-paragraph:
-    - meta_content_scope: markup.list.unnumbered.markdown
-    - include: list-paragraph
-
-  ordered-list-paragraph:
-    - meta_content_scope: markup.list.numbered.markdown
-    - include: list-paragraph
-
-  list-paragraph:
-    - match: ^(?=\S|{{atx_heading}})
-      pop: true
-    - include: list-indended-code-blocks
-    - include: block-quotes
-    - include: fenced-code-blocks
-    - include: html-blocks
-    - include: reference-definitions
-    - include: thematic-breaks
-    - match: (?=\S)
-      push: list-items
-
-  list-indended-code-blocks:
-    # at least 8 chars / 2 tabs
-    - match: ^{{indented_code_block}}{2,}[^>+*\s-].*$\n?
-      scope: markup.raw.block.markdown
-
-  list-items:
-    - match: ^(?=\s*$|{{atx_heading}})
-      pop: true
     - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
         1: markup.list.unnumbered.markdown
@@ -452,47 +429,68 @@ contexts:
         4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      push: unordered-list-content
-    - match: ([ ]*)(\d+([.)]))(?=\s)
+      push: unordered-list-block
+    - match: ([ ]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
-      push: ordered-list-content
-    - match: \s+
-      scope: meta.paragraph.list.markdown
-    - match: (?=\S)
-      push: list-content
+        4: markup.list.numbered.markdown
+      push: ordered-list-block
 
-  unordered-list-content:
-    - clear_scopes: 1
-    - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
-    - include: list-content
+  unordered-list-block:
+    - meta_content_scope: markup.list.unnumbered.markdown
+    - include: list-block-end
+    - include: list-block-content
 
-  ordered-list-content:
-    - clear_scopes: 1
-    - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
-    - include: list-content
+  ordered-list-block:
+    - meta_content_scope: markup.list.numbered.markdown
+    - include: list-block-end
+    - include: list-block-content
 
-  list-content:
-    - meta_content_scope: meta.paragraph.list.markdown
-    - include: block-quotes
+  list-block-end:
+    - match: ^(?=\S)
+      pop: true
+
+  list-block-content:
+    - include: thematic-breaks
     - include: fenced-code-blocks
     - include: html-blocks
     - include: latex-blocks
     - include: reference-definitions
-    - include: thematic-breaks
+    - include: atx-headings
+    - include: list-items
+    - match: (?=\S)
+      push: list-content
+
+  list-items:
+    - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
+      captures:
+        1: markup.list.unnumbered.markdown
+        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+        3: markup.list.unnumbered.markdown
+        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+        5: markup.checkbox.mark.markdown-gfm
+        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+    - match: ([ ]*)(\d{1,9}([.)]))(\s)
+      captures:
+        1: markup.list.numbered.markdown
+        2: markup.list.numbered.bullet.markdown
+        3: punctuation.definition.list_item.markdown
+        4: markup.list.numbered.markdown
+
+  list-content:
+    - include: block-quotes
     - match: ^
       pop: true
-    - match: (?=\S)
+    - match: \s*(?=\S)
       push: list-text
 
   list-text:
+    - meta_scope: meta.paragraph.list.markdown
+    - match: ^(?={{list_item_paragraph_end}})
+      pop: true
     - include: inlines
-    - match: $
-      pop: true
-    - match: (?={{list_item}})
-      pop: true
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
@@ -640,7 +638,7 @@ contexts:
 
   fenced-code-blocks:
     # https://spec.commonmark.org/0.30/#fenced-code-blocks
-    - match: ^(?={{fenced_code_block_start}})
+    - match: (?={{fenced_code_block_start}})
       push: fenced-code-block-content
 
   fenced-code-block-content:
@@ -2073,7 +2071,7 @@ contexts:
 
   footnote-definitions:
     # Mardown Extras Footnotes
-    - match: '[ ]{,3}(\[)({{footnote_name}})(\])(:)'
+    - match: '[ ]*(\[)({{footnote_name}})(\])(:)'
       captures:
         1: punctuation.definition.reference.begin.markdown
         2: entity.name.reference.link.markdown
@@ -2092,7 +2090,7 @@ contexts:
 
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
-    - match: '[ ]{,3}(\[)({{reference_name}})(\])(:)'
+    - match: '[ ]*(\[)({{reference_name}})(\])(:)'
       captures:
         1: punctuation.definition.reference.begin.markdown
         2: entity.name.reference.link.markdown
