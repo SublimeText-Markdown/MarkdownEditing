@@ -2664,10 +2664,262 @@ A line with bolded **|**
 
 # TEST: BLOCK QUOTES ##########################################################
 
-> This is a block quote. It contains markup.
-> Including things like *italics*
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
-|                       ^^^^^^^^^ markup.italic
+## https://spec.commonmark.org/0.30/#example-228
+
+> # Foo
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - markup.heading
+| ^^^^^^ markup.quote.markdown markup.heading.1.markdown
+| ^ punctuation.definition.heading.begin.markdown
+|   ^^^ entity.name.section.markdown
+
+> # Foo
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+> # Foo
+> bar
+> baz
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-229
+
+># Foo
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^ markup.quote.markdown markup.heading.1.markdown
+|^ punctuation.definition.heading.begin.markdown
+|  ^^^ entity.name.section.markdown
+
+># Foo
+>bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^ markup.quote.markdown
+
+># Foo
+>bar
+> baz
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-230
+
+   > # Foo
+| <- markup.quote.markdown
+|^^^^^^^^^^ markup.quote.markdown
+|  ^ punctuation.definition.blockquote.markdown
+|    ^^^^^^ markup.heading.1.markdown
+|    ^ punctuation.definition.heading.begin.markdown
+|      ^^^ entity.name.section.markdown
+
+   > # Foo
+   > bar
+| <- markup.quote.markdown - punctuation
+|^^ markup.quote.markdown - punctuation
+|  ^ markup.quote.markdown punctuation.definition.blockquote.markdown
+|   ^^^^^ markup.quote.markdown - punctuation
+
+   > # Foo
+   > bar
+ > baz
+| <- markup.quote.markdown - punctuation
+|^ markup.quote.markdown punctuation.definition.blockquote.markdown
+| ^^^^^ markup.quote.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-231
+
+    > # Foo
+    > bar
+    > baz
+| <- markup.raw.block.markdown
+|^^^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-232
+
+> # Foo
+> bar
+baz
+| <- markup.quote.markdown
+|^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-233
+
+> bar
+baz
+| <- markup.quote.markdown
+|^^^ markup.quote.markdown
+> foo
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-234
+
+> foo
+***
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+
+> foo
+---
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+
+> foo
+___
+| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+|^^ meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - markup.quote
+
+## https://spec.commonmark.org/0.30/#example-235
+
+> - foo
+- bar
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown - markup.quote
+|^^^^^ markup.list.unnumbered.markdown - markup.quote
+
+## https://spec.commonmark.org/0.30/#example-236
+
+>     foo
+    bar
+| <- markup.raw.block.markdown
+|^^^^^^^ markup.raw.block.markdown
+
+## https://spec.commonmark.org/0.30/#example-237
+
+> ```
+foo
+| <- meta.paragraph.markdown - markup.quote - markup.raw
+|^^^ meta.paragraph.markdown - markup.quote - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-238
+
+> foo
+    - bar
+| <- markup.quote.markdown - markup.list - markup.raw
+|^^^^^^^^^ markup.quote.markdown - markup.list - markup.raw
+
+## https://spec.commonmark.org/0.30/#example-239
+
+>
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-240
+
+>
+>  
+> 
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-241
+
+>
+> foo
+>  
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-242
+
+> foo
+
+| <- - markup.quote
+> foo
+
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-243
+
+> foo
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-244
+
+> foo
+>
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+
+## https://spec.commonmark.org/0.30/#example-245
+
+foo
+> bar
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-246
+
+> aaa
+***
+> bbb
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-247
+
+> bar
+baz
+| <- markup.quote.markdown
+|^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-248
+
+> bar
+
+baz
+| <- meta.paragraph.markdown - markup.quote
+|^^ meta.paragraph.markdown - markup.quote
+
+## https://spec.commonmark.org/0.30/#example-249
+
+> bar
+>
+baz
+| <- markup.quote.markdown
+|^^^ markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-250
+
+> > > foo
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown - markup.quote markup.quote
+|^ markup.quote.markdown - markup.quote markup.quote - punctuation
+| ^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown - markup.quote markup.quote markup.quote
+|  ^ markup.quote.markdown markup.quote.markdown - markup.quote markup.quote markup.quote - punctuation
+|   ^ markup.quote.markdown markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+|    ^^^^^ markup.quote.markdown markup.quote.markdown markup.quote.markdown - punctuation
+
+> > > foo
+bar
+| <- markup.quote.markdown markup.quote.markdown markup.quote.markdown
+|^^^ markup.quote.markdown markup.quote.markdown markup.quote.markdown
+
+## https://spec.commonmark.org/0.30/#example-251
+
+>>> foo
+> bar
+>>baz
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+| ^^^^ markup.quote.markdown markup.quote.markdown - punctuation
+
+## https://spec.commonmark.org/0.30/#example-252
+
+>     code
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - markup.raw
+| ^^^^^^^^^ markup.quote.markdown markup.raw.block.markdown
+
+>    not code
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown - markup.raw
+|^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
+
+## https://custom-tests/block-quotes#valid-block-quote-starts
 
 >=
 | <- punctuation.definition.blockquote.markdown 
@@ -2678,23 +2930,12 @@ A line with bolded **|**
   >=
 | ^ punctuation.definition.blockquote.markdown
     >=
-|   ^^ - punctuation.definition.blockquote.markdown
+| ^^^^^ markup.quote.markdown - punctuation
 
     >=
-|   ^^ - punctuation.definition.blockquote.markdown
+|   ^^ markup.raw.block.markdown - markup.quote - punctuation
 
-> Block quote
-| <- markup.quote punctuation.definition.blockquote
-| ^^^^^^^^^^^ markup.quote
-
-> Block quote followed by an empty block quote line
->
-| <- markup.quote punctuation.definition.blockquote
-
-> Block quote followed by an empty block quote line
->
-> Followed by more quoted text
-| <- markup.quote punctuation.definition.blockquote
+## https://custom-tests/block-quotes#nested-block-quotes
 
 > > Nested block quote
 | <- markup.quote punctuation.definition.blockquote
@@ -2707,15 +2948,6 @@ A line with bolded **|**
 > Followed by more quoted text that is not nested
 | <- markup.quote punctuation.definition.blockquote - markup.quote markup.quote
 
-> Here is a block quote
-This quote continues on. Line breaking is OK in markdown
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote
-> Here it is again
-| <- punctuation.definition.blockquote
-
-paragraph
-| <- meta.paragraph
-
 >    > this is a nested quote but no code in a block quote
 | <- punctuation.definition.blockquote
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.quote.markdown
@@ -2724,10 +2956,7 @@ paragraph
 | <- punctuation.definition.blockquote
 |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
 
-> CommonMark expects following line to be indented code block (see: example 326)
-    > but all common parsers handle it as continued text.
-|   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown - markup.raw
-|   ^ - punctuation
+## https://custom-tests/block-quotes#fenced-code-blocks
 
 > Quoted fenced code block begin
 > ```
@@ -2800,6 +3029,8 @@ no code block
 ```
 | <- meta.code-fence.definition.end.text.markdown-gfm - markup.quote
 
+## https://custom-tests/block-quotes#block-terminations
+
 > Block quote followed by heading
 # heading
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
@@ -2827,15 +3058,9 @@ no code block
 |^ markup.list.numbered.bullet.markdown punctuation.definition.list_item.markdown
 | ^^^^^^^^^^ markup.list.numbered.markdown - meta.quote
 
-> Block quote followed by thematic break
-***
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
+## https://custom-tests/block-quotes#list-items
 
-> Block quote followed by thematic break
-- - -
-| <- meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown - meta.quote
-
-> Block quote with list items
+> Block quote with lists
 > - list item 1
 | ^ markup.quote punctuation.definition.list_item
 > - list item 2
@@ -2852,6 +3077,8 @@ no code block
 > - list item 3
   continued
 | ^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+## https://custom-tests/block-quotes#gfm-tasks
 
 > Block quote with GFM tasks
 > * [ ] task
@@ -2887,6 +3114,20 @@ no code block
 |     ^ markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
 |      ^ markup.checkbox.mark.markdown-gfm - punctuation
 |       ^ markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+
+## https://custom-tests/block-quotes#emphasis
+
+> Blcok quotes support markup,
+> like *italics*, **bold**, ***bold italic*** and ~~strikethrough~~.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|      ^^^^^^^^^ markup.italic.markdown
+|                 ^^^^^^^^ markup.bold.markdown
+|                           ^^ markup.bold.markdown punctuation.definition.bold.begin.markdown
+|                             ^ markup.bold.markdown markup.italic.markdown punctuation.definition.italic.begin.markdown
+|                              ^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown - punctuation
+|                                         ^ markup.bold.markdown markup.italic.markdown punctuation.definition.italic.end.markdown
+|                                          ^^ markup.bold.markdown punctuation.definition.bold.end.markdown
+|                                                 ^^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
 
 
 # TEST: LIST BLOKCKS ##########################################################
@@ -3198,12 +3439,12 @@ Paragraph break.
             code here
 
             >     block quote code here
-|           ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
-|                 ^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered markup.quote markup.raw.block
+         |  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
+         |        ^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered markup.quote markup.raw.block
 
             > > test
-|           ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
-|             ^ markup.list.unnumbered markup.quote markup.quote punctuation.definition.blockquote - markup.raw.block
+         |  ^ markup.list.unnumbered markup.quote punctuation.definition.blockquote
+         |    ^ markup.list.unnumbered markup.quote markup.quote punctuation.definition.blockquote - markup.raw.block
 
       - f
 |     ^ markup.list.unnumbered.bullet punctuation.definition.list_item

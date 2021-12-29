@@ -308,15 +308,20 @@ contexts:
 
   block-quote-content:
     - include: block-quote-nested
-    - include: block-quote-code-block
+    - include: block-quote-indended-code-block
+    - include: block-quote-fenced-code-block
     - include: block-quote-list-item
     - include: atx-headings
-    - include: indented-code-blocks
     - include: thematic-breaks
     - match: ''
       set: block-quote-text
 
-  block-quote-code-block:
+  block-quote-indended-code-block:
+    - match: '{{indented_code_block}}.*$\n?'
+      scope: markup.raw.block.markdown
+      pop: true
+
+  block-quote-fenced-code-block:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
@@ -326,9 +331,9 @@ contexts:
         0: meta.code-fence.definition.begin.text.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
-      set: block-quote-code-block-content
+      set: block-quote-fenced-code-block-content
 
-  block-quote-code-block-content:
+  block-quote-fenced-code-block-content:
     - match: ^(?!\s*{{block_quote}})
       pop: true
     - match: '{{fenced_code_block_end}}'
@@ -340,9 +345,9 @@ contexts:
       captures:
         1: punctuation.definition.blockquote.markdown
     - match: ''
-      push: block-quote-code-block-text
+      push: block-quote-fenced-code-block-text
 
-  block-quote-code-block-text:
+  block-quote-fenced-code-block-text:
     - meta_include_prototype: false
     - meta_content_scope: markup.raw.code-fence.markdown-gfm
     - match: ^
