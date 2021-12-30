@@ -807,6 +807,11 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
             import urllib.request
 
             resp = urllib.request.urlopen(link_href)
+            content_type = {a: b for a, b in resp.getheaders()}.get("Content-Type")
+            if content_type and not content_type.startswith("text"):
+                url_titles[link_href] = None
+                raise TypeError(f"Link {link_href!r} points to non-text content {content_type!r}")
+
             match = re.search(rb"<title[^>]*>(?!<)(.+?)</title>", resp.read())
             if match:
                 url_titles[link_href] = re.sub(r"([\[\]])", r"\\\g<1>", match.group(1).decode())
@@ -837,12 +842,29 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
             suggested_title = suggest_default_link_name("", link_href, False)
             try:
                 getTitleFromUrlJob(link_href)
+                if url_titles[link_href] is None:
+                    raise TypeError(f"Link {link_href!r} has NoneType as value")
+
                 title = url_titles[link_href] + " (" + suggested_title + ")"
                 link_href = url_redirects.get(link_href) or link_href
+            except TypeError as e:
+                print(e)
+                continue
             except Exception as e:
                 print(e)
                 title = suggested_title
             view.replace(edit, link_region, "[" + title + "](" + link_href + ")")
+
+
+class MdeConvertBareLinkToMdLinkWholeviewCommand(MdeTextCommand):
+    """Convert all inline links to reference."""
+
+    def is_visible(self):
+        return True
+
+    def run(self, edit, name=None):
+        self.view.sel().add(sublime.Region(0, self.view.size()))
+        MdeConvertBareLinkToMdLinkCommand.run(self, edit, name=name)
 
 
 class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):

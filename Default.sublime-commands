@@ -250,6 +250,10 @@
 		"command": "mde_convert_bare_link_to_md_link"
 	},
 	{
+		"caption": "MarkdownEditing: Convert all bare links to markdown",
+		"command": "mde_convert_bare_link_to_md_link_wholeview"
+	},
+	{
 		"caption": "MarkdownEditing: Add Missing Link Labels",
 		"command": "mde_gather_missing_link_markers"
 	},
