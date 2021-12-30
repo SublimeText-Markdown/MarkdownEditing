@@ -807,7 +807,7 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
             import urllib.request
 
             resp = urllib.request.urlopen(link_href)
-            match = re.search(rb"<title>(.+?)</title>", resp.read())
+            match = re.search(rb"<title[^>]*>(?!<)(.+?)</title>", resp.read())
             if match:
                 url_titles[link_href] = re.sub(r"([\[\]])", r"\\\g<1>", match.group(1).decode())
 
