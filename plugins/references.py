@@ -810,7 +810,9 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
             content_type = {a: b for a, b in resp.getheaders()}.get("Content-Type")
             if content_type and not content_type.startswith("text"):
                 url_titles[link_href] = None
-                raise TypeError(f"Link {link_href!r} points to non-text content {content_type!r}")
+                raise TypeError(
+                    "Link '{}' points to non-text content '{}'".format(link_href, content_type)
+                )
 
             match = re.search(rb"<title[^>]*>(?!<)(.+?)</title>", resp.read())
             if match:
@@ -843,7 +845,7 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
             try:
                 getTitleFromUrlJob(link_href)
                 if url_titles[link_href] is None:
-                    raise TypeError(f"Link {link_href!r} has NoneType as value")
+                    raise TypeError("Link '{}' has NoneType as value".format(link_href))
 
                 title = url_titles[link_href] + " (" + suggested_title + ")"
                 link_href = url_redirects.get(link_href) or link_href
