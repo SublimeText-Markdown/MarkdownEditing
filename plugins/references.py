@@ -87,12 +87,12 @@ def getMarkers(view, name=""):
 
 
 def find_by_selector_in_regions(view, regions, selector):
-    def _gen():
-        for sel in view.find_by_selector(selector):
-            if any(s.intersects(sel) for s in regions):
-                yield sel
+    selectors = []
+    for sel in view.find_by_selector(selector):
+        if any(s.intersects(sel) for s in regions):
+            selectors.append(sel)
 
-    return list(_gen())
+    return selectors
 
 
 def getReferences2(view):
