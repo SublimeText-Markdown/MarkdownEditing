@@ -327,7 +327,7 @@ contexts:
     - include: latex-blocks
     - include: reference-definitions
     - include: atx-headings
-    - include: setext-heading-or-paragraph
+    - include: setext-headings-or-paragraphs
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
@@ -823,35 +823,54 @@ contexts:
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
-  setext-heading-or-paragraph:
-    # https://spec.commonmark.org/0.30/#setext-headings
+  setext-headings-or-paragraphs:
     # A paragraph may start with a line of equal signs which must not be matched
     # as heading underline. This is achieved by consuming them here, which also
     # applies `meta.paragraph` scope as expected.
     # A line of dashes is already matched as thematic break and thus ignored.
     - match: ^[ ]{,3}(?:=+|(?=\S))
-      push: paragraph
+      branch_point: setext-headings-or-paragraphs
+      branch:
+        - paragraph
+        - setext-heading2
+        - setext-heading1
 
   setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
     - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
-      scope: markup.heading.1.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: true
+    - include: setext-heading-content
 
   setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
     - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
-      scope: markup.heading.2.setext.markdown
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: true
+    - include: setext-heading-content
+
+  setext-heading-content:
+    - match: '{{setext_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
+    - include: markups
 
   paragraph:
+    # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
-    - include: setext-heading1
-    - include: setext-heading2
+    - match: '{{setext_escape}}'
+      fail: setext-headings-or-paragraphs
     - include: paragraph-end
     - include: inlines
 
