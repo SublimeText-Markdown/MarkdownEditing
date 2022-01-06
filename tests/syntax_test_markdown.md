@@ -1956,6 +1956,20 @@ FROM TableName
 | <- meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
+```ts
+declare type foo = 'bar'
+| <- markup.raw.code-fence.typescript.markdown-gfm source.ts
+```
+| <- meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+```tsx
+
+| <- markup.raw.code-fence.tsx.markdown-gfm
+```
+| <- meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
 ```xml
 |^^^^^ meta.code-fence.definition.begin.xml
 |  ^^^ constant.other.language-name
