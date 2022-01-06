@@ -56,21 +56,20 @@
 		},
 		{
 			"name": "Striked Content",
-			"scope": "text.html.markdown markup.strikethrough",
+			"scope": "text.html.markdown markup.strikethrough, text.html.markdown markup.strikethrough string",
 			"foreground": "var(grey)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked References",
-			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"name": "Striked Punctuations",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
 			"foreground": "var(grey)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked Strings",
-			"scope": "text.html.markdown markup.strikethrough string",
-			"foreground": "var(grey)",
-			"font_style": ""
+			"name": "Striked URLs",
+			"scope": "text.html.markdown markup.strikethrough & (markup.underline.link.markdown | markup.underline.link.image.markdown)",
+			"foreground": "var(grey)"
 		},
 		{
 			"name": "Markdown: Hard Line Breaks",

@@ -4,7 +4,10 @@
 	"variables": {
 		"line_break": "hsl(210, 15%, 20%)",
 		"raw_fg": "hsl(210, 10%, 60%)",
-		"raw_bg": "hsl(210, 15%, 20%)"
+		"raw_bg": "hsl(210, 15%, 20%)",
+
+		"strikethrough_content_fg": "color(var(pink) a(0.5))",
+		"strikethrough_punctuation_fg": "color(var(pink) a(0.8))"
 	},
 	"rules": [
 
@@ -56,21 +59,20 @@
 		},
 		{
 			"name": "Striked Content",
-			"scope": "text.html.markdown markup.strikethrough",
-			"foreground": "var(grey)",
+			"scope": "text.html.markdown markup.strikethrough, text.html.markdown markup.strikethrough string",
+			"foreground": "var(strikethrough_content_fg)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked References",
-			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
-			"foreground": "var(grey)",
+			"name": "Striked Punctuations",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"foreground": "var(strikethrough_punctuation_fg)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked Strings",
-			"scope": "text.html.markdown markup.strikethrough string",
-			"foreground": "var(grey)",
-			"font_style": ""
+			"name": "Striked URLs",
+			"scope": "text.html.markdown markup.strikethrough & (markup.underline.link.markdown | markup.underline.link.image.markdown)",
+			"foreground": "var(strikethrough_content_fg)"
 		},
 		{
 			"name": "Markdown: Hard Line Breaks",
