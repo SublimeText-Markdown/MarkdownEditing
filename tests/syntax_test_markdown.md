@@ -1445,10 +1445,10 @@ bar
 |  ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm constant.other.language-name.markdown
 |      ^ meta.code-fence.definition.begin.ruby.markdown-gfm - constant
 def foo(x)
-| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function.ruby keyword.declaration.function.ruby
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function
   return 3
 end
-| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword.control.block.end.ruby
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword
 ```
 | <- meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -1462,10 +1462,10 @@ end
 |       ^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm constant.other.language-name.markdown
 |           ^^^^^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.ruby.markdown-gfm - constant
 def foo(x)
-| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function.ruby keyword.declaration.function.ruby
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby meta.function
   return 3
 end
-| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword.control.block.end.ruby
+| <- markup.raw.code-fence.ruby.markdown-gfm source.ruby keyword
 ~~~~~~~
 | <- meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^^^^^ meta.code-fence.definition.end.ruby.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -1668,7 +1668,7 @@ unclosed_paren = (
 ```regex
 (?x)
 \s+
-| <- markup.raw.code-fence.regexp.markdown-gfm source.regexp meta.mode.extended.regexp keyword.control
+| <- markup.raw.code-fence.regexp.markdown-gfm source.regexp
 ```
 | <- meta.code-fence.definition.end.regexp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.regexp.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -1710,20 +1710,6 @@ FROM TableName
 ```
 | <- meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.sql.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-
-```ts
-declare type foo = 'bar'
-| <- markup.raw.code-fence.typescript.markdown-gfm source.ts
-```
-| <- meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-|^^ meta.code-fence.definition.end.typescript.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-
-```tsx
-
-| <- markup.raw.code-fence.tsx.markdown-gfm
-```
-| <- meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-|^^ meta.code-fence.definition.end.tsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
 ```xml
 |^^^^^ meta.code-fence.definition.begin.xml
@@ -1972,10 +1958,10 @@ okay
 <style
   type="text/css">
 h1 {color:red;}
-| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag.html.css
+| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag
 
 p {color:blue;}
-| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag.html.css
+| <- meta.disable-markdown source.css.embedded.html meta.selector.css entity.name.tag
 </style>
 okay
 | <- - meta.disable-markdown
