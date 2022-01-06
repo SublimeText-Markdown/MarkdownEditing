@@ -62,7 +62,7 @@
 		},
 		{
 			"name": "Striked Punctuations",
-			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata | punctuation.definition.bold | punctuation.definition.italic | punctuation.definition.string)",
 			"foreground": "var(grey)",
 			"font_style": ""
 		},

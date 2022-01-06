@@ -6,8 +6,8 @@
 		"raw_fg": "hsl(210, 10%, 60%)",
 		"raw_bg": "hsl(210, 15%, 20%)",
 
-		"strikethrough_content_fg": "color(var(pink) a(0.5))",
-		"strikethrough_punctuation_fg": "color(var(pink) a(0.8))"
+		"strikethrough_content_fg": "hsl(0, 0%, 45%)",
+		"strikethrough_punctuation_fg": "hsl(0, 0%, 50%)"
 	},
 	"rules": [
 
@@ -65,7 +65,7 @@
 		},
 		{
 			"name": "Striked Punctuations",
-			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata | markup.bold punctuation.definition.bold | markup.italic punctuation.definition.italic | string punctuation.definition.string)",
 			"foreground": "var(strikethrough_punctuation_fg)",
 			"font_style": ""
 		},
