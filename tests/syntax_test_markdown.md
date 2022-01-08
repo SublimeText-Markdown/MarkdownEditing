@@ -2458,6 +2458,158 @@ Foo
 | <- markup.quote.markdown punctuation.definition.blockquote.markdown
 |^^^^^ markup.quote.markdown
 
+## https://spec.commonmark.org/0.30/#example-218
+
+> [foo]: /url
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.link
+| ^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown
+| ^ punctuation.definition.reference.begin.markdown
+|  ^^^ entity.name.reference.link.markdown
+|     ^ punctuation.definition.reference.end.markdown
+|      ^ punctuation.separator.key-value.markdown
+|        ^^^^ markup.underline.link.markdown
+
+## https://custom-tests/link-reference-definitions/in-block-quotes
+
+> [foo]: /url "description"
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown - meta.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown
+| ^ punctuation.definition.reference.begin.markdown
+|  ^^^ entity.name.reference.link.markdown
+|     ^ punctuation.definition.reference.end.markdown
+|      ^ punctuation.separator.key-value.markdown
+|        ^^^^ markup.underline.link.markdown
+|             ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> [foo]: 
+> /url
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown meta.link.reference.def.markdown - markup.underline
+| ^^^^ markup.quote.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+
+> [foo]: 
+> /url
+> "description"
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown meta.link.reference.def.markdown - meta.string - string
+| ^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+
+> [foo]:
+> </url-with
+> -continuation>
+| <- markup.quote.markdown meta.link.reference.def.markdown markup.underline.link.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^ markup.underline.link.markdown
+|              ^ punctuation.definition.link.end.markdown
+
+> [foo]: 
+  /url
+| <- markup.quote.markdown - markup.underline - punctuation
+|^ markup.quote.markdown meta.link.reference.def.markdown - markup.underline
+| ^^^^ markup.quote.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+
+> [foo]: 
+  /url
+  "description"
+| <- markup.quote.markdown - meta.string - string - punctuation
+|^ markup.quote.markdown meta.link.reference.def.markdown - meta.string - string
+| ^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+
+> [foo]:
+  </url-with
+  -continuation>
+| <- markup.quote.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+|^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^ markup.underline.link.markdown
+|              ^ punctuation.definition.link.end.markdown
+
+## https://custom-tests/link-reference-definitions/in-block-quote-lists
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]: /url "description"
+| <- markup.quote.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown markup.list.numbered.markdown - meta.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|        ^ punctuation.definition.reference.begin.markdown
+|         ^^^ entity.name.reference.link.markdown
+|            ^ punctuation.definition.reference.end.markdown
+|             ^ punctuation.separator.key-value.markdown
+|               ^^^^ markup.underline.link.markdown
+|                    ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+>        /url "description"
+| <- markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|        ^^^^ markup.underline.link.markdown
+|             ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+>        /url
+>        "description"
+| <- markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|        ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+>        </url-with
+>        -continuation>
+| <- markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                     ^ punctuation.definition.link.end.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+         /url "description"
+|<- markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|        ^^^^ markup.underline.link.markdown
+|             ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+         /url
+         "description"
+| <- markup.quote.markdown - meta.string - string - punctuation
+|^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|        ^^^^^^^^^^^^^ meta.string.title.markdown string.quoted.double.markdown
+
+> 1. item
+>    + item
+>      - item [foo]
+>
+>        [foo]:
+         </url-with
+         -continuation>
+| <- markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.markdown
+|                     ^ punctuation.definition.link.end.markdown
+
 ## https://custom-tests/link-reference-definitions
 
 [//]: # (This is a comment without a line-break.)
@@ -2500,6 +2652,23 @@ text
     That's the *second* paragraph.
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra - markup.raw
 |              ^^^^^^^^ markup.italic
+
+## https://custom-tests/footnote-reference-definitions/in-block-quotes
+
+> [^1]: And that's the footnote.
+|^ markup.quote.markdown - meta.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+| ^ punctuation.definition.reference.begin.markdown
+|  ^^ entity.name.reference.link.markdown
+|    ^ punctuation.definition.reference.end.markdown
+|     ^ punctuation.separator.key-value.markdown
+
+> [^1]:
+>    And that's the footnote.
+> 
+>    That's the *second* paragraph.
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+|               ^^^^^^^^ markup.italic
 
 
 # TEST: TABLES ################################################################

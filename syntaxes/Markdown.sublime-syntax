@@ -332,6 +332,7 @@ contexts:
   block-quote-common:
     - include: thematic-breaks
     - include: atx-headings
+    - include: block-quote-reference-definitions
     - include: block-quote-punctuation-content
     - include: block-quote-fenced-code-block
     - include: block-quote-list-block
@@ -369,6 +370,66 @@ contexts:
         1: punctuation.definition.raw.code-fence.end.markdown
       pop: true
 
+  block-quote-reference-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definitions
+    - include: block-quote-footnote-definitions
+    - include: block-quote-link-definitions
+
+  block-quote-footnote-definitions:
+    # Mardown Extras Footnotes
+    - match: '[ \t]*(\[)({{footnote_name}})(\])(:)'
+      captures:
+        1: punctuation.definition.reference.begin.markdown
+        2: entity.name.reference.link.markdown
+        3: punctuation.definition.reference.end.markdown
+        4: punctuation.separator.key-value.markdown
+      push: block-quote-footnote-def-body
+
+  block-quote-footnote-def-body:
+    - meta_scope: meta.link.reference.def.footnote.markdown-extra
+    - match: ^(?![ \t>]*[ ]?(?:[ ]{4}|$))
+      pop: true
+    - include: block-quote-punctuations
+    - include: quote-footnote-def-common
+
+  block-quote-link-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definition
+    - match: '[ \t]*(\[)({{reference_name}})(\])(:)'
+      captures:
+        1: punctuation.definition.reference.begin.markdown
+        2: entity.name.reference.link.markdown
+        3: punctuation.definition.reference.end.markdown
+        4: punctuation.separator.key-value.markdown
+      push:
+        - block-quote-link-def-meta
+        - block-quote-link-def-title
+        - block-quote-link-def-url
+
+  block-quote-link-def-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.link.reference.def.markdown
+    - include: immediately-pop
+
+  block-quote-link-def-title:
+    - include: block-quote-nested-paragraph-end
+    - include: block-quote-punctuations
+    - include: link-title-begin
+    - include: else-pop
+
+  block-quote-link-def-url:
+    - include: block-quote-nested-paragraph-end
+    - include: block-quote-punctuations
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: block-quote-link-def-url-angled
+    - match: (?=\S)
+      set: link-def-url-unquoted
+
+  block-quote-link-def-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - include: block-quote-punctuations
+    - include: link-url-angled
+
   block-quote-list-block:
     - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
@@ -399,6 +460,7 @@ contexts:
 
   block-quote-list-block-content:
     - include: list-block-common
+    - include: block-quote-reference-definitions
     - include: block-quote-punctuation-content
     - include: block-quote-list-paragraphs
 
@@ -444,6 +506,10 @@ contexts:
 
   block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown
+    - include: block-quote-paragraph-end
+    - include: inlines
+
+  block-quote-paragraph-end:
     - match: |-
         (?x)
         # pop out of this context if one of the following conditions are met:
@@ -458,7 +524,6 @@ contexts:
           )
         )
       pop: true
-    - include: inlines
 
   block-quote-punctuations:
     - match: ^[ \t]*(>)[ ]?
@@ -467,7 +532,6 @@ contexts:
       push: block-quote-punctuation-body
 
   block-quote-punctuation-body:
-    - clear_scopes: 1
     - include: block-quote-punctuation-content
     - include: immediately-pop
 
@@ -514,13 +578,13 @@ contexts:
     - include: fenced-code-blocks
     - include: latex-blocks
     - include: html-blocks
+    - include: reference-definitions
     - include: list-block-common
     - include: list-block-quotes
     - include: list-paragraphs
 
   list-block-common:
     - include: thematic-breaks
-    - include: reference-definitions
     - include: atx-headings
     - include: list-items
 
@@ -2158,6 +2222,9 @@ contexts:
     - meta_scope: meta.link.reference.def.footnote.markdown-extra
     - match: ^(?![ ]{4}|$)
       pop: true
+    - include: quote-footnote-def-common
+
+  quote-footnote-def-common:
     - include: emphasis
     - include: images
     - include: literals
@@ -2207,7 +2274,6 @@ contexts:
     - match: (?=\s)
       pop: true
     - include: link-url-common
-
 
 ###[ LEAF BLOCKS: TABLES ]####################################################
 
