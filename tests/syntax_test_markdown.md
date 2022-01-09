@@ -3116,6 +3116,12 @@ bar
 | <- punctuation.definition.blockquote
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
 
+>    > this is a nested quote but no code in a block quote
+>     > with a second line of content
+| <- punctuation.definition.blockquote
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown
+|     ^ - punctuation
+
 >     > this is code in a block quote, not a nested quote
 | <- punctuation.definition.blockquote
 |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
@@ -3392,6 +3398,16 @@ no code block
        | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
        |^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown markup.list.numbered.markdown
        |      ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+       > Block
+       > 1. item
+       >    + item
+       >      - item
+       >        > quote
+       >        > quote
+       | <- markup.list.numbered.markdown markup.quote.markdown punctuation.definition.blockquote.markdown
+       |^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown
+       |        ^ punctuation.definition.blockquote.markdown
 
        > Block
        > 1. item
