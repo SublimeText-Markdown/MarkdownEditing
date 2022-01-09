@@ -838,63 +838,65 @@ if hasattr(sublime, "KIND_ID_MARKUP"):
         KIND_REFERENCE = (sublime.KIND_ID_MARKUP, "R", "Ref")
 
         re_reflinks = re.compile(
-            r"^\[(?P<id>[^\^][^\]]*)\]:[ \t]+(?P<link>\S*)(?:[ \t]+(?P<desc>.*))?$",
+            r"^[ \t>]*\[(?P<id>[^\^][^\]]*)\]:\s+(?P<link>\S*)(?:\s+(?P<desc>.*))?$",
             re.MULTILINE,
         )
 
-        def on_query_completions(self, prefix, locations):
+        def on_query_completions(self, _, locations):
             if not self.view.match_selector(
                 locations[0],
-                "text.html.markdown meta.link.reference"
-                " (constant.other.reference.link | punctuation.definition.constant)",
+                "text.html.markdown meta.link.reference, "
+                "text.html.markdown meta.image.reference",
             ):
                 return None
 
             completions = []
             for ref in self.view.find_by_selector("meta.link.reference.def"):
-                match = self.re_reflinks.match(self.view.substr(ref))
-                if not match:
-                    continue
-                completions.append(
-                    sublime.CompletionItem(
-                        trigger=match.group("id"),
-                        completion=match.group("id"),
-                        completion_format=sublime.COMPLETION_FORMAT_TEXT,
-                        kind=self.KIND_REFERENCE,
-                        annotation=shorten((match.group("link") or "No link"), 30),
-                        details=(match.group("desc") or "No title").strip(" \t\v\f\r\n'\""),
+                for match in self.re_reflinks.finditer(self.view.substr(ref)):
+                    completions.append(
+                        sublime.CompletionItem(
+                            trigger=match.group("id"),
+                            completion=match.group("id"),
+                            completion_format=sublime.COMPLETION_FORMAT_TEXT,
+                            kind=self.KIND_REFERENCE,
+                            annotation=shorten((match.group("link") or "No link"), 30),
+                            details=(match.group("desc") or "No title").strip(" \t\v\f\r\n'\""),
+                        )
                     )
-                )
             return sublime.CompletionList(
                 completions,
                 sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS,
             )
 
-
 else:
 
     class MdeReferenceCompletionsProvider(MdeViewEventListener):
         re_reflinks = re.compile(
-            r"^\[(?P<id>[^\^][^\]]*)\]:[ \t]+(?P<link>\S*)(?:[ \t]+(?P<desc>.*))?$",
+            r"^[ \t>]*\[(?P<id>[^\^][^\]]*)\]:\s+(?P<link>\S*)(?:\s+(?P<desc>.*))?$",
             re.MULTILINE,
         )
 
-        def on_query_completions(self, prefix, locations):
+        def on_query_completions(self, _, locations):
             if not self.view.match_selector(
                 locations[0],
-                "text.html.markdown meta.link.reference"
-                " (constant.other.reference.link | punctuation.definition.constant)",
+                "text.html.markdown meta.link.reference, "
+                "text.html.markdown meta.image.reference",
             ):
                 return None
 
             completions = []
             for ref in self.view.find_by_selector("meta.link.reference.def"):
-                match = self.re_reflinks.match(self.view.substr(ref))
-                if not match:
-                    continue
-                completions.append(match.group("id"))
+                for match in self.re_reflinks.finditer(self.view.substr(ref)):
+                    completions.append(
+                        [
+                            match.group("id")
+                            + "\t"
+                            + shorten((match.group("link") or "No link"), 30),
+                            match.group("id"),
+                        ]
+                    )
 
-            return [
+            return (
                 completions,
                 sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS,
-            ]
+            )
