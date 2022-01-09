@@ -341,6 +341,23 @@ contexts:
     - match: ^(?!(?:[ \t]*>))
       pop: true
 
+  block-quote-punctuations:
+    - match: ^[ \t]*(>)[ ]?
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push: block-quote-punctuation-body
+
+  block-quote-punctuation-body:
+    - include: block-quote-punctuation-content
+    - include: immediately-pop
+
+  block-quote-punctuation-content:
+    - match: '[ \t]*(>)[ ]?'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > FENCED CODE BLOCKS ]####################
+
   block-quote-fenced-code-block:
     - match: |-
          (?x)
@@ -369,6 +386,8 @@ contexts:
         0: meta.code-fence.definition.end.text.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
       pop: true
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > REFERENCE DEFINITIONS ]#################
 
   block-quote-reference-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definitions
@@ -429,6 +448,8 @@ contexts:
     - meta_content_scope: markup.underline.link.markdown
     - include: block-quote-punctuations
     - include: link-url-angled
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > LIST BLOCKS ]###########################
 
   block-quote-list-block:
     - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
@@ -500,6 +521,8 @@ contexts:
         )
       pop: true
 
+###[ CONTAINER BLOCKS: BLOCK QUOTES > PARAGRAPHS ]############################
+
   block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
       set: block-quote-paragraph-body
@@ -524,21 +547,6 @@ contexts:
           )
         )
       pop: true
-
-  block-quote-punctuations:
-    - match: ^[ \t]*(>)[ ]?
-      captures:
-        1: punctuation.definition.blockquote.markdown
-      push: block-quote-punctuation-body
-
-  block-quote-punctuation-body:
-    - include: block-quote-punctuation-content
-    - include: immediately-pop
-
-  block-quote-punctuation-content:
-    - match: '[ \t]*(>)[ ]?'
-      captures:
-        1: punctuation.definition.blockquote.markdown
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
