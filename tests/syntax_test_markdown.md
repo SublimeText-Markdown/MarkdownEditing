@@ -2646,12 +2646,50 @@ text
 |   ^ punctuation.definition.reference.end.markdown
 |    ^ punctuation.separator.key-value.markdown
 
+  [^1]: And that's the footnote.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra
+| ^ punctuation.definition.reference.begin.markdown
+|  ^^ entity.name.reference.link.markdown
+|    ^ punctuation.definition.reference.end.markdown
+|     ^ punctuation.separator.key-value.markdown
+
+   [^1]: And that's the footnote.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra
+|  ^ punctuation.definition.reference.begin.markdown
+|   ^^ entity.name.reference.link.markdown
+|     ^ punctuation.definition.reference.end.markdown
+|      ^ punctuation.separator.key-value.markdown
+
+     [^1]: And that's no footnote.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block.markdown
+
+[^1]:
+    And that's the footnote
+with a *second* line.
+|^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra - markup.raw
+
 [^1]:
     And that's the footnote.
 
-    That's the *second* paragraph.
-|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra - markup.raw
+    That's the *second* footnote paragraph.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra - markup.raw
 |              ^^^^^^^^ markup.italic
+
+[^1]:
+    And that's the footnote.
+
+   Not a footnote paragraph.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - meta.link
+
+[^1]:
+    And that's the footnote
+with a *second* line.
+[^2]: second
+| <- meta.link.reference.def.footnote.markdown-extra punctuation.definition.reference.begin.markdown
+|^^^^^^^^^^^^ meta.link.reference.def.footnote.markdown-extra
+|^^ entity.name.reference.link.markdown
+|  ^ punctuation.definition.reference.end.markdown
+|   ^ punctuation.separator.key-value.markdown
 
 ## https://custom-tests/footnote-reference-definitions/in-block-quotes
 
@@ -2663,13 +2701,57 @@ text
 |    ^ punctuation.definition.reference.end.markdown
 |     ^ punctuation.separator.key-value.markdown
 
-> [^1]:
->    And that's the footnote.
-> 
->    That's the *second* paragraph.
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
-|               ^^^^^^^^ markup.italic
+>  [^1]: And that's the footnote.
+|^ markup.quote.markdown - meta.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+|  ^ punctuation.definition.reference.begin.markdown
+|   ^^ entity.name.reference.link.markdown
+|     ^ punctuation.definition.reference.end.markdown
+|      ^ punctuation.separator.key-value.markdown
 
+>   [^1]: And that's the footnote.
+|^ markup.quote.markdown - meta.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+|   ^ punctuation.definition.reference.begin.markdown
+|    ^^ entity.name.reference.link.markdown
+|      ^ punctuation.definition.reference.end.markdown
+|       ^ punctuation.separator.key-value.markdown
+
+>     [^1]: And that's no footnote.
+|^ markup.quote.markdown - meta.link - markup.raw
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.raw.block.markdown
+
+> [^1]: And that's the footnote.
+> with a *second* line.
+| <- markup.quote.markdown meta.link.reference.def.footnote.markdown-extra punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+
+> [^1]:
+>     And that's the footnote.
+> 
+>     That's the *second* paragraph.
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown meta.link.reference.def.footnote.markdown-extra
+|                ^^^^^^^^ markup.italic
+
+> [^1]:
+>     And that's the footnote.
+> 
+>    Not a footnote paragraph.
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown - markup.link
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown - markup.link
+
+>   [^1]: And that's the footnote.
+> 
+>     code block
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown - markup.raw
+|^ markup.quote.markdown - markup.raw
+| ^^^^^^^^^^^^^^^ markup.quote.markdown markup.raw.block.markdown
+
+> [^1]:
+>     And that's the footnote.
+> 
+      That's not a *second* paragraph.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block.markdown
 
 # TEST: TABLES ################################################################
 
@@ -3621,7 +3703,7 @@ second line
     second line
 | <- markup.quote.markdown markup.list.numbered.markdown
 
-## https://custom-tests/list-blocks/unordered-lists-with-atx-headings
+## https://custom-tests/block-quotes/unordered-lists-with-atx-headings
 
 > * list item
 > # global heading
@@ -3715,7 +3797,7 @@ second line
         | <- markup.quote.markdown markup.raw.block.markdown
         |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.raw.block.markdown
 
-## https://custom-tests/list-blocks/ordered-lists-with-atx-headings
+## https://custom-tests/block-quotes/ordered-lists-with-atx-headings
 
 > 
 > 1. list item
@@ -3802,7 +3884,7 @@ second line
            | <- markup.quote.markdown markup.list.numbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
            |^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.heading.2.markdown
 
-## https://custom-tests/list-blocks/unordered-lists-with-reference-definitions
+## https://custom-tests/block-quotes/unordered-lists-with-reference-definitions
 
 > * list item [ref]
     |         ^^^^^ markup.list.unnumbered.markdown meta.link.reference.description.markdown
@@ -3843,7 +3925,7 @@ second line
    |    ^ punctuation.separator.key-value.markdown
    |      ^^^^ markup.underline.link.markdown
 
-## https://custom-tests/list-blocks/ordered-lists-with-reference-definitions
+## https://custom-tests/block-quotes/ordered-lists-with-reference-definitions
 
 > 1. list item [ref]
      |         ^^^^^ markup.list.numbered.markdown meta.link.reference.description.markdown
@@ -3883,6 +3965,53 @@ second line
      |   ^ punctuation.definition.reference.end.markdown
      |    ^ punctuation.separator.key-value.markdown
      |      ^^^^ markup.underline.link.markdown
+
+## https://custom-tests/block-quotes/ordered-lists-with-footnote-definitions
+
+> 1. list item
+>    + sub item
+>      - sub item [^1]
+>      
+>        [^1]:
+>            This is a foot note
+>            with a second line
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.footnote.markdown-extra
+
+> 1. list item
+>    + sub item
+>      - sub item [^1]
+>      
+>        [^1]:
+>            This is a foot note
+>            with a second line
+>        [^2]:
+|        ^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.link.reference.def.footnote.markdown-extra
+|        ^ punctuation.definition.reference.begin.markdown
+|         ^^ entity.name.reference.link.markdown
+|           ^ punctuation.definition.reference.end.markdown
+|            ^ punctuation.separator.key-value.markdown
+
+> 1. list item
+>    + sub item
+>      - sub item [^1]
+>      
+>        [^1]:
+>            This is a foot note
+>            with a second line
+>        # header
+|^ markup.quote.markdown markup.list.numbered.markdown - markup.heading
+| ^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.heading.1.markdown
+
+> 1. list item
+>    + sub item
+>      - sub item [^1]
+>      
+>        [^1]:
+>            This is a foot note
+>            with a second line
+>      - sub item
+|^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown
+|      ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
 
 ## https://custom-tests/block-quotes#gfm-tasks
 
@@ -4949,6 +5078,53 @@ paragraph
    |   ^ punctuation.definition.reference.end.markdown
    |    ^ punctuation.separator.key-value.markdown
    |      ^^^^ markup.underline.link.markdown
+
+## https://custom-tests/list-blocks/subitems-with-footnote-reference-definitions
+
+1. list item
+   + sub item
+     - sub item [^1]
+     
+       [^1]:
+           This is a foot note
+           with a second line
+| <- markup.list.numbered.markdown meta.link.reference.def.footnote.markdown-extra
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.link.reference.def.footnote.markdown-extra
+
+1. list item
+   + sub item
+     - sub item [^1]
+     
+       [^1]:
+           This is a foot note
+           with a second line
+       [^2]:
+       ^^^^^^ markup.list.numbered.markdown meta.link.reference.def.footnote.markdown-extra
+       ^ punctuation.definition.reference.begin.markdown
+        ^^ entity.name.reference.link.markdown
+          ^ punctuation.definition.reference.end.markdown
+           ^ punctuation.separator.key-value.markdown
+
+1. list item
+   + sub item
+     - sub item [^1]
+     
+       [^1]:
+           This is a foot note
+           with a second line
+       # header
+|^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.1.markdown
+
+1. list item
+   + sub item
+     - sub item [^1]
+     
+       [^1]:
+           This is a foot note
+           with a second line
+     - sub item
+|^^^^^^^^^^^^^^ markup.list.numbered.markdown
+|    ^ markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
 
 ## https://custom-tests/list-blocks/subitems-with-block-quotes
 

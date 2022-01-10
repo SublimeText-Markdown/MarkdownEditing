@@ -232,6 +232,7 @@ variables:
     tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
     tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
+    reference_definition: (?:\[{{reference_name}}\]\:)
     footnote_name: (?:\^(?:\\\]|[^]])+)
     reference_name: (?:(?:\\\]|[^]])+)
 
@@ -412,20 +413,50 @@ contexts:
 
   block-quote-footnote-definitions:
     # Mardown Extras Footnotes
-    - match: '[ \t]*(\[)({{footnote_name}})(\])(:)'
+    - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
-        1: punctuation.definition.reference.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.reference.end.markdown
-        4: punctuation.separator.key-value.markdown
+        2: punctuation.definition.reference.begin.markdown
+        3: entity.name.reference.link.markdown
+        4: punctuation.definition.reference.end.markdown
+        5: punctuation.separator.key-value.markdown
       push: block-quote-footnote-def-body
 
   block-quote-footnote-def-body:
     - meta_scope: meta.link.reference.def.footnote.markdown-extra
-    - match: ^(?![ \t>]*[ ]?(?:[ ]{4}|$))
-      pop: true
+    - include: block-quote-footnote-def-end
     - include: block-quote-punctuations
-    - include: quote-footnote-def-common
+    - include: block-quote-footnote-paragraphs
+
+  block-quote-footnote-def-end:
+    # A footnote definition is terminated by blocks not indented by at least 4 characters.
+    # Note: The first space after a quotation punctuation is not counted for simplicity reasons.
+    - match: ^(?!(?:[ \t]*>)+[ ](?:\1[ ]{4}|\s*$))
+      pop: true
+
+  block-quote-footnote-paragraphs:
+    - match: '[ \t]*(?=\S)'
+      push: block-quote-footnote-paragraph-body
+
+  block-quote-footnote-paragraph-body:
+    - include: block-quote-footnote-paragraph-end
+    - include: block-quote-punctuations
+    - include: footnote-paragraph-common
+
+  block-quote-footnote-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= (?:[ \t]*>)* [ \t]*
+           (?: $                           # the line is blank (or only contains whitespace)
+           |   {{reference_definition}}    # a reference definition begins the line
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
+        )
+      pop: true
 
   block-quote-link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
@@ -2234,25 +2265,52 @@ contexts:
 
   footnote-definitions:
     # Mardown Extras Footnotes
-    - match: '[ \t]*(\[)({{footnote_name}})(\])(:)'
+    - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
-        1: punctuation.definition.reference.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.reference.end.markdown
-        4: punctuation.separator.key-value.markdown
+        2: punctuation.definition.reference.begin.markdown
+        3: entity.name.reference.link.markdown
+        4: punctuation.definition.reference.end.markdown
+        5: punctuation.separator.key-value.markdown
       push: footnote-def-body
 
   footnote-def-body:
     - meta_scope: meta.link.reference.def.footnote.markdown-extra
-    - match: ^(?![ ]{4}|$)
-      pop: true
-    - include: quote-footnote-def-common
+    - include: footnote-def-end
+    - include: footnote-paragraphs
 
-  quote-footnote-def-common:
+  footnote-def-end:
+    - match: ^(?!(?:\1[ ]{4}|\s*$))
+      pop: true
+
+  footnote-paragraphs:
+    - match: '[ \t]*(?=\S)'
+      push: footnote-paragraph-body
+
+  footnote-paragraph-body:
+    - include: footnote-paragraph-end
+    - include: footnote-paragraph-common
+
+  footnote-paragraph-common:
     - include: emphasis
     - include: images
     - include: literals
     - include: links
+
+  footnote-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= [ \t]*
+           (?: $                           # the line is blank (or only contains whitespace)
+           |   {{reference_definition}}    # a reference definition begins the line
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
+        )
+      pop: true
 
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
