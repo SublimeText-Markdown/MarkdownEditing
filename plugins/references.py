@@ -841,7 +841,9 @@ class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
 
         for link_region in valid_regions[::-1]:
             link_href = view.substr(link_region)
-            suggested_title = suggest_default_link_name("", link_href, False)
+            suggested_title = suggest_default_link_name(
+                "", url_redirects.get(link_href, link_href), False
+            )
             try:
                 getTitleFromUrlJob(link_href)
                 if url_titles[link_href] is None:
