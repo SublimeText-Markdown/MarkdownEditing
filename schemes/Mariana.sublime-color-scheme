@@ -105,6 +105,10 @@
 			"scope": "text.html.markdown meta.link.inline markup.underline.link",
 			"foreground": "var(pink)"
 		},
+		{
+			"scope": "(meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown, meta.link.reference.wiki.description.markdown) - comment - constant - entity - punctuation - string",
+			"foreground": "var(blue)"
+		},
 
 		// Keyboard Shortcuts
 		{
