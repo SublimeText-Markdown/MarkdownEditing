@@ -129,8 +129,13 @@ When you notice any undesired behaviour introduced by the latest update, your fe
 * Setext-style headers (`===` and `---`) show up in the symbol list of Sublime Text 4 only.  
   They are not supported by Sublime Text 3 (see [#158][]).
 
+* Indended code block highlighting in list blocks is not supported (see [#663][]).  
+  ST's syntax engine can't count indentation, so reliably highlighting indended code blocks in
+  maybe nested list items is impossible. Use fenced code blocks instead.
+
 * Installing for the first time while having markdown files opened may cause MarkdownEditing to behave unexpectedly on those files. Close and reopen those files to fix it.
 
 [#158]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/158
+[#663]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues/663
 [mdereleases]: https://github.com/SublimeText-Markdown/MarkdownEditing/releases
 [mdeissues]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues
