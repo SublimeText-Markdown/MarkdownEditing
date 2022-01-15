@@ -3364,8 +3364,9 @@ contexts:
     - include: latex-content
 
   latex-blocks:
-    - match: \$\$
-      scope: string.other.math.latex punctuation.definition.string.begin.latex
+    - match: '[ \t]*(\$\$)'
+      captures:
+        1: string.other.math.latex punctuation.definition.string.begin.latex
       push: latex-block-content
 
   latex-block-content:
