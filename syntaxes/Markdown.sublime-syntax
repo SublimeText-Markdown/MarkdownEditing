@@ -19,234 +19,234 @@ file_extensions:
   - markdn
 
 variables:
-    atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
-    atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
-    atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
-    setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
+  atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
+  atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
+  setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
 
-    block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
-    indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
+  block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
+  indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
 
-    first_list_item: (?:[ ]{,3}(?:1[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
-    list_item: (?:[ ]{,3}(?:\d{1,9}[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+  first_list_item: (?:[ ]{,3}(?:1[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+  list_item: (?:[ ]{,3}(?:\d{1,9}[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
 
-    thematic_break: |-
-      (?x:
-        [ ]{,3}                    # between 0 to 3 spaces
-        (?:                        # followed by one of the following:
-          [-](?:[ \t]*[-]){2,}     # - a dash,        followed by the following at least twice: any number of spaces or tabs followed by a dash
-        | [*](?:[ \t]*[*]){2,}     # - a star,        followed by the following at least twice: any number of spaces or tabs followed by a star
-        | [_](?:[ \t]*[_]){2,}     # - an underscore, followed by the following at least twice: any number of spaces or tabs followed by an underscore
-        )
-        [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
+  thematic_break: |-
+    (?x:
+      [ ]{,3}                    # between 0 to 3 spaces
+      (?:                        # followed by one of the following:
+        [-](?:[ \t]*[-]){2,}     # - a dash,        followed by the following at least twice: any number of spaces or tabs followed by a dash
+      | [*](?:[ \t]*[*]){2,}     # - a star,        followed by the following at least twice: any number of spaces or tabs followed by a star
+      | [_](?:[ \t]*[_]){2,}     # - an underscore, followed by the following at least twice: any number of spaces or tabs followed by an underscore
       )
+      [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
+    )
 
-    backticks: |-
-      (?x:
-        (`{4})(?![\s`])(?:[^`]+(?=`)|(?!`{4})`+(?!`))+(`{4})(?!`)  # 4 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
-      | (`{3})(?![\s`])(?:[^`]+(?=`)|(?!`{3})`+(?!`))+(`{3})(?!`)  # 3 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
-      | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
-      | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
-      )
-    escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
+  backticks: |-
+    (?x:
+      (`{4})(?![\s`])(?:[^`]+(?=`)|(?!`{4})`+(?!`))+(`{4})(?!`)  # 4 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
+    | (`{3})(?![\s`])(?:[^`]+(?=`)|(?!`{3})`+(?!`))+(`{3})(?!`)  # 3 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
+    | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
+    | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
+    )
+  escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
-    balance_square_brackets: |-
-      (?x:
-        (?:
-          (?:{{escapes}})+                  # escape characters
-        | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+
-      )
-    balance_square_brackets_and_emphasis: |-
-      (?x:
-        (?:
-          (?:{{escapes}})+                  # escape characters
-        | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+                                  # at least one character
-      )
-    balance_square_brackets_pipes_and_emphasis: |-
-      (?x:
-        (?:
-          (?:{{escapes}})+                  # escape characters
-        | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+                                  # at least one character
-      )
-    balanced_emphasis: |-
-      (?x:
-        \*  (?!\*){{balance_square_brackets_and_emphasis}}+\*  (?!\*)
-      | \*\*      {{balance_square_brackets_and_emphasis}}+\*\*
-      | _   (?!_) {{balance_square_brackets_and_emphasis}}+_   (?!_)
-      | __        {{balance_square_brackets_and_emphasis}}+__
-      )
+  balance_square_brackets: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+
+    )
+  balance_square_brackets_and_emphasis: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+                                  # at least one character
+    )
+  balance_square_brackets_pipes_and_emphasis: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+                                  # at least one character
+    )
+  balanced_emphasis: |-
+    (?x:
+      \*  (?!\*){{balance_square_brackets_and_emphasis}}+\*  (?!\*)
+    | \*\*      {{balance_square_brackets_and_emphasis}}+\*\*
+    | _   (?!_) {{balance_square_brackets_and_emphasis}}+_   (?!_)
+    | __        {{balance_square_brackets_and_emphasis}}+__
+    )
 
-    table_cell: |-
-      (?x:
-        # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
-        # emphasis in table cells can't span multiple lines
-        (?:
-          {{balance_square_brackets_pipes_and_emphasis}}
-        | {{balanced_emphasis}}
-        )+  # at least one character
-      )
-    table_first_row: |-
-      (?x:
-        # at least 2 non-escaped pipe chars on the line
-        (?:{{table_cell}}?\|){2}
+  table_cell: |-
+    (?x:
+      # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
+      # emphasis in table cells can't span multiple lines
+      (?:
+        {{balance_square_brackets_pipes_and_emphasis}}
+      | {{balanced_emphasis}}
+      )+  # at least one character
+    )
+  table_first_row: |-
+    (?x:
+      # at least 2 non-escaped pipe chars on the line
+      (?:{{table_cell}}?\|){2}
 
-        # something other than whitespace followed by a pipe char or hyphon,
-        # followed by something other than whitespace and the end of the line
-      | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
-      )
+      # something other than whitespace followed by a pipe char or hyphon,
+      # followed by something other than whitespace and the end of the line
+    | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
+    )
 
-    fenced_code_block_start: |-
-      (?x:
-        ([ \t]*)
-        (
-          (`){3,}      #   3 or more backticks
-          (?![^`]*`)   #   not followed by any more backticks on the same line
-        |              # or
-          (~){3,}      #   3 or more tildas
-        )
-        \s*            # allow for whitespace between code block start and info string
+  fenced_code_block_start: |-
+    (?x:
+      ([ \t]*)
+      (
+        (`){3,}      #   3 or more backticks
+        (?![^`]*`)   #   not followed by any more backticks on the same line
+      |              # or
+        (~){3,}      #   3 or more tildas
       )
-    fenced_code_block_language: |-
-      (?x:             # first word of an infostring is used as language specifier
-        (
-          [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
-          [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
-        )
+      \s*            # allow for whitespace between code block start and info string
+    )
+  fenced_code_block_language: |-
+    (?x:             # first word of an infostring is used as language specifier
+      (
+        [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
+        [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
       )
-    fenced_code_block_trailing_infostring_characters: |-
-      (?x:
-        (
-          \s*          # any whitespace, or ..
-        |
-          \s[^`]*      # any characters (except backticks), separated by whitespace ...
-        )
-        $\n?           # ... until EOL
+    )
+  fenced_code_block_trailing_infostring_characters: |-
+    (?x:
+      (
+        \s*          # any whitespace, or ..
+      |
+        \s[^`]*      # any characters (except backticks), separated by whitespace ...
       )
-    fenced_code_block_end: |-
-      (?x:
-        [ \t]*
-        (
-          \2           # the backtick/tilde combination that opened the code fence
-          (?:\3|\4)*   # plus optional additional closing characters
-        )
-        \s*$           # any amount of whitespace until EOL
+      $\n?           # ... until EOL
+    )
+  fenced_code_block_end: |-
+    (?x:
+      [ \t]*
+      (
+        \2           # the backtick/tilde combination that opened the code fence
+        (?:\3|\4)*   # plus optional additional closing characters
       )
-    fenced_code_block_escape: ^{{fenced_code_block_end}}
+      \s*$           # any amount of whitespace until EOL
+    )
+  fenced_code_block_escape: ^{{fenced_code_block_end}}
 
-    # https://spec.commonmark.org/0.30/#email-autolink
-    email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
-    email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
+  # https://spec.commonmark.org/0.30/#email-autolink
+  email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
+  email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
 
-    # https://spec.commonmark.org/0.30/#html-blocks
-    html_block: |-
-      (?x:
-        [ ]{,3}
-        (?:
-          \$\$                                 # a latex math block begins the line
-        | {{html_tag_block_end_at_close_tag}}  # html block type 1
-        | {{html_tag_block_end_at_blank_line}} # html block type 6
-        | {{html_block_open_tag}}              # html block type 7
-        | {{html_block_close_tag}}             # html block type 7
-        | {{html_block_comment}}               # html block type 2
-        | {{html_block_decl}}                  # html block type 4
-        | {{html_block_cdata}}                 # html block type 5
-        | {{html_block_preprocessor}}          # html block type 3
-        )
+  # https://spec.commonmark.org/0.30/#html-blocks
+  html_block: |-
+    (?x:
+      [ ]{,3}
+      (?:
+        \$\$                                 # a latex math block begins the line
+      | {{html_tag_block_end_at_close_tag}}  # html block type 1
+      | {{html_tag_block_end_at_blank_line}} # html block type 6
+      | {{html_block_open_tag}}              # html block type 7
+      | {{html_block_close_tag}}             # html block type 7
+      | {{html_block_comment}}               # html block type 2
+      | {{html_block_decl}}                  # html block type 4
+      | {{html_block_cdata}}                 # html block type 5
+      | {{html_block_preprocessor}}          # html block type 3
       )
-    html_block_comment: <!--
-    html_block_cdata: <!\[CDATA\[
-    html_block_decl: <![a-zA-Z]
-    html_block_preprocessor: <\?
-    html_block_open_tag: |-
-      (?xi:
-        <
-        [a-z]             # A tag name consists of an ASCII letter
-        [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
-        (?:               # An attribute consists of whitespace, an attribute name, and an optional attribute value specification
-          \s+
-          [a-z_:]         # An attribute name consists of an ASCII letter, _, or :
-          [a-z0-9_.:-]*   # followed by zero or more ASCII letters, digits, _, ., :, or -
-          (?:             # An attribute value specification consists of optional whitespace, a = character, optional whitespace, and an attribute value
-            \s*
-            =
-            \s*
-            (?:
-              [^ @'=<>`]+ # An unquoted attribute value is a nonempty string of characters not including spaces, ", ', =, <, >, or `
-            | '[^']*'     # A single-quoted attribute value consists of ', zero or more characters not including ', and a final '
-            | "[^"]*"     # A double-quoted attribute value consists of ", zero or more characters not including ", and a final "
-            )
-          )?
-        )*
-        \s*
-        /?
-        >
-        \s*$
-      )
-    html_block_close_tag: |-
-      (?xi:
-        </
-        [a-z]             # A tag name consists of an ASCII letter
-        [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
-        \s*
-        >
-        \s*$
-      )
-    html_tag_block_end_at_close_tag: |-
-      <(?xi: pre | script | style | textarea ){{html_tag_break_char}}
-    html_tag_block_end_at_blank_line: |-
-      <(?xi:
-        address | article | aside | base | basefont | blockquote | body | caption
-      | c enter | col | colgroup | dd | details | dialog | dir | div | dl | dt
-      | fieldset | figcaption | figure | footer | form | frame | frameset | h1 | h2
-      | h3 | h4 | h5 | h6 | head | header | hr | html | iframe | legend | li | link
-      | main | menu | menuitem | nav | noframes | ol | optgroup | option | p | param
-      | section | source | summary | table | tbody | td | tfoot | th
-      | thead | title | tr | track | ul
-      ){{html_tag_maybe_selfclosing_break_char}}
-    html_tag_break_char: (?:[ \t>]|$)
-    html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
+    )
+  html_block_comment: <!--
+  html_block_cdata: <!\[CDATA\[
+  html_block_decl: <![a-zA-Z]
+  html_block_preprocessor: <\?
+  html_block_open_tag: |-
+    (?xi:
+      <
+      [a-z]             # A tag name consists of an ASCII letter
+      [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
+      (?:               # An attribute consists of whitespace, an attribute name, and an optional attribute value specification
+        \s+
+        [a-z_:]         # An attribute name consists of an ASCII letter, _, or :
+        [a-z0-9_.:-]*   # followed by zero or more ASCII letters, digits, _, ., :, or -
+        (?:             # An attribute value specification consists of optional whitespace, a = character, optional whitespace, and an attribute value
+          \s*
+          =
+          \s*
+          (?:
+            [^ @'=<>`]+ # An unquoted attribute value is a nonempty string of characters not including spaces, ", ', =, <, >, or `
+          | '[^']*'     # A single-quoted attribute value consists of ', zero or more characters not including ', and a final '
+          | "[^"]*"     # A double-quoted attribute value consists of ", zero or more characters not including ", and a final "
+          )
+        )?
+      )*
+      \s*
+      /?
+      >
+      \s*$
+    )
+  html_block_close_tag: |-
+    (?xi:
+      </
+      [a-z]             # A tag name consists of an ASCII letter
+      [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
+      \s*
+      >
+      \s*$
+    )
+  html_tag_block_end_at_close_tag: |-
+    <(?xi: pre | script | style | textarea ){{html_tag_break_char}}
+  html_tag_block_end_at_blank_line: |-
+    <(?xi:
+      address | article | aside | base | basefont | blockquote | body | caption
+    | c enter | col | colgroup | dd | details | dialog | dir | div | dl | dt
+    | fieldset | figcaption | figure | footer | form | frame | frameset | h1 | h2
+    | h3 | h4 | h5 | h6 | head | header | hr | html | iframe | legend | li | link
+    | main | menu | menuitem | nav | noframes | ol | optgroup | option | p | param
+    | section | source | summary | table | tbody | td | tfoot | th
+    | thead | title | tr | track | ul
+    ){{html_tag_maybe_selfclosing_break_char}}
+  html_tag_break_char: (?:[ \t>]|$)
+  html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
 
-    html_entity: '&([a-zA-Z0-9]+|#\d+|#[Xx]\h+);'
+  html_entity: '&([a-zA-Z0-9]+|#\d+|#[Xx]\h+);'
 
-    ascii_space: '\t\n\f '
-    tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
-    tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
-    tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
-    tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
+  ascii_space: '\t\n\f '
+  tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
+  tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
+  tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
+  tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
-    reference_definition: (?:\[{{reference_name}}\]\:)
-    footnote_name: (?:\^(?:\\\]|[^]])+)
-    reference_name: (?:(?:\\\]|[^]])+)
+  reference_definition: (?:\[{{reference_name}}\]\:)
+  footnote_name: (?:\^(?:\\\]|[^]])+)
+  reference_name: (?:(?:\\\]|[^]])+)
 
-    paragraph_end: |-
-      (?x: # pop out of this context if one of the following conditions are met:
-        ^(?=\s*$                        # the line is blank (or only contains whitespace)
-         |  {{block_quote}}             # a blockquote begins the line
-         |  {{atx_heading}}             # an ATX heading begins the line
-         |  {{fenced_code_block_start}} # a fenced codeblock begins the line
-         |  {{thematic_break}}          # line is a thematic beak
-         |  {{first_list_item}}         # a list item begins the line
-         |  {{html_block}}              # a html block begins the line
-         )
-      )
+  paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?=\s*$                        # the line is blank (or only contains whitespace)
+       |  {{block_quote}}             # a blockquote begins the line
+       |  {{atx_heading}}             # an ATX heading begins the line
+       |  {{fenced_code_block_start}} # a fenced codeblock begins the line
+       |  {{thematic_break}}          # line is a thematic beak
+       |  {{first_list_item}}         # a list item begins the line
+       |  {{html_block}}              # a html block begins the line
+       )
+    )
 
 ##############################################################################
 
