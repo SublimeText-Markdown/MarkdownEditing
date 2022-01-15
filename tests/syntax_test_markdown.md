@@ -3632,6 +3632,38 @@ second line
            | <- markup.quote.markdown markup.list.numbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
            |^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.heading.2.markdown
 
+## https://custom-tests/block-quotes/list-blocks/items-with-fenced-code-blocks
+
+> 1. item
+>    + item
+>      - item
+>        ```C++
+| <- markup.quote.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown markup.list.numbered.markdown - meta.code-fence
+| ^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.code-fence.definition.begin.text.markdown-gfm
+|        ^^^ punctuation.definition.raw.code-fence.begin.markdown
+|           ^^^ constant.other.language-name.markdown
+
+> 1. item
+>    + item
+>      - item
+>        ```C++
+>        code
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown markup.list.numbered.markdown - meta.code-fence
+| ^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown markup.raw.code-fence.markdown-gfm
+
+> 1. item
+>    + item
+>      - item
+>        ```C++
+>        code
+>        ```
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.markdown markup.list.numbered.markdown - meta.code-fence
+| ^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.code-fence.definition.end.text.markdown-gfm
+|        ^^^ punctuation.definition.raw.code-fence.end.markdown
+
 ## https://custom-tests/block-quotes/list-blocks/unordered-items-with-reference-definitions
 
 > * list item [ref]

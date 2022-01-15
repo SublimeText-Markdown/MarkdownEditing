@@ -387,7 +387,7 @@ contexts:
         0: meta.code-fence.definition.begin.text.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
-      set: block-quote-fenced-code-block-body
+      push: block-quote-fenced-code-block-body
 
   block-quote-fenced-code-block-body:
     - include: block-quote-fenced-code-block-end
@@ -530,6 +530,7 @@ contexts:
 
   block-quote-list-block-content:
     - include: list-block-common
+    - include: block-quote-fenced-code-block
     - include: block-quote-nested-punctuation-content
     - include: block-quote-reference-definitions
     - include: block-quote-list-paragraphs
