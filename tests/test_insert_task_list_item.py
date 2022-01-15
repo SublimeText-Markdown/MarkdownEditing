@@ -30,7 +30,7 @@ class InsertTaskListItemTestCase(DereferrablePanelTestCase):
             """
         )
 
-    def test_insert_unaligned_task_with_minus(self):
+    def test_insert_unaligned_task_with_plus(self):
         self.view.settings().set("mde.list_align_text", False)
         self.view.settings().set("mde.list_indent_bullets", ["+", "-", "*"])
 
@@ -66,7 +66,7 @@ class InsertTaskListItemTestCase(DereferrablePanelTestCase):
             """
         )
 
-    def test_insert_aligned_task_with_minus(self):
+    def test_insert_aligned_task_with_plus(self):
         self.view.settings().set("mde.list_align_text", True)
         self.view.settings().set("mde.list_indent_bullets", ["+", "-", "*"])
 
