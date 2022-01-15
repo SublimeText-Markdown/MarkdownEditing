@@ -101,13 +101,14 @@
 
 		// Inline References
 		{
-			"name": "Inline Link URL",
-			"scope": "text.html.markdown meta.link.inline markup.underline.link",
-			"foreground": "var(pink)"
+			"name": "Markdown: Link Description",
+			"scope": "(meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown, meta.link.reference.wiki.description.markdown) - comment - constant - entity - punctuation - string - markup.strikethrough",
+			"foreground": "var(blue)"
 		},
 		{
-			"scope": "(meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown, meta.link.reference.wiki.description.markdown) - comment - constant - entity - punctuation - string",
-			"foreground": "var(blue)"
+			"name": "Markdown: Inline Link URL",
+			"scope": "text.html.markdown meta.link.inline markup.underline.link",
+			"foreground": "var(pink)"
 		},
 
 		// Keyboard Shortcuts
