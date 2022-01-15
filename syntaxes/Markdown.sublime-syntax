@@ -2340,16 +2340,19 @@ contexts:
         - link-def-url
 
   link-def-end:
+    - meta_include_prototype: false
     - meta_scope: meta.link.reference.def.markdown
-    - match: ^
-      pop: true
-    - match: \s*\S+
-      scope: invalid.illegal.expected-eol.markdown
+    - include: immediately-pop
 
   link-def-title:
-    - include: link-title-begin
-    - include: paragraph-end
-    - include: else-pop
+    - match: ^(?!\s*["'(])
+      pop: true
+    - match: (?=["'(])
+      set:
+        - expect-eol
+        - link-title
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
 
   link-def-url:
     - match: <
@@ -3390,6 +3393,12 @@ contexts:
     - match: $
       pop: true
 
+  expect-eol:
+    - include: eol-pop
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
+
   immediately-pop:
     - match: ''
       pop: true
+

@@ -2354,7 +2354,6 @@ with blank line'
 |    ^ punctuation.separator.key-value.markdown
 |      ^^^^^^ markup.underline.link.markdown
 
-
 ## https://spec.commonmark.org/0.30/#example-205
 
 [FOO]: /url
@@ -2389,7 +2388,7 @@ bar
 This is not a link reference definition, because there are characters other than spaces or tabs after the title:
 
 [foo]: /url "title" ok
-|^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |                   ^^ invalid.illegal.expected-eol.markdown
 
 ## https://spec.commonmark.org/0.30/#example-210
@@ -2398,7 +2397,7 @@ This is a link reference definition, but it has no title:
 
 [foo]: /url
 "title" ok
-|^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^^^^^^^ meta.link.reference.def.markdown
 |       ^^ invalid.illegal.expected-eol.markdown
 
 [foo]: <bar> "baz" 
@@ -2410,12 +2409,11 @@ This is a link reference definition, but it has no title:
 |                 ^ - invalid.illegal.expected-eol
 
 [foo]: <bar>> "baz" 
-|^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
+|^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown
 |      ^ punctuation.definition.link.begin
 |       ^^^ markup.underline.link
 |          ^ punctuation.definition.link.end
-|           ^^^^^^^ invalid.illegal.expected-eol
-|                  ^ - invalid.illegal.expected-eol
+|           ^^^^^^^ invalid.illegal.expected-eol.markdown
 
 ## https://spec.commonmark.org/0.30/#example-211
 
@@ -4907,6 +4905,21 @@ So is this, with a empty second item:
       |   ^ punctuation.definition.reference.end.markdown
       |    ^ punctuation.separator.key-value.markdown
       |      ^^^^ markup.underline.link.markdown
+ 
+      [ref]:
+      /url
+      | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+      |^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+
+      [ref]: /url
+      "title"
+      | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+      |^^^^^^ markup.list.unnumbered.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+
+      [ref]: /url
+      no title
+      | <- markup.list.unnumbered.markdown meta.paragraph.list.markdown - meta.link
+      |^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown - meta.link
 
   [ref]: /url
   | <- markup.list.unnumbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
@@ -4940,6 +4953,21 @@ So is this, with a empty second item:
          |   ^ punctuation.definition.reference.end.markdown
          |    ^ punctuation.separator.key-value.markdown
          |      ^^^^ markup.underline.link.markdown
+
+         [ref]:
+         /url
+         | <- markup.list.numbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+         |^^^ markup.list.numbered.markdown meta.link.reference.def.markdown markup.underline.link.markdown
+
+         [ref]: /url
+         "title"
+         | <- markup.list.numbered.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+         |^^^^^^ markup.list.numbered.markdown meta.link.reference.def.markdown meta.string.title.markdown string.quoted.double.markdown
+
+         [ref]: /url
+         no title
+         | <- markup.list.numbered.markdown meta.paragraph.list.markdown - meta.link
+         |^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - meta.link
 
    [ref]: /url
    | <- markup.list.numbered.markdown meta.link.reference.def.markdown punctuation.definition.reference.begin.markdown
