@@ -4854,12 +4854,12 @@ So is this, with a empty second item:
     <style>
         h1 {
             font-family: Helvetica;
-        |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css meta.block.css
+        |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css
         }
 
         p {
             font-family: "Ubuntu Sans";
-        |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css meta.block.css
+        |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown source.css.embedded.html meta.property-list.css
         }
     </style>
     | <- markup.list.unnumbered.markdown meta.disable-markdown meta.tag.style.end.html punctuation.definition.tag.begin.html
