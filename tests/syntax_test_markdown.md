@@ -5177,6 +5177,36 @@ paragraph
        >       foo 2
        | ^^^^^^^^^^^^ markup.list.numbered.markdown markup.quote.markdown markup.raw.block.markdown
 
+## https://custom-tests/list-blocks/items-with-nested-block-quotes
+
+1. item
+   + item
+     - item
+       > > Nested block quote
+       | <- markup.quote punctuation.definition.blockquote
+       | ^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+       |^ - punctuation
+       | ^ punctuation.definition.blockquote
+       |  ^ - punctuation
+       
+       > > Nested quote
+       > Followed by more quoted text that is not nested
+       | <- markup.quote punctuation.definition.blockquote - markup.quote markup.quote
+       
+       >    > this is a nested quote but no code in a block quote
+       | <- punctuation.definition.blockquote
+       |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+       
+       >    > this is a nested quote but no code in a block quote
+       >     > with a second line of content
+       | <- punctuation.definition.blockquote
+       |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown
+       |     ^ - punctuation
+       
+       >     > this is code in a block quote, not a nested quote
+       | <- punctuation.definition.blockquote
+       |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block - markup.quote markup.quote
+
 ## https://custom-tests/list-blocks/items-with-block-quotes/list-blocks
 
 1. item

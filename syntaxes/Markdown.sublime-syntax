@@ -309,12 +309,13 @@ contexts:
 
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
-    - match: '[ \t]*(>)[ ]?'
+    - match: '[ \t]{,3}(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
       push:
         - block-quote-meta
         - block-quote-body
+        - block-quote-punctuation-body
 
   block-quote-meta:
     - meta_include_prototype: false
@@ -323,6 +324,7 @@ contexts:
 
   block-quote-body:
     - include: block-quote-end
+    - include: block-quote-punctuations
     - include: block-quote-content
 
   block-quote-content:
@@ -334,7 +336,6 @@ contexts:
     - include: thematic-breaks
     - include: atx-headings
     - include: block-quote-reference-definitions
-    - include: block-quote-punctuation-content
     - include: block-quote-fenced-code-block
     - include: block-quote-list-block
 
@@ -349,10 +350,13 @@ contexts:
       push: block-quote-punctuation-body
 
   block-quote-punctuation-body:
+    - include: block-quote-punctuation-content
+    - include: immediately-pop
+
+  block-quote-punctuation-content:
     - match: '[ \t]{,3}(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
-    - include: immediately-pop
 
   block-quote-nested-punctuations:
     # Quotes signs in list items are not restricted by indentation level
@@ -363,12 +367,10 @@ contexts:
       push: block-quote-nested-punctuation-body
 
   block-quote-nested-punctuation-body:
-    - match: '[ \t]*(>)[ ]?'
-      captures:
-        1: punctuation.definition.blockquote.markdown
+    - include: block-quote-nested-punctuation-content
     - include: immediately-pop
 
-  block-quote-punctuation-content:
+  block-quote-nested-punctuation-content:
     - match: '[ \t]*(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -528,8 +530,8 @@ contexts:
 
   block-quote-list-block-content:
     - include: list-block-common
+    - include: block-quote-nested-punctuation-content
     - include: block-quote-reference-definitions
-    - include: block-quote-punctuation-content
     - include: block-quote-list-paragraphs
 
   block-quote-list-block-end:
@@ -666,12 +668,23 @@ contexts:
       push:
         - block-quote-meta
         - list-block-quote-body
+        - block-quote-punctuation-body
 
   list-block-quote-body:
     - include: block-quote-end
-    - include: block-quote-common
+    - include: list-block-quote-punctuations
+    - include: list-block-quote-content
+
+  list-block-quote-content:
     - include: indented-code-blocks
+    - include: block-quote-common
     - include: list-block-quote-paragraph
+
+  list-block-quote-punctuations:
+    - match: ^[ \t]*(>)[ ]?
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push: block-quote-punctuation-body
 
   list-block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
@@ -680,7 +693,7 @@ contexts:
   list-block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown
     - include: block-quote-nested-paragraph-end
-    - include: block-quote-nested-punctuations
+    - include: list-block-quote-punctuations
     - include: inlines
 
   list-paragraphs:
