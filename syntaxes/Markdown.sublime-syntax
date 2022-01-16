@@ -248,6 +248,30 @@ variables:
        )
     )
 
+  # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
+  bold_italic_asterisk_begin: |-
+    (?x:
+         (\*\*)(\*) {{no_space_nor_punct}}
+    | \B (\*\*)(\*) {{no_space_but_punct}}
+    )
+
+  bold_asterisk_begin: |-
+    (?x:
+         \*{2} {{no_space_nor_punct}}
+    | \B \*{2} {{no_space_but_punct}}
+    )
+
+  italic_asterisk_begin: |-
+    (?x:
+         \* {{no_space_nor_punct}}
+    | \B \* {{no_space_but_punct}}
+    )
+
+  # not followed by Unicode whitespace and not followed by a Unicode punctuation character
+  no_space_nor_punct: (?![\s*\p{P}])
+  # not followed by Unicode whitespace and followed by a Unicode punctuation character
+  no_space_but_punct: (?=[[^\s*]&&\p{P}])
+
 ##############################################################################
 
 contexts:
@@ -2521,12 +2545,14 @@ contexts:
 
   bold:
     # https://spec.commonmark.org/0.30/#emphasis-and-strong-emphasis
-    - match: (\*\*)(\*)(?=\S)(?!\*)
+    - match: '{{bold_italic_asterisk_begin}}'
       captures:
         1: punctuation.definition.bold.begin.markdown
         2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
       push: bold-italic-asterisk
-    - match: \*\*(?=\S)(?!\*\*|\*\s)
+    - match: '{{bold_asterisk_begin}}'
       scope: punctuation.definition.bold.begin.markdown
       push: bold-asterisk
     - match: \b(__)(_)(?=\S)(?!_)
@@ -2668,7 +2694,7 @@ contexts:
     - include: strikethrough
 
   italic:
-    - match: \*(?=\S)(?!\*)
+    - match: '{{italic_asterisk_begin}}'
       scope: punctuation.definition.italic.begin.markdown
       push: italic-asterisk
     - match: \b_(?=\S)(?!_)
