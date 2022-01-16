@@ -94,6 +94,8 @@ else:
         MdeReferenceOrganizeCommand,
         MdeAddNumberedReferenceDefinitionCommand,
         MdeReferenceCompletionsProvider,
+    )
+    from .plugins.network import (
         MdeConvertBareLinkToMdLinkCommand,
         MdeConvertBareLinkToMdLinkWholeviewCommand,
     )

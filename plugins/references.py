@@ -13,7 +13,6 @@ Exported commands:
     MdeReferenceOrganizeCommand
     MdeGatherMissingLinkMarkersCommand
     MdeConvertInlineLinkToReferenceCommand
-    MdeConvertBareLinkToMdLinkCommand
     MdeConvertInlineLinksToReferencesCommand
 """
 import sublime
@@ -26,7 +25,6 @@ from .view import MdeViewEventListener
 
 refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
-barelink_scope_name = "meta.link.inet.markdown"
 footnote_scope_name = "meta.link.reference.footnote.markdown-extra"
 marker_scope_name = "meta.link.reference.description.markdown"
 marker_literal_scope_name = "meta.link.reference.literal.description.markdown"
@@ -91,15 +89,6 @@ def getMarkers(view, name=""):
         else:
             ids[key] = Obj(regions=[reg], label=name)
     return ids
-
-
-def find_by_selector_in_regions(view, regions, selector):
-    selectors = []
-    for sel in view.find_by_selector(selector):
-        if any(s.intersects(sel) for s in regions):
-            selectors.append(sel)
-
-    return selectors
 
 
 def getReferences(view, name=""):
@@ -779,96 +768,6 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
         for link_span in link_spans:
             _link_span = sublime.Region(link_span[0].a + offset, link_span[0].b + offset)
             offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
-
-
-class MdeConvertBareLinkToMdLinkCommand(MdeTextCommand):
-    """Convert an inline link to reference."""
-
-    def is_visible(self):
-        """Return True if selection contains links"""
-        view = self.view
-        for sel in view.find_by_selector(barelink_scope_name):
-            if any(s.intersects(sel) for s in view.sel()):
-                return True
-        return False
-
-    def run(self, edit, name=None):
-        """Run command callback."""
-        # import queue
-        import threading
-        import time
-
-        thread_queue = []
-
-        url_titles = {}
-        url_redirects = {}
-
-        def getTitleFromUrlJob(link_href):
-            import urllib.request
-
-            resp = urllib.request.urlopen(link_href)
-            content_type = {a: b for a, b in resp.getheaders()}.get("Content-Type")
-            if content_type and not content_type.startswith("text"):
-                url_titles[link_href] = None
-                raise TypeError(
-                    "Link '{}' points to non-text content '{}'".format(link_href, content_type)
-                )
-
-            match = re.search(rb"<title[^>]*>(?!<)(.+?)</title>", resp.read())
-            if match:
-                url_titles[link_href] = re.sub(r"([\[\]])", r"\\\g<1>", match.group(1).decode())
-
-            real_url = resp.geturl()
-            if real_url != link_href:
-                print(link_href, "=/=", real_url, "Redirect?")
-                url_redirects[link_href] = real_url
-
-        view = self.view
-        valid_regions = find_by_selector_in_regions(view, view.sel(), barelink_scope_name)
-
-        for link_region in valid_regions:
-            link_href = view.substr(link_region)
-            thread_queue.append(threading.Thread(target=getTitleFromUrlJob, args=(link_href,)))
-
-        while True:
-            left = len([thread for thread in thread_queue if thread.is_alive()])
-            view.set_status("rawlinktomd", "Fetching " + str(left) + " pages")
-            if left == 0:
-                break
-            time.sleep(0.2)
-
-        view.erase_status("rawlinktomd")
-
-        for link_region in valid_regions[::-1]:
-            link_href = view.substr(link_region)
-            suggested_title = suggest_default_link_name(
-                "", url_redirects.get(link_href, link_href), False
-            )
-            try:
-                getTitleFromUrlJob(link_href)
-                if url_titles[link_href] is None:
-                    raise TypeError("Link '{}' has NoneType as value".format(link_href))
-
-                title = url_titles[link_href] + " (" + suggested_title + ")"
-                link_href = url_redirects.get(link_href) or link_href
-            except TypeError as e:
-                print(e)
-                continue
-            except Exception as e:
-                print(e)
-                title = suggested_title
-            view.replace(edit, link_region, "[" + title + "](" + link_href + ")")
-
-
-class MdeConvertBareLinkToMdLinkWholeviewCommand(MdeTextCommand):
-    """Convert all inline links to reference."""
-
-    def is_visible(self):
-        return True
-
-    def run(self, edit, name=None):
-        self.view.sel().add(sublime.Region(0, self.view.size()))
-        MdeConvertBareLinkToMdLinkCommand.run(self, edit, name=name)
 
 
 class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):
