@@ -1188,7 +1188,7 @@
 	// jump to reference
 	{ "keys": ["f12"], "command": "mde_reference_jump", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference string.other.link", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown meta.link.reference", "match_all": true }
 		]
 	},
 	{ "keys": ["shift+f12"], "command": "mde_reference_jump", "context":
