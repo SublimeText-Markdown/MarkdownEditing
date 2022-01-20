@@ -59,7 +59,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
 
         :param text:  The triple quoted block text to put into scratch view.
         """
-        cls.setText(dedent(text).strip("\n"))
+        cls.setText(dedent(text).strip("\n") + "\n")
 
     @classmethod
     def setText(cls, text):
