@@ -59,7 +59,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
 
         :param text:  The triple quoted block text to put into scratch view.
         """
-        cls.setText(dedent(text).strip("\n") + "\n")
+        cls.setText(dedent(text).strip("\n"))
 
     @classmethod
     def setText(cls, text):
@@ -106,7 +106,7 @@ class DereferrablePanelTestCase(DeferrableTestCase):
             Triple quoted text, which is detented and stripped
             before being compared with view's content.
         """
-        self.assertEqual(self.getText(), dedent(text).strip("\n") + "\n")
+        self.assertEqual(self.getText().strip("\n"), dedent(text).strip("\n"))
 
     def assertEqualText(self, text):
         """
