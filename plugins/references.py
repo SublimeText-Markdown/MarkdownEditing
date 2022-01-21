@@ -95,16 +95,11 @@ def getReferences2(view):
     """
     ret = {}
     for definition_line in view.find_by_selector(definition_scope_name):
-
-        def substr(scope, i):
-            return list(
-                map(view.substr, find_by_selector_in_regions(view, [definition_line], scope))
-            )[i]
-
-        name = substr("entity.name.reference.link.markdown", 0)
-        link = substr("markup.underline.link", -1)
-        assert not ret.get(name)
-        ret[name] = link
+        raw_text = view.substr(definition_line)
+        for reference_def in re.finditer(r"\[(.+)\]: (.+)", raw_text):
+            name, link = reference_def.groups()
+            assert not ret.get(name)
+            ret[name] = link
     return ret
 
 
@@ -759,7 +754,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
     def run(self, edit, name=None):
         """Run command callback."""
         view = self.view
-        pattern = r"\[([^\]]+)\]\((?!#)([^\)]+)\)"
+        re_link_or_embed = r"\[([^\]]+)\]\((?!#)([^\)]+)\)"
 
         # Remove all whitespace at the end of the file
         whitespace_at_end = view.find(r"\s*\z", 0)
@@ -779,7 +774,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
             start = findScopeFrom(view, sel.b, marker_begin_scope_name, backwards=True)
             end = findScopeFrom(view, sel.b, marker_end_scope_name) + 1
             text = view.substr(sublime.Region(start, end))
-            m = re.match(pattern, text)
+            m = re.match(re_link_or_embed, text)
             if m is None:
                 continue
             text = m.group(1)
@@ -791,6 +786,7 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
                 continue
             # Set name based on link.
             # If link already exists, reuse existing reference
+            name = None
             if names_by_link.get(link):
                 name = names_by_link.get(link)
             else:
@@ -810,9 +806,9 @@ class MdeConvertInlineLinkToReferenceCommand(MdeTextCommand):
             names_by_link[link] = name
 
         offset = 0
-        for link_span in link_spans:
-            _link_span = sublime.Region(link_span[0].a + offset, link_span[0].b + offset)
-            offset -= convert2ref(view, edit, _link_span, link_span[1], link_span[2])
+        for span, name, name_is_text in link_spans:
+            _link_span = sublime.Region(span.a + offset, span.b + offset)
+            offset -= convert2ref(view, edit, _link_span, name, name_is_text)
 
 
 class MdeConvertInlineLinksToReferencesCommand(MdeTextCommand):
