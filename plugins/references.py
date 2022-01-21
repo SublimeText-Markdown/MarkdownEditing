@@ -89,6 +89,7 @@ def getMarkers(view, name=""):
 
 def getReferences2(view):
     """Get a dictionary of all references in the document.
+    Only includes real references with scope definition_scope_name, not footnotes.
 
     Returns:
         dict: {name: link} mapping
@@ -420,13 +421,13 @@ class MdeReferenceNewImageCommand(MdeTextCommand):
 
 def get_next_footnote_marker(view):
     """Get the number of the next footnote."""
-    refs = getReferences2(view)
+    refs = getReferences(view)
 
     footnotes = []
-    for refname in refs.keys():
-        if refname[0] == "^":
+    for ref in refs:
+        if ref[0] == "^":
             try:
-                footnotes.append(int(refname[1:]))
+                footnotes.append(int(ref[1:]))
             except ValueError:
                 pass
 
