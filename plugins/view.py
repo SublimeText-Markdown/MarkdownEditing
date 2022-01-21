@@ -107,3 +107,12 @@ class MdeCenteredLineKeeper(MdeViewEventListener):
         if self.current_line != current_line:
             self.current_line = current_line
             self.view.show_at_center(pt)
+
+
+def find_by_selector_in_regions(view, regions, selector):
+    selectors = []
+    for sel in view.find_by_selector(selector):
+        if any(s.intersects(sel) for s in regions):
+            selectors.append(sel)
+
+    return selectors

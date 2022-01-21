@@ -22,6 +22,7 @@ import urllib.parse
 
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
+from .view import find_by_selector_in_regions
 
 refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
@@ -84,15 +85,6 @@ def getMarkers(view, name=""):
         else:
             ids[key] = Obj(regions=[reg], label=name)
     return ids
-
-
-def find_by_selector_in_regions(view, regions, selector):
-    selectors = []
-    for sel in view.find_by_selector(selector):
-        if any(s.intersects(sel) for s in regions):
-            selectors.append(sel)
-
-    return selectors
 
 
 def getReferences2(view):
@@ -324,7 +316,16 @@ def append_reference_link(edit, view, name, url):
 
 
 def suggest_default_link_name(name, link, image):
-    """Suggest default link name in camel case."""
+    """Suggest default link name in camel case, if `name` is small.
+
+    Args:
+        name (str): An existing name, used as a fallback
+        link (str): The link href
+        image (bool): Whether the link points to an image or not. Used for fallback.
+
+    Returns:
+        str: A suggested reference name in CamelCase, or `name`.
+    """
     ret = ""
     # string.punctuation minus -.:;<=>_
     no_punctuation = str.maketrans("", "", "!\"#$%&'()*+,/?@[\\]^`{|}~")
