@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        st_version: [4]
+        st_version: [3, 4]
     container:
       image: sublimetext/unittesting
       options: --cap-add=NET_ADMIN
