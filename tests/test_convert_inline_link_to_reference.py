@@ -422,3 +422,25 @@ class TestConvertInlineLinkToReferenceReuseExistingDefinitions(DereferrablePanel
             >     [GitHub]: https://github.com
             """
         )
+
+    def test_reuse_definition_but_create_new_for_differnt_url(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com/user) link.
+            Third [GitHub](https://github.com) link.
+
+            [GitHub]: https://github.com
+            """
+        )
+        self.view.run_command("mde_convert_inline_links_to_references")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][GitHub2] link.
+            Third [GitHub][] link.
+
+            [GitHub]: https://github.com
+            [GitHub2]: https://github.com/user
+            """
+        )
