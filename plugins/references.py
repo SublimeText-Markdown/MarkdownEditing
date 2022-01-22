@@ -22,7 +22,6 @@ import urllib.parse
 
 from .view import MdeTextCommand
 from .view import MdeViewEventListener
-from .view import find_by_selector_in_regions
 
 refname_scope_name = "entity.name.reference.link.markdown"
 definition_scope_name = "meta.link.reference.def.markdown"
