@@ -539,9 +539,21 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
                     flatrefs.append((name, view.substr(line_reg).strip("\n")))
                 sel.add(line_reg)
 
+        sorting_funcs = {
+            "marker_order": lambda x: marker_order[x[0].lower()]
+            if x[0].lower() in marker_order
+            else 9999,
+            "alphabetical": lambda x: x[0].lower(),
+            "numeric": lambda x: [
+                int(p) if p.isnumeric() else p for p in re.split(r"[ _.-]", x[0].lower())
+            ],
+        }
+        settings = view.settings()
+
         flatfns.sort(key=operator.itemgetter(0))
         flatrefs.sort(
-            key=lambda x: marker_order[x[0].lower()] if x[0].lower() in marker_order else 9999
+            key=sorting_funcs[settings.get("mde.ref_organize_sort", "marker_order")],
+            reverse=settings.get("mde.ref_organize_sort_reverse", False),
         )
 
         view.run_command("left_delete")
