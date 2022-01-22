@@ -40,6 +40,16 @@
 	// Adds <Tab> after list items instead of a single <space>.
 	"mde.list_align_text": false,
 
+	// MarkdownEditing (References):
+	// The sorting method used by the Organize References command.
+	// Should be one of
+	//
+	// 'reference_order': List in order of appearance in document
+	// 'alphabetical': Alphabetical based on reference name, sorting numerals lexagraphically
+	// 'numeric': Alphabetical based on reference name, sorting numeral chunks numerically
+	"mde.ref_organize_sort": "reference_order",
+	"mde.ref_organize_sort_reverse": false,
+
 	// MarkdownEditing:
 	// Automatically switches list bullet when indenting blank list item with <Tab>.
 	"mde.list_indent_auto_switch_bullet": true,
