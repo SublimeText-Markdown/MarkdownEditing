@@ -520,10 +520,10 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
 
         # reorder
         markers = getMarkers(view)
-        marker_order = sorted(
+        reference_order = sorted(
             markers.keys(), key=lambda marker: min(markers[marker].regions, key=lambda reg: reg.a).a
         )
-        marker_order = dict(zip(marker_order, range(0, len(marker_order))))
+        reference_order = dict(zip(reference_order, range(0, len(reference_order))))
 
         refs = getReferences(view)
         flatrefs = []
@@ -540,8 +540,8 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
                 sel.add(line_reg)
 
         sorting_funcs = {
-            "marker_order": lambda x: marker_order[x[0].lower()]
-            if x[0].lower() in marker_order
+            "reference_order": lambda x: reference_order[x[0].lower()]
+            if x[0].lower() in reference_order
             else 9999,
             "alphabetical": lambda x: x[0].lower(),
             "numeric": lambda x: [
@@ -552,7 +552,7 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
 
         flatfns.sort(key=operator.itemgetter(0))
         flatrefs.sort(
-            key=sorting_funcs[settings.get("mde.ref_organize_sort", "marker_order")],
+            key=sorting_funcs[settings.get("mde.ref_organize_sort", "reference_order")],
             reverse=settings.get("mde.ref_organize_sort_reverse", False),
         )
 
@@ -608,7 +608,7 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
         lower_refs = [ref.lower() for ref in refs]
         missings = []
         for ref in refs:
-            if ref not in marker_order:
+            if ref not in reference_order:
                 missings.append(refs[ref].label)
         if len(missings) > 0:
             output += "Error: Definition [%s] %s no reference\n" % (

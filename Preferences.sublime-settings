@@ -44,10 +44,10 @@
 	// The sorting method used by the Organize References command.
 	// Should be one of
 	//
-	// 'marker_order': List in order of appearance in document
+	// 'reference_order': List in order of appearance in document
 	// 'alphabetical': Alphabetical based on reference name, sorting numerals lexagraphically
 	// 'numeric': Alphabetical based on reference name, sorting numeral chunks numerically
-	"mde.ref_organize_sort": "marker_order",
+	"mde.ref_organize_sort": "reference_order",
 	"mde.ref_organize_sort_reverse": false,
 
 	// MarkdownEditing:
