@@ -93,13 +93,14 @@ def getReferences2(view):
     Returns:
         dict: {name: link} mapping
     """
+    pattern = re.compile(r"\[(.+)\]:\s+(?:<([^>]+)>|(\S+))", re.MULTILINE)
+
     ret = {}
     for definition_line in view.find_by_selector(definition_scope_name):
-        raw_text = view.substr(definition_line)
-        for reference_def in re.finditer(r"\[(.+)\]: (.+)", raw_text):
-            name, link = reference_def.groups()
+        for reference_def in pattern.finditer(view.substr(definition_line)):
+            name, angled_link, unquoted_link = reference_def.groups()
             assert not ret.get(name)
-            ret[name] = link
+            ret[name] = angled_link or unquoted_link
     return ret
 
 

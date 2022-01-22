@@ -108,3 +108,317 @@ class TestConvertInlineLinkToReference(DereferrablePanelTestCase):
             [Issues]: https://github.com/user/repo/issues
             """
         )
+
+
+class TestConvertInlineLinkToReferenceReuseExistingDefinitions(DereferrablePanelTestCase):
+    def test_reuse_indented_definition(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+               [GitHub]: https://github.com
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+               [GitHub]: https://github.com
+            """
+        )
+
+    def test_reuse_definition_with_multiple_spaces(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]:       https://github.com
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]:       https://github.com
+            """
+        )
+
+    def test_reuse_multiline_definition(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]:
+                https://github.com
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]:
+                https://github.com
+            """
+        )
+
+    def test_reuse_definition_with_quoted_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]: https://github.com "the page description"
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]: https://github.com "the page description"
+            """
+        )
+
+    def test_reuse_multiline_definition_with_quoted_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]:
+                https://github.com
+                "the page description"
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]:
+                https://github.com
+                "the page description"
+            """
+        )
+
+    def test_reuse_definition_with_parenthesed_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]: https://github.com (the page description)
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]: https://github.com (the page description)
+            """
+        )
+
+    def test_reuse_multiline_definition_with_parenthesed_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]:
+                https://github.com
+                (the page description)
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]:
+                https://github.com
+                (the page description)
+            """
+        )
+
+    def test_reuse_definition_with_angled_url(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]: <https://github.com>
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]: <https://github.com>
+            """
+        )
+
+    def test_reuse_indended_definition_with_angled_url(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+               [GitHub]:    <https://github.com>
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+               [GitHub]:    <https://github.com>
+            """
+        )
+
+    def test_reuse_multiline_definition_with_angled_url(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]:
+            <https://github.com>
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]:
+            <https://github.com>
+            """
+        )
+
+    def test_reuse_definition_with_angled_url_and_quoted_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]: <https://github.com> "the page description"
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]: <https://github.com> "the page description"
+            """
+        )
+
+    def test_reuse_definition_with_angled_url_and_parenthesed_description(self):
+        self.setBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub](https://github.com) link.
+
+            [GitHub]: <https://github.com> (the page description)
+            """
+        )
+        self.setCaretTo(2, 10)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            First [GitHub][] link.
+            Second [GitHub][] link.
+
+            [GitHub]: <https://github.com> (the page description)
+            """
+        )
+
+    def test_reuse_definition_in_blockquote(self):
+        self.setBlockText(
+            """
+            > First [GitHub][] link.
+            > Second [GitHub](https://github.com) link.
+            >
+            > [GitHub]: https://github.com
+            """
+        )
+        self.setCaretTo(2, 12)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            > First [GitHub][] link.
+            > Second [GitHub][] link.
+            >
+            > [GitHub]: https://github.com
+            """
+        )
+
+    def test_reuse_definition_in_listitem(self):
+        self.setBlockText(
+            """
+            - First [GitHub][] link.
+              - Second [GitHub](https://github.com) link.
+
+                [GitHub]: https://github.com
+            """
+        )
+        self.setCaretTo(2, 15)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            - First [GitHub][] link.
+              - Second [GitHub][] link.
+
+                [GitHub]: https://github.com
+            """
+        )
+
+    def test_reuse_definition_quoted_in_listitem(self):
+        self.setBlockText(
+            """
+            > - First [GitHub][] link.
+            >   - Second [GitHub](https://github.com) link.
+            >
+            >     [GitHub]: https://github.com
+            """
+        )
+        self.setCaretTo(2, 15)
+        self.view.run_command("mde_convert_inline_link_to_reference")
+        self.assertEqualBlockText(
+            """
+            > - First [GitHub][] link.
+            >   - Second [GitHub][] link.
+            >
+            >     [GitHub]: https://github.com
+            """
+        )
