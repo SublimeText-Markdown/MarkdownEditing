@@ -41,7 +41,7 @@ goto :usage
 
 :LINT
     call :venv
-    black --check .
+    black .
     flake8
     goto :eof
 

@@ -19,204 +19,258 @@ file_extensions:
   - markdn
 
 variables:
-    atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
-    atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
-    atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
-    setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
+  atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
+  atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
+  setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
 
-    block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
-    indented_code_block: (?:[ ]{4}|\t)                  # 4 spaces or a tab
-    list_item: (?:[ ]{,3}(?:\d+[.)]|[*+-])\s)           # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
-    thematic_break: |-
-      (?x:
-        [ ]{,3}                    # between 0 to 3 spaces
-        (?:                        # followed by one of the following:
-          [-](?:[ ]{,2}[-]){2,}    # - a dash,        followed by the following at least twice: between 0 to 2 spaces followed by a dash
-        | [*](?:[ ]{,2}[*]){2,}    # - a star,        followed by the following at least twice: between 0 to 2 spaces followed by a star
-        | [_](?:[ ]{,2}[_]){2,}    # - an underscore, followed by the following at least twice: between 0 to 2 spaces followed by an underscore
-        )
-        [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
-      )
+  block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
+  indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
 
-    backticks: |-
-      (?x:
-        (`{4})(?![\s`])(?:[^`]+(?=`)|(?!`{4})`+(?!`))+(`{4})(?!`)  # 4 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
-      | (`{3})(?![\s`])(?:[^`]+(?=`)|(?!`{3})`+(?!`))+(`{3})(?!`)  # 3 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
-      | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
-      | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
-      )
-    escape: \\[-`*_#+.!(){}\[\]\\>|~<]
+  first_list_item: (?:[ ]{,3}(?:1[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+  list_item: (?:[ ]{,3}(?:\d{1,9}[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
 
-    balance_square_brackets: |-
-      (?x:
-        (?:
-          {{escape}}+                       # escape characters
-        | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+
+  thematic_break: |-
+    (?x:
+      [ ]{,3}                    # between 0 to 3 spaces
+      (?:                        # followed by one of the following:
+        [-](?:[ \t]*[-]){2,}     # - a dash,        followed by the following at least twice: any number of spaces or tabs followed by a dash
+      | [*](?:[ \t]*[*]){2,}     # - a star,        followed by the following at least twice: any number of spaces or tabs followed by a star
+      | [_](?:[ \t]*[_]){2,}     # - an underscore, followed by the following at least twice: any number of spaces or tabs followed by an underscore
       )
-    balance_square_brackets_and_emphasis: |-
-      (?x:
-        (?:
-          {{escape}}+                       # escape characters
-        | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+                                  # at least one character
-      )
-    balance_square_brackets_pipes_and_emphasis: |-
-      (?x:
-        (?:
-          {{escape}}+                       # escape characters
-        | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
-        | {{backticks}}                     # inline code
-        | \[(?:                             # nested square brackets (one level deep)
-            [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-            {{backticks}}?                  #  balanced backticks
-          )*\]                              #  closing square bracket
-        )+                                  # at least one character
-      )
-    balanced_emphasis: |-
-      (?x:
-        \*  (?!\*){{balance_square_brackets_and_emphasis}}+\*  (?!\*)
-      | \*\*      {{balance_square_brackets_and_emphasis}}+\*\*
-      | _   (?!_) {{balance_square_brackets_and_emphasis}}+_   (?!_)
-      | __        {{balance_square_brackets_and_emphasis}}+__
-      )
+      [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
+    )
 
-    table_cell: |-
-      (?x:
-        # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
-        # emphasis in table cells can't span multiple lines
-        (?:
-          {{balance_square_brackets_pipes_and_emphasis}}
-        | {{balanced_emphasis}}
-        )+  # at least one character
-      )
-    table_first_row: |-
-      (?x:
-        # at least 2 non-escaped pipe chars on the line
-        (?:{{table_cell}}?\|){2}
+  backticks: |-
+    (?x:
+      (`{4})(?![\s`])(?:[^`]+(?=`)|(?!`{4})`+(?!`))+(`{4})(?!`)  # 4 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
+    | (`{3})(?![\s`])(?:[^`]+(?=`)|(?!`{3})`+(?!`))+(`{3})(?!`)  # 3 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
+    | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
+    | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
+    )
+  escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
-        # something other than whitespace followed by a pipe char or hyphon,
-        # followed by something other than whitespace and the end of the line
-      | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
-      )
+  balance_square_brackets: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+
+    )
+  balance_square_brackets_and_emphasis: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+                                  # at least one character
+    )
+  balance_square_brackets_pipes_and_emphasis: |-
+    (?x:
+      (?:
+        (?:{{escapes}})+                  # escape characters
+      | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+      | {{backticks}}                     # inline code
+      | \[(?:                             # nested square brackets (one level deep)
+          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
+          {{backticks}}?                  #  balanced backticks
+        )*\]                              #  closing square bracket
+      )+                                  # at least one character
+    )
+  balanced_emphasis: |-
+    (?x:
+      \*  (?!\*){{balance_square_brackets_and_emphasis}}+\*  (?!\*)
+    | \*\*      {{balance_square_brackets_and_emphasis}}+\*\*
+    | _   (?!_) {{balance_square_brackets_and_emphasis}}+_   (?!_)
+    | __        {{balance_square_brackets_and_emphasis}}+__
+    )
 
-    fenced_code_block_start: |-
-      (?x:
-        ([ \t]*)
-        (
-          (`){3,}      #   3 or more backticks
-          (?![^`]*`)   #   not followed by any more backticks on the same line
-        |              # or
-          (~){3,}      #   3 or more tildas
-          (?![^~]*~)   #   not followed by any more tildas on the same line
-        )
-        \s*            # allow for whitespace between code block start and info string
-      )
-    fenced_code_block_language: |-
-      (?x:             # first word of an infostring is used as language specifier
-        (
-          [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
-          [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
-        )
-      )
-    fenced_code_block_trailing_infostring_characters: |-
-      (?x:
-        (
-          \s*          # any whitespace, or ..
-        |
-          \s[^`]*      # any characters (except backticks), separated by whitespace ...
-        )
-        $\n?           # ... until EOL
-      )
-    fenced_code_block_end: |-
-      (?x:
-        [ \t]*
-        (
-          \2           # the backtick/tilde combination that opened the code fence
-          (?:\3|\4)*   # plus optional additional closing characters
-        )
-        \s*$           # any amount of whitespace until EOL
-      )
-    fenced_code_block_escape: ^{{fenced_code_block_end}}
+  table_cell: |-
+    (?x:
+      # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
+      # emphasis in table cells can't span multiple lines
+      (?:
+        {{balance_square_brackets_pipes_and_emphasis}}
+      | {{balanced_emphasis}}
+      )+  # at least one character
+    )
+  table_first_row: |-
+    (?x:
+      # at least 2 non-escaped pipe chars on the line
+      (?:{{table_cell}}?\|){2}
 
-    # https://spec.commonmark.org/0.30/#email-autolink
-    email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
-    email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
+      # something other than whitespace followed by a pipe char or hyphon,
+      # followed by something other than whitespace and the end of the line
+    | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
+    )
 
-    # https://spec.commonmark.org/0.30/#html-blocks
-    html_block_comment: <!--
-    html_block_cdata: <!\[CDATA\[
-    html_block_decl: <![a-zA-Z]
-    html_block_preprocessor: <\?
-    html_block_open_tag: |-
-      (?xi:
-        <
-        [a-z]             # A tag name consists of an ASCII letter
-        [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
-        (?:               # An attribute consists of whitespace, an attribute name, and an optional attribute value specification
-          \s+
-          [a-z_:]         # An attribute name consists of an ASCII letter, _, or :
-          [a-z0-9_.:-]*   # followed by zero or more ASCII letters, digits, _, ., :, or -
-          (?:             # An attribute value specification consists of optional whitespace, a = character, optional whitespace, and an attribute value
-            \s*
-            =
-            \s*
-            (?:
-              [^ @'=<>`]+ # An unquoted attribute value is a nonempty string of characters not including spaces, ", ', =, <, >, or `
-            | '[^']*'     # A single-quoted attribute value consists of ', zero or more characters not including ', and a final '
-            | "[^"]*"     # A double-quoted attribute value consists of ", zero or more characters not including ", and a final "
-            )
-          )?
-        )*
-        \s*
-        /?
-        >
-        \s*$
+  fenced_code_block_start: |-
+    (?x:
+      ([ \t]*)
+      (
+        (`){3,}      #   3 or more backticks
+        (?![^`]*`)   #   not followed by any more backticks on the same line
+      |              # or
+        (~){3,}      #   3 or more tildas
       )
-    html_block_close_tag: |-
-      (?xi:
-        </
-        [a-z]             # A tag name consists of an ASCII letter
-        [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
-        \s*
-        >
-        \s*$
+      \s*            # allow for whitespace between code block start and info string
+    )
+  fenced_code_block_language: |-
+    (?x:             # first word of an infostring is used as language specifier
+      (
+        [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
+        [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
       )
-    html_tag_block_end_at_close_tag: |-
-      <(?xi: pre | script | style | textarea ){{html_tag_break_char}}
-    html_tag_block_end_at_blank_line: |-
-      <(?xi:
-        address | article | aside | base | basefont | blockquote | body | caption
-      | c enter | col | colgroup | dd | details | dialog | dir | div | dl | dt
-      | fieldset | figcaption | figure | footer | form | frame | frameset | h1 | h2
-      | h3 | h4 | h5 | h6 | head | header | hr | html | iframe | legend | li | link
-      | main | menu | menuitem | nav | noframes | ol | optgroup | option | p | param
-      | section | source | summary | table | tbody | td | tfoot | th
-      | thead | title | tr | track | ul
-      ){{html_tag_maybe_selfclosing_break_char}}
-    html_tag_break_char: (?:[ \t>]|$)
-    html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
+    )
+  fenced_code_block_trailing_infostring_characters: |-
+    (?x:
+      (
+        \s*          # any whitespace, or ..
+      |
+        \s[^`]*      # any characters (except backticks), separated by whitespace ...
+      )
+      $\n?           # ... until EOL
+    )
+  fenced_code_block_end: |-
+    (?x:
+      [ \t]*
+      (
+        \2           # the backtick/tilde combination that opened the code fence
+        (?:\3|\4)*   # plus optional additional closing characters
+      )
+      \s*$           # any amount of whitespace until EOL
+    )
+  fenced_code_block_escape: ^{{fenced_code_block_end}}
 
-    html_entity: '&([a-zA-Z0-9]+|#\d+|#x\h+);'
+  # https://spec.commonmark.org/0.30/#email-autolink
+  email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
+  email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
 
-    ascii_space: '\t\n\f '
-    tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
-    tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
-    tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
-    tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
+  # https://spec.commonmark.org/0.30/#html-blocks
+  html_block: |-
+    (?x:
+      [ ]{,3}
+      (?:
+        \$\$                                 # a latex math block begins the line
+      | {{html_tag_block_end_at_close_tag}}  # html block type 1
+      | {{html_tag_block_end_at_blank_line}} # html block type 6
+      | {{html_block_open_tag}}              # html block type 7
+      | {{html_block_close_tag}}             # html block type 7
+      | {{html_block_comment}}               # html block type 2
+      | {{html_block_decl}}                  # html block type 4
+      | {{html_block_cdata}}                 # html block type 5
+      | {{html_block_preprocessor}}          # html block type 3
+      )
+    )
+  html_block_comment: <!--
+  html_block_cdata: <!\[CDATA\[
+  html_block_decl: <![a-zA-Z]
+  html_block_preprocessor: <\?
+  html_block_open_tag: |-
+    (?xi:
+      <
+      [a-z]             # A tag name consists of an ASCII letter
+      [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
+      (?:               # An attribute consists of whitespace, an attribute name, and an optional attribute value specification
+        \s+
+        [a-z_:]         # An attribute name consists of an ASCII letter, _, or :
+        [a-z0-9_.:-]*   # followed by zero or more ASCII letters, digits, _, ., :, or -
+        (?:             # An attribute value specification consists of optional whitespace, a = character, optional whitespace, and an attribute value
+          \s*
+          =
+          \s*
+          (?:
+            [^ @'=<>`]+ # An unquoted attribute value is a nonempty string of characters not including spaces, ", ', =, <, >, or `
+          | '[^']*'     # A single-quoted attribute value consists of ', zero or more characters not including ', and a final '
+          | "[^"]*"     # A double-quoted attribute value consists of ", zero or more characters not including ", and a final "
+          )
+        )?
+      )*
+      \s*
+      /?
+      >
+      \s*$
+    )
+  html_block_close_tag: |-
+    (?xi:
+      </
+      [a-z]             # A tag name consists of an ASCII letter
+      [a-z0-9-]*        # followed by zero or more ASCII letters, digits, or hyphens (-)
+      \s*
+      >
+      \s*$
+    )
+  html_tag_block_end_at_close_tag: |-
+    <(?xi: pre | script | style | textarea ){{html_tag_break_char}}
+  html_tag_block_end_at_blank_line: |-
+    <(?xi:
+      address | article | aside | base | basefont | blockquote | body | caption
+    | c enter | col | colgroup | dd | details | dialog | dir | div | dl | dt
+    | fieldset | figcaption | figure | footer | form | frame | frameset | h1 | h2
+    | h3 | h4 | h5 | h6 | head | header | hr | html | iframe | legend | li | link
+    | main | menu | menuitem | nav | noframes | ol | optgroup | option | p | param
+    | section | source | summary | table | tbody | td | tfoot | th
+    | thead | title | tr | track | ul
+    ){{html_tag_maybe_selfclosing_break_char}}
+  html_tag_break_char: (?:[ \t>]|$)
+  html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
 
-    footnote_name: (?:\^(?:\\\]|[^]])+)
-    reference_name: (?:(?:\\\]|[^]])+)
+  html_entity: '&([a-zA-Z0-9]+|#\d+|#[Xx]\h+);'
+
+  ascii_space: '\t\n\f '
+  tag_attribute_name_start: (?=[^{{ascii_space}}=/>}])
+  tag_attribute_name_break: (?=[{{ascii_space}}=/>}])
+  tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
+  tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
+
+  reference_definition: (?:\[{{reference_name}}\]\:)
+  footnote_name: (?:\^(?:\\\]|[^]])+)
+  reference_name: (?:(?:\\\]|[^]])+)
+
+  paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?=\s*$                        # the line is blank (or only contains whitespace)
+       |  {{block_quote}}             # a blockquote begins the line
+       |  {{atx_heading}}             # an ATX heading begins the line
+       |  {{fenced_code_block_start}} # a fenced codeblock begins the line
+       |  {{thematic_break}}          # line is a thematic beak
+       |  {{first_list_item}}         # a list item begins the line
+       |  {{html_block}}              # a html block begins the line
+       )
+    )
+
+  # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
+  bold_italic_asterisk_begin: |-
+    (?x:
+         (\*\*)(\*) {{no_space_nor_punct}}
+    | \B (\*\*)(\*) {{no_space_but_punct}}
+    )
+
+  bold_asterisk_begin: |-
+    (?x:
+         \*{2} {{no_space_nor_punct}}
+    | \B \*{2} {{no_space_but_punct}}
+    )
+
+  italic_asterisk_begin: |-
+    (?x:
+         \* {{no_space_nor_punct}}
+    | \B \* {{no_space_but_punct}}
+    )
+
+  # not followed by Unicode whitespace and not followed by a Unicode punctuation character
+  no_space_nor_punct: (?![\s*\p{P}])
+  # not followed by Unicode whitespace and followed by a Unicode punctuation character
+  no_space_but_punct: (?=[[^\s*]&&\p{P}])
 
 ##############################################################################
 
@@ -263,7 +317,7 @@ contexts:
         1: punctuation.section.block.end.frontmatter.markdown
 
   markdown:
-    - include: indented-code-block
+    - include: indented-code-blocks
     - include: thematic-breaks
     - include: block-quotes
     - include: list-blocks
@@ -272,52 +326,82 @@ contexts:
     - include: html-blocks
     - include: latex-blocks
     - include: reference-definitions
-    - include: atx-heading
-    - include: setext-heading-or-paragraph
+    - include: atx-headings
+    - include: setext-headings-or-paragraphs
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
-    - match: '{{block_quote}}'
-      comment: |-
-        We terminate the block quote when seeing an empty line, a
-        separator or a line with leading > characters. The latter is
-        to “reset” the quote level for quoted lines.
-        The idea here is to match block level elements first, then once
-        we have confirmed there are no block level elements left, move to
-        matching inline markdown. This prevents block level elements being
-        detected when they shouldn't be.
+    - match: '[ \t]{,3}(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
       push:
         - block-quote-meta
-        - block-quote-content
-
-  block-quote-nested:
-    - match: '{{block_quote}}'
-      captures:
-        1: punctuation.definition.blockquote.markdown
-      set:
-        - block-quote-meta
-        - block-quote-content
+        - block-quote-body
+        - block-quote-punctuation-body
 
   block-quote-meta:
     - meta_include_prototype: false
     - meta_scope: markup.quote.markdown
     - include: immediately-pop
 
-  block-quote-content:
-    - include: block-quote-nested
-    - include: block-quote-code-block
-    - include: block-quote-list-item
-    - include: atx-heading
-    - include: indented-code-block
-    - include: thematic-breaks
-    - match: ''
-      set: block-quote-text
+  block-quote-body:
+    - include: block-quote-end
+    - include: block-quote-punctuations
+    - include: block-quote-content
 
-  block-quote-code-block:
+  block-quote-content:
+    - include: indented-code-blocks
+    - include: block-quote-common
+    - include: block-quote-paragraph
+
+  block-quote-common:
+    - include: thematic-breaks
+    - include: atx-headings
+    - include: block-quote-reference-definitions
+    - include: block-quote-fenced-code-block
+    - include: block-quote-list-block
+
+  block-quote-end:
+    - match: ^(?!(?:[ \t]*>))
+      pop: true
+
+  block-quote-punctuations:
+    - match: ^[ \t]{,3}(>)[ ]?
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push: block-quote-punctuation-body
+
+  block-quote-punctuation-body:
+    - include: block-quote-punctuation-content
+    - include: immediately-pop
+
+  block-quote-punctuation-content:
+    - match: '[ \t]{,3}(>)[ ]?'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+
+  block-quote-nested-punctuations:
+    # Quotes signs in list items are not restricted by indentation level
+    # for technical reasons.
+    - match: ^[ \t]*(>)[ ]?
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push: block-quote-nested-punctuation-body
+
+  block-quote-nested-punctuation-body:
+    - include: block-quote-nested-punctuation-content
+    - include: immediately-pop
+
+  block-quote-nested-punctuation-content:
+    - match: '[ \t]*(>)[ ]?'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > FENCED CODE BLOCKS ]####################
+
+  block-quote-fenced-code-block:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
@@ -327,76 +411,221 @@ contexts:
         0: meta.code-fence.definition.begin.text.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
-      set: block-quote-code-block-content
+      push: block-quote-fenced-code-block-body
 
-  block-quote-code-block-content:
-    - match: ^(?!\s*{{block_quote}})
-      pop: true
+  block-quote-fenced-code-block-body:
+    - include: block-quote-fenced-code-block-end
+    - include: block-quote-fenced-code-block-content
+
+  block-quote-fenced-code-block-content:
+    - include: block-quote-punctuation-content
+    - match: .*$\n?
+      scope: markup.raw.code-fence.markdown-gfm
+
+  block-quote-fenced-code-block-end:
+    - include: block-quote-end
     - match: '{{fenced_code_block_end}}'
       captures:
         0: meta.code-fence.definition.end.text.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
       pop: true
-    - match: '{{block_quote}}'
-      captures:
-        1: punctuation.definition.blockquote.markdown
-    - match: ''
-      push: block-quote-code-block-text
 
-  block-quote-code-block-text:
-    - meta_include_prototype: false
-    - meta_content_scope: markup.raw.code-fence.markdown-gfm
-    - match: ^
+###[ CONTAINER BLOCKS: BLOCK QUOTES > REFERENCE DEFINITIONS ]#################
+
+  block-quote-reference-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definitions
+    - include: block-quote-footnote-definitions
+    - include: block-quote-link-definitions
+
+  block-quote-footnote-definitions:
+    # Mardown Extras Footnotes
+    - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
+      captures:
+        2: punctuation.definition.reference.begin.markdown
+        3: entity.name.reference.link.markdown
+        4: punctuation.definition.reference.end.markdown
+        5: punctuation.separator.key-value.markdown
+      push: block-quote-footnote-def-body
+
+  block-quote-footnote-def-body:
+    - meta_scope: meta.link.reference.def.footnote.markdown-extra
+    - include: block-quote-footnote-def-end
+    - include: block-quote-punctuations
+    - include: block-quote-footnote-paragraphs
+
+  block-quote-footnote-def-end:
+    # A footnote definition is terminated by blocks not indented by at least 4 characters.
+    # Note: The first space after a quotation punctuation is not counted for simplicity reasons.
+    - match: ^(?!(?:[ \t]*>)+[ ](?:\1[ ]{4}|\s*$))
       pop: true
 
-  block-quote-list-item:
-    - match: ([ ]{,3})(\d+([.)]))(\s)
+  block-quote-footnote-paragraphs:
+    - match: '[ \t]*(?=\S)'
+      push: block-quote-footnote-paragraph-body
+
+  block-quote-footnote-paragraph-body:
+    - include: block-quote-footnote-paragraph-end
+    - include: block-quote-punctuations
+    - include: footnote-paragraph-common
+
+  block-quote-footnote-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= (?:[ \t]*>)* [ \t]*
+           (?: $                           # the line is blank (or only contains whitespace)
+           |   {{reference_definition}}    # a reference definition begins the line
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
+        )
+      pop: true
+
+  block-quote-link-definitions:
+    # https://spec.commonmark.org/0.30/#link-reference-definition
+    - match: '[ \t]*(\[)({{reference_name}})(\])(:)'
+      captures:
+        1: punctuation.definition.reference.begin.markdown
+        2: entity.name.reference.link.markdown
+        3: punctuation.definition.reference.end.markdown
+        4: punctuation.separator.key-value.markdown
+      push:
+        - block-quote-link-def-meta
+        - block-quote-link-def-title
+        - block-quote-link-def-url
+
+  block-quote-link-def-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.link.reference.def.markdown
+    - include: immediately-pop
+
+  block-quote-link-def-title:
+    - include: block-quote-nested-paragraph-end
+    - include: block-quote-punctuations
+    - include: link-title-begin
+    - include: else-pop
+
+  block-quote-link-def-url:
+    - include: block-quote-nested-paragraph-end
+    - include: block-quote-punctuations
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: block-quote-link-def-url-angled
+    - match: (?=\S)
+      set: link-def-url-unquoted
+
+  block-quote-link-def-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - include: block-quote-punctuations
+    - include: link-url-angled
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > LIST BLOCKS ]###########################
+
+  block-quote-list-block:
+    - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
+      captures:
+        1: markup.list.unnumbered.markdown
+        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+        3: markup.list.unnumbered.markdown
+        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
+        5: markup.checkbox.mark.markdown-gfm
+        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+      set: block-quote-unordered-list-block-body
+    - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
         4: markup.list.numbered.markdown
-      set:
-        - block-quote-ordered-list-content
-        - list-content
-    - match: ([ ]{,3})([*+-])((?:[ ](\[)([ xX])(\]))?\s)
-      captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      set:
-        - block-quote-unordered-list-content
-        - list-content
+      set: block-quote-ordered-list-block-body
 
-  block-quote-ordered-list-content:
-    - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
-    - include: block-quote-text
+  block-quote-ordered-list-block-body:
+    - meta_content_scope: markup.list.numbered.markdown
+    - include: block-quote-list-block-end
+    - include: block-quote-list-block-content
 
-  block-quote-unordered-list-content:
-    - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
-    - include: block-quote-text
+  block-quote-unordered-list-block-body:
+    - meta_content_scope: markup.list.unnumbered.markdown
+    - include: block-quote-list-block-end
+    - include: block-quote-list-block-content
 
-  block-quote-text:
+  block-quote-list-block-content:
+    - include: list-block-common
+    - include: block-quote-fenced-code-block
+    - include: block-quote-nested-punctuation-content
+    - include: block-quote-reference-definitions
+    - include: block-quote-list-paragraphs
+
+  block-quote-list-block-end:
+    - include: block-quote-end
+    # A list block ends with the first unindented text block.
+    # Note:
+    #  This is a simplification as we can't count indentation levels.
+    #  According to CommonMark, a list block ends as soon as a new paragraph
+    #  starts which is less indented than the first list item's text.
+    - match: ^(?=(?:[ \t]*>)+[ ]?\S)
+      pop: true
+
+  block-quote-list-paragraphs:
+    # A list paragraph doesn't support indented code blocks.
+    - match: '[ \t]*(?=\S)'
+      push: block-quote-list-paragraph-body
+
+  block-quote-list-paragraph-body:
+    - meta_scope: meta.paragraph.list.markdown
+    - include: block-quote-nested-paragraph-end
+    - include: block-quote-nested-punctuations
+    - include: inlines
+
+  block-quote-nested-paragraph-end:
     - match: |-
         (?x)
-        ^
-        (?= \s*$
-        |   {{atx_heading}}
-        |   {{block_quote}}
-        |   {{fenced_code_block_start}}
-        |   {{list_item}}
-        |   {{thematic_break}}
+        # pop out of this context if one of the following conditions are met:
+        ^(?= (?:[ \t]*>)* [ \t]*
+           (?: $                           # the line is blank (or only contains whitespace)
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
         )
       pop: true
-    - include: inline
+
+###[ CONTAINER BLOCKS: BLOCK QUOTES > PARAGRAPHS ]############################
+
+  block-quote-paragraph:
+    - match: '[ \t]*(?=\S)'
+      set: block-quote-paragraph-body
+
+  block-quote-paragraph-body:
+    - meta_scope: markup.paragraph.markdown
+    - include: block-quote-paragraph-end
+    - include: block-quote-punctuations
+    - include: inlines
+
+  block-quote-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= (?:[ \t]{,3}>)*
+           (?: \s* $                       # the line is blank (or only contains whitespace)
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
+        )
+      pop: true
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
   list-blocks:
-    - match: ^([ ]{,3})([*+-])( (\[)([ xX])(\]))?(?=\s)
+    - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
         1: markup.list.unnumbered.markdown
         2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
@@ -404,44 +633,45 @@ contexts:
         4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      push: unordered-list-paragraph
-    - match: ^([ ]{,3})(\d+([.)]))(?=\s)
+      push: unordered-list-block
+    - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
-      push: ordered-list-paragraph
+        4: markup.list.numbered.markdown
+      push: ordered-list-block
 
-  unordered-list-paragraph:
+  unordered-list-block:
     - meta_content_scope: markup.list.unnumbered.markdown
-    - include: list-paragraph
+    - include: list-block-end
+    - include: list-block-content
 
-  ordered-list-paragraph:
+  ordered-list-block:
     - meta_content_scope: markup.list.numbered.markdown
-    - include: list-paragraph
+    - include: list-block-end
+    - include: list-block-content
 
-  list-paragraph:
-    - match: ^(?=\S|{{atx_heading}})
+  list-block-end:
+    - match: ^(?=\S)
       pop: true
-    - include: list-indended-code-blocks
-    - include: block-quotes
-    - include: fenced-code-blocks
-    - include: html-blocks
-    - include: latex-blocks
-    - include: reference-definitions
-    - include: thematic-breaks
-    - match: (?=\S)
-      push: list-items
 
-  list-indended-code-blocks:
-    # at least 8 chars / 2 tabs
-    - match: ^{{indented_code_block}}{2,}[^>+*\s-].*$\n?
-      scope: markup.raw.block.markdown
+  list-block-content:
+    - include: fenced-code-blocks
+    - include: latex-blocks
+    - include: html-blocks
+    - include: reference-definitions
+    - include: list-block-common
+    - include: list-block-quotes
+    - include: list-paragraphs
+
+  list-block-common:
+    - include: thematic-breaks
+    - include: atx-headings
+    - include: list-items
 
   list-items:
-    - match: ^(?=\s*$|{{atx_heading}})
-      pop: true
-    - match: ([ ]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
+    - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
         1: markup.list.unnumbered.markdown
         2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
@@ -449,78 +679,103 @@ contexts:
         4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      push: unordered-list-content
-    - match: ([ ]*)(\d+([.)]))(?=\s)
+    - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
-      push: ordered-list-content
-    - match: \s+
-      scope: meta.paragraph.list.markdown
-    - match: (?=\S)
-      push: list-content
+        4: markup.list.numbered.markdown
 
-  unordered-list-content:
-    - clear_scopes: 1
-    - meta_content_scope: markup.list.unnumbered.markdown meta.paragraph.list.markdown
-    - include: list-content
+  list-block-quotes:
+    - match: '[ \t]*(>)[ ]?'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push:
+        - block-quote-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
 
-  ordered-list-content:
-    - clear_scopes: 1
-    - meta_content_scope: markup.list.numbered.markdown meta.paragraph.list.markdown
-    - include: list-content
+  list-block-quote-body:
+    - include: block-quote-end
+    - include: list-block-quote-punctuations
+    - include: list-block-quote-content
 
-  list-content:
-    - meta_content_scope: meta.paragraph.list.markdown
-    - include: block-quotes
-    - include: fenced-code-blocks
-    - include: html-blocks
-    - include: latex-blocks
-    - include: reference-definitions
-    - include: thematic-breaks
-    - match: ^
-      pop: true
-    - match: (?=\S)
-      push: list-text
+  list-block-quote-content:
+    - include: indented-code-blocks
+    - include: block-quote-common
+    - include: list-block-quote-paragraph
 
-  list-text:
-    - include: inline
-    - match: $
-      pop: true
-    - match: (?={{list_item}})
+  list-block-quote-punctuations:
+    - match: ^[ \t]*(>)[ ]?
+      captures:
+        1: punctuation.definition.blockquote.markdown
+      push: block-quote-punctuation-body
+
+  list-block-quote-paragraph:
+    - match: '[ \t]*(?=\S)'
+      set: list-block-quote-paragraph-body
+
+  list-block-quote-paragraph-body:
+    - meta_scope: markup.paragraph.markdown
+    - include: block-quote-nested-paragraph-end
+    - include: list-block-quote-punctuations
+    - include: inlines
+
+  list-paragraphs:
+    - match: '[ \t]*(?=\S)'
+      push: list-paragraph-body
+
+  list-paragraph-body:
+    - meta_scope: meta.paragraph.list.markdown
+    - include: list-paragraph-end
+    - include: inlines
+
+  list-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= [ \t]*
+          (?: $                           # the line is blank (or only contains whitespace)
+          |   {{block_quote}}             # a blockquote begins the line
+          |   {{atx_heading}}             # an ATX heading begins the line
+          |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+          |   {{thematic_break}}          # line is a thematic beak
+          |   {{list_item}}               # a list item begins the line
+          |   {{html_block}}              # a html block begins the line
+          )
+        )
       pop: true
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
-  atx-heading:
+  atx-headings:
     # https://spec.commonmark.org/0.30/#atx-headings
     # Note:
     #   Consume spaces and tabs after opening hashes so entity.name
     #   starts with first non-whitespace character,
     #   but don't do so if directly followed by closing hashes
     #   as terminator pattern requires them to match then.
-    - match: '[ ]{,3}(#{1}){{atx_heading_space}}'
+    - match: '[ \t]*(#{1}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading1-content
-    - match: '[ ]{,3}(#{2}){{atx_heading_space}}'
+    - match: '[ \t]*(#{2}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading2-content
-    - match: '[ ]{,3}(#{3}){{atx_heading_space}}'
+    - match: '[ \t]*(#{3}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading3-content
-    - match: '[ ]{,3}(#{4}){{atx_heading_space}}'
+    - match: '[ \t]*(#{4}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading4-content
-    - match: '[ ]{,3}(#{5}){{atx_heading_space}}'
+    - match: '[ \t]*(#{5}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading5-content
-    - match: '[ ]{,3}(#{6}){{atx_heading_space}}'
+    - match: '[ \t]*(#{6}){{atx_heading_space}}'
       captures:
         1: punctuation.definition.heading.begin.markdown
       push: atx-heading6-content
@@ -568,13 +823,13 @@ contexts:
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
-  setext-heading-or-paragraph:
+  setext-headings-or-paragraphs:
     # A paragraph may start with a line of equal signs which must not be matched
     # as heading underline. This is achieved by consuming them here, which also
     # applies `meta.paragraph` scope as expected.
     # A line of dashes is already matched as thematic break and thus ignored.
     - match: ^[ ]{,3}(?:=+|(?=\S))
-      branch_point: setext-heading-or-paragraph
+      branch_point: setext-headings-or-paragraphs
       branch:
         - paragraph
         - setext-heading2
@@ -604,50 +859,28 @@ contexts:
 
   setext-heading-content:
     - match: '{{setext_escape}}'
-      fail: setext-heading-or-paragraph
+      fail: setext-headings-or-paragraphs
     - include: emphasis
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
     - match: '{{setext_escape}}'
-      fail: setext-heading-or-paragraph
+      fail: setext-headings-or-paragraphs
     - include: paragraph-end
-    - include: inline
+    - include: inlines
 
   paragraph-end:
-    - match: |-
-        (?x)
-        ^(?= # pop out of this context if one of the following conditions are met:
-            \s*$                        # the line is blank (or only contains whitespace)
-          | {{atx_heading}}             # an ATX heading begins the line
-          | {{block_quote}}             # a blockquote begins the line
-          | {{fenced_code_block_start}} # a fenced codeblock begins the line
-          | {{thematic_break}}          # line is a thematic beak
-          | [ ]{,3}
-            (?:
-              1[.)]\s                   # an ordered list item with number "1" begins the line
-            | [*+-]\s                   # an unordered list item begins the line
-            | \$\$                      # a latex math block begins the line
-            | {{html_tag_block_end_at_close_tag}}  # html block type 1
-            | {{html_tag_block_end_at_blank_line}} # html block type 6
-            | {{html_block_open_tag}}              # html block type 7
-            | {{html_block_close_tag}}             # html block type 7
-            | {{html_block_comment}}               # html block type 2
-            | {{html_block_decl}}                  # html block type 4
-            | {{html_block_cdata}}                 # html block type 5
-            | {{html_block_preprocessor}}          # html block type 3
-            )
-          )
+    - match: '{{paragraph_end}}'
       pop: true
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
-  indented-code-block:
+  indented-code-blocks:
     # https://spec.commonmark.org/0.30/#indented-code-blocks
     - match: '{{indented_code_block}}.*$\n?'
       scope: markup.raw.block.markdown
@@ -656,7 +889,7 @@ contexts:
 
   fenced-code-blocks:
     # https://spec.commonmark.org/0.30/#fenced-code-blocks
-    - match: ^(?={{fenced_code_block_start}})
+    - match: (?={{fenced_code_block_start}})
       push: fenced-code-block-content
 
   fenced-code-block-content:
@@ -1961,7 +2194,7 @@ contexts:
         0: meta.code-fence.definition.begin.xonsh.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
-      embed: scope:source.python
+      embed: scope:source.xonsh
       embed_scope: markup.raw.code-fence.xonsh.markdown-gfm
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
@@ -1973,35 +2206,35 @@ contexts:
   # https://spec.commonmark.org/0.30/#html-blocks
   html-blocks:
     # Markdown formatting is disabled inside block-level tags.
-    - match: ^[ ]*(?=<((?i:pre|textarea)){{html_tag_break_char}})
+    - match: ^[ \t]*(?=<((?i:pre|textarea)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
         - html-block-type-1a
     # Markdown formatting is disabled inside block-level tags.
-    - match: ^[ ]*(?=<((?i:script|style)){{html_tag_break_char}})
+    - match: ^[ \t]*(?=<((?i:script|style)){{html_tag_break_char}})
       push:
         - html-block-pop-at-eol
         - html-block-type-1b
     # Markdown formatting is disabled inside block level tags and if a complete HTML tag is the only thing on the line.
-    - match: ^[ ]*(?={{html_tag_block_end_at_blank_line}}|{{html_block_open_tag}}|{{html_block_close_tag}})
+    - match: ^[ \t]*(?={{html_tag_block_end_at_blank_line}}|{{html_block_open_tag}}|{{html_block_close_tag}})
       push: html-block-type-6
     # Markdown formatting is disabled inside comments.
-    - match: ^[ ]*(?={{html_block_comment}})
+    - match: ^[ \t]*(?={{html_block_comment}})
       push:
         - html-block-pop-at-eol
         - html-block-type-2
     # Markdown formatting is disabled inside preprocessor instructions.
-    - match: ^[ ]*(?={{html_block_preprocessor}})
+    - match: ^[ \t]*(?={{html_block_preprocessor}})
       push:
         - html-block-pop-at-eol
         - html-block-type-3
     # Markdown formatting is disabled inside doctype declarations.
-    - match: ^[ ]*(?={{html_block_decl}})
+    - match: ^[ \t]*(?={{html_block_decl}})
       push:
         - html-block-pop-at-eol
         - html-block-type-4
     # Markdown formatting is disabled inside CDATA.
-    - match: ^[ ]*(?={{html_block_cdata}})
+    - match: ^[ \t]*(?={{html_block_cdata}})
       push:
         - html-block-pop-at-eol
         - html-block-type-5
@@ -2061,7 +2294,11 @@ contexts:
   html-content:
     - include: scope:text.html.basic
 
-  tag-kbd:
+  html-entities:
+    # https://spec.commonmark.org/0.30/#entity-and-numeric-character-references
+    - include: scope:text.html.basic#entities
+
+  html-kbd-tags:
     # A simple implementation to add dedicated `markup.kbd` scopes.
     # Note: Doesn't (intent to) support bold/italic/striked content.
     - match: ((<)(kbd)(>))([^<]+)((</)(kbd)(>))
@@ -2085,26 +2322,56 @@ contexts:
 
   footnote-definitions:
     # Mardown Extras Footnotes
-    - match: '[ ]{,3}(\[)({{footnote_name}})(\])(:)'
+    - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
-        1: punctuation.definition.reference.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.reference.end.markdown
-        4: punctuation.separator.key-value.markdown
+        2: punctuation.definition.reference.begin.markdown
+        3: entity.name.reference.link.markdown
+        4: punctuation.definition.reference.end.markdown
+        5: punctuation.separator.key-value.markdown
       push: footnote-def-body
 
   footnote-def-body:
     - meta_scope: meta.link.reference.def.footnote.markdown-extra
-    - match: ^(?![ ]{4}|$)
+    - include: footnote-def-end
+    - include: footnote-paragraphs
+
+  footnote-def-end:
+    - match: ^(?!(?:\1[ ]{4}|\s*$))
       pop: true
+
+  footnote-paragraphs:
+    - match: '[ \t]*(?=\S)'
+      push: footnote-paragraph-body
+
+  footnote-paragraph-body:
+    - include: footnote-paragraph-end
+    - include: footnote-paragraph-common
+
+  footnote-paragraph-common:
     - include: emphasis
     - include: images
     - include: literals
     - include: links
 
+  footnote-paragraph-end:
+    - match: |-
+        (?x)
+        # pop out of this context if one of the following conditions are met:
+        ^(?= [ \t]*
+           (?: $                           # the line is blank (or only contains whitespace)
+           |   {{reference_definition}}    # a reference definition begins the line
+           |   {{atx_heading}}             # an ATX heading begins the line
+           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{thematic_break}}          # line is a thematic beak
+           |   {{list_item}}               # a list item begins the line
+           |   {{html_block}}              # a html block begins the line
+           )
+        )
+      pop: true
+
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
-    - match: '[ ]{,3}(\[)({{reference_name}})(\])(:)'
+    - match: '[ \t]*(\[)({{reference_name}})(\])(:)'
       captures:
         1: punctuation.definition.reference.begin.markdown
         2: entity.name.reference.link.markdown
@@ -2112,13 +2379,22 @@ contexts:
         4: punctuation.separator.key-value.markdown
       push:
         - link-def-end
-        - link-title
+        - link-def-title
         - link-def-url
 
   link-def-end:
+    - meta_include_prototype: false
     - meta_scope: meta.link.reference.def.markdown
-    - include: eol-pop
-    - match: \s*\S+
+    - include: immediately-pop
+
+  link-def-title:
+    - match: ^(?!\s*["'(])
+      pop: true
+    - match: (?=["'(])
+      set:
+        - expect-eol
+        - link-title
+    - match: \S.+
       scope: invalid.illegal.expected-eol.markdown
 
   link-def-url:
@@ -2127,20 +2403,14 @@ contexts:
       set: link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
-    - include: eol-pop
+    - include: paragraph-end
 
   link-def-url-angled:
     - meta_content_scope: markup.underline.link.markdown
-    - match: \>
-      scope: punctuation.definition.link.end.markdown
-      pop: true
-    - include: link-def-url-common
+    - include: link-url-angled
 
   link-def-url-unquoted:
     - meta_scope: markup.underline.link.markdown
-    - include: link-def-url-common
-
-  link-def-url-common:
     # URLs are terminated by whitespace or newline in reference definitions
     # Note: \s includes \n
     - match: (?=\s)
@@ -2202,7 +2472,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
   table-cell-emphasis:
     - include: emphasis
@@ -2220,6 +2490,7 @@ contexts:
       push: thematic-break-body
 
   thematic-break-body:
+    - meta_include_prototype: false
     - meta_scope: meta.separator.thematic-break.markdown
     - match: '[-_*]+'
       scope: punctuation.definition.thematic-break.markdown
@@ -2228,13 +2499,13 @@ contexts:
 
 ###[ INLINE ]#################################################################
 
-  inline:
+  inlines:
     - include: hard-line-breaks
     - include: emphasis
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
   emphasis:
     - include: bold
@@ -2260,15 +2531,14 @@ contexts:
     - include: link-inline
     - include: link-ref
 
-  markup:
+  markups:
     # Markdown will convert this for us. We match it so that the
     # HTML grammar will not mark it up as invalid.
     - match: '[<>](-+|=+)[<>]?'
     - match: '[<>]?(-+|=+)[<>]'
     - match: '<<+|<>|>>+'
     - match: <(?![A-Za-z/?!])
-    - match: (?!{{html_entity}})&
-    - include: tag-kbd
+    - include: html-kbd-tags
     - include: html-content
 
 ###[ INLINE: CODE SPANS ]#####################################################
@@ -2294,12 +2564,14 @@ contexts:
 
   bold:
     # https://spec.commonmark.org/0.30/#emphasis-and-strong-emphasis
-    - match: (\*\*)(\*)(?=\S)(?!\*)
+    - match: '{{bold_italic_asterisk_begin}}'
       captures:
         1: punctuation.definition.bold.begin.markdown
         2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
       push: bold-italic-asterisk
-    - match: \*\*(?=\S)(?!\*\*|\*\s)
+    - match: '{{bold_asterisk_begin}}'
       scope: punctuation.definition.bold.begin.markdown
       push: bold-asterisk
     - match: \b(__)(_)(?=\S)(?!_)
@@ -2315,9 +2587,9 @@ contexts:
     - meta_scope: markup.bold.markdown
     - match: |-
         (?x)
-            [ \t]*\*{4,}     # if there are more than 3 its not applicable to be bold or italic
-        |   [ \t]+\*\*+      # whitespace followed by 2 or more is also not applicable
-        |   ^\*\*            # emphasis can't be closed at the start of the line
+          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+\*\*+     # whitespace followed by 2 or more is also not applicable
+        | ^\*\*           # emphasis can't be closed at the start of the line
     - match: (?:_)?(\*\*)
       captures:
         1: punctuation.definition.bold.end.markdown
@@ -2330,10 +2602,10 @@ contexts:
   bold-underscore:
     - meta_scope: markup.bold.markdown
     - match: |-
-          (?x)
-              [ \t]*_{4,}    # if there are more than 3 its not applicable to be bold or italic
-          |   [ \t]+__+      # whitespace followed by 2 or more is also not applicable
-          |   ^__            # emphasis can't be closed at the start of the line
+        (?x)
+          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+__+       # whitespace followed by 2 or more is also not applicable
+        | ^__             # emphasis can't be closed at the start of the line
     - match: (?:\*)?(__\b)
       captures:
         1: punctuation.definition.bold.end.markdown
@@ -2348,9 +2620,9 @@ contexts:
     - meta_content_scope: markup.italic.markdown
     - match: |-
         (?x)
-            [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
-        |   [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        |   ^\*(?!\*)       # emphasis can't be closed at the start of the line
+          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^\*(?!\*)       # emphasis can't be closed at the start of the line
     - match: (\*)(\*\*)
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
@@ -2369,9 +2641,9 @@ contexts:
     - meta_content_scope: markup.bold.markdown
     - match: |-
         (?x)
-            [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
-        |   [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        |   ^\*\*           # emphasis can't be closed at the start of the line
+          [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*\*
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
       pop: true
@@ -2381,9 +2653,9 @@ contexts:
     - meta_content_scope: markup.italic.markdown
     - match: |-
         (?x)
-            [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
-        |   [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        |   ^\*\*           # emphasis can't be closed at the start of the line
+          [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       pop: true
@@ -2394,9 +2666,9 @@ contexts:
     - meta_content_scope: markup.italic.markdown
     - match: |-
         (?x)
-            [ \t]*_{4,}   # if there are more than 3 its not applicable to be bold or italic
-        |   [ \t]+_(?!_)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        |   ^_(?!_)       # emphasis can't be closed at the start of the line
+          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+_(?!_)    # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^_(?!_)         # emphasis can't be closed at the start of the line
     - match: (_)(__)\b
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
@@ -2414,10 +2686,10 @@ contexts:
   bold-after-bold-italic-underscore:
     - meta_content_scope: markup.bold.markdown
     - match: |-
-          (?x)
-              [ \t]*_{3,}   # if there are more than 3 its not applicable to be bold or italic
-          |   [ \t]+__+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-          |   ^__           # emphasis can't be closed at the start of the line
+        (?x)
+          [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^__             # emphasis can't be closed at the start of the line
     - match: __\b
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
       pop: true
@@ -2426,10 +2698,10 @@ contexts:
   italic-after-bold-italic-underscore:
     - meta_content_scope: markup.italic.markdown
     - match: |-
-          (?x)
-              [ \t]*_{3,}   # if there are more than 3 its not applicable to be bold or italic
-          |   [ \t]+__+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-          |   ^__           # emphasis can't be closed at the start of the line
+        (?x)
+          [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^__             # emphasis can't be closed at the start of the line
     - match: _\b
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       pop: true
@@ -2441,7 +2713,7 @@ contexts:
     - include: strikethrough
 
   italic:
-    - match: \*(?=\S)(?!\*)
+    - match: '{{italic_asterisk_begin}}'
       scope: punctuation.definition.italic.begin.markdown
       push: italic-asterisk
     - match: \b_(?=\S)(?!_)
@@ -2452,10 +2724,10 @@ contexts:
   italic-asterisk:
     - meta_scope: markup.italic.markdown
     - match: |-
-          (?x)
-              [ \t]*\*{4,}   # if there are more than 3 its not applicable to be bold or italic
-          |   [ \t]+\*(?!\*) # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-          |   ^\*(?!\*)      # emphasis can't be closed at the start of the line
+        (?x)
+          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^\*(?!\*)       # emphasis can't be closed at the start of the line
     - match: \*(?!\*[^*])
       scope: punctuation.definition.italic.end.markdown
       pop: true
@@ -2465,10 +2737,10 @@ contexts:
   italic-underscore:
     - meta_scope: markup.italic.markdown
     - match: |-
-          (?x)
-              [ \t]*_{4,}   # if there are more than 3 its not applicable to be bold or italic
-          |   [ \t]+_(?!_)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-          |   ^_(?!_)       # emphasis can't be closed at the start of the line
+        (?x)
+          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
+        | [ \t]+_(?!_)    # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
+        | ^_(?!_)         # emphasis can't be closed at the start of the line
     - match: _\b
       scope: punctuation.definition.italic.end.markdown
       pop: true
@@ -2480,15 +2752,18 @@ contexts:
     - include: strikethrough
 
   strikethrough:
-    - match: (?:~(?!~}|>|\s))+  # any number of ~ up to ~> or ~~} critic markers
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: ~~(?![~}>\s])  # 2x ~ but no ~> or ~~}
       scope: punctuation.definition.strikethrough.begin.markdown
       push: strikethrough-content
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
 
   strikethrough-content:
     - meta_scope: markup.strikethrough.markdown-gfm
-    - match: (?:~(?!~}|>))+     # any number of ~ up to ~> or ~~} critic markers
+    - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
       scope: punctuation.definition.strikethrough.end.markdown
       pop: true
+    - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
     - include: bold
     - include: italic
@@ -2504,7 +2779,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
-    - include: markup
+    - include: markups
 
 ###[ INLINE: IMAGES ]#########################################################
 
@@ -2756,7 +3031,7 @@ contexts:
     - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
     - include: emphasis
     - include: literals
-    - include: markup
+    - include: markups
 
   link-text-nested:
     - include: link-text
@@ -2768,6 +3043,11 @@ contexts:
     - include: images
 
   link-title:
+    - include: link-title-begin
+    - include: eol-pop
+    - include: else-pop
+
+  link-title-begin:
     - match: \'
       scope: punctuation.definition.string.begin.markdown
       set: link-title-single-quoted-content
@@ -2777,8 +3057,6 @@ contexts:
     - match: \(
       scope: punctuation.definition.string.begin.markdown
       set: link-title-other-quoted-content
-    - match: $|(?=\S)
-      pop: true
 
   link-title-double-quoted-content:
     - meta_scope: meta.string.title.markdown string.quoted.double.markdown
@@ -2805,6 +3083,8 @@ contexts:
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.link-title.markdown
       pop: true
+    - include: escapes
+    - include: html-entities
 
   link-url-angled:
     - match: \>
@@ -2826,6 +3106,7 @@ contexts:
 
   link-url-common:
     - include: escapes
+    - include: html-entities
     - include: link-url-path-separators
     - include: link-url-scheme-separators
     - include: link-url-escapes
@@ -2997,10 +3278,12 @@ contexts:
 ###[ INLINE: OTHER ]##########################################################
 
   escapes:
-    - match: '{{escape}}'
+    # https://spec.commonmark.org/0.30/#backslash-escapes
+    - match: '{{escapes}}'
       scope: constant.character.escape.markdown
 
   hard-line-breaks:
+    # https://spec.commonmark.org/0.30/#hard-line-breaks
     - match: '[ ]{2,}$'
       scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
     - match: (\\)\n
@@ -3129,8 +3412,9 @@ contexts:
     - include: latex-content
 
   latex-blocks:
-    - match: \$\$
-      scope: string.other.math.latex punctuation.definition.string.begin.latex
+    - match: '[ \t]*(\$\$)'
+      captures:
+        1: string.other.math.latex punctuation.definition.string.begin.latex
       push: latex-block-content
 
   latex-block-content:
@@ -3154,6 +3438,12 @@ contexts:
     - match: $
       pop: true
 
+  expect-eol:
+    - include: eol-pop
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
+
   immediately-pop:
     - match: ''
       pop: true
+
