@@ -78,7 +78,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
 
         self.setCaretTo(1, 1)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_subitems(self):
         self.setBlockText(
@@ -110,7 +114,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
 
         self.setCaretTo(1, 1)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("* item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            * item 1 foo bar item 2
+            """
+        )
 
     def test_join_ordered_list_with_subitems_multi_caret(self):
         self.setBlockText(
@@ -125,7 +133,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_subitems_multi_caret(self):
         self.setBlockText(
@@ -140,8 +152,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("* item 1 foo bar item 2")
-
+        self.assertEqualBlockText(
+            """
+            * item 1 foo bar item 2
+            """
+        )
     def test_join_ordered_list_with_text_multi_caret(self):
         self.setBlockText(
             """
@@ -155,7 +170,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_text_multi_caret(self):
         self.setBlockText(
@@ -170,7 +189,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("* item 1 bar baz item")
+        self.assertEqualBlockText(
+        """
+        * item 1 bar baz item
+        """
+    )
 
     def test_join_selected_ordered_list_with_subitems(self):
         self.setBlockText(
@@ -183,7 +206,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_selected_unordered_list_with_subitems(self):
         self.setBlockText(
@@ -196,7 +223,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("* item 1 foo bar item 2")
+        self.assertEqualBlockText(
+        """
+        * item 1 foo bar item 2
+        """
+    )
 
     def test_join_selected_ordered_list_with_text(self):
         self.setBlockText(
@@ -209,7 +240,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_selected_unordered_list_with_text(self):
         self.setBlockText(
@@ -222,7 +257,11 @@ class JoinListItemsTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("* item 1 bar baz item")
+        self.assertEqualBlockText(
+        """
+        * item 1 bar baz item
+        """
+    )
 
     def test_join_lines_keep_ordered_list_bullet(self):
         self.setBlockText(
@@ -275,7 +314,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> foo bar baz")
+        self.assertEqualBlockText(
+            """
+            > foo bar baz
+            """
+        )
 
     def test_join_selected_text_level2(self):
         self.setBlockText(
@@ -287,7 +330,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> > foo bar baz")
+        self.assertEqualBlockText(
+        """
+        > > foo bar baz
+        """
+    )
 
     def test_join_two_ordered_list_items_with_dot(self):
         self.setBlockText(
@@ -364,7 +411,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
 
         self.setCaretTo(1, 1)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> 1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            > 1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_subitems(self):
         self.setBlockText(
@@ -396,7 +447,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
 
         self.setCaretTo(1, 1)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> * item 1 foo bar item 2")
+        self.assertEqualBlockText(
+        """
+        > * item 1 foo bar item 2
+        """
+    )
 
     def test_join_ordered_list_with_subitems_multi_caret(self):
         self.setBlockText(
@@ -411,7 +466,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> 1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            > 1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_subitems_multi_caret(self):
         self.setBlockText(
@@ -426,7 +485,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> * item 1 foo bar item 2")
+        self.assertEqualBlockText(
+        """
+        > * item 1 foo bar item 2
+        """
+    )
 
     def test_join_ordered_list_with_text_multi_caret(self):
         self.setBlockText(
@@ -441,7 +504,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> 1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            > 1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_unordered_list_with_text_multi_caret(self):
         self.setBlockText(
@@ -456,7 +523,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         self.addCaretAt(2, 3)
         self.addCaretAt(3, 3)
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> * item 1 bar baz item")
+        self.assertEqualBlockText(
+        """
+        > * item 1 bar baz item
+        """
+    )
 
     def test_join_selected_ordered_list_with_subitems(self):
         self.setBlockText(
@@ -469,7 +540,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> 1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            > 1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_selected_unordered_list_with_subitems(self):
         self.setBlockText(
@@ -482,7 +557,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> * item 1 foo bar item 2")
+        self.assertEqualBlockText(
+        """
+        > * item 1 foo bar item 2
+        """
+    )
 
     def test_join_selected_ordered_list_with_text(self):
         self.setBlockText(
@@ -495,7 +574,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> 1) item 1 foo bar item 2")
+        self.assertEqualBlockText(
+            """
+            > 1) item 1 foo bar item 2
+            """
+        )
 
     def test_join_selected_unordered_list_with_text(self):
         self.setBlockText(
@@ -508,7 +591,11 @@ class JoinBlockQuoteLinesTestCase(DereferrablePanelTestCase):
         )
         self.view.run_command("select_all")
         self.view.run_command("mde_join_lines")
-        self.assertEqualText("> * item 1 bar baz item")
+        self.assertEqualBlockText(
+        """
+        > * item 1 bar baz item
+        """
+    )
 
     def test_join_lines_keep_ordered_list_bullet_if_caret_after_blockquote_sign(self):
         self.setBlockText(

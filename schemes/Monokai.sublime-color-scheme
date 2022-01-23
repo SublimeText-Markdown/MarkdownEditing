@@ -10,67 +10,66 @@
 
 		// Basic Formattings
 		{
-			"name": "Bold Content",
+			"name": "Markdown: Bold Content",
 			"scope": "text.html.markdown markup.bold - punctuation.definition.bold",
 			"font_style": "bold"
 		},
 		{
-			"name": "Bold Punctuation",
+			"name": "Markdown: Bold Punctuation",
 			"scope": "text.html.markdown punctuation.definition.bold",
 			"font_style": ""
 		},
 		{
-			"name": "Italic Content",
+			"name": "Markdown: Italic Content",
 			"scope": "text.html.markdown markup.italic - punctuation.definition.italic",
 			"font_style": "italic"
 		},
 		{
-			"name": "Italic Punctuation",
+			"name": "Markdown: Italic Punctuation",
 			"scope": "text.html.markdown punctuation.definition.italic",
 			"font_style": ""
 		},
 		{
-			"name": "Bold Italic Content",
+			"name": "Markdown: Bold Italic Content",
 			"scope": "text.html.markdown markup.bold markup.italic - punctuation.definition.bold - punctuation.definition.italic, text.html.markdown markup.bold_italic - punctuation.definition.bold",
 			"font_style": "bold italic"
 		},
 		{
-			"name": "Underlined Content",
+			"name": "Markdown: Underlined Content",
 			"scope": "text.html.markdown markup.underline",
 			"font_style": "underline"
 		},
 		{
-			"name": "Bold Underlined Content",
+			"name": "Markdown: Bold Underlined Content",
 			"scope": "text.html.markdown & markup.bold & markup.underline - punctuation.definition.bold",
 			"font_style": "bold underline"
 		},
 		{
-			"name": "Italic Underlined Content",
+			"name": "Markdown: Italic Underlined Content",
 			"scope": "text.html.markdown & markup.italic & markup.underline - punctuation.definition.italic",
 			"font_style": "italic underline"
 		},
 		{
-			"name": "Bold Italic Underlined Content",
+			"name": "Markdown: Bold Italic Underlined Content",
 			"scope": "text.html.markdown & markup.bold & markup.italic & markup.underline - punctuation.definition.bold - punctuation.definition.italic",
 			"font_style": "bold underline"
 		},
 		{
-			"name": "Striked Content",
-			"scope": "text.html.markdown markup.strikethrough",
+			"name": "Markdown: Striked Content",
+			"scope": "text.html.markdown markup.strikethrough, text.html.markdown markup.strikethrough string",
 			"foreground": "var(grey)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked References",
-			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata)",
+			"name": "Markdown: Striked Punctuations",
+			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata | punctuation.definition.bold | punctuation.definition.italic | punctuation.definition.string)",
 			"foreground": "var(grey)",
 			"font_style": ""
 		},
 		{
-			"name": "Striked Strings",
-			"scope": "text.html.markdown markup.strikethrough string",
-			"foreground": "var(grey)",
-			"font_style": ""
+			"name": "Markdown: Striked URLs",
+			"scope": "text.html.markdown markup.strikethrough & (markup.underline.link.markdown | markup.underline.link.image.markdown)",
+			"foreground": "var(grey)"
 		},
 		{
 			"name": "Markdown: Hard Line Breaks",
@@ -80,7 +79,7 @@
 
 		// Block Quotes
 		{
-			"name": "Block Quotes",
+			"name": "Markdown: Block Quotes",
 			"scope": "text.html.markdown markup.quote punctuation.definition.blockquote, text.html.markdown markup.quote punctuation.definition.quote",
 			"foreground": "var(grey)",
 			"background": "var(grey)"
@@ -88,13 +87,13 @@
 
 		// Code Blocks
 		{
-			"name": "Inline Code Block",
+			"name": "Markdown: Inline Code Block",
 			"scope": "text.html.markdown markup.raw.inline",
 			"foreground": "var(raw_fg)",
 			"background": "var(raw_bg)"
 		},
 		{
-			"name": "Raw Code Block",
+			"name": "Markdown: Raw Code Block",
 			"scope": "text.html.markdown markup.raw, text.html.markdown meta.code-fence",
 			"foreground": "var(raw_fg)",
 			"background": "var(raw_bg)"
@@ -102,36 +101,41 @@
 
 		// Inline References
 		{
-			"name": "Inline Link URL",
+			"name": "Markdown: Link Description",
+			"scope": "(meta.image.inline.description.markdown, meta.image.reference.description.markdown, meta.link.inline.description.markdown, meta.link.reference.description.markdown, meta.link.reference.literal.description.markdown, meta.link.reference.wiki.description.markdown) - comment - constant - entity - punctuation - string - markup.strikethrough",
+			"foreground": "var(yellow)"
+		},
+		{
+			"name": "Markdown: Inline Link URL",
 			"scope": "text.html.markdown meta.link.inline markup.underline.link",
 			"foreground": "var(blue)"
 		},
 
 		// Keyboard Shortcuts
 		{
-			"name": "Keyboard Shortcut Background",
+			"name": "Markdown: Keyboard Shortcut Background",
 			"scope": "text.html.markdown markup.kbd",
 			"background": "var(raw_bg)"
 		},
 		{
-			"name": "Keyboard Shortcut Tags",
+			"name": "Markdown: Keyboard Shortcut Tags",
 			"scope": "text.html.markdown markup.kbd entity.name.tag, text.html.markdown markup.kbd punctuation.definition.tag",
 			"foreground": "var(raw_fg)"
 		},
 		{
-			"name": "Keyboard Shortcut Content",
+			"name": "Markdown: Keyboard Shortcut Content",
 			"scope": "text.html.markdow markup.kbd.content",
 			"foreground": "var(blue)"
 		},
 
 		// Tables
 		{
-			"name": "Table Separators / Lines",
+			"name": "Markdown: Table Separators / Lines",
 			"scope": "text.html.markdown meta.table.header-separator punctuation.section, text.html.markdown punctuation.section.table-header, text.html.markdown punctuation.separator.table-cell",
 			"foreground": "var(grey)"
 		},
 		{
-			"name": "Table Cell Content Alignment Operator",
+			"name": "Markdown: Table Cell Content Alignment Operator",
 			"scope": "text.html.markdown meta.table.header-separator punctuation.definition",
 			"foreground": "var(red2)"
 		}
