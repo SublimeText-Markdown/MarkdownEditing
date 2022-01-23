@@ -105,9 +105,6 @@ Here are the used scopes under 3 different markdown flavors. If you are not sure
 * punctuation.definition.string.end.markdown
 * punctuation.definition.string.markdown
 * punctuation.separator.key-value.markdown
-* string.other.link.description.markdown
-* string.other.link.description.title.markdown
-* string.other.link.title.markdown
 
 ### ScopeName: text.html.markdown.gfm
 
@@ -168,9 +165,6 @@ Here are the used scopes under 3 different markdown flavors. If you are not sure
 * __punctuation.definition.tag.begin.html__
 * __punctuation.definition.tag.end.html__
 * punctuation.separator.key-value.markdown
-* string.other.link.description.markdown
-* string.other.link.description.title.markdown
-* string.other.link.title.markdown
 
 ### ScopeName: text.html.markdown.multimarkdown
 
