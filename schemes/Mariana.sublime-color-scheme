@@ -63,7 +63,7 @@
 		{
 			"name": "Markdown: Striked Punctuations",
 			"scope": "text.html.markdown markup.strikethrough & (punctuation.definition | punctuation.separator | punctuation.definition.strikethrough | punctuation.definition.constant | punctuation.definition.image | punctuation.definition.link | punctuation.definition.metadata | markup.bold punctuation.definition.bold | markup.italic punctuation.definition.italic | string punctuation.definition.string)",
-			"foreground": "var(blue2)",
+			"foreground": "var(blue6)",
 			"font_style": ""
 		},
 		{
