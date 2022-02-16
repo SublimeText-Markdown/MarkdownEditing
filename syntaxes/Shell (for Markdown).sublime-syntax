@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+name: Interactive Unix Shell
+scope: source.shell.interactive.markdown
+hidden: true
+
+contexts:
+  main:
+    - match: ^(?=\$\s)
+      push: shell-interactive
+    - include: shell-statements
+
+  shell-interactive:
+    - match: ^\$(?=\s)
+      scope: comment.other.shell
+      push: shell-statements
+      with_prototype:
+        # continuation lines begin with `> `
+        - match: ^>(?=\s)
+          scope: comment.other.shell
+        - match: ^
+          pop: true
+
+  shell-statements:
+    - include: scope:source.shell
