@@ -2,24 +2,25 @@
 ---
 name: Interactive Unix Shell
 scope: source.shell.interactive.markdown
+version: 2
 hidden: true
 
+extends: Packages/ShellScript/Shell-Unix-Generic.sublime-syntax
+
 contexts:
+  prototype:
+    - meta_prepend: true
+    # continuation lines begin with `> `
+    - match: ^>(?=\s)
+      scope: comment.other.shell
+
   main:
     - match: ^(?=\$\s)
       push: shell-interactive
-    - include: shell-statements
+    - include: statements
 
   shell-interactive:
     - match: ^\$(?=\s)
       scope: comment.other.shell
-      push: shell-statements
-      with_prototype:
-        # continuation lines begin with `> `
-        - match: ^>(?=\s)
-          scope: comment.other.shell
-        - match: ^
-          pop: true
-
-  shell-statements:
-    - include: scope:source.shell
+      embed: statements
+      escape: (?<![^\\]\\)(?<![\\]{3})\n
