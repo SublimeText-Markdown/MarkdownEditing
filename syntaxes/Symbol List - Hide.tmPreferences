@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>text.html.markdown markup.raw.block.fenced.markdown, text.html.markdown meta.toc-list.id</string>
+	<string>text.html.markdown markup.raw.code-fence, text.html.markdown meta.toc-list.id</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

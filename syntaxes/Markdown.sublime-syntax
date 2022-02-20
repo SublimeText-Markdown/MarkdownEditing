@@ -933,6 +933,7 @@ contexts:
     - include: fenced-ruby
     - include: fenced-rust
     - include: fenced-scala
+    - include: fenced-shell
     - include: fenced-shell-script
     - include: fenced-sql
     - include: fenced-tsx
@@ -1550,11 +1551,28 @@ contexts:
         0: meta.code-fence.definition.end.scala.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  fenced-shell:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:console|shell))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.shell.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.shell.interactive.markdown
+      embed_scope: markup.raw.code-fence.shell.markdown-gfm
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.shell.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-shell-script:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:console|shell(?:-script)?|sh|bash|zsh))
+          ((?i:shell-script|sh|bash|zsh))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.shell-script.markdown-gfm
