@@ -6,18 +6,20 @@ hidden: true
 
 contexts:
   main:
-    - match: ^(?=\$\s)
+    - match: ^(?=\s*\$\s)
       push: shell-interactive
     - include: shell-statements
 
   shell-interactive:
-    - match: ^\$(?=\s)
-      scope: comment.other.shell
+    - match: ^\s*(\$)(?=\s)
+      captures:
+        1: comment.other.shell
       push: shell-statements
       with_prototype:
         # continuation lines begin with `> `
-        - match: ^>(?=\s)
-          scope: comment.other.shell
+        - match: ^\s*(>)\s
+          captures:
+            1: comment.other.shell
         - match: ^
           pop: true
 
