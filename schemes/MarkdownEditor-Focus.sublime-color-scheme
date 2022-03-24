@@ -295,8 +295,18 @@
 			"foreground": "#AAAAAA"
 		},
 		{
+			"name": "Markdown: Link URL Separators",
+			"scope": "markup.underline.link punctuation.separator",
+			"foreground": "#AAAAAA"
+		},
+		{
 			"name": "Markdown: Plain Link",
-			"scope": "meta.link.inet markup.underline.link, meta.link.email.lt-gt markup.underline.link",
+			"scope": "meta.link.inet markup.underline.link, meta.link.email markup.underline.link",
+			"foreground": "#444488"
+		},
+		{
+			"name": "Markdown: Plain Link Separators",
+			"scope": "meta.link.inet markup.underline.link punctuation.separator, meta.link.email markup.underline.link punctuation.separator",
 			"foreground": "#444488"
 		},
 		{
