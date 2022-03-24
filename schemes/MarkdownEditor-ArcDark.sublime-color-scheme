@@ -350,6 +350,11 @@
 			"scope": "markup.strikethrough markup.kbd.content",
 			"foreground": "#484848"
 		},
+		{
+			"name": "Markdown: Underline",
+			"scope": "markup.underline",
+			"font_style": "underline"
+		},
 
 		//
 		// Markups

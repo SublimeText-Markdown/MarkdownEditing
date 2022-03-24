@@ -359,6 +359,11 @@
 			"foreground": "#B7B7B7",
 			"background": "#E6E6E6"
 		},
+		{
+			"name": "Markdown: Underline",
+			"scope": "markup.underline",
+			"font_style": "underline"
+		},
 
 		//
 		// Markups

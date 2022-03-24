@@ -381,6 +381,11 @@
 			"foreground": "#aaaaaa",
 			"background": "#cccccc"
 		},
+		{
+			"name": "Markdown: Underline",
+			"scope": "markup.underline",
+			"font_style": "underline"
+		},
 
 		//
 		// Markups
