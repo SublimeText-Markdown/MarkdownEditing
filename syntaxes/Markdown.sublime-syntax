@@ -3159,7 +3159,7 @@ contexts:
       scope: punctuation.definition.attributes.end.markdown
       pop: true
     - match: \,
-      scope: punctuation.separator.mapping.pair.markdown
+      scope: punctuation.separator.sequence.markdown
     - match: '{{tag_attribute_name_start}}'
       push: [tag-attr-meta, tag-attr-equals, tag-attr-name]
 
