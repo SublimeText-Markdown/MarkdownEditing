@@ -3,6 +3,8 @@
 name: MultiMarkdown
 scope: text.html.markdown.multimarkdown
 
+extends: Markdown.sublime-syntax
+
 first_line_match: (?i:^format:\s*complete\s*$)
 
 variables:
@@ -17,7 +19,7 @@ contexts:
 
   multimarkdown-header:
     - match: ^$
-      pop: true
+      pop: 1
     - match: ^(?:{{header}}\s*)?
       captures:
         1: keyword.other.multimarkdown
@@ -28,8 +30,8 @@ contexts:
     - meta_scope: meta.header.multimarkdown
     - meta_content_scope: string.unquoted.multimarkdown
     - match: \n
-      pop: true
+      pop: 1
 
   multimarkdown-content:
     - meta_scope: meta.content.multimarkdown
-    - include: scope:text.html.markdown
+    - include: markdown

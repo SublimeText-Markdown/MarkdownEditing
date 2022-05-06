@@ -272,8 +272,18 @@
 			"foreground": "#b7a884"
 		},
 		{
+			"name": "Markdown: Link URL Separators",
+			"scope": "markup.underline.link punctuation.separator",
+			"foreground": "#b7a884"
+		},
+		{
 			"name": "Markdown: Plain Link",
-			"scope": "meta.link.inet markup.underline.link, meta.link.email.lt-gt markup.underline.link",
+			"scope": "meta.link.inet markup.underline.link, meta.link.email markup.underline.link",
+			"foreground": "#624369"
+		},
+		{
+			"name": "Markdown: Plain Link Separators",
+			"scope": "meta.link.inet markup.underline.link punctuation.separator, meta.link.email markup.underline.link punctuation.separator",
 			"foreground": "#624369"
 		},
 		{
@@ -359,6 +369,11 @@
 			"scope": "markup.strikethrough markup.kbd.content",
 			"foreground": "#c2b58e",
 			"background": "#e2daab"
+		},
+		{
+			"name": "Markdown: Underline",
+			"scope": "markup.underline",
+			"font_style": "underline"
 		},
 
 		//
