@@ -1690,11 +1690,44 @@ unclosed_paren = (
 |^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
 ```shell
+function foo () {
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell storage.type
+}
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell punctuation.section
 
-| <- markup.raw.code-fence.shell-script.markdown-gfm source.shell.bash
+$ ls ~
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive comment.other.shell
+| ^^ meta.function-call.shell variable.function.shell
+|   ^^ meta.function-call.arguments.shell
+
+output.txt
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive - meta.function-call - variable
+|^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive - meta.function-call - variable
+
+$ ls \
+> /foo/
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown comment.other.shell
+|^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown
+
+$ ls \
+> /foo/
+bar
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown - meta.function-call
+|^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown - meta.function-call
+
+function foo () {}
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown - meta.function
+|^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown - meta.function
 ```
-| <- meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-|^^ meta.code-fence.definition.end.shell-script.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+| <- meta.code-fence.definition.end.shell.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.shell.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   ```shell
+   $ ls
+|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown
+|  ^ comment.other.shell
+|    ^^ meta.function-call.identifier.shell variable.function.shell
+   ```
 
 ```shell-script
 

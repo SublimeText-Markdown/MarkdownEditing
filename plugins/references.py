@@ -932,7 +932,6 @@ if hasattr(sublime, "KIND_ID_MARKUP"):
                 sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS,
             )
 
-
 else:
 
     class MdeReferenceCompletionsProvider(MdeViewEventListener):
