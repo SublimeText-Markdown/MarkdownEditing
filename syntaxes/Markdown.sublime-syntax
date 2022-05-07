@@ -366,7 +366,7 @@ contexts:
 
   block-quote-end:
     - match: ^(?!(?:[ \t]*>))
-      pop: true
+      pop: 1
 
   block-quote-punctuations:
     - match: ^[ \t]{,3}(>)[ ]?
@@ -429,7 +429,7 @@ contexts:
       captures:
         0: meta.code-fence.definition.end.text.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
-      pop: true
+      pop: 1
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > REFERENCE DEFINITIONS ]#################
 
@@ -458,7 +458,7 @@ contexts:
     # A footnote definition is terminated by blocks not indented by at least 4 characters.
     # Note: The first space after a quotation punctuation is not counted for simplicity reasons.
     - match: ^(?!(?:[ \t]*>)+[ ](?:\1[ ]{4}|\s*$))
-      pop: true
+      pop: 1
 
   block-quote-footnote-paragraphs:
     - match: '[ \t]*(?=\S)'
@@ -483,7 +483,7 @@ contexts:
            |   {{html_block}}              # a html block begins the line
            )
         )
-      pop: true
+      pop: 1
 
   block-quote-link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
@@ -568,7 +568,7 @@ contexts:
     #  According to CommonMark, a list block ends as soon as a new paragraph
     #  starts which is less indented than the first list item's text.
     - match: ^(?=(?:[ \t]*>)+[ ]?\S)
-      pop: true
+      pop: 1
 
   block-quote-list-paragraphs:
     # A list paragraph doesn't support indented code blocks.
@@ -594,7 +594,7 @@ contexts:
            |   {{html_block}}              # a html block begins the line
            )
         )
-      pop: true
+      pop: 1
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > PARAGRAPHS ]############################
 
@@ -621,7 +621,7 @@ contexts:
            |   {{html_block}}              # a html block begins the line
            )
         )
-      pop: true
+      pop: 1
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
 
@@ -655,7 +655,7 @@ contexts:
 
   list-block-end:
     - match: ^(?=\S)
-      pop: true
+      pop: 1
 
   list-block-content:
     - include: fenced-code-blocks
@@ -745,7 +745,7 @@ contexts:
           |   {{html_block}}              # a html block begins the line
           )
         )
-      pop: true
+      pop: 1
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
@@ -816,7 +816,7 @@ contexts:
       captures:
         1: punctuation.definition.heading.end.markdown
         2: meta.whitespace.newline.markdown
-      pop: true
+      pop: 1
     - include: emphasis
     - include: images
     - include: literals
@@ -844,7 +844,7 @@ contexts:
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
-      pop: true
+      pop: 1
     - include: setext-heading-content
 
   setext-heading2:
@@ -855,7 +855,7 @@ contexts:
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
-      pop: true
+      pop: 1
     - include: setext-heading-content
 
   setext-heading-content:
@@ -877,7 +877,7 @@ contexts:
 
   paragraph-end:
     - match: '{{paragraph_end}}'
-      pop: true
+      pop: 1
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
@@ -895,7 +895,7 @@ contexts:
 
   fenced-code-block-content:
     - match: $
-      pop: true
+      pop: 1
     - include: fenced-syntaxes
     - include: fenced-raw
 
@@ -1771,7 +1771,7 @@ contexts:
       captures:
         0: meta.code-fence.definition.end.text.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
-      pop: true
+      pop: 1
 
   fenced-ada:
     - match: |-
@@ -2409,49 +2409,49 @@ contexts:
         1: punctuation.definition.tag.begin.html
         2: entity.name.tag.block.any.html
         3: punctuation.definition.tag.end.html
-      pop: true
+      pop: 1
     - include: html-content
 
   html-block-type-1b:
     - match: (?!</?\1>)
-      pop: true
+      pop: 1
     - include: html-content
 
   html-block-type-2:
     - match: (?!{{html_block_comment}})
-      pop: true
+      pop: 1
     - include: html-content
 
   html-block-type-3:
     - match: \?>
-      pop: true
+      pop: 1
 
   html-block-type-4:
     - match: (?!{{html_block_decl}})
-      pop: true
+      pop: 1
     - include: html-content
     - match: '{{html_block_decl}}'
       set: html-block-type-4-other
 
   html-block-type-4-other:
     - match: '>'
-      pop: true
+      pop: 1
 
   html-block-type-5:
     - match: (?!{{html_block_cdata}})
-      pop: true
+      pop: 1
     - include: html-content
 
   html-block-type-6:
     - meta_scope: meta.disable-markdown
     - match: ^\s*\n
-      pop: true
+      pop: 1
     - include: html-content
 
   html-block-pop-at-eol:
     - meta_scope: meta.disable-markdown
     - match: $\n?
-      pop: true
+      pop: 1
     - include: html-content
 
   html-content:
@@ -2500,7 +2500,7 @@ contexts:
 
   footnote-def-end:
     - match: ^(?!(?:\1[ ]{4}|\s*$))
-      pop: true
+      pop: 1
 
   footnote-paragraphs:
     - match: '[ \t]*(?=\S)'
@@ -2530,7 +2530,7 @@ contexts:
            |   {{html_block}}              # a html block begins the line
            )
         )
-      pop: true
+      pop: 1
 
   link-definitions:
     # https://spec.commonmark.org/0.30/#link-reference-definition
@@ -2552,7 +2552,7 @@ contexts:
 
   link-def-title:
     - match: ^(?!\s*["'(])
-      pop: true
+      pop: 1
     - match: (?=["'(])
       set:
         - expect-eol
@@ -2577,7 +2577,7 @@ contexts:
     # URLs are terminated by whitespace or newline in reference definitions
     # Note: \s includes \n
     - match: (?=\s)
-      pop: true
+      pop: 1
     - include: link-url-common
 
 ###[ LEAF BLOCKS: TABLES ]####################################################
@@ -2596,7 +2596,7 @@ contexts:
     - match: ^(?=[-|:\s]+$)
       set: table-header-separator
     - match: ^
-      pop: true
+      pop: 1
 
   table-header-separator:
     - meta_scope: meta.table.header-separator.markdown-gfm
@@ -2624,7 +2624,7 @@ contexts:
           |   {{indented_code_block}}
           |   {{thematic_break}}
           )
-      pop: true
+      pop: 1
 
   table-cell-content:
     - match: (?={{balanced_emphasis}})
@@ -2658,7 +2658,7 @@ contexts:
     - match: '[-_*]+'
       scope: punctuation.definition.thematic-break.markdown
     - match: \n
-      pop: true
+      pop: 1
 
 ###[ INLINE ]#################################################################
 
@@ -2716,11 +2716,11 @@ contexts:
     - meta_scope: markup.raw.inline.markdown
     - match: \1(?!`)
       scope: punctuation.definition.raw.end.markdown
-      pop: true
+      pop: 1
     - match: '`+'
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.raw.markdown
-      pop: true
+      pop: 1
     - include: paragraph-end
 
 ###[ INLINE: EMPHASIS ]#######################################################
@@ -2756,7 +2756,7 @@ contexts:
     - match: (?:_)?(\*\*)
       captures:
         1: punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     # Consume the underscore that has no corresponding underscore before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
     - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
@@ -2772,7 +2772,7 @@ contexts:
     - match: (?:\*)?(__\b)
       captures:
         1: punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     # Consume the asterisk that has no corresponding asterisk before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
     - match: \*(?=[^\s*])(?=[^*_]*__\b)
@@ -2790,7 +2790,7 @@ contexts:
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
         2: punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     - match: \*\*
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-asterisk
@@ -2809,7 +2809,7 @@ contexts:
         | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*\*
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     - include: bold-common
 
   italic-after-bold-italic-asterisk:
@@ -2821,7 +2821,7 @@ contexts:
         | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: true
+      pop: 1
     - include: italic-common
 
   bold-italic-underscore:
@@ -2836,7 +2836,7 @@ contexts:
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
         2: punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     - match: _\b
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       set: bold-after-bold-italic-underscore
@@ -2855,7 +2855,7 @@ contexts:
         | ^__             # emphasis can't be closed at the start of the line
     - match: __\b
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: true
+      pop: 1
     - include: bold-common
 
   italic-after-bold-italic-underscore:
@@ -2867,7 +2867,7 @@ contexts:
         | ^__             # emphasis can't be closed at the start of the line
     - match: _\b
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: true
+      pop: 1
     - include: italic-common
 
   bold-common:
@@ -2893,7 +2893,7 @@ contexts:
         | ^\*(?!\*)       # emphasis can't be closed at the start of the line
     - match: \*(?!\*[^*])
       scope: punctuation.definition.italic.end.markdown
-      pop: true
+      pop: 1
     - match: \*+
     - include: italic-common
 
@@ -2906,7 +2906,7 @@ contexts:
         | ^_(?!_)         # emphasis can't be closed at the start of the line
     - match: _\b
       scope: punctuation.definition.italic.end.markdown
-      pop: true
+      pop: 1
     - include: italic-common
 
   italic-common:
@@ -2925,7 +2925,7 @@ contexts:
     - meta_scope: markup.strikethrough.markdown-gfm
     - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
       scope: punctuation.definition.strikethrough.end.markdown
-      pop: true
+      pop: 1
     - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
     - include: bold
@@ -2933,10 +2933,10 @@ contexts:
 
   emphasis-common:
     - match: '{{setext_escape}}'
-      pop: true
+      pop: 1
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown
-      pop: true
+      pop: 1
     - include: paragraph-end
     - include: hard-line-breaks
     - include: images
@@ -2957,7 +2957,7 @@ contexts:
     - meta_scope: meta.image.inline.description.markdown
     - match: \]
       scope: punctuation.definition.image.end.markdown
-      pop: true
+      pop: 1
     - include: link-text
 
   image-inline-metadata:
@@ -3013,7 +3013,7 @@ contexts:
     - meta_scope: meta.image.reference.description.markdown
     - match: \]
       scope: punctuation.definition.image.end.markdown
-      pop: true
+      pop: 1
     - include: link-text
 
   image-ref-metadata:
@@ -3023,7 +3023,7 @@ contexts:
         1: punctuation.definition.metadata.begin.markdown
         2: markup.underline.link.markdown
         3: punctuation.definition.metadata.end.markdown
-      pop: true
+      pop: 1
     - include: immediately-pop
 
   image-ref-attr:
@@ -3049,7 +3049,7 @@ contexts:
     - meta_scope: meta.link.inline.description.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     - include: link-text-allow-image
 
   link-inline-metadata:
@@ -3108,7 +3108,7 @@ contexts:
     - meta_scope: meta.link.reference.description.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     - include: link-text-allow-image
 
   link-ref-metadata:
@@ -3118,7 +3118,7 @@ contexts:
         1: punctuation.definition.metadata.begin.markdown
         2: markup.underline.link.markdown
         3: punctuation.definition.metadata.end.markdown
-      pop: true
+      pop: 1
     - include: immediately-pop
 
   link-ref-attr:
@@ -3143,7 +3143,7 @@ contexts:
     - meta_scope: meta.link.reference.literal.description.markdown
     - match: \]
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     - include: link-text-allow-image
 
   link-ref-literal-metadata:
@@ -3152,7 +3152,7 @@ contexts:
       captures:
         1: punctuation.definition.metadata.begin.markdown
         2: punctuation.definition.metadata.end.markdown
-      pop: true
+      pop: 1
     - include: immediately-pop
 
   link-ref-literal-attr:
@@ -3182,7 +3182,7 @@ contexts:
     - meta_scope: meta.link.reference.wiki.description.markdown
     - match: \]\]
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     - include: link-text-allow-image
 
 ###[ INLINE: LINK/IMAGE PROTOTYPES ]##########################################
@@ -3199,7 +3199,7 @@ contexts:
   link-text-nested:
     - include: link-text
     - match: \]
-      pop: true
+      pop: 1
 
   link-text-allow-image:
     - include: link-text
@@ -3225,46 +3225,46 @@ contexts:
     - meta_scope: meta.string.title.markdown string.quoted.double.markdown
     - match: \"
       scope: punctuation.definition.string.end.markdown
-      pop: true
+      pop: 1
     - include: link-title-common
 
   link-title-single-quoted-content:
     - meta_scope: meta.string.title.markdown string.quoted.single.markdown
     - match: \'
       scope: punctuation.definition.string.end.markdown
-      pop: true
+      pop: 1
     - include: link-title-common
 
   link-title-other-quoted-content:
     - meta_scope: meta.string.title.markdown string.quoted.other.markdown
     - match: \)
       scope: punctuation.definition.string.end.markdown
-      pop: true
+      pop: 1
     - include: link-title-common
 
   link-title-common:
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.link-title.markdown
-      pop: true
+      pop: 1
     - include: escapes
     - include: html-entities
 
   link-url-angled:
     - match: \>
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     - include: link-url-common
 
   link-url-unquoted:
     - match: (?=[ \t)])
-      pop: true
+      pop: 1
     - match: \(
       push: link-url-unquoted-parens
     - include: link-url-common
 
   link-url-unquoted-parens:
     - match: \)
-      pop: true
+      pop: 1
     - include: link-url-unquoted
 
   link-url-common:
@@ -3292,7 +3292,7 @@ contexts:
   link-url-scheme-separator:
     - match: ':/{,2}'
       scope: punctuation.separator.path.markdown
-      pop: true
+      pop: 1
 
 ###[ INLINE: LINK/IMAGE/REFERENCE ATTRIBUTES ]################################
 
@@ -3302,7 +3302,7 @@ contexts:
     # https://pandoc.org/MANUAL.html#extension-link_attributes
     - match: \}
       scope: punctuation.definition.attributes.end.markdown
-      pop: true
+      pop: 1
     - match: \,
       scope: punctuation.separator.sequence.markdown
     - match: '{{tag_attribute_name_start}}'
@@ -3311,7 +3311,7 @@ contexts:
   tag-attr-name:
     - meta_scope: entity.other.attribute-name.markdown
     - match: '{{tag_attribute_name_break}}'
-      pop: true
+      pop: 1
     - match: '["''`<]'
       scope: invalid.illegal.attribute-name.markdown
 
@@ -3340,18 +3340,18 @@ contexts:
     - meta_scope: string.quoted.double.markdown
     - match: \"
       scope: punctuation.definition.string.end.markdown
-      pop: true
+      pop: 1
 
   tag-attr-value-single-quoted:
     - meta_scope: string.quoted.single.markdown
     - match: \'
       scope: punctuation.definition.string.end.markdown
-      pop: true
+      pop: 1
 
   tag-attr-value-unquoted:
     - meta_scope: string.unquoted.markdown
     - match: '{{tag_unquoted_attribute_break}}'
-      pop: true
+      pop: 1
     - match: '["''`<]'
       scope: invalid.illegal.attribute-value.markdown
 
@@ -3403,10 +3403,10 @@ contexts:
     - meta_content_scope: markup.underline.link.markdown
     - match: \>
       scope: punctuation.definition.link.end.markdown
-      pop: true
+      pop: 1
     # Spaces are not allowed in autolinks
     - match: (?=\s)
-      pop: true
+      pop: 1
     - include: autolink-inet-common
 
   autolink-inet-unquoted-content:
@@ -3422,14 +3422,14 @@ contexts:
     #    be considered part of the autolink, though they may be included in the
     #    interior # of the link
     - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:*_~]*[\s<])
-      pop: true
+      pop: 1
     - include: autolink-inet-common
 
   autolink-inet-group:
     - match: \)
-      pop: true
+      pop: 1
     - match: (?=(?:{{html_entity}})*[?!.,:*_~]*[\s<])
-      pop: true
+      pop: 1
     - include: autolink-inet-common
 
   autolink-inet-common:
@@ -3475,7 +3475,7 @@ contexts:
     - meta_content_scope: markup.inserted.critic.markdown
     - match: \+\+\}
       scope: punctuation.definition.critic.end.markdown
-      pop: true
+      pop: 1
     - include: critics-common
 
   critics-comments:
@@ -3488,7 +3488,7 @@ contexts:
     - meta_content_scope: comment.critic.markdown
     - match: '<<}'
       scope: punctuation.definition.critic.end.markdown
-      pop: true
+      pop: 1
     - include: critics-common
 
   critics-deletions:
@@ -3501,7 +3501,7 @@ contexts:
     - meta_content_scope: markup.deleted.critic.markdown
     - match: '--}'
       scope: punctuation.definition.critic.end.markdown
-      pop: true
+      pop: 1
     - include: critics-common
 
   critics-highlights:
@@ -3514,7 +3514,7 @@ contexts:
     - meta_content_scope: markup.info.critic.markdown
     - match: '==}'
       scope: punctuation.definition.critic.end.markdown
-      pop: true
+      pop: 1
     - include: critics-common
 
   critics-substitutions:
@@ -3538,12 +3538,12 @@ contexts:
     - meta_content_scope: markup.inserted.critic.markdown
     - match: '~~}'
       scope: punctuation.definition.critic.end.markdown
-      pop: true
+      pop: 1
     - include: critics-common
 
   critics-common:
     - match: ^(?=\s*$)
-      pop: true
+      pop: 1
     - include: emphasis
     - include: images
     - include: literals
@@ -3571,7 +3571,7 @@ contexts:
     - meta_scope: text.tex.latex meta.environment.math.inline.dollar.latex
     - match: \$
       scope: string.other.math.latex punctuation.definition.string.begin.latex
-      pop: true
+      pop: 1
     - include: latex-content
 
   latex-blocks:
@@ -3584,7 +3584,7 @@ contexts:
     - meta_scope: text.tex.latex meta.environment.math.block.dollar.latex
     - match: \$\$
       scope: string.other.math.latex punctuation.definition.string.end.latex
-      pop: true
+      pop: 1
     - include: latex-content
 
   latex-content:
@@ -3595,11 +3595,11 @@ contexts:
 
   else-pop:
     - match: (?=\S)
-      pop: true
+      pop: 1
 
   eol-pop:
     - match: $
-      pop: true
+      pop: 1
 
   expect-eol:
     - include: eol-pop
@@ -3608,5 +3608,5 @@ contexts:
 
   immediately-pop:
     - match: ''
-      pop: true
+      pop: 1
 
