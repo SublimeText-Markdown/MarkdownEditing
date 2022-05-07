@@ -1837,9 +1837,9 @@ graph n {}
 <div></div>
 |^^^ entity.name.tag.block.any.html
 <?php
-| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html.basic meta.embedded.block.php punctuation.section.embedded.begin.php
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php meta.embedded punctuation.section.embedded.begin.php
 var_dump(expression);
-| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html.basic meta.embedded.block.php source.php meta.function-call
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php meta.embedded source.php meta.function-call
 ```
 | <- meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -1892,7 +1892,7 @@ for (var i = 0; i < 10; i++) {
 
 ```php
 var_dump(expression);
-| <- markup.raw.code-fence.php.markdown-gfm source.php meta.function-call.php
+| <- markup.raw.code-fence.php.markdown-gfm source.php meta.function-call
 ```
 | <- meta.code-fence.definition.end.php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
