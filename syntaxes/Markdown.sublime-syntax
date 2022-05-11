@@ -1657,7 +1657,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          ((?i:yaml))
+          ((?i:yaml|yml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.yaml.markdown-gfm
