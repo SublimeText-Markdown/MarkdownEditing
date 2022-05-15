@@ -1967,9 +1967,9 @@ function foo () {}
 
    ```shell
    $ ls
-|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown
+|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell
 |  ^ comment.other.shell
-|    ^^ meta.function-call.identifier.shell variable.function.shell
+|    ^^ meta.function-call variable.function
    ```
 
 ```shell-script
