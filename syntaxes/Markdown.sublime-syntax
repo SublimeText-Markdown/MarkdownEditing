@@ -161,8 +161,7 @@ variables:
     (?x:
       [ ]{,3}
       (?:
-        \$\$                                 # a latex math block begins the line
-      | {{html_tag_block_end_at_close_tag}}  # html block type 1
+        {{html_tag_block_end_at_close_tag}}  # html block type 1
       | {{html_tag_block_end_at_blank_line}} # html block type 6
       | {{html_block_open_tag}}              # html block type 7
       | {{html_block_close_tag}}             # html block type 7
@@ -233,6 +232,8 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
+  latex_block: '[ ]{,3}\$\$'
+
   reference_definition: (?:\[{{reference_name}}\]\:)
   footnote_name: (?:\^(?:\\\]|[^]])+)
   reference_name: (?:(?:\\\]|[^]])+)
@@ -245,6 +246,7 @@ variables:
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
+       |  {{latex_block}}             # a latex block begins the line
        |  {{html_block}}              # a html block begins the line
        )
     )
@@ -324,8 +326,8 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
-    - include: html-blocks
     - include: latex-blocks
+    - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
     - include: setext-headings-or-paragraphs
@@ -480,6 +482,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
+           |   {{latex_block}}             # a latex block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -591,6 +594,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
+           |   {{latex_block}}             # a latex block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -618,6 +622,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
+           |   {{latex_block}}             # a latex block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -742,6 +747,7 @@ contexts:
           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
           |   {{thematic_break}}          # line is a thematic beak
           |   {{list_item}}               # a list item begins the line
+          |   {{latex_block}}             # a latex block begins the line
           |   {{html_block}}              # a html block begins the line
           )
         )
@@ -2527,6 +2533,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
+           |   {{latex_block}}             # a latex block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -3557,33 +3564,36 @@ contexts:
         (?x)
         (\$)(?=\S)
         (?=
-          (?:
-            \\\\
-            |\\\$
-            |[^\$]
-          )*?
+          (?: \\\\ | \\\$ | [^\$] )*?
           \S\$(?:[^a-zA-Z0-9]|$)
         )
-      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      scope: punctuation.definition.math.begin.markdown
       push: latex-inline-content
 
   latex-inline-content:
-    - meta_scope: text.tex.latex meta.environment.math.inline.dollar.latex
+    - meta_scope:
+        markup.math.inline.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
     - match: \$
-      scope: string.other.math.latex punctuation.definition.string.begin.latex
+      scope: punctuation.definition.math.end.markdown
       pop: 1
     - include: latex-content
 
   latex-blocks:
     - match: '[ \t]*(\$\$)'
       captures:
-        1: string.other.math.latex punctuation.definition.string.begin.latex
+        1: punctuation.definition.math.begin.markdown
       push: latex-block-content
 
   latex-block-content:
-    - meta_scope: text.tex.latex meta.environment.math.block.dollar.latex
-    - match: \$\$
-      scope: string.other.math.latex punctuation.definition.string.end.latex
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)(?:\s*\n)?
+      captures:
+        1: punctuation.definition.math.end.markdown
       pop: 1
     - include: latex-content
 
