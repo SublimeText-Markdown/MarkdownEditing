@@ -7610,3 +7610,63 @@ This is a [[wiki link]].
 |         ^^^^^^^^^^^^^ meta.link.reference.wiki.description.markdown
 |         ^^ punctuation.definition.link.begin.markdown
 |                    ^^ punctuation.definition.link.end.markdown
+
+
+# TEST: LATEX EQUATIONS #######################################################
+
+This is math $1+1$ expression.
+|            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|            ^ punctuation.definition.math.begin.markdown
+|             ^ constant.numeric.math.tex
+|              ^ keyword.operator.math.tex
+|               ^ constant.numeric.math.tex
+|                ^ punctuation.definition.math.end.markdown
+
+$$
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+|^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|^ punctuation.definition.math.begin.markdown
+| ^ - punctuation
+foo = 1 + 2 * \sqrt{a^2+b^2}
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex variable.other.math.tex
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|   ^ keyword.operator.math.tex
+|     ^ constant.numeric.math.tex
+|       ^ keyword.operator.math.tex
+|         ^ constant.numeric.math.tex
+|           ^ keyword.operator.math.tex
+|             ^^^^^ support.function.math.tex
+|                  ^^^^^^^^^ meta.group.brace.latex
+|                  ^ punctuation.definition.group.brace.begin.latex
+|                   ^ variable.other.math.tex
+|                    ^ keyword.operator.math.tex
+|                     ^ constant.numeric.math.tex
+|                      ^ keyword.operator.math.tex
+|                       ^ variable.other.math.tex
+|                        ^ keyword.operator.math.tex
+|                         ^ constant.numeric.math.tex
+|                          ^ punctuation.definition.group.brace.end.latex
+$$
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
+|^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
+
+    $$
+| <- markup.raw.block.markdown
+|^^^^^^ markup.raw.block.markdown
+
+1. Numbered List
+
+   $$
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+   foo = 1 + 2
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex variable.other.math.tex
+   $$
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
+   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
+
+   $$ 1+1 $$
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+   |^^^^^^^^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |^ punctuation.definition.math.begin.markdown
+   |      ^^ punctuation.definition.math.end.markdown
