@@ -2525,8 +2525,8 @@ contexts:
   literals:
     - include: code-spans
     - include: critics
-    - include: escapes
     - include: math-inline
+    - include: escapes
 
   links:
     - include: autolink-email
@@ -3395,7 +3395,6 @@ contexts:
 ###[ EXTENSIONS: LATEX ]######################################################
 
   math-inline:
-    - match: \\\$
     - match: |-
         (?x)
         (\$)(?=\S)
