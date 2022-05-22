@@ -34,3 +34,37 @@ T: <- - meta.frontmatter.multimarkdown
 # Heading
 T: <- markup.heading punctuation.definition.heading - meta.frontmatter.multimarkdown
 T:^^^^^^^ markup.heading - meta.frontmatter.multimarkdown
+
+# MathJax Tests
+
+An example of math within a paragraph --- \\( {e}^{i\pi }+1=0 \\) --- easy enough.
+T:^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+T:                                        ^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.multimarkdown
+T:                                        ^^^ punctuation.definition.math.begin.multimarkdown
+T:                                           ^^^^^^^^^^^^^^^^^ text.tex.latex.embedded.multimarkdown
+T:                                                            ^^^ punctuation.definition.math.end.multimarkdown
+T:                                                                ^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+And an equation on it's own:
+
+   \\( {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\)
+T:^ meta.paragraph.markdown - markup.math
+T: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.multimarkdown
+T: ^^^ punctuation.definition.math.begin.multimarkdown
+T:    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ text.tex.latex.embedded.multimarkdown
+T:                                                   ^^^ punctuation.definition.math.end.multimarkdown
+T:                                                      ^ meta.paragraph.markdown - markup.math
+
+   \\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+T:^ meta.paragraph.markdown - markup.math
+T: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.multimarkdown
+T: ^^^ punctuation.definition.math.begin.multimarkdown
+T:    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ text.tex.latex.embedded.multimarkdown
+T:                                                   ^^^ punctuation.definition.math.end.multimarkdown
+T:                                                      ^ meta.paragraph.markdown - markup.math
+
+   $$ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} $$
+T:^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown
+T: ^^ punctuation.definition.math.begin.markdown
+T:   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ text.tex.latex.embedded.markdown
+T:                                                  ^^ punctuation.definition.math.end.markdown

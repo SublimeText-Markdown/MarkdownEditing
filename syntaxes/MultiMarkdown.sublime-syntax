@@ -49,3 +49,20 @@ contexts:
       embed: html-content
       embed_scope: meta.mapping.value.multimarkdown
       escape: ^(?={{header}})
+
+  math-inline:
+    - meta_append: true
+    - match: \\\\\[
+      scope: markup.math.inline.multimarkdown punctuation.definition.math.begin.multimarkdown
+      embed: math-content
+      embed_scope: markup.math.inline.multimarkdown text.tex.latex.embedded.multimarkdown
+      escape: \\\\\]
+      escape_captures:
+        0: markup.math.inline.multimarkdown punctuation.definition.math.end.multimarkdown
+    - match: \\\\\(
+      scope: markup.math.inline.multimarkdown punctuation.definition.math.begin.multimarkdown
+      embed: math-content
+      embed_scope: markup.math.inline.multimarkdown text.tex.latex.embedded.multimarkdown
+      escape: \\\\\)
+      escape_captures:
+        0: markup.math.inline.multimarkdown punctuation.definition.math.end.multimarkdown
