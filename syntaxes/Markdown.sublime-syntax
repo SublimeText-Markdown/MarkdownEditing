@@ -23,7 +23,16 @@ variables:
   atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
   atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
   atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
-  setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+
+  setext_heading_or_paragraph: ^[ ]{,3}(?:=+|(?=\S))  # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)    # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one hyphon (setext underline can be of any length)
+
+  list_setext_heading_or_paragraph: '[ \t]*(?:=+|(?=\S))' # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)\s*$) # two or more spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)    # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
+  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)    # two or more spaces, followed by at least one hyphon (setext underline can be of any length)
 
   block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
@@ -676,7 +685,7 @@ contexts:
     - include: reference-definitions
     - include: list-block-common
     - include: list-block-quotes
-    - include: list-paragraphs
+    - include: list-setext-headings-or-paragraphs
 
   list-block-common:
     - include: thematic-breaks
@@ -734,12 +743,49 @@ contexts:
     - include: list-block-quote-punctuations
     - include: inlines
 
-  list-paragraphs:
-    - match: '[ \t]*(?=\S)'
-      push: list-paragraph-body
+  list-setext-headings-or-paragraphs:
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: '{{list_setext_heading_or_paragraph}}'
+      branch_point: list-setext-headings-or-paragraphs
+      branch:
+        - list-paragraph
+        - list-setext-heading2
+        - list-setext-heading1
 
-  list-paragraph-body:
+  list-setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - match: '{{list_setext_heading1_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: 1
+    - match: '{{list_setext_heading_escape}}'
+      fail: list-setext-headings-or-paragraphs
+    - include: setext-heading-content
+
+  list-setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - match: '{{list_setext_heading2_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: 1
+    - match: '{{list_setext_heading_escape}}'
+      fail: list-setext-headings-or-paragraphs
+    - include: setext-heading-content
+
+  list-paragraph:
+    # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.list.markdown
+    - match: '{{list_setext_heading_escape}}'
+      fail: list-setext-headings-or-paragraphs
     - include: list-paragraph-end
     - include: inlines
 
@@ -842,7 +888,7 @@ contexts:
     # as heading underline. This is achieved by consuming them here, which also
     # applies `meta.paragraph` scope as expected.
     # A line of dashes is already matched as thematic break and thus ignored.
-    - match: ^[ ]{,3}(?:=+|(?=\S))
+    - match: '{{setext_heading_or_paragraph}}'
       branch_point: setext-headings-or-paragraphs
       branch:
         - paragraph
@@ -853,27 +899,29 @@ contexts:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.1.markdown
     - meta_content_scope: entity.name.section.markdown
-    - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
+    - match: '{{setext_heading1_end}}'
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
     - include: setext-heading-content
 
   setext-heading2:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.2.markdown
     - meta_content_scope: entity.name.section.markdown
-    - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
+    - match: '{{setext_heading2_end}}'
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
     - include: setext-heading-content
 
   setext-heading-content:
-    - match: '{{setext_escape}}'
-      fail: setext-headings-or-paragraphs
     - include: emphasis
     - include: images
     - include: literals
@@ -883,7 +931,7 @@ contexts:
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
-    - match: '{{setext_escape}}'
+    - match: '{{setext_heading_escape}}'
       fail: setext-headings-or-paragraphs
     - include: paragraph-end
     - include: inlines
@@ -2946,7 +2994,7 @@ contexts:
     - include: italic
 
   emphasis-common:
-    - match: '{{setext_escape}}'
+    - match: '{{setext_heading_escape}}'
       pop: 1
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown

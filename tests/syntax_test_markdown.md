@@ -4575,7 +4575,7 @@ A list item can contain a heading:
 
 - Should be a setext heading!
   ---
-| ^^^ markup.list.unnumbered.markdown meta.separator.thematic-break.markdown punctuation.definition.thematic-break.markdown
+| ^^^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 
 - Bar
   ---
@@ -5113,6 +5113,40 @@ So is this, with a empty second item:
          ## list item heading 2
          | <- markup.list.numbered.markdown markup.heading.2.markdown punctuation.definition.heading.begin.markdown
          |^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown markup.heading.2.markdown
+
+## https://custom-tests/list-blocks/items-with-setext-headings
+
+* list item
+global heading
+===
+| <- markup.list.unnumbered.markdown meta.paragraph.list.markdown
+|^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+* list item
+ global heading (matched as list item heading)
+ ===
+ | <- markup.list.unnumbered.markdown meta.paragraph.list.markdown
+ |^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
+* list item
+  heading
+  ===
+  | <- markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+  |^^ markup.list.unnumbered.markdown markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+  
+  - list item
+
+  list item heading
+  ---
+  | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+  |^^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+  + list item
+    
+    list item heading
+    ---
+    | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+    |^^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 
 ## https://custom-tests/list-blocks/items-with-fenced-code-blocks-indented-by-tabs
 
