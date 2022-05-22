@@ -1385,7 +1385,7 @@
 			{ "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["super+alt+d"], "command": "mde_open_page", "context":
+	{ "keys": ["f12"], "command": "mde_open_page", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "meta.link.reference.wiki.description.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true }
