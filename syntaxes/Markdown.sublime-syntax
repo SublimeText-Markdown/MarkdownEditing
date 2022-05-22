@@ -332,6 +332,13 @@ contexts:
     - include: atx-headings
     - include: setext-headings-or-paragraphs
 
+  indented-markdown:
+    # This is a public context which can be embedded by 3rd-party syntaxes
+    # to support Markdown highlighting in locations of arbitrary indentation,
+    # but without reference to list blocks as this is an implementation detail.
+    # The content may diverge from list block content in future.
+    - include: list-block-content
+
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
   block-quotes:
