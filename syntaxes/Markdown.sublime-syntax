@@ -231,7 +231,7 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
-  latex_block: '[ ]{,3}\$\$'
+  math_block: '[ ]{,3}\$\$'
 
   reference_definition: (?:\[{{reference_name}}\]\:)
   footnote_name: (?:\^(?:\\\]|[^]])+)
@@ -245,7 +245,7 @@ variables:
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
-       |  {{latex_block}}             # a latex block begins the line
+       |  {{math_block}}              # a math block begins the line
        |  {{html_block}}              # a html block begins the line
        )
     )
@@ -325,7 +325,7 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
-    - include: latex-blocks
+    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
@@ -481,7 +481,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{latex_block}}             # a latex block begins the line
+           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -593,7 +593,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{latex_block}}             # a latex block begins the line
+           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -621,7 +621,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{latex_block}}             # a latex block begins the line
+           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -663,7 +663,7 @@ contexts:
 
   list-block-content:
     - include: fenced-code-blocks
-    - include: latex-blocks
+    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: list-block-common
@@ -746,7 +746,7 @@ contexts:
           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
           |   {{thematic_break}}          # line is a thematic beak
           |   {{list_item}}               # a list item begins the line
-          |   {{latex_block}}             # a latex block begins the line
+          |   {{math_block}}              # a math block begins the line
           |   {{html_block}}              # a html block begins the line
           )
         )
@@ -2369,7 +2369,7 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{latex_block}}             # a latex block begins the line
+           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -2526,7 +2526,7 @@ contexts:
     - include: code-spans
     - include: critics
     - include: escapes
-    - include: latex-inline
+    - include: math-inline
 
   links:
     - include: autolink-email
@@ -3394,7 +3394,7 @@ contexts:
 
 ###[ EXTENSIONS: LATEX ]######################################################
 
-  latex-inline:
+  math-inline:
     - match: \\\$
     - match: |-
         (?x)
@@ -3404,9 +3404,9 @@ contexts:
           \S\$(?:[^a-zA-Z0-9]|$)
         )
       scope: punctuation.definition.math.begin.markdown
-      push: latex-inline-content
+      push: math-inline-content
 
-  latex-inline-content:
+  math-inline-content:
     - meta_scope:
         markup.math.inline.markdown
         text.tex.latex.embedded.markdown
@@ -3414,15 +3414,15 @@ contexts:
     - match: \$
       scope: punctuation.definition.math.end.markdown
       pop: true
-    - include: latex-content
+    - include: math-content
 
-  latex-blocks:
+  math-blocks:
     - match: '[ \t]*(\$\$)'
       captures:
         1: punctuation.definition.math.begin.markdown
-      push: latex-block-content
+      push: math-block-content
 
-  latex-block-content:
+  math-block-content:
     - meta_scope:
         markup.math.block.markdown
         text.tex.latex.embedded.markdown
@@ -3431,9 +3431,9 @@ contexts:
       captures:
         1: punctuation.definition.math.end.markdown
       pop: true
-    - include: latex-content
+    - include: math-content
 
-  latex-content:
+  math-content:
     - include: scope:text.tex.latex#macros
     - include: scope:text.tex.latex#math-content
 
