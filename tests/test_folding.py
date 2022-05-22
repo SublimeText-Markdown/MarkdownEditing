@@ -162,6 +162,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         self.assertFoldedRegions([(37, 52), (184, 199), (367, 382), (417, 432)])
 
         # setup test
+        self.setCaretTo(row, col)
         self.view.settings().set("mde.auto_fold_link.enabled", False)
 
         # fold heading

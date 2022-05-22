@@ -345,8 +345,8 @@ Lastly the command to open the *home* page is provided, where the home page is j
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>H</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>H</kbd> | Open home page
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>D</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>D</kbd> | Open wiki page under the cursor
 | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>J</kbd> | Open journal page for today
-| <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>X</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>B</kbd> | List back links
+| <kbd>f12</kbd> | <kbd>f12</kbd>  | Open wiki page under cursor
+| <kbd>Shift</kbd> + <kbd>f12</kbd> | <kbd>⇧</kbd> + <kbd>f12</kbd> | List back links
 
 _Note: The key bindings are disabled via Preferences by default to prevent conflicts with certain keyboard layouts._
