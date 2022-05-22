@@ -3558,6 +3558,23 @@ contexts:
 
 ###[ EXTENSIONS: LATEX ]######################################################
 
+  math-blocks:
+    - match: '[ \t]*(\$\$)'
+      captures:
+        1: punctuation.definition.math.begin.markdown
+      push: math-block-content
+
+  math-block-content:
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)(?:\s*\n)?
+      captures:
+        1: punctuation.definition.math.end.markdown
+      pop: 1
+    - include: math-content
+
   math-inline:
     - match: |-
         (?x)
@@ -3576,23 +3593,6 @@ contexts:
         meta.environment.math.block.dollar.latex
     - match: \$
       scope: punctuation.definition.math.end.markdown
-      pop: 1
-    - include: math-content
-
-  math-blocks:
-    - match: '[ \t]*(\$\$)'
-      captures:
-        1: punctuation.definition.math.begin.markdown
-      push: math-block-content
-
-  math-block-content:
-    - meta_scope:
-        markup.math.block.markdown
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-    - match: (\$\$)(?:\s*\n)?
-      captures:
-        1: punctuation.definition.math.end.markdown
       pop: 1
     - include: math-content
 
