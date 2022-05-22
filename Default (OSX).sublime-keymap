@@ -1385,28 +1385,28 @@
 			{ "key": "setting.mde.keymap_disable.open_home_page", "operator": "not_equal", "operand": true }
 		]
 	},
-	{ "keys": ["super+alt+d"], "command": "mde_open_page", "context":
+	{ "keys": ["super+alt+j"], "command": "mde_open_journal", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["f12"], "command": "mde_open_page", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "meta.link.reference.wiki.description.markdown", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.open_page", "operator": "not_equal", "operand": true }
+		]
+	},
+	{ "keys": ["shift+f12"], "command": "mde_list_back_links", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - (meta.link | markup.underline.link | variable)", "match_all": true },
+			{ "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true }
 		]
 	},
 	{ "keys": ["super+alt+d"], "command": "mde_make_page_reference", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - (meta.link | markup.underline.link)", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.make_page_reference", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+alt+x"], "command": "mde_list_back_links", "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.list_back_links", "operator": "not_equal", "operand": true }
-		]
-	},
-	{ "keys": ["super+alt+j"], "command": "mde_open_journal", "context":
-		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-			{ "key": "setting.mde.keymap_disable.open_journal", "operator": "not_equal", "operand": true }
 		]
 	}
 ]

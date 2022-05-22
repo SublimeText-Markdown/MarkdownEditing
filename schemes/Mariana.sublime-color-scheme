@@ -8,6 +8,13 @@
 	},
 	"rules": [
 
+		// Frontmatter
+		{
+			"name": "Frontmatter: Mapping Key Names",
+			"scope": "text.html.markdown meta.mapping.key string, text.html.markdown meta.mapping.key constant.language, text.html.markdown meta.mapping.key constant.numeric",
+			"foreground": "var(blue5)"
+		},
+
 		// Basic Formattings
 		{
 			"name": "Markdown: Bold Content",

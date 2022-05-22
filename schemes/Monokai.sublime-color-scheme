@@ -8,6 +8,13 @@
 	},
 	"rules": [
 
+		// Frontmatter
+		{
+			"name": "Frontmatter: Mapping Key Names",
+			"scope": "text.html.markdown meta.mapping.key string, text.html.markdown meta.mapping.key constant.language, text.html.markdown meta.mapping.key constant.numeric",
+			"foreground": "var(red2)"
+		},
+
 		// Basic Formattings
 		{
 			"name": "Markdown: Bold Content",
@@ -69,7 +76,7 @@
 		{
 			"name": "Markdown: Striked URLs",
 			"scope": "text.html.markdown markup.strikethrough & (markup.underline.link.markdown | markup.underline.link.image.markdown)",
-			"foreground": "var(yellow5)",
+			"foreground": "var(yellow5)"
 		},
 		{
 			"name": "Markdown: Hard Line Breaks",

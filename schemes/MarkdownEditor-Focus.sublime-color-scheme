@@ -68,6 +68,20 @@
 	},
 	"rules":
 	[
+		//
+		// Frontmatter
+		//
+
+		{
+			"name": "Frontmatter: Mapping Key Names",
+			"scope": "meta.mapping.key string, meta.mapping.key constant.language, meta.mapping.key constant.numeric",
+			"foreground": "#6700B9"
+		},
+
+		//
+		// Common
+		//
+
 		{
 			"name": "Comments",
 			"scope": "comment, comment punctuation",
