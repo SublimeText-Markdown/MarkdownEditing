@@ -26,7 +26,6 @@ contexts:
       captures:
         0: meta.frontmatter.multimarkdown
         1: punctuation.section.block.begin.frontmatter.multimarkdown
-        2: constant.other.language-name.multimarkdown
       embed: frontmatter-content
       embed_scope: meta.frontmatter.multimarkdown
       escape: ^(---|\.{3})\s*\n
