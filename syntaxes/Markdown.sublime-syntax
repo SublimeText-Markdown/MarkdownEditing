@@ -25,14 +25,14 @@ variables:
   atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
 
   setext_heading_or_paragraph: ^[ ]{,3}(?:=+|(?=\S))  # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
-  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)    # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)    # between 0 and 3 spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
   setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
-  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one hyphon (setext underline can be of any length)
+  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
 
   list_setext_heading_or_paragraph: '[ \t]*(?:=+|(?=\S))' # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
-  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)\s*$) # two or more spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)\s*$) # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
   list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)    # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
-  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)    # two or more spaces, followed by at least one hyphon (setext underline can be of any length)
+  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)    # two or more spaces, followed by at least one hyphen (setext underline can be of any length)
 
   block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
@@ -118,7 +118,7 @@ variables:
       # at least 2 non-escaped pipe chars on the line
       (?:{{table_cell}}?\|){2}
 
-      # something other than whitespace followed by a pipe char or hyphon,
+      # something other than whitespace followed by a pipe char or hyphen,
       # followed by something other than whitespace and the end of the line
     | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
     )
