@@ -34,6 +34,6 @@ And an equation on it's own:
 
    $$ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} $$
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown
-|  ^^ punctuation.definition.math.begin.markdown
+|  ^^ punctuation.definition.math.begin.latex
 |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ text.tex.latex.embedded.markdown
-|                                                   ^^ punctuation.definition.math.end.markdown
+|                                                   ^^ punctuation.definition.math.end.latex

@@ -243,8 +243,6 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
-  math_block: '[ ]{,3}\$\$'
-
   reference_definition: (?:\[{{reference_name}}\]\:)
   footnote_name: (?:\^(?:\\\]|[^]])+)
   reference_name: (?:(?:\\\]|[^]])+)
@@ -257,7 +255,6 @@ variables:
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
-       |  {{math_block}}              # a math block begins the line
        |  {{html_block}}              # a html block begins the line
        )
     )
@@ -271,7 +268,6 @@ variables:
         |   {{fenced_code_block_start}} # a fenced codeblock begins the line
         |   {{thematic_break}}          # line is a thematic beak
         |   {{list_item}}               # a list item begins the line
-        |   {{math_block}}              # a math block begins the line
         |   {{html_block}}              # a html block begins the line
         )
       )
@@ -353,7 +349,6 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
-    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
@@ -516,7 +511,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -628,7 +622,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -656,7 +649,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -698,7 +690,6 @@ contexts:
 
   list-block-content:
     - include: fenced-code-blocks
-    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: list-block-common
@@ -802,6 +793,7 @@ contexts:
     - meta_scope: meta.paragraph.list.markdown
     - include: list-paragraph-fail
     - include: list-paragraph-end
+    - include: list-math-blocks
     - include: inlines
 
   list-paragraph-end:
@@ -937,6 +929,7 @@ contexts:
     - meta_scope: meta.paragraph.markdown
     - include: paragraph-fail
     - include: paragraph-end
+    - include: math-blocks
     - include: inlines
 
   paragraph-end:
@@ -2615,7 +2608,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -3638,26 +3630,144 @@ contexts:
     - include: literals
     - include: links
 
-###[ EXTENSIONS: LATEX ]######################################################
+###[ EXTENSIONS: MATHJAX ]####################################################
 
-  math-blocks:
-    - match: '[ \t]*(\$\$)'
+  list-math-blocks:
+    - match: (?=(?:^[ \t]*)?\$\$)
+      branch_point: list-math-blocks
+      branch:
+        - list-math-block-begin
+        - list-math-inline-block-begin
+
+  list-math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ \t]*(\$\$)
       captures:
-        1: punctuation.definition.math.begin.markdown
-      push: math-block-content
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - list-math-block-end
+        - list-math-block-content
+    - match: ''
+      fail: list-math-blocks
 
-  math-block-content:
+  list-math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)\s*$\n?
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-inline-block-begin:
+    # Math blocks preceeded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - list-math-inline-block-end
+        - list-math-block-content
+
+  list-math-inline-block-end:
+    - meta_include_prototype: false
     - meta_scope:
         markup.math.block.markdown
         text.tex.latex.embedded.markdown
         meta.environment.math.block.dollar.latex
-    - match: (\$\$)(?:\s*\n)?
-      captures:
-        1: punctuation.definition.math.end.markdown
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
       pop: 1
-    - include: math-content
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{list_paragraph_end}}|{{list_setext_heading_escape}}
+      pop: 1 # embed math once
+
+  math-blocks:
+    - match: (?=(?:^[ ]{,3})?\$\$)
+      branch_point: math-blocks
+      branch:
+        - math-block-begin
+        - math-inline-block-begin
+
+  math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ ]{,3}(\$\$)
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - math-block-end
+        - math-block-content
+    - match: ''
+      fail: math-blocks
+
+  math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)\s*$\n?
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-inline-block-begin:
+    # Math blocks preceeded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - math-inline-blocks-end
+        - math-block-content
+
+  math-inline-blocks-end:
+    - meta_include_prototype: false
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{paragraph_end}}|{{setext_heading_escape}}
+      pop: 1 # embed math once
 
   math-inline:
+    # Consume any remaining $$ to prevent deadlock
+    # (workaround for sublimehq/sublime_text/issues/5415)
+    - match: \$\$
     - match: |-
         (?x)
         # dollar sign not followed by whitespace

@@ -7905,10 +7905,97 @@ This is a [[wiki link]].
 
 # TEST: MATHJAX BLOCKS MARKUP #################################################
 
+  $$
+|^^^^ meta.paragraph.markdown - markup.math
+
+  $$ 1+1
+|^^^^^^^^ meta.paragraph.markdown - markup.math
+
+  $$ 1+1 
+  $$
+| ^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+
+  $$ 1+1 $$
+|^ meta.paragraph.markdown markup.math.block.markdown - text.tex
+| ^^^^^^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|          ^ meta.paragraph.markdown markup.math.block.markdown - text.tex
+| ^^ punctuation.definition.math.begin.latex
+|        ^^ punctuation.definition.math.end.latex
+
+  $$ 1+1 $$ followed by text
+|^ meta.paragraph.markdown - markup.math
+| ^^^^^^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|          ^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+| ^^ punctuation.definition.math.begin.latex
+|        ^^ punctuation.definition.math.end.latex
+  
+  $$ 1+1 
+|^ meta.paragraph.markdown - markup.math
+| ^^^^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+| ^^ punctuation.definition.math.begin.latex
+  $$ followed by text
+| ^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+|   ^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+  Paragraph $$ 1+1 $$
+| ^^^^^^^^^^ meta.paragraph.markdown - markup.math
+|           ^^^^^^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                    ^ meta.paragraph.markdown - markup.math
+
+  Paragraph $$ 1+1 
+| ^^^^^^^^^^ meta.paragraph.markdown - markup.math
+|           ^^^^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+  $$
+|^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|   ^ meta.paragraph.markdown - markup.math
+
 $$
-| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+1+1
+# Heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^ markup.heading.1.markdown
+
+$$ SeText heading 1
+===
+$$
+| <- meta.paragraph.markdown - markup.math
+
+$$ SeText heading 2
+| <- markup.heading.2.markdown entity.name.section.markdown
+---
+$$
+| <- meta.paragraph.markdown - markup.math
+
+$$ SeText heading 2
+| <- markup.heading.2.markdown entity.name.section.markdown
+---
+$$
+| <- meta.paragraph.markdown - markup.math
+
+Math blocks don't terminate paragraphs, but MathJax renders them as such
+ $$
+ 1+1
+ $$
+| <- meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+|  ^ meta.paragraph.markdown markup.math.block.markdown - text.tex
+
+   $$
+| <- meta.paragraph.markdown markup.math.block.markdown - text.tex
+|^^ meta.paragraph.markdown markup.math.block.markdown - text.tex
+|  ^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|  ^^ punctuation.definition.math.begin.latex
+   1+1
+   $$
+| <- meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|^^^^ meta.paragraph.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|  ^^ punctuation.definition.math.end.latex
+|    ^ meta.paragraph.markdown markup.math.block.markdown - text.tex
+
+$$
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.latex
 |^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
-|^ punctuation.definition.math.begin.markdown
+|^ punctuation.definition.math.begin.latex
 | ^ - punctuation
 foo = 1 + 2 * \sqrt{a^2+b^2}
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex variable.other.math.tex
@@ -7930,8 +8017,9 @@ foo = 1 + 2 * \sqrt{a^2+b^2}
 |                         ^ constant.numeric.math.tex
 |                          ^ punctuation.definition.group.brace.end.latex
 $$
-| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
-|^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+|^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+| ^ markup.math.block.markdown - text.tex
 
     $$
 | <- markup.raw.block.markdown
@@ -7940,19 +8028,85 @@ $$
 1. Numbered List
 
    $$
-   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
-   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
+   | <- markup.list.numbered.markdown - markup.math
+   |^^ markup.list.numbered.markdown - markup.math
+
+   $$ 1+1
+   | <- markup.list.numbered.markdown - markup.math
+   |^^^^^^ markup.list.numbered.markdown - markup.math
+
+   $$ 1+1 $$
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.latex
+   |^^^^^^^^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |^ punctuation.definition.math.begin.latex
+   |      ^^ punctuation.definition.math.end.latex
+
+    $$ 1+1 $$ followed by text
+   | <- markup.list.numbered.markdown meta.paragraph.list.markdown - meta.math
+   |^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |         ^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+   |^^ punctuation.definition.math.begin.latex
+   |       ^^ punctuation.definition.math.end.latex
+    
+    $$
+    1+1
+    # Heading
+    | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^ markup.heading.1.markdown
+    
+    $$ SeText heading 1
+    ===
+    $$
+    | <- meta.paragraph.list.markdown - markup.math
+    
+    $$ SeText heading 2
+    | <- markup.heading.2.markdown entity.name.section.markdown
+    ---
+    $$
+    | <- meta.paragraph.list.markdown - markup.math
+    
+    $$ SeText heading 2
+    | <- markup.heading.2.markdown entity.name.section.markdown
+    ---
+    $$
+    | <- meta.paragraph.list.markdown - markup.math
+
+    $$ 1+1
+   | <- markup.list.numbered.markdown meta.paragraph.list.markdown - meta.math
+   |^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |^^ punctuation.definition.math.begin.latex
+    $$ followed by text
+   |^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |  ^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+  
+   Paragraph $$ 1+1 $$
+   |^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+   |         ^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |                  ^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+  
+   Paragraph $$ 1+1 
+   |^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+   |         ^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+    $$
+   |^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |  ^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+
+   Math blocks don't terminate paragraphs, but MathJax renders them as such
+   $$
+   1+1
+   $$
+   | <- markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+   |^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+   | ^ markup.list.numbered.markdown meta.paragraph.list.markdown - text.tex
+
+   $$
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.latex
+   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.latex
    foo = 1 + 2
    | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex variable.other.math.tex
    $$
-   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
-   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.markdown
-
-   $$ 1+1 $$
-   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
-   |^^^^^^^^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
-   |^ punctuation.definition.math.begin.markdown
-   |      ^^ punctuation.definition.math.end.markdown
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
+   |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.end.latex
 
 # TEST: MATHJAX INLINE MARKUP #################################################
 
