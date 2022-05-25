@@ -14,15 +14,13 @@ variables:
 contexts:
   main:
     - meta_include_prototype: false
-    - match: ^
-      set:
-        - markdown
-        - frontmatter
+    - match: ''
+      set: [markdown, frontmatter]
 
   frontmatter:
     # MultiMarkdown 6 supports frontmatter like headers for compatibility reasons
     # Note: The content is still limited to simple key-value pairs, no YAML!
-    - match: (---)\s*\n
+    - match: ^(---)\s*\n
       captures:
         0: meta.frontmatter.multimarkdown
         1: punctuation.section.block.begin.frontmatter.multimarkdown
@@ -34,10 +32,13 @@ contexts:
         1: punctuation.section.block.end.frontmatter.multimarkdown
       pop: 1
     # Classic key-value frontmatter beginning with first key, terminated by empty line.
-    - match: (?={{header}})
+    - match: ^(?={{header}})
       embed: frontmatter-content
       embed_scope: meta.frontmatter.multimarkdown
       escape: ^$
+      pop: 1
+    # Ensure to highlight frontmatter if the syntax is embedded, but pop as early as possible
+    - match: ^|(?=\S)
       pop: 1
 
   frontmatter-content:
