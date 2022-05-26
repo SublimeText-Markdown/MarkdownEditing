@@ -24,15 +24,17 @@ variables:
   atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
   atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
 
-  setext_heading_or_paragraph: ^[ ]{,3}(?:=+|(?=\S))  # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
-  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)    # between 0 and 3 spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
-  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
-  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)       # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
+  setext_heading_or_paragraph: ^(?:[ ]{,3}=+|(?=[ ]{,3}\S))   # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)[ \t]*$)         # between 0 and 3 spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
+  setext_heading1_escape: ^(?=[ ]{,3}=+[ \t]*$)               # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
 
-  list_setext_heading_or_paragraph: '[ \t]*(?:=+|(?=\S))' # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
-  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)\s*$) # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
-  list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)    # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
-  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)    # two or more spaces, followed by at least one hyphen (setext underline can be of any length)
+  list_setext_heading_or_paragraph: (?:[ \t]*=+|(?=[ \t]*\S)) # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)[ \t]*$)  # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
+  list_setext_heading1_escape: ^(?=[ \t]{2,}=+[ \t]*$)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
+  list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
+  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)        # two or more spaces, followed by at least one hyphen (setext underline can be of any length)
 
   block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
@@ -258,6 +260,21 @@ variables:
        |  {{math_block}}              # a math block begins the line
        |  {{html_block}}              # a html block begins the line
        )
+    )
+
+  list_paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{math_block}}              # a math block begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
     )
 
   # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
@@ -764,8 +781,6 @@ contexts:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
-    - match: '{{list_setext_heading_escape}}'
-      fail: list-setext-headings-or-paragraphs
     - include: setext-heading-content
 
   list-setext-heading2:
@@ -777,34 +792,24 @@ contexts:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
-    - match: '{{list_setext_heading_escape}}'
+    - match: '{{list_setext_heading1_escape}}'
       fail: list-setext-headings-or-paragraphs
     - include: setext-heading-content
 
   list-paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.list.markdown
-    - match: '{{list_setext_heading_escape}}'
-      fail: list-setext-headings-or-paragraphs
+    - include: list-paragraph-fail
     - include: list-paragraph-end
     - include: inlines
 
   list-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= [ \t]*
-          (?: $                           # the line is blank (or only contains whitespace)
-          |   {{block_quote}}             # a blockquote begins the line
-          |   {{atx_heading}}             # an ATX heading begins the line
-          |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-          |   {{thematic_break}}          # line is a thematic beak
-          |   {{list_item}}               # a list item begins the line
-          |   {{math_block}}              # a math block begins the line
-          |   {{html_block}}              # a html block begins the line
-          )
-        )
+    - match: '{{list_paragraph_end}}'
       pop: 1
+
+  list-paragraph-fail:
+    - match: '{{list_setext_heading_escape}}'
+      fail: list-setext-headings-or-paragraphs
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
@@ -904,8 +909,6 @@ contexts:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
-    - match: '{{setext_heading_escape}}'
-      fail: setext-headings-or-paragraphs
     - include: setext-heading-content
 
   setext-heading2:
@@ -917,7 +920,7 @@ contexts:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
-    - match: '{{setext_heading_escape}}'
+    - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
     - include: setext-heading-content
 
@@ -931,14 +934,17 @@ contexts:
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
-    - match: '{{setext_heading_escape}}'
-      fail: setext-headings-or-paragraphs
+    - include: paragraph-fail
     - include: paragraph-end
     - include: inlines
 
   paragraph-end:
     - match: '{{paragraph_end}}'
       pop: 1
+
+  paragraph-fail:
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
