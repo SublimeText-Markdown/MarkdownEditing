@@ -296,6 +296,7 @@ variables:
     | \B \* {{no_space_but_punct}}
     )
 
+  no_escape_behind: (?<![^\\]\\)(?<![\\]{3})
   # not followed by Unicode whitespace and not followed by a Unicode punctuation character
   no_space_nor_punct: (?![\s*\p{P}])
   # not followed by Unicode whitespace and followed by a Unicode punctuation character
@@ -3659,23 +3660,27 @@ contexts:
   math-inline:
     - match: |-
         (?x)
-        (\$)(?=\S)
-        (?=
-          (?: \\\\ | \\\$ | [^\$] )*?
-          \S\$(?:[^a-zA-Z0-9]|$)
-        )
-      scope: punctuation.definition.math.begin.markdown
-      push: math-inline-content
-
-  math-inline-content:
-    - meta_scope:
+        # dollar sign not followed by whitespace
+        (\$) (?=\S)
+        # arbritary number of chars, maybe escaped dollar sign, but no html tags
+        # terminated by non-whitespace, followed by dollar and non-word characther
+        (?= (?: \\\\ | \\\$ | (?!</?[A-Za-z]+[ \t]*/?>)[^\$] )*? \S\$\W )
+      scope:
         markup.math.inline.markdown
         text.tex.latex.embedded.markdown
         meta.environment.math.block.dollar.latex
-    - match: \$
-      scope: punctuation.definition.math.end.markdown
-      pop: 1
-    - include: math-content
+        punctuation.definition.math.begin.latex
+      embed: math-content
+      embed_scope:
+        markup.math.inline.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+      escape: '{{no_escape_behind}}\$'
+      escape_captures:
+        0: markup.math.inline.markdown
+           text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
 
   math-content:
     - include: scope:text.tex.latex#macros

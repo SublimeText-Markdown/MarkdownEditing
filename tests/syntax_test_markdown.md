@@ -7903,15 +7903,7 @@ This is a [[wiki link]].
 |                    ^^ punctuation.definition.link.end.markdown
 
 
-# TEST: LATEX EQUATIONS #######################################################
-
-This is math $1+1$ expression.
-|            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
-|            ^ punctuation.definition.math.begin.markdown
-|             ^ constant.numeric.math.tex
-|              ^ keyword.operator.math.tex
-|               ^ constant.numeric.math.tex
-|                ^ punctuation.definition.math.end.markdown
+# TEST: MATHJAX BLOCKS MARKUP #################################################
 
 $$
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex punctuation.definition.math.begin.markdown
@@ -7961,3 +7953,105 @@ $$
    |^^^^^^^^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
    |^ punctuation.definition.math.begin.markdown
    |      ^^ punctuation.definition.math.end.markdown
+
+# TEST: MATHJAX INLINE MARKUP #################################################
+
+# Math $1+1$ atx heading
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
+|      ^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+
+Math $1+1$ setext heading
+| <- markup.heading.1.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
+|    ^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+===
+| <- markup.heading.1.markdown punctuation.definition.heading.setext.markdown
+
+Math $1+1$ setext heading
+| <- markup.heading.2.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.markdown
+|    ^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+---
+| <- markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+This is math $1+1$ expression, but $ 1+1 $ ,$ 1+1$, $1+1 $ and 1+1$ or $1+1 are not.
+|            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|            ^ punctuation.definition.math.begin.latex
+|             ^ constant.numeric.math.tex
+|              ^ keyword.operator.math.tex
+|               ^ constant.numeric.math.tex
+|                ^ punctuation.definition.math.end.latex
+|                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+Math with -$1$() $2$-$3$a or $4$_
+|          ^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|             ^^^ meta.paragraph.markdown - markup.math
+|                ^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                   ^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+Use `\$` to display a dollar sign: $\sqrt{\$4}$
+|   ^^^^ meta.paragraph.markdown markup.raw.inline.markdown
+|                                  ^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                                  ^ punctuation.definition.math.begin.latex
+|                                   ^^^^^ support.function.math.tex
+|                                        ^ punctuation.definition.group
+|                                         ^^ constant.character.escape
+|                                           ^ constant.numeric
+|                                            ^ punctuation.definition
+|                                             ^ punctuation.definition.math.end.latex
+
+No math <span>$</span>1+1$ or $1+1<span>$</span>
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+No math $<br>1+1$ or $1+1<br>$
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
+
+Math $a<b$ but $a<b>a$ $a <b 10$ text
+|    ^^^^^ markup.math.inline.markdown
+|         ^^^^^^^^^^^^^ - markup.math
+|                      ^^^^^^^^^ markup.math.inline.markdown
+|                               ^^^^^^ - markup.math - meta.tag
+
+This is no $1+
+b$ math.
+| <- meta.paragraph.markdown - markup.math
+|^^^^^^^^ meta.paragraph.markdown - markup.math
+
+Handle incomplete $\sqrt{b$ expressions well.
+|                 ^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                 ^ punctuation.definition.math.begin.latex
+|                  ^^^^^ support.function.math.tex
+|                       ^^ meta.group.brace.latex
+|                         ^ punctuation.definition.math.end.latex - meta.group
+|                          ^ meta.paragraph.markdown - markup.math
+
+1. ordered list $\sqrt{b}$ equation $1+
+   |            ^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |                      ^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+
+   Math $1+1$ in paragraph.
+   |    ^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+
+   No math <span>$</span>1+1$ or $1+1<span>$</span>
+   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+  
+   No math $<br>1+1$ or $1+1<br>$
+   |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown - markup.math
+   
+   Math $a<b$ but $a<b>a$ $a <b 10$ text
+   |    ^^^^^ markup.math.inline.markdown
+   |         ^^^^^^^^^^^^^ - markup.math
+   |                      ^^^^^^^^^ markup.math.inline.markdown
+   |                               ^^^^^^ - markup.math - meta.tag
+
+   +  unordered $\sqrt{b}$ equation
+      |         ^^^^^^^^^^ markup.list.numbered.markdown meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+
+   Handle incomplete $\sqrt{b$ expressions well.
+   |                 ^^^^^^^^^ meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+   |                 ^ punctuation.definition.math.begin.latex
+   |                  ^^^^^ support.function.math.tex
+   |                       ^^ meta.group.brace.latex
+   |                         ^ punctuation.definition.math.end.latex - meta.group
+   |                          ^ meta.paragraph.list.markdown - markup.math
