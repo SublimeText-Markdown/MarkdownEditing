@@ -28,7 +28,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            * [X] task 1
+            * [x] task 1
             """
         )
 
@@ -50,7 +50,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_asterisk_undone(self, col):
         self.setBlockText(
             """
-            * [X] task 1
+            * [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -86,7 +86,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            - [X] task 1
+            - [x] task 1
             """
         )
 
@@ -108,7 +108,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_minus_undone(self, col):
         self.setBlockText(
             """
-            - [X] task 1
+            - [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -144,7 +144,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            + [X] task 1
+            + [x] task 1
             """
         )
 
@@ -166,7 +166,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_plus_undone(self, col):
         self.setBlockText(
             """
-            + [X] task 1
+            + [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -202,7 +202,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            > * [X] task 1
+            > * [x] task 1
             """
         )
 
@@ -224,7 +224,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_asterisk_in_quote_undone(self, col):
         self.setBlockText(
             """
-            > * [X] task 1
+            > * [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -260,7 +260,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            > - [X] task 1
+            > - [x] task 1
             """
         )
 
@@ -282,7 +282,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_minus_in_quote_undone(self, col):
         self.setBlockText(
             """
-            > - [X] task 1
+            > - [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -318,7 +318,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
         self.view.run_command("mde_toggle_task_list_item")
         self.assertEqualBlockText(
             """
-            > + [X] task 1
+            > + [x] task 1
             """
         )
 
@@ -340,7 +340,7 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def _test_set_task_with_plus_in_quote_undone(self, col):
         self.setBlockText(
             """
-            > + [X] task 1
+            > + [x] task 1
             """
         )
         self.setCaretTo(1, col)
@@ -354,15 +354,15 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
     def test_toggle_multi_caret_tasks(self):
         self.setBlockText(
             """
-            * [X] task 1
-                - [X] sub task
-                    + [X] sub task
+            * [x] task 1
+                - [x] sub task
+                    + [x] sub task
             * [ ] task 1
                 - [ ] sub task
                     + [ ] sub task
-            > * [X] task 1
-            >     - [X] sub task
-            >         + [X] sub task
+            > * [x] task 1
+            >     - [x] sub task
+            >         + [x] sub task
             > * [ ] task 1
             >     - [ ] sub task
             >         + [ ] sub task
@@ -377,30 +377,30 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
             * [ ] task 1
                 - [ ] sub task
                     + [ ] sub task
-            * [X] task 1
-                - [X] sub task
-                    + [X] sub task
+            * [x] task 1
+                - [x] sub task
+                    + [x] sub task
             > * [ ] task 1
             >     - [ ] sub task
             >         + [ ] sub task
-            > * [X] task 1
-            >     - [X] sub task
-            >         + [X] sub task
+            > * [x] task 1
+            >     - [x] sub task
+            >         + [x] sub task
             """
         )
 
     def test_toggle_selected_tasks(self):
         self.setBlockText(
             """
-            * [X] task 1
-                - [X] sub task
-                    + [X] sub task
+            * [x] task 1
+                - [x] sub task
+                    + [x] sub task
             * [ ] task 1
                 - [ ] sub task
                     + [ ] sub task
-            > * [X] task 1
-            >     - [X] sub task
-            >         + [X] sub task
+            > * [x] task 1
+            >     - [x] sub task
+            >         + [x] sub task
             > * [ ] task 1
             >     - [ ] sub task
             >         + [ ] sub task
@@ -413,14 +413,14 @@ class MdeToggleTaskListItemTestCase(DereferrablePanelTestCase):
             * [ ] task 1
                 - [ ] sub task
                     + [ ] sub task
-            * [X] task 1
-                - [X] sub task
-                    + [X] sub task
+            * [x] task 1
+                - [x] sub task
+                    + [x] sub task
             > * [ ] task 1
             >     - [ ] sub task
             >         + [ ] sub task
-            > * [X] task 1
-            >     - [X] sub task
-            >         + [X] sub task
+            > * [x] task 1
+            >     - [x] sub task
+            >         + [x] sub task
             """
         )
