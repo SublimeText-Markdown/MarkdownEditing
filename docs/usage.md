@@ -239,7 +239,7 @@ Following key bindings may be used to create or toggle tasks.
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
 | <kbd>Alt</kbd> + <kbd>t</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>t</kbd> | Creates new GFM task (`* [ ] task`)
-| <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [X] task`)
+| <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [x] task`)
 
 # References
 
