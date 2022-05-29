@@ -205,21 +205,21 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
     **Examples:**
 
     ```markdown
-    # Orderd Task List
+    # Ordered Task List
 
     1. [ ] task 1
-    2. [X] task 2
+    2. [x] task 2
 
-    # Unorderd Task List
+    # Unordered Task List
 
     * [ ] task 1
-    - [X] task 2
+    - [x] task 2
     + [ ] task 3
 
     # Quoted Task List
 
     > * [ ] task 1
-    > * [X] task 2
+    > * [x] task 2
     ```
     """
 
@@ -245,7 +245,7 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
                 region.a += match.start(1)
                 region.b = region.a + 1
 
-                self.view.replace(edit, region, "X" if match.group(1) == " " else " ")
+                self.view.replace(edit, region, "x" if match.group(1) == " " else " ")
 
 
 class MdeJoinLines(MdeTextCommand):
