@@ -56,12 +56,12 @@ goto :usage
         echo Missing release-%2.md
         exit /b 1
     )
-    git checkout st3176 --autostash && git merge st3-develop --no-ff
+    git checkout st3176 && git merge st3-develop --no-ff
     if not errorlevel 0 (
         echo Unable to merge st3-develop into st3176!
         exit /b 1
     )
-    git checkout master --autostash && git merge st4-develop --no-ff
+    git checkout master && git merge st4-develop --no-ff
     if not errorlevel 0 (
         echo Unable to merge st4-develop into master!
         exit /b 1
