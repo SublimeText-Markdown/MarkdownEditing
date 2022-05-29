@@ -52,18 +52,25 @@ goto :usage
 
 :RELEASE
     if "%2"== "" goto :usage
-    if not exist "messages/release-%2.md" (
-        echo Missing release-%2.md
+    set st3_changelog=release-st3-%2.md
+    set st4_changelog=release-st4-%2.md
+
+    if not exist "messages/%st3_changelog%" (
+        echo Missing %st3_changelog%
         exit /b 1
     )
-    git checkout st3176 && git merge %2 --no-ff
-    if not errorlevel 0 (
-        echo Unable to merge %2 into st3176!
+    if not exist "messages/%st4_changelog%" (
+        echo Missing %st4_changelog%
         exit /b 1
     )
-    git checkout master && git merge %2 --no-ff
+    git checkout st3176 && git merge st3-develop --no-ff
     if not errorlevel 0 (
-        echo Unable to merge %2 into master!
+        echo Unable to merge st3-develop into st3176!
+        exit /b 1
+    )
+    git checkout master && git merge st4-develop --no-ff
+    if not errorlevel 0 (
+        echo Unable to merge st4-develop into master!
         exit /b 1
     )
     echo Hit any key to push branches!
@@ -81,9 +88,9 @@ goto :usage
     echo Hit any key to publish release!
     pause
     : create release for ST3
-    gh release create --target st3176 -t "MarkdownEditing %2 (ST3176+)" -F "messages/release-%2.md" "3176-%2"
+    gh release create --target st3176 -t "MarkdownEditing %2 (ST3176+)" -F "messages/%st3_changelog%" "3176-%2"
     : create release for ST3
-    gh release create --target master -t "MarkdownEditing %2 (ST4107+)" -F "messages/release-%2.md" "4107-%2"
+    gh release create --target master -t "MarkdownEditing %2 (ST4107+)" -F "messages/%st4_changelog%" "4107-%2"
     git fetch
     goto :eof
 

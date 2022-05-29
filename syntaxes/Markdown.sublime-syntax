@@ -23,7 +23,18 @@ variables:
   atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
   atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
   atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
-  setext_escape: ^(?=[ ]{,3}(?:=+|-+)\s*$)            # between 0 and 3 spaces, followed by at least one hyphon or equal sign (setext underline can be of any length)
+
+  setext_heading_or_paragraph: ^(?:[ ]{,3}=+|(?=[ ]{,3}\S))   # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)[ \t]*$)         # between 0 and 3 spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
+  setext_heading1_escape: ^(?=[ ]{,3}=+[ \t]*$)               # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
+
+  list_setext_heading_or_paragraph: (?:[ \t]*=+|(?=[ \t]*\S)) # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)[ \t]*$)  # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
+  list_setext_heading1_escape: ^(?=[ \t]{2,}=+[ \t]*$)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
+  list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
+  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)        # two or more spaces, followed by at least one hyphen (setext underline can be of any length)
 
   block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
@@ -109,7 +120,7 @@ variables:
       # at least 2 non-escaped pipe chars on the line
       (?:{{table_cell}}?\|){2}
 
-      # something other than whitespace followed by a pipe char or hyphon,
+      # something other than whitespace followed by a pipe char or hyphen,
       # followed by something other than whitespace and the end of the line
     | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
     )
@@ -232,8 +243,6 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
-  math_block: '[ ]{,3}\$\$'
-
   reference_definition: (?:\[{{reference_name}}\]\:)
   footnote_name: (?:\^(?:\\\]|[^]])+)
   reference_name: (?:(?:\\\]|[^]])+)
@@ -246,9 +255,22 @@ variables:
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
-       |  {{math_block}}              # a math block begins the line
        |  {{html_block}}              # a html block begins the line
        )
+    )
+
+  list_paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
     )
 
   # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
@@ -270,6 +292,7 @@ variables:
     | \B \* {{no_space_but_punct}}
     )
 
+  no_escape_behind: (?<![^\\]\\)(?<![\\]{3})
   # not followed by Unicode whitespace and not followed by a Unicode punctuation character
   no_space_nor_punct: (?![\s*\p{P}])
   # not followed by Unicode whitespace and followed by a Unicode punctuation character
@@ -326,11 +349,17 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
-    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
     - include: setext-headings-or-paragraphs
+
+  indented-markdown:
+    # This is a public context which can be embedded by 3rd-party syntaxes
+    # to support Markdown highlighting in locations of arbitrary indentation,
+    # but without reference to list blocks as this is an implementation detail.
+    # The content may diverge from list block content in future.
+    - include: list-block-content
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
@@ -482,7 +511,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -594,7 +622,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -622,7 +649,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -664,12 +690,11 @@ contexts:
 
   list-block-content:
     - include: fenced-code-blocks
-    - include: math-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: list-block-common
     - include: list-block-quotes
-    - include: list-paragraphs
+    - include: list-setext-headings-or-paragraphs
 
   list-block-common:
     - include: thematic-breaks
@@ -727,31 +752,57 @@ contexts:
     - include: list-block-quote-punctuations
     - include: inlines
 
-  list-paragraphs:
-    - match: '[ \t]*(?=\S)'
-      push: list-paragraph-body
+  list-setext-headings-or-paragraphs:
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: '{{list_setext_heading_or_paragraph}}'
+      branch_point: list-setext-headings-or-paragraphs
+      branch:
+        - list-paragraph
+        - list-setext-heading2
+        - list-setext-heading1
 
-  list-paragraph-body:
+  list-setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - match: '{{list_setext_heading1_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: 1
+    - include: setext-heading-content
+
+  list-setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.markdown
+    - meta_content_scope: entity.name.section.markdown
+    - match: '{{list_setext_heading2_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.markdown
+        2: meta.whitespace.newline.markdown
+      pop: 1
+    - match: '{{list_setext_heading1_escape}}'
+      fail: list-setext-headings-or-paragraphs
+    - include: setext-heading-content
+
+  list-paragraph:
+    # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.list.markdown
+    - include: list-paragraph-fail
     - include: list-paragraph-end
+    - include: list-math-blocks
     - include: inlines
 
   list-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= [ \t]*
-          (?: $                           # the line is blank (or only contains whitespace)
-          |   {{block_quote}}             # a blockquote begins the line
-          |   {{atx_heading}}             # an ATX heading begins the line
-          |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-          |   {{thematic_break}}          # line is a thematic beak
-          |   {{list_item}}               # a list item begins the line
-          |   {{math_block}}              # a math block begins the line
-          |   {{html_block}}              # a html block begins the line
-          )
-        )
+    - match: '{{list_paragraph_end}}'
       pop: 1
+
+  list-paragraph-fail:
+    - match: '{{list_setext_heading_escape}}'
+      fail: list-setext-headings-or-paragraphs
 
 ###[ LEAF BLOCKS: ATX HEADINGS ]##############################################
 
@@ -835,7 +886,7 @@ contexts:
     # as heading underline. This is achieved by consuming them here, which also
     # applies `meta.paragraph` scope as expected.
     # A line of dashes is already matched as thematic break and thus ignored.
-    - match: ^[ ]{,3}(?:=+|(?=\S))
+    - match: '{{setext_heading_or_paragraph}}'
       branch_point: setext-headings-or-paragraphs
       branch:
         - paragraph
@@ -846,7 +897,7 @@ contexts:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.1.markdown
     - meta_content_scope: entity.name.section.markdown
-    - match: ^[ ]{,3}(=+)[ \t]*$(\n?)
+    - match: '{{setext_heading1_end}}'
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
@@ -857,16 +908,16 @@ contexts:
     # https://spec.commonmark.org/0.30/#setext-headings
     - meta_scope: markup.heading.2.markdown
     - meta_content_scope: entity.name.section.markdown
-    - match: ^[ ]{,3}(-+)[ \t]*$(\n?)
+    - match: '{{setext_heading2_end}}'
       captures:
         1: punctuation.definition.heading.setext.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
     - include: setext-heading-content
 
   setext-heading-content:
-    - match: '{{setext_escape}}'
-      fail: setext-headings-or-paragraphs
     - include: emphasis
     - include: images
     - include: literals
@@ -876,14 +927,18 @@ contexts:
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
     - meta_scope: meta.paragraph.markdown
-    - match: '{{setext_escape}}'
-      fail: setext-headings-or-paragraphs
+    - include: paragraph-fail
     - include: paragraph-end
+    - include: math-blocks
     - include: inlines
 
   paragraph-end:
     - match: '{{paragraph_end}}'
       pop: 1
+
+  paragraph-fail:
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
 
 ###[ LEAF BLOCKS: INDENTED CODE BLOCKS ]######################################
 
@@ -976,6 +1031,7 @@ contexts:
     - include: fenced-swift
     - include: fenced-terraform
     - include: fenced-toml
+    - include: fenced-twee
     - include: fenced-twig
     - include: fenced-verilog
     - include: fenced-xonsh
@@ -2313,6 +2369,25 @@ contexts:
         0: meta.code-fence.definition.end.toml.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  fenced-twee:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:twee))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.twee.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:text.twee
+      embed_scope:
+        markup.raw.code-fence.twee.markdown-gfm
+        text.twee.embedded.markdown
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.twee.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-twig:
     - match: |-
          (?x)
@@ -2533,7 +2608,6 @@ contexts:
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
-           |   {{math_block}}              # a math block begins the line
            |   {{html_block}}              # a html block begins the line
            )
         )
@@ -2939,7 +3013,7 @@ contexts:
     - include: italic
 
   emphasis-common:
-    - match: '{{setext_escape}}'
+    - match: '{{setext_heading_escape}}'
       pop: 1
     - match: ^\s*$\n?
       scope: invalid.illegal.non-terminated.bold-italic.markdown
@@ -3556,45 +3630,167 @@ contexts:
     - include: literals
     - include: links
 
-###[ EXTENSIONS: LATEX ]######################################################
+###[ EXTENSIONS: MATHJAX ]####################################################
 
-  math-blocks:
-    - match: '[ \t]*(\$\$)'
+  list-math-blocks:
+    - match: (?=(?:^[ \t]*)?\$\$)
+      branch_point: list-math-blocks
+      branch:
+        - list-math-block-begin
+        - list-math-inline-block-begin
+
+  list-math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ \t]*(\$\$)
       captures:
-        1: punctuation.definition.math.begin.markdown
-      push: math-block-content
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - list-math-block-end
+        - list-math-block-content
+    - match: ''
+      fail: list-math-blocks
 
-  math-block-content:
+  list-math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)\s*$\n?
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-inline-block-begin:
+    # Math blocks preceeded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - list-math-inline-block-end
+        - list-math-block-content
+
+  list-math-inline-block-end:
+    - meta_include_prototype: false
     - meta_scope:
         markup.math.block.markdown
         text.tex.latex.embedded.markdown
         meta.environment.math.block.dollar.latex
-    - match: (\$\$)(?:\s*\n)?
-      captures:
-        1: punctuation.definition.math.end.markdown
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
       pop: 1
-    - include: math-content
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{list_paragraph_end}}|{{list_setext_heading_escape}}
+      pop: 1 # embed math once
+
+  math-blocks:
+    - match: (?=(?:^[ ]{,3})?\$\$)
+      branch_point: math-blocks
+      branch:
+        - math-block-begin
+        - math-inline-block-begin
+
+  math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ ]{,3}(\$\$)
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - math-block-end
+        - math-block-content
+    - match: ''
+      fail: math-blocks
+
+  math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$)\s*$\n?
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-inline-block-begin:
+    # Math blocks preceeded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - math-inline-blocks-end
+        - math-block-content
+
+  math-inline-blocks-end:
+    - meta_include_prototype: false
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{paragraph_end}}|{{setext_heading_escape}}
+      pop: 1 # embed math once
 
   math-inline:
+    # Consume any remaining $$ to prevent deadlock
+    # (workaround for sublimehq/sublime_text/issues/5415)
+    - match: \$\$
     - match: |-
         (?x)
-        (\$)(?=\S)
-        (?=
-          (?: \\\\ | \\\$ | [^\$] )*?
-          \S\$(?:[^a-zA-Z0-9]|$)
-        )
-      scope: punctuation.definition.math.begin.markdown
-      push: math-inline-content
-
-  math-inline-content:
-    - meta_scope:
+        # dollar sign not followed by whitespace
+        (\$) (?=\S)
+        # arbritary number of chars, maybe escaped dollar sign, but no html tags
+        # terminated by non-whitespace, followed by dollar and non-word characther
+        (?= (?: \\\\ | \\\$ | (?!</?[A-Za-z]+[ \t]*/?>)[^\$] )*? \S\$\W )
+      scope:
         markup.math.inline.markdown
         text.tex.latex.embedded.markdown
         meta.environment.math.block.dollar.latex
-    - match: \$
-      scope: punctuation.definition.math.end.markdown
-      pop: 1
-    - include: math-content
+        punctuation.definition.math.begin.latex
+      embed: math-content
+      embed_scope:
+        markup.math.inline.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+      escape: '{{no_escape_behind}}\$'
+      escape_captures:
+        0: markup.math.inline.markdown
+           text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
 
   math-content:
     - include: scope:text.tex.latex#macros
