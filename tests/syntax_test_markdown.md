@@ -5148,6 +5148,24 @@ global heading
     | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
     |^^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
 
+  - heading
+    ---
+    | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+    |^^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+  - should not be a heading, but we can't handle it yet
+  --
+  | <- markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+  |^ markup.list.unnumbered.markdown markup.heading.2.markdown punctuation.definition.heading.setext.markdown
+
+  - list item
+  - 
+  | <- markup.list.unnumbered.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+
+  - list item
+  = 
+  | <- markup.list.unnumbered.markdown meta.paragraph.list.markdown
+
 ## https://custom-tests/list-blocks/items-with-fenced-code-blocks-indented-by-tabs
 
   * foo

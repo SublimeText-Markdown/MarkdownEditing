@@ -30,11 +30,11 @@ variables:
   setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
   setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)               # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
 
-  list_setext_heading_or_paragraph: (?:[ \t]*=+|(?=[ \t]*\S)) # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
-  list_setext_heading_escape: ^(?=[ \t]{2,}(?:=+|-+)[ \t]*$)  # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
-  list_setext_heading1_escape: ^(?=[ \t]{2,}=+[ \t]*$)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
-  list_setext_heading1_end: ^[ \t]{2,}(=+)[ \t]*$(\n?)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length)
-  list_setext_heading2_end: ^[ \t]{2,}(-+)[ \t]*$(\n?)        # two or more spaces, followed by at least one hyphen (setext underline can be of any length)
+  list_setext_heading_or_paragraph: (?:[ \t]*=+|(?=[ \t]*\S))  # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
+  list_setext_heading_escape: ^(?=[ \t]{2,}(?:==+|--+)[ \t]*$) # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+  list_setext_heading1_escape: ^(?=[ \t]{2,}==+[ \t]*$)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+  list_setext_heading1_end: ^[ \t]{2,}(==+)[ \t]*$(\n?)        # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+  list_setext_heading2_end: ^[ \t]{2,}(--+)[ \t]*$(\n?)        # two or more spaces, followed by at least one hyphen (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
 
   block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
