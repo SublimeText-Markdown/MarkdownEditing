@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+    <key>scope</key>
+    <string>text.html.markdown</string>
+    <key>settings</key>
+    <dict>
+        <key>foldScopes</key>
+        <array>
+            <dict>
+                <key>begin</key>
+                <string>markup.heading meta.whitespace.newline - markup.quote - meta.list</string>
+                <key>end</key>
+                <string>markup.heading - markup.quote - meta.list</string>
+                <key>excludeTrailingNewlines</key>
+                <true/>
+            </dict>
+            <dict>
+                <key>begin</key>
+                <string>meta.code-fence.definition.begin</string>
+                <key>end</key>
+                <string>meta.code-fence.definition.end</string>
+                <key>excludeTrailingNewlines</key>
+                <true/>
+            </dict>
+        </array>
+    </dict>
+</dict>
+</plist>
