@@ -20,25 +20,19 @@ on:
 
 jobs:
   test:
-    name: Sublime Text ${{ matrix.st_version }}
+    name: Sublime Text ${{ matrix.st-version }}
     runs-on: ubuntu-18.04
     timeout-minutes: 15 # default is 6 hours!
     strategy:
       fail-fast: false
       matrix:
-        st_version: [3, 4]
-    container:
-      image: sublimetext/unittesting
-      options: --cap-add=NET_ADMIN
-    env:
-      SUBLIME_TEXT_VERSION: ${{ matrix.st_version }}
+        st-version: [3, 4]
     steps:
-      - uses: actions/checkout@v1
-      - run: sh -e /etc/init.d/xvfb start
-      - run: curl -OL https://raw.githubusercontent.com/SublimeText/UnitTesting/master/sbin/github.sh
-      - run: apt-get update
-      - run: |
-          PATH="$HOME/.local/bin:$PATH"
-          sh github.sh bootstrap
-          sh github.sh install_package_control
-          sh github.sh run_tests
+      - uses: actions/checkout@v2
+      - uses: SublimeText/UnitTesting/actions/setup@v1
+        with:
+          sublime-text-version: ${{ matrix.st-version }}
+      - uses: SublimeText/UnitTesting/actions/run-tests@v1
+        with:
+          coverage: true
+          codecov-upload: true
