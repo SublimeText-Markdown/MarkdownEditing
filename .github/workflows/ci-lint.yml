@@ -25,7 +25,6 @@ jobs:
     strategy:
       matrix:
         python:
-          - '3.3'
           - '3.8'
         arch:
           - 'x64'
@@ -41,6 +40,5 @@ jobs:
         run: pip install -r tests/requirements.txt
       - name: Run black
         run: python -m black --check .
-        if: ${{ matrix.python == '3.8' }}
       - name: Run flake8
         run: python -m flake8
