@@ -1592,7 +1592,7 @@ graph n {}
 
 ```html+php
 <div></div>
-|^^^ entity.name.tag.block.any.html
+|^^^ entity.name.tag.block
 <?php
 | <- markup.raw.code-fence.html-php.markdown-gfm embedding.php meta.embedded punctuation.section.embedded.begin.php
 var_dump(expression);
@@ -1830,7 +1830,7 @@ okay.
 | ^^^^^^^ meta.paragraph markup.italic - meta.disable-markdown
 
 </DIV>
-| ^^^ meta.disable-markdown meta.tag.block.any.html
+| ^^^ meta.disable-markdown meta.tag.block
 
 ## https://spec.commonmark.org/0.30/#example-153
 
@@ -1888,7 +1888,7 @@ int x = 33;
 | <- meta.disable-markdown - markup.italic - punctuation
 |^^^^^ meta.disable-markdown - markup.italic
 </Warning>
-| ^^^^^^^ meta.disable-markdown meta.tag.other.html entity.name.tag.other.html
+| ^^^^^^^ meta.disable-markdown meta.tag.other entity.name.tag.other.html
 
 ## https://spec.commonmark.org/0.30/#example-164
 
@@ -1947,7 +1947,7 @@ int x = 33;
 ## https://spec.commonmark.org/0.30/#example-169
 
 <pre language="haskell"><code>
-| ^^ meta.disable-markdown meta.tag.block.any.html entity.name.tag.block.any.html
+| ^^ meta.disable-markdown meta.tag.block entity.name.tag.block
 import Text.HTML.TagSoup
 
 main :: IO ()
@@ -1955,7 +1955,7 @@ main :: IO ()
 main = print $ parseTags tags
 </code></pre>
 | ^^^^^^^^^^^ meta.disable-markdown
-|        ^^^ meta.tag.block.any.html entity.name.tag.block.any.html
+|        ^^^ meta.tag.block entity.name.tag.block
 okay
 | <- - meta.disable-markdown
 
@@ -2193,7 +2193,7 @@ non-disabled markdown
 <div>this is HTML until there are two blank lines
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
 still <span>HTML</span>
-|      ^^^^ meta.tag.inline.any.html entity.name.tag.inline.any.html
+|      ^^^^ meta.tag.inline entity.name.tag.inline
 </div>
 | ^^^^ meta.disable-markdown
 
@@ -2201,14 +2201,14 @@ non-disabled markdown
 | <- - meta.disable-markdown
 
 <pre>nested tags don't count <pre>test</pre>
-|                                     ^^^^^^ meta.disable-markdown meta.tag.block.any.html
+|                                     ^^^^^^ meta.disable-markdown meta.tag.block
 non-disabled markdown
 | <- - meta.disable-markdown
 
 <div>nested tags don't count <div>test
 |                                 ^^^^^ meta.disable-markdown
 </div>
-| ^^^ meta.disable-markdown entity.name.tag.block.any.html
+| ^^^ meta.disable-markdown entity.name.tag.block
 
 non-disabled markdown
 | <- - meta.disable-markdown
@@ -2223,7 +2223,7 @@ non-disabled markdown
 
 <div>another</div> <span>disable</span> test
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.disable-markdown
-|                  ^^^^^^ meta.tag.inline.any.html
+|                  ^^^^^^ meta.tag.inline
 disabled markdown
 | <- meta.disable-markdown
 
@@ -5387,7 +5387,7 @@ blah*
 | ^ punctuation.definition.raw.begin.markdown
 |      ^ punctuation.definition.raw.end.markdown
 |        ^ - punctuation
-|          ^^^^^^^^^^^^^^^^^^^ meta.tag.inline.a.html 
+|          ^^^^^^^^^^^^^^^^^^^ meta.tag.inline
 
 - list item
 
@@ -5648,7 +5648,7 @@ foo
 ## https://spec.commonmark.org/0.30/#example-344
 
 <a href="`">`
-| ^^^^^^^^^ meta.tag.inline.a
+| ^^^^^^^^^ meta.tag.inline
 |           ^ punctuation.definition.raw.begin
 
 | <- invalid.illegal.non-terminated.raw
@@ -6620,38 +6620,38 @@ testing__
 *italic text <span>HTML element</span> end of italic text*
 | <- punctuation.definition.italic
 |                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
+|            ^^^^^^ meta.tag.inline
+|                              ^^^^^^^ meta.tag.inline
 
 _italic text <SPAN>HTML element</SPAN> end of italic text_
 | <- punctuation.definition.italic
 |                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
+|            ^^^^^^ meta.tag.inline
+|                              ^^^^^^^ meta.tag.inline
 
 **bold text <span>HTML element</span> end of bold text**
 | <- punctuation.definition.bold
 |                                                     ^^ punctuation.definition.bold
-|           ^^^^^^ meta.tag.inline.any.html
-|                             ^^^^^^^ meta.tag.inline.any.html
+|           ^^^^^^ meta.tag.inline
+|                             ^^^^^^^ meta.tag.inline
 
 __bold text <span>HTML element</span> end of bold text__
 | <- punctuation.definition.bold
 |                                                     ^^ punctuation.definition.bold
-|           ^^^^^^ meta.tag.inline.any.html
-|                             ^^^^^^^ meta.tag.inline.any.html
+|           ^^^^^^ meta.tag.inline
+|                             ^^^^^^^ meta.tag.inline
 
 *italic text <span>HTML element</span> end of italic text*
 | <- punctuation.definition.italic
 |                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
+|            ^^^^^^ meta.tag.inline
+|                              ^^^^^^^ meta.tag.inline
 
 _italic text <span>HTML element</span> end of italic text_
 | <- punctuation.definition.italic
 |                                                        ^ punctuation.definition.italic
-|            ^^^^^^ meta.tag.inline.any.html
-|                              ^^^^^^^ meta.tag.inline.any.html
+|            ^^^^^^ meta.tag.inline
+|                              ^^^^^^^ meta.tag.inline
 
 _test <span>text_ foobar</span>
 | <- punctuation
