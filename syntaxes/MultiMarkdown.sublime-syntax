@@ -9,7 +9,7 @@ extends: Markdown.sublime-syntax
 first_line_match: (?i:^format:\s*complete\s*$)
 
 variables:
-  header: ([A-Za-z0-9][\w -]*)(:)
+  header: ([A-Za-z0-9][\w -]*)((:)\s+)
 
 contexts:
   main:
@@ -45,7 +45,8 @@ contexts:
     - match: ^{{header}}
       captures:
         1: meta.mapping.key.multimarkdown entity.other.attribute-name.multimarkdown
-        2: meta.mapping.multimarkdown punctuation.separator.key-value.multimarkdown
+        2: meta.mapping.multimarkdown
+        3: punctuation.separator.key-value.multimarkdown
       embed: html-content
       embed_scope: meta.mapping.value.multimarkdown
       escape: ^(?={{header}})

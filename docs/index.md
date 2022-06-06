@@ -10,8 +10,8 @@ with...
 *   color schemes optimized for writing
 *   robust syntax definitions for
     *   Standard Markdown
-    *   Github flavoured Markdown
-    *   MultiMarkdown
+    *   [Github flavoured Markdown][GFM]
+    *   [MultiMarkdown][]
 
 ⓘ _See [configuration][] section to learn how to change the color scheme_.
 
@@ -90,4 +90,6 @@ with...
 [AtxHeadings]: usage.md#atx-style
 [HeadingsLevels]: usage.md#headings-levels
 [SeHeadings]: usage.md#setext-style
+[GFM]: https://github.github.com/gfm
 [GFM Task]: https://github.github.com/gfm/#task-list-items-extension-
+[MultiMarkdown]: https://fletcherpenney.net/multimarkdown
