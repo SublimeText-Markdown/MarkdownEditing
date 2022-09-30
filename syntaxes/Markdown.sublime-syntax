@@ -918,11 +918,23 @@ contexts:
     - include: setext-heading-content
 
   setext-heading-content:
+    - include: setext-hard-line-breaks
     - include: emphasis
     - include: images
     - include: literals
     - include: links
     - include: markups
+
+  setext-hard-line-breaks:
+    # This context consumes what 'hard-line-breaks' does for normal
+    # paragraphs to avoid deadlock of ST's syntax engine.
+    #
+    # as workaround for
+    #    https://github.com/sublimehq/sublime_text/issues/5415
+    # causing
+    #    https://github.com/sublimehq/Packages/issues/3494
+    - match: '[ ]{2,}$'
+    - match: '\\\n'
 
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
@@ -983,6 +995,7 @@ contexts:
     - include: fenced-jsx
     - include: fenced-lisp
     - include: fenced-lua
+    - include: fenced-makefile
     - include: fenced-matlab
     - include: fenced-objc
     - include: fenced-objcpp
@@ -1452,6 +1465,25 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.lua.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-makefile:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:makefile))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.makefile
+      embed_scope:
+        markup.raw.code-fence.makefile.markdown-gfm
+        source.makefile
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-matlab:
