@@ -918,11 +918,23 @@ contexts:
     - include: setext-heading-content
 
   setext-heading-content:
+    - include: setext-hard-line-breaks
     - include: emphasis
     - include: images
     - include: literals
     - include: links
     - include: markups
+
+  setext-hard-line-breaks:
+    # This context consumes what 'hard-line-breaks' does for normal
+    # paragraphs to avoid deadlock of ST's syntax engine.
+    #
+    # as workaround for
+    #    https://github.com/sublimehq/sublime_text/issues/5415
+    # causing
+    #    https://github.com/sublimehq/Packages/issues/3494
+    - match: '[ ]{2,}$'
+    - match: '\\\n'
 
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
