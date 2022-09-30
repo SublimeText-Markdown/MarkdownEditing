@@ -1633,6 +1633,13 @@ for (var i = 0; i < 10; i++) {
 | <- meta.code-fence.definition.end.lua.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.lua.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 
+```makefile
+
+| <- markup.raw.code-fence.makefile.markdown-gfm source.makefile
+```
+| <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
 ```matlab
 
 | <- markup.raw.code-fence.matlab.markdown-gfm source.matlab
