@@ -57,7 +57,7 @@ class MdeUnsavedViewNameSetter(MdeViewEventListener):
     MAX_NAME = 50
 
     def on_modified(self):
-        if self.view.file_name() is not None or not self.view.settings().get("set_unsaved_view_name"):
+        if self.view.file_name() is not None or not self.view.settings().get("set_unsaved_view_name", True):
             return
 
         name = first_heading_text(self.view)
