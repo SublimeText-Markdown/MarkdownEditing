@@ -102,7 +102,8 @@ def on_after_install():
 
     def async_worker():
         bootstrap_syntax_assignments()
-        disable_native_markdown_package()
+        if int(sublime.version()) < 4132:
+            disable_native_markdown_package()
         clear_invalid_color_schemes()
         # Update bootstrap cookie.
         open(bootstrapped, "w").write(BOOTSTRAP_VERSION)
