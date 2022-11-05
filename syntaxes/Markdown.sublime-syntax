@@ -2821,20 +2821,29 @@ contexts:
 
   code-spans:
     # https://spec.commonmark.org/0.30/#code-spans
-    - match: (`+)(?!`)
+    - match: (?=`+)
+      branch_point: code-spans
+      branch:
+        - code-span
+        - no-code-span
+
+  code-span:
+    - match: (`+)
       scope: punctuation.definition.raw.begin.markdown
-      push: code-span-body
+      set: code-span-body
 
   code-span-body:
     - meta_scope: markup.raw.inline.markdown
     - match: \1(?!`)
       scope: punctuation.definition.raw.end.markdown
       pop: 1
-    - match: '`+'
-    - match: ^\s*$\n?
-      scope: invalid.illegal.non-terminated.raw.markdown
+    - match: \`+
+    - match: '{{list_paragraph_end}}'
+      fail: code-spans
+
+  no-code-span:
+    - match: \`+
       pop: 1
-    - include: paragraph-end
 
 ###[ INLINE: EMPHASIS ]#######################################################
 

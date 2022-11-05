@@ -5665,6 +5665,16 @@ paragraph
        | ^ punctuation.definition.heading.begin.markdown
        |   ^^^^^^^ entity.name.section.markdown
 
+       > - list item <code>```math</code> equation
+       >   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+       > 
+       >   - list item <code>```math</code> equation
+       >     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+       >   - list item <code>```math</code>``` equation
+       >     | ^^^^^^^^^^^^^^ markup.quote.markdown  markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+       >     |               ^^^^^^^^^^^^^^^^^ markup.quote.markdown  markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.raw.inline.markdown
+       >     |                                ^^^^^^^^^^ markup.quote.markdown  markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+
 ## https://custom-tests/list-blocks/items-with-code-spans
 
 - `<foo>` | `<bar>` (foo/bar.baz)
@@ -5722,6 +5732,16 @@ blah*
       <span>*no-markdown*</span>
       |^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown
       |                  ^^^^^^^ meta.tag
+
+- list item <code>```math</code> equation
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+
+  - list item <code>```math</code> equation
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+  - list item <code>```math</code>``` equation
+    | ^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
+    |               ^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.raw.inline.markdown
+    |                                ^^^^^^^^^^ markup.list.unnumbered.markdown meta.paragraph.list.markdown - markup.raw
 
 ## https://custom-tests/list-blocks/items-with-links-and-references
 
@@ -5814,8 +5834,9 @@ more text``
 |        ^^ punctuation.definition.raw.end
 
 ``text
+| <- meta.paragraph.markdown - markup.raw
+|^^^^^^ meta.paragraph.markdown - markup.raw
 
-| <- invalid.illegal.non-terminated.raw
 text
 | <- - markup.raw
 
@@ -5957,33 +5978,25 @@ foo
 
 `<a href="`">`
 |^^^^^^^^^^ markup.raw.inline.markdown
-|          ^^ - markup.raw
-
-| <- invalid.illegal.non-terminated.raw
+|          ^^^^ - markup.raw - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-344
 
 <a href="`">`
-| ^^^^^^^^^ meta.tag.inline
-|           ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
+| ^^^^^^^^^^ meta.tag.inline.a
+|           ^^ - meta.tag - markup.raw - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-345
 
 `<http://foo.bar.`baz>`
 |^^^^^^^^^^^^^^^^^ markup.raw.inline
-|                     ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
+|                 ^^^^^^ - meta.tag - markup.raw - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-346
 
 <http://foo.bar.`baz>`
 |^^^^^^^^^^^^^^^^^^^ markup.underline.link
-|                    ^ punctuation.definition.raw.begin
-
-| <- invalid.illegal.non-terminated.raw
+|                    ^ - markup.raw - punctuation
 
 
 # TEST: EMPHASIS ##############################################################
