@@ -1,5 +1,5 @@
 <snippet>
-	<content><![CDATA[{-- $SELECTION --}]]></content>
+	<content><![CDATA[{--$SELECTION--}]]></content>
 	<scope>text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.critic - meta.code-fence - markup.raw - markup.kbd</scope>
 	<description>Markdown Critic Deletion</description>
 </snippet>
