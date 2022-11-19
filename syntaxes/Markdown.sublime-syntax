@@ -3515,6 +3515,7 @@ contexts:
         - link-url-scheme-separator
     # Github Flavoured Markdown
     # After a valid domain, zero or more non-space non-< characters may follow
+    # https://github.github.com/gfm/#autolinks-extension-
     - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
       captures:
         1: punctuation.separator.path.markdown
@@ -3543,14 +3544,15 @@ contexts:
     # 3. Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not
     #    be considered part of the autolink, though they may be included in the
     #    interior # of the link
-    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:*_~]*[\s<])
+    #    Note: contains some empirical (undocumented) punctuation such as ;, ', "
+    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:;*_~'"]*[\s<])
       pop: 1
     - include: autolink-inet-common
 
   autolink-inet-group:
     - match: \)
       pop: 1
-    - match: (?=(?:{{html_entity}})*[?!.,:*_~]*[\s<])
+    - match: (?=(?:{{html_entity}})*[?!.,:;*_~'"]*[\s<])
       pop: 1
     - include: autolink-inet-common
 
