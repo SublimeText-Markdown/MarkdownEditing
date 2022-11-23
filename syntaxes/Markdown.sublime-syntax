@@ -2446,7 +2446,7 @@ contexts:
       scope: punctuation.definition.attributes.begin.markdown
       set: link-def-attr-body
     - match: ^(?!\s*{)|(?=\S)
-      pop: 1
+      pop: true
 
   link-def-attr-body:
     - meta_scope: meta.attributes.markdown
@@ -2460,13 +2460,13 @@ contexts:
         - expect-attr-or-eol
         - link-title
     - match: (?=\{)
-      pop: 1
+      pop: true
     - match: \S.+
       scope: invalid.illegal.expected-eol.markdown
 
   expect-attr-or-eol:
     - match: (?=\{)
-      pop: 1
+      pop: true
     - include: expect-eol
 
   link-def-url:
@@ -3339,7 +3339,7 @@ contexts:
 
   autolink-inet-group:
     - match: \)
-      pop: 1
+      pop: true
     - match: (?=(?:{{html_entity}})*[?!.,:;*_~'"]*[\s<])
       pop: true
     - include: autolink-inet-common
