@@ -66,6 +66,8 @@ class MdeMatchHeadingHashesDetector(MdeViewEventListener):
 
     def on_pre_save(self):
         self.auto_detect_heading_style()
+        if self.view.settings().get("mde.auto_match_heading_hashes", False):
+            self.view.run_command("mde_match_heading_hashes")
 
     def auto_detect_heading_style(self):
         view = self.view
@@ -86,6 +88,3 @@ class MdeMatchHeadingHashesDetector(MdeViewEventListener):
             view.settings().set("mde.match_heading_hashes", num_trailing / num_leading > 0.5)
         else:
             view.settings().erase("mde.match_heading_hashes")
-
-        if view.settings().get("mde.auto_match_heading_hashes", False):
-            view.run_command("mde_match_heading_hashes")

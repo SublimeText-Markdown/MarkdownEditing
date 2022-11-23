@@ -2431,24 +2431,43 @@ contexts:
         3: punctuation.definition.reference.end.markdown
         4: punctuation.separator.key-value.markdown
       push:
-        - link-def-end
+        - link-def-meta
+        - link-def-attr
         - link-def-title
         - link-def-url
 
-  link-def-end:
+  link-def-meta:
     - meta_include_prototype: false
     - meta_scope: meta.link.reference.def.markdown
     - include: immediately-pop
+
+  link-def-attr:
+    - match: \{
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-def-attr-body
+    - match: ^(?!\s*{)|(?=\S)
+      pop: true
+
+  link-def-attr-body:
+    - meta_scope: meta.attributes.markdown
+    - include: tag-attributes
 
   link-def-title:
     - match: ^(?!\s*["'(])
       pop: true
     - match: (?=["'(])
       set:
-        - expect-eol
+        - expect-attr-or-eol
         - link-title
+    - match: (?=\{)
+      pop: true
     - match: \S.+
       scope: invalid.illegal.expected-eol.markdown
+
+  expect-attr-or-eol:
+    - match: (?=\{)
+      pop: true
+    - include: expect-eol
 
   link-def-url:
     - match: <
@@ -3206,6 +3225,7 @@ contexts:
       scope: invalid.illegal.attribute-name.markdown
 
   tag-attr-meta:
+    - meta_include_prototype: false
     - meta_scope: meta.attribute-with-value.markdown
     - include: immediately-pop
 
@@ -3283,6 +3303,7 @@ contexts:
         - link-url-scheme-separator
     # Github Flavoured Markdown
     # After a valid domain, zero or more non-space non-< characters may follow
+    # https://github.github.com/gfm/#autolinks-extension-
     - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
       captures:
         1: punctuation.separator.path.markdown
@@ -3311,14 +3332,15 @@ contexts:
     # 3. Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not
     #    be considered part of the autolink, though they may be included in the
     #    interior # of the link
-    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:*_~]*[\s<])
+    #    Note: contains some empirical (undocumented) punctuation such as ;, ', "
+    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:;*_~'"]*[\s<])
       pop: true
     - include: autolink-inet-common
 
   autolink-inet-group:
     - match: \)
       pop: true
-    - match: (?=(?:{{html_entity}})*[?!.,:*_~]*[\s<])
+    - match: (?=(?:{{html_entity}})*[?!.,:;*_~'"]*[\s<])
       pop: true
     - include: autolink-inet-common
 

@@ -2508,6 +2508,41 @@ Foo
 |      ^ punctuation.separator.key-value.markdown
 |        ^^^^ markup.underline.link.markdown
 
+## https://custom-tests/link-reference-definitions/with-attributes
+
+[link]: /url {#id .class width=30}
+|            ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown meta.attributes.markdown
+
+[link]: /url (description) {#id .class width=30}
+|                          ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown meta.attributes.markdown
+
+[link]: /url "description" {#id .class width=30}
+|                          ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown meta.attributes.markdown
+
+[link]: 
+  /url 
+  {#id .class width=30}
+| ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown meta.attributes.markdown
+
+[link]: 
+  /url 
+
+  {#id .class width=30}
+| ^^^^^^^^^^^^^^^^^^^^^ - meta.link - meta.attributes
+
+[link]: 
+  /url 
+  "description" 
+  {#id .class width=30}
+| ^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.def.markdown meta.attributes.markdown
+
+[link]: 
+  /url 
+  "description" 
+
+  {#id .class width=30}
+| ^^^^^^^^^^^^^^^^^^^^^ - meta.link - meta.attributes
+
 ## https://custom-tests/link-reference-definitions/in-block-quotes
 
 > [foo]: /url "description"
@@ -7357,6 +7392,92 @@ Visit www.commonmark.org/a.b.
 |     ^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
 |                           ^ - markup.underline.link
 |                       ^ punctuation.separator.path.markdown
+
+Visit www.commonmark.org?
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org!
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org:
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org;
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org*
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org_
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit www.commonmark.org~
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                       ^ - markup.underline.link
+
+Visit 'www.commonmark.org'
+|     ^ - markup.underline.link
+|      ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit "www.commonmark.org"
+|     ^ - markup.underline.link
+|      ^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit "www.commonmark.org/q'uo"te"
+|     ^ - markup.underline.link
+|      ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                                ^ - markup.underline.link
+Visit www.commonmark.org=
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit www.commonmark.org&
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit www.commonmark.org%
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit www.commonmark.org$
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+Visit www.commonmark.org#
+|    ^ - markup.underline.link
+|     ^^^^^^^^^^^^^^^^^^^ meta.paragraph meta.link.inet.markdown markup.underline.link
+|                        ^ - markup.underline.link
+
+www.google.com/search?q=(business'
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                ^ - markup.underline.link
+
+www.google.com/search?q=(business"
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
+|             ^ punctuation.separator.path.markdown
+|                    ^ punctuation.separator.path.markdown
+|                                ^ - markup.underline.link
 
 www.google.com/search?q=(business))+ok
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.inet.markdown markup.underline.link
