@@ -32,10 +32,9 @@ else:
         MdeFoldLinksCommand,
         MdeFoldLinksListener,
         MdeFoldSectionCommand,
-        MdeFoldSectionContextCommand,
         MdeShowFoldAllSectionsCommand,
         MdeUnfoldAllSectionsCommand,
-        MdeUnfoldSectionContextCommand,
+        MdeUnfoldSectionCommand,
     )
     from .plugins.footnotes import (
         MdeGatherMissingFootnotesCommand,
