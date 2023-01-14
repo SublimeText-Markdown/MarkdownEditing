@@ -8,85 +8,97 @@ from .color_schemes import clear_color_schemes, clear_invalid_color_schemes, sel
 
 BOOTSTRAP_VERSION = "3.0.3"
 
-package_name = "MarkdownEditing"
+package_name = __package__.split(".")[0]
 
 
-def get_ingored_packages():
-    settings = sublime.load_settings("Preferences.sublime-settings")
-    return settings.get("ignored_packages") or []
-
-
-def save_ingored_packages(ignored_packages):
-    settings = sublime.load_settings("Preferences.sublime-settings")
-    settings.set("ignored_packages", ignored_packages)
-    sublime.save_settings("Preferences.sublime-settings")
-
-
-def disable_native_markdown_package():
-    ignored_packages = get_ingored_packages()
-    if "Markdown" not in ignored_packages:
-        ignored_packages.append("Markdown")
-        save_ingored_packages(ignored_packages)
-
-
-def enable_native_markdown_package():
-    ignored_packages = get_ingored_packages()
-    if "Markdown" in ignored_packages:
-        ignored_packages.remove("Markdown")
-        save_ingored_packages(ignored_packages)
-
-        def reassign():
-            reassign_syntax(
-                "Markdown.sublime-syntax",
-                "Packages/Markdown/Markdown.sublime-syntax",
-            )
-            reassign_syntax(
-                "MultiMarkdown.sublime-syntax",
-                "Packages/Markdown/MultiMarkdown.sublime-syntax",
-            )
-
-        sublime.set_timeout(reassign, 100)
-
-
-def reassign_syntax(current_syntax, new_syntax):
-    for window in sublime.windows():
-        for view in window.views():
-            syntax = view.settings().get("syntax")
-            if syntax and syntax.endswith(current_syntax) and syntax != new_syntax:
-                view.assign_syntax(new_syntax)
-
-
-def bootstrap_syntax_assignments():
+def augment_default_markdown():
     """
-    Reassign syntax to all open Markdown, MultiMarkdown or Plain Text files.
+    Augment ST's default Markdown.sublime-package with MDE's syntaxes.
 
-    Repair syntax assignments of open views after install or upgrade, in case
-    old ones no longer exist.
+    As of ST 4134 builtin Markdown syntax can be used as base syntax for various packages.
+    Hence disabling default package may break at least HAML, Astro, Liquid and probably more.
+
+    To avoid that from happening, MDE creates a Markdown.sublime-package to completely
+    override default package instead. This step prevents MarkdownEditing from extending
+    default Markdown syntax, but it's probably the most safest way to provide all its
+    benefits (additional fenced code blocks) to all other 3rd-party packages.
     """
-    markdown = "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"
-    multimarkdown = "Packages/MarkdownEditing/syntaxes/MultiMarkdown.sublime-syntax"
 
-    for window in sublime.windows():
-        for view in window.views():
-            syntax = view.settings().get("syntax")
-            if syntax:
-                syntax = os.path.basename(syntax)
-                if syntax in ("Markdown.tmLanguage", "Markdown.sublime-syntax"):
-                    view.assign_syntax(markdown)
-                    continue
-                if syntax in ("MultiMarkdown.tmLanguage", "MultiMarkdown.sublime-syntax"):
-                    view.assign_syntax(multimarkdown)
-                    continue
+    dst_path = os.path.join(sublime.installed_packages_path(), "Markdown.sublime-package")
+    if os.path.isfile(dst_path):
+        return
 
-            file_name = view.file_name()
-            if file_name:
-                _, ext = os.path.splitext(file_name)
-                if ext in (".md", ".mdown", ".markdown"):
-                    view.assign_syntax(markdown)
+    from textwrap import dedent
+    from zipfile import ZipFile, ZIP_DEFLATED
+
+    def load_res(syntax):
+        return (
+            sublime.load_resource("/".join(("Packages", package_name, "syntaxes", syntax)))
+            .replace("\r\n", "\n")
+            .replace("\r", "\n")
+        )
+
+    tmp_path = os.path.join(sublime.installed_packages_path(), "Markdown.tmp")
+    with ZipFile(tmp_path, "w", compression=ZIP_DEFLATED) as pkg:
+        # copy unhidden Markdown syntax and assign default file extensions
+        pkg.writestr(
+            "Markdown.sublime-syntax",
+            load_res("Markdown.sublime-syntax").replace(
+                "\nhidden: true\n",
+                dedent(
+                    """
+
+                    file_extensions:
+                      - md
+                      - mdown
+                      - markdown
+                      - markdn
+                    """
+                ),
+            ),
+        )
+        # copy unhidden MultiMarkdown syntax
+        pkg.writestr(
+            "MultiMarkdown.sublime-syntax",
+            load_res("MultiMarkdown.sublime-syntax").replace("\nhidden: true\n", "\n"),
+        )
+        pkg.writestr(
+            "Shell (for Markdown).sublime-syntax",
+            load_res("Shell (for Markdown).sublime-syntax"),
+        )
+        pkg.writestr(
+            "README.md",
+            dedent(
+                """
+                NOTE
+                ====
+
+                This file is auto generated by MarkdownEditing
+                to augment ST's default Markdown syntax.
+                """
+            ).lstrip(),
+        )
+    os.rename(tmp_path, dst_path)
+
+    prefs = sublime.load_settings("Preferences.sublime-settings")
+    ignored = prefs.get("ignored_packages", [])
+    if ignored and "Markdown" in ignored:
+        ignored.remove("Markdown")
+        prefs.set("ignored_packages", ignored)
+        sublime.save_settings("Preferences.sublime-settings")
+
+
+def restore_default_markdown():
+    try:
+        os.remove(os.path.join(sublime.installed_packages_path(), "Markdown.sublime-package"))
+    except OSError:
+        pass
 
 
 def on_after_install():
-    cache_path = os.path.join(sublime.cache_path(), "MarkdownEditing")
+    augment_default_markdown()
+
+    cache_path = os.path.join(sublime.cache_path(), package_name)
     bootstrapped = os.path.join(cache_path, "bootstrapped")
 
     # Check bootstrapped cookie.
@@ -101,8 +113,6 @@ def on_after_install():
     os.makedirs(cache_path, exist_ok=True)
 
     def async_worker():
-        bootstrap_syntax_assignments()
-        disable_native_markdown_package()
         clear_invalid_color_schemes()
         # Update bootstrap cookie.
         open(bootstrapped, "w").write(BOOTSTRAP_VERSION)
@@ -113,11 +123,10 @@ def on_after_install():
 
 
 def on_before_uninstall():
+    restore_default_markdown()
+
     if "package_control" in sys.modules:
         from package_control import events
 
         if events.remove(package_name):
-            # Native package causes some conflicts.
-            enable_native_markdown_package()
-            # Remove syntax specific color schemes.
             clear_color_schemes()

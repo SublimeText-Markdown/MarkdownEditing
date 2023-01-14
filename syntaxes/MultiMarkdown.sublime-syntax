@@ -2,6 +2,7 @@
 ---
 name: MultiMarkdown
 scope: text.html.markdown.multimarkdown
+hidden: true
 
 first_line_match: (?i:^format:\s*complete\s*$)
 
