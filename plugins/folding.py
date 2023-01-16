@@ -322,10 +322,11 @@ class MdeShowFoldAllSectionsCommand(MdeTextCommand):
     """
 
     def run(self, edit):
-        view = self.view
-        view.window().run_command(
-            "show_overlay", {"overlay": "command_palette", "text": "MarkdownEditing: Fold"}
-        )
+        window = self.view.window()
+        if window:
+            window.run_command(
+                "show_overlay", {"overlay": "command_palette", "text": "MarkdownEditing: Fold"}
+            )
 
 
 class MdeFoldAllSectionsCommand(MdeTextCommand):
