@@ -208,7 +208,7 @@ class MdeFoldSectionCommand(MdeTextCommand):
     """
     This class describes a `mde_fold_section` command.
 
-    The command folds or unfolds sections at least one caret is within.
+    The command folds sections at least one caret is within.
 
     It's behavior depends on former call of `mde_fold_all_secitons` command and
     the active `mde.folding.target_level` setting respectively.
@@ -222,15 +222,68 @@ class MdeFoldSectionCommand(MdeTextCommand):
         keep folded if their parent section is unfolded.
     """
 
-    def description(self):
-        return "Toggle fold/unfold on current section"
+    def is_enabled(self):
+        view = self.view
+        target_level = folding_target_level(view)
+        for sel in view.sel():
+            section, _ = section_region_and_level(view, sel.a, target_level)
+            if section:
+                return not bool(folded_region(view, section))
+        return False
+
+    def run(self, edit):
+        view = self.view
+        target_level = folding_target_level(view)
+        sections = []
+        for sel in view.sel():
+            if any(s.contains(sel) for s in sections):
+                continue
+            section, _ = section_region_and_level(view, sel.begin(), target_level)
+            if not section:
+                continue
+            folded_section = folded_region(view, section)
+            if not folded_section:
+                sections.append(section)
+
+        view.fold(sections)
+
+        sublime.status_message(
+            "{} region{} folded".format(len(sections), "s" if len(sections) > 1 else "")
+        )
+
+
+class MdeUnfoldSectionCommand(MdeTextCommand):
+    """
+    This class describes a `mde_unfold_section` command.
+
+    The command unfolds sections at least one caret is within.
+
+    It's behavior depends on former call of `mde_fold_all_secitons` command and
+    the active `mde.folding.target_level` setting respectively.
+
+    -1: The whole section, including all child sections is folded and unfolded.
+        The folded region begins after the nearest heading found before a caret's
+        position and ends with the next heading of same level after the caret.
+     0: The region between two the headings enclosing the caret's position
+        is folded or unfolded. That's the so called outline mode.
+    >0: Like (-1) but all child sections of higher level then `target_level`
+        keep folded if their parent section is unfolded.
+    """
+
+    def is_enabled(self):
+        view = self.view
+        target_level = folding_target_level(view)
+        for sel in view.sel():
+            section, _ = section_region_and_level(view, sel.a, target_level)
+            if section:
+                return bool(folded_region(view, section))
+        return False
 
     def run(self, edit):
         view = self.view
         target_level = folding_target_level(view)
         sections = []
         levels = []
-        unfold = False
         for sel in view.sel():
             if any(s.contains(sel) for s in sections):
                 continue
@@ -242,78 +295,25 @@ class MdeFoldSectionCommand(MdeTextCommand):
                 if folded_section != section:
                     level = section_level(view, folded_section.begin())
                 sections.append(folded_section)
-                unfold = True
-            else:
-                sections.append(section)
             levels.append(level)
 
-        if unfold:
-            regions_to_fold = []
-            if target_level > -1:
-                # keep all child sections folded
-                for section, level in zip(sections, levels):
-                    regions_to_fold.extend(
-                        sections_to_fold(view, section, max(target_level, level + 1))
-                    )
-            else:
-                for section in sections:
-                    regions_to_fold.extend(sections_to_fold(view, section, -1))
-
-            view.unfold(sections)
-            view.fold(regions_to_fold + urls_to_fold(view))
-
+        regions_to_fold = []
+        if target_level > -1:
+            # keep all child sections folded
+            for section, level in zip(sections, levels):
+                regions_to_fold.extend(
+                    sections_to_fold(view, section, max(target_level, level + 1))
+                )
         else:
-            view.fold(sections)
+            for section in sections:
+                regions_to_fold.extend(sections_to_fold(view, section, -1))
+
+        view.unfold(sections)
+        view.fold(regions_to_fold + urls_to_fold(view))
 
         sublime.status_message(
-            "{} region{} {}folded".format(
-                len(sections), "s" if len(sections) > 1 else "", "un" if unfold else ""
-            )
+            "{} region{} unfolded".format(len(sections), "s" if len(sections) > 1 else "")
         )
-
-
-class MdeFoldSectionContextCommand(MdeFoldSectionCommand):
-    """
-    This class describes a `mde_fold_section_context` command.
-    """
-
-    def is_visible(self):
-        if not super().is_visible():
-            return False
-        view = self.view
-        target_level = folding_target_level(view)
-        hasSection = False
-        for sel in view.sel():
-            section, _ = section_region_and_level(view, sel.a, target_level)
-            if section:
-                folded = folded_region(view, section)
-                if folded:
-                    return False
-                else:
-                    hasSection = True
-        return hasSection
-
-
-class MdeUnfoldSectionContextCommand(MdeFoldSectionCommand):
-    """
-    This class describes a `mde_unfold_section_context` command.
-    """
-
-    def is_visible(self):
-        if not super().is_visible():
-            return False
-        view = self.view
-        target_level = folding_target_level(view)
-        hasSection = False
-        for sel in view.sel():
-            section, _ = section_region_and_level(view, sel.a, target_level)
-            if section:
-                folded = folded_region(view, section)
-                if folded:
-                    hasSection = True
-                else:
-                    return False
-        return hasSection
 
 
 class MdeShowFoldAllSectionsCommand(MdeTextCommand):
@@ -322,10 +322,11 @@ class MdeShowFoldAllSectionsCommand(MdeTextCommand):
     """
 
     def run(self, edit):
-        view = self.view
-        view.window().run_command(
-            "show_overlay", {"overlay": "command_palette", "text": "MarkdownEditing: Fold"}
-        )
+        window = self.view.window()
+        if window:
+            window.run_command(
+                "show_overlay", {"overlay": "command_palette", "text": "MarkdownEditing: Fold"}
+            )
 
 
 class MdeFoldAllSectionsCommand(MdeTextCommand):

@@ -133,14 +133,21 @@ Adding or removing `#` at the beginning of lines also modifies heading levels im
 
 Irrelevant sections of documents can be folded/collapsed via Command Palette:
 
-*   **MarkdownEditing: Toggle Folding Current Section**  
-    Whether child sections are folded or unfolded as well depends on folding level defined by calling one of the following commands.
+*   **MarkdownEditing: Fold Current Section**  
+    Whether child sections are folded depends on folding level defined by calling one of the following commands.
 
-    If `Fold All Sections` was called before _("outline mode" is active)_, the region between current and following sibling or child heading is (un)folded only.
+    If `Fold All Sections` was called before _("outline mode" is active)_, the region between current and following sibling or child heading is folded only.
+
+    If `Unfold All Sections` was called before, all child sections are folded.
+
+*   **MarkdownEditing: Unfold Current Section**  
+    Whether child sections are unfolded depends on folding level defined by calling one of the following commands.
+
+    If `Fold All Sections` was called before _("outline mode" is active)_, the region between current and following sibling or child heading is unfolded only.
 
     If `Fold Level 1-6 Sections` was called before, all child sections with lower level keep folded when unfolding their parent section.
 
-    If `Unfold All Sections` was called before, all child sections are (un)folded.
+    If `Unfold All Sections` was called before, all child sections are unfolded.
 
 *   **MarkdownEditing: Fold Level 1-6 Sections**  
     Folds all sections of headings of specific level. Also hides lower level headings.
@@ -158,7 +165,8 @@ Folding is bound to following keys by default:
 | <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
 | <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
 | <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
-| <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold/Unfold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Unfold current section.
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 
 ## Automatic Link Url Folding
