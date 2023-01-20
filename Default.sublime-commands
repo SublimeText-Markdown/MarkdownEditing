@@ -146,8 +146,12 @@
 	//
 
 	{
-		"caption": "MarkdownEditing: Toggle Folding Current Section",
+		"caption": "MarkdownEditing: Fold Current Section",
 		"command": "mde_fold_section"
+	},
+	{
+		"caption": "MarkdownEditing: Unold Current Section",
+		"command": "mde_unfold_section"
 	},
 	{
 		"caption": "MarkdownEditing: Fold Level 1 Sections",

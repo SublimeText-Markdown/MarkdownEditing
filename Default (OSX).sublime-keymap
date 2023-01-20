@@ -678,24 +678,20 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
+	{ "keys": ["super+shift+["], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
-			{ "key": "overlay_visible", "operator": "equal", "operand": false },
-			{ "key": "preceding_text", "operator": "not_regex_match", "operand": "^\\s+", "match_all": true }
+			{ "key": "overlay_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["shift+tab"], "command": "mde_fold_section", "context":
+	{ "keys": ["super+shift+]"], "command": "mde_unfold_section", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
-			{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
-			{ "key": "overlay_visible", "operator": "equal", "operand": false },
-			{ "key": "text", "operator": "regex_contains", "operand": "^(#{1,6}(?!#))|^(-{3,}|={3,})$"}
+			{ "key": "overlay_visible", "operator": "equal", "operand": false }
 		]
 	},
 	{ "keys": ["ctrl+shift+tab"], "command": "mde_show_fold_all_sections", "context":

@@ -21,14 +21,14 @@ on:
 jobs:
   test:
     name: Sublime Text ${{ matrix.st-version }}
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15 # default is 6 hours!
     strategy:
       fail-fast: false
       matrix:
         st-version: [3, 4]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: SublimeText/UnitTesting/actions/setup@v1
         with:
           sublime-text-version: ${{ matrix.st-version }}
