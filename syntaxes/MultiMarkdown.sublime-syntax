@@ -3,6 +3,7 @@
 name: MultiMarkdown
 scope: text.html.markdown.multimarkdown
 version: 2
+hidden: true
 
 extends: Markdown.sublime-syntax
 

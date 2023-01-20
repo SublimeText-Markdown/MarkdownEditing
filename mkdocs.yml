@@ -45,6 +45,11 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.progressbar:
   - pymdownx.arithmatex:
+  - pymdownx.magiclink:
+      repo_url_shortener: true
+      repo_url_shorthand: true
+      user: SublimeText-Markdown
+      repo: MarkdownEditing
   - pymdownx.mark:
   - pymdownx.tilde:
   - pymdownx.striphtml:

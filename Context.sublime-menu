@@ -9,11 +9,11 @@
 			},
 			{
 				"caption": "Fold Section",
-				"command": "mde_fold_section_context"
+				"command": "mde_fold_section"
 			},
 			{
 				"caption": "Unfold Section",
-				"command": "mde_unfold_section_context"
+				"command": "mde_unfold_section"
 			},
 			{
 				"caption": "-",

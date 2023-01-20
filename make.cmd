@@ -52,17 +52,7 @@ goto :usage
 
 :RELEASE
     if "%2"== "" goto :usage
-    set st3_changelog=release-st3-%2.md
-    set st4_changelog=release-st4-%2.md
 
-    if not exist "messages/%st3_changelog%" (
-        echo Missing %st3_changelog%
-        exit /b 1
-    )
-    if not exist "messages/%st4_changelog%" (
-        echo Missing %st4_changelog%
-        exit /b 1
-    )
     git checkout st3176 && git merge st3-develop --no-ff
     if not errorlevel 0 (
         echo Unable to merge st3-develop into st3176!
@@ -85,12 +75,29 @@ goto :usage
         echo Failed to push master!
         exit /b 1
     )
-    echo Hit any key to publish release!
-    pause
-    : create release for ST3
-    gh release create --target st3176 -t "MarkdownEditing %2 (ST3176+)" -F "messages/%st3_changelog%" "3176-%2"
-    : create release for ST3
-    gh release create --target master -t "MarkdownEditing %2 (ST4107+)" -F "messages/%st4_changelog%" "4107-%2"
+
+    for %%d in ("%~dp0.") do set package=%%~nxd
+
+    echo Createing assets for "%package%"...
+
+    :: create downloadable asset for ST4126+
+    set build=3176
+    set archive=%package%-%2-st%build%.sublime-package
+    set assets="%archive%#%archive%"
+    call git tag -f %build%-%2 st%build%
+    call git archive --format zip -o "%archive%" %build%-%2
+
+    :: create downloadable asset for ST4134+
+    set build=4107
+    set archive=%package%-%2-st%build%.sublime-package
+    set assets=%assets% "%archive%#%archive%"
+    call git tag -f %build%-%2 master
+    call git archive --format zip -o "%archive%" %build%-%2
+
+    :: create the release
+    call git push --tags --force
+    gh release create --target master -t "%package% %2" "%2" %assets%
+    del /f /q *.sublime-package
     git fetch
     goto :eof
 
