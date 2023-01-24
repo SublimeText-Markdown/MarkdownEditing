@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[> **Warning**
+>
+> ${0:enter text}
+]]></content>
+	<tabTrigger>ghwarn</tabTrigger>
+	<scope>text.html.markdown - meta.frontmatter - meta.disable-markdown - meta.code-fence - markup.raw</scope>
+	<description>Markdown Admonition</description>
+</snippet>

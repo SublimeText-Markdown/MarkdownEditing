@@ -678,7 +678,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true }
 		]
 	},
-	{ "keys": ["super+shift+["], "command": "mde_fold_section", "context":
+	{ "keys": ["super+alt+["], "command": "mde_fold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
@@ -686,7 +686,7 @@
 			{ "key": "overlay_visible", "operator": "equal", "operand": false }
 		]
 	},
-	{ "keys": ["super+shift+]"], "command": "mde_unfold_section", "context":
+	{ "keys": ["super+alt+]"], "command": "mde_unfold_section", "context":
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw - markup.list", "match_all": true },
 			{ "key": "setting.mde.keymap_disable.fold_section", "operator": "not_equal", "operand": true },
