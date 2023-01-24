@@ -162,12 +162,12 @@ Folding is bound to following keys by default:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold current section.
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Unfold current section.
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>0</kbd> | Unfold all sections
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Tab</kbd> | Fold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Tab</kbd> | Unfold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⌃</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 
 ## Automatic Link Url Folding
 
