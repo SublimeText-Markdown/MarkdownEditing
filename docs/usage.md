@@ -107,10 +107,10 @@ or use one of the following bindings:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>0</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>0</kbd> | convert headings into normal text
-| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>1..6</kbd> | <kbd>^</kbd> + <kbd>k</kbd>, <kbd>^</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
-| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>,</kbd> | <kbd>⇧</kbd> + <kbd>^</kbd> + <kbd>,</kbd> | reduce headings level by one
-| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>.</kbd> | <kbd>⇧</kbd> + <kbd>^</kbd> + <kbd>.</kbd> | increase headings level by one
+| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>0</kbd> | <kbd>⌃</kbd> + <kbd>k</kbd>, <kbd>⌃</kbd> + <kbd>0</kbd> | convert headings into normal text
+| <kbd>Alt</kbd> + <kbd>k</kbd>, <kbd>Alt</kbd> + <kbd>1..6</kbd> | <kbd>⌃</kbd> + <kbd>k</kbd>, <kbd>⌃</kbd> + <kbd>1..6</kbd> | set headings level to 1..6
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>,</kbd> | <kbd>⇧</kbd> + <kbd>⌃</kbd> + <kbd>,</kbd> | reduce headings level by one
+| <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>.</kbd> | <kbd>⇧</kbd> + <kbd>⌃</kbd> + <kbd>.</kbd> | increase headings level by one
 
 Key bindings can be disabled via `"mde.keymap_disable.set_heading_level": true`.
 
@@ -162,12 +162,12 @@ Folding is bound to following keys by default:
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>0</kbd> | Unfold all sections
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌥</kbd> + <kbd>k</kbd>, <kbd>⌥</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold current section.
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Unfold current section.
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>0</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>0</kbd> | Unfold all sections
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>1..6</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>1..6</kbd> | Fold sections by level 1..6
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>9</kbd> | <kbd>⌘</kbd> + <kbd>k</kbd>, <kbd>⌘</kbd> + <kbd>9</kbd> | Fold all sections, but keep headings of any level visible
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Tab</kbd> | Fold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd> | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Tab</kbd> | Unfold current section.
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>⌃</kbd> + <kbd>⇧</kbd> + <kbd>Tab</kbd> | Fold all sections under headings of a certain level.
 
 ## Automatic Link Url Folding
 
