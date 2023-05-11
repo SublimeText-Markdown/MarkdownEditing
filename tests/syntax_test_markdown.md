@@ -1052,6 +1052,11 @@ this must not be bold italic***
 |      ^^^ - entity.name.section
 |       ^^ punctuation.definition.heading.end.markdown
 
+# Headding <u>with</u> tag
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
+|          ^^^ meta.tag
+|                 ^^^^ meta.tag
 
 # TEST: SETEXT HEADINGS #######################################################
 

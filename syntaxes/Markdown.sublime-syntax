@@ -828,6 +828,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
+    - include: markups
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
