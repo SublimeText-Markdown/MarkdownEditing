@@ -135,7 +135,7 @@ variables:
     (?x:             # first word of an infostring is used as language specifier
       (
         [[:alpha:]]  # starts with a letter to make sure not to hit any attribute annotation
-        [^`\s]*      # optionally followed by any nonwhitespace character (except backticks)
+        [^\s:;`]*    # optionally followed by any nonwhitespace character (except backticks)
       )
     )
   fenced_code_block_trailing_infostring_characters: |-
@@ -143,7 +143,7 @@ variables:
       (
         \s*          # any whitespace, or ..
       |
-        \s[^`]*      # any characters (except backticks), separated by whitespace ...
+        [\s:;][^`]*  # any characters (except backticks), separated by colon, semicolon or whitespace ...
       )
       $\n?           # ... until EOL
     )
@@ -873,6 +873,7 @@ contexts:
     - include: images
     - include: literals
     - include: links
+    - include: markups
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
