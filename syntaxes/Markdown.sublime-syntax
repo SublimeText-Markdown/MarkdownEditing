@@ -872,8 +872,13 @@ contexts:
 
   indented-code-blocks:
     # https://spec.commonmark.org/0.30/#indented-code-blocks
-    - match: '{{indented_code_block}}.*$\n?'
-      scope: markup.raw.block.markdown
+    - match: '{{indented_code_block}}'
+      push: indented-code-block-body
+
+  indented-code-block-body:
+    - meta_scope: markup.raw.block.markdown
+    - match: \n
+      pop: 1
 
 ###[ LEAF BLOCKS: FENCED CODE BLOCKS ]########################################
 
