@@ -39,14 +39,14 @@
 		[
 			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*[ ]$" }
-		],
+		]
 	},
 	// unindent by two chars if line starts with even amount of spaces
 	{ "keys": ["shift+tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Left 2.sublime-macro"}, "context":
 		[
 			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*$" }
-		],
+		]
 	},
 	// unindent by two chars if line starts with even amount of spaces
 	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Left 2.sublime-macro"}, "context":
