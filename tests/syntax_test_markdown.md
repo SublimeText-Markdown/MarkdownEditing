@@ -1776,7 +1776,7 @@ FROM TableName
 |^^ punctuation.definition.raw.code-fence.begin.markdown
 |  ^^^ constant.other.language-name.markdown
 
-| <- markup.raw.code-fence.jsx.markdown-gfm source.jsx
+| <- markup.raw.code-fence.jsx.markdown-gfm
 ```
 
 ```jldoctest; filter = r"Stacktrace:(\n \[[0-9]+\].*)*"

@@ -878,7 +878,7 @@ contexts:
   indented-code-block-body:
     - meta_scope: markup.raw.block.markdown
     - match: \n
-      pop: 1
+      pop: true
 
 ###[ LEAF BLOCKS: FENCED CODE BLOCKS ]########################################
 
