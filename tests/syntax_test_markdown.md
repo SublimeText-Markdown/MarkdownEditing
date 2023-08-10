@@ -1842,9 +1842,9 @@ graph n {}
 <div></div>
 |^^^ entity.name.tag.block
 <?php
-| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php meta.embedded punctuation.section.embedded.begin.php
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html meta.embedded punctuation.section.embedded.begin.php
 var_dump(expression);
-| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php meta.embedded source.php meta.function-call
+| <- markup.raw.code-fence.html-php.markdown-gfm embedding.php text.html meta.embedded source.php meta.function-call
 ```
 | <- meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.html-php.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -1946,9 +1946,9 @@ unclosed_paren = (
 
 ```shell
 function foo () {
-| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell keyword.declaration.function.shell 
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell keyword.declaration.function.shell 
 }
-| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell meta.compound.shell punctuation.section.compound.end.shell
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell meta.compound.shell punctuation.section.compound.end.shell
 
 $ ls ~
 | <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive comment.other.shell
@@ -1979,9 +1979,9 @@ function foo () {}
 
    ```shell
    $ ls
-|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell
+|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown
 |  ^ comment.other.shell
-|    ^^ meta.function-call variable.function
+|    ^^ meta.function-call.identifier.shell variable.function.shell
    ```
 
 ```shell-script
@@ -2032,6 +2032,7 @@ declare type foo = 'bar'
 |^^^^^^^^^^^^^^^ meta.code-fence.definition.begin.jsx.markdown-gfm
 |^^ punctuation.definition.raw.code-fence.begin.markdown
 |  ^^^ constant.other.language-name.markdown
+|     ^ - constant
 
 | <- markup.raw.code-fence.jsx.markdown-gfm source.jsx
 ```
@@ -6039,7 +6040,7 @@ foo
 ## https://spec.commonmark.org/0.30/#example-344
 
 <a href="`">`
-| ^^^^^^^^^^ meta.tag.inline.a
+| ^^^^^^^^^^ meta.tag.inline
 |           ^^ - meta.tag - markup.raw - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-345
