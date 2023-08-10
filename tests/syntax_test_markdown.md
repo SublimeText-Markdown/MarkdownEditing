@@ -2021,9 +2021,9 @@ unclosed_paren = (
 |       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
 
 function foo () {
-| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell keyword.declaration.function.shell 
+| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell keyword.declaration.function.shell 
 }
-| <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive.markdown meta.function.shell meta.compound.shell punctuation.section.compound.end.shell
+| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell meta.compound.shell punctuation.section.compound.end.shell
 
 $ ls ~
 | <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive comment.other.shell
