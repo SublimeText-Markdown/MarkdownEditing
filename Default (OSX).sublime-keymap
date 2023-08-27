@@ -8,6 +8,55 @@
 	},
 
 	//
+	// The following key bindings enforce indentation by 2 chars in YAML frontmatter
+	// without regards to syntax specific or global indentation settings,
+	// to avoid YAML parsing errors.
+	//
+
+	// insert newline and indent it by two chars
+	{ "keys": ["enter"], "command": "insert_snippet", "args": { "contents": "\n" }, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "following_text", "operator": "regex_match", "operand": "^$" }
+		]
+	},
+	// indent by one char if line starts with odd amount of spaces
+	{ "keys": ["tab"], "command": "insert", "args": { "characters": " " }, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*[ ]$" }
+		]
+	},
+	// indent by two chars if line starts with even amount of spaces
+	{ "keys": ["tab"], "command": "insert", "args": { "characters": "  " }, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*$" }
+		]
+	},
+	// unindent by one char if line starts with odd amount of spaces
+	{ "keys": ["shift+tab"], "command": "left_delete", "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*[ ]$" }
+		]
+	},
+	// unindent by two chars if line starts with even amount of spaces
+	{ "keys": ["shift+tab"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Left 2.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*$" }
+		]
+	},
+	// unindent by two chars if line starts with even amount of spaces
+	{ "keys": ["backspace"], "command": "run_macro_file", "args": {"file": "Packages/MarkdownEditing/macros/Delete Left 2.sublime-macro"}, "context":
+		[
+			{ "key": "selector", "operand": "text.html.markdown meta.frontmatter source.yaml" },
+			{ "key": "preceding_text", "operator": "regex_match", "operand": "(?:[ ]{2})*$" }
+		]
+	},
+
+	//
 	// Auto-Pairing Astersisks
 	//
 
@@ -947,7 +996,7 @@
 	// Unindent list item no matter of caret position if `shift_tab_unindent` is set
 	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true },
 			{ "key": "setting.shift_tab_unindent", "operator": "equal", "operand": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
@@ -957,7 +1006,7 @@
 	// Unindent list item if caret is in front of bullets
 	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*$", "match_all": true },
@@ -967,7 +1016,7 @@
 	// Unindent list item if caret is behind bullets
 	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
 			{ "key": "preceding_text", "operator": "regex_match", "operand": "^[\\s>]*[-+*]\\s*$", "match_all": true },
@@ -977,7 +1026,7 @@
 	// Unindent list item if caret is at eol
 	{ "keys": ["shift+tab"], "command": "mde_unindent_list_item", "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter", "match_all": true },
 			{ "key": "has_prev_field", "operator": "equal", "operand": false },
 			{ "key": "overlay_visible", "operator": "equal", "operand": false },
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s", "match_all": true },

@@ -17,9 +17,9 @@
             </dict>
             <dict>
                 <key>begin</key>
-                <string>meta.code-fence.definition.begin</string>
+                <string>meta.fold.code-fence.begin</string>
                 <key>end</key>
-                <string>meta.code-fence.definition.end</string>
+                <string>meta.fold.code-fence.end</string>
                 <key>excludeTrailingNewlines</key>
                 <true/>
             </dict>
