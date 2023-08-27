@@ -335,6 +335,16 @@ contexts:
       escape_captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.end.frontmatter.markdown
+    - match: (\+{3})\s*\n
+      captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.begin.frontmatter.markdown
+      embed: scope:source.toml
+      embed_scope: meta.frontmatter.markdown source.toml.embedded.markdown
+      escape: ^(\+{3})\s*\n
+      escape_captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.end.frontmatter.markdown
 
   markdown:
     - include: indented-code-blocks
