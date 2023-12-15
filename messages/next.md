@@ -7,6 +7,8 @@ feedback you can use [GitHub issues][issues].
 
 ## New Features
 
+- syntax highlighting and snippets for Github Alerts (closes #743)
+
 ## Changes
 
 [issues]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues
