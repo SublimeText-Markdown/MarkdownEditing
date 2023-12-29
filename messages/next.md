@@ -10,6 +10,7 @@ feedback you can use [GitHub issues][issues].
 ## New Features
 
 - syntax highlighting and snippets for Github Alerts (closes #743)
+- allow disabling list bullet auto insertion/removal (closes #744)
 
 ## Changes
 
