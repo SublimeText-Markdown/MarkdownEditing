@@ -5,6 +5,8 @@ feedback you can use [GitHub issues][issues].
 
 ## Bug Fixes
 
+- unfold links if `mde.auto_fold_link.enabled` is set false (fixes #742)
+
 ## New Features
 
 - syntax highlighting and snippets for Github Alerts (closes #743)
