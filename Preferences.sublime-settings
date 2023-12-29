@@ -40,6 +40,22 @@
 	// Adds <Tab> after list items instead of a single <space>.
 	"mde.list_align_text": false,
 
+	// MarkdownEditing (Lists):
+	// Automatically insert or remove list item bullets while writing.
+	"mde.list_auto_bullets": true,
+
+	// MarkdownEditing (Lists):
+	// Automatically switches list bullet when indenting blank list item with <Tab>.
+	"mde.list_indent_auto_switch_bullet": false,
+
+	// MarkdownEditing (Lists):
+	// List bullets to be used for automatically switching. In their order.
+	"mde.list_indent_bullets": ["*", "-", "+"],
+
+	// MarkdownEditing (Lists):
+	// Auto increments ordered list number. Set to false if you want always "1".
+	"mde.auto_increment_ordered_list_number": true,
+
 	// MarkdownEditing (References):
 	// The sorting method used by the Organize References command.
 	// Should be one of
@@ -50,19 +66,7 @@
 	"mde.ref_organize_sort": "reference_order",
 	"mde.ref_organize_sort_reverse": false,
 
-	// MarkdownEditing:
-	// Automatically switches list bullet when indenting blank list item with <Tab>.
-	"mde.list_indent_auto_switch_bullet": true,
-
-	// MarkdownEditing:
-	// List bullets to be used for automatically switching. In their order.
-	"mde.list_indent_bullets": ["*", "-", "+"],
-
-	// MarkdownEditing:
-	// Auto increments ordered list number. Set to false if you want always "1".
-	"mde.auto_increment_ordered_list_number": true,
-
-	// MarkdownEditing:
+	// MarkdownEditing (Linting):
 	"mde.lint": {
 		"mdl": {
 			// By default it is mdl.bat on windows and mdl otherwise. Leave it blank to use the default value

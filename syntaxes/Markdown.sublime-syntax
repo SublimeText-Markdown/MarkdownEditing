@@ -311,6 +311,16 @@ contexts:
       escape_captures:
         0: meta.frontmatter.markdown
         1: punctuation.section.block.end.frontmatter.markdown
+    - match: (\+{3})\s*\n
+      captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.begin.frontmatter.markdown
+      embed: scope:source.toml
+      embed_scope: meta.frontmatter.markdown source.toml.embedded.markdown
+      escape: ^(\+{3})\s*\n
+      escape_captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.end.frontmatter.markdown
 
   markdown:
     - include: indented-code-blocks
@@ -336,6 +346,56 @@ contexts:
 
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
+    - match: '[ \t]{,3}(>)[ ]?((\[)!CAUTION(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.caution.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-caution-meta
+        - block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.warning.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-warning-meta
+        - block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.important.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-important-meta
+        - block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.note.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-note-meta
+        - block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.tip.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-tip-meta
+        - block-quote-body
+        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -343,6 +403,31 @@ contexts:
         - block-quote-meta
         - block-quote-body
         - block-quote-punctuation-body
+
+  block-quote-caution-meta:
+    - meta_include_prototype: false
+    - meta_scope: markup.quote.alert.caution.markdown
+    - include: immediately-pop
+
+  block-quote-warning-meta:
+    - meta_include_prototype: false
+    - meta_scope: markup.quote.alert.warning.markdown
+    - include: immediately-pop
+
+  block-quote-important-meta:
+    - meta_include_prototype: false
+    - meta_scope: markup.quote.alert.important.markdown
+    - include: immediately-pop
+
+  block-quote-note-meta:
+    - meta_include_prototype: false
+    - meta_scope: markup.quote.alert.note.markdown
+    - include: immediately-pop
+
+  block-quote-tip-meta:
+    - meta_include_prototype: false
+    - meta_scope: markup.quote.alert.tip.markdown
+    - include: immediately-pop
 
   block-quote-meta:
     - meta_include_prototype: false
@@ -695,6 +780,56 @@ contexts:
         4: markup.list.numbered.markdown
 
   list-block-quotes:
+    - match: '[ \t]{,3}(>)[ ]?((\[)!CAUTION(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.caution.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-caution-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.warning.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-warning-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.important.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-important-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.note.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-note-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
+    - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
+      captures:
+        1: punctuation.definition.blockquote.markdown
+        2: markup.heading.alert.tip.markdown
+        3: punctuation.definition.heading.begin.markdown
+        4: punctuation.definition.heading.end.markdown
+      push:
+        - block-quote-tip-meta
+        - list-block-quote-body
+        - block-quote-punctuation-body
     - match: '[ \t]*(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -939,7 +1074,7 @@ contexts:
     - include: fenced-yaml
     # 3rd-party syntaxes
     - include: fenced-ada
-    - include: fenced-akh
+    - include: fenced-ahk
     - include: fenced-arduino
     - include: fenced-coffee
     - include: fenced-dart
@@ -1855,23 +1990,23 @@ contexts:
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
-  fenced-akh:
+  fenced-ahk:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(akh))
+          (?i:\s*(ahk))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.akh.markdown-gfm
+        0: meta.code-fence.definition.begin.ahk.markdown-gfm
         2: punctuation.definition.raw.code-fence.begin.markdown
         5: constant.other.language-name.markdown
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.akh
-      embed_scope: markup.raw.code-fence.akh.markdown-gfm
+      embed: scope:source.ahk
+      embed_scope: markup.raw.code-fence.ahk.markdown-gfm
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.akh.markdown-gfm
+        0: meta.code-fence.definition.end.ahk.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 

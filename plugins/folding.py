@@ -400,32 +400,33 @@ class MdeFoldLinksListener(MdeViewEventListener):
     This class describes an automatic link folding event listener.
     """
 
-    @classmethod
-    def is_applicable(cls, settings):
-        return MdeViewEventListener.is_applicable(settings) and settings.get(
-            "mde.auto_fold_link.enabled", True
-        )
+    def auto_fold(self):
+        settings = self.view.settings()
+        if settings.get("mde.auto_fold_link.enabled", True):
+            fold_urls(self.view)
+        else:
+            unfold_urls(self.view)
 
     def on_init(self):
         """
         Fold all links after application startup.
         """
-        fold_urls(self.view)
+        self.auto_fold()
 
     def on_load(self):
         """
         Fold all links once file is loaded.
         """
-        fold_urls(self.view)
+        self.auto_fold()
 
     def on_activated(self):
         """
         Update link folding when activating view.
         """
-        fold_urls(self.view)
+        self.auto_fold()
 
     def on_selection_modified(self):
         """
         Update link folding when moving caret around.
         """
-        fold_urls(self.view)
+        self.auto_fold()
