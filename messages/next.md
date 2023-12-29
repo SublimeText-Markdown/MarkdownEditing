@@ -5,10 +5,12 @@ feedback you can use [GitHub issues][issues].
 
 ## Bug Fixes
 
+- fix AutoHotKey scopes and context names
 - unfold links if `mde.auto_fold_link.enabled` is set false (fixes #742)
 
 ## New Features
 
+- syntax highlighting for TOML frontmatters (closes #736)
 - syntax highlighting and snippets for Github Alerts (closes #743)
 - allow disabling list bullet auto insertion/removal (closes #744)
 
