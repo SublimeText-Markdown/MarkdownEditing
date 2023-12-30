@@ -624,14 +624,14 @@ contexts:
         4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      set: block-quote-unordered-list-block-body
+      push: block-quote-unordered-list-block-body
     - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
         4: markup.list.numbered.markdown
-      set: block-quote-ordered-list-block-body
+      push: block-quote-ordered-list-block-body
 
   block-quote-ordered-list-block-body:
     - meta_content_scope: markup.list.numbered.markdown
@@ -691,7 +691,7 @@ contexts:
 
   block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
-      set: block-quote-paragraph-body
+      push: block-quote-paragraph-body
 
   block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown
@@ -856,7 +856,7 @@ contexts:
 
   list-block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
-      set: list-block-quote-paragraph-body
+      push: list-block-quote-paragraph-body
 
   list-block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown

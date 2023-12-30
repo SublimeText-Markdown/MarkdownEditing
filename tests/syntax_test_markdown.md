@@ -7886,6 +7886,66 @@ This is a [[wiki link]].
 |^ markup.quote.alert.caution.markdown - markup.paragraph
 | ^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
 
+> [!CAUTION]
+> 
+> Paragraph 1
+> 
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown - markup.paragraph
+| ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+
+> [!CAUTION]
+> 
+> - list item
+> 
+> - list item
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown
+| ^ markup.quote.alert.caution.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|  ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.unnumbered.markdown
+
+> [!CAUTION]
+> 
+> 1. list item
+> 
+> 2. list item
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown
+| ^^ markup.quote.alert.caution.markdown markup.list.numbered.bullet.markdown
+|  ^ punctuation.definition.list_item.markdown
+|   ^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+
+> [!CAUTION]
+> 
+> 1. list item
+> 
+> 2. list item paragraph 1
+> 
+>    list item paragraph 2
+| <- markup.quote.alert.caution.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+
+> [!CAUTION]
+> 
+> Paragraph 1
+> 
+> # Heading
+>
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
+> [!CAUTION]
+> 
+> ```
+> fenced code
+> ```
+>
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
 > [!WARNING]
 | <- markup.quote.alert.warning.markdown punctuation.definition.blockquote.markdown
 |^^^^^^^^^^^^ markup.quote.alert.warning.markdown
@@ -7957,6 +8017,66 @@ This is a [[wiki link]].
    | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
    |^ markup.quote.alert.caution.markdown - markup.paragraph
    | ^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+
+   > [!CAUTION]
+   > 
+   > Paragraph 1
+   > 
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown - markup.paragraph
+   | ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+   
+   > [!CAUTION]
+   > 
+   > - list item
+   > 
+   > - list item
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown
+   | ^ markup.quote.alert.caution.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+   |  ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.unnumbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > 1. list item
+   > 
+   > 2. list item
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown
+   | ^^ markup.quote.alert.caution.markdown markup.list.numbered.bullet.markdown
+   |  ^ punctuation.definition.list_item.markdown
+   |   ^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > 1. list item
+   > 
+   > 2. list item paragraph 1
+   > 
+   >    list item paragraph 2
+   | <- markup.quote.alert.caution.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > Paragraph 1
+   > 
+   > # Heading
+   >
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
+   > [!CAUTION]
+   > 
+   > ```
+   > fenced code
+   > ```
+   >
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
 
 1. list item   
    > [!WARNING]
