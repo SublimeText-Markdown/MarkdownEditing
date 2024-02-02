@@ -6,6 +6,7 @@ feedback you can use [GitHub issues][issues].
 ## Bug Fixes
 
 - fix premature block quote termination
+- fix extra backticks when creating fenced code blocks (#749)
 
 ## New Features
 
