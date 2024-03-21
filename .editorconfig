@@ -7,14 +7,35 @@ indent_size = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.json]
-indent_style = tab
+# Markdown
 
 [*.md]
+indent_style = space
+indent_size = 2
 trim_trailing_whitespace = false
+
+# JSON
+
+[*.json]
+indent_style = tab
+indent_size = 4
 
 [*.sublime-*]
 indent_style = tab
+indent_size = 4
+
+# XML
 
 [*.tmPreferences]
 indent_style = tab
+indent_size = 4
+
+# YAML
+
+[*.sublime-syntax]
+indent_style = space
+indent_size = 2
+
+[*.yml]
+indent_style = space
+indent_size = 2
