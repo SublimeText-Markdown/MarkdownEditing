@@ -10,6 +10,8 @@ feedback you can use [GitHub issues][issues].
 
 ## New Features
 
+- syntax highlighting for LaTeX in fenced code blocks
+
 ## Changes
 
 [issues]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues

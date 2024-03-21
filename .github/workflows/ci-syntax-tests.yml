@@ -30,10 +30,16 @@ jobs:
         include:
           - build: 4107
             default_packages: v4107
+          - build: 4126
+            default_packages: v4126
+          - build: 4152
+            default_packages: v4152
+          - build: 4169
+            default_packages: v4169
           - build: latest
             default_packages: master
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: SublimeText/syntax-test-action@v2
         with:
           build: ${{ matrix.build }}

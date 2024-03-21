@@ -1911,6 +1911,18 @@ for (var i = 0; i < 10; i++) {
 |^^ meta.code-fence.definition.end.jsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.jsx.markdown-gfm meta.fold.code-fence.end - punctuation
 
+```latex
+| <- meta.code-fence.definition.begin.latex.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.latex.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^^^^^ meta.code-fence.definition.begin.latex.markdown-gfm constant.other.language-name.markdown
+|       ^ meta.code-fence.definition.begin.latex.markdown-gfm meta.fold.code-fence.begin.markdown - punctuation
+
+| <- markup.raw.code-fence.latex.markdown-gfm text.tex.latex
+```
+| <- meta.code-fence.definition.end.latex.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.latex.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.latex.markdown-gfm meta.fold.code-fence.end.markdown - punctuation
+
 ```lisp
 |^^^^^^ meta.code-fence.definition.begin - meta.fold
 |      ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
