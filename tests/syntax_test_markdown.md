@@ -8567,23 +8567,23 @@ $$
 |^ punctuation.definition.math.begin
 | ^ - punctuation
 foo = 1 + 2 * \sqrt{a^2+b^2}
-| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other.math
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
-|   ^ keyword.operator.math
-|     ^ constant.numeric.math
-|       ^ keyword.operator.math
-|         ^ constant.numeric.math
-|           ^ keyword.operator.math
-|             ^^^^^ support.function.math
+|   ^ keyword.operator
+|     ^ constant.numeric
+|       ^ keyword.operator
+|         ^ constant.numeric
+|           ^ keyword.operator
+|             ^^^^^ support.function
 |                  ^^^^^^^^^ meta.group.brace
 |                  ^ punctuation.definition.group.brace.begin
-|                   ^ variable.other.math
-|                    ^ keyword.operator.math
-|                     ^ constant.numeric.math
-|                      ^ keyword.operator.math
-|                       ^ variable.other.math
-|                        ^ keyword.operator.math
-|                         ^ constant.numeric.math
+|                   ^ variable.other
+|                    ^ keyword.operator, punctuation.separator.superscript
+|                     ^ constant.numeric
+|                      ^ keyword.operator
+|                       ^ variable.other
+|                        ^ keyword.operator, punctuation.separator.superscript
+|                         ^ constant.numeric
 |                          ^ punctuation.definition.group.brace.end
 $$
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
@@ -8672,7 +8672,7 @@ $$
    | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.begin
    |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.begin
    foo = 1 + 2
-   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other.math
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other
    $$
    | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
    |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
@@ -8701,9 +8701,9 @@ Math $1+1$ setext heading
 This is math $1+1$ expression, but $ 1+1 $ ,$ 1+1$, $1+1 $ and 1+1$ or $1+1 are not.
 |            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |            ^ punctuation.definition.math.begin
-|             ^ constant.numeric.math
-|              ^ keyword.operator.math
-|               ^ constant.numeric.math
+|             ^ constant.numeric
+|              ^ keyword.operator
+|               ^ constant.numeric
 |                ^ punctuation.definition.math.end
 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
 
@@ -8717,7 +8717,7 @@ Use `\$` to display a dollar sign: $\sqrt{\$4}$
 |   ^^^^ meta.paragraph.markdown markup.raw.inline.markdown
 |                                  ^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |                                  ^ punctuation.definition.math.begin
-|                                   ^^^^^ support.function.math
+|                                   ^^^^^ support.function
 |                                        ^ punctuation.definition.group
 |                                         ^^ constant.character.escape
 |                                           ^ constant.numeric
@@ -8744,7 +8744,7 @@ b$ math.
 Handle incomplete $\sqrt{b$ expressions well.
 |                 ^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |                 ^ punctuation.definition.math.begin
-|                  ^^^^^ support.function.math
+|                  ^^^^^ support.function
 |                       ^^ meta.group.brace
 |                         ^ punctuation.definition.math.end - meta.group
 |                          ^ meta.paragraph.markdown - markup.math
@@ -8774,7 +8774,7 @@ Handle incomplete $\sqrt{b$ expressions well.
    Handle incomplete $\sqrt{b$ expressions well.
    |                 ^^^^^^^^^ meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
    |                 ^ punctuation.definition.math.begin
-   |                  ^^^^^ support.function.math
+   |                  ^^^^^ support.function
    |                       ^^ meta.group.brace
    |                         ^ punctuation.definition.math.end - meta.group
    |                          ^ meta.paragraph.list.markdown - markup.math
