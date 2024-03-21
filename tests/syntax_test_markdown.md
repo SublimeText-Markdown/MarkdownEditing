@@ -1911,6 +1911,18 @@ for (var i = 0; i < 10; i++) {
 |^^ meta.code-fence.definition.end.jsx.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.jsx.markdown-gfm meta.fold.code-fence.end - punctuation
 
+```latex
+| <- meta.code-fence.definition.begin.latex.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^ meta.code-fence.definition.begin.latex.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^^^^^ meta.code-fence.definition.begin.latex.markdown-gfm constant.other.language-name.markdown
+|       ^ meta.code-fence.definition.begin.latex.markdown-gfm meta.fold.code-fence.begin.markdown - punctuation
+
+| <- markup.raw.code-fence.latex.markdown-gfm text.tex.latex
+```
+| <- meta.code-fence.definition.end.latex.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.latex.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.latex.markdown-gfm meta.fold.code-fence.end.markdown - punctuation
+
 ```lisp
 |^^^^^^ meta.code-fence.definition.begin - meta.fold
 |      ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
@@ -8208,6 +8220,66 @@ This is a [[wiki link]].
 |^ markup.quote.alert.caution.markdown - markup.paragraph
 | ^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
 
+> [!CAUTION]
+> 
+> Paragraph 1
+> 
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown - markup.paragraph
+| ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+
+> [!CAUTION]
+> 
+> - list item
+> 
+> - list item
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown
+| ^ markup.quote.alert.caution.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+|  ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.unnumbered.markdown
+
+> [!CAUTION]
+> 
+> 1. list item
+> 
+> 2. list item
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^ markup.quote.alert.caution.markdown
+| ^^ markup.quote.alert.caution.markdown markup.list.numbered.bullet.markdown
+|  ^ punctuation.definition.list_item.markdown
+|   ^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+
+> [!CAUTION]
+> 
+> 1. list item
+> 
+> 2. list item paragraph 1
+> 
+>    list item paragraph 2
+| <- markup.quote.alert.caution.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+
+> [!CAUTION]
+> 
+> Paragraph 1
+> 
+> # Heading
+>
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
+> [!CAUTION]
+> 
+> ```
+> fenced code
+> ```
+>
+> Paragraph 2
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
 > [!WARNING]
 | <- markup.quote.alert.warning.markdown punctuation.definition.blockquote.markdown
 |^^^^^^^^^^^^ markup.quote.alert.warning.markdown
@@ -8279,6 +8351,66 @@ This is a [[wiki link]].
    | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
    |^ markup.quote.alert.caution.markdown - markup.paragraph
    | ^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+
+   > [!CAUTION]
+   > 
+   > Paragraph 1
+   > 
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown - markup.paragraph
+   | ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.paragraph.markdown
+   
+   > [!CAUTION]
+   > 
+   > - list item
+   > 
+   > - list item
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown
+   | ^ markup.quote.alert.caution.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+   |  ^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.unnumbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > 1. list item
+   > 
+   > 2. list item
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^ markup.quote.alert.caution.markdown
+   | ^^ markup.quote.alert.caution.markdown markup.list.numbered.bullet.markdown
+   |  ^ punctuation.definition.list_item.markdown
+   |   ^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > 1. list item
+   > 
+   > 2. list item paragraph 1
+   > 
+   >    list item paragraph 2
+   | <- markup.quote.alert.caution.markdown markup.list.numbered.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown markup.list.numbered.markdown
+   
+   > [!CAUTION]
+   > 
+   > Paragraph 1
+   > 
+   > # Heading
+   >
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+
+   > [!CAUTION]
+   > 
+   > ```
+   > fenced code
+   > ```
+   >
+   > Paragraph 2
+   | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+   |^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
 
 1. list item   
    > [!WARNING]
@@ -8435,23 +8567,23 @@ $$
 |^ punctuation.definition.math.begin
 | ^ - punctuation
 foo = 1 + 2 * \sqrt{a^2+b^2}
-| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other.math
+| <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
-|   ^ keyword.operator.math
-|     ^ constant.numeric.math
-|       ^ keyword.operator.math
-|         ^ constant.numeric.math
-|           ^ keyword.operator.math
-|             ^^^^^ support.function.math
+|   ^ keyword.operator
+|     ^ constant.numeric
+|       ^ keyword.operator
+|         ^ constant.numeric
+|           ^ keyword.operator
+|             ^^^^^ support.function
 |                  ^^^^^^^^^ meta.group.brace
 |                  ^ punctuation.definition.group.brace.begin
-|                   ^ variable.other.math
-|                    ^ keyword.operator.math
-|                     ^ constant.numeric.math
-|                      ^ keyword.operator.math
-|                       ^ variable.other.math
-|                        ^ keyword.operator.math
-|                         ^ constant.numeric.math
+|                   ^ variable.other
+|                    ^ keyword.operator, punctuation.separator.superscript
+|                     ^ constant.numeric
+|                      ^ keyword.operator
+|                       ^ variable.other
+|                        ^ keyword.operator, punctuation.separator.superscript
+|                         ^ constant.numeric
 |                          ^ punctuation.definition.group.brace.end
 $$
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
@@ -8540,7 +8672,7 @@ $$
    | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.begin
    |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.begin
    foo = 1 + 2
-   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other.math
+   | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other
    $$
    | <- markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
    |^ markup.list.numbered.markdown markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
@@ -8569,9 +8701,9 @@ Math $1+1$ setext heading
 This is math $1+1$ expression, but $ 1+1 $ ,$ 1+1$, $1+1 $ and 1+1$ or $1+1 are not.
 |            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |            ^ punctuation.definition.math.begin
-|             ^ constant.numeric.math
-|              ^ keyword.operator.math
-|               ^ constant.numeric.math
+|             ^ constant.numeric
+|              ^ keyword.operator
+|               ^ constant.numeric
 |                ^ punctuation.definition.math.end
 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
 
@@ -8585,7 +8717,7 @@ Use `\$` to display a dollar sign: $\sqrt{\$4}$
 |   ^^^^ meta.paragraph.markdown markup.raw.inline.markdown
 |                                  ^^^^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |                                  ^ punctuation.definition.math.begin
-|                                   ^^^^^ support.function.math
+|                                   ^^^^^ support.function
 |                                        ^ punctuation.definition.group
 |                                         ^^ constant.character.escape
 |                                           ^ constant.numeric
@@ -8612,7 +8744,7 @@ b$ math.
 Handle incomplete $\sqrt{b$ expressions well.
 |                 ^^^^^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |                 ^ punctuation.definition.math.begin
-|                  ^^^^^ support.function.math
+|                  ^^^^^ support.function
 |                       ^^ meta.group.brace
 |                         ^ punctuation.definition.math.end - meta.group
 |                          ^ meta.paragraph.markdown - markup.math
@@ -8642,7 +8774,7 @@ Handle incomplete $\sqrt{b$ expressions well.
    Handle incomplete $\sqrt{b$ expressions well.
    |                 ^^^^^^^^^ meta.paragraph.list.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
    |                 ^ punctuation.definition.math.begin
-   |                  ^^^^^ support.function.math
+   |                  ^^^^^ support.function
    |                       ^^ meta.group.brace
    |                         ^ punctuation.definition.math.end - meta.group
    |                          ^ meta.paragraph.list.markdown - markup.math
