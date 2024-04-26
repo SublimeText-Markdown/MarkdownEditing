@@ -7,6 +7,7 @@ feedback you can use [GitHub issues][issues].
 
 - fix premature block quote termination
 - fix extra backticks when creating fenced code blocks (#749)
+- fix syntax highlighting of single backticks and code-spans in table cells
 
 ## New Features
 

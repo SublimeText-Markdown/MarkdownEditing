@@ -2921,8 +2921,9 @@ bar | baz
 | f\|oo  |
 | ------ |
 | b `|` az |
-|   ^^^ meta.table markup.raw.inline - meta.table.header-separator
-|          ^ meta.table punctuation.separator.table-cell
+|^^^^^^^^^^^ meta.table.markdown-gfm - markup.raw
+|    ^ punctuation.separator.table-cell.markdown
+|          ^ punctuation.separator.table-cell.markdown
 | b **|** im |
 | <- meta.table punctuation.separator.table-cell
 |   ^^^^^ meta.table markup.bold - punctuation.separator.table-cell
@@ -2991,8 +2992,17 @@ not a table |
 |      ^ punctuation.separator.table-cell
 |           ^ punctuation.separator.table-cell
 |`test | me |
-|^ invalid.deprecated.unescaped-backticks
+|^^^^^^^^^^^^^ meta.table.markdown-gfm - markup.raw
 |      ^ punctuation.separator.table-cell
+| ` ` | ` me ` |
+| <- meta.table.markdown-gfm punctuation.separator.table-cell.markdown
+| ^^^ meta.table.markdown-gfm markup.raw.inline.markdown
+| ^ punctuation.definition.raw.begin.markdown
+|   ^ punctuation.definition.raw.end.markdown
+|     ^ punctuation.separator.table-cell
+|       ^^^^^^ markup.raw.inline.markdown
+|       ^ punctuation.definition.raw.begin.markdown
+|            ^ punctuation.definition.raw.end.markdown
 
 | table | followed by
 paragraph
