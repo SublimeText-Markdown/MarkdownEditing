@@ -9,7 +9,7 @@
 #
 # The scope suffix should indicate which flavor of Markdown the feature came from,
 # to help make this syntax definition easier to maintain.
-name: Markdown
+name: Markdown (MDE)
 scope: text.html.markdown
 version: 2
 hidden: true
@@ -3135,13 +3135,21 @@ contexts:
   table-cell-content:
     - match: (?={{balanced_emphasis}})
       push: table-cell-emphasis
-    - match: (?!{{backticks}})`+
-      scope: invalid.deprecated.unescaped-backticks.markdown
+    - include: table-cell-code-spans
     - include: table-cell-separators
     - include: images
-    - include: literals
+    - include: critics
+    - include: math-inline
+    - include: escapes
     - include: links
     - include: markups
+
+  table-cell-code-spans:
+    - match: (`+)[^`|]+(\1)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
 
   table-cell-emphasis:
     - include: emphasis
