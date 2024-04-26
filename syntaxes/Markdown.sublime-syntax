@@ -9,7 +9,7 @@
 #
 # The scope suffix should indicate which flavor of Markdown the feature came from,
 # to help make this syntax definition easier to maintain.
-name: Markdown
+name: Markdown (MDE)
 scope: text.html.markdown
 hidden: true
 
@@ -355,7 +355,6 @@ contexts:
       push:
         - block-quote-caution-meta
         - block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -365,7 +364,6 @@ contexts:
       push:
         - block-quote-warning-meta
         - block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -375,7 +373,6 @@ contexts:
       push:
         - block-quote-important-meta
         - block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -385,7 +382,6 @@ contexts:
       push:
         - block-quote-note-meta
         - block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -395,7 +391,6 @@ contexts:
       push:
         - block-quote-tip-meta
         - block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -624,14 +619,14 @@ contexts:
         4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
         5: markup.checkbox.mark.markdown-gfm
         6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
-      set: block-quote-unordered-list-block-body
+      push: block-quote-unordered-list-block-body
     - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
         1: markup.list.numbered.markdown
         2: markup.list.numbered.bullet.markdown
         3: punctuation.definition.list_item.markdown
         4: markup.list.numbered.markdown
-      set: block-quote-ordered-list-block-body
+      push: block-quote-ordered-list-block-body
 
   block-quote-ordered-list-block-body:
     - meta_content_scope: markup.list.numbered.markdown
@@ -691,7 +686,7 @@ contexts:
 
   block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
-      set: block-quote-paragraph-body
+      push: block-quote-paragraph-body
 
   block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown
@@ -789,7 +784,6 @@ contexts:
       push:
         - block-quote-caution-meta
         - list-block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -799,7 +793,6 @@ contexts:
       push:
         - block-quote-warning-meta
         - list-block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -809,7 +802,6 @@ contexts:
       push:
         - block-quote-important-meta
         - list-block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -819,7 +811,6 @@ contexts:
       push:
         - block-quote-note-meta
         - list-block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -829,7 +820,6 @@ contexts:
       push:
         - block-quote-tip-meta
         - list-block-quote-body
-        - block-quote-punctuation-body
     - match: '[ \t]*(>)[ ]?'
       captures:
         1: punctuation.definition.blockquote.markdown
@@ -856,7 +846,7 @@ contexts:
 
   list-block-quote-paragraph:
     - match: '[ \t]*(?=\S)'
-      set: list-block-quote-paragraph-body
+      push: list-block-quote-paragraph-body
 
   list-block-quote-paragraph-body:
     - meta_scope: markup.paragraph.markdown
@@ -1050,6 +1040,7 @@ contexts:
     - include: fenced-jsonc
     - include: fenced-jspx
     - include: fenced-jsx
+    - include: fenced-latex
     - include: fenced-lisp
     - include: fenced-lua
     - include: fenced-makefile
@@ -1503,6 +1494,26 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.jsx.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-latex:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(latex|tex))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.latex.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.tex.latex
+      embed_scope: markup.raw.code-fence.latex.markdown-gfm
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.latex.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
@@ -2899,13 +2910,21 @@ contexts:
   table-cell-content:
     - match: (?={{balanced_emphasis}})
       push: table-cell-emphasis
-    - match: (?!{{backticks}})`+
-      scope: invalid.deprecated.unescaped-backticks.markdown
+    - include: table-cell-code-spans
     - include: table-cell-separators
     - include: images
-    - include: literals
+    - include: critics
+    - include: math-inline
+    - include: escapes
     - include: links
     - include: markups
+
+  table-cell-code-spans:
+    - match: (`+)[^`|]+(\1)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
 
   table-cell-emphasis:
     - include: emphasis
