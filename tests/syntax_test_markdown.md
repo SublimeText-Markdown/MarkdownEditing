@@ -8579,21 +8579,21 @@ $$
 foo = 1 + 2 * \sqrt{a^2+b^2}
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar variable.other.math
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
-|   ^ keyword.operator.math
-|     ^ constant.numeric.math
-|       ^ keyword.operator.math
-|         ^ constant.numeric.math
-|           ^ keyword.operator.math
+|   ^ keyword.operator
+|     ^ constant.numeric
+|       ^ keyword.operator
+|         ^ constant.numeric
+|           ^ keyword.operator
 |             ^^^^^ support.function.math
 |                  ^^^^^^^^^ meta.group.brace
 |                  ^ punctuation.definition.group.brace.begin
 |                   ^ variable.other.math
-|                    ^ keyword.operator.math
-|                     ^ constant.numeric.math
-|                      ^ keyword.operator.math
+|                    ^ keyword.operator
+|                     ^ constant.numeric
+|                      ^ keyword.operator
 |                       ^ variable.other.math
-|                        ^ keyword.operator.math
-|                         ^ constant.numeric.math
+|                        ^ keyword.operator
+|                         ^ constant.numeric
 |                          ^ punctuation.definition.group.brace.end
 $$
 | <- markup.math.block.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar punctuation.definition.math.end
@@ -8711,9 +8711,9 @@ Math $1+1$ setext heading
 This is math $1+1$ expression, but $ 1+1 $ ,$ 1+1$, $1+1 $ and 1+1$ or $1+1 are not.
 |            ^^^^^ meta.paragraph.markdown markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar
 |            ^ punctuation.definition.math.begin
-|             ^ constant.numeric.math
-|              ^ keyword.operator.math
-|               ^ constant.numeric.math
+|             ^ constant.numeric
+|              ^ keyword.operator
+|               ^ constant.numeric
 |                ^ punctuation.definition.math.end
 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup.math
 
