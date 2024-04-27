@@ -9,7 +9,7 @@
 #
 # The scope suffix should indicate which flavor of Markdown the feature came from,
 # to help make this syntax definition easier to maintain.
-name: Markdown (MDE)
+name: Markdown
 scope: text.html.markdown
 hidden: true
 
@@ -106,6 +106,12 @@ variables:
       # something other than whitespace followed by a pipe char or hyphon,
       # followed by something other than whitespace and the end of the line
     | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
+    )
+
+  table_codespan_content: |-
+    (?x:
+      [^`|]             # first or only char must not be a backtick or pipe.
+      (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
     )
 
   fenced_code_block_start: |-
@@ -2920,11 +2926,39 @@ contexts:
     - include: markups
 
   table-cell-code-spans:
-    - match: (`+)[^`|]+(\1)
+    # code-spans quoted with up to 6 backticks are supported
+    # to avoid usage of slower Oniguruma features
+    - match: (`{6}){{table_codespan_content}}(`{6})(?!`)
       scope: markup.raw.inline.markdown
       captures:
         1: punctuation.definition.raw.begin.markdown
         2: punctuation.definition.raw.end.markdown
+    - match: (`{5}){{table_codespan_content}}(`{5})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{4}){{table_codespan_content}}(`{4})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{3}){{table_codespan_content}}(`{3})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{2}){{table_codespan_content}}(`{2})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{1}){{table_codespan_content}}(`{1})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: \`+  # consume remainers
 
   table-cell-emphasis:
     - include: emphasis
