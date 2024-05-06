@@ -3195,6 +3195,54 @@ test
 > bar
 | <- markup.quote punctuation.definition.blockquote - meta.table
 
+| c1  |  c2    | c3      | c4     | c5          | c6       | c7
+| --- | ---    | ---     | ---    | ---         | ---      | ---
+| ` ` | ` me ` | `` ` `` | ` `` ` | ``foo`bar`` | ```foo`` | ``foo```
+| <- meta.table.markdown-gfm punctuation.separator.table-cell.markdown
+| ^^^ meta.table.markdown-gfm markup.raw.inline.markdown
+| ^ punctuation.definition.raw.begin.markdown
+|   ^ punctuation.definition.raw.end.markdown
+|     ^ punctuation.separator.table-cell
+|       ^^^^^^ markup.raw.inline.markdown
+|       ^ punctuation.definition.raw.begin.markdown
+|            ^ punctuation.definition.raw.end.markdown
+|                ^^^^^^^ markup.raw.inline.markdown
+|                ^^ punctuation.definition.raw.begin.markdown
+|                  ^^^ - punctuation
+|                     ^^ punctuation.definition.raw.end.markdown
+|                        ^ punctuation.separator.table-cell
+|                          ^^^^^^ markup.raw.inline.markdown
+|                          ^ punctuation.definition.raw.begin.markdown
+|                           ^^^^ - punctuation
+|                               ^ punctuation.definition.raw.end.markdown
+|                                 ^ punctuation.separator.table-cell
+|                                   ^^^^^^^^^^^ markup.raw.inline.markdown
+|                                   ^^ punctuation.definition.raw.begin.markdown
+|                                     ^^^^^^^ - punctuation
+|                                            ^^ punctuation.definition.raw.end.markdown
+|                                               ^ punctuation.separator.table-cell
+|                                                 ^^^^^^^^ - markup.raw
+
+| c1             |  c2                 |
+| ---            | ---                 |
+| ```` ``` ````  | `````` ````` `````` |
+| ^^^^^^^^^^^^^ markup.raw.inline.markdown
+| ^^^^ punctuation.definition.raw.begin.markdown
+|     ^^^^^ - punctuation
+|          ^^^^ punctuation.definition.raw.end.markdown
+|                  ^^^^^^^^^^^^^^^^^^^ markup.raw.inline.markdown
+|                  ^^^^^^ punctuation.definition.raw.begin.markdown
+|                        ^^^^^^^ - punctuation
+|                               ^^^^^^ punctuation.definition.raw.end.markdown
+| table with | `multiple` code `spans`) |
+| <- punctuation.separator.table-cell
+|            ^ punctuation.separator.table-cell
+|              ^^^^^^^^^^ markup.raw.inline
+|                        ^^^^^^ - markup.raw.inline
+|                              ^^^^^^^ markup.raw.inline
+
+
+
 `|` this `|` example `|` is not a table `|`
 | ^ punctuation.definition.raw.end - meta.table
 | nor is this | because it is not at block level, it immediately follows a paragraph |
@@ -3251,15 +3299,6 @@ not a table |
 |`test | me |
 |^^^^^^^^^^^^^ meta.table.markdown-gfm - markup.raw
 |      ^ punctuation.separator.table-cell
-| ` ` | ` me ` |
-| <- meta.table.markdown-gfm punctuation.separator.table-cell.markdown
-| ^^^ meta.table.markdown-gfm markup.raw.inline.markdown
-| ^ punctuation.definition.raw.begin.markdown
-|   ^ punctuation.definition.raw.end.markdown
-|     ^ punctuation.separator.table-cell
-|       ^^^^^^ markup.raw.inline.markdown
-|       ^ punctuation.definition.raw.begin.markdown
-|            ^ punctuation.definition.raw.end.markdown
 
 | table | followed by
 paragraph
@@ -8588,11 +8627,11 @@ foo = 1 + 2 * \sqrt{a^2+b^2}
 |                  ^^^^^^^^^ meta.group.brace
 |                  ^ punctuation.definition.group.brace.begin
 |                   ^ variable.other.math
-|                    ^ keyword.operator
+|                    ^ keyword.operator, punctuation.separator.superscript
 |                     ^ constant.numeric
 |                      ^ keyword.operator
 |                       ^ variable.other.math
-|                        ^ keyword.operator
+|                        ^ keyword.operator, punctuation.separator.superscript
 |                         ^ constant.numeric
 |                          ^ punctuation.definition.group.brace.end
 $$
