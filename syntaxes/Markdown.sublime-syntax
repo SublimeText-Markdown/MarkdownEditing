@@ -1127,7 +1127,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(applescript|osascript))
+          (?i:\s*(applescript|osascript|scpt))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.applescript.markdown-gfm
@@ -1247,7 +1247,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(diff|patch))
+          (?i:\s*(u?diff|patch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.diff.markdown-gfm
@@ -1267,7 +1267,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(bat|cmd|dos))
+          (?i:\s*(bat(?:ch(?:file)?)?|cmd|(?:dos|win)batch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
@@ -1287,7 +1287,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(erlang|escript))
+          (?i:\s*(erl(?:ang)?|escript))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.erlang.markdown-gfm
@@ -1307,7 +1307,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(graphviz))
+          (?i:\s*(dot|graphviz|gv))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.graphviz.markdown-gfm
@@ -1347,7 +1347,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(haskell))
+          (?i:\s*(haskell|hsc?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.haskell.markdown-gfm
@@ -1367,7 +1367,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(html\+php))
+          (?i:\s*(html\+php|phtml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.html-php.markdown-gfm
@@ -1387,7 +1387,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(html))
+          (?i:\s*(x?html))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.html.markdown-gfm
@@ -1427,7 +1427,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(javascript|js))
+          (?i:\s*(javascript|js|node))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.javascript.markdown-gfm
@@ -1567,7 +1567,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(makefile))
+          (?i:\s*(make(?:file)?|mf))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.makefile.markdown-gfm
@@ -1669,7 +1669,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(perl))
+          (?i:\s*(perl5?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.perl.markdown-gfm
@@ -1709,7 +1709,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(python|py))
+          (?i:\s*(python3?|py))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.python.markdown-gfm
@@ -1909,7 +1909,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(typescript|ts))
+          (?i:\s*(typescript|ts(?:node)?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.typescript.markdown-gfm
@@ -3738,7 +3738,7 @@ contexts:
     - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
     # 1. When an autolink ends in ), we scan the entire autolink for the total
     #    number of parentheses. If there is a greater number of closing parentheses
-    #    than opening ones, we donâ€™t consider the last character part of the
+    #    than opening ones, we don’t consider the last character part of the
     #    autolink, in order to facilitate including an autolink inside a parenthesis
     # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
     #    resemble an entity reference; if the preceding text is & followed by one
