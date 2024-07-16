@@ -5,7 +5,8 @@ feedback you can use [GitHub issues][issues].
 
 ## Bug Fixes
 
-- improve code span patterns in table cells
+* improve code span patterns in table cells
+* Fix Terraform syntax highlighting in fenced code blocks (#765)
 
 ## New Features
 

@@ -2521,7 +2521,7 @@ contexts:
         5: constant.other.language-name.markdown
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.json.terraform
+      embed: scope:source.terraform
       embed_scope: markup.raw.code-fence.terraform.markdown-gfm
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
