@@ -1038,6 +1038,7 @@ contexts:
     - include: fenced-erlang
     - include: fenced-graphviz
     - include: fenced-golang
+    - include: fenced-groovy
     - include: fenced-haskell
     - include: fenced-html-php
     - include: fenced-html
@@ -1320,6 +1321,26 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.graphviz.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-groovy:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(groovy))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.groovy.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:source.groovy
+      embed_scope: markup.raw.code-fence.groovy.markdown-gfm
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.groovy.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 

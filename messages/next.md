@@ -11,6 +11,8 @@ feedback you can use [GitHub issues][issues].
 
 ## New Features
 
+* syntax highlighting for Groovy in fenced code blocks (#768)
+
 ## Changes
 
 [issues]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues

@@ -1610,6 +1610,16 @@ graph n {}
 |^^ meta.code-fence.definition.end.graphviz.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.graphviz.markdown-gfm meta.fold.code-fence.end - punctuation
 
+```groovy
+| ^^^^^^^ meta.code-fence.definition.begin.groovy.markdown-gfm - meta.fold
+|        ^ meta.code-fence.definition.begin.groovy.markdown-gfm meta.fold.code-fence.begin.markdown
+
+| <- markup.raw.code-fence.groovy.markdown-gfm source.groovy
+```
+| <- meta.code-fence.definition.end.groovy.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.groovy.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.groovy.markdown-gfm meta.fold.code-fence.end - punctuation
+
 ```haskell
 |^^^^^^^^^ meta.code-fence.definition.begin - meta.fold
 |         ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
