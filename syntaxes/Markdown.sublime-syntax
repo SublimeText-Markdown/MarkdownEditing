@@ -1439,7 +1439,9 @@ contexts:
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
       embed: scope:source.groovy
-      embed_scope: markup.raw.code-fence.groovy.markdown-gfm
+      embed_scope:
+        markup.raw.code-fence.groovy.markdown-gfm
+        source.groovy
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.groovy.markdown-gfm

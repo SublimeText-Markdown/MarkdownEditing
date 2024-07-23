@@ -240,6 +240,14 @@
 			"details": "Specifies <code>GraphViz</code> code highlighting"
 		},
 
+		// Groovy
+		{
+			"trigger": "groovy",
+			"annotation": "Groovy",
+			"kind": ["markup", "s", "Syntax"],
+			"details": "Specifies <code>Groovy</code> code highlighting"
+		},
+
 		// Haskell
 		{
 			"trigger": "haskell",
