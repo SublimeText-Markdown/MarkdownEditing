@@ -11,6 +11,7 @@ feedback you can use [GitHub issues][issues].
 
 ## New Features
 
+* syntax highlighting for `==highlight==` emphasis (#764)
 * syntax highlighting for Groovy in fenced code blocks (#768)
 
 ## Changes

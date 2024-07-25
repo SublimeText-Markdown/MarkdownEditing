@@ -6947,6 +6947,117 @@ __test <span>text__ *formatted</span>*
 |                   ^ punctuation
 |                                    ^ punctuation
 
+# TEST: HIGHLIGHT #############################################################
+
+__==bold highlight==__
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.highlight
+| ^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.highlight.markdown
+|                   ^^ markup.bold.markdown - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|                 ^^ punctuation.definition.highlight.end.markdown 
+|                   ^^ punctuation.definition.bold.end.markdown
+
+**==bold highlight==**
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.highlight
+| ^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.highlight.markdown
+|                   ^^ markup.bold.markdown - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|                 ^^ punctuation.definition.highlight.end.markdown 
+|                   ^^ punctuation.definition.bold.end.markdown
+
+_==italic highlight==_
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.highlight.markdown
+|                    ^ markup.italic.markdown - markup.highlight
+|^^ punctuation.definition.highlight.begin.markdown
+|                  ^^ punctuation.definition.highlight.end.markdown 
+|                    ^ punctuation.definition.italic.end.markdown
+
+*==italic highlight==*
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.highlight.markdown
+|                    ^ markup.italic.markdown - markup.highlight
+|^^ punctuation.definition.highlight.begin.markdown
+|                  ^^ punctuation.definition.highlight.end.markdown 
+|                    ^ punctuation.definition.italic.end.markdown
+
+___==bold italic highlight==___
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.highlight
+| ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.highlight.markdown
+|                           ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|                            ^^ markup.bold.markdown - markup.italic - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.highlight.begin.markdown
+|                         ^^ punctuation.definition.highlight.end.markdown 
+|                           ^ punctuation.definition.italic.end.markdown
+|                            ^^ punctuation.definition.bold.end.markdown
+
+***==bold italic highlight==***
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.highlight
+| ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.highlight.markdown
+|                           ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|                            ^^ markup.bold.markdown - markup.italic - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.highlight.begin.markdown
+|                         ^^ punctuation.definition.highlight.end.markdown 
+|                           ^ punctuation.definition.italic.end.markdown
+|                            ^^ punctuation.definition.bold.end.markdown
+
+=Hi= Hello, world!
+| <- - punctuation.definition.highlight
+|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|  ^ - punctuation.definition.highlight
+
+This =text==== is ====curious=.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|    ^ - punctuation.definition.highlight
+|         ^^^^ - punctuation.definition.highlight
+|                 ^^^^ - punctuation.definition.highlight
+|                            ^ - punctuation.definition.highlight
+
+This ==text==== is ====curious==.
+|^^^^ meta.paragraph - markup
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.highlight
+|                               ^^ meta.paragraph - markup
+|    ^^ punctuation.definition.highlight.begin
+|          ^^^^ - punctuation.definition.highlight
+|                  ^^^^ - punctuation.definition.highlight
+|                             ^^ punctuation.definition.highlight.end
+
+This ==is ==highlighted== inline text
+|^^^^ - markup.highlight
+|    ^^^^^^^^^^^^^^^^^^^^ markup.highlight.markdown
+|                        ^^^^^^^^^^^^ - markup.highlight
+
+This ==has a
+|    ^^^^^^^^ meta.paragraph markup.highlight
+
+| <- meta.paragraph markup.highlight invalid.illegal.non-terminated.bold-italic
+new paragraph==.
+|            ^^ meta.paragraph markup.highlight punctuation.definition.highlight.begin
+
+| <- invalid.illegal.non-terminated.bold-italic
+
+A ==[highlight](https://link-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+A ==![highlight](https://image-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+A ==[![highlight](image-url)](link-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+
 # TEST: STRIKETHROUGH #########################################################
 
 __~~bold striked~~__
@@ -7034,6 +7145,11 @@ This ~~text~~~~ is ~~~~curious~~.
 |                  ^^^^ - punctuation.definition.strikethrough
 |                             ^^ punctuation.definition.strikethrough.end
 
+This ~~is ~~striked~~ inline text
+|^^^^ - markup.strikethrough
+|    ^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
+|                    ^^^^^^^^^^^^^ - markup.strikethrough
+
 This ~~has a
 |    ^^^^^^^^ meta.paragraph markup.strikethrough
 
@@ -7043,13 +7159,13 @@ new paragraph~~.
 
 | <- invalid.illegal.non-terminated.bold-italic
 
-A ~~[striked](https://link-url)~~
+A ~~[highlight](https://link-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
-A ~~![striked](https://image-url)~~
+A ~~![highlight](https://image-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
-A ~~[![striked](image-url)](link-url)~~
+A ~~[![highlight](image-url)](link-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
 
