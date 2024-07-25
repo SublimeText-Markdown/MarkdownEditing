@@ -3244,6 +3244,7 @@ contexts:
   emphasis:
     - include: bold
     - include: italic
+    - include: highlight
     - include: strikethrough
 
   images:
@@ -3378,6 +3379,7 @@ contexts:
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       set: bold-after-bold-italic-asterisk
     - include: emphasis-common
+    - include: highlight
     - include: strikethrough
 
   bold-after-bold-italic-asterisk:
@@ -3424,6 +3426,7 @@ contexts:
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-underscore
     - include: emphasis-common
+    - include: highlight
     - include: strikethrough
 
   bold-after-bold-italic-underscore:
@@ -3453,6 +3456,7 @@ contexts:
   bold-common:
     - include: emphasis-common
     - include: italic
+    - include: highlight
     - include: strikethrough
 
   italic:
@@ -3492,7 +3496,24 @@ contexts:
   italic-common:
     - include: emphasis-common
     - include: bold
+    - include: highlight
     - include: strikethrough
+
+  highlight:
+    - match: ==(?![=>\s])  # 2x = but no =>
+      scope: punctuation.definition.highlight.begin.markdown
+      push: highlight-content
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  highlight-content:
+    - meta_scope: markup.highlight.markdown
+    - match: ==(?!=)  # 2x =
+      scope: punctuation.definition.highlight.end.markdown
+      pop: 1
+    - match: '[ \t]*=+'
+    - include: emphasis-common
+    - include: bold
+    - include: italic
 
   strikethrough:
     # https://github.github.com/gfm/#strikethrough-extension-
@@ -3506,7 +3527,7 @@ contexts:
     - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
       scope: punctuation.definition.strikethrough.end.markdown
       pop: 1
-    - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
+    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
     - include: bold
     - include: italic
@@ -3995,7 +4016,7 @@ contexts:
     - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
     # 1. When an autolink ends in ), we scan the entire autolink for the total
     #    number of parentheses. If there is a greater number of closing parentheses
-    #    than opening ones, we donâ€™t consider the last character part of the
+    #    than opening ones, we don’t consider the last character part of the
     #    autolink, in order to facilitate including an autolink inside a parenthesis
     # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
     #    resemble an entity reference; if the preceding text is & followed by one
