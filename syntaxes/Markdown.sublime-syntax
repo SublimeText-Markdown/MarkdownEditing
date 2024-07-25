@@ -9,7 +9,7 @@
 #
 # The scope suffix should indicate which flavor of Markdown the feature came from,
 # to help make this syntax definition easier to maintain.
-name: Markdown (MDE)
+name: Markdown
 scope: text.html.markdown
 version: 2
 hidden: true
@@ -118,6 +118,12 @@ variables:
       # something other than whitespace followed by a pipe char or hyphen,
       # followed by something other than whitespace and the end of the line
     | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
+    )
+
+  table_codespan_content: |-
+    (?x:
+      [^`|]             # first or only char must not be a backtick or pipe.
+      (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
     )
 
   fenced_code_block_start: |-
@@ -1112,6 +1118,7 @@ contexts:
     - include: fenced-erlang
     - include: fenced-graphviz
     - include: fenced-golang
+    - include: fenced-groovy
     - include: fenced-haskell
     - include: fenced-html-php
     - include: fenced-html
@@ -1203,7 +1210,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(applescript|osascript))
+          (?i:\s*(applescript|osascript|scpt))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.applescript.markdown-gfm
@@ -1335,7 +1342,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(diff|patch))
+          (?i:\s*(u?diff|patch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.diff.markdown-gfm
@@ -1357,7 +1364,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(bat|cmd|dos))
+          (?i:\s*(bat(?:ch(?:file)?)?|cmd|(?:dos|win)batch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
@@ -1379,7 +1386,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(erlang|escript))
+          (?i:\s*(erl(?:ang)?|escript))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.erlang.markdown-gfm
@@ -1401,7 +1408,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(graphviz))
+          (?i:\s*(dot|graphviz|gv))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.graphviz.markdown-gfm
@@ -1416,6 +1423,28 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.graphviz.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-groovy:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(groovy))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.groovy.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:source.groovy
+      embed_scope:
+        markup.raw.code-fence.groovy.markdown-gfm
+        source.groovy
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.groovy.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
@@ -1445,7 +1474,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(haskell))
+          (?i:\s*(haskell|hsc?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.haskell.markdown-gfm
@@ -1467,7 +1496,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(html\+php))
+          (?i:\s*(html\+php|phtml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.html-php.markdown-gfm
@@ -1489,7 +1518,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(html))
+          (?i:\s*(x?html))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.html.markdown-gfm
@@ -1533,7 +1562,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(javascript|js))
+          (?i:\s*(javascript|js|node))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.javascript.markdown-gfm
@@ -1687,7 +1716,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(makefile))
+          (?i:\s*(make(?:file)?|mf))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.makefile.markdown-gfm
@@ -1797,7 +1826,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(perl))
+          (?i:\s*(perl5?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.perl.markdown-gfm
@@ -1841,7 +1870,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(python|py))
+          (?i:\s*(python3?|py))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.python.markdown-gfm
@@ -2061,7 +2090,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(typescript|ts))
+          (?i:\s*(typescript|ts(?:node)?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.typescript.markdown-gfm
@@ -2731,10 +2760,10 @@ contexts:
         5: constant.other.language-name.markdown
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.json.terraform
+      embed: scope:source.terraform
       embed_scope:
         markup.raw.code-fence.terraform.markdown-gfm
-        source.json.terraform
+        source.terraform
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.terraform.markdown-gfm
@@ -3145,11 +3174,39 @@ contexts:
     - include: markups
 
   table-cell-code-spans:
-    - match: (`+)[^`|]+(\1)
+    # code-spans quoted with up to 6 backticks are supported
+    # to avoid usage of slower Oniguruma features
+    - match: (`{6}){{table_codespan_content}}(`{6})(?!`)
       scope: markup.raw.inline.markdown
       captures:
         1: punctuation.definition.raw.begin.markdown
         2: punctuation.definition.raw.end.markdown
+    - match: (`{5}){{table_codespan_content}}(`{5})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{4}){{table_codespan_content}}(`{4})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{3}){{table_codespan_content}}(`{3})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{2}){{table_codespan_content}}(`{2})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: (`{1}){{table_codespan_content}}(`{1})(?!`)
+      scope: markup.raw.inline.markdown
+      captures:
+        1: punctuation.definition.raw.begin.markdown
+        2: punctuation.definition.raw.end.markdown
+    - match: \`+  # consume remainers
 
   table-cell-emphasis:
     - include: emphasis
@@ -3187,6 +3244,7 @@ contexts:
   emphasis:
     - include: bold
     - include: italic
+    - include: highlight
     - include: strikethrough
 
   images:
@@ -3321,6 +3379,7 @@ contexts:
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       set: bold-after-bold-italic-asterisk
     - include: emphasis-common
+    - include: highlight
     - include: strikethrough
 
   bold-after-bold-italic-asterisk:
@@ -3367,6 +3426,7 @@ contexts:
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-underscore
     - include: emphasis-common
+    - include: highlight
     - include: strikethrough
 
   bold-after-bold-italic-underscore:
@@ -3396,6 +3456,7 @@ contexts:
   bold-common:
     - include: emphasis-common
     - include: italic
+    - include: highlight
     - include: strikethrough
 
   italic:
@@ -3435,7 +3496,24 @@ contexts:
   italic-common:
     - include: emphasis-common
     - include: bold
+    - include: highlight
     - include: strikethrough
+
+  highlight:
+    - match: ==(?![=>\s])  # 2x = but no =>
+      scope: punctuation.definition.highlight.begin.markdown
+      push: highlight-content
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  highlight-content:
+    - meta_scope: markup.highlight.markdown
+    - match: ==(?!=)  # 2x =
+      scope: punctuation.definition.highlight.end.markdown
+      pop: 1
+    - match: '[ \t]*=+'
+    - include: emphasis-common
+    - include: bold
+    - include: italic
 
   strikethrough:
     # https://github.github.com/gfm/#strikethrough-extension-
@@ -3449,7 +3527,7 @@ contexts:
     - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
       scope: punctuation.definition.strikethrough.end.markdown
       pop: 1
-    - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
+    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
     - include: bold
     - include: italic
@@ -3938,7 +4016,7 @@ contexts:
     - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
     # 1. When an autolink ends in ), we scan the entire autolink for the total
     #    number of parentheses. If there is a greater number of closing parentheses
-    #    than opening ones, we donâ€™t consider the last character part of the
+    #    than opening ones, we don’t consider the last character part of the
     #    autolink, in order to facilitate including an autolink inside a parenthesis
     # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
     #    resemble an entity reference; if the preceding text is & followed by one

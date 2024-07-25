@@ -1853,6 +1853,16 @@ graph n {}
 |^^ meta.code-fence.definition.end.graphviz.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.graphviz.markdown-gfm meta.fold.code-fence.end - punctuation
 
+```groovy
+| ^^^^^^^ meta.code-fence.definition.begin.groovy.markdown-gfm - meta.fold
+|        ^ meta.code-fence.definition.begin.groovy.markdown-gfm meta.fold.code-fence.begin.markdown
+
+| <- markup.raw.code-fence.groovy.markdown-gfm source.groovy
+```
+| <- meta.code-fence.definition.end.groovy.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.groovy.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|  ^ meta.code-fence.definition.end.groovy.markdown-gfm meta.fold.code-fence.end - punctuation
+
 ```haskell
 |^^^^^^^^^ meta.code-fence.definition.begin - meta.fold
 |         ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
@@ -3195,6 +3205,54 @@ test
 > bar
 | <- markup.quote punctuation.definition.blockquote - meta.table
 
+| c1  |  c2    | c3      | c4     | c5          | c6       | c7
+| --- | ---    | ---     | ---    | ---         | ---      | ---
+| ` ` | ` me ` | `` ` `` | ` `` ` | ``foo`bar`` | ```foo`` | ``foo```
+| <- meta.table.markdown-gfm punctuation.separator.table-cell.markdown
+| ^^^ meta.table.markdown-gfm markup.raw.inline.markdown
+| ^ punctuation.definition.raw.begin.markdown
+|   ^ punctuation.definition.raw.end.markdown
+|     ^ punctuation.separator.table-cell
+|       ^^^^^^ markup.raw.inline.markdown
+|       ^ punctuation.definition.raw.begin.markdown
+|            ^ punctuation.definition.raw.end.markdown
+|                ^^^^^^^ markup.raw.inline.markdown
+|                ^^ punctuation.definition.raw.begin.markdown
+|                  ^^^ - punctuation
+|                     ^^ punctuation.definition.raw.end.markdown
+|                        ^ punctuation.separator.table-cell
+|                          ^^^^^^ markup.raw.inline.markdown
+|                          ^ punctuation.definition.raw.begin.markdown
+|                           ^^^^ - punctuation
+|                               ^ punctuation.definition.raw.end.markdown
+|                                 ^ punctuation.separator.table-cell
+|                                   ^^^^^^^^^^^ markup.raw.inline.markdown
+|                                   ^^ punctuation.definition.raw.begin.markdown
+|                                     ^^^^^^^ - punctuation
+|                                            ^^ punctuation.definition.raw.end.markdown
+|                                               ^ punctuation.separator.table-cell
+|                                                 ^^^^^^^^ - markup.raw
+
+| c1             |  c2                 |
+| ---            | ---                 |
+| ```` ``` ````  | `````` ````` `````` |
+| ^^^^^^^^^^^^^ markup.raw.inline.markdown
+| ^^^^ punctuation.definition.raw.begin.markdown
+|     ^^^^^ - punctuation
+|          ^^^^ punctuation.definition.raw.end.markdown
+|                  ^^^^^^^^^^^^^^^^^^^ markup.raw.inline.markdown
+|                  ^^^^^^ punctuation.definition.raw.begin.markdown
+|                        ^^^^^^^ - punctuation
+|                               ^^^^^^ punctuation.definition.raw.end.markdown
+| table with | `multiple` code `spans`) |
+| <- punctuation.separator.table-cell
+|            ^ punctuation.separator.table-cell
+|              ^^^^^^^^^^ markup.raw.inline
+|                        ^^^^^^ - markup.raw.inline
+|                              ^^^^^^^ markup.raw.inline
+
+
+
 `|` this `|` example `|` is not a table `|`
 | ^ punctuation.definition.raw.end - meta.table
 | nor is this | because it is not at block level, it immediately follows a paragraph |
@@ -3251,15 +3309,6 @@ not a table |
 |`test | me |
 |^^^^^^^^^^^^^ meta.table.markdown-gfm - markup.raw
 |      ^ punctuation.separator.table-cell
-| ` ` | ` me ` |
-| <- meta.table.markdown-gfm punctuation.separator.table-cell.markdown
-| ^^^ meta.table.markdown-gfm markup.raw.inline.markdown
-| ^ punctuation.definition.raw.begin.markdown
-|   ^ punctuation.definition.raw.end.markdown
-|     ^ punctuation.separator.table-cell
-|       ^^^^^^ markup.raw.inline.markdown
-|       ^ punctuation.definition.raw.begin.markdown
-|            ^ punctuation.definition.raw.end.markdown
 
 | table | followed by
 paragraph
@@ -7220,6 +7269,117 @@ __test <span>text__ *formatted</span>*
 |                   ^ punctuation
 |                                    ^ punctuation
 
+# TEST: HIGHLIGHT #############################################################
+
+__==bold highlight==__
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.highlight
+| ^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.highlight.markdown
+|                   ^^ markup.bold.markdown - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|                 ^^ punctuation.definition.highlight.end.markdown 
+|                   ^^ punctuation.definition.bold.end.markdown
+
+**==bold highlight==**
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.highlight
+| ^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.highlight.markdown
+|                   ^^ markup.bold.markdown - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|                 ^^ punctuation.definition.highlight.end.markdown 
+|                   ^^ punctuation.definition.bold.end.markdown
+
+_==italic highlight==_
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.highlight.markdown
+|                    ^ markup.italic.markdown - markup.highlight
+|^^ punctuation.definition.highlight.begin.markdown
+|                  ^^ punctuation.definition.highlight.end.markdown 
+|                    ^ punctuation.definition.italic.end.markdown
+
+*==italic highlight==*
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown markup.highlight.markdown
+|                    ^ markup.italic.markdown - markup.highlight
+|^^ punctuation.definition.highlight.begin.markdown
+|                  ^^ punctuation.definition.highlight.end.markdown 
+|                    ^ punctuation.definition.italic.end.markdown
+
+___==bold italic highlight==___
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.highlight
+| ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.highlight.markdown
+|                           ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|                            ^^ markup.bold.markdown - markup.italic - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.highlight.begin.markdown
+|                         ^^ punctuation.definition.highlight.end.markdown 
+|                           ^ punctuation.definition.italic.end.markdown
+|                            ^^ punctuation.definition.bold.end.markdown
+
+***==bold italic highlight==***
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^ markup.bold.markdown - markup.italic - markup.highlight
+| ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown markup.italic.markdown markup.highlight.markdown
+|                           ^ markup.bold.markdown markup.italic.markdown - markup.highlight
+|                            ^^ markup.bold.markdown - markup.italic - markup.highlight
+|^ punctuation.definition.bold.begin.markdown
+| ^ punctuation.definition.italic.begin.markdown
+|  ^^ punctuation.definition.highlight.begin.markdown
+|                         ^^ punctuation.definition.highlight.end.markdown 
+|                           ^ punctuation.definition.italic.end.markdown
+|                            ^^ punctuation.definition.bold.end.markdown
+
+=Hi= Hello, world!
+| <- - punctuation.definition.highlight
+|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|  ^ - punctuation.definition.highlight
+
+This =text==== is ====curious=.
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|    ^ - punctuation.definition.highlight
+|         ^^^^ - punctuation.definition.highlight
+|                 ^^^^ - punctuation.definition.highlight
+|                            ^ - punctuation.definition.highlight
+
+This ==text==== is ====curious==.
+|^^^^ meta.paragraph - markup
+|    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph markup.highlight
+|                               ^^ meta.paragraph - markup
+|    ^^ punctuation.definition.highlight.begin
+|          ^^^^ - punctuation.definition.highlight
+|                  ^^^^ - punctuation.definition.highlight
+|                             ^^ punctuation.definition.highlight.end
+
+This ==is ==highlighted== inline text
+|^^^^ - markup.highlight
+|    ^^^^^^^^^^^^^^^^^^^^ markup.highlight.markdown
+|                        ^^^^^^^^^^^^ - markup.highlight
+
+This ==has a
+|    ^^^^^^^^ meta.paragraph markup.highlight
+
+| <- meta.paragraph markup.highlight invalid.illegal.non-terminated.bold-italic
+new paragraph==.
+|            ^^ meta.paragraph markup.highlight punctuation.definition.highlight.begin
+
+| <- invalid.illegal.non-terminated.bold-italic
+
+A ==[highlight](https://link-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+A ==![highlight](https://image-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+A ==[![highlight](image-url)](link-url)==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+
 # TEST: STRIKETHROUGH #########################################################
 
 __~~bold striked~~__
@@ -7307,6 +7467,11 @@ This ~~text~~~~ is ~~~~curious~~.
 |                  ^^^^ - punctuation.definition.strikethrough
 |                             ^^ punctuation.definition.strikethrough.end
 
+This ~~is ~~striked~~ inline text
+|^^^^ - markup.strikethrough
+|    ^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
+|                    ^^^^^^^^^^^^^ - markup.strikethrough
+
 This ~~has a
 |    ^^^^^^^^ meta.paragraph markup.strikethrough
 
@@ -7316,13 +7481,13 @@ new paragraph~~.
 
 | <- invalid.illegal.non-terminated.bold-italic
 
-A ~~[striked](https://link-url)~~
+A ~~[highlight](https://link-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
-A ~~![striked](https://image-url)~~
+A ~~![highlight](https://image-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
-A ~~[![striked](image-url)](link-url)~~
+A ~~[![highlight](image-url)](link-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
 
 
@@ -8588,11 +8753,11 @@ foo = 1 + 2 * \sqrt{a^2+b^2}
 |                  ^^^^^^^^^ meta.group.brace
 |                  ^ punctuation.definition.group.brace.begin
 |                   ^ variable.other.math
-|                    ^ keyword.operator
+|                    ^ keyword.operator, punctuation.separator.superscript
 |                     ^ constant.numeric
 |                      ^ keyword.operator
 |                       ^ variable.other.math
-|                        ^ keyword.operator
+|                        ^ keyword.operator, punctuation.separator.superscript
 |                         ^ constant.numeric
 |                          ^ punctuation.definition.group.brace.end
 $$
