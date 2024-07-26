@@ -14,7 +14,6 @@ contexts:
     - match: ^\s*(>)\s
       captures:
         1: comment.other.shell
-      scope: comment.other.shell
 
   main:
     - match: ^(?=\s*\$\s)
@@ -27,3 +26,12 @@ contexts:
         1: comment.other.shell
       embed: statements
       escape: (?<![^\\]\\)(?<![\\]{3})\n
+
+  line-continuation-body:
+    - meta_prepend: true
+    - meta_include_prototype: false
+    # continuation lines begin with `> `
+    - match: ^\s*(>)\s
+      captures:
+        1: comment.other.shell
+      pop: 1

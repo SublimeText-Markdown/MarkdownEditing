@@ -1790,7 +1790,7 @@ foo
 # test
 | ^^^^^ source.shell comment.line.number-sign
 echo hello, \
-|           ^^ punctuation.separator.continuation.line
+|           ^ punctuation.separator.continuation.line
 echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
 |                       ^^ constant.character.escape
 ```
@@ -2045,7 +2045,7 @@ unclosed_paren = (
 function foo () {
 | <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell keyword.declaration.function.shell 
 }
-| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell meta.compound.shell punctuation.section.compound.end.shell
+| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell punctuation.section
 
 $ ls ~
 | <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive comment.other.shell
