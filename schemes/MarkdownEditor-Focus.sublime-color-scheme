@@ -411,6 +411,12 @@
 			"scope": "markup.prompt",
 			"foreground": "#555555"
 		},
+		{
+			"name": "Markup: Highlight",
+			"scope": "markup.highlight",
+			"foreground": "var(critic_highlight_fg)",
+			"background": "var(critic_highlight_bg)"
+		},
 
 		//
 		// CriticMarkup
