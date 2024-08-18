@@ -1182,6 +1182,8 @@ contexts:
     - include: fenced-twee
     - include: fenced-twig
     - include: fenced-verilog
+    - include: fenced-wast
+    - include: fenced-wit
     - include: fenced-xonsh
 
   fenced-actionscript:
@@ -2855,6 +2857,50 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.verilog.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-wast:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(wast))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.wast.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:source.wast
+      embed_scope:
+        markup.raw.code-fence.wast.markdown-gfm
+        source.wast
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.wast.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-wit:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(wit))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.wit.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:source.wit
+      embed_scope:
+        markup.raw.code-fence.wit.markdown-gfm
+        source.wit
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.wit.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 

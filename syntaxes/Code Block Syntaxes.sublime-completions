@@ -664,6 +664,20 @@
 			"details": "Specifies <code>SQL</code> code highlighting"
 		},
 
+		// WASM
+		{
+			"trigger": "wast",
+			"annotation": "WAST",
+			"kind": ["markup", "s", "Syntax"],
+			"details": "Specifies <code>WebAssembly Text</code> code highlighting"
+		},
+		{
+			"trigger": "wit",
+			"annotation": "WIT",
+			"kind": ["markup", "s", "Syntax"],
+			"details": "Specifies <code>WabAssembly Interface Type</code> code highlighting"
+		},
+
 		// XML
 		{
 			"trigger": "atom",
