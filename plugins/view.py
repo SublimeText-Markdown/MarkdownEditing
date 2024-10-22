@@ -95,7 +95,7 @@ class MdeCenteredLineKeeper(MdeViewEventListener):
 
     def on_modified(self):
         sel = self.view.sel()
-        if sel and len(sel) != 1:
+        if not sel or len(sel) != 1:
             return
 
         settings = self.view.settings()
