@@ -50,55 +50,58 @@ variables:
 
   backticks: |-
     (?x:
-      (`{4})(?![\s`])(?:[^`]+(?=`)|(?!`{4})`+(?!`))+(`{4})(?!`)  # 4 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
-    | (`{3})(?![\s`])(?:[^`]+(?=`)|(?!`{3})`+(?!`))+(`{3})(?!`)  # 3 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
-    | (`{2})(?![\s`])(?:[^`]+(?=`)|(?!`{2})`+(?!`))+(`{2})(?!`)  # 2 backticks, followed by at least one non whitespace, non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
-    | (`{1})(?![\s`])(?:[^`]+(?=`)|(?!`{1})`+(?!`))+(`{1})(?!`)  # 1 backtick,  followed by at least one non whitespace, non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
+      (`{4})[^`](?:[^`]|(?!`{4})`+[^`])*(`{4})(?!`)  # 4 backticks, followed by at least one non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
+    | (`{3})[^`](?:[^`]|(?!`{3})`+[^`])*(`{3})(?!`)  # 3 backticks, followed by at least one non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
+    | (`{2})[^`](?:[^`]|(?!`{2})`+[^`])*(`{2})(?!`)  # 2 backticks, followed by at least one non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
+    | (`{1})[^`](?:[^`]|(?!`{1})`+[^`])*(`{1})(?!`)  # 1 backtick,  followed by at least one non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
     )
   escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
   balance_square_brackets: |-
     (?x:
       (?:
-        (?:{{escapes}})+                  # escape characters
-      | [^\[\]`\\]+(?=[\[\]`\\]|$)        # anything that isn't a square bracket or a backtick or the start of an escape character
+        \\.                               # maybe escaped character (be lazy)
+      | [^\[\]`]                          # anything that isn't a square bracket or backtick
       | {{backticks}}                     # inline code
-      | \[(?:                             # nested square brackets (one level deep)
-          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-          {{backticks}}?                  #  balanced backticks
-        )*\]                              #  closing square bracket
+      | \[ (?:                            # nested square brackets (one level deep)
+          \\.                             #  maybe escaped character (be lazy)
+        | [^\[\]`]                        #  anything that isn't a square bracket or backtick
+        | {{backticks}}                   #  inline code
+        )* \]                             #  closing square bracket
       )+
     )
   balance_square_brackets_and_emphasis: |-
     (?x:
       (?:
-        (?:{{escapes}})+                  # escape characters
-      | [^\[\]`\\_*]+(?=[\[\]`\\_*]|$)    # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+        \\.                               # maybe escaped character (be lazy)
+      | [^\[\]`_*]                        # anything that isn't a square bracket, backtick or emphasis
       | {{backticks}}                     # inline code
-      | \[(?:                             # nested square brackets (one level deep)
-          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-          {{backticks}}?                  #  balanced backticks
-        )*\]                              #  closing square bracket
+      | \[ (?:                            # nested square brackets (one level deep)
+          \\.                             #  maybe escaped character (be lazy)
+        | [^\[\]`_*]                      #  anything that isn't a square bracket, backtick or emphasis
+        | {{backticks}}                   #  inline code
+        )* \]                             #  closing square bracket
       )+                                  # at least one character
     )
   balance_square_brackets_pipes_and_emphasis: |-
     (?x:
       (?:
-        (?:{{escapes}})+                  # escape characters
-      | [^\[\]`\\_*|]+(?=[\[\]`\\_*|]|$)  # anything that isn't a square bracket, a backtick, the start of an escape character, or an emphasis character
+        \\.                               # maybe escaped character (be lazy)
+      | [^\[\]`_*|]                       # anything that isn't a square bracket, backtick or emphasis or table cell separator
       | {{backticks}}                     # inline code
-      | \[(?:                             # nested square brackets (one level deep)
-          [^\[\]`]+(?=[\[\]`])            #  anything that isn't a square bracket or a backtick
-          {{backticks}}?                  #  balanced backticks
-        )*\]                              #  closing square bracket
+      | \[ (?:                            # nested square brackets (one level deep)
+          \\.                             #  maybe escaped character (be lazy)
+        | [^\[\]`_*|]                     #  anything that isn't a square bracket, backtick or emphasis or table cell separator
+        | {{backticks}}                   #  inline code
+        )* \]                             #  closing square bracket
       )+                                  # at least one character
     )
   balanced_emphasis: |-
     (?x:
-      \*  (?!\*){{balance_square_brackets_and_emphasis}}+\*  (?!\*)
-    | \*\*      {{balance_square_brackets_and_emphasis}}+\*\*
-    | _   (?!_) {{balance_square_brackets_and_emphasis}}+_   (?!_)
-    | __        {{balance_square_brackets_and_emphasis}}+__
+      \*  (?!\*){{balance_square_brackets_and_emphasis}}\*  (?!\*)
+    | \*\*      {{balance_square_brackets_and_emphasis}}\*\*
+    | _   (?!_) {{balance_square_brackets_and_emphasis}}_   (?!_)
+    | __        {{balance_square_brackets_and_emphasis}}__
     )
 
   table_cell: |-

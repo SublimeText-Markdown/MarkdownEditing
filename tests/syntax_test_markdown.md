@@ -6047,6 +6047,25 @@ blah*
     |                                                       ^ punctuation.definition.string.begin.markdown
     |                                                                       ^ punctuation.definition.string.end.markdown
     |                                                                        ^ punctuation.definition.metadata.end.markdown
+    
+    Complex ![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }
+    |       ^^^^^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
+    |       ^^ punctuation.definition.image.begin.markdown
+    |               ^^^^^^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+    |                          ^ punctuation.definition.image.end.markdown
+    |                           ^^^^^^^^^^^^^^^^^^ meta.image.inline.metadata.markdown
+    |                           ^ punctuation.definition.metadata.begin.markdown
+    |                            ^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+    |                                            ^ punctuation.definition.metadata.end.markdown
+    |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.image.inline.attributes.markdown
+    |                                             ^ punctuation.definition.attributes.begin.markdown
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.attribute-with-value.markdown
+    |                                              ^^^^^^^^^^^ entity.other.attribute-name.markdown
+    |                                                          ^^^^^^ entity.other.attribute-name.markdown
+    |                                                                ^ punctuation.separator.key-value.markdown
+    |                                                                 ^^^^^^^ string.unquoted.markdown
+    |                                                                         ^ punctuation.definition.attributes.end.markdown
+
 
 
 # TEST: CODE SPANS ############################################################
@@ -7379,6 +7398,27 @@ A ==![highlight](https://image-url)==
 A ==[![highlight](image-url)](link-url)==
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
 
+A ==![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }==
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.highlight.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|   ^^^^^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
+|   ^^ punctuation.definition.image.begin.markdown
+|           ^^^^^^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                      ^ punctuation.definition.image.end.markdown
+|                       ^^^^^^^^^^^^^^^^^^ meta.image.inline.metadata.markdown
+|                       ^ punctuation.definition.metadata.begin.markdown
+|                        ^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+|                                        ^ punctuation.definition.metadata.end.markdown
+|                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.image.inline.attributes.markdown
+|                                         ^ punctuation.definition.attributes.begin.markdown
+|                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.attribute-with-value.markdown
+|                                          ^^^^^^^^^^^ entity.other.attribute-name.markdown
+|                                                      ^^^^^^ entity.other.attribute-name.markdown
+|                                                            ^ punctuation.separator.key-value.markdown
+|                                                             ^^^^^^^ string.unquoted.markdown
+|                                                                     ^ punctuation.definition.attributes.end.markdown
+|                                                                      ^^ punctuation.definition.highlight.end.markdown
+
 
 # TEST: STRIKETHROUGH #########################################################
 
@@ -7489,6 +7529,27 @@ A ~~![highlight](https://image-url)~~
 
 A ~~[![highlight](image-url)](link-url)~~
 | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown markup.strikethrough.markdown-gfm
+
+A ~~![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }~~
+| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
+| ^^ punctuation.definition.strikethrough.begin.markdown
+|   ^^^^^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
+|   ^^ punctuation.definition.image.begin.markdown
+|           ^^^^^^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                      ^ punctuation.definition.image.end.markdown
+|                       ^^^^^^^^^^^^^^^^^^ meta.image.inline.metadata.markdown
+|                       ^ punctuation.definition.metadata.begin.markdown
+|                        ^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+|                                        ^ punctuation.definition.metadata.end.markdown
+|                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.image.inline.attributes.markdown
+|                                         ^ punctuation.definition.attributes.begin.markdown
+|                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.attribute-with-value.markdown
+|                                          ^^^^^^^^^^^ entity.other.attribute-name.markdown
+|                                                      ^^^^^^ entity.other.attribute-name.markdown
+|                                                            ^ punctuation.separator.key-value.markdown
+|                                                             ^^^^^^^ string.unquoted.markdown
+|                                                                     ^ punctuation.definition.attributes.end.markdown
+|                                                                      ^^ punctuation.definition.strikethrough.end.markdown
 
 
 # TEST: LINKS #################################################################
@@ -7869,6 +7930,90 @@ Here is a ![Image Ref Alt][1].
 |                         ^ punctuation.definition.metadata.begin.markdown
 |                          ^ markup.underline.link.markdown
 |                           ^ punctuation.definition.metadata.end.markdown
+
+A complex ![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }
+|         ^^^^^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
+|         ^^ punctuation.definition.image.begin.markdown
+|                 ^^^^^^^^^^ markup.math.inline.markdown text.tex.latex.embedded.markdown meta.environment.math.block.dollar.latex
+|                            ^ punctuation.definition.image.end.markdown
+|                             ^^^^^^^^^^^^^^^^^^ meta.image.inline.metadata.markdown
+|                             ^ punctuation.definition.metadata.begin.markdown
+|                              ^^^^^^^^^^^^^^^^ markup.underline.link.image.markdown
+|                                              ^ punctuation.definition.metadata.end.markdown
+|                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.image.inline.attributes.markdown
+|                                               ^ punctuation.definition.attributes.begin.markdown
+|                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.attribute-with-value.markdown
+|                                                ^^^^^^^^^^^ entity.other.attribute-name.markdown
+|                                                            ^^^^^^ entity.other.attribute-name.markdown
+|                                                                  ^ punctuation.separator.key-value.markdown
+|                                                                   ^^^^^^^ string.unquoted.markdown
+|                                                                           ^ punctuation.definition.attributes.end.markdown
+
+With codepsan ![`a`b]()
+|             ^^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^ markup.raw.inline.markdown
+|               ^ punctuation.definition.raw.begin.markdown
+|                 ^ punctuation.definition.raw.end.markdown
+|                   ^ punctuation.definition.image.end.markdown
+|                    ^^ meta.image.inline.metadata.markdown
+|                    ^ punctuation.definition.metadata.begin.markdown
+|                     ^ punctuation.definition.metadata.end.markdown
+
+With codepsan ![``a`b``]()
+|             ^^^^^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^^^^^ markup.raw.inline.markdown
+|               ^^ punctuation.definition.raw.begin.markdown
+|                    ^^ punctuation.definition.raw.end.markdown
+|                      ^ punctuation.definition.image.end.markdown
+|                       ^^ meta.image.inline.metadata.markdown
+|                       ^ punctuation.definition.metadata.begin.markdown
+|                        ^ punctuation.definition.metadata.end.markdown
+
+With codepsan ![` `]()
+|             ^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^ markup.raw.inline.markdown
+|               ^ punctuation.definition.raw.begin.markdown
+|                 ^ punctuation.definition.raw.end.markdown
+|                  ^ punctuation.definition.image.end.markdown
+|                   ^^ meta.image.inline.metadata.markdown
+|                   ^ punctuation.definition.metadata.begin.markdown
+|                    ^ punctuation.definition.metadata.end.markdown
+
+With codepsan ![`` ` ``]()
+|             ^^^^^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^^^^^ markup.raw.inline.markdown
+|               ^^ punctuation.definition.raw.begin.markdown
+|                    ^^ punctuation.definition.raw.end.markdown
+|                      ^ punctuation.definition.image.end.markdown
+|                       ^^ meta.image.inline.metadata.markdown
+|                       ^ punctuation.definition.metadata.begin.markdown
+|                        ^ punctuation.definition.metadata.end.markdown
+
+With codepsan ![``` `` ```]()
+|             ^^^^^^^^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^^^^^^^^ markup.raw.inline.markdown
+|               ^^^ punctuation.definition.raw.begin.markdown
+|                      ^^^ punctuation.definition.raw.end.markdown
+|                         ^ punctuation.definition.image.end.markdown
+|                          ^^ meta.image.inline.metadata.markdown
+|                          ^ punctuation.definition.metadata.begin.markdown
+|                           ^ punctuation.definition.metadata.end.markdown
+ 
+With codepsan ![```` ``` ````]()
+|             ^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
+|             ^^ punctuation.definition.image.begin.markdown
+|               ^^^^^^^^^^^^^ markup.raw.inline.markdown
+|               ^^^^ punctuation.definition.raw.begin.markdown
+|                        ^^^^ punctuation.definition.raw.end.markdown
+|                            ^ punctuation.definition.image.end.markdown
+|                             ^^ meta.image.inline.metadata.markdown
+|                             ^ punctuation.definition.metadata.begin.markdown
+|                              ^ punctuation.definition.metadata.end.markdown
 
 
 # TEST: FOOTNOTES #############################################################
