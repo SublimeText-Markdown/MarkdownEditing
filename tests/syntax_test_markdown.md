@@ -2043,9 +2043,9 @@ unclosed_paren = (
 |       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
 
 function foo () {
-| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell keyword.declaration.function.shell 
+| <- markup.raw.code-fence.shell.markdown-gfm meta.function keyword.declaration.function.shell
 }
-| <- markup.raw.code-fence.shell.markdown-gfm meta.function.shell punctuation.section
+| <- markup.raw.code-fence.shell.markdown-gfm meta.function punctuation.section
 
 $ ls ~
 | <- markup.raw.code-fence.shell.markdown-gfm source.shell.interactive comment.other.shell
@@ -2394,7 +2394,7 @@ okay
 
 <style
   type="text/css">
-| ^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.style.begin.html meta.attribute-with-value.html
+| ^^^^^^^^^^^^^^^ meta.disable-markdown meta.tag.style.begin.html meta.attribute-with-value
 h1 {color:red;}
 |   ^^^^^ meta.disable-markdown source.css.embedded.html meta.property-list.css meta.property-name.css support.type.property-name.css
 
