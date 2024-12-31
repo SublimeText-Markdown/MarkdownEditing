@@ -28,9 +28,9 @@ else:
         MdeSelectColorSchemeCommand,
     )
     from .plugins.folding import (
+        MdeAutoFoldListener,
         MdeFoldAllSectionsCommand,
         MdeFoldLinksCommand,
-        MdeFoldLinksListener,
         MdeFoldSectionCommand,
         MdeShowFoldAllSectionsCommand,
         MdeUnfoldAllSectionsCommand,
