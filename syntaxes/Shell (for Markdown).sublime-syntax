@@ -1,37 +1,41 @@
 %YAML 1.2
 ---
-name: Interactive Unix Shell
-scope: source.shell.interactive.markdown
+scope: source.shell.embedded.markdown
 version: 2
 hidden: true
 
 extends: Packages/ShellScript/Shell-Unix-Generic.sublime-syntax
 
 contexts:
-  prototype:
-    - meta_prepend: true
-    # continuation lines begin with `> `
-    - match: ^\s*(>)\s
-      captures:
-        1: comment.other.shell
-
   main:
+    - meta_include_prototype: false
+    # found shebang => normal script
+    - match: ^(?=\s*#!)
+      set: [statements, shebang]
+    # first non-comment line starts with `$` => interactive shell
     - match: ^(?=\s*\$\s)
-      push: shell-interactive
-    - include: statements
+      set: shell-interactive
+    # some script without shebang
+    - match: ^(?=\s*[^#])
+      set: statements
+    - include: comments
 
   shell-interactive:
     - match: ^\s*(\$)(?=\s)
       captures:
         1: comment.other.shell
       embed: statements
-      escape: (?<![^\\]\\)(?<![\\]{3})\n
+      escape: '{{no_escape_behind}}\n'
 
   line-continuation-body:
     - meta_prepend: true
-    - meta_include_prototype: false
-    # continuation lines begin with `> `
+    # continuation line of interactive shells begin with `> `
     - match: ^\s*(>)\s
       captures:
         1: comment.other.shell
       pop: 1
+
+variables:
+  # lazy escaping from heredoc as shell maybe indented
+  no_indent: ^\s*
+  tab_indent: ^\s*
