@@ -1392,6 +1392,9 @@ contexts:
     - include: fenced-jade
     - include: fenced-julia
     - include: fenced-kotlin
+    - include: fenced-kdl
+    - include: fenced-kdl1
+    - include: fenced-kdl2
     - include: fenced-less
     - include: fenced-mermaid
     - include: fenced-nim
@@ -2786,6 +2789,72 @@ contexts:
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.kdl.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl
+      embed_scope:
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.kdl.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl1:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl1))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.kdl.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl.1
+      embed_scope:
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl.1
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.kdl.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl2:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl2))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.kdl.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl.2
+      embed_scope:
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl.2
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.kdl.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
