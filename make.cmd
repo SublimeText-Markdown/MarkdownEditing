@@ -96,7 +96,7 @@ goto :usage
 
     :: create the release
     call git push --tags --force
-    gh release create --target master -t "%package% %2" "%2" %assets%
+    gh release create --target master -t "%package% %2" "%build%-%2" %assets%
     del /f /q *.sublime-package
     git fetch
     goto :eof
