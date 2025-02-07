@@ -166,6 +166,9 @@ variables:
     )
   fenced_code_block_escape: ^{{fenced_code_block_end}}
 
+  # https://pandoc.org/MANUAL.html#divs-and-spans
+  fenced_div_block: '[ \t]*(:{3,})'
+
   # https://spec.commonmark.org/0.30/#email-autolink
   email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
   email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
@@ -256,6 +259,7 @@ variables:
        |  {{block_quote}}             # a blockquote begins the line
        |  {{atx_heading}}             # an ATX heading begins the line
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
+       |  {{fenced_div_block}}        # a fenced div block begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
        |  {{html_block}}              # a html block begins the line
@@ -269,6 +273,7 @@ variables:
         |   {{block_quote}}             # a blockquote begins the line
         |   {{atx_heading}}             # an ATX heading begins the line
         |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
         |   {{thematic_break}}          # line is a thematic beak
         |   {{list_item}}               # a list item begins the line
         |   {{html_block}}              # a html block begins the line
@@ -362,6 +367,7 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
+    - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
@@ -594,6 +600,7 @@ contexts:
            |   {{reference_definition}}    # a reference definition begins the line
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -705,6 +712,7 @@ contexts:
            (?: $                           # the line is blank (or only contains whitespace)
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -732,6 +740,7 @@ contexts:
            (?: \s* $                       # the line is blank (or only contains whitespace)
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -775,6 +784,7 @@ contexts:
 
   list-block-content:
     - include: fenced-code-blocks
+    - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: list-block-common
@@ -3067,6 +3077,7 @@ contexts:
            |   {{reference_definition}}    # a reference definition begins the line
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -3182,6 +3193,7 @@ contexts:
           |   {{atx_heading}}
           |   {{block_quote}}
           |   {{fenced_code_block_start}}
+          |   {{fenced_div_block}}
           |   {{indented_code_block}}
           |   {{thematic_break}}
           )
@@ -4345,6 +4357,41 @@ contexts:
     - include: scope:text.tex.latex#macros
     - include: scope:text.tex.latex#math-content
 
+###[ EXTENSIONS: PANDOC FENCED DIVS ]##########################################
+
+  fenced-div-blocks:
+    # https://pandoc.org/MANUAL.html#divs-and-spans
+    - match: '{{fenced_div_block}}[ \t]*$\n?'
+      scope: meta.div.markdown
+      captures:
+        1: punctuation.section.div.end.markdown
+    - match: '{{fenced_div_block}}'
+      captures:
+        1: punctuation.section.div.begin.markdown
+      push:
+        - fenced-div-puncuation
+        - fenced-div-attr
+
+  fenced-div-attr:
+    - meta_include_prototype: false
+    - match: \{
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-def-attr-body
+    - match: '{{tag_attribute_name_start}}'
+      set:
+        - tag-attr-meta
+        - tag-attr-equals
+        - tag-attr-name
+    - match: else-pop
+
+  fenced-div-puncuation:
+    - meta_include_prototype: false
+    - meta_scope: meta.div.markdown
+    - match: ':+'
+      scope: punctuation.section.div.markdown
+      pop: 1
+    - include: else-pop
+
 ###[ PROTOTYPES ]#############################################################
 
   else-pop:
@@ -4363,4 +4410,3 @@ contexts:
   immediately-pop:
     - match: ''
       pop: 1
-

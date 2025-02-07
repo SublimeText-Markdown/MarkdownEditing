@@ -23,6 +23,14 @@
 				<key>excludeTrailingNewlines</key>
 				<true/>
 			</dict>
+			<dict>
+				<key>begin</key>
+				<string>punctuation.section.div.begin.markdown</string>
+				<key>end</key>
+				<string>punctuation.section.div.end.markdown</string>
+				<key>excludeTrailingNewlines</key>
+				<false/>
+			</dict>
 		</array>
 	</dict>
 </dict>
