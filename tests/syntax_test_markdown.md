@@ -2069,7 +2069,7 @@ output.txt
 
 $ ls \
 > /foo/
-| <- markup.raw.code-fence.shell.markdown-gfm source.shell comment.other.shell
+| <- markup.raw.code-fence.shell.markdown-gfm source.shell
 |^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell
 
 $ ls \
