@@ -53,23 +53,12 @@ goto :usage
 :RELEASE
     if "%2"== "" goto :usage
 
-    git checkout st3176 && git merge st3-develop --no-ff
-    if not errorlevel 0 (
-        echo Unable to merge st3-develop into st3176!
-        exit /b 1
-    )
     git checkout master && git merge st4-develop --no-ff
     if not errorlevel 0 (
         echo Unable to merge st4-develop into master!
         exit /b 1
     )
-    echo Hit any key to push branches!
-    pause
-    call git push origin st3176
-    if not errorlevel 0 (
-        echo Failed to push st3176!
-        exit /b 1
-    )
+
     call git push origin master
     if not errorlevel 0 (
         echo Failed to push master!
@@ -80,22 +69,13 @@ goto :usage
 
     echo Createing assets for "%package%"...
 
-    :: create downloadable asset for ST4126+
-    set build=3176
-    set archive=%package%-%2-st%build%.sublime-package
-    set assets="%archive%#%archive%"
-    call git tag -f %build%-%2 st%build%
-    call git archive --format zip -o "%archive%" %build%-%2
-
     :: create downloadable asset for ST4134+
     set build=4107
     set archive=%package%-%2-st%build%.sublime-package
-    set assets=%assets% "%archive%#%archive%"
-    call git tag -f %build%-%2 master
-    call git archive --format zip -o "%archive%" %build%-%2
+    set assets="%archive%#%archive%"
+    call git archive --format zip -o "%archive%" master
 
     :: create the release
-    call git push --tags --force
     gh release create --target master -t "%package% %2" "%build%-%2" %assets%
     del /f /q *.sublime-package
     git fetch
