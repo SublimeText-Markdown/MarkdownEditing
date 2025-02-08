@@ -103,31 +103,6 @@ variables:
     | __        {{balance_square_brackets_and_emphasis}}__
     )
 
-  table_cell: |-
-    (?x:
-      # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
-      # emphasis in table cells can't span multiple lines
-      (?:
-        {{balance_square_brackets_pipes_and_emphasis}}
-      | {{balanced_emphasis}}
-      )+  # at least one character
-    )
-  table_first_row: |-
-    (?x:
-      # at least 2 non-escaped pipe chars on the line
-      (?:{{table_cell}}?\|){2}
-
-      # something other than whitespace followed by a pipe char or hyphen,
-      # followed by something other than whitespace and the end of the line
-    | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
-    )
-
-  table_codespan_content: |-
-    (?x:
-      [^`|]             # first or only char must not be a backtick or pipe.
-      (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
-    )
-
   fenced_code_block: |-
     (?x:
       (`){3,}      #   3 or more backticks
@@ -338,6 +313,35 @@ variables:
         |   {{html_block}}              # a html block begins the line
         )
       )
+    )
+
+  # Tables
+  # ======
+
+  table_first_row: |-
+    (?x:
+      # at least 2 non-escaped pipe chars on the line
+      (?:{{table_cell}}?\|){2}
+
+      # something other than whitespace followed by a pipe char or hyphen,
+      # followed by something other than whitespace and the end of the line
+    | (?! \s*\-\s+ | \s+\|){{table_cell}}\|(?!\s+$)
+    )
+
+  table_cell: |-
+    (?x:
+      # Pipes inside other inline spans (such as emphasis, code, etc.) will not break a cell,
+      # emphasis in table cells can't span multiple lines
+      (?:
+        {{balance_square_brackets_pipes_and_emphasis}}
+      | {{balanced_emphasis}}
+      )+  # at least one character
+    )
+
+  table_codespan_content: |-
+    (?x:
+      [^`|]             # first or only char must not be a backtick or pipe.
+      (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
     )
 
   table_end: |-
