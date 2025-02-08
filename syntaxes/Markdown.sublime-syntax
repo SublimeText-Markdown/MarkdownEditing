@@ -166,24 +166,6 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
-  reference_definition: (?:\[{{reference_name}}\]\:)
-  footnote_name: (?:\^(?:\\\]|[^]])+)
-  reference_name: (?:(?:\\\]|[^]])+)
-
-  blockquote_footnote_end: |-
-    (?x: # pop out of this context if one of the following conditions are met:
-      ^(?= (?:[ \t]*>)* [ \t]*
-        (?: $                           # the line is blank (or only contains whitespace)
-        |   {{reference_definition}}    # a reference definition begins the line
-        |   {{atx_heading}}             # an ATX heading begins the line
-        |   {{fenced_code_block}}       # a fenced codeblock begins the line
-        |   {{fenced_div_block}}        # a fenced div block begins the line
-        |   {{thematic_break}}          # line is a thematic beak
-        |   {{list_item}}               # a list item begins the line
-        |   {{html_block}}              # a html block begins the line
-        )
-      )
-    )
 
   blockquote_paragraph_end: |-
     (?x: # pop out of this context if one of the following conditions are met:
@@ -203,22 +185,6 @@ variables:
     (?x: # pop out of this context if one of the following conditions are met:
       ^(?= (?:[ \t]*>)* [ \t]*
         (?: $                           # the line is blank (or only contains whitespace)
-        |   {{atx_heading}}             # an ATX heading begins the line
-        |   {{fenced_code_block}}       # a fenced codeblock begins the line
-        |   {{fenced_div_block}}        # a fenced div block begins the line
-        |   {{thematic_break}}          # line is a thematic beak
-        |   {{list_item}}               # a list item begins the line
-        |   {{html_block}}              # a html block begins the line
-        )
-      )
-    )
-
-  footnote_end: |-
-    (?x: # pop out of this context if one of the following conditions are met:
-      ^(?= [ \t]*
-        (?: $                           # the line is blank (or only contains whitespace)
-        |   {{reference_definition}}    # a reference definition begins the line
-        |   {{block_quote}}             # a blockquote begins the line
         |   {{atx_heading}}             # an ATX heading begins the line
         |   {{fenced_code_block}}       # a fenced codeblock begins the line
         |   {{fenced_div_block}}        # a fenced div block begins the line
@@ -258,6 +224,45 @@ variables:
         )
       )
     )
+
+  # References and Footnotes
+  # ========================
+
+  blockquote_footnote_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= (?:[ \t]*>)* [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  footnote_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  footnote_name: (?:\^(?:\\\]|[^]])+)
+
+  reference_definition: (?:\[{{reference_name}}\]\:)
+  reference_name: (?:(?:\\\]|[^]])+)
 
   # Tables
   # ======
