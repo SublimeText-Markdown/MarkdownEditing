@@ -8524,12 +8524,77 @@ This is a [[wiki link]].
 
 # TEST: GITHUB ALERTS #########################################################
 
+>[!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|^^^^^^^^^^ markup.heading.alert.caution.markdown
+|^ punctuation.definition.heading.begin.markdown
+|         ^ punctuation.definition.heading.end.markdown
+
 > [!CAUTION]
 | <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
 |^^^^^^^^^^^^ markup.quote.alert.caution.markdown
 | ^^^^^^^^^^ markup.heading.alert.caution.markdown
 | ^ punctuation.definition.heading.begin.markdown
 |          ^ punctuation.definition.heading.end.markdown
+
+>  [!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|  ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|  ^ punctuation.definition.heading.begin.markdown
+|           ^ punctuation.definition.heading.end.markdown
+
+>   [!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|   ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|   ^ punctuation.definition.heading.begin.markdown
+|            ^ punctuation.definition.heading.end.markdown
+
+>    [!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|    ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|    ^ punctuation.definition.heading.begin.markdown
+|             ^ punctuation.definition.heading.end.markdown
+
+>     [!CAUTION]
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^ markup.quote.markdown
+| ^^^^^^^^^^^^^^^ markup.raw.block.markdown
+
+---
+
+>	[!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+| ^^^^^^^^^^ markup.heading.alert.caution.markdown
+| ^ punctuation.definition.heading.begin.markdown
+|          ^ punctuation.definition.heading.end.markdown
+
+> 	[!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|  ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|  ^ punctuation.definition.heading.begin.markdown
+|           ^ punctuation.definition.heading.end.markdown
+
+> 		[!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|   ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|   ^ punctuation.definition.heading.begin.markdown
+|            ^ punctuation.definition.heading.end.markdown
+
+> 			[!CAUTION]
+| <- markup.quote.alert.caution.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^ markup.quote.alert.caution.markdown
+|    ^^^^^^^^^^ markup.heading.alert.caution.markdown
+|    ^ punctuation.definition.heading.begin.markdown
+|             ^ punctuation.definition.heading.end.markdown
+
+---
 
 > [!CAUTION]
 > 
