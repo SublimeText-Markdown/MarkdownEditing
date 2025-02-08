@@ -47,62 +47,6 @@ variables:
       [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
     )
 
-  backticks: |-
-    (?x:
-      (`{4})[^`](?:[^`]|(?!`{4})`+[^`])*(`{4})(?!`)  # 4 backticks, followed by at least one non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
-    | (`{3})[^`](?:[^`]|(?!`{3})`+[^`])*(`{3})(?!`)  # 3 backticks, followed by at least one non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
-    | (`{2})[^`](?:[^`]|(?!`{2})`+[^`])*(`{2})(?!`)  # 2 backticks, followed by at least one non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
-    | (`{1})[^`](?:[^`]|(?!`{1})`+[^`])*(`{1})(?!`)  # 1 backtick,  followed by at least one non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
-    )
-  escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
-
-  balance_square_brackets: |-
-    (?x:
-      (?:
-        \\.                               # maybe escaped character (be lazy)
-      | [^\[\]`]                          # anything that isn't a square bracket or backtick
-      | {{backticks}}                     # inline code
-      | \[ (?:                            # nested square brackets (one level deep)
-          \\.                             #  maybe escaped character (be lazy)
-        | [^\[\]`]                        #  anything that isn't a square bracket or backtick
-        | {{backticks}}                   #  inline code
-        )* \]                             #  closing square bracket
-      )+
-    )
-  balance_square_brackets_and_emphasis: |-
-    (?x:
-      (?:
-        \\.                               # maybe escaped character (be lazy)
-      | [^\[\]`_*]                        # anything that isn't a square bracket, backtick or emphasis
-      | {{backticks}}                     # inline code
-      | \[ (?:                            # nested square brackets (one level deep)
-          \\.                             #  maybe escaped character (be lazy)
-        | [^\[\]`_*]                      #  anything that isn't a square bracket, backtick or emphasis
-        | {{backticks}}                   #  inline code
-        )* \]                             #  closing square bracket
-      )+                                  # at least one character
-    )
-  balance_square_brackets_pipes_and_emphasis: |-
-    (?x:
-      (?:
-        \\.                               # maybe escaped character (be lazy)
-      | [^\[\]`_*|]                       # anything that isn't a square bracket, backtick or emphasis or table cell separator
-      | {{backticks}}                     # inline code
-      | \[ (?:                            # nested square brackets (one level deep)
-          \\.                             #  maybe escaped character (be lazy)
-        | [^\[\]`_*|]                     #  anything that isn't a square bracket, backtick or emphasis or table cell separator
-        | {{backticks}}                   #  inline code
-        )* \]                             #  closing square bracket
-      )+                                  # at least one character
-    )
-  balanced_emphasis: |-
-    (?x:
-      \*  (?!\*){{balance_square_brackets_and_emphasis}}\*  (?!\*)
-    | \*\*      {{balance_square_brackets_and_emphasis}}\*\*
-    | _   (?!_) {{balance_square_brackets_and_emphasis}}_   (?!_)
-    | __        {{balance_square_brackets_and_emphasis}}__
-    )
-
   fenced_code_block: |-
     (?x:
       (`){3,}      #   3 or more backticks
@@ -357,6 +301,67 @@ variables:
       )
     )
 
+  # Inline
+  # ======
+
+  balanced_emphasis: |-
+    (?x:
+      \*  (?!\*){{balance_square_brackets_and_emphasis}}\*  (?!\*)
+    | \*\*      {{balance_square_brackets_and_emphasis}}\*\*
+    | _   (?!_) {{balance_square_brackets_and_emphasis}}_   (?!_)
+    | __        {{balance_square_brackets_and_emphasis}}__
+    )
+
+  balance_square_brackets: |-
+    (?x:
+      (?:
+        \\.                # maybe escaped character (be lazy)
+      | [^\[\]`]           # anything that isn't a square bracket or backtick
+      | {{backticks}}      # inline code
+      | \[ (?:             # nested square brackets (one level deep)
+          \\.              #  maybe escaped character (be lazy)
+        | [^\[\]`]         #  anything that isn't a square bracket or backtick
+        | {{backticks}}    #  inline code
+        )* \]              #  closing square bracket
+      )+
+    )
+
+  balance_square_brackets_and_emphasis: |-
+    (?x:
+      (?:
+        \\.                # maybe escaped character (be lazy)
+      | [^\[\]`_*]         # anything that isn't a square bracket, backtick or emphasis
+      | {{backticks}}      # inline code
+      | \[ (?:             # nested square brackets (one level deep)
+          \\.              #  maybe escaped character (be lazy)
+        | [^\[\]`_*]       #  anything that isn't a square bracket, backtick or emphasis
+        | {{backticks}}    #  inline code
+        )* \]              #  closing square bracket
+      )+                   # at least one character
+    )
+
+  balance_square_brackets_pipes_and_emphasis: |-
+    (?x:
+      (?:
+        \\.                # maybe escaped character (be lazy)
+      | [^\[\]`_*|]        # anything that isn't a square bracket, backtick or emphasis or table cell separator
+      | {{backticks}}      # inline code
+      | \[ (?:             # nested square brackets (one level deep)
+          \\.              #  maybe escaped character (be lazy)
+        | [^\[\]`_*|]      #  anything that isn't a square bracket, backtick or emphasis or table cell separator
+        | {{backticks}}    #  inline code
+        )* \]              #  closing square bracket
+      )+                   # at least one character
+    )
+
+  backticks: |-
+    (?x:
+      (`{4})[^`](?:[^`]|(?!`{4})`+[^`])*(`{4})(?!`)  # 4 backticks, followed by at least one non backtick character, followed by (less than 4 backticks, or at least one non backtick character) at least once, followed by exactly 4 backticks
+    | (`{3})[^`](?:[^`]|(?!`{3})`+[^`])*(`{3})(?!`)  # 3 backticks, followed by at least one non backtick character, followed by (less than 3 backticks, or at least one non backtick character) at least once, followed by exactly 3 backticks
+    | (`{2})[^`](?:[^`]|(?!`{2})`+[^`])*(`{2})(?!`)  # 2 backticks, followed by at least one non backtick character, followed by (less than 2 backticks, or at least one non backtick character) at least once, followed by exactly 2 backticks
+    | (`{1})[^`](?:[^`]|(?!`{1})`+[^`])*(`{1})(?!`)  # 1 backtick,  followed by at least one non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
+    )
+
   # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
   bold_italic_asterisk_begin: |-
     (?x:
@@ -375,6 +380,11 @@ variables:
          \* {{no_space_nor_punct}}
     | \B \* {{no_space_but_punct}}
     )
+
+  # Prototypes
+  # ==========
+
+  escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
   no_escape_behind: (?<![^\\]\\)(?<![\\]{3})
   # not followed by Unicode whitespace and not followed by a Unicode punctuation character
