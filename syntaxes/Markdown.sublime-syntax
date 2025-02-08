@@ -84,14 +84,14 @@ variables:
       )
       (\s*$\n?)      # any amount of whitespace until EOL (fold end marker)
     )
+
   fenced_code_block_escape: ^{{fenced_code_block_end}}
 
   # https://pandoc.org/MANUAL.html#divs-and-spans
   fenced_div_block: ':{3,}'
 
-  # https://spec.commonmark.org/0.30/#email-autolink
-  email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
-  email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
+  # HTML blocks
+  # ===========
 
   # https://spec.commonmark.org/0.30/#html-blocks
   html_block: |-
@@ -155,6 +155,7 @@ variables:
     | section | source | summary | table | tbody | td | tfoot | th
     | thead | title | tr | track | ul
     ){{html_tag_maybe_selfclosing_break_char}}
+
   html_tag_break_char: (?:[ \t>]|$)
   html_tag_maybe_selfclosing_break_char: (?:[ \t]|/?>|$)
 
@@ -385,6 +386,13 @@ variables:
          \* {{no_space_nor_punct}}
     | \B \* {{no_space_but_punct}}
     )
+
+  # Links
+  # =====
+
+  # https://spec.commonmark.org/0.30/#email-autolink
+  email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
+  email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
 
   # Prototypes
   # ==========
