@@ -15,31 +15,30 @@ version: 2
 hidden: true
 
 variables:
-  atx_heading: (?:[ ]{,3}[#]{1,6}(?:[ \t]|$))         # between 0 and 3 spaces, followed 1 to 6 hashes, followed by at least one space or tab or by end of the line
-  atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$) # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
-  atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)        # \n is optional so ## is matched as end punctuation in new document (at eof)
+  atx_heading: (?:\#{1,6}[ \t\n])                              # 1 to 6 hashes, followed by at least one space or tab or by end of the line
+  atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)          # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
+  atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)                 # \n is optional so ## is matched as end punctuation in new document (at eof)
 
   setext_heading_or_paragraph: ^(?:[ ]{,3}=+[ \t]*$|(?=[ ]{,3}\S))    # between 0 and 3 spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
   setext_heading_escape: ^(?=[ ]{,3}(?:=+|-+)[ \t]*$)                 # between 0 and 3 spaces, followed by at least one hyphen or equal sign (setext underline can be of any length)
   setext_heading1_escape: ^(?=[ ]{,3}=+[ \t]*$)                       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
-  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*$(\n?)                       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
-  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*$(\n?)                       # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
+  setext_heading1_end: ^[ ]{,3}(=+)[ \t]*($\n?)                       # between 0 and 3 spaces, followed by at least one equal sign (setext underline can be of any length)
+  setext_heading2_end: ^[ ]{,3}(-+)[ \t]*($\n?)                       # between 0 and 3 spaces, followed by at least one hyphen (setext underline can be of any length)
 
   list_setext_heading_or_paragraph: (?:[ \t]*=+[ \t]*$|(?=[ \t]*\S))  # any number of spaces, followed by non-whitespace (consume equal signs as paragraphs may start with them)
   list_setext_heading_escape: ^(?=[ \t]{2,}(?:==+|--+)[ \t]*$)        # two or more spaces, followed by at least one hyphen or equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
   list_setext_heading1_escape: ^(?=[ \t]{2,}==+[ \t]*$)               # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
-  list_setext_heading1_end: ^[ \t]{2,}(==+)[ \t]*$(\n?)               # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
-  list_setext_heading2_end: ^[ \t]{2,}(--+)[ \t]*$(\n?)               # two or more spaces, followed by at least one hyphen (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+  list_setext_heading1_end: ^[ \t]{2,}(==+)[ \t]*($\n?)               # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+  list_setext_heading2_end: ^[ \t]{2,}(--+)[ \t]*($\n?)               # two or more spaces, followed by at least one hyphen (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
 
-  block_quote: (?:[ ]{,3}(>)[ ]?)                     # between 0 and 3 spaces, followed by a greater than sign, (followed by any character or the end of the line = "only care about optional space!")
-  indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)          # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
+  block_quote: '>'                             # a greater than sign, (followed by any character or the end of the line)
+  indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)   # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
 
-  first_list_item: (?:[ ]{,3}(?:1[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
-  list_item: (?:[ ]{,3}(?:\d{1,9}[.)]|[*+-])\s)       # between 0 and 3 spaces, followed by either: at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+  first_list_item: (?:(?:1[.)]|[*+-])[ \t\n])  # at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
+  list_item: (?:(?:\d{1,9}[.)]|[*+-])[ \t\n])  # at least one integer and a full stop or a parenthesis, or (a star, plus or dash), followed by whitespace
 
   thematic_break: |-
     (?x:
-      [ ]{,3}                    # between 0 to 3 spaces
       (?:                        # followed by one of the following:
         [-](?:[ \t]*[-]){2,}     # - a dash,        followed by the following at least twice: any number of spaces or tabs followed by a dash
       | [*](?:[ \t]*[*]){2,}     # - a star,        followed by the following at least twice: any number of spaces or tabs followed by a star
@@ -129,15 +128,17 @@ variables:
       (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
     )
 
+  fenced_code_block: |-
+    (?x:
+      (`){3,}      #   3 or more backticks
+      (?![^`]*`)   #   not followed by any more backticks on the same line
+    |              # or
+      (~){3,}      #   3 or more tildas
+    )
   fenced_code_block_start: |-
     (?x:
       ([ \t]*)
-      (
-        (`){3,}      #   3 or more backticks
-        (?![^`]*`)   #   not followed by any more backticks on the same line
-      |              # or
-        (~){3,}      #   3 or more tildas
-      )
+      ({{fenced_code_block}})
     )
   fenced_code_block_language: |-
     (?x:             # first word of an infostring is used as language specifier
@@ -167,7 +168,7 @@ variables:
   fenced_code_block_escape: ^{{fenced_code_block_end}}
 
   # https://pandoc.org/MANUAL.html#divs-and-spans
-  fenced_div_block: '[ \t]*(:{3,})'
+  fenced_div_block: ':{3,}'
 
   # https://spec.commonmark.org/0.30/#email-autolink
   email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
@@ -176,17 +177,14 @@ variables:
   # https://spec.commonmark.org/0.30/#html-blocks
   html_block: |-
     (?x:
-      [ ]{,3}
-      (?:
-        {{html_tag_block_end_at_close_tag}}  # html block type 1
-      | {{html_tag_block_end_at_blank_line}} # html block type 6
-      | {{html_block_open_tag}}              # html block type 7
-      | {{html_block_close_tag}}             # html block type 7
-      | {{html_block_comment}}               # html block type 2
-      | {{html_block_decl}}                  # html block type 4
-      | {{html_block_cdata}}                 # html block type 5
-      | {{html_block_preprocessor}}          # html block type 3
-      )
+      {{html_tag_block_end_at_close_tag}}  # html block type 1
+    | {{html_tag_block_end_at_blank_line}} # html block type 6
+    | {{html_block_open_tag}}              # html block type 7
+    | {{html_block_close_tag}}             # html block type 7
+    | {{html_block_comment}}               # html block type 2
+    | {{html_block_decl}}                  # html block type 4
+    | {{html_block_cdata}}                 # html block type 5
+    | {{html_block_preprocessor}}          # html block type 3
     )
   html_block_comment: <!--
   html_block_cdata: <!\[CDATA\[
@@ -253,17 +251,78 @@ variables:
   footnote_name: (?:\^(?:\\\]|[^]])+)
   reference_name: (?:(?:\\\]|[^]])+)
 
+  blockquote_footnote_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= (?:[ \t]*>)* [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  blockquote_paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= (?:[ \t]*>)* [ ]{,3}
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  blockquote_nested_paragraph_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= (?:[ \t]*>)* [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  footnote_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
   paragraph_end: |-
     (?x: # pop out of this context if one of the following conditions are met:
-      ^(?=\s*$                        # the line is blank (or only contains whitespace)
-       |  {{block_quote}}             # a blockquote begins the line
-       |  {{atx_heading}}             # an ATX heading begins the line
-       |  {{fenced_code_block_start}} # a fenced codeblock begins the line
-       |  {{fenced_div_block}}        # a fenced div block begins the line
-       |  {{thematic_break}}          # line is a thematic beak
-       |  {{first_list_item}}         # a list item begins the line
-       |  {{html_block}}              # a html block begins the line
-       )
+      ^(?= [ \t]{,3}
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{first_list_item}}         # a list item begins the line
+        |   {{html_block}}              # a html block begins the line
+        )
+      )
     )
 
   list_paragraph_end: |-
@@ -272,11 +331,24 @@ variables:
         (?: $                           # the line is blank (or only contains whitespace)
         |   {{block_quote}}             # a blockquote begins the line
         |   {{atx_heading}}             # an ATX heading begins the line
-        |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
         |   {{fenced_div_block}}        # a fenced div block begins the line
         |   {{thematic_break}}          # line is a thematic beak
         |   {{list_item}}               # a list item begins the line
         |   {{html_block}}              # a html block begins the line
+        )
+      )
+    )
+
+  table_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ ]{,3}
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
         )
       )
     )
@@ -592,20 +664,7 @@ contexts:
     - include: footnote-paragraph-common
 
   block-quote-footnote-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= (?:[ \t]*>)* [ \t]*
-           (?: $                           # the line is blank (or only contains whitespace)
-           |   {{reference_definition}}    # a reference definition begins the line
-           |   {{atx_heading}}             # an ATX heading begins the line
-           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-           |   {{fenced_div_block}}        # a fenced div block begins the line
-           |   {{thematic_break}}          # line is a thematic beak
-           |   {{list_item}}               # a list item begins the line
-           |   {{html_block}}              # a html block begins the line
-           )
-        )
+    - match: '{{blockquote_footnote_end}}'
       pop: 1
 
   block-quote-link-definitions:
@@ -705,19 +764,7 @@ contexts:
     - include: inlines
 
   block-quote-nested-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= (?:[ \t]*>)* [ \t]*
-           (?: $                           # the line is blank (or only contains whitespace)
-           |   {{atx_heading}}             # an ATX heading begins the line
-           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-           |   {{fenced_div_block}}        # a fenced div block begins the line
-           |   {{thematic_break}}          # line is a thematic beak
-           |   {{list_item}}               # a list item begins the line
-           |   {{html_block}}              # a html block begins the line
-           )
-        )
+    - match: '{{blockquote_nested_paragraph_end}}'
       pop: 1
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > PARAGRAPHS ]############################
@@ -733,19 +780,7 @@ contexts:
     - include: inlines
 
   block-quote-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= (?:[ \t]{,3}>)*
-           (?: \s* $                       # the line is blank (or only contains whitespace)
-           |   {{atx_heading}}             # an ATX heading begins the line
-           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-           |   {{fenced_div_block}}        # a fenced div block begins the line
-           |   {{thematic_break}}          # line is a thematic beak
-           |   {{list_item}}               # a list item begins the line
-           |   {{html_block}}              # a html block begins the line
-           )
-        )
+    - match: '{{blockquote_paragraph_end}}'
       pop: 1
 
 ###[ CONTAINER BLOCKS: LISTS ]################################################
@@ -3069,20 +3104,7 @@ contexts:
     - include: links
 
   footnote-paragraph-end:
-    - match: |-
-        (?x)
-        # pop out of this context if one of the following conditions are met:
-        ^(?= [ \t]*
-           (?: $                           # the line is blank (or only contains whitespace)
-           |   {{reference_definition}}    # a reference definition begins the line
-           |   {{atx_heading}}             # an ATX heading begins the line
-           |   {{fenced_code_block_start}} # a fenced codeblock begins the line
-           |   {{fenced_div_block}}        # a fenced div block begins the line
-           |   {{thematic_break}}          # line is a thematic beak
-           |   {{list_item}}               # a list item begins the line
-           |   {{html_block}}              # a html block begins the line
-           )
-        )
+    - match: '{{footnote_end}}'
       pop: 1
 
   link-definitions:
@@ -3187,16 +3209,7 @@ contexts:
 
   table-end:
     # The table is broken at the first empty line, or beginning of another block-level structure
-    - match: |-
-          (?x)^
-          (?= \s*$
-          |   {{atx_heading}}
-          |   {{block_quote}}
-          |   {{fenced_code_block_start}}
-          |   {{fenced_div_block}}
-          |   {{indented_code_block}}
-          |   {{thematic_break}}
-          )
+    - match: '{{table_end}}'
       pop: 1
 
   table-cell-content:
@@ -3258,7 +3271,7 @@ contexts:
 
   thematic-breaks:
     # https://spec.commonmark.org/0.30/#thematic-breaks
-    - match: (?={{thematic_break}})
+    - match: (?=[ \t]*{{thematic_break}})
       push: thematic-break-body
 
   thematic-break-body:
@@ -4361,11 +4374,11 @@ contexts:
 
   fenced-div-blocks:
     # https://pandoc.org/MANUAL.html#divs-and-spans
-    - match: '{{fenced_div_block}}[ \t]*$\n?'
+    - match: '[ \t]*({{fenced_div_block}})[ \t]*$\n?'
       scope: meta.div.markdown
       captures:
         1: punctuation.section.div.end.markdown
-    - match: '{{fenced_div_block}}'
+    - match: '[ \t]*({{fenced_div_block}})'
       captures:
         1: punctuation.section.div.begin.markdown
       push:
