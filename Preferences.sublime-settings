@@ -124,6 +124,13 @@
 	// MarkdownEditing (Folding):
 	// Selector for urls to automatically fold
 	"mde.auto_fold_link.selector": "( meta.image.inline.metadata.markdown | meta.image.reference.metadata.markdown | meta.link.inline.metadata.markdown | meta.link.reference.metadata.markdown ) - punctuation.definition.metadata",
+	// MarkdownEditing (Folding):
+	// Automatically fold sections when loading new document
+	// false: disable auto-folding on load
+	// true: fold headings by level 1
+	// 0: fold all sections, but keep headings visible (outline/toc mode, like ctrl+k, ctrl+9)
+	// 1..6: fold headings by level (like ctrl+k, ctrl+1..6)
+	"mde.auto_fold_sections.level": false,
 
 	// MarkdownEditing (Wiki):
 	// wiki file extensions

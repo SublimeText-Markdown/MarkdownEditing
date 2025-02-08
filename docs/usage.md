@@ -189,6 +189,25 @@ The folding selector can be tweaked in order to add or remove certain kinds of u
     "mde.auto_fold_link.selector": "( meta.image | meta.link ) & ( markup.underline | constant.other) - meta.link.reference.footnote - meta.link.reference.def - meta.link.inet",
 ```
 
+## Automatic Section Folding
+
+MarkdownEditing can automatically fold sections when loading a document.
+
+To globally enable it, add the following setting to _Perferences.sublime-settings_
+
+```jsonc
+    "mde.auto_fold_sections.level": 0,  // TOC mode
+```
+
+Valid values are:
+
+| Value | Description
+| :---: | ---
+| false | disable auto-folding on load
+| true  | fold headings by level 1
+|   0   | fold all sections, but keep headings visible (outline/toc mode, like <kbd>ctrl+k, ctrl+9</kbd>)
+| 1..6  | fold headings by level (like <kbd>ctrl+k, ctrl+1..6</kbd>)
+
 ## Navigation
 
 MarkdownEditing provides various ways to navigate between sections.

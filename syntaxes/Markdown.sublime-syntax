@@ -166,6 +166,9 @@ variables:
     )
   fenced_code_block_escape: ^{{fenced_code_block_end}}
 
+  # https://pandoc.org/MANUAL.html#divs-and-spans
+  fenced_div_block: '[ \t]*(:{3,})'
+
   # https://spec.commonmark.org/0.30/#email-autolink
   email_domain_commonmark: '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?'
   email_user_commonmark: '[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+'
@@ -256,6 +259,7 @@ variables:
        |  {{block_quote}}             # a blockquote begins the line
        |  {{atx_heading}}             # an ATX heading begins the line
        |  {{fenced_code_block_start}} # a fenced codeblock begins the line
+       |  {{fenced_div_block}}        # a fenced div block begins the line
        |  {{thematic_break}}          # line is a thematic beak
        |  {{first_list_item}}         # a list item begins the line
        |  {{html_block}}              # a html block begins the line
@@ -269,6 +273,7 @@ variables:
         |   {{block_quote}}             # a blockquote begins the line
         |   {{atx_heading}}             # an ATX heading begins the line
         |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
         |   {{thematic_break}}          # line is a thematic beak
         |   {{list_item}}               # a list item begins the line
         |   {{html_block}}              # a html block begins the line
@@ -362,6 +367,7 @@ contexts:
     - include: list-blocks
     - include: tables
     - include: fenced-code-blocks
+    - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: atx-headings
@@ -378,7 +384,7 @@ contexts:
 
   block-quotes:
     # https://spec.commonmark.org/0.30/#block-quotes
-    - match: '[ \t]{,3}(>)[ ]?((\[)!CAUTION(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!CAUTION(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.caution.markdown
@@ -387,7 +393,7 @@ contexts:
       push:
         - block-quote-caution-meta
         - block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!WARNING(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.warning.markdown
@@ -396,7 +402,7 @@ contexts:
       push:
         - block-quote-warning-meta
         - block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!IMPORTANT(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.important.markdown
@@ -405,7 +411,7 @@ contexts:
       push:
         - block-quote-important-meta
         - block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!NOTE(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.note.markdown
@@ -414,7 +420,7 @@ contexts:
       push:
         - block-quote-note-meta
         - block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!TIP(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.tip.markdown
@@ -594,6 +600,7 @@ contexts:
            |   {{reference_definition}}    # a reference definition begins the line
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -705,6 +712,7 @@ contexts:
            (?: $                           # the line is blank (or only contains whitespace)
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -732,6 +740,7 @@ contexts:
            (?: \s* $                       # the line is blank (or only contains whitespace)
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -775,6 +784,7 @@ contexts:
 
   list-block-content:
     - include: fenced-code-blocks
+    - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: list-block-common
@@ -803,7 +813,7 @@ contexts:
         4: markup.list.numbered.markdown
 
   list-block-quotes:
-    - match: '[ \t]{,3}(>)[ ]?((\[)!CAUTION(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!CAUTION(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.caution.markdown
@@ -812,7 +822,7 @@ contexts:
       push:
         - block-quote-caution-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!WARNING(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!WARNING(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.warning.markdown
@@ -821,7 +831,7 @@ contexts:
       push:
         - block-quote-warning-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!IMPORTANT(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!IMPORTANT(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.important.markdown
@@ -830,7 +840,7 @@ contexts:
       push:
         - block-quote-important-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!NOTE(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!NOTE(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.note.markdown
@@ -839,7 +849,7 @@ contexts:
       push:
         - block-quote-note-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?((\[)!TIP(\]))'
+    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!TIP(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.tip.markdown
@@ -1147,7 +1157,6 @@ contexts:
     - include: fenced-rust
     - include: fenced-scala
     - include: fenced-shell
-    - include: fenced-shell-script
     - include: fenced-sql
     - include: fenced-tsx
     - include: fenced-typescript
@@ -2007,7 +2016,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(console|shell))
+          (?i:\s*(console|bash|shell(?:-script)?|sh)|zsh)
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.shell.markdown-gfm
@@ -2015,35 +2024,13 @@ contexts:
         5: constant.other.language-name.markdown
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.shell.interactive.markdown
+      embed: scope:source.shell.embedded.markdown
       embed_scope:
         markup.raw.code-fence.shell.markdown-gfm
-        source.shell.interactive.markdown
+        source.shell
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.shell.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
-        2: meta.fold.code-fence.end.markdown
-
-  fenced-shell-script:
-    - match: |-
-         (?x)
-          {{fenced_code_block_start}}
-          (?i:\s*(shell-script|sh|bash|zsh))
-          {{fenced_code_block_trailing_infostring_characters}}
-      captures:
-        0: meta.code-fence.definition.begin.shell-script.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
-        6: comment.line.infostring.markdown
-        7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.shell.bash
-      embed_scope:
-        markup.raw.code-fence.shell-script.markdown-gfm
-        source.shell.bash
-      escape: '{{fenced_code_block_escape}}'
-      escape_captures:
-        0: meta.code-fence.definition.end.shell-script.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
@@ -3090,6 +3077,7 @@ contexts:
            |   {{reference_definition}}    # a reference definition begins the line
            |   {{atx_heading}}             # an ATX heading begins the line
            |   {{fenced_code_block_start}} # a fenced codeblock begins the line
+           |   {{fenced_div_block}}        # a fenced div block begins the line
            |   {{thematic_break}}          # line is a thematic beak
            |   {{list_item}}               # a list item begins the line
            |   {{html_block}}              # a html block begins the line
@@ -3205,6 +3193,7 @@ contexts:
           |   {{atx_heading}}
           |   {{block_quote}}
           |   {{fenced_code_block_start}}
+          |   {{fenced_div_block}}
           |   {{indented_code_block}}
           |   {{thematic_break}}
           )
@@ -4368,6 +4357,41 @@ contexts:
     - include: scope:text.tex.latex#macros
     - include: scope:text.tex.latex#math-content
 
+###[ EXTENSIONS: PANDOC FENCED DIVS ]##########################################
+
+  fenced-div-blocks:
+    # https://pandoc.org/MANUAL.html#divs-and-spans
+    - match: '{{fenced_div_block}}[ \t]*$\n?'
+      scope: meta.div.markdown
+      captures:
+        1: punctuation.section.div.end.markdown
+    - match: '{{fenced_div_block}}'
+      captures:
+        1: punctuation.section.div.begin.markdown
+      push:
+        - fenced-div-puncuation
+        - fenced-div-attr
+
+  fenced-div-attr:
+    - meta_include_prototype: false
+    - match: \{
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-def-attr-body
+    - match: '{{tag_attribute_name_start}}'
+      set:
+        - tag-attr-meta
+        - tag-attr-equals
+        - tag-attr-name
+    - match: else-pop
+
+  fenced-div-puncuation:
+    - meta_include_prototype: false
+    - meta_scope: meta.div.markdown
+    - match: ':+'
+      scope: punctuation.section.div.markdown
+      pop: 1
+    - include: else-pop
+
 ###[ PROTOTYPES ]#############################################################
 
   else-pop:
@@ -4386,4 +4410,3 @@ contexts:
   immediately-pop:
     - match: ''
       pop: 1
-
