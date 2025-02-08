@@ -47,6 +47,9 @@ variables:
       [ \t]*$                    # followed by any number of tabs or spaces, followed by the end of the line
     )
 
+  # Fenced code blocks
+  # ==================
+
   fenced_code_block: |-
     (?x:
       (`){3,}      #   3 or more backticks
@@ -54,11 +57,13 @@ variables:
     |              # or
       (~){3,}      #   3 or more tildas
     )
+
   fenced_code_block_start: |-
     (?x:
       ([ \t]*)
       ({{fenced_code_block}})
     )
+
   fenced_code_block_language: |-
     (?x:             # first word of an infostring is used as language specifier
       \s*            # allow for whitespace between code block start and info string
@@ -67,6 +72,7 @@ variables:
         [^\s:;`]*    # optionally followed by any nonwhitespace character (except backticks)
       )
     )
+
   fenced_code_block_trailing_infostring_characters: |-
     (?x:
       (?:
@@ -75,6 +81,7 @@ variables:
       )?
       (\s*$\n?)              # ... until EOL (fold begin marker)
     )
+
   fenced_code_block_end: |-
     (?x:
       [ \t]*
@@ -167,6 +174,8 @@ variables:
   tag_unquoted_attribute_start: (?=[^{{ascii_space}}=/>}])
   tag_unquoted_attribute_break: (?=[{{ascii_space}}}]|/?>)
 
+  # Pragraphs
+  # =========
 
   blockquote_paragraph_end: |-
     (?x: # pop out of this context if one of the following conditions are met:
