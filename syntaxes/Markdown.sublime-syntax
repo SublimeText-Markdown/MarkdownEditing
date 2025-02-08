@@ -15,6 +15,10 @@ version: 2
 hidden: true
 
 variables:
+
+  # Headings
+  # ========
+
   atx_heading: (?:\#{1,6}[ \t\n])                              # 1 to 6 hashes, followed by at least one space or tab or by end of the line
   atx_heading_space: (?:(?=[ \t]+#+[ \t]*$)|[ \t]+|$)          # consume spaces only if heading is not empty to ensure `atx_heading_end` can fully match closing hashes
   atx_heading_end: (?:[ \t]+(#+))?[ \t]*($\n?)                 # \n is optional so ## is matched as end punctuation in new document (at eof)
@@ -30,6 +34,9 @@ variables:
   list_setext_heading1_escape: ^(?=[ \t]{2,}==+[ \t]*$)               # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
   list_setext_heading1_end: ^[ \t]{2,}(==+)[ \t]*($\n?)               # two or more spaces, followed by at least one equal sign (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
   list_setext_heading2_end: ^[ \t]{2,}(--+)[ \t]*($\n?)               # two or more spaces, followed by at least one hyphen (setext underline can be of any length, but ST needs at least 2 to avoid ambiguity with empty list items)
+
+  # Common Block Indicators
+  # =======================
 
   block_quote: '>'                             # a greater than sign, (followed by any character or the end of the line)
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)   # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
