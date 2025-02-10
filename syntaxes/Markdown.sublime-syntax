@@ -4034,9 +4034,12 @@ contexts:
     # Github Flavoured Markdown
     # After a valid domain, zero or more non-space non-< characters may follow
     # https://github.github.com/gfm/#autolinks-extension-
-    - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
+    - match: (?:(https|http|ftp)(://))(www\.)?[\w-]+|(www\.)[\w-]+
       captures:
-        1: punctuation.separator.path.markdown
+        1: markup.underline.link.protocol
+        2: punctuation.separator.path.markdown
+        3: markup.underline.link.www
+        4: markup.underline.link.www
       push: autolink-inet-unquoted-content
 
   autolink-inet-angled-content:
