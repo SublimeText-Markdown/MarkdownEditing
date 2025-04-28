@@ -206,6 +206,23 @@
 	},
 
 	//
+	// Tasks
+	//
+
+	{
+		"caption": "MarkdownEditing: Insert Task",
+		"command": "mde_insert_task_list_item"
+	},
+	{
+		"caption": "MarkdownEditing: Toggle Task",
+		"command": "mde_toggle_task_list_item"
+	},
+	{
+		"caption": "MarkdownEditing: Reset Tasks",
+		"command": "mde_reset_task_list_items"
+	},
+
+	//
 	// References
 	//
 

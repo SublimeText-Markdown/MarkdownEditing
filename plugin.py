@@ -67,6 +67,7 @@ else:
         MdeNumberListCommand,
         MdeSwitchListBulletTypeCommand,
         MdeInsertTaskListItemCommand,
+        MdeResetTaskListItemsCommand,
         MdeToggleTaskListItemCommand,
         MdeJoinLines,
     )

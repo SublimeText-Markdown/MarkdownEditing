@@ -196,6 +196,49 @@ class MdeInsertTaskListItemCommand(MdeTextCommand):
             self.view.insert(edit, sel.begin(), to_insert)
 
 
+class MdeResetTaskListItemsCommand(MdeTextCommand):
+    """
+    The `mde_reset_task_list_items` command resets check mark of all task list items.
+
+    It must be called in the line of the check mark.
+
+    **Examples:**
+
+    ```markdown
+    # Ordered Task List
+
+    1. [ ] task 1
+    2. [x] task 2
+
+    # Unordered Task List
+
+    * [ ] task 1
+    - [x] task 2
+    + [ ] task 3
+
+    # Quoted Task List
+
+    > * [ ] task 1
+    > * [x] task 2
+    ```
+    """
+
+    def run(self, edit):
+        sels = self.view.sel()
+        if not sels:
+            return
+
+        # list of non-empty selections
+        sels = [sel for sel in sels if not sel.empty()]
+
+        # replace all check marks by space
+        for mark in self.view.find_by_selector(
+            "text.html.markdown markup.list markup.checkbox.mark"
+        ):
+            if not sels or any(mark in sel for sel in sels):
+                self.view.replace(edit, mark, " ")
+
+
 class MdeToggleTaskListItemCommand(MdeTextCommand):
     """
     The `mde_toggle_task_list_item` command toggles the check mark of task list items.

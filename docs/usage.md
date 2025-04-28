@@ -250,7 +250,7 @@ Further available key bindings:
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>,</kbd>  | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>,</kbd> | Decrease block quote level (remove a `> `)
 | <kbd>Ctrl</kbd> + <kbd>Enter</kbd>  | <kbd>⌘</kbd> + <kbd>Enterkbd> | Terminate block quote by adding two newline's.<br/>If the current line is empty, block quote signs are removed.
 
-# Lists and Tasks
+# Lists
 
 List bullets are automatically changed when indenting or unindenting list items by default. This behaviour can be disabled via `"mde.list_indent_auto_switch_bullet": false`.
 
@@ -261,12 +261,24 @@ Following commands are provided via Command Palette:
 *   **Switch List Bullet Type**
     Switches the highlighted list between numbered and bulleted style.
 
+# Tasks
+
+Following commands are provided via Command Palette to manage tasks:
+
+*   **Insert Task**
+    Creates new GFM task (`* [ ] task`)
+*   **Toggle Task**
+    Toggles GFM task check marks (`* [x] task`)
+*   **Reset Tasks**
+    Clear all task check boxes. If non-empty selection exists, only selected tasks are reset.
+
 Following key bindings may be used to create or toggle tasks.
 
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
 | <kbd>Alt</kbd> + <kbd>t</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>t</kbd> | Creates new GFM task (`* [ ] task`)
-| <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [x] task`)
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>x</kbd>  | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>x</kbd> | Clear GFM all (selected) task check marks (`* [0] task`)
+| <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [x] task`)
 
 # References
 
