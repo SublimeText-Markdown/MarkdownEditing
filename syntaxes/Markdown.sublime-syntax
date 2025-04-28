@@ -2156,7 +2156,7 @@ contexts:
     - match: |-
          (?x)
           {{fenced_code_block_start}}
-          (?i:\s*(console|bash|shell(?:-script)?|sh)|zsh)
+          (?i:\s*(console|bash|shell(?:-script)?|sh))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
         0: meta.code-fence.definition.begin.markdown-gfm
@@ -2164,11 +2164,32 @@ contexts:
         5: constant.other.language-name.markdown
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
-      embed: scope:source.shell.embedded.markdown
+      embed: scope:source.shell.bash.embedded.markdown
       embed_scope:
         meta.code-fence.body.markdown-gfm
         markup.raw.code-fence.shell.markdown-gfm
-        source.shell
+        source.shell.bash
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(zsh))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:source.shell.zsh.embedded.markdown
+      embed_scope:
+        meta.code-fence.body.markdown-gfm
+        markup.raw.code-fence.shell.markdown-gfm
+        source.shell.zsh
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.markdown-gfm

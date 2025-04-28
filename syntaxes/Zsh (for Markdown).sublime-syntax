@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+scope: source.shell.zsh.embedded.markdown
+version: 2
+hidden: true
+
+extends:
+  - Bash (for Markdown).sublime-syntax
+  - Packages/ShellScript/Zsh.sublime-syntax
