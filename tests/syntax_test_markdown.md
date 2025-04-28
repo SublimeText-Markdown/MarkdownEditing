@@ -7288,6 +7288,11 @@ __test <span>text__ *formatted</span>*
 
 # TEST: HIGHLIGHT #############################################################
 
+  ==highlight==
+| ^^^^^^^^^^^^^ markup.highlight.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|            ^^ punctuation.definition.highlight.end.markdown
+
 __==bold highlight==__
 | <- markup.bold.markdown punctuation.definition.bold.begin.markdown
 |^ markup.bold.markdown - markup.highlight
@@ -7352,9 +7357,9 @@ ___==bold italic highlight==___
 |                           ^ punctuation.definition.italic.end.markdown
 |                            ^^ punctuation.definition.bold.end.markdown
 
-=Hi= Hello, world!
+=Hi= Hello, ===world===!
 | <- - punctuation.definition.highlight
-|^^^^^^^^^^^^^^^^^ meta.paragraph - markup
+|^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph - markup
 |  ^ - punctuation.definition.highlight
 
 This =text==== is ====curious=.
@@ -7417,6 +7422,69 @@ A ==![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }==
 |                                                                     ^ punctuation.definition.attributes.end.markdown
 |                                                                      ^^ punctuation.definition.highlight.end.markdown
 
+- ==highlight==
+| ^^^^^^^^^^^^^ markup.highlight.markdown
+| ^^ punctuation.definition.highlight.begin.markdown
+|            ^^ punctuation.definition.highlight.end.markdown
+
+1. ==highlight==
+|  ^^^^^^^^^^^^^ markup.highlight.markdown
+|  ^^ punctuation.definition.highlight.begin.markdown
+|             ^^ punctuation.definition.highlight.end.markdown
+
+Heading
+=======
+==highlight==
+| <- meta.paragraph.markdown markup.highlight.markdown punctuation.definition.highlight.begin.markdown
+|^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+Heading
+-------
+==highlight==
+| <- meta.paragraph.markdown markup.highlight.markdown punctuation.definition.highlight.begin.markdown
+|^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+==
+==highlight==
+| <- meta.paragraph.markdown markup.highlight.markdown punctuation.definition.highlight.begin.markdown
+|^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+===
+==highlight==
+| <- meta.paragraph.markdown markup.highlight.markdown punctuation.definition.highlight.begin.markdown
+|^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+---
+==highlight==
+| <- meta.paragraph.markdown markup.highlight.markdown punctuation.definition.highlight.begin.markdown
+|^^^^^^^^^^^^ meta.paragraph.markdown markup.highlight.markdown
+
+Heading
+==
+===not highlighted===
+| <- meta.paragraph.markdown - markup
+|^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup
+
+Heading
+--
+===not highlighted===
+| <- meta.paragraph.markdown - markup
+|^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup
+
+==
+===not highlighted===
+| <- meta.paragraph.markdown - markup
+|^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup
+
+===
+===not highlighted===
+| <- meta.paragraph.markdown - markup
+|^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup
+
+---
+===not highlighted===
+| <- meta.paragraph.markdown - markup
+|^^^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown - markup
 
 # TEST: STRIKETHROUGH #########################################################
 
