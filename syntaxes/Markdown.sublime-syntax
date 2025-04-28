@@ -561,7 +561,7 @@ contexts:
     - include: block-quote-link-definitions
 
   block-quote-footnote-definitions:
-    # Mardown Extras Footnotes
+    # Markdown Extras Footnotes
     - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
         2: punctuation.definition.reference.begin.markdown
@@ -3036,7 +3036,7 @@ contexts:
     - include: link-definitions
 
   footnote-definitions:
-    # Mardown Extras Footnotes
+    # Markdown Extras Footnotes
     - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
         2: punctuation.definition.reference.begin.markdown
@@ -4017,7 +4017,7 @@ contexts:
         3: punctuation.separator.path.markdown
         4: punctuation.separator.path.markdown
         5: punctuation.definition.link.end.markdown
-    # Github Flavoured Markdown
+    # GitHub Flavoured Markdown
     - match: '[\w.+-]+(@)[\w-]+(?:\.(?:(?![._-][\W])[\w_-])+)+(?![_-])'
       captures:
         0: meta.link.email.markdown markup.underline.link.markdown
@@ -4031,7 +4031,7 @@ contexts:
       push:
         - autolink-inet-angled-content
         - link-url-scheme-separator
-    # Github Flavoured Markdown
+    # GitHub Flavoured Markdown
     # After a valid domain, zero or more non-space non-< characters may follow
     # https://github.github.com/gfm/#autolinks-extension-
     - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
@@ -4369,7 +4369,7 @@ contexts:
       captures:
         1: punctuation.section.div.begin.markdown
       push:
-        - fenced-div-puncuation
+        - fenced-div-punctuation
         - fenced-div-attr
 
   fenced-div-attr:
@@ -4384,7 +4384,7 @@ contexts:
         - tag-attr-name
     - match: else-pop
 
-  fenced-div-puncuation:
+  fenced-div-punctuation:
     - meta_include_prototype: false
     - meta_scope: meta.div.markdown
     - match: ':+'
