@@ -27,6 +27,10 @@ else:
     from .plugins.color_schemes import (
         MdeSelectColorSchemeCommand,
     )
+    from .plugins.critic import (
+        MdeGotoNextCriticCommand,
+        MdeGotoPrevCriticCommand
+    )
     from .plugins.folding import (
         MdeAutoFoldListener,
         MdeFoldAllSectionsCommand,

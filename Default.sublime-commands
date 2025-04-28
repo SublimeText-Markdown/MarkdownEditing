@@ -263,6 +263,19 @@
 	},
 
 	//
+	// CriticMarkup
+	//
+
+	{
+		"caption": "MarkdownEditing: Goto Next Critic",
+		"command": "mde_goto_next_critic"
+	},
+	{
+		"caption": "MarkdownEditing: Goto Previous Critic",
+		"command": "mde_goto_prev_critic"
+	},
+
+	//
 	// Wiki
 	//
 

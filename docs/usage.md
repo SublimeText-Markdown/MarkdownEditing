@@ -321,6 +321,11 @@ Important functions are bound to following keys by default:
 
 MarkdownEditing supports document review by highlighting critic markup and enable adding critic or accepting and rejecting proposed changes via key bindings.
 
+| Linux/Windows | MacOS | Description
+|---------------|-------|-------------
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>down</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>down</kbd> | Jump to next critic marker.
+| <kbd>Alt</kbd> + <kbd>c</kbd>, <kbd>Alt</kbd> + <kbd>up</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>c</kbd>,  <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>up</kbd> | Jump to previous critic marker.
+
 ## Reviewer
 
 A document reviewer can insert critic or propose changes for single words or selections with following key bindings:

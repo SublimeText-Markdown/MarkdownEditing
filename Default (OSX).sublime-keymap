@@ -1462,6 +1462,18 @@
 		]
 	},
 
+	// navigate between critics
+	{ "keys": ["super+alt+c", "super+alt+down"], "command": "mde_goto_next_critic", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+		]
+	},
+	{ "keys": ["super+alt+c", "super+alt+up"], "command": "mde_goto_prev_critic", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+		]
+	},
+
 	//
 	// Wiki
 	//
