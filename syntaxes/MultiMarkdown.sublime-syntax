@@ -24,13 +24,13 @@ contexts:
     - match: ^(---)\s*\n
       captures:
         0: meta.frontmatter.multimarkdown
-        1: punctuation.section.block.begin.frontmatter.multimarkdown
+        1: punctuation.section.frontmatter.begin.multimarkdown
       embed: frontmatter-content
       embed_scope: meta.frontmatter.multimarkdown
       escape: ^(---|\.{3})\s*\n
       escape_captures:
         0: meta.frontmatter.multimarkdown
-        1: punctuation.section.block.end.frontmatter.multimarkdown
+        1: punctuation.section.frontmatter.end.multimarkdown
       pop: 1
     # Classic key-value frontmatter beginning with first key, terminated by empty line.
     - match: ^(?={{header}})
