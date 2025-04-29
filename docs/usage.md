@@ -277,7 +277,7 @@ Following key bindings may be used to create or toggle tasks.
 | Linux/Windows | MacOS | Description
 |---------------|-------|-------------
 | <kbd>Alt</kbd> + <kbd>t</kbd>  | <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>t</kbd> | Creates new GFM task (`* [ ] task`)
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>x</kbd>  | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>x</kbd> | Clear GFM all (selected) task check marks (`* [0] task`)
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>x</kbd>  | <kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>x</kbd> | Clear GFM all (selected) task check marks (to `* [ ] task`)
 | <kbd>Alt</kbd> + <kbd>x</kbd>  | <kbd>⌥</kbd> + <kbd>x</kbd> | Toggles GFM task check marks (`* [x] task`)
 
 # References
