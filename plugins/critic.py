@@ -1,9 +1,8 @@
-import sublime_plugin
-
 from bisect import bisect_left, bisect_right
+from .view import MdeTextCommand
 
 
-class MdeGotoNextCriticCommand(sublime_plugin.TextCommand):
+class MdeGotoNextCriticCommand(MdeTextCommand):
     def run(self, edit):
         sel = self.view.sel()
         if not sel:
@@ -20,7 +19,7 @@ class MdeGotoNextCriticCommand(sublime_plugin.TextCommand):
         self.view.show_at_center(sel)
 
 
-class MdeGotoPrevCriticCommand(sublime_plugin.TextCommand):
+class MdeGotoPrevCriticCommand(MdeTextCommand):
     def run(self, edit):
         sel = self.view.sel()
         if not sel:
