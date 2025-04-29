@@ -31,6 +31,14 @@
 				<key>excludeTrailingNewlines</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>begin</key>
+				<string>punctuation.section.frontmatter.begin.markdown</string>
+				<key>end</key>
+				<string>punctuation.section.frontmatter.end.markdown</string>
+				<key>excludeTrailingNewlines</key>
+				<true/>
+			</dict>
 		</array>
 	</dict>
 </dict>

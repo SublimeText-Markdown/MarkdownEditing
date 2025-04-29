@@ -1084,6 +1084,12 @@
 			{ "key": "overlay_visible", "operator": "equal", "operand": false }
 		]
 	},
+	// Reset GFM tasks
+	{ "keys": ["alt+shift+x"], "command": "mde_reset_task_list_items", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+		]
+	},
 	// Toggle GFM tasks
 	{ "keys": ["alt+x"], "command": "mde_toggle_task_list_item", "context":
 		[
@@ -1459,6 +1465,18 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.critic.substitution", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": false }
+		]
+	},
+
+	// navigate between critics
+	{ "keys": ["alt+c", "alt+down"], "command": "mde_goto_next_critic", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
+		]
+	},
+	{ "keys": ["alt+c", "alt+up"], "command": "mde_goto_prev_critic", "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true }
 		]
 	},
 

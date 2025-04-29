@@ -206,6 +206,23 @@
 	},
 
 	//
+	// Tasks
+	//
+
+	{
+		"caption": "MarkdownEditing: Insert Task",
+		"command": "mde_insert_task_list_item"
+	},
+	{
+		"caption": "MarkdownEditing: Toggle Task",
+		"command": "mde_toggle_task_list_item"
+	},
+	{
+		"caption": "MarkdownEditing: Reset Tasks",
+		"command": "mde_reset_task_list_items"
+	},
+
+	//
 	// References
 	//
 
@@ -260,6 +277,19 @@
 	{
 		"caption": "MarkdownEditing: Organize References",
 		"command": "mde_reference_organize"
+	},
+
+	//
+	// CriticMarkup
+	//
+
+	{
+		"caption": "MarkdownEditing: Goto Next Critic",
+		"command": "mde_goto_next_critic"
+	},
+	{
+		"caption": "MarkdownEditing: Goto Previous Critic",
+		"command": "mde_goto_prev_critic"
 	},
 
 	//
