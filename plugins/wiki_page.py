@@ -5,7 +5,7 @@ import sys
 
 import sublime
 
-from datetime import date
+from datetime import datetime
 
 from .logging import logger
 from .view import MdeTextCommand
@@ -56,9 +56,8 @@ class MdeOpenHomePageCommand(MdeTextCommand):
 
 class MdeOpenJournalCommand(MdeTextCommand):
     def run(self, edit):
-        today = date.today()
         date_format = self.view.settings().get("mde.journal.dateformat", DEFAULT_DATE_FORMAT)
-        name = today.strftime(date_format)
+        name = datetime.now().strftime(date_format)
 
         wiki_page = WikiPage(self.view)
         wiki_page.select_page(name)
