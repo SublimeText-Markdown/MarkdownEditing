@@ -96,7 +96,6 @@ class MdeOpenPageCommand(MdeTextCommand):
 
 
 class MdePrepareFromTemplateCommand(MdeTextCommand):
-
     DEFAULT_PAGE_TEMPLATE = "templates/PageTemplate.md"
     PRESET_TEMPLATE_TEXT = "# $title\n\n"
 
@@ -306,14 +305,12 @@ class WikiPage:
 
         # return empty selection if surrounded by whitespace
         reg = sublime.Region(sel.begin() - 1, sel.end())
-        if all(c in " \t\n" for c in  self.view.substr(reg)):
+        if all(c in " \t\n" for c in self.view.substr(reg)):
             return sel
 
         # expand selection to word boundaries
         reg = self.view.expand_by_class(
-            sel,
-            classes=sublime.CLASS_WORD_START | sublime.CLASS_WORD_END,
-            separators=" \t\n"
+            sel, classes=sublime.CLASS_WORD_START | sublime.CLASS_WORD_END, separators=" \t\n"
         )
         if not reg.empty():
             sels.clear()
