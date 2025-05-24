@@ -132,6 +132,10 @@
 	// 1..6: fold headings by level (like ctrl+k, ctrl+1..6)
 	"mde.auto_fold_sections.level": false,
 
+	// MarkdownEditing (Journal):
+	// date and time format of journal files
+	"mde.journal.dateformat": "%Y-%m-%d",
+
 	// MarkdownEditing (Wiki):
 	// wiki file extensions
 	"mde.wikilinks.markdown_extension": ".md",
