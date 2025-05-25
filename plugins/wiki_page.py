@@ -310,7 +310,7 @@ class WikiPage:
 
         # expand selection to word boundaries
         reg = self.view.expand_by_class(
-            sel, classes=sublime.CLASS_WORD_START | sublime.CLASS_WORD_END, separators=" \t\n"
+            sel, classes=sublime.CLASS_WORD_START | sublime.CLASS_WORD_END, separators=" \t\n?*"
         )
         if not reg.empty():
             sels.clear()
