@@ -6746,6 +6746,16 @@ _foo __bar__ baz_
 |               ^ punctuation.definition.italic.end.markdown
 |                ^ - markup
 
+*foo **bar** baz*
+| <- markup.italic.markdown punctuation.definition.italic.begin.markdown
+|^^^^ markup.italic.markdown - markup markup
+|    ^^ punctuation.definition.bold.begin.markdown
+|    ^^^^^^^ markup.italic.markdown markup.bold.markdown
+|         ^^ punctuation.definition.bold.end.markdown
+|           ^^^^^ markup.italic.markdown - markup markup
+|               ^ punctuation.definition.italic.end.markdown
+|                ^ - markup
+
 ## https://spec.commonmark.org/0.30/#example-418
 
 *foo [*bar*](/url)*
@@ -6825,6 +6835,17 @@ bar**
 ## https://spec.commonmark.org/0.30/#example-423
 
 __foo _bar_ baz__
+| <- markup.bold.markdown punctuation.definition.bold.begin.markdown
+|^^^^^ markup.bold.markdown - markup markup
+|^ punctuation.definition.bold.begin.markdown
+|     ^ punctuation.definition.italic.begin.markdown
+|     ^^^^^ markup.bold.markdown markup.italic.markdown
+|         ^ punctuation.definition.italic.end.markdown
+|          ^^^^^^ markup.bold.markdown - markup markup
+|               ^ punctuation.definition.bold.end.markdown
+|                ^ - markup
+
+**foo *bar* baz**
 | <- markup.bold.markdown punctuation.definition.bold.begin.markdown
 |^^^^^ markup.bold.markdown - markup markup
 |^ punctuation.definition.bold.begin.markdown
@@ -6923,8 +6944,9 @@ foo **_**
 ## https://spec.commonmark.org/0.30/#example-442
 
 *foo**
-
-> Note: Needs ST4's branching to get it right!
+|^^^^ markup.italic.markdown
+|   ^ punctuation.definition.italic.end.markdown
+|    ^ - markup.italic - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-443
 
@@ -6950,8 +6972,9 @@ foo **_**
 ## https://spec.commonmark.org/0.30/#example-446
 
 *foo****
-
-> Note: Needs ST4's branching to get it right!
+|^^^^ markup.italic.markdown
+|   ^ punctuation.definition.italic.end.markdown
+|    ^^^ - markup.italic - punctuation
 
 ## https://spec.commonmark.org/0.30/#example-447
 
@@ -7053,15 +7076,24 @@ _more `tests_` here_
 |     ^^^^^^^^ markup.raw.inline
 |                  ^ punctuation.definition.italic.end
 
+_more `tests_` here__
+|                   ^ - punctuation
+
 __more `tests__` here__
 | <- punctuation.definition.bold.begin
 |      ^^^^^^^^^ markup.raw.inline
 |                    ^^ punctuation.definition.bold.end
 
+__more `tests__` here___
+|                      ^ - punctuation
+
 **more `tests__` here**
 | <- punctuation.definition.bold.begin
 |      ^^^^^^^^^ markup.raw.inline
 |                    ^^ punctuation.definition.bold.end
+
+**more `tests__` here***
+|                      ^ - punctuation
 
 **more `tests**` here**
 | <- punctuation.definition.bold.begin
@@ -7070,9 +7102,17 @@ __more `tests__` here__
 
 *more `tests__` here**
 | <- punctuation.definition.italic.begin
-|                   ^^ - punctuation
+|                   ^ punctuation.definition.italic.end
+|                    ^ - punctuation
 abc*
-|  ^ punctuation.definition.italic.end
+|  ^ - punctuation
+
+_more `tests__` here__
+| <- punctuation.definition.italic.begin
+|                   ^ punctuation.definition.italic.end
+|                    ^ - punctuation
+abc_
+|  ^ - punctuation
 
 This is ***bold italic***
 |       ^^^^^^^^^^^^^^^^^ markup.bold
@@ -7081,6 +7121,114 @@ This is ***bold italic***
 |         ^^^^^^^^^^^^^ markup.italic
 |                     ^ punctuation.definition.italic.end
 |                      ^^ punctuation.definition.bold.end
+
+This is ***bold*italic***
+|       ^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^ markup.italic
+|              ^ punctuation.definition.italic.end
+|               ^^^^^^^^^ - markup.italic
+|                     ^^ punctuation.definition.bold.end
+|                       ^ - markup.bold - punctuation
+
+This is ***bold* italic***
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^ markup.italic
+|              ^ punctuation.definition.italic.end
+|               ^^^^^^^^^ - markup.italic
+|                      ^^ punctuation.definition.bold.end
+|                        ^ - markup.bold - punctuation
+
+This is ***bold *italic***
+|       ^^^^^^^^^^^^^^^^^^ markup.bold, markup.italic
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                      ^ punctuation.definition.italic.end
+|                       ^^ punctuation.definition.bold.end
+|                         ^ - markup.bold - punctuation
+
+This is ***bold * italic***
+|       ^^^^^^^^^^^^^^^^^^^ markup.bold, markup.italic
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                       ^ punctuation.definition.italic.end
+|                        ^^ punctuation.definition.bold.end
+|                          ^ - markup.bold - punctuation
+
+This is ***bold**italic***
+|       ^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^ markup.italic
+|              ^^ punctuation.definition.bold.end
+|                ^^^^^^^^ - markup.bold
+|                      ^ punctuation.definition.italic.end
+|                       ^^ - markup.italic - punctuation
+
+This is ***bold** italic***
+|       ^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^^ markup.italic
+|              ^^ punctuation.definition.bold.end
+|                ^^^^^^^^^ - markup.bold
+|                       ^ punctuation.definition.italic.end
+|                        ^^ - markup.italic - punctuation
+
+This is ***bold **italic***
+|       ^^^^^^^^^^^^^^^^^^^ markup.bold, markup.italic
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                       ^ punctuation.definition.italic.end
+|                        ^^ punctuation.definition.bold.end
+|                          ^ - markup.bold - markup.italic - punctuation
+
+This is ***bold ** italic***
+|       ^^^^^^^^^^^^^^^^^^^^ markup.bold, markup.italic
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                        ^ punctuation.definition.italic.end
+|                         ^^ punctuation.definition.bold.end
+|                           ^ - markup.bold - markup.italic - punctuation
+
+This is ***bold ***italic***
+|       ^^^^^^^^^^^^^^^^^^^^ markup.bold, markup.italic
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                        ^ punctuation.definition.italic.end
+|                         ^^ punctuation.definition.bold.end
+|                           ^ - markup.bold - markup.italic - punctuation
+
+This is ***bold italic** **bold italic***
+|       ^^^^^^^^^^^^^^^^ markup.bold.markdown
+|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown
+|                       ^ markup.italic - markup.bold
+|                        ^^^^^^^^^^^^^^^ markup.bold.markdown
+|                                       ^ - markup.bold
+|                                        ^ - markup.bold - markup.italic - punctuation
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                     ^^ punctuation.definition.bold.end
+|                        ^^ punctuation.definition.bold.begin
+|                                     ^^ punctuation.definition.bold.end
+|                                       ^ punctuation.definition.italic.end
+
+This is ***bold italic* *bold italic***
+|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown
+|         ^^^^^^^^^^^^^ markup.italic
+|                      ^ - markup.italic
+|                        ^^^^^^^^^^^^ markup.italic
+|                                    ^^ - markup.italic
+|                                      ^ - markup.bold - markup.italic - punctuation
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                     ^ punctuation.definition.italic.end
+|                       ^ punctuation.definition.italic.begin
+|                                   ^ punctuation.definition.italic.end
+|                                    ^^ punctuation.definition.bold.end
 
 This is ***bold italic* and just bold**
 |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
@@ -7118,33 +7266,134 @@ This is __*bold italic*__
 |                     ^ punctuation.definition.italic.end
 |                      ^^ punctuation.definition.bold.end
 
-This is ___bold italic___
+This is ___bold italic____
 |       ^^^^^^^^^^^^^^^^^ markup.bold
 |       ^^ punctuation.definition.bold.begin
 |         ^ punctuation.definition.italic.begin
 |         ^^^^^^^^^^^^^ markup.italic
 |                     ^ punctuation.definition.italic.end
 |                      ^^ punctuation.definition.bold.end
+|                        ^ - markup.bold - markup.italic - punctuation
 
-This is ___bold italic_ and just bold__
+This is ___bold_italic___
+|       ^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^ markup.italic
+|              ^ - punctuation
+|                     ^ punctuation.definition.italic.end
+|                      ^^ punctuation.definition.bold.end
+|                        ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold _italic___
+|       ^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^ markup.italic
+|               ^ - punctuation
+|                      ^ punctuation.definition.italic.end
+|                       ^^ punctuation.definition.bold.end
+|                         ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold _ italic___
+|       ^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^^ markup.italic
+|               ^ - punctuation
+|                       ^ punctuation.definition.italic.end
+|                        ^^ punctuation.definition.bold.end
+|                          ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold__italic___
+|       ^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^ markup.italic
+|              ^^ - punctuation
+|                      ^ punctuation.definition.italic.end
+|                       ^^ punctuation.definition.bold.end
+|                         ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold __italic___
+|       ^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^^ markup.italic
+|               ^^ - punctuation
+|                       ^ punctuation.definition.italic.end
+|                        ^^ punctuation.definition.bold.end
+|                          ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold __ italic___
+|       ^^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^^^ markup.italic
+|               ^^ - punctuation
+|                        ^ punctuation.definition.italic.end
+|                         ^^ punctuation.definition.bold.end
+|                           ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold ___italic___
+|       ^^^^^^^^^^^^^^^^^^^^ markup.bold
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|         ^^^^^^^^^^^^^^^^ markup.italic
+|               ^^^ - punctuation
+|                        ^ punctuation.definition.italic.end
+|                         ^^ punctuation.definition.bold.end
+|                           ^ - markup.bold - markup.italic - punctuation
+
+This is ___bold italic__ __bold italic___
+|       ^^^^^^^^^^^^^^^^ markup.bold.markdown
+|         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic.markdown
+|                       ^ markup.italic - markup.bold
+|                        ^^^^^^^^^^^^^^^ markup.bold.markdown
+|                                       ^ - markup.bold
+|                                        ^ - markup.bold - markup.italic - punctuation
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                     ^^ punctuation.definition.bold.end
+|                        ^^ punctuation.definition.bold.begin
+|                                     ^^ punctuation.definition.bold.end
+|                                       ^ punctuation.definition.italic.end
+
+This is ___bold italic_ _bold italic___
+|       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold.markdown
+|         ^^^^^^^^^^^^^ markup.italic
+|                      ^ - markup.italic
+|                        ^^^^^^^^^^^^ markup.italic
+|                                    ^^ - markup.italic
+|                                      ^ - markup.bold - markup.italic - punctuation
+|       ^^ punctuation.definition.bold.begin
+|         ^ punctuation.definition.italic.begin
+|                     ^ punctuation.definition.italic.end
+|                       ^ punctuation.definition.italic.begin
+|                                   ^ punctuation.definition.italic.end
+|                                    ^^ punctuation.definition.bold.end
+
+This is ___bold italic_ and just bold___
 |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.bold
 |       ^^ punctuation.definition.bold.begin
 |         ^ punctuation.definition.italic.begin
 |         ^^^^^^^^^^^^^ markup.italic
 |                     ^ punctuation.definition.italic.end
-|                      ^^^^^^^^^^^^^^^^ - markup.italic
+|                      ^^^^^^^^^^^^^^^^^ - markup.italic
 |                                    ^^ punctuation.definition.bold.end
+|                                      ^ - markup.bold - punctuation
 
 The next scope overlap funny because we have to pick one order
 to scope three indicators in a row
-This is ___bold italic__ and just italic_
+This is ___bold italic__ and just italic__
 |       ^^^^^^^^^^^^^^^ markup.bold
 |       ^^ punctuation.definition.bold.begin
 |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.italic
 |         ^ punctuation.definition.italic.begin
 |                     ^^ punctuation.definition.bold.end
-|                       ^^^^^^^^^^^^^^^^^ - markup.bold
+|                       ^^^^^^^^^^^^^^^^^^ - markup.bold
 |                                       ^ punctuation.definition.italic.end
+|                                        ^ - markup.italic - punctuation
 
 This is _**italic bold**_
 |       ^^^^^^^^^^^^^^^^^ markup.italic
