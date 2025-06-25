@@ -479,6 +479,7 @@ contexts:
         1: punctuation.section.frontmatter.end.markdown
 
   markdown:
+    - include: merge-conflict-markers
     - include: indented-code-blocks
     - include: thematic-breaks
     - include: block-quotes
@@ -497,6 +498,26 @@ contexts:
     # but without reference to list blocks as this is an implementation detail.
     # The content may diverge from list block content in future.
     - include: list-block-content
+
+###[ MERGE CONFLICT MARKERS ]##################################################
+
+  merge-conflict-markers:
+    # see also: Diff.sublime-syntax#conflict-markers
+    - match: ^(<{7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.begin.diff
+      captures:
+        1: punctuation.section.block.begin.diff
+        2: entity.name.section.diff
+    - match: ^(>{7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.end.diff
+      captures:
+        1: punctuation.section.block.end.diff
+        2: entity.name.section.diff
+    - match: ^(\|{7}|={7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.separator.diff
+      captures:
+        1: punctuation.section.block.diff
+        2: entity.name.section.diff
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
@@ -864,6 +885,7 @@ contexts:
       pop: 1
 
   list-block-content:
+    - include: merge-conflict-markers
     - include: fenced-code-blocks
     - include: fenced-div-blocks
     - include: html-blocks
@@ -3440,6 +3462,7 @@ contexts:
     - include: link-ref
 
   markups:
+    - include: merge-conflict-markers
     # Markdown will convert this for us. We match it so that the
     # HTML grammar will not mark it up as invalid.
     - match: '[<>](-+|=+)[<>]?'
