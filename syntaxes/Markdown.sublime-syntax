@@ -2670,11 +2670,10 @@ contexts:
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
       embed: scope:source.mermaid
-
       embed_scope:
-        source.mermaid
+        meta.code-fence.body.markdown-gfm
         markup.raw.code-fence.mermaid.markdown-gfm
-        source.mermaid.embedded.markdown-gfm
+        source.mermaid
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.markdown-gfm
