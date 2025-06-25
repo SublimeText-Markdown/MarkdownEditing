@@ -37,7 +37,7 @@ def debounced(delay_in_ms, sync=False):
 
         @wraps(func)
         def wrapper(self, *args, **kwargs):
-            view = self.view if hasattr(self, 'view') else args[0]
+            view = self.view if hasattr(self, "view") else args[0]
             pending = view.view_id in call_at
             call_at[view.view_id] = now() * 1000 + delay_in_ms
             if pending:

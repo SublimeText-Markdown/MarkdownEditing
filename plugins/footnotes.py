@@ -193,7 +193,7 @@ class MdeSortFootnotesCommand(MdeTextCommand):
             if r not in keys:
                 keys.append(r)
 
-        for (key, item) in defs.items():
+        for key, item in defs.items():
             fnend = self.view.find(r"(\s*\Z|\n\s*\n(?!\ {4,}))", item.end())
             fnreg = sublime.Region(item.begin(), fnend.end())
             notes[key] = self.view.substr(fnreg).strip()
