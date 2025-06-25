@@ -1052,11 +1052,11 @@ this must not be bold italic***
 |      ^^^ - entity.name.section
 |       ^^ punctuation.definition.heading.end.markdown
 
-# Headding <u>with</u> tag
+# Heading <u>with</u> tag
 | <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
-|^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
-|          ^^^ meta.tag
-|                 ^^^^ meta.tag
+|^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
+|         ^^^ meta.tag
+|                ^^^^ meta.tag
 
 # TEST: SETEXT HEADINGS #######################################################
 
@@ -1995,7 +1995,7 @@ var_dump(expression);
 
 ```python
 |^^^^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|        ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|        ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 |^^ punctuation.definition.raw.code-fence.begin
 |  ^^^^^^ constant.other.language-name
 def function():
@@ -2010,7 +2010,7 @@ unclosed_paren = (
 
 ```regex
 |^^^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 (?x)
 \s+
 | <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.regexp.markdown-gfm source.regexp
@@ -2021,7 +2021,7 @@ unclosed_paren = (
 
 ```scala
 |^^^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|       ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 
 | <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.scala.markdown-gfm source.scala
 ```
@@ -2093,7 +2093,7 @@ bar
 
 ```sql
 |^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 |^^ punctuation.definition.raw.code-fence.begin.markdown
 |  ^^^ constant.other.language-name
 SELECT TOP 10 *
@@ -2120,7 +2120,7 @@ declare type foo = 'bar'
 
 ```xml
 |^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 |^^ punctuation.definition.raw.code-fence.begin.markdown
 |  ^^^ constant.other.language-name
 <?xml version="1.0" ?>
@@ -2136,7 +2136,7 @@ declare type foo = 'bar'
 
 ```jsx:file.jsx
 |^^^^^^^^^^^^^^ meta.code-fence.definition.begin - meta.fold - markup
-|              ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - merkup
+|              ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
 |^^ punctuation.definition.raw.code-fence.begin.markdown
 |  ^^^ constant.other.language-name.markdown
 |     ^^^^^^^^^ comment.line.infostring.markdown
@@ -4447,7 +4447,7 @@ second line
 
 ## https://custom-tests/block-quotes#emphasis
 
-> Blcok quotes support markup,
+> Block quotes support markup,
 > like *italics*, **bold**, ***bold italic*** and ~~strikethrough~~.
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
 |      ^^^^^^^^^ markup.italic.markdown
@@ -5456,7 +5456,7 @@ global heading
     <p>
     | <- markup.list.unnumbered.markdown meta.disable-markdown meta.tag
     |^^ markup.list.unnumbered.markdown meta.disable-markdown meta.tag
-      *no-markodwn*
+      *no-markdown*
     |^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.disable-markdown - markup.italic
     </p>
     - not a list item

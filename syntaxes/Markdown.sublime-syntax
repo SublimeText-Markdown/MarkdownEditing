@@ -3401,7 +3401,7 @@ contexts:
       captures:
         1: punctuation.definition.raw.begin.markdown
         2: punctuation.definition.raw.end.markdown
-    - match: \`+  # consume remainers
+    - match: \`+  # consume remainders
 
   table-cell-emphasis:
     - include: emphasis
