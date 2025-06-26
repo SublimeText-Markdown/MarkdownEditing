@@ -63,10 +63,6 @@ def augment_default_markdown():
             load_res("MultiMarkdown.sublime-syntax").replace("\nhidden: true\n", "\n"),
         )
         pkg.writestr(
-            "Shell (for Markdown).sublime-syntax",
-            load_res("Shell (for Markdown).sublime-syntax"),
-        )
-        pkg.writestr(
             "README.md",
             dedent(
                 """
