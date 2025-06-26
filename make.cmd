@@ -52,6 +52,7 @@ goto :usage
 
 :RELEASE
     if "%2"== "" goto :usage
+    set version=%2
 
     git checkout master && git merge st4-develop --no-ff
     if not errorlevel 0 (
@@ -69,14 +70,28 @@ goto :usage
 
     echo Createing assets for "%package%"...
 
-    :: create downloadable asset for ST4134+
+    :: create tag and download asset for ST4152+
     set build=4107
-    set archive=%package%-%2-st%build%.sublime-package
+    set branch=st%build%
+    set tag=%build%-%version%
+    set archive=%package%-%version%-st%build%.sublime-package
     set assets="%archive%#%archive%"
-    call git archive --format zip -o "%archive%" master
+    call git push origin %branch%
+    call git tag -f %tag% %branch%
+    call git push --force origin %tag%
+    call git archive --format zip -o "%archive%" %branch%
+
+    :: create tag and download asset for ST4200+ (master branch)
+    set build=4200
+    set branch=master
+    set tag=%build%-%version%
+    set archive=%package%-%version%-st%build%.sublime-package
+    set assets=%assets% "%archive%#%archive%"
+    call git push origin %branch%
+    call git archive --format zip -o "%archive%" %branch%
 
     :: create the release
-    gh release create --target master -t "%package% %2" "%build%-%2" %assets%
+    gh release create --target %branch% -t "%package% %version%" "%tag%" %assets%
     del /f /q *.sublime-package
     git fetch
     goto :eof

@@ -1,10 +1,10 @@
 %YAML 1.2
 ---
-scope: source.shell.embedded.markdown
+scope: source.shell.bash.embedded.markdown
 version: 2
 hidden: true
 
-extends: Packages/ShellScript/Shell-Unix-Generic.sublime-syntax
+extends: Packages/ShellScript/Bash.sublime-syntax
 
 contexts:
   main:

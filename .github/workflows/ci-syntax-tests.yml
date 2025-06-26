@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'master'
-      - 'st3176'
     paths:
       - '.github/workflows/ci-syntax-tests.yml'
       - '**.sublime-syntax'
@@ -28,14 +27,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - build: 4107
-            default_packages: v4107
-          - build: 4126
-            default_packages: v4126
-          - build: 4152
-            default_packages: v4152
-          - build: 4169
-            default_packages: v4169
+          - build: 4200
+            default_packages: v4200
           - build: latest
             default_packages: master
     steps:
