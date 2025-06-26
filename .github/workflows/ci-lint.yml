@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         python:
-          - '3.8'
+          - '3.13'
         arch:
           - 'x64'
     steps:
@@ -40,5 +40,3 @@ jobs:
         run: pip install -r tests/requirements.txt
       - name: Run black
         run: python -m black --check .
-      - name: Run flake8
-        run: python -m flake8

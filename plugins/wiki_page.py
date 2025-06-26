@@ -5,7 +5,7 @@ import sys
 
 import sublime
 
-from datetime import date
+from datetime import datetime
 
 from .logging import logger
 from .view import MdeTextCommand
@@ -56,9 +56,8 @@ class MdeOpenHomePageCommand(MdeTextCommand):
 
 class MdeOpenJournalCommand(MdeTextCommand):
     def run(self, edit):
-        today = date.today()
         date_format = self.view.settings().get("mde.journal.dateformat", DEFAULT_DATE_FORMAT)
-        name = today.strftime(date_format)
+        name = datetime.now().strftime(date_format)
 
         wiki_page = WikiPage(self.view)
         wiki_page.select_page(name)
@@ -97,7 +96,6 @@ class MdeOpenPageCommand(MdeTextCommand):
 
 
 class MdePrepareFromTemplateCommand(MdeTextCommand):
-
     DEFAULT_PAGE_TEMPLATE = "templates/PageTemplate.md"
     PRESET_TEMPLATE_TEXT = "# $title\n\n"
 
@@ -296,17 +294,30 @@ class WikiPage:
             yield dir, dirnames, files
 
     def select_word_at_cursor(self):
-        word_region = None
+        sels = self.view.sel()
+        if not sels:
+            return None
 
-        selection = self.view.sel()
-        for region in selection:
-            word_region = self.view.word(region)
-            if not word_region.empty():
-                selection.clear()
-                selection.add(word_region)
-                return word_region
+        # return non-empty selection
+        sel = sels[0]
+        if not sel.empty():
+            return sel
 
-        return word_region
+        # return empty selection if surrounded by whitespace
+        reg = sublime.Region(sel.begin() - 1, sel.end())
+        if all(c in " \t\n" for c in self.view.substr(reg)):
+            return sel
+
+        # expand selection to word boundaries
+        reg = self.view.expand_by_class(
+            sel, classes=sublime.CLASS_WORD_START | sublime.CLASS_WORD_END, separators=" \t\n?*"
+        )
+        if not reg.empty():
+            sels.clear()
+            sels.add(reg)
+            return reg
+
+        return sel
 
     def show_quick_list(self, file_list):
         self.file_list = file_list

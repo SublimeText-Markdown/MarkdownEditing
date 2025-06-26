@@ -1,6 +1,9 @@
 import re
+import unicodedata
+
 import sublime
 
+from ..decorators import debounced
 from ..view import MdeViewEventListener
 
 HEADINGS_RE = re.compile(
@@ -54,15 +57,42 @@ class MdeUnsavedViewNameSetter(MdeViewEventListener):
     This view event listener prints the first heading as tab title of unsaved documents.
     """
 
-    MAX_NAME = 50
-
+    @debounced(50, sync=True)
     def on_modified(self):
-        if self.view.file_name() is not None or not self.view.settings().get(
-            "set_unsaved_view_name", True
-        ):
+        if self.view.file_name() or self.view.is_loading():
+            return
+
+        view_settings = self.view.settings()
+        if not view_settings.get("set_unsaved_view_name", True):
+            return
+
+        cur_name = view_settings.get("mde_auto_name")
+        view_name = self.view.name()
+
+        # Name has been explicitly set, don't override it
+        if not cur_name and view_name:
+            return
+
+        # Name has been explicitly changed, don't override it
+        if cur_name and cur_name != view_name:
+            view_settings.erase("mde_auto_name")
+            return
+
+        # Don't set the names on widgets, it'll just trigger spurious
+        # on_modified callbacks
+        if view_settings.get("is_widget"):
             return
 
         name = first_heading_text(self.view)
-        if len(name) > self.MAX_NAME:
-            name = name[: self.MAX_NAME] + "…"
+        if len(name) > 50:
+            name = name[:50] + "…"
+
+        # Filter non-printable characters. Without this the save dialog on
+        # windows fails to open.
+        first_line = "".join(c for c in name if unicodedata.category(c)[0] != "C")
+
         self.view.set_name(name)
+        view_settings.set("mde_auto_name", name)
+
+        # make sure ST's default auto-namer keeps quite
+        view_settings.erase("auto_name")

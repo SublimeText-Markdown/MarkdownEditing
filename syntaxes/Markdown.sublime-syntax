@@ -421,6 +421,9 @@ variables:
   # not followed by Unicode whitespace and followed by a Unicode punctuation character
   no_space_but_punct: (?=[[^\s*]&&\p{P}])
 
+  # BOL for ST specific newline treatment or unicode whitespace
+  wspace: (?:^|\s+)
+
 ##############################################################################
 
 contexts:
@@ -476,6 +479,7 @@ contexts:
         1: punctuation.section.frontmatter.end.markdown
 
   markdown:
+    - include: merge-conflict-markers
     - include: indented-code-blocks
     - include: thematic-breaks
     - include: block-quotes
@@ -494,6 +498,26 @@ contexts:
     # but without reference to list blocks as this is an implementation detail.
     # The content may diverge from list block content in future.
     - include: list-block-content
+
+###[ MERGE CONFLICT MARKERS ]##################################################
+
+  merge-conflict-markers:
+    # see also: Diff.sublime-syntax#conflict-markers
+    - match: ^(<{7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.begin.diff
+      captures:
+        1: punctuation.section.block.begin.diff
+        2: entity.name.section.diff
+    - match: ^(>{7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.end.diff
+      captures:
+        1: punctuation.section.block.end.diff
+        2: entity.name.section.diff
+    - match: ^(\|{7}|={7})(?:\s+(\S.*?))?$\n?
+      scope: meta.block.conflict.separator.diff
+      captures:
+        1: punctuation.section.block.diff
+        2: entity.name.section.diff
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES ]#########################################
 
@@ -861,6 +885,7 @@ contexts:
       pop: 1
 
   list-block-content:
+    - include: merge-conflict-markers
     - include: fenced-code-blocks
     - include: fenced-div-blocks
     - include: html-blocks
@@ -2645,11 +2670,10 @@ contexts:
         6: comment.line.infostring.markdown
         7: meta.fold.code-fence.begin.markdown
       embed: scope:source.mermaid
-
       embed_scope:
-        source.mermaid
+        meta.code-fence.body.markdown-gfm
         markup.raw.code-fence.mermaid.markdown-gfm
-        source.mermaid.embedded.markdown-gfm
+        source.mermaid
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.markdown-gfm
@@ -3376,7 +3400,7 @@ contexts:
       captures:
         1: punctuation.definition.raw.begin.markdown
         2: punctuation.definition.raw.end.markdown
-    - match: \`+  # consume remainers
+    - match: \`+  # consume remainders
 
   table-cell-emphasis:
     - include: emphasis
@@ -3437,6 +3461,7 @@ contexts:
     - include: link-ref
 
   markups:
+    - include: merge-conflict-markers
     # Markdown will convert this for us. We match it so that the
     # HTML grammar will not mark it up as invalid.
     - match: '[<>](-+|=+)[<>]?'
@@ -3488,7 +3513,7 @@ contexts:
     - match: '{{bold_asterisk_begin}}'
       scope: punctuation.definition.bold.begin.markdown
       push: bold-asterisk
-    - match: \b(__)(_)(?=\S)(?!_)
+    - match: \b(__)(_)(?![_\s])
       captures:
         1: punctuation.definition.bold.begin.markdown
         2: markup.italic.markdown punctuation.definition.italic.begin.markdown
@@ -3499,14 +3524,9 @@ contexts:
 
   bold-asterisk:
     - meta_scope: markup.bold.markdown
-    - match: |-
-        (?x)
-          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+\*\*+     # whitespace followed by 2 or more is also not applicable
-        | ^\*\*           # emphasis can't be closed at the start of the line
-    - match: (?:_)?(\*\*)
-      captures:
-        1: punctuation.definition.bold.end.markdown
+    - match: '{{wspace}}\*{2,}'
+    - match: \*\*
+      scope: punctuation.definition.bold.end.markdown
       pop: 1
     # Consume the underscore that has no corresponding underscore before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
@@ -3515,14 +3535,9 @@ contexts:
 
   bold-underscore:
     - meta_scope: markup.bold.markdown
-    - match: |-
-        (?x)
-          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+__+       # whitespace followed by 2 or more is also not applicable
-        | ^__             # emphasis can't be closed at the start of the line
-    - match: (?:\*)?(__\b)
-      captures:
-        1: punctuation.definition.bold.end.markdown
+    - match: '{{wspace}}_{2,}'
+    - match: __(?=_*\b)
+      scope: punctuation.definition.bold.end.markdown
       pop: 1
     # Consume the asterisk that has no corresponding asterisk before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
@@ -3532,11 +3547,7 @@ contexts:
   bold-italic-asterisk:
     - meta_scope: markup.bold.markdown
     - meta_content_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^\*(?!\*)       # emphasis can't be closed at the start of the line
+    - match: '{{wspace}}\*+'
     - match: (\*)(\*\*)
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
@@ -3545,7 +3556,7 @@ contexts:
     - match: \*\*
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-asterisk
-    - match: \*
+    - match: \*(?!\*[^\s*])
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       set: bold-after-bold-italic-asterisk
     - include: emphasis-common
@@ -3554,11 +3565,7 @@ contexts:
 
   bold-after-bold-italic-asterisk:
     - meta_content_scope: markup.bold.markdown
-    - match: |-
-        (?x)
-          [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^\*\*           # emphasis can't be closed at the start of the line
+    - match: '{{wspace}}\*{3,}'
     - match: \*\*
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
       pop: 1
@@ -3566,12 +3573,8 @@ contexts:
 
   italic-after-bold-italic-asterisk:
     - meta_content_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^\*\*           # emphasis can't be closed at the start of the line
-    - match: \*
+    - match: '{{wspace}}\*{3,}'
+    - match: \*(?!\*[^\s*])
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       pop: 1
     - include: italic-common
@@ -3579,46 +3582,34 @@ contexts:
   bold-italic-underscore:
     - meta_scope: markup.bold.markdown
     - meta_content_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+_(?!_)    # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^_(?!_)         # emphasis can't be closed at the start of the line
-    - match: (_)(__)\b
+    - match: '{{wspace}}_+'
+    - match: (_)(__)(?=_*\b)
       captures:
         1: markup.italic.markdown punctuation.definition.italic.end.markdown
         2: punctuation.definition.bold.end.markdown
       pop: 1
-    - match: _\b
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      set: bold-after-bold-italic-underscore
     - match: __\b
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
       set: italic-after-bold-italic-underscore
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: bold-after-bold-italic-underscore
     - include: emphasis-common
     - include: highlight
     - include: strikethrough
 
   bold-after-bold-italic-underscore:
     - meta_content_scope: markup.bold.markdown
-    - match: |-
-        (?x)
-          [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^__             # emphasis can't be closed at the start of the line
-    - match: __\b
+    - match: '{{wspace}}_{3,}'
+    - match: __(?=_*\b)
       scope: markup.bold.markdown punctuation.definition.bold.end.markdown
       pop: 1
     - include: bold-common
 
   italic-after-bold-italic-underscore:
     - meta_content_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^__             # emphasis can't be closed at the start of the line
-    - match: _\b
+    - match: '{{wspace}}_{3,}'
+    - match: _(?=_*\b)
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
       pop: 1
     - include: italic-common
@@ -3640,25 +3631,16 @@ contexts:
 
   italic-asterisk:
     - meta_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^\*(?!\*)       # emphasis can't be closed at the start of the line
-    - match: \*(?!\*[^*])
+    - match: '{{wspace}}\*(?!\*)'
+    - match: \*(?!\*[^\s*])
       scope: punctuation.definition.italic.end.markdown
       pop: 1
-    - match: \*+
     - include: italic-common
 
   italic-underscore:
     - meta_scope: markup.italic.markdown
-    - match: |-
-        (?x)
-          [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
-        | [ \t]+_(?!_)    # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
-        | ^_(?!_)         # emphasis can't be closed at the start of the line
-    - match: _\b
+    - match: '{{wspace}}_(?!_)'
+    - match: _(?=_*\b)
       scope: punctuation.definition.italic.end.markdown
       pop: 1
     - include: italic-common

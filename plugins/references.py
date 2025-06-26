@@ -15,6 +15,7 @@ Exported commands:
     MdeConvertInlineLinkToReferenceCommand
     MdeConvertInlineLinksToReferencesCommand
 """
+
 import sublime
 import re
 import operator
@@ -571,9 +572,9 @@ class MdeReferenceOrganizeCommand(MdeTextCommand):
                 sel.add(line_reg)
 
         sorting_funcs = {
-            "reference_order": lambda x: reference_order[x[0].lower()]
-            if x[0].lower() in reference_order
-            else 9999,
+            "reference_order": lambda x: (
+                reference_order[x[0].lower()] if x[0].lower() in reference_order else 9999
+            ),
             "alphabetical": lambda x: x[0].lower(),
             "numeric": lambda x: [
                 int(p) if p.isnumeric() else p for p in re.split(r"[ _.-]", x[0].lower())
