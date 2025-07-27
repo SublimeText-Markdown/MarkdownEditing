@@ -3452,6 +3452,7 @@ contexts:
     - include: escapes
 
   links:
+    - include: anchors
     - include: autolink-email
     - include: autolink-inet
     - include: link-ref-wiki
@@ -4195,6 +4196,12 @@ contexts:
     - include: link-url-escapes
 
 ###[ INLINE: OTHER ]##########################################################
+
+  anchors:
+    - match: (#)[[:alnum:]_/-]+\b
+      scope: markup.anchor.markdown
+      captures:
+        1: punctuation.definition.anchor.markdown
 
   escapes:
     # https://spec.commonmark.org/0.30/#backslash-escapes

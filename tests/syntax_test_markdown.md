@@ -818,7 +818,7 @@ bar
 
 #hashtag
 | <- meta.paragraph.markdown - markup.heading
-|^^^^^^^^ meta.paragraph.markdown - markup.heading
+|^^^^^^^ meta.paragraph.markdown markup.anchor.markdown - markup.heading
 
 ## https://spec.commonmark.org/0.30/#example-65
 
@@ -8685,6 +8685,10 @@ a.b-c_d@a.b.
  a.b-c_d@a.b_
 | <- - meta.link - markup.underline
 |^^^^^^^^^^^^^ - meta.link - markup.underline.link
+
+An #fully-qualified/anchor_name.
+|  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.anchor.markdown
+|  ^ punctuation.definition.anchor.markdown
 
 
 # TEST: HARD LINE BREAKS ######################################################
