@@ -9,6 +9,7 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string><![CDATA[
+			s/\n(?:\s*>)+//g;   # remove intermediate block quote punctuation
 			s/^\s*//g;			# strip leading whitespace
 			s/\s*$//g; 			# strip all trailing whitespace
 			s/\s+/ /g;			# convert (multiple) whitespace to one space
