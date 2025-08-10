@@ -2,6 +2,8 @@
 
 This module exports __all__ modules, which Sublime Text needs to know about.
 """
+__version__ = "3.5.0"
+
 import sublime
 
 if int(sublime.version()) < 3176:
