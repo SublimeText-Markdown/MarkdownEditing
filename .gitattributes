@@ -9,7 +9,7 @@
 docs/				export-ignore
 samples/			export-ignore
 CONTRIBUTING.md     export-ignore
-mcdocs.yml			export-ignore
+mkdocs.yml			export-ignore
 
 # Unittests
 tests/              export-ignore
