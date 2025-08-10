@@ -1,10 +1,8 @@
 import logging
 import sublime
 
-PACKAGE_NAME = __package__.split(".", 1)[0]
-
 logging.basicConfig(level=logging.ERROR, format="%(name)s [%(levelname)s]: %(message)s")
-logger = logging.getLogger(PACKAGE_NAME)
+logger = logging.getLogger("MarkdownEditing")
 
 
 def load_logger():
@@ -14,8 +12,8 @@ def load_logger():
     Must be called in plugin_loaded().
     """
     settings = sublime.load_settings("Preferences.sublime-settings")
-    settings.clear_on_change(__name__)
-    settings.add_on_change(__name__, on_preferences_changed)
+    settings.clear_on_change(__spec__.name)
+    settings.add_on_change(__spec__.name, on_preferences_changed)
     on_preferences_changed()
 
 
@@ -26,7 +24,7 @@ def unload_logger():
     Must be called in plugin_unloaded().
     """
     settings = sublime.load_settings("Preferences.sublime-settings")
-    settings.clear_on_change(__name__)
+    settings.clear_on_change(__spec__.name)
 
 
 def on_preferences_changed():

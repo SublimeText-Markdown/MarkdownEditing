@@ -20,7 +20,7 @@ class FoldingTestCase(DereferrablePanelTestCase):
         Create output panel and load text from `test_folding.md` into.
         """
         super().setUpClass()
-        with open(__file__[:-2] + "md") as f:
+        with open(__spec__.origin[:-2] + "md") as f:
             cls.setText(f.read().replace("\r\n", "\n").replace("\r", "\n"))
 
     def setUp(self):
