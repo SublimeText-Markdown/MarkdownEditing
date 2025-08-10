@@ -247,7 +247,7 @@ class TestSublimeResources(unittest.TestCase):
             '*.sublime-theme'
         )
         result = False
-        folder = os.path.dirname(os.path.dirname(__file__))
+        folder = os.path.dirname(os.path.dirname(__spec__.origin))
         for file in self._get_files(patterns, folder=folder):
             print('checking %s ... ' % file)
             result |= CheckJsonFormat(True, True).check_format(file)

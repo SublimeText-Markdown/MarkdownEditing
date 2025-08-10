@@ -242,10 +242,10 @@ variables:
       )
     )
 
-  # References and Footnotes
-  # ========================
+  # Footnotes
+  # =========
 
-  blockquote_footnote_end: |-
+  blockquote_footnote_paragraph_end: |-
     (?x: # pop out of this context if one of the following conditions are met:
       ^(?= (?:[ \t]*>)* [ \t]*
         (?: $                           # the line is blank (or only contains whitespace)
@@ -260,7 +260,7 @@ variables:
       )
     )
 
-  footnote_end: |-
+  footnote_paragraph_end: |-
     (?x: # pop out of this context if one of the following conditions are met:
       ^(?= [ \t]*
         (?: $                           # the line is blank (or only contains whitespace)
@@ -277,6 +277,38 @@ variables:
     )
 
   footnote_name: (?:\^(?:\\\]|[^]])+)
+
+  # References
+  # ==========
+
+  blockquote_reference_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= (?:[ \t]*>)* [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        )
+      )
+    )
+
+  reference_end: |-
+    (?x: # pop out of this context if one of the following conditions are met:
+      ^(?= [ \t]*
+        (?: $                           # the line is blank (or only contains whitespace)
+        |   {{reference_definition}}    # a reference definition begins the line
+        |   {{block_quote}}             # a blockquote begins the line
+        |   {{atx_heading}}             # an ATX heading begins the line
+        |   {{fenced_code_block}}       # a fenced codeblock begins the line
+        |   {{fenced_div_block}}        # a fenced div block begins the line
+        |   {{thematic_break}}          # line is a thematic beak
+        |   {{list_item}}               # a list item begins the line
+        )
+      )
+    )
 
   reference_definition: (?:\[{{reference_name}}\]\:)
   reference_name: (?:(?:\\\]|[^]])+)
@@ -716,9 +748,26 @@ contexts:
     - include: block-quote-footnote-paragraphs
 
   block-quote-footnote-def-end:
-    # A footnote definition is terminated by blocks not indented by at least 4 characters.
-    # Note: The first space after a quotation punctuation is not counted for simplicity reasons.
-    - match: ^(?!(?:[ \t]*>)+[ ](?:\1[ ]{4}|\s*$))
+    # Pop at eol, if next line contains a reference definition, for each
+    # footnote to be indexed individually by separating `meta.link.reference`
+    # scopes from each other.
+    - match: $
+      branch_point: block-quote-footnote-def-continuation
+      branch:
+        - block-quote-footnote-def-continuation
+        - immediately-pop2
+    # A footnote definition is terminated by blocks not indented by at least
+    # 4 characters + 1st first space after quotation punctuation for simplicity.
+    - match: ^(?!(?:[ \t]*>)+(?:[ ]\1[ ]{4}|\s*$))
+      pop: 1
+
+  block-quote-footnote-def-continuation:
+    - meta_include_prototype: false
+    # if line starts with footnote or reference definition,
+    # rollback to previous line and pop footnote contexts.
+    - match: ^(?=(?:[ \t]*>)*[ \t]*{{reference_definition}})
+      fail: block-quote-footnote-def-continuation
+    - match: ^
       pop: 1
 
   block-quote-footnote-paragraphs:
@@ -726,12 +775,25 @@ contexts:
       push: block-quote-footnote-paragraph-body
 
   block-quote-footnote-paragraph-body:
+    - meta_scope: meta.paragraph.markdown
     - include: block-quote-footnote-paragraph-end
     - include: block-quote-punctuations
     - include: footnote-paragraph-common
 
   block-quote-footnote-paragraph-end:
-    - match: '{{blockquote_footnote_end}}'
+    - match: $
+      branch_point: block-quote-footnote-paragraph-continuation
+      branch:
+        - block-quote-footnote-paragraph-continuation
+        - immediately-pop2
+
+  block-quote-footnote-paragraph-continuation:
+    - meta_include_prototype: false
+    # if line terminates the paragraph or footnote definition,
+    # rollback to previous line and pop its contexts.
+    - match: '{{blockquote_footnote_paragraph_end}}'
+      fail: block-quote-footnote-paragraph-continuation
+    - match: ^
       pop: 1
 
   block-quote-link-definitions:
@@ -744,6 +806,7 @@ contexts:
         4: punctuation.separator.key-value.markdown
       push:
         - block-quote-link-def-meta
+        - block-quote-link-def-attr
         - block-quote-link-def-title
         - block-quote-link-def-url
 
@@ -752,25 +815,73 @@ contexts:
     - meta_scope: meta.link.reference.def.markdown
     - include: immediately-pop
 
+  block-quote-link-def-attr:
+    - include: block-quote-punctuations
+    - match: \{
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-def-attr-body
+    - match: $
+      branch_point: block-quote-link-def-attr-continuation
+      branch:
+        - block-quote-link-def-attr-continuation
+        - immediately-pop2
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
+
+  block-quote-link-def-attr-continuation:
+    - meta_include_prototype: false
+    # if line doesn't start with attributes block,
+    # rollback to previous line and pop its contexts.
+    - match: ^(?!(?:[ \t]*>)*\s*{)
+      fail: block-quote-link-def-attr-continuation
+    - match: ^
+      pop: 1
+
   block-quote-link-def-title:
-    - include: block-quote-nested-paragraph-end
     - include: block-quote-punctuations
     - include: link-title-begin
+    - match: $
+      branch_point: block-quote-link-def-title-continuation
+      branch:
+        - block-quote-link-def-title-continuation
+        - immediately-pop2
     - include: else-pop
 
+  block-quote-link-def-title-continuation:
+    - meta_include_prototype: false
+    # if line doesn't start with an url description,
+    # rollback to previous line and pop its contexts.
+    - match: ^(?!(?:[ \t]*>)*\s*["'(])
+      fail: block-quote-link-def-title-continuation
+    - match: ^
+      pop: 1
+
   block-quote-link-def-url:
-    - include: block-quote-nested-paragraph-end
     - include: block-quote-punctuations
     - match: <
       scope: punctuation.definition.link.begin.markdown
       set: block-quote-link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
+    - match: $
+      branch_point: block-quote-link-def-url-continuation
+      branch:
+        - block-quote-link-def-url-continuation
+        - immediately-pop2
 
   block-quote-link-def-url-angled:
     - meta_content_scope: markup.underline.link.markdown
     - include: block-quote-punctuations
     - include: link-url-angled
+
+  block-quote-link-def-url-continuation:
+    - meta_include_prototype: false
+    # if line terminates the reference definition,
+    # rollback to previous line and pop its contexts.
+    - match: '{{blockquote_reference_end}}'
+      fail: block-quote-link-def-url-continuation
+    - match: ^
+      pop: 1
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > LIST BLOCKS ]###########################
 
@@ -3215,7 +3326,7 @@ contexts:
 
   footnote-definitions:
     # Markdown Extras Footnotes
-    - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
+    - match: ([ \t]*)(\[)({{footnote_name}})(\])(:)
       captures:
         2: punctuation.definition.reference.begin.markdown
         3: entity.name.reference.link.markdown
@@ -3229,7 +3340,24 @@ contexts:
     - include: footnote-paragraphs
 
   footnote-def-end:
+    # Pop at eol, if next line contains a reference definition, for each
+    # footnote to be indexed individually by separating `meta.link.reference`
+    # scopes from each other.
+    - match: $
+      branch_point: footnote-def-end
+      branch:
+        - footnote-def-continuation
+        - immediately-pop2
+    # pop at bol if non-empty line is not indented enough
     - match: ^(?!(?:\1[ ]{4}|\s*$))
+      pop: 1
+
+  footnote-def-continuation:
+    # if line starts with footnote or reference definition,
+    # rollback to previous line and pop footnote contexts.
+    - match: ^(?=[ \t]*{{reference_definition}})
+      fail: footnote-def-end
+    - match: ^
       pop: 1
 
   footnote-paragraphs:
@@ -3237,6 +3365,7 @@ contexts:
       push: footnote-paragraph-body
 
   footnote-paragraph-body:
+    - meta_scope: meta.paragraph.markdown
     - include: footnote-paragraph-end
     - include: footnote-paragraph-common
 
@@ -3247,7 +3376,19 @@ contexts:
     - include: links
 
   footnote-paragraph-end:
-    - match: '{{footnote_end}}'
+    - match: $
+      branch_point: footnote-paragraph-end
+      branch:
+        - footnote-paragraph-continuation
+        - immediately-pop2
+
+  footnote-paragraph-continuation:
+    - meta_include_prototype: false
+    # if line terminates the footnote paragraph,
+    # rollback to previous line and pop its contexts.
+    - match: '{{footnote_paragraph_end}}'
+      fail: footnote-paragraph-end
+    - match: ^
       pop: 1
 
   link-definitions:
@@ -3273,29 +3414,44 @@ contexts:
     - match: \{
       scope: punctuation.definition.attributes.begin.markdown
       set: link-def-attr-body
-    - match: ^(?!\s*{)|(?=\S)
-      pop: 1
+    - match: $
+      branch_point: link-def-attr-continuation
+      branch:
+        - link-def-attr-continuation
+        - immediately-pop2
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
 
   link-def-attr-body:
     - meta_scope: meta.attributes.markdown
     - include: tag-attributes
 
-  link-def-title:
-    - match: ^(?!\s*["'(])
+  link-def-attr-continuation:
+    - meta_include_prototype: false
+    # if line doesn't start with attributes block,
+    # rollback to previous line and pop its contexts.
+    - match: ^(?!\s*{)
+      fail: link-def-attr-continuation
+    - match: ^
       pop: 1
-    - match: (?=["'(])
-      set:
-        - expect-attr-or-eol
-        - link-title
-    - match: (?=\{)
-      pop: 1
-    - match: \S.+
-      scope: invalid.illegal.expected-eol.markdown
 
-  expect-attr-or-eol:
-    - match: (?=\{)
+  link-def-title:
+    - include: link-title-begin
+    - match: $
+      branch_point: link-def-title-continuation
+      branch:
+        - link-def-title-continuation
+        - immediately-pop2
+    - include: else-pop
+
+  link-def-title-continuation:
+    - meta_include_prototype: false
+    # if line doesn't start with an url description,
+    # rollback to previous line and pop its contexts.
+    - match: ^(?!\s*["'(])
+      fail: link-def-title-continuation
+    - match: ^
       pop: 1
-    - include: expect-eol
 
   link-def-url:
     - match: <
@@ -3303,19 +3459,32 @@ contexts:
       set: link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
-    - include: paragraph-end
+    - match: $
+      branch_point: link-def-url-continuation
+      branch:
+        - link-def-url-continuation
+        - immediately-pop2
 
   link-def-url-angled:
     - meta_content_scope: markup.underline.link.markdown
     - include: link-url-angled
 
   link-def-url-unquoted:
-    - meta_scope: markup.underline.link.markdown
+    - meta_content_scope: markup.underline.link.markdown
     # URLs are terminated by whitespace or newline in reference definitions
     # Note: \s includes \n
     - match: (?=\s)
       pop: 1
     - include: link-url-common
+
+  link-def-url-continuation:
+    - meta_include_prototype: false
+    # if line terminates the reference definition,
+    # rollback to previous line and pop its contexts.
+    - match: '{{reference_end}}'
+      fail: link-def-url-continuation
+    - match: ^
+      pop: 1
 
 ###[ LEAF BLOCKS: TABLES ]####################################################
 
@@ -3452,6 +3621,7 @@ contexts:
     - include: escapes
 
   links:
+    - include: anchors
     - include: autolink-email
     - include: autolink-inet
     - include: link-ref-wiki
@@ -3996,11 +4166,26 @@ contexts:
     - include: link-title-common
 
   link-title-common:
-    - match: ^\s*$\n?
-      scope: invalid.illegal.non-terminated.link-title.markdown
-      pop: 1
+    - match: $\n?
+      branch_point: link-title-continuation
+      branch:
+        - link-title-continuation
+        - link-title-termination
     - include: escapes
     - include: html-entities
+
+  link-title-continuation:
+    - meta_include_prototype: false
+    # if line is empty, rollback to previous line and pop its contexts.
+    - match: ^\s*$
+      fail: link-title-continuation
+    - match: ^
+      pop: 1
+
+  link-title-termination:
+    - meta_include_prototype: false
+    - meta_scope: invalid.illegal.non-terminated.link-title.markdown
+    - include: immediately-pop2
 
   link-url-angled:
     - match: \>
@@ -4195,6 +4380,12 @@ contexts:
     - include: link-url-escapes
 
 ###[ INLINE: OTHER ]##########################################################
+
+  anchors:
+    - match: (#)[[:alnum:]_/-]+\b
+      scope: markup.anchor.markdown
+      captures:
+        1: punctuation.definition.anchor.markdown
 
   escapes:
     # https://spec.commonmark.org/0.30/#backslash-escapes
@@ -4522,5 +4713,11 @@ contexts:
       scope: invalid.illegal.expected-eol.markdown
 
   immediately-pop:
+    - meta_include_prototype: false
     - match: ''
       pop: 1
+
+  immediately-pop2:
+    - meta_include_prototype: false
+    - match: ''
+      pop: 2
