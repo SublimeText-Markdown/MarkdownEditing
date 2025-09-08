@@ -1,6 +1,5 @@
 [
 	{"command": "expand_selection", "args": {"to": "brackets"}},
 	{"command": "expand_selection", "args": {"to": "brackets"}},
-	{"command": "move", "args": {"by": "words", "extend": true, "forward": true}},
-	{"command": "insert_snippet", "args": {"contents": "${SELECTION/\\{==\\s?(.*?)\\s*==\\}[ \\t]*(.*)$/\\1\\2/g}"}}
+	{"command": "insert_snippet", "args": {"contents": "${SELECTION/\\{==(.*?)==\\}/\\1/g}"}}
 ]
