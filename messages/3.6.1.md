@@ -16,5 +16,7 @@ feedback you can use [GitHub issues][issues].
 
 - embedded linter no longer complains on Bash- and Python-style comments in code blocks 
   (previously it triggered the `MD023` rule)
+- refactor syntax definitions of fenced code blocks to work around a crash 
+  caused by unbalanced fences
 
 [issues]: https://github.com/SublimeText-Markdown/MarkdownEditing/issues
