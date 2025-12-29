@@ -3356,8 +3356,12 @@ paragraph
 
 | table | followed by
 https://foo.bar/baz
-| <- meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
-|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.markdown-gfm
+| <- meta.paragraph.markdown meta.link.inet.markdown markup.underline.link.protocol.markdown-gfm
+|^^^^^^^^^^^^^^^^^^ meta.paragraph.markdown meta.link.inet.markdown
+|^^^^^^^ markup.underline.link.protocol.markdown-gfm
+|    ^^^ punctuation.separator.path.markdown
+|       ^^^^^^^^^^^ markup.underline.link.markdown-gfm
+|              ^ punctuation.separator.path.markdown
 
 | table | followed by
 # heading

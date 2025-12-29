@@ -1381,6 +1381,7 @@ contexts:
     - include: fenced-ada
     - include: fenced-ahk
     - include: fenced-arduino
+    - include: fenced-bbcode
     - include: fenced-coffee
     - include: fenced-dart
     - include: fenced-docker
@@ -1392,6 +1393,9 @@ contexts:
     - include: fenced-jade
     - include: fenced-julia
     - include: fenced-kotlin
+    - include: fenced-kdl
+    - include: fenced-kdl1
+    - include: fenced-kdl2
     - include: fenced-less
     - include: fenced-mermaid
     - include: fenced-nim
@@ -2536,6 +2540,29 @@ contexts:
         1: punctuation.definition.raw.code-fence.end.markdown
         2: meta.fold.code-fence.end.markdown
 
+  fenced-bbcode:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(bbcode|bbc))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.bbcode
+      embed_scope:
+        meta.code-fence.body.markdown-gfm
+        markup.raw.code-fence.bbcode.markdown-gfm
+        text.bbcode
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
   fenced-coffee:
     - match: |-
          (?x)
@@ -2783,6 +2810,75 @@ contexts:
         meta.code-fence.body.markdown-gfm
         markup.raw.code-fence.kotlin.markdown-gfm
         source.kotlin
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl
+      embed_scope:
+        meta.code-fence.body.markdown-gfm
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl1:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl1))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl.1
+      embed_scope:
+        meta.code-fence.body.markdown-gfm
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl.1
+      escape: '{{fenced_code_block_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+        2: meta.fold.code-fence.end.markdown
+
+  fenced-kdl2:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          (?i:\s*(kdl2))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+        6: comment.line.infostring.markdown
+        7: meta.fold.code-fence.begin.markdown
+      embed: scope:text.kdl.2
+      embed_scope:
+        meta.code-fence.body.markdown-gfm
+        markup.raw.code-fence.kdl.markdown-gfm
+        text.kdl.2
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.markdown-gfm
@@ -4354,9 +4450,12 @@ contexts:
     # GitHub Flavoured Markdown
     # After a valid domain, zero or more non-space non-< characters may follow
     # https://github.github.com/gfm/#autolinks-extension-
-    - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
+    - match: (https|http|ftp)(://)(www\.)?|(www\.)
       captures:
-        1: punctuation.separator.path.markdown
+        1: markup.underline.link.protocol.markdown-gfm
+        2: markup.underline.link.protocol.markdown-gfm punctuation.separator.path.markdown
+        3: markup.underline.link.www.markdown-gfm
+        4: markup.underline.link.www.markdown-gfm
       push: autolink-inet-unquoted-content
 
   autolink-inet-angled-content:
@@ -4371,7 +4470,8 @@ contexts:
     - include: autolink-inet-common
 
   autolink-inet-unquoted-content:
-    - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
+    - meta_scope: meta.link.inet.markdown
+    - meta_content_scope: markup.underline.link.markdown-gfm
     # 1. When an autolink ends in ), we scan the entire autolink for the total
     #    number of parentheses. If there is a greater number of closing parentheses
     #    than opening ones, we don't consider the last character part of the
