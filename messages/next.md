@@ -6,7 +6,9 @@ feedback you can use [GitHub issues][issues].
 ## Bug Fixes
 
 ## New Features
+
 * Add BBCode support for fenced code block
+* Add support for KDL fenced code blocks - auto-v1/2-selection variant `kdl` as well as forced v1/v2 variants `kdl1` and `kdl2`
 
 ## Changes
 
