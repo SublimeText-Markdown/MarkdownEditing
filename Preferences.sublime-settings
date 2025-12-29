@@ -155,7 +155,7 @@
 	// Default keys: (OSX/Linux/Win): alt+k, alt+0..9
 	"mde.keymap_disable.set_heading_level": false,
 	// Jump between link/image/footnote reference and definition
-	// Default keys: (OSX)super+ctrl+shift+l    (Linux/Win)ctrl+alt+g
+	// Default keys: (OSX/Linux/Win): f12, shift+f12
 	"mde.keymap_disable.reference_jump": false,
 	// Add a new link
 	// Default keys: (OSX)super+alt+r   (Linux/Win)ctrl+super+r

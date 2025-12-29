@@ -28,7 +28,7 @@ def debounced(delay_in_ms, sync=False):
             if not view.is_valid():
                 del call_at[view.view_id]
                 return
-            diff = call_at[view.view_id] - now() * 1000
+            diff = call_at[view.view_id] - int(now() * 1000)
             if diff > 0:
                 set_timeout(partial(_debounced_callback, view, callback), diff)
             else:
@@ -39,7 +39,7 @@ def debounced(delay_in_ms, sync=False):
         def wrapper(self, *args, **kwargs):
             view = self.view if hasattr(self, "view") else args[0]
             pending = view.view_id in call_at
-            call_at[view.view_id] = now() * 1000 + delay_in_ms
+            call_at[view.view_id] = int(now() * 1000) + delay_in_ms
             if pending:
                 return
             callback = partial(func, self, *args, **kwargs)
