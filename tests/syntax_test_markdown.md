@@ -9657,11 +9657,11 @@ paragraph
 
 ---
 
-    ::: indendet-code-block
+    ::: indented-code-block
 | <- markup.raw.block.markdown
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block.markdown
 
-    ::: indendet-code-block
+    ::: indented-code-block
     code
     :::
 |<- markup.raw.block.markdown
