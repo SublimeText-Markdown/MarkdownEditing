@@ -821,7 +821,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1 $3/}"}, "context":
@@ -829,7 +829,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true }
 		]
 	},
 	// Add line to current GFM task
@@ -838,7 +838,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true }
 		]
 	},
 	{ "keys": ["shift+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*)([-+*])(\\s+).*/\n$1     $3/}"}, "context":
@@ -846,7 +846,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true }
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true }
 		]
 	},
 	// Extend lists (also in block quotes)
@@ -855,7 +855,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -864,7 +864,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -873,7 +873,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -882,7 +882,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -892,7 +892,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -901,7 +901,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -910,7 +910,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -919,7 +919,7 @@
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown - meta.frontmatter - meta.disable-markdown - markup.raw", "match_all": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "setting.mde.list_auto_bullets", "operator": "equal", "operand": true },
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\](?:\\s+\\S|\\s*$)", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^([\\s>]*([-+*])\\s+)\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
