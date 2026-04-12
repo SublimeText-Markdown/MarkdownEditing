@@ -78,8 +78,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
         view = self.view
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
         pattern = re.compile(
-            r"""
-            (?x)
+            r"""(?x)
             ^([ \t>]*)                   # block quotes
             (?:
                 (\#+)                    # leading hashes
