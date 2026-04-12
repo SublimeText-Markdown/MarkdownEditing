@@ -5,6 +5,11 @@ feedback you can use [GitHub issues][issues].
 
 ## Bug Fixes
 
+- disable `mde_show_fold_all_sections` binding by default (fixes #807)
+- Insert new list items on enter only on empty selection (fixes #810)
+- fix "extend list" binding constraints (fixes #812)
+- fix code-spans not properly terminated in tables
+
 ## New Features
 
 ## Changes
