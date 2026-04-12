@@ -339,7 +339,7 @@ variables:
   table_codespan_content: |-
     (?x:
       [^`|]             # first or only char must not be a backtick or pipe.
-      (?:[^|]*?[^`|])?  # none must be a pipe, the last additionally must not be a backtick
+      (?:[^|]*?[^`|])?? # none must be a pipe, the last additionally must not be a backtick
     )
 
   table_end: |-
