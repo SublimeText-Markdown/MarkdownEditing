@@ -3244,6 +3244,57 @@ test
 > bar
 | <- markup.quote punctuation.definition.blockquote - meta.table
 
+c1        | c2
+--------- | ---------
+`Row 1`   | `a`, `b`, `c`
+|^^^^^^^^^^^^^^^^^^^^^^^^^ meta.table.markdown-gfm
+|^^^^^^ markup.raw.inline.markdown
+|     ^ punctuation.definition.raw.end.markdown
+|         ^ punctuation.separator.table-cell.markdown
+|           ^^^ markup.raw.inline.markdown
+|           ^ punctuation.definition.raw.begin.markdown
+|             ^ punctuation.definition.raw.end.markdown
+|                ^^^ markup.raw.inline.markdown
+|                ^ punctuation.definition.raw.begin.markdown
+|                  ^ punctuation.definition.raw.end.markdown
+|                     ^^^ markup.raw.inline.markdown
+|                     ^ punctuation.definition.raw.begin.markdown
+|                       ^ punctuation.definition.raw.end.markdown
+
+c1        | c2
+--------- | ---------
+`Row 2`   | ``a``, ``b``, ``c``
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.table.markdown-gfm
+|^^^^^^ markup.raw.inline.markdown
+|     ^ punctuation.definition.raw.end.markdown
+|         ^ punctuation.separator.table-cell.markdown
+|           ^^^^^ markup.raw.inline.markdown
+|           ^^ punctuation.definition.raw.begin.markdown
+|              ^^ punctuation.definition.raw.end.markdown
+|                  ^^^^^ markup.raw.inline.markdown
+|                  ^^ punctuation.definition.raw.begin.markdown
+|                     ^^ punctuation.definition.raw.end.markdown
+|                         ^^^^^ markup.raw.inline.markdown
+|                         ^^ punctuation.definition.raw.begin.markdown
+|                            ^^ punctuation.definition.raw.end.markdown
+
+c1        | c2
+--------- | ---------
+`Row 3`   | ```a```, ```b```, ```c```
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.table.markdown-gfm
+|^^^^^^ markup.raw.inline.markdown
+|     ^ punctuation.definition.raw.end.markdown
+|         ^ punctuation.separator.table-cell.markdown
+|           ^^^^^^^ markup.raw.inline.markdown
+|           ^^^ punctuation.definition.raw.begin.markdown
+|               ^^^ punctuation.definition.raw.end.markdown
+|                    ^^^^^^^ markup.raw.inline.markdown
+|                    ^^^ punctuation.definition.raw.begin.markdown
+|                        ^^^ punctuation.definition.raw.end.markdown
+|                             ^^^^^^^ markup.raw.inline.markdown
+|                             ^^^ punctuation.definition.raw.begin.markdown
+|                                 ^^^ punctuation.definition.raw.end.markdown
+
 | c1  |  c2    | c3      | c4     | c5          | c6       | c7
 | --- | ---    | ---     | ---    | ---         | ---      | ---
 | ` ` | ` me ` | `` ` `` | ` `` ` | ``foo`bar`` | ```foo`` | ``foo```
@@ -9657,11 +9708,11 @@ paragraph
 
 ---
 
-    ::: indendet-code-block
+    ::: indented-code-block
 | <- markup.raw.block.markdown
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.block.markdown
 
-    ::: indendet-code-block
+    ::: indented-code-block
     code
     :::
 |<- markup.raw.block.markdown

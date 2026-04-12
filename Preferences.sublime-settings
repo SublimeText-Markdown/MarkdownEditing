@@ -177,7 +177,7 @@
 	"mde.keymap_disable.fold_section": false,
 	// Open a panel showing all functions related to folding
 	// Default keys: (OSX/Linux/Win)ctrl+shift+tab
-	"mde.keymap_disable.show_fold_all_sections": false,
+	"mde.keymap_disable.show_fold_all_sections": true,
 	// Jump to the next heading (any level/same or higher level)
 	// Default keys: (OSX)super+ctrl/shift+pagedown (Linux/Win)ctrl+shift(+alt)+pagedown
 	"mde.keymap_disable.goto_next_heading": false,
