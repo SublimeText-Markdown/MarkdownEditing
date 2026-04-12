@@ -594,8 +594,9 @@ class md023(mddef):
     def is_inside_code_block(self, text, s, e):
         def calculate_intendation(text, position):
             return position - text.rfind("\n", 0, position) - 1
+
         keyword = "```"
-        block_s = text.rfind(keyword, 0, s-1)
+        block_s = text.rfind(keyword, 0, s - 1)
         block_e = text.find(keyword, e)
         block_s_intendation = calculate_intendation(text, block_s)
         block_e_intendation = calculate_intendation(text, block_e)
