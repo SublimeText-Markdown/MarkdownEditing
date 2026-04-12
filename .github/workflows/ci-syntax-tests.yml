@@ -39,7 +39,7 @@ jobs:
           - build: latest
             default_packages: master
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: SublimeText/syntax-test-action@v2
         with:
           build: ${{ matrix.build }}
