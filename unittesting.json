@@ -2,5 +2,5 @@
 	"verbosity": 1,
 	"capture_console": false,
 	"failfast": false,
-	"reload_package_on_testing": false,
+	"reload_package_on_testing": false
 }
