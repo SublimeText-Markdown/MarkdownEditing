@@ -184,12 +184,26 @@ class WikiPage:
         else:
             self.open_new_file(pagename)
 
+    def project_folders(self):
+        window = self.view.window()
+        if window and window.folders():
+            return window.folders()
+
+        filename = self.view.file_name()
+        if filename:
+            return [os.path.dirname(filename)]
+
+        return []
+
     def find_files_with_name(self, pagename):
         pagename = pagename.replace("\\", os.sep).replace(os.sep + os.sep, os.sep).strip()
 
-        self.current_file = self.view.file_name()
-        self.current_dir = os.path.dirname(self.current_file)
-        logger.debug("Locating page '%s' in: %s" % (pagename, self.current_dir))
+        search_dirs = self.project_folders()
+        if not search_dirs:
+            return []
+
+        sublime.status_message("Locating page '{}' in: {}".format(pagename, search_dirs))
+        logger.debug("Locating page '%s' in: %s" % (pagename, search_dirs))
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
@@ -201,34 +215,40 @@ class WikiPage:
         else:
             search_pattern = "^%s%s$" % (pagename, markdown_extension)
 
-        # Scan directory tree for files that match the pagename...
+        # Scan project directory trees for files that match the pagename...
         results = []
-        for dirname, _, files in self.list_dir_tree(self.current_dir):
-            for file in files:
-                if re.search(search_pattern, file):
-                    filename = os.path.join(dirname, file)
-                    results.append([self.extract_page_name(filename), filename])
+        for search_dir in search_dirs:
+            for dirname, _, files in self.list_dir_tree(search_dir):
+                for file in files:
+                    if re.search(search_pattern, file):
+                        filename = os.path.join(dirname, file)
+                        results.append([self.extract_page_name(filename), filename])
 
         return results
 
     def find_files_with_ref(self):
-        self.current_file = self.view.file_name()
-        self.current_dir, current_base = os.path.split(self.current_file)
-        self.current_name, _ = os.path.splitext(current_base)
+        current_file = self.view.file_name()
+        if not current_file:
+            return []
+        _, current_base = os.path.split(current_file)
+        search_dirs = self.project_folders()
+        sublime.status_message("Showing backlinks from: {}".format(search_dirs))
+        current_name, _ = os.path.splitext(current_base)
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
         )
 
         results = []
-        for dirname, _, files in self.list_dir_tree(self.current_dir):
-            for file in files:
-                page_name, extension = os.path.splitext(file)
-                filename = os.path.join(dirname, file)
-                if extension == markdown_extension and self.contains_ref(
-                    filename, self.current_name
-                ):
-                    results.append([page_name, filename])
+        for search_dir in search_dirs:
+            for dirname, _, files in self.list_dir_tree(search_dir):
+                for file in files:
+                    page_name, extension = os.path.splitext(file)
+                    filename = os.path.join(dirname, file)
+                    if extension == markdown_extension and self.contains_ref(
+                        filename, current_name
+                    ):
+                        results.append([page_name, filename])
 
         return results
 
@@ -255,8 +275,19 @@ class WikiPage:
 
     def open_new_file(self, pagename):
         current_syntax = self.view.settings().get("syntax")
-        current_file = self.view.file_name()
-        current_dir = os.path.dirname(current_file)
+        search_dirs = self.project_folders()
+        if not search_dirs:
+            return
+
+        # Prefer current file location
+        filename = self.view.file_name()
+        if filename:
+            current_dir = os.path.dirname(filename)
+        else:
+            # Fallback to first project folder
+            current_dir = search_dirs[0]
+
+        sublime.status_message("New page location: {}".format(current_dir))
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
@@ -335,9 +366,9 @@ class WikiPage:
     def find_matching_files(self, word_region):
         word = None if word_region.empty() else self.view.substr(word_region)
 
-        current_file = self.view.file_name()
-        current_dir, current_base = os.path.split(current_file)
-        logger.debug("Finding matching files for %s in %s", word, current_dir)
+        search_dirs = self.project_folders()
+        sublime.status_message("Finding matching files for {} in {}".format(word, search_dirs))
+        logger.debug("Finding matching files for %s in %s", word, search_dirs)
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
@@ -347,15 +378,16 @@ class WikiPage:
         if word is not None and word.endswith(markdown_extension):
             word = word[: -len(markdown_extension)]
 
-        # Scan directory tree for potential filenames that contain the word...
+        # Scan project directory trees for potential filenames that contain the word...
         results = []
-        for dirname, _, files in self.list_dir_tree(current_dir):
-            for file in files:
-                page_name, extension = os.path.splitext(file)
-                filename = os.path.join(dirname, file)
+        for search_dir in search_dirs:
+            for dirname, _, files in self.list_dir_tree(search_dir):
+                for file in files:
+                    page_name, extension = os.path.splitext(file)
+                    filename = os.path.join(dirname, file)
 
-                if extension == markdown_extension and (not word or word in page_name):
-                    results.append([page_name, filename])
+                    if extension == markdown_extension and (not word or word in page_name):
+                        results.append([page_name, filename])
 
         return results
 
