@@ -3128,6 +3128,10 @@ with a *second* line.
 |  ^ punctuation.definition.reference.end.markdown
 |   ^ punctuation.separator.key-value.markdown
 
+# not-a-foot-note
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown - meta.link
+|^^^^^^^^^^^^^^^^^ markup.heading.1.markdown - meta.link
+
 ## https://custom-tests/footnote-reference-definitions/in-block-quotes
 
 > [^1]: And that's the footnote.

@@ -3451,7 +3451,7 @@ contexts:
   footnote-def-continuation:
     # if line starts with footnote or reference definition,
     # rollback to previous line and pop footnote contexts.
-    - match: ^(?=[ \t]*{{reference_definition}})
+    - match: ^(?=[ \t]*(?:{{atx_heading}}|{{reference_definition}}))
       fail: footnote-def-end
     - match: ^
       pop: 1
