@@ -219,7 +219,7 @@ class md003(mddef):
 class md004(mddef):
     flag = re.M
     desc = "Unordered list style"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastSym = None
@@ -315,7 +315,7 @@ class md004(mddef):
 class md005(mddef):
     flag = re.M
     desc = "Inconsistent indentation for list items at the same level"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
@@ -383,7 +383,7 @@ class md005(mddef):
 class md006(mddef):
     flag = re.M
     desc = "Consider starting bulleted lists at the beginning of the line"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
@@ -420,7 +420,7 @@ class md006(mddef):
 class md007(mddef):
     flag = re.M
     desc = "Unordered list indentation"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
