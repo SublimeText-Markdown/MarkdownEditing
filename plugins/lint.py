@@ -569,13 +569,9 @@ class md021(mddef):
 class md022(mddef):
     flag = re.M
     desc = "Headers should be surrounded by blank lines"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^(?:(?:#{1,6}(?!#).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
     def test(self, text, s, e):
-        if re.match(r"-+|=+", text[s:e]):
-            st = text.rfind("\n", 0, s - 1)
-            s = st + 1
-
         if s > 1 and text[s - 2] != "\n":
             return {s: "blank line required before this line"}
 
