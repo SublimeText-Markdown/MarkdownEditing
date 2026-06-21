@@ -167,7 +167,7 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = "First header should be a h1 header"
-    locator = r"^(?:#{1,6}(?!#))|(?:-+$|=+$)"
+    locator = r"^(?:#{1,6}(?!#))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
 
     def test(self, text, s, e):
         ret = {}
@@ -176,9 +176,8 @@ class md002(mddef):
         if re.match(r"#{1,6}(?!#)", text[s:e]):
             if e - s != 1:
                 ret[s] = "level %d found" % (e - s)
-        elif re.match("-+|=+", text[s:e]):
-            if not re.match("=+", text[s:e]):
-                ret[s] = "level 2 found"
+        elif re.match(r"(?:[^\n]*\n)+?-+", text[s:e]):
+            ret[s] = "level 2 found"
         return ret
 
 
