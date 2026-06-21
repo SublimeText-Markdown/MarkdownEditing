@@ -167,7 +167,7 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = "First header should be a h1 header"
-    locator = r"^(?:#{1,6}(?!#))|(?:-+$|=+$)"
+    locator = r"^(?:#{1,6}(?!#))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
 
     def test(self, text, s, e):
         ret = {}
@@ -176,9 +176,8 @@ class md002(mddef):
         if re.match(r"#{1,6}(?!#)", text[s:e]):
             if e - s != 1:
                 ret[s] = "level %d found" % (e - s)
-        elif re.match("-+|=+", text[s:e]):
-            if not re.match("=+", text[s:e]):
-                ret[s] = "level 2 found"
+        elif re.match(r"(?:[^\n]*\n)+?-+", text[s:e]):
+            ret[s] = "level 2 found"
         return ret
 
 
@@ -220,7 +219,7 @@ class md003(mddef):
 class md004(mddef):
     flag = re.M
     desc = "Unordered list style"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastSym = None
@@ -316,7 +315,7 @@ class md004(mddef):
 class md005(mddef):
     flag = re.M
     desc = "Inconsistent indentation for list items at the same level"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
@@ -384,7 +383,7 @@ class md005(mddef):
 class md006(mddef):
     flag = re.M
     desc = "Consider starting bulleted lists at the beginning of the line"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
@@ -421,7 +420,7 @@ class md006(mddef):
 class md007(mddef):
     flag = re.M
     desc = "Unordered list indentation"
-    locator = r"^([ ]{0,3})[*+-](?=\s)"
+    locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
     gid = 1
     lastpos = -1
@@ -570,13 +569,9 @@ class md021(mddef):
 class md022(mddef):
     flag = re.M
     desc = "Headers should be surrounded by blank lines"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^(?:(?:#{1,6}(?!#).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
     def test(self, text, s, e):
-        if re.match(r"-+|=+", text[s:e]):
-            st = text.rfind("\n", 0, s - 1)
-            s = st + 1
-
         if s > 1 and text[s - 2] != "\n":
             return {s: "blank line required before this line"}
 
