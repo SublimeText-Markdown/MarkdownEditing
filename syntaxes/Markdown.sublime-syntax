@@ -1027,7 +1027,7 @@ contexts:
         4: markup.list.numbered.markdown
 
   list-block-quotes:
-    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!CAUTION(\]))'
+    - match: '[ \t]*(>)[ ]?[ \t]{,3}((\[)!CAUTION(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.caution.markdown
@@ -1036,7 +1036,7 @@ contexts:
       push:
         - block-quote-caution-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!WARNING(\]))'
+    - match: '[ \t]*(>)[ ]?[ \t]{,3}((\[)!WARNING(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.warning.markdown
@@ -1045,7 +1045,7 @@ contexts:
       push:
         - block-quote-warning-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!IMPORTANT(\]))'
+    - match: '[ \t]*(>)[ ]?[ \t]{,3}((\[)!IMPORTANT(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.important.markdown
@@ -1054,7 +1054,7 @@ contexts:
       push:
         - block-quote-important-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!NOTE(\]))'
+    - match: '[ \t]*(>)[ ]?[ \t]{,3}((\[)!NOTE(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.note.markdown
@@ -1063,7 +1063,7 @@ contexts:
       push:
         - block-quote-note-meta
         - list-block-quote-body
-    - match: '[ \t]{,3}(>)[ ]?[ \t]{,3}((\[)!TIP(\]))'
+    - match: '[ \t]*(>)[ ]?[ \t]{,3}((\[)!TIP(\]))'
       captures:
         1: punctuation.definition.blockquote.markdown
         2: markup.heading.alert.tip.markdown
