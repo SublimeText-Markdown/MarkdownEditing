@@ -38,6 +38,8 @@ variables:
   # Common Block Indicators
   # =======================
 
+  admonition_escape: ^(?!\s*$|\1\s{4,}\S)
+
   block_quote: '>'                             # a greater than sign, (followed by any character or the end of the line)
   indented_code_block: (?:[ ]{4}|[ ]{0,3}\t)   # a visual tab of width 4 consisting of 4 spaces or 0 to 3 spaces followed by 1 tab
 
@@ -521,6 +523,7 @@ contexts:
     - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
+    - include: admonitions
     - include: atx-headings
     - include: setext-headings-or-paragraphs
 
@@ -1001,6 +1004,7 @@ contexts:
     - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
+    - include: admonitions
     - include: list-block-common
     - include: list-block-quotes
     - include: list-setext-headings-or-paragraphs
@@ -4500,6 +4504,145 @@ contexts:
       captures:
         0: meta.hard-line-break.markdown
         1: constant.character.escape.markdown
+
+###[ EXTENSIONS: ADMONITIONS ]################################################
+
+  admonitions:
+    # https://python-markdown.github.io/extensions/admonition/
+    - match: '^([ \t]*)(!!!)[ \t]+(caution|danger)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-caution-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(bug|failure)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-error-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(important)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-important-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(abstract|info|note|question|success)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-note-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(quote)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-quote-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(tip)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-tip-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(warning)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-warning-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(\w+)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+      embed: admonation-other-heading
+      escape: '{{admonition_escape}}'
+
+  admonation-caution-heading:
+    - meta_scope: meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
+    - match: ^
+      set: admonation-caution-body
+    - include: admonation-titles
+
+  admonation-caution-body:
+    - meta_scope: meta.admonition.caution.markdown
+    - include: indented-markdown
+
+  admonation-error-heading:
+    - meta_scope: meta.admonition.error.markdown markup.heading.admonition.error.markdown
+    - match: ^
+      set: admonation-error-body
+    - include: admonation-titles
+
+  admonation-error-body:
+    - meta_scope: meta.admonition.error.markdown
+    - include: indented-markdown
+
+  admonation-important-heading:
+    - meta_scope: meta.admonition.important.markdown markup.heading.admonition.important.markdown
+    - match: ^
+      set: admonation-important-body
+    - include: admonation-titles
+
+  admonation-important-body:
+    - meta_scope: meta.admonition.important.markdown
+    - include: indented-markdown
+
+  admonation-note-heading:
+    - meta_scope: meta.admonition.note.markdown markup.heading.admonition.note.markdown
+    - match: ^
+      set: admonation-note-body
+    - include: admonation-titles
+
+  admonation-note-body:
+    - meta_scope: meta.admonition.note.markdown
+    - include: indented-markdown
+
+  admonation-quote-heading:
+    - meta_scope: meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
+    - match: ^
+      set: admonation-quote-body
+    - include: admonation-titles
+
+  admonation-quote-body:
+    - meta_scope: meta.admonition.quote.markdown
+    - include: indented-markdown
+
+  admonation-tip-heading:
+    - meta_scope: meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
+    - match: ^
+      set: admonation-tip-body
+    - include: admonation-titles
+
+  admonation-tip-body:
+    - meta_scope: meta.admonition.tip.markdown
+    - include: indented-markdown
+
+  admonation-warning-heading:
+    - meta_scope: meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
+    - match: ^
+      set: admonation-warning-body
+    - include: admonation-titles
+
+  admonation-warning-body:
+    - meta_scope: meta.admonition.warning.markdown
+    - include: indented-markdown
+
+  admonation-other-heading:
+    - meta_scope: meta.admonition.other.markdown markup.heading.admonition.other.markdown
+    - match: ^
+      set: admonation-other-body
+    - include: admonation-titles
+
+  admonation-other-body:
+    - meta_scope: meta.admonition.other.markdown
+    - include: indented-markdown
+
+  admonation-titles:
+    - match: \"
+      scope: punctuation.definition.title.begin.markdown
+      push: admonation-title-body
+
+  admonation-title-body:
+    - meta_scope: meta.title.markdown
+    - match: \"
+      scope: punctuation.definition.title.end.markdown
+      pop: 1
+    - match: $
+      pop: 1
+    - include: inlines
 
 ###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
