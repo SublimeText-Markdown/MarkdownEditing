@@ -8836,6 +8836,126 @@ soft line break
 not a hard line break`
 
 
+# TEST: ADMONITIONS ###########################################################
+
+!!! bug "Bug Title"
+|^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
+|^^ punctuation.definition.admonition.markdown
+|       ^^^^^^^^^^^ meta.title.markdown
+|       ^ punctuation.definition.title.begin.markdown
+|                 ^ punctuation.definition.title.end.markdown
+
+!!! danger "Be very careful"
+|^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
+|^^ punctuation.definition.admonition.markdown
+|          ^^^^^^^^^^^^^^^^^ meta.title.markdown
+|          ^ punctuation.definition.title.begin.markdown
+|                          ^ punctuation.definition.title.end.markdown
+
+!!! failure
+|^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
+|^^ punctuation.definition.admonition.markdown
+
+!!! failure blinking
+|^^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
+|^^ punctuation.definition.admonition.markdown
+
+!!! failure "Error Title"
+|^^^^^^^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
+|^^ punctuation.definition.admonition.markdown
+|           ^^^^^^^^^^^^^ meta.title.markdown
+|           ^ punctuation.definition.title.begin.markdown
+|                       ^ punctuation.definition.title.end.markdown
+
+!!! quote
+|^^^^^^^^^ meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
+|^^ punctuation.definition.admonition.markdown
+
+!!! danger "Be very careful"
+
+    # Heading
+    | <- meta.admonition.caution.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^ meta.admonition.caution.markdown markup.heading.1.markdown
+    
+    Tip Body
+    | <- meta.admonition.caution.markdown meta.paragraph.list.markdown
+    |^^^^^^^^ meta.admonition.caution.markdown meta.paragraph.list.markdown
+
+    - list
+    | <- meta.admonition.caution.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+    |^ meta.admonition.caution.markdown markup.list.unnumbered.markdown
+    | ^^^^^ meta.admonition.caution.markdown meta.paragraph.list.markdown
+
+!!! quote
+
+    # Heading
+    | <- meta.admonition.quote.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^ meta.admonition.quote.markdown markup.heading.1.markdown
+    
+    Tip Body
+    | <- meta.admonition.quote.markdown meta.paragraph.list.markdown
+    |^^^^^^^^ meta.admonition.quote.markdown meta.paragraph.list.markdown
+
+    - list
+    | <- meta.admonition.quote.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+    |^ meta.admonition.quote.markdown markup.list.unnumbered.markdown
+    | ^^^^^ meta.admonition.quote.markdown meta.paragraph.list.markdown
+
+!!! tip "This may help you"
+
+    # Heading
+    | <- meta.admonition.tip.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^ meta.admonition.tip.markdown markup.heading.1.markdown
+    
+    Tip Body
+    | <- meta.admonition.tip.markdown meta.paragraph.list.markdown
+    |^^^^^^^^ meta.admonition.tip.markdown meta.paragraph.list.markdown
+
+    - list
+    | <- meta.admonition.tip.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+    |^ meta.admonition.tip.markdown markup.list.unnumbered.markdown
+    | ^^^^^ meta.admonition.tip.markdown meta.paragraph.list.markdown
+
+!!! warning "Heads up"
+
+    # Heading
+    | <- meta.admonition.warning.markdown markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+    |^^^^^^^^^ meta.admonition.warning.markdown markup.heading.1.markdown
+    
+    Tip Body
+    | <- meta.admonition.warning.markdown meta.paragraph.list.markdown
+    |^^^^^^^^ meta.admonition.warning.markdown meta.paragraph.list.markdown
+
+    - list
+    | <- meta.admonition.warning.markdown markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+    |^ meta.admonition.warning.markdown markup.list.unnumbered.markdown
+    | ^^^^^ meta.admonition.warning.markdown meta.paragraph.list.markdown
+
+- list item
+| <- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown - meta.admonition
+  
+  !!! tip "Title"
+|^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
+| ^^^ punctuation.definition.admonition.markdown
+
+- list item
+  
+  !!! warning "Title"
+|^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
+| ^^^ punctuation.definition.admonition.markdown
+
+  !!! success "Title"
+
+      paragraph
+      |^^^^^^^^^ meta.admonition.note.markdown meta.paragraph.list.markdown
+
+      - list
+      |<- markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
+      |^^^^^^ meta.admonition.note.markdown
+      |^ markup.list.unnumbered.markdown
+      | ^^^^^ meta.paragraph.list.markdown
+
+
 # TEST: CRITIC MARKUP #########################################################
 
 This is an {++additional++} word in {++**bold**++}.
@@ -9297,6 +9417,22 @@ This is a [[wiki link]].
    | <- markup.quote.alert.tip.markdown punctuation.definition.blockquote.markdown
    |^ markup.quote.alert.tip.markdown - markup.paragraph
    | ^^^^^ markup.quote.alert.tip.markdown markup.paragraph.markdown
+
+   - sub item
+
+     > [!TIP]
+     | <- markup.quote.alert.tip.markdown punctuation.definition.blockquote.markdown
+     |^^^^^^^^ markup.quote.alert.tip.markdown
+     | ^^^^^^ markup.heading.alert.tip.markdown
+     | ^ punctuation.definition.heading.begin.markdown
+     |      ^ punctuation.definition.heading.end.markdown
+
+     > [!TIP]
+     > 
+     > Text
+     | <- markup.quote.alert.tip.markdown punctuation.definition.blockquote.markdown
+     |^ markup.quote.alert.tip.markdown - markup.paragraph
+     | ^^^^^ markup.quote.alert.tip.markdown markup.paragraph.markdown
 
 # TEST: MATHJAX BLOCKS MARKUP #################################################
 
