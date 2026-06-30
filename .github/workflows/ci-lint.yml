@@ -37,6 +37,6 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
       - name: Install linters
-        run: pip install -r tests/requirements.txt
+        run: pip install black
       - name: Run black
         run: python -m black --check .
