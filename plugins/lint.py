@@ -97,7 +97,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
                 (row, col) = self.view.rowcol(t[0])
                 outputtxt += f"line {row + 1}: {t[1]}, {t[2]}\n"
             output = window.create_output_panel("mde")
-            output.run_command("insert", {"characters": outputtxt})
+            output.run_command("append", {"characters": outputtxt})
             window.run_command("show_panel", {"panel": "output.mde"})
         else:
             sublime.status_message("MarkdownLint: no errors found")
