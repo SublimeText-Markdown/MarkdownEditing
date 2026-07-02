@@ -167,7 +167,7 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = "First header should be a h1 header"
-    locator = r"^(?:#{1,6}(?=[ \t]))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
+    locator = r"^(?:#{1,6}(?=[ \t])|(?:\S[^\n]*\n)+?(?:-+|=+)$)"
 
     def test(self, text, s, e):
         ret = {}
@@ -184,12 +184,11 @@ class md002(mddef):
 class md003(mddef):
     flag = re.M
     desc = "Header style"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"^(#{1,6}(?=[ \t])).*$"
-    ratxc = r"^(#{1,6}(?=[ \t])).*?(#+)$"
-    rsetext = r"[\-\=]+"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(?:\S[^\n]*\n)+?(?:-+|=+)$"
 
     def test(self, text, s, e):
         ret = {}
@@ -569,7 +568,7 @@ class md021(mddef):
 class md022(mddef):
     flag = re.M
     desc = "Headers should be surrounded by blank lines"
-    locator = r"^(?:(?:#{1,6}(?=[ \t]).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
     def test(self, text, s, e):
         if s > 1 and text[s - 2] != "\n":
@@ -583,35 +582,40 @@ class md022(mddef):
 class md023(mddef):
     flag = re.M
     desc = "Headers must start at the beginning of the line"
-    locator = r"^( +)((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
-    gid = 1
+    locator = r"^([ \t]+#{1,6}[ \t]+[^\n]*|(?:[ \t]+\S[^\n]*\n)+?[ \t]+(?:-+|=+))$"
 
     def is_inside_code_block(self, text, s, e):
         def calculate_intendation(text, position):
-            return position - text.rfind("\n", 0, position) - 1
+            return max(0, position - text.rfind("\n", 0, position) - 1)
 
         keyword = "```"
         block_s = text.rfind(keyword, 0, s - 1)
         block_e = text.find(keyword, e)
         block_s_intendation = calculate_intendation(text, block_s)
         block_e_intendation = calculate_intendation(text, block_e)
-        assert block_s_intendation == block_e_intendation
-        return e - s >= block_s_intendation
+        return block_s >= 0 and block_e > block_s and block_s_intendation == block_e_intendation
 
     def test(self, text, s, e):
         if self.is_inside_code_block(text, s, e):
             return {}
-        return {s: "%d spaces found" % (e - s)}
+
+        numws = 0
+        for c in text:
+            if c not in ' \t':
+                break
+            numws += 1
+
+        return {s: "%d spaces found" % numws}
 
 
 class md024(mddef):
     flag = re.M
     desc = "Multiple headers with the same content"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"(#{1,6}(?=[ \t])) *(.*?) *$"
-    ratxc = r"(#{1,6}(?=[ \t])) *(.*?) *(#+)$"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(\S[^\n]*\n)+?(-+|=+)$"
 
     def __init__(self, settings, view):
         super(md024, self).__init__(settings, view)
@@ -620,16 +624,12 @@ class md024(mddef):
     def test(self, text, s, e):
         ret = {}
         title = text[s:e]
-        if re.match(r"-+|=+", title):
-            st = text.rfind("\n", 0, s - 1)
-            title = text[st + 1 : s - 1]
-        else:
-            mr = re.match(self.ratxc, title)
-            if mr:
-                title = mr.group(2)
-            else:
-                mr = re.match(self.ratx, title)
-                title = mr.group(2)
+        if mr := re.match(self.rsetext, title):
+            title = mr.group(1)[:-1]
+        elif mr := re.match(self.ratxc, title):
+            title = mr.group(2)
+        elif mr := re.match(self.ratx, title):
+            title = mr.group(2)
         if title in self.storage:
             ret[s] = "%s duplicated" % repr(title)
         else:
@@ -640,7 +640,7 @@ class md024(mddef):
 class md025(mddef):
     flag = re.M
     desc = "Multiple top level headers in the same document"
-    locator = r"^(={3,}|#(?!#).*)$"
+    locator = r"^(?:#[ \t].*|(?:\S[^\n]*\n)+?=+)$"
     count = 0
 
     def test(self, text, s, e):
@@ -654,25 +654,21 @@ class md025(mddef):
 class md026(mddef):
     flag = re.M
     desc = "Trailing punctuation in header"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"(#{1,6}(?=[ \t])) *(.*?) *$"
-    ratxc = r"(#{1,6}(?=[ \t])) *(.*?) *?(#+)$"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(\S[^\n]*\n)+?(-+|=+)$"
 
     def test(self, text, s, e):
         ret = {}
         title = text[s:e]
-        if re.match(r"-+|=+", title):
-            st = text.rfind("\n", 0, s - 1)
-            title = text[st + 1 : s - 1]
-        else:
-            mr = re.match(self.ratxc, title)
-            if mr:
-                title = mr.group(2)
-            else:
-                mr = re.match(self.ratx, title)
-                title = mr.group(2)
+        if mr := re.match(self.rsetext, title):
+            title = mr.group(1)[:-1]
+        elif mr := re.match(self.ratxc, title):
+            title = mr.group(2)
+        elif mr := re.match(self.ratx, title):
+            title = mr.group(2)
         if len(title) > 0 and title[-1] in self.settings:
             ret[s] = "%s found" % repr(title[-1])
         return ret
