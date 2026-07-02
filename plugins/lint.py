@@ -42,7 +42,7 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
             else:
                 result = self.read_result(stdout)
                 outputtxt = result
-                sublime.status_message("MarkdownLint: %d error(s) found" % len(result.split("\n")))
+                sublime.status_message(f"MarkdownLint: {len(result.split("\n"))} error(s) found")
 
             window = self.view.window() or sublime.active_window()
             if outputtxt:
@@ -90,12 +90,12 @@ class MdeMarkdownLintCommand(MdeTextCommand):
             result.extend(r)
         window = self.view.window() or sublime.active_window()
         if len(result) > 0:
-            sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
+            sublime.status_message(f"MarkdownLint: {len(result)} error(s) found")
             result = sorted(result, key=lambda t: t[0])
             outputtxt = ""
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
-                outputtxt += "line %d: %s, %s\n" % (row + 1, t[1], t[2])
+                outputtxt += f"line {row + 1}: {t[1]}, {t[2]}\n"
             output = window.create_output_panel("mde")
             output.run_command("insert", {"characters": outputtxt})
             window.run_command("show_panel", {"panel": "output.mde"})
@@ -148,7 +148,7 @@ class mddef(object):
 class md001(mddef):
     flag = re.M
     desc = "Header levels should only increment by one level at a time"
-    locator = r"^#{1,6}(?!#)"
+    locator = r"^#{1,6}(?=[ \t])"
 
     lastMatch = None
 
@@ -159,7 +159,7 @@ class md001(mddef):
             n2 = e - s
             if n2 > n1:
                 if n2 != n1 + 1:
-                    ret[s] = "expected %d, %d found" % (n1 + 1, n2)
+                    ret[s] = f"expected {n1 + 1}, {n2} found"
         self.lastMatch = text[s:e]
         return ret
 
@@ -167,15 +167,15 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = "First header should be a h1 header"
-    locator = r"^(?:#{1,6}(?!#))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
+    locator = r"^(?:#{1,6}(?=[ \t])|(?:\S[^\n]*\n)+?(?:-+|=+)$)"
 
     def test(self, text, s, e):
         ret = {}
         # print (text[s:e])
         self.finish = True
-        if re.match(r"#{1,6}(?!#)", text[s:e]):
+        if re.match(r"#{1,6}(?=[ \t])", text[s:e]):
             if e - s != 1:
-                ret[s] = "level %d found" % (e - s)
+                ret[s] = f"level {e - s} found"
         elif re.match(r"(?:[^\n]*\n)+?-+", text[s:e]):
             ret[s] = "level 2 found"
         return ret
@@ -184,12 +184,11 @@ class md002(mddef):
 class md003(mddef):
     flag = re.M
     desc = "Header style"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"^(#{1,6}(?!#)).*$"
-    ratxc = r"^(#{1,6}(?!#)).*?(#+)$"
-    rsetext = r"[\-\=]+"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(?:\S[^\n]*\n)+?(?:-+|=+)$"
 
     def test(self, text, s, e):
         ret = {}
@@ -242,9 +241,9 @@ class md004(mddef):
         if ans is None:
             (ans, exp) = self.testcyc(sym, -1)
             if ans is False:
-                ret[e] = "%s expected, %s found" % (exp, sym)
+                ret[e] = f"{exp} expected, {sym} found"
         elif ans is False:
-            ret[e] = "%s expected, %s found" % (exp, sym)
+            ret[e] = f"{exp} expected, {sym} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -272,10 +271,10 @@ class md004(mddef):
                     lvstack.append(nspaces)
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
-                    ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = f"{exp} expected, {sym} found"
             else:
                 if not ans:
-                    ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = f"{exp} expected, {sym} found"
         return ret
 
     def testsingle(self, sym):
@@ -345,7 +344,7 @@ class md005(mddef):
         basenspaces = e - s
         (ans, exp) = self.spacecheck(-1, nspaces)
         if not ans:
-            ret[s] = "%s expected, %s found" % (exp, nspaces)
+            ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -376,7 +375,7 @@ class md005(mddef):
                 lvstack.append(nspaces)
             (ans, exp) = self.spacecheck(lv, nspaces)
             if ans is False:
-                ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
 
 
@@ -399,7 +398,7 @@ class md006(mddef):
         # sym = text[e:e + 1]
         nspaces = e - s
         if nspaces > 0:
-            ret[s] = "%d found" % nspaces
+            ret[s] = f"{nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -432,7 +431,7 @@ class md007(mddef):
             self.settings = settings
 
     def spacecheck(self, nspaces):
-        return (nspaces % self.settings == 0, "%d*n" % self.settings)
+        return (nspaces % self.settings == 0, f"{self.settings}*n")
 
     def test(self, text, s, e):
         # print(self.lastpos)
@@ -444,7 +443,7 @@ class md007(mddef):
         nspaces = e - s
         (ans, exp) = self.spacecheck(nspaces)
         if not ans:
-            ret[s] = "%s expected, %s found" % (exp, nspaces)
+            ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -462,7 +461,7 @@ class md007(mddef):
             nspaces = len(mr.group(1))
             (ans, exp) = self.spacecheck(nspaces)
             if ans is False:
-                ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
 
 
@@ -472,7 +471,7 @@ class md009(mddef):
     locator = r" +$"
 
     def test(self, text, s, e):
-        return {s: "%d spaces" % (e - s)}
+        return {s: f"{e - s} spaces"}
 
 
 class md010(mddef):
@@ -498,7 +497,7 @@ class md012(mddef):
     locator = r"\n{3,}"
 
     def test(self, text, s, e):
-        return {s + 1: "%d blank lines" % (e - s - 1)}
+        return {s + 1: f"{e - s - 1} blank lines"}
 
 
 class md013(mddef):
@@ -516,7 +515,7 @@ class md013(mddef):
         t = text[s:e]
         if not re.match(r"^[ ]*[>\+\-\*].+$", t):
             if e - s > self.settings:
-                return {s: "%d characters" % (e - s)}
+                return {s: f"{e - s} characters"}
         return {}
 
 
@@ -541,7 +540,7 @@ class md019(mddef):
 class md020(mddef):
     flag = re.M
     desc = "No space inside hashes on closed atx style header"
-    locator = r"^(#{1,6}(?!#))(.*?)(#+)$"
+    locator = r"^(#{1,6}(?=[ \t]))(.*?)(#+)$"
     gid = 2
 
     def test(self, text, s, e):
@@ -556,7 +555,7 @@ class md020(mddef):
 class md021(mddef):
     flag = re.M
     desc = "Multiple spaces inside hashes on closed atx style header"
-    locator = r"(#{1,6}(?!#))(.*?)(#+)"
+    locator = r"(#{1,6}(?=[ \t]))(.*?)(#+)"
     gid = 2
 
     def test(self, text, s, e):
@@ -569,7 +568,7 @@ class md021(mddef):
 class md022(mddef):
     flag = re.M
     desc = "Headers should be surrounded by blank lines"
-    locator = r"^(?:(?:#{1,6}(?!#).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
     def test(self, text, s, e):
         if s > 1 and text[s - 2] != "\n":
@@ -583,35 +582,40 @@ class md022(mddef):
 class md023(mddef):
     flag = re.M
     desc = "Headers must start at the beginning of the line"
-    locator = r"^( +)((?:-+|=+)|(?:#{1,6}(?!#).*))$"
-    gid = 1
+    locator = r"^([ \t]+#{1,6}[ \t]+[^\n]*|(?:[ \t]+\S[^\n]*\n)+?[ \t]+(?:-+|=+))$"
 
     def is_inside_code_block(self, text, s, e):
         def calculate_intendation(text, position):
-            return position - text.rfind("\n", 0, position) - 1
+            return max(0, position - text.rfind("\n", 0, position) - 1)
 
         keyword = "```"
         block_s = text.rfind(keyword, 0, s - 1)
         block_e = text.find(keyword, e)
         block_s_intendation = calculate_intendation(text, block_s)
         block_e_intendation = calculate_intendation(text, block_e)
-        assert block_s_intendation == block_e_intendation
-        return e - s >= block_s_intendation
+        return block_s >= 0 and block_e > block_s and block_s_intendation == block_e_intendation
 
     def test(self, text, s, e):
         if self.is_inside_code_block(text, s, e):
             return {}
-        return {s: "%d spaces found" % (e - s)}
+
+        numws = 0
+        for c in text:
+            if c not in ' \t':
+                break
+            numws += 1
+
+        return {s: f"{numws} spaces found"}
 
 
 class md024(mddef):
     flag = re.M
     desc = "Multiple headers with the same content"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"(#{1,6}(?!#)) *(.*?) *$"
-    ratxc = r"(#{1,6}(?!#)) *(.*?) *(#+)$"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(\S[^\n]*\n)+?(-+|=+)$"
 
     def __init__(self, settings, view):
         super(md024, self).__init__(settings, view)
@@ -620,18 +624,14 @@ class md024(mddef):
     def test(self, text, s, e):
         ret = {}
         title = text[s:e]
-        if re.match(r"-+|=+", title):
-            st = text.rfind("\n", 0, s - 1)
-            title = text[st + 1 : s - 1]
-        else:
-            mr = re.match(self.ratxc, title)
-            if mr:
-                title = mr.group(2)
-            else:
-                mr = re.match(self.ratx, title)
-                title = mr.group(2)
+        if mr := re.match(self.rsetext, title):
+            title = mr.group(1)[:-1]
+        elif mr := re.match(self.ratxc, title):
+            title = mr.group(2)
+        elif mr := re.match(self.ratx, title):
+            title = mr.group(2)
         if title in self.storage:
-            ret[s] = "%s duplicated" % repr(title)
+            ret[s] = f"{title} duplicated"
         else:
             self.storage.append(title)
         return ret
@@ -640,41 +640,37 @@ class md024(mddef):
 class md025(mddef):
     flag = re.M
     desc = "Multiple top level headers in the same document"
-    locator = r"^(={3,}|#(?!#).*)$"
+    locator = r"^(?:#[ \t].*|(?:\S[^\n]*\n)+?=+)$"
     count = 0
 
     def test(self, text, s, e):
         ret = {}
         self.count += 1
         if self.count > 1:
-            ret[s] = "%d found" % self.count
+            ret[s] = f"{self.count} found"
         return ret
 
 
 class md026(mddef):
     flag = re.M
     desc = "Trailing punctuation in header"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
-    gid = 1
+    locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
-    ratx = r"(#{1,6}(?!#)) *(.*?) *$"
-    ratxc = r"(#{1,6}(?!#)) *(.*?) *?(#+)$"
+    ratx = r"^(#{1,6})[ \t]+(.*?)[ \t]*$"
+    ratxc = r"^(#{1,6})[ \t]+(.*?)[ \t]+(#+)$"
+    rsetext = r"^(\S[^\n]*\n)+?(-+|=+)$"
 
     def test(self, text, s, e):
         ret = {}
         title = text[s:e]
-        if re.match(r"-+|=+", title):
-            st = text.rfind("\n", 0, s - 1)
-            title = text[st + 1 : s - 1]
-        else:
-            mr = re.match(self.ratxc, title)
-            if mr:
-                title = mr.group(2)
-            else:
-                mr = re.match(self.ratx, title)
-                title = mr.group(2)
+        if mr := re.match(self.rsetext, title):
+            title = mr.group(1)[:-1]
+        elif mr := re.match(self.ratxc, title):
+            title = mr.group(2)
+        elif mr := re.match(self.ratx, title):
+            title = mr.group(2)
         if len(title) > 0 and title[-1] in self.settings:
-            ret[s] = "%s found" % repr(title[-1])
+            ret[s] = f"{title[-1]} found"
         return ret
 
 
@@ -752,13 +748,10 @@ class md029(mddef):
 
             if style == "one":
                 if sym != "1":
-                    ret[mr.start(1) + e + 1] = "%s found, '1' expected" % repr(sym)
+                    ret[mr.start(1) + e + 1] = f"{sym} found, '1' expected"
             else:
                 if int(sym) != int(lastSym) + 1:
-                    ret[mr.start(1) + e + 1] = "%s found, '%d' expected" % (
-                        repr(sym),
-                        int(lastSym) + 1,
-                    )
+                    ret[mr.start(1) + e + 1] = f"{sym} found, '{int(lastSym) + 1}' expected"
                 lastSym = sym
         return ret
 
@@ -789,5 +782,5 @@ class md030(mddef):
         is_multi = (len(text) >= p + 2) and (text[p + 1] in "\r\n")
         against_value = multi if is_multi else single
         if against_value != nspaces:
-            ret[e] = "%d spaces found, %d expected" % (nspaces, against_value)
+            ret[e] = f"{nspaces} spaces found, {against_value} expected"
         return ret
