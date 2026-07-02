@@ -4309,7 +4309,7 @@ contexts:
 
 ###[ EXTENSIONS: ADMONITIONS ]################################################
 
-    admonitions:
+  admonitions:
     # https://python-markdown.github.io/extensions/admonition/
     - match: '^([ \t]*)(!!!)[ \t]+(caution|danger)\b'
       captures:
