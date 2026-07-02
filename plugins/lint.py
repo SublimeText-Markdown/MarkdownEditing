@@ -148,7 +148,7 @@ class mddef(object):
 class md001(mddef):
     flag = re.M
     desc = "Header levels should only increment by one level at a time"
-    locator = r"^#{1,6}(?!#)"
+    locator = r"^#{1,6}(?=[ \t])"
 
     lastMatch = None
 
@@ -167,13 +167,13 @@ class md001(mddef):
 class md002(mddef):
     flag = re.M
     desc = "First header should be a h1 header"
-    locator = r"^(?:#{1,6}(?!#))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
+    locator = r"^(?:#{1,6}(?=[ \t]))|(?:\S[^\n]*\n)+?(?:-+$|=+$)"
 
     def test(self, text, s, e):
         ret = {}
         # print (text[s:e])
         self.finish = True
-        if re.match(r"#{1,6}(?!#)", text[s:e]):
+        if re.match(r"#{1,6}(?=[ \t])", text[s:e]):
             if e - s != 1:
                 ret[s] = "level %d found" % (e - s)
         elif re.match(r"(?:[^\n]*\n)+?-+", text[s:e]):
@@ -184,11 +184,11 @@ class md002(mddef):
 class md003(mddef):
     flag = re.M
     desc = "Header style"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
     gid = 1
 
-    ratx = r"^(#{1,6}(?!#)).*$"
-    ratxc = r"^(#{1,6}(?!#)).*?(#+)$"
+    ratx = r"^(#{1,6}(?=[ \t])).*$"
+    ratxc = r"^(#{1,6}(?=[ \t])).*?(#+)$"
     rsetext = r"[\-\=]+"
 
     def test(self, text, s, e):
@@ -541,7 +541,7 @@ class md019(mddef):
 class md020(mddef):
     flag = re.M
     desc = "No space inside hashes on closed atx style header"
-    locator = r"^(#{1,6}(?!#))(.*?)(#+)$"
+    locator = r"^(#{1,6}(?=[ \t]))(.*?)(#+)$"
     gid = 2
 
     def test(self, text, s, e):
@@ -556,7 +556,7 @@ class md020(mddef):
 class md021(mddef):
     flag = re.M
     desc = "Multiple spaces inside hashes on closed atx style header"
-    locator = r"(#{1,6}(?!#))(.*?)(#+)"
+    locator = r"(#{1,6}(?=[ \t]))(.*?)(#+)"
     gid = 2
 
     def test(self, text, s, e):
@@ -569,7 +569,7 @@ class md021(mddef):
 class md022(mddef):
     flag = re.M
     desc = "Headers should be surrounded by blank lines"
-    locator = r"^(?:(?:#{1,6}(?!#).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
+    locator = r"^(?:(?:#{1,6}(?=[ \t]).*)|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
     def test(self, text, s, e):
         if s > 1 and text[s - 2] != "\n":
@@ -583,7 +583,7 @@ class md022(mddef):
 class md023(mddef):
     flag = re.M
     desc = "Headers must start at the beginning of the line"
-    locator = r"^( +)((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^( +)((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
     gid = 1
 
     def is_inside_code_block(self, text, s, e):
@@ -607,11 +607,11 @@ class md023(mddef):
 class md024(mddef):
     flag = re.M
     desc = "Multiple headers with the same content"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
     gid = 1
 
-    ratx = r"(#{1,6}(?!#)) *(.*?) *$"
-    ratxc = r"(#{1,6}(?!#)) *(.*?) *(#+)$"
+    ratx = r"(#{1,6}(?=[ \t])) *(.*?) *$"
+    ratxc = r"(#{1,6}(?=[ \t])) *(.*?) *(#+)$"
 
     def __init__(self, settings, view):
         super(md024, self).__init__(settings, view)
@@ -654,11 +654,11 @@ class md025(mddef):
 class md026(mddef):
     flag = re.M
     desc = "Trailing punctuation in header"
-    locator = r"^((?:-+|=+)|(?:#{1,6}(?!#).*))$"
+    locator = r"^((?:-+|=+)|(?:#{1,6}(?=[ \t]).*))$"
     gid = 1
 
-    ratx = r"(#{1,6}(?!#)) *(.*?) *$"
-    ratxc = r"(#{1,6}(?!#)) *(.*?) *?(#+)$"
+    ratx = r"(#{1,6}(?=[ \t])) *(.*?) *$"
+    ratxc = r"(#{1,6}(?=[ \t])) *(.*?) *?(#+)$"
 
     def test(self, text, s, e):
         ret = {}
