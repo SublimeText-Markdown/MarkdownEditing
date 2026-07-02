@@ -42,7 +42,7 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
             else:
                 result = self.read_result(stdout)
                 outputtxt = result
-                sublime.status_message("MarkdownLint: %d error(s) found" % len(result.split("\n")))
+                sublime.status_message(f"MarkdownLint: {len(result.split("\n"))} error(s) found")
 
             window = self.view.window() or sublime.active_window()
             if outputtxt:
@@ -90,12 +90,12 @@ class MdeMarkdownLintCommand(MdeTextCommand):
             result.extend(r)
         window = self.view.window() or sublime.active_window()
         if len(result) > 0:
-            sublime.status_message("MarkdownLint: %d error(s) found" % len(result))
+            sublime.status_message(f"MarkdownLint: {len(result)} error(s) found")
             result = sorted(result, key=lambda t: t[0])
             outputtxt = ""
             for t in result:
                 (row, col) = self.view.rowcol(t[0])
-                outputtxt += "line %d: %s, %s\n" % (row + 1, t[1], t[2])
+                outputtxt += f"line {row + 1}: {t[1]}, {t[2]}\n"
             output = window.create_output_panel("mde")
             output.run_command("insert", {"characters": outputtxt})
             window.run_command("show_panel", {"panel": "output.mde"})
@@ -159,7 +159,7 @@ class md001(mddef):
             n2 = e - s
             if n2 > n1:
                 if n2 != n1 + 1:
-                    ret[s] = "expected %d, %d found" % (n1 + 1, n2)
+                    ret[s] = f"expected {n1 + 1}, {n2} found"
         self.lastMatch = text[s:e]
         return ret
 
@@ -175,7 +175,7 @@ class md002(mddef):
         self.finish = True
         if re.match(r"#{1,6}(?=[ \t])", text[s:e]):
             if e - s != 1:
-                ret[s] = "level %d found" % (e - s)
+                ret[s] = f"level {e - s} found"
         elif re.match(r"(?:[^\n]*\n)+?-+", text[s:e]):
             ret[s] = "level 2 found"
         return ret
@@ -241,9 +241,9 @@ class md004(mddef):
         if ans is None:
             (ans, exp) = self.testcyc(sym, -1)
             if ans is False:
-                ret[e] = "%s expected, %s found" % (exp, sym)
+                ret[e] = f"{exp} expected, {sym} found"
         elif ans is False:
-            ret[e] = "%s expected, %s found" % (exp, sym)
+            ret[e] = f"{exp} expected, {sym} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -271,10 +271,10 @@ class md004(mddef):
                     lvstack.append(nspaces)
                 (ans, exp) = self.testcyc(sym, lv)
                 if ans is False:
-                    ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = f"{exp} expected, {sym} found"
             else:
                 if not ans:
-                    ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, sym)
+                    ret[e + 1 + mr.start(2)] = f"{exp} expected, {sym} found"
         return ret
 
     def testsingle(self, sym):
@@ -344,7 +344,7 @@ class md005(mddef):
         basenspaces = e - s
         (ans, exp) = self.spacecheck(-1, nspaces)
         if not ans:
-            ret[s] = "%s expected, %s found" % (exp, nspaces)
+            ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -375,7 +375,7 @@ class md005(mddef):
                 lvstack.append(nspaces)
             (ans, exp) = self.spacecheck(lv, nspaces)
             if ans is False:
-                ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
 
 
@@ -398,7 +398,7 @@ class md006(mddef):
         # sym = text[e:e + 1]
         nspaces = e - s
         if nspaces > 0:
-            ret[s] = "%d found" % nspaces
+            ret[s] = f"{nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -431,7 +431,7 @@ class md007(mddef):
             self.settings = settings
 
     def spacecheck(self, nspaces):
-        return (nspaces % self.settings == 0, "%d*n" % self.settings)
+        return (nspaces % self.settings == 0, f"{self.settings}*n")
 
     def test(self, text, s, e):
         # print(self.lastpos)
@@ -443,7 +443,7 @@ class md007(mddef):
         nspaces = e - s
         (ans, exp) = self.spacecheck(nspaces)
         if not ans:
-            ret[s] = "%s expected, %s found" % (exp, nspaces)
+            ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
         mr = re.search(self.eol, rest, re.M)
@@ -461,7 +461,7 @@ class md007(mddef):
             nspaces = len(mr.group(1))
             (ans, exp) = self.spacecheck(nspaces)
             if ans is False:
-                ret[e + 1 + mr.start(2)] = "%s expected, %s found" % (exp, nspaces)
+                ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
 
 
@@ -471,7 +471,7 @@ class md009(mddef):
     locator = r" +$"
 
     def test(self, text, s, e):
-        return {s: "%d spaces" % (e - s)}
+        return {s: f"{e - s} spaces"}
 
 
 class md010(mddef):
@@ -497,7 +497,7 @@ class md012(mddef):
     locator = r"\n{3,}"
 
     def test(self, text, s, e):
-        return {s + 1: "%d blank lines" % (e - s - 1)}
+        return {s + 1: f"{e - s - 1} blank lines"}
 
 
 class md013(mddef):
@@ -515,7 +515,7 @@ class md013(mddef):
         t = text[s:e]
         if not re.match(r"^[ ]*[>\+\-\*].+$", t):
             if e - s > self.settings:
-                return {s: "%d characters" % (e - s)}
+                return {s: f"{e - s} characters"}
         return {}
 
 
@@ -605,7 +605,7 @@ class md023(mddef):
                 break
             numws += 1
 
-        return {s: "%d spaces found" % numws}
+        return {s: f"{numws} spaces found"}
 
 
 class md024(mddef):
@@ -631,7 +631,7 @@ class md024(mddef):
         elif mr := re.match(self.ratx, title):
             title = mr.group(2)
         if title in self.storage:
-            ret[s] = "%s duplicated" % repr(title)
+            ret[s] = f"{title} duplicated"
         else:
             self.storage.append(title)
         return ret
@@ -647,7 +647,7 @@ class md025(mddef):
         ret = {}
         self.count += 1
         if self.count > 1:
-            ret[s] = "%d found" % self.count
+            ret[s] = f"{self.count} found"
         return ret
 
 
@@ -670,7 +670,7 @@ class md026(mddef):
         elif mr := re.match(self.ratx, title):
             title = mr.group(2)
         if len(title) > 0 and title[-1] in self.settings:
-            ret[s] = "%s found" % repr(title[-1])
+            ret[s] = f"{title[-1]} found"
         return ret
 
 
@@ -748,13 +748,10 @@ class md029(mddef):
 
             if style == "one":
                 if sym != "1":
-                    ret[mr.start(1) + e + 1] = "%s found, '1' expected" % repr(sym)
+                    ret[mr.start(1) + e + 1] = f"{sym} found, '1' expected"
             else:
                 if int(sym) != int(lastSym) + 1:
-                    ret[mr.start(1) + e + 1] = "%s found, '%d' expected" % (
-                        repr(sym),
-                        int(lastSym) + 1,
-                    )
+                    ret[mr.start(1) + e + 1] = f"{sym} found, '{int(lastSym) + 1}' expected"
                 lastSym = sym
         return ret
 
@@ -785,5 +782,5 @@ class md030(mddef):
         is_multi = (len(text) >= p + 2) and (text[p + 1] in "\r\n")
         against_value = multi if is_multi else single
         if against_value != nspaces:
-            ret[e] = "%d spaces found, %d expected" % (nspaces, against_value)
+            ret[e] = f"{nspaces} spaces found, {against_value} expected"
         return ret
