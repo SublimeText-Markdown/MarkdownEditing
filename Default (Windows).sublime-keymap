@@ -849,6 +849,17 @@
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^[\\s>]*[-+*][ ]\\[[ xX]\\]\\s+(?:\\S|$)", "match_all": true }
 		]
 	},
+	// Terminate lists (also in block quotes)
+	{ "keys": ["ctrl+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*).*/\n$1\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+		]
+	},
+	{ "keys": ["ctrl+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*).*/\n$1\n$1/}"}, "context":
+		[
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+		]
+	},
 	// Extend lists (also in block quotes)
 	{ "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^(?:\\s*((?:>\\s*)*)([-+*])(\\s+)).*/\n$1$2$3/}"}, "context":
 		[
@@ -1163,12 +1174,12 @@
 	// Terminate blockquote
 	{ "keys": ["ctrl+enter"], "command": "insert_snippet", "args": {"contents": "\n\n"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote - text.html.markdown markup.list", "match_all": true }
 		]
 	},
 	{ "keys": ["ctrl+keypad_enter"], "command": "insert_snippet", "args": {"contents": "\n\n"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true }
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote - text.html.markdown markup.list", "match_all": true }
 		]
 	},
 	// Terminate empty blockquote
