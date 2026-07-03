@@ -4314,41 +4314,49 @@ contexts:
     - match: '^([ \t]*)(!!!)[ \t]+(caution|danger)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-caution-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(bug|failure)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-error-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(important)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-important-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(abstract|info|note|question|success)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-note-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(quote)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-quote-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(tip)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-tip-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(warning)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-warning-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(\w+)\b'
       captures:
         2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
       embed: admonation-other-heading
       escape: '{{admonition_escape}}'
 
