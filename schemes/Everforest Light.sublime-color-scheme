@@ -1,0 +1,1743 @@
+{
+  "name": "Everforest Light",
+  "author": "",
+  "globals": {
+    "background": "var(bg0)",
+    "foreground": "var(fg)",
+    "caret": "var(fg)",
+    "block_caret": "var(fg)",
+    "line_highlight": "var(bg1)",
+    "misspelling": "var(red)",
+    "fold_marker": "var(green)",
+    "accent": "var(green)",
+    "gutter": "var(bg0)",
+    "gutter_foreground": "var(grey0)",
+    "line_diff_added": "var(green)",
+    "line_diff_modified": "var(blue)",
+    "line_diff_deleted": "var(red)",
+    "selection": "var(bg_visual)",
+    "inactive_selection": "var(bg3)",
+    "inactive_selection_border": "var(bg3)",
+    "inactive_selection_foreground": "var(grey2)",
+    "highlight": "var(green)",
+    "find_highlight": "var(bg_green)",
+    "find_highlight_foreground": "var(green)",
+    "guide": "var(bg2)",
+    "active_guide": "var(fg)",
+    "stack_guide": "var(grey1)",
+    "brackets_foreground": "var(bg3)",
+    "tags_foreground": "var(bg3)",
+    "shadow": "var(bg_dim)"
+  },
+  "variables": {
+    "bg_dim": "#efebd4",
+    "bg0": "#fdf6e3",
+    "bg1": "#f4f0d9",
+    "bg2": "var(bg_dim)",
+    "bg3": "#e6e2cc",
+    "bg_visual": "#eaedc8",
+    "bg_red": "#fde3da",
+    "bg_yellow": "#faedcd",
+    "bg_green": "#f0f1d2",
+    "bg_blue": "#e9f0e9",
+    "bg_purple": "#fae8e2",
+    "fg": "#5c6a72",
+    "red": "#f85552",
+    "green": "#8da101",
+    "yellow": "#dfa000",
+    "orange": "#f57d26",
+    "blue": "#3a94c5",
+    "purple": "#df69ba",
+    "aqua": "#35a77c",
+    "grey0": "#a6b0a0",
+    "grey1": "#939f91",
+    "grey2": "#829181"
+  },
+  "rules": [
+    {
+      "name": "Keyword",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword, storage.type.function, storage.type.class, storage.type.enum, storage.type.interface, storage.type.property, keyword.operator.new, keyword.operator.expression, keyword.operator.new, keyword.operator.delete, storage.type.extends"
+    },
+    {
+      "name": "Debug",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.debugger"
+    },
+    {
+      "name": "Storage",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage, modifier, keyword.var, entity.name.tag, keyword.control.case, keyword.control.switch"
+    },
+    {
+      "name": "Operator",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.operator"
+    },
+    {
+      "name": "String",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "string, punctuation.definition.string.end, punctuation.definition.string.begin, punctuation.definition.string.template.begin, punctuation.definition.string.template.end"
+    },
+    {
+      "name": "Attribute",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name"
+    },
+    {
+      "name": "String Escape",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "constant.character.escape, punctuation.quasi.element, punctuation.definition.template-expression, punctuation.section.embedded, storage.type.format, constant.other.placeholder, constant.other.placeholder, variable.interpolation"
+    },
+    {
+      "name": "Function",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "entity.name.function, support.function, meta.function, meta.function-call, meta.definition.method"
+    },
+    {
+      "name": "Preproc",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "keyword.control.at-rule, keyword.control.import, keyword.control.export, storage.type.namespace, punctuation.decorator, keyword.control.directive, keyword.preprocessor, punctuation.definition.preprocessor, punctuation.definition.directive, keyword.other.import, keyword.other.package, entity.name.type.namespace, entity.name.scope-resolution, keyword.other.using, keyword.package, keyword.import, keyword.map"
+    },
+    {
+      "name": "Annotation",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "storage.type.annotation"
+    },
+    {
+      "name": "Label",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.label, constant.other.label"
+    },
+    {
+      "name": "Modules",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "support.module, support.node, support.other.module, support.type.object.module, entity.name.type.module, entity.name.type.class.module, keyword.control.module"
+    },
+    {
+      "name": "Type",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "storage.type, support.type, entity.name.type, keyword.type"
+    },
+    {
+      "name": "Class",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.type.class, support.class, entity.name.class, entity.other.inherited-class, storage.class"
+    },
+    {
+      "name": "Number",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "constant.numeric"
+    },
+    {
+      "name": "Boolean",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "constant.language.boolean"
+    },
+    {
+      "name": "Macro",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.function.preprocessor"
+    },
+    {
+      "name": "Special identifier",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "variable.language.this, variable.language.self, variable.language.super, keyword.other.this, variable.language.special, constant.language.null, constant.language.undefined, constant.language.nan"
+    },
+    {
+      "name": "Constant",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "constant.language, support.constant"
+    },
+    {
+      "name": "Identifier",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "variable, support.variable, meta.definition.variable"
+    },
+    {
+      "name": "Property",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "variable.object.property, support.variable.property, variable.other.property, variable.other.object.property, variable.other.enummember, variable.other.member, meta.object-literal.key"
+    },
+    {
+      "name": "Delimiter",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation, meta.brace, meta.delimiter, meta.bracket"
+    },
+    {
+      "name": "Markdown header default",
+      "font_style": "bold italic",
+      "scope": "markup.heading | entity.name.section"
+    },
+    {
+      "scope": "markup.heading.1",
+      "foreground": "var(red)"
+    },
+    {
+      "scope": "markup.heading.2",
+      "foreground": "var(orange)"
+    },
+    {
+      "scope": "markup.heading.3",
+      "foreground": "var(yellow)"
+    },
+    {
+      "scope": "markup.heading.4",
+      "foreground": "var(green)"
+    },
+    {
+      "scope": "markup.heading.5",
+      "foreground": "var(blue)"
+    },
+    {
+      "scope": "markup.heading.6",
+      "foreground": "var(purple)"
+    },
+    {
+      "scope": "markup.bold",
+      "foreground": "var(yellow)",
+      "font_style": "bold"
+    },
+    {
+      "scope": "markup.italic",
+      "foreground": "var(purple)",
+      "font_style": "italic"
+    },
+    {
+      "scope": "markup.bold markup.italic | markup.italic markup.bold",
+      "foreground": "var(red)",
+      "font_style": "italic bold"
+    },
+    {
+      "scope": "markup.underline",
+      "font_style": "underline"
+    },
+    {
+      "scope": "markup.strikethrough",
+      "foreground": "var(grey1)"
+    },
+    {
+      "scope": "markup.inserted",
+      "foreground": "var(green)",
+      "font_style": "underline"
+    },
+    {
+      "scope": "markup.deleted",
+      "foreground": "var(red)"
+    },
+    {
+      "name": "Markdown URL",
+      "scope": "markup.underline.link | markup.underline.link.markdown | markup.underline.link.image.markdown | markup.underline.link.markdown-gfm | punctuation.separator.path.markdown | constant.character.escape.url.markdown",
+      "foreground": "var(blue)",
+      "font_style": "underline"
+    },
+    {
+      "name": "Markdown link text",
+      "scope": "meta.link.inline.description | meta.image.inline.description | meta.link.reference.description | meta.image.reference.description | entity.name.reference.link | meta.link.reference.literal | meta.link.reference.footnote",
+      "foreground": "var(green)"
+    },
+    {
+      "scope": "meta.string.title",
+      "foreground": "var(orange)"
+    },
+    {
+      "name": "Markdown footnote",
+      "scope": "meta.link.reference.def",
+      "foreground": "var(grey1)"
+    },
+    {
+      "scope": "markup.quote",
+      "foreground": "var(grey1)",
+      "font_style": "italic"
+    },
+    {
+      "scope": "markup.info | markup.highlight | markup.heading.alert.note | markup.heading.admonition.note entity.name.admonition",
+      "background": "var(bg_blue)",
+      "foreground": "var(blue)"
+    },
+    {
+      "scope": "markup.heading.alert.tip | markup.heading.admonition.tip entity.name.admonition",
+      "background": "var(bg_green)",
+      "foreground": "var(green)"
+    },
+    {
+      "scope": "markup.heading.alert.important | markup.heading.admonition.important entity.name.admonition",
+      "background": "var(bg_purple)",
+      "foreground": "var(purple)"
+    },
+    {
+      "scope": "markup.heading.alert.warning | markup.heading.admonition.warning entity.name.admonition",
+      "background": "var(bg_yellow)",
+      "foreground": "var(yellow)"
+    },
+    {
+      "scope": "markup.heading.alert.caution | markup.heading.admonition.caution entity.name.admonition | markup.heading.admonition.error entity.name.admonition",
+      "background": "var(bg_red)",
+      "foreground": "var(red)"
+    },
+    {
+      "scope": "markup.heading.admonition.quote entity.name.admonition | markup.heading.admonition.other entity.name.admonition",
+      "background": "var(bg3)"
+    },
+    {
+      "scope": "markup.raw.inline | markup.raw.block",
+      "foreground": "var(aqua)",
+      "font_style": "glow"
+    },
+    {
+      "name": "Markdown code block language",
+      "scope": "constant.other.language-name",
+      "foreground": "var(yellow)"
+    },
+    {
+      "scope": "markup.math",
+      "foreground": "var(purple)"
+    },
+    {
+      "scope": "punctuation.definition.thematic-break",
+      "foreground": "var(grey1)"
+    },
+    {
+      "scope": "punctuation | markup.list.unnumbered.bullet | markup.list.numbered.bullet",
+      "foreground": "var(grey0)",
+      "font_style": "regular"
+    },
+    {
+      "scope": "punctuation.definition.blockquote | punctuation.definition.admonition",
+      "background": "color(var(grey0) alpha(0.25))",
+      "foreground": "color(var(grey0) alpha(0.25))"
+    },
+    {
+      "name": "reStructuredText heading",
+      "foreground": "var(orange)",
+      "font_style": "bold",
+      "scope": "punctuation.definition.heading.restructuredtext"
+    },
+    {
+      "name": "reStructuredText delimiter",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.field.restructuredtext, punctuation.separator.key-value.restructuredtext, punctuation.definition.directive.restructuredtext, punctuation.definition.constant.restructuredtext, punctuation.definition.italic.restructuredtext, punctuation.definition.table.restructuredtext"
+    },
+    {
+      "name": "reStructuredText delimiter bold",
+      "foreground": "var(grey1)",
+      "font_style": "regular",
+      "scope": "punctuation.definition.bold.restructuredtext"
+    },
+    {
+      "name": "reStructuredText aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.tag.restructuredtext, punctuation.definition.link.restructuredtext, punctuation.definition.raw.restructuredtext, punctuation.section.raw.restructuredtext"
+    },
+    {
+      "name": "reStructuredText purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "constant.other.footnote.link.restructuredtext"
+    },
+    {
+      "name": "reStructuredText red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "support.directive.restructuredtext"
+    },
+    {
+      "name": "reStructuredText green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "entity.name.directive.restructuredtext, markup.raw.restructuredtext, markup.raw.inner.restructuredtext, string.other.link.title.restructuredtext"
+    },
+    {
+      "name": "LaTex delimiter",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.function.latex, punctuation.definition.function.tex, punctuation.definition.keyword.latex, constant.character.newline.tex, punctuation.definition.keyword.tex"
+    },
+    {
+      "name": "LaTex red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "support.function.be.latex"
+    },
+    {
+      "name": "LaTex orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "support.function.section.latex, keyword.control.table.cell.latex, keyword.control.table.newline.latex"
+    },
+    {
+      "name": "LaTex yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "support.class.latex, variable.parameter.latex, variable.parameter.function.latex, variable.parameter.definition.label.latex, constant.other.reference.label.latex"
+    },
+    {
+      "name": "LaTex purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.preamble.latex"
+    },
+    {
+      "name": "Html grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.namespace.xml"
+    },
+    {
+      "name": "Html orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "entity.name.tag.html, entity.name.tag.xml, entity.name.tag.localname.xml"
+    },
+    {
+      "name": "Html yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.html, entity.other.attribute-name.xml, entity.other.attribute-name.localname.xml"
+    },
+    {
+      "name": "Html green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.html, string.quoted.single.html, punctuation.definition.string.begin.html, punctuation.definition.string.end.html, punctuation.separator.key-value.html, punctuation.definition.string.begin.xml, punctuation.definition.string.end.xml, string.quoted.double.xml, string.quoted.single.xml, punctuation.definition.tag.begin.html, punctuation.definition.tag.end.html, punctuation.definition.tag.xml, meta.tag.xml, meta.tag.preprocessor.xml, meta.tag.other.html, meta.tag.block.any.html, meta.tag.inline.any.html"
+    },
+    {
+      "name": "Html purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "variable.language.documentroot.xml, meta.tag.sgml.doctype.xml"
+    },
+    {
+      "name": "Proto yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "storage.type.proto"
+    },
+    {
+      "name": "Proto green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.proto.syntax, string.quoted.single.proto.syntax, string.quoted.double.proto, string.quoted.single.proto"
+    },
+    {
+      "name": "Proto aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.class.proto, entity.name.class.message.proto"
+    },
+    {
+      "name": "CSS grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.entity.css, punctuation.separator.key-value.css, punctuation.terminator.rule.css, punctuation.separator.list.comma.css"
+    },
+    {
+      "name": "CSS red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.class.css"
+    },
+    {
+      "name": "CSS orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.unit"
+    },
+    {
+      "name": "CSS yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.pseudo-class.css, entity.other.attribute-name.pseudo-element.css"
+    },
+    {
+      "name": "CSS green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.single.css, string.quoted.double.css, support.constant.property-value.css, meta.property-value.css, punctuation.definition.string.begin.css, punctuation.definition.string.end.css, constant.numeric.css, support.constant.font-name.css, variable.parameter.keyframe-list.css"
+    },
+    {
+      "name": "CSS aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "support.type.property-name.css"
+    },
+    {
+      "name": "CSS blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "support.type.vendored.property-name.css"
+    },
+    {
+      "name": "CSS purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.tag.css, entity.other.keyframe-offset.css, punctuation.definition.keyword.css, keyword.control.at-rule.keyframes.css, meta.selector.css"
+    },
+    {
+      "name": "SASS grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.entity.scss, punctuation.separator.key-value.scss, punctuation.terminator.rule.scss, punctuation.separator.list.comma.scss"
+    },
+    {
+      "name": "SASS orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.control.at-rule.keyframes.scss"
+    },
+    {
+      "name": "SASS yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "punctuation.definition.interpolation.begin.bracket.curly.scss, punctuation.definition.interpolation.end.bracket.curly.scss"
+    },
+    {
+      "name": "SASS green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "punctuation.definition.string.begin.scss, punctuation.definition.string.end.scss, string.quoted.double.scss, string.quoted.single.scss, constant.character.css.sass, meta.property-value.scss"
+    },
+    {
+      "name": "SASS purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.at-rule.include.scss, keyword.control.at-rule.use.scss, keyword.control.at-rule.mixin.scss, keyword.control.at-rule.extend.scss, keyword.control.at-rule.import.scss"
+    },
+    {
+      "name": "Stylus white",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "meta.function.stylus"
+    },
+    {
+      "name": "Stylus yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.function.stylus"
+    },
+    {
+      "name": "JavaScript white",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "string.unquoted.js"
+    },
+    {
+      "name": "JavaScript grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.accessor.js, punctuation.separator.key-value.js, punctuation.separator.label.js, keyword.operator.accessor.js"
+    },
+    {
+      "name": "JavaScript red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "punctuation.definition.block.tag.jsdoc"
+    },
+    {
+      "name": "JavaScript orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.js, storage.type.function.arrow.js"
+    },
+    {
+      "name": "JSX white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "JSXNested"
+    },
+    {
+      "name": "JSX green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "punctuation.definition.tag.jsx, entity.other.attribute-name.jsx, punctuation.definition.tag.begin.js.jsx, punctuation.definition.tag.end.js.jsx, entity.other.attribute-name.js.jsx"
+    },
+    {
+      "name": "TypeScript white",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.type.module.ts"
+    },
+    {
+      "name": "TypeScript grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "keyword.operator.type.annotation.ts, punctuation.accessor.ts, punctuation.separator.key-value.ts"
+    },
+    {
+      "name": "TypeScript green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "punctuation.definition.tag.directive.ts, entity.other.attribute-name.directive.ts"
+    },
+    {
+      "name": "TypeScript aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.type.ts, entity.name.type.interface.ts, entity.other.inherited-class.ts, entity.name.type.alias.ts, entity.name.type.class.ts, entity.name.type.enum.ts"
+    },
+    {
+      "name": "TypeScript orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.ts, storage.type.function.arrow.ts, storage.type.type.ts"
+    },
+    {
+      "name": "TypeScript blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.type.module.ts"
+    },
+    {
+      "name": "TypeScript purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.import.ts, keyword.control.export.ts, storage.type.namespace.ts"
+    },
+    {
+      "name": "TSX white",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.type.module.tsx"
+    },
+    {
+      "name": "TSX grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "keyword.operator.type.annotation.tsx, punctuation.accessor.tsx, punctuation.separator.key-value.tsx"
+    },
+    {
+      "name": "TSX green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "punctuation.definition.tag.directive.tsx, entity.other.attribute-name.directive.tsx, punctuation.definition.tag.begin.tsx, punctuation.definition.tag.end.tsx, entity.other.attribute-name.tsx"
+    },
+    {
+      "name": "TSX aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.type.tsx, entity.name.type.interface.tsx, entity.other.inherited-class.tsx, entity.name.type.alias.tsx, entity.name.type.class.tsx, entity.name.type.enum.tsx"
+    },
+    {
+      "name": "TSX blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.type.module.tsx"
+    },
+    {
+      "name": "TSX purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.import.tsx, keyword.control.export.tsx, storage.type.namespace.tsx"
+    },
+    {
+      "name": "TSX orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.tsx, storage.type.function.arrow.tsx, storage.type.type.tsx, support.class.component.tsx"
+    },
+    {
+      "name": "CoffeeScript orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.function.coffee"
+    },
+    {
+      "name": "PureScript white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.type-signature.purescript"
+    },
+    {
+      "name": "PureScript orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.double-colon.purescript, keyword.other.arrow.purescript, keyword.other.big-arrow.purescript"
+    },
+    {
+      "name": "PureScript yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.function.purescript"
+    },
+    {
+      "name": "PureScript green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.single.purescript, string.quoted.double.purescript, punctuation.definition.string.begin.purescript, punctuation.definition.string.end.purescript, string.quoted.triple.purescript, entity.name.type.purescript"
+    },
+    {
+      "name": "PureScript purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "support.other.module.purescript"
+    },
+    {
+      "name": "Dart grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.dot.dart"
+    },
+    {
+      "name": "Dart orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.primitive.dart"
+    },
+    {
+      "name": "Dart yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "support.class.dart"
+    },
+    {
+      "name": "Dart green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "entity.name.function.dart, string.interpolated.single.dart, string.interpolated.double.dart"
+    },
+    {
+      "name": "Dart blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "variable.language.dart"
+    },
+    {
+      "name": "Dart purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.other.import.dart, storage.type.annotation.dart"
+    },
+    {
+      "name": "Pug red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.class.pug"
+    },
+    {
+      "name": "Pug orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.function.pug"
+    },
+    {
+      "name": "Pug aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.tag.pug"
+    },
+    {
+      "name": "Pug purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.tag.pug, storage.type.import.include.pug"
+    },
+    {
+      "name": "C white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.function-call.c, storage.modifier.array.bracket.square.c, meta.function.definition.parameters.c"
+    },
+    {
+      "name": "C grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.dot-access.c, constant.character.escape.line-continuation.c"
+    },
+    {
+      "name": "C red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.control.directive.include.c, punctuation.definition.directive.c, keyword.control.directive.pragma.c, keyword.control.directive.line.c, keyword.control.directive.define.c, keyword.control.directive.conditional.c, keyword.control.directive.diagnostic.error.c, keyword.control.directive.undef.c, keyword.control.directive.conditional.ifdef.c, keyword.control.directive.endif.c, keyword.control.directive.conditional.ifndef.c, keyword.control.directive.conditional.if.c, keyword.control.directive.else.c"
+    },
+    {
+      "name": "C orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "punctuation.separator.pointer-access.c"
+    },
+    {
+      "name": "C aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.member.c"
+    },
+    {
+      "name": "C++ white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.function-call.cpp, storage.modifier.array.bracket.square.cpp, meta.function.definition.parameters.cpp, meta.body.function.definition.cpp"
+    },
+    {
+      "name": "C++ grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.dot-access.cpp, constant.character.escape.line-continuation.cpp"
+    },
+    {
+      "name": "C++ red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.control.directive.include.cpp, punctuation.definition.directive.cpp, keyword.control.directive.pragma.cpp, keyword.control.directive.line.cpp, keyword.control.directive.define.cpp, keyword.control.directive.conditional.cpp, keyword.control.directive.diagnostic.error.cpp, keyword.control.directive.undef.cpp, keyword.control.directive.conditional.ifdef.cpp, keyword.control.directive.endif.cpp, keyword.control.directive.conditional.ifndef.cpp, keyword.control.directive.conditional.if.cpp, keyword.control.directive.else.cpp, storage.type.namespace.definition.cpp, keyword.other.using.directive.cpp, storage.type.struct.cpp"
+    },
+    {
+      "name": "C++ orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "punctuation.separator.pointer-access.cpp, punctuation.section.angle-brackets.begin.template.call.cpp, punctuation.section.angle-brackets.end.template.call.cpp"
+    },
+    {
+      "name": "C++ aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.member.cpp"
+    },
+    {
+      "name": "C# red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.using.cs"
+    },
+    {
+      "name": "C# yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "keyword.type.cs, constant.character.escape.cs, punctuation.definition.interpolation.begin.cs, punctuation.definition.interpolation.end.cs"
+    },
+    {
+      "name": "C# green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.cs, string.quoted.single.cs, punctuation.definition.string.begin.cs, punctuation.definition.string.end.cs"
+    },
+    {
+      "name": "C# aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.object.property.cs"
+    },
+    {
+      "name": "C# purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.type.namespace.cs"
+    },
+    {
+      "name": "F# white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "keyword.symbol.fsharp, constant.language.unit.fsharp"
+    },
+    {
+      "name": "F# yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "keyword.format.specifier.fsharp, entity.name.type.fsharp"
+    },
+    {
+      "name": "F# green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.fsharp, string.quoted.single.fsharp, punctuation.definition.string.begin.fsharp, punctuation.definition.string.end.fsharp"
+    },
+    {
+      "name": "F# blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.section.fsharp"
+    },
+    {
+      "name": "F# purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "support.function.attribute.fsharp"
+    },
+    {
+      "name": "Java grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.java, punctuation.separator.period.java"
+    },
+    {
+      "name": "Java red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.import.java, keyword.other.package.java"
+    },
+    {
+      "name": "Java orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.function.arrow.java, keyword.control.ternary.java"
+    },
+    {
+      "name": "Java aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.property.java"
+    },
+    {
+      "name": "Java purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "variable.language.wildcard.java, storage.modifier.import.java, storage.type.annotation.java, punctuation.definition.annotation.java, storage.modifier.package.java, entity.name.type.module.java"
+    },
+    {
+      "name": "Kotlin red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.import.kotlin"
+    },
+    {
+      "name": "Kotlin orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.kotlin"
+    },
+    {
+      "name": "Kotlin aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.kotlin"
+    },
+    {
+      "name": "Kotlin purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.package.kotlin, storage.type.annotation.kotlin"
+    },
+    {
+      "name": "Scala purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.package.scala"
+    },
+    {
+      "name": "Scala blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "constant.language.scala"
+    },
+    {
+      "name": "Scala aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.import.scala"
+    },
+    {
+      "name": "Scala green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.scala, string.quoted.single.scala, punctuation.definition.string.begin.scala, punctuation.definition.string.end.scala, string.quoted.double.interpolated.scala, string.quoted.single.interpolated.scala, string.quoted.triple.scala"
+    },
+    {
+      "name": "Scala yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.class, entity.other.inherited-class.scala"
+    },
+    {
+      "name": "Scala orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.declaration.stable.scala, keyword.other.arrow.scala"
+    },
+    {
+      "name": "Scala red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.import.scala"
+    },
+    {
+      "name": "Groovy white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "keyword.operator.navigation.groovy, meta.method.body.java, meta.definition.method.groovy, meta.definition.method.signature.java"
+    },
+    {
+      "name": "Scala grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.groovy"
+    },
+    {
+      "name": "Scala red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.other.import.groovy, keyword.other.package.groovy, keyword.other.import.static.groovy"
+    },
+    {
+      "name": "Groovy orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.def.groovy"
+    },
+    {
+      "name": "Groovy green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "variable.other.interpolated.groovy, meta.method.groovy"
+    },
+    {
+      "name": "Groovy aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "storage.modifier.import.groovy, storage.modifier.package.groovy"
+    },
+    {
+      "name": "Groovy purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "storage.type.annotation.groovy"
+    },
+    {
+      "name": "Go red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.type.go"
+    },
+    {
+      "name": "Go aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.package.go"
+    },
+    {
+      "name": "Go purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.import.go, keyword.package.go"
+    },
+    {
+      "name": "Rust white",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.type.mod.rust"
+    },
+    {
+      "name": "Rust grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "keyword.operator.path.rust, keyword.operator.member-access.rust"
+    },
+    {
+      "name": "Rust orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.rust"
+    },
+    {
+      "name": "Rust aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "support.constant.core.rust"
+    },
+    {
+      "name": "Rust purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "meta.attribute.rust, variable.language.rust, storage.type.module.rust"
+    },
+    {
+      "name": "Swift white",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "meta.function-call.swift, support.function.any-method.swift"
+    },
+    {
+      "name": "Swift aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "support.variable.swift"
+    },
+    {
+      "name": "PHP white",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.operator.class.php"
+    },
+    {
+      "name": "PHP orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.trait.php"
+    },
+    {
+      "name": "PHP aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.php, support.other.namespace.php"
+    },
+    {
+      "name": "PHP blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "storage.type.modifier.access.control.public.cpp, storage.type.modifier.access.control.private.cpp"
+    },
+    {
+      "name": "PHP purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.import.include.php, storage.type.php"
+    },
+    {
+      "name": "Python white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.function-call.arguments.python"
+    },
+    {
+      "name": "Python grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.decorator.python, punctuation.separator.period.python"
+    },
+    {
+      "name": "Python aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.python"
+    },
+    {
+      "name": "Python purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.import.python, keyword.control.import.from.python"
+    },
+    {
+      "name": "Lua aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.lua"
+    },
+    {
+      "name": "Lua blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.class.lua"
+    },
+    {
+      "name": "Ruby white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.function.method.with-arguments.ruby"
+    },
+    {
+      "name": "Ruby grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.method.ruby"
+    },
+    {
+      "name": "Ruby orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.control.pseudo-method.ruby, storage.type.variable.ruby"
+    },
+    {
+      "name": "Ruby green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "keyword.other.special-method.ruby"
+    },
+    {
+      "name": "Ruby purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.module.ruby, punctuation.definition.constant.ruby"
+    },
+    {
+      "name": "Ruby yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "string.regexp.character-class.ruby,string.regexp.interpolated.ruby,punctuation.definition.character-class.ruby,string.regexp.group.ruby, punctuation.section.regexp.ruby, punctuation.definition.group.ruby"
+    },
+    {
+      "name": "Ruby blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "variable.other.constant.ruby"
+    },
+    {
+      "name": "Haskell orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.arrow.haskell, keyword.other.big-arrow.haskell, keyword.other.double-colon.haskell"
+    },
+    {
+      "name": "Haskell yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "storage.type.haskell"
+    },
+    {
+      "name": "Haskell green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "constant.other.haskell, string.quoted.double.haskell, string.quoted.single.haskell, punctuation.definition.string.begin.haskell, punctuation.definition.string.end.haskell"
+    },
+    {
+      "name": "Haskell blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.function.haskell"
+    },
+    {
+      "name": "Haskell aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.namespace, meta.preprocessor.haskell"
+    },
+    {
+      "name": "Julia red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.control.import.julia, keyword.control.export.julia"
+    },
+    {
+      "name": "Julia orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.storage.modifier.julia"
+    },
+    {
+      "name": "Julia aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.julia"
+    },
+    {
+      "name": "Julia purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "support.function.macro.julia"
+    },
+    {
+      "name": "Elm white",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.period.elm"
+    },
+    {
+      "name": "Elm yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "storage.type.elm"
+    },
+    {
+      "name": "R orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.r"
+    },
+    {
+      "name": "R green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "entity.name.function.r, variable.function.r"
+    },
+    {
+      "name": "R aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.r"
+    },
+    {
+      "name": "R purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.namespace.r"
+    },
+    {
+      "name": "Erlang grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.module-function.erlang, punctuation.section.directive.begin.erlang"
+    },
+    {
+      "name": "Erlang red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.control.directive.erlang, keyword.control.directive.define.erlang"
+    },
+    {
+      "name": "Erlang yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.type.class.module.erlang"
+    },
+    {
+      "name": "Erlang green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.erlang, string.quoted.single.erlang, punctuation.definition.string.begin.erlang, punctuation.definition.string.end.erlang"
+    },
+    {
+      "name": "Erlang purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.directive.export.erlang, keyword.control.directive.module.erlang, keyword.control.directive.import.erlang, keyword.control.directive.behaviour.erlang"
+    },
+    {
+      "name": "Elixir aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.readwrite.module.elixir, punctuation.definition.variable.elixir"
+    },
+    {
+      "name": "Elixir blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "constant.language.elixir"
+    },
+    {
+      "name": "Elixir purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.module.elixir"
+    },
+    {
+      "name": "OCaml white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "entity.name.type.value-signature.ocaml"
+    },
+    {
+      "name": "OCaml orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.other.ocaml"
+    },
+    {
+      "name": "OCaml aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.language.variant.ocaml"
+    },
+    {
+      "name": "Perl red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "storage.type.sub.perl, storage.type.declare.routine.perl"
+    },
+    {
+      "name": "Lisp white",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "meta.function.lisp"
+    },
+    {
+      "name": "Lisp red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "storage.type.function-type.lisp"
+    },
+    {
+      "name": "Lisp green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "keyword.constant.lisp"
+    },
+    {
+      "name": "Lisp aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.name.function.lisp"
+    },
+    {
+      "name": "Clojure green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "constant.keyword.clojure, support.variable.clojure, meta.definition.variable.clojure"
+    },
+    {
+      "name": "Clojure purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.global.clojure"
+    },
+    {
+      "name": "Clojure blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "entity.name.function.clojure"
+    },
+    {
+      "name": "Shell white",
+      "foreground": "var(fg)",
+      "font_style": 0,
+      "scope": "meta.scope.if-block.shell, meta.scope.group.shell"
+    },
+    {
+      "name": "Shell yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "support.function.builtin.shell, entity.name.function.shell"
+    },
+    {
+      "name": "Shell green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.shell, string.quoted.single.shell, punctuation.definition.string.begin.shell, punctuation.definition.string.end.shell, string.unquoted.heredoc.shell"
+    },
+    {
+      "name": "Shell purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "keyword.control.heredoc-token.shell, variable.other.normal.shell, punctuation.definition.variable.shell, variable.other.special.shell, variable.other.positional.shell, variable.other.bracket.shell"
+    },
+    {
+      "name": "Fish red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "support.function.builtin.fish"
+    },
+    {
+      "name": "Fish orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "support.function.unix.fish"
+    },
+    {
+      "name": "Fish blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "variable.other.normal.fish, punctuation.definition.variable.fish, variable.other.fixed.fish, variable.other.special.fish"
+    },
+    {
+      "name": "Fish green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.fish, punctuation.definition.string.end.fish, punctuation.definition.string.begin.fish, string.quoted.single.fish"
+    },
+    {
+      "name": "Fish purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "constant.character.escape.single.fish"
+    },
+    {
+      "name": "PowerShell grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.variable.powershell"
+    },
+    {
+      "name": "PowerShell yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "entity.name.function.powershell, support.function.attribute.powershell, support.function.powershell"
+    },
+    {
+      "name": "PowerShell green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.single.powershell, string.quoted.double.powershell, punctuation.definition.string.begin.powershell, punctuation.definition.string.end.powershell, string.quoted.double.heredoc.powershell"
+    },
+    {
+      "name": "PowerShell aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "variable.other.member.powershell"
+    },
+    {
+      "name": "GraphQL white",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "string.unquoted.alias.graphql"
+    },
+    {
+      "name": "GraphQL red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "keyword.type.graphql"
+    },
+    {
+      "name": "GraphQL purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.fragment.graphql"
+    },
+    {
+      "name": "Makefile orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "entity.name.function.target.makefile"
+    },
+    {
+      "name": "Makefile yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "variable.other.makefile"
+    },
+    {
+      "name": "Makefile green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "meta.scope.prerequisites.makefile"
+    },
+    {
+      "name": "CMake green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.source.cmake"
+    },
+    {
+      "name": "CMake aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "entity.source.cmake"
+    },
+    {
+      "name": "CMake purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "storage.source.cmake"
+    },
+    {
+      "name": "VimL grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.map.viml"
+    },
+    {
+      "name": "VimL orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "storage.type.map.viml"
+    },
+    {
+      "name": "VimL green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "constant.character.map.viml, constant.character.map.key.viml"
+    },
+    {
+      "name": "VimL blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "constant.character.map.special.viml"
+    },
+    {
+      "name": "Tmux green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "constant.language.tmux, constant.numeric.tmux"
+    },
+    {
+      "name": "Dockerfile orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "entity.name.function.package-manager.dockerfile"
+    },
+    {
+      "name": "Dockerfile yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "keyword.operator.flag.dockerfile"
+    },
+    {
+      "name": "Dockerfile green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.dockerfile, string.quoted.single.dockerfile"
+    },
+    {
+      "name": "Dockerfile aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.character.escape.dockerfile"
+    },
+    {
+      "name": "Dockerfile purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.name.type.base-image.dockerfile, entity.name.image.dockerfile"
+    },
+    {
+      "name": "Diff grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.definition.separator.diff"
+    },
+    {
+      "name": "Diff red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "markup.deleted.diff, punctuation.definition.deleted.diff"
+    },
+    {
+      "name": "Diff orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "meta.diff.range.context, punctuation.definition.range.diff"
+    },
+    {
+      "name": "Diff yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "meta.diff.header.from-file"
+    },
+    {
+      "name": "Diff green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "markup.inserted.diff, punctuation.definition.inserted.diff"
+    },
+    {
+      "name": "Diff blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "markup.changed.diff, punctuation.definition.changed.diff"
+    },
+    {
+      "name": "Diff purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "punctuation.definition.from-file.diff"
+    },
+    {
+      "name": "Git red",
+      "foreground": "var(red)",
+      "font_style": 0,
+      "scope": "entity.name.section.group-title.ini, punctuation.definition.entity.ini"
+    },
+    {
+      "name": "Git orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "punctuation.separator.key-value.ini"
+    },
+    {
+      "name": "Git green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.ini, string.quoted.single.ini, punctuation.definition.string.begin.ini, punctuation.definition.string.end.ini"
+    },
+    {
+      "name": "Git aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "keyword.other.definition.ini"
+    },
+    {
+      "name": "SQL yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "support.function.aggregate.sql"
+    },
+    {
+      "name": "SQL green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.single.sql, punctuation.definition.string.end.sql, punctuation.definition.string.begin.sql, string.quoted.double.sql"
+    },
+    {
+      "name": "GraphQL yellow",
+      "foreground": "var(yellow)",
+      "font_style": 0,
+      "scope": "support.type.graphql"
+    },
+    {
+      "name": "GraphQL blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "variable.parameter.graphql"
+    },
+    {
+      "name": "GraphQL aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "constant.character.enum.graphql"
+    },
+    {
+      "name": "JSON grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.support.type.property-name.begin.json, punctuation.support.type.property-name.end.json, punctuation.separator.dictionary.key-value.json, punctuation.definition.string.begin.json, punctuation.definition.string.end.json, punctuation.separator.dictionary.pair.json, punctuation.separator.array.json"
+    },
+    {
+      "name": "JSON orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "support.type.property-name.json"
+    },
+    {
+      "name": "JSON green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.double.json"
+    },
+    {
+      "name": "YAML grey",
+      "foreground": "var(grey1)",
+      "font_style": 0,
+      "scope": "punctuation.separator.key-value.mapping.yaml"
+    },
+    {
+      "name": "YAML green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.unquoted.plain.out.yaml, string.quoted.single.yaml, string.quoted.double.yaml, punctuation.definition.string.begin.yaml, punctuation.definition.string.end.yaml, string.unquoted.plain.in.yaml, string.unquoted.block.yaml"
+    },
+    {
+      "name": "YAML aqua",
+      "foreground": "var(aqua)",
+      "font_style": 0,
+      "scope": "punctuation.definition.anchor.yaml, punctuation.definition.block.sequence.item.yaml"
+    },
+    {
+      "name": "TOML orange",
+      "foreground": "var(orange)",
+      "font_style": 0,
+      "scope": "keyword.key.toml"
+    },
+    {
+      "name": "TOML green",
+      "foreground": "var(green)",
+      "font_style": 0,
+      "scope": "string.quoted.single.basic.line.toml, string.quoted.single.literal.line.toml, punctuation.definition.keyValuePair.toml"
+    },
+    {
+      "name": "TOML blue",
+      "foreground": "var(blue)",
+      "font_style": 0,
+      "scope": "constant.other.boolean.toml"
+    },
+    {
+      "name": "TOML purple",
+      "foreground": "var(purple)",
+      "font_style": 0,
+      "scope": "entity.other.attribute-name.table.toml, punctuation.definition.table.toml, entity.other.attribute-name.table.array.toml, punctuation.definition.table.array.toml"
+    },
+    {
+      "name": "Comment",
+      "foreground": "var(grey1)",
+      "font_style": "italic",
+      "scope": "comment, string.comment, punctuation.definition.comment"
+    }
+  ]
+}
