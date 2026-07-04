@@ -42,7 +42,7 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
             else:
                 result = self.read_result(stdout)
                 outputtxt = result
-                numerrs = len(result.split('\n'))
+                numerrs = len(result.split("\n"))
                 sublime.status_message(f"MarkdownLint: {numerrs} error(s) found")
 
             window = self.view.window() or sublime.active_window()
@@ -95,7 +95,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
             result = sorted(result, key=lambda t: t[0])
             outputtxt = ""
             for t in result:
-                (row, col) = self.view.rowcol(t[0])
+                row, col = self.view.rowcol(t[0])
                 outputtxt += f"line {row + 1}: {t[1]}, {t[2]}\n"
             output = window.create_output_panel("mde")
             output.run_command("append", {"characters": outputtxt})
@@ -238,9 +238,9 @@ class md004(mddef):
         lvstack = []
         basenspaces = e - s
         sym = text[e : e + 1]
-        (ans, exp) = self.testsingle(sym)
+        ans, exp = self.testsingle(sym)
         if ans is None:
-            (ans, exp) = self.testcyc(sym, -1)
+            ans, exp = self.testcyc(sym, -1)
             if ans is False:
                 ret[e] = f"{exp} expected, {sym} found"
         elif ans is False:
@@ -254,7 +254,7 @@ class md004(mddef):
         for mr in mrs:
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
-            (ans, exp) = self.testsingle(sym)
+            ans, exp = self.testsingle(sym)
             if ans is None:
                 # cyclic or any
                 nspaces = len(mr.group(1))
@@ -270,7 +270,7 @@ class md004(mddef):
                             break
                     lv = len(lvstack)
                     lvstack.append(nspaces)
-                (ans, exp) = self.testcyc(sym, lv)
+                ans, exp = self.testcyc(sym, lv)
                 if ans is False:
                     ret[e + 1 + mr.start(2)] = f"{exp} expected, {sym} found"
             else:
@@ -343,7 +343,7 @@ class md005(mddef):
         # sym = text[e:e + 1]
         nspaces = e - s
         basenspaces = e - s
-        (ans, exp) = self.spacecheck(-1, nspaces)
+        ans, exp = self.spacecheck(-1, nspaces)
         if not ans:
             ret[s] = f"{exp} expected, {nspaces} found"
 
@@ -374,7 +374,7 @@ class md005(mddef):
                         break
                 lv = len(lvstack)
                 lvstack.append(nspaces)
-            (ans, exp) = self.spacecheck(lv, nspaces)
+            ans, exp = self.spacecheck(lv, nspaces)
             if ans is False:
                 ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
@@ -442,7 +442,7 @@ class md007(mddef):
 
         ret = {}
         nspaces = e - s
-        (ans, exp) = self.spacecheck(nspaces)
+        ans, exp = self.spacecheck(nspaces)
         if not ans:
             ret[s] = f"{exp} expected, {nspaces} found"
 
@@ -460,7 +460,7 @@ class md007(mddef):
             # print('----')
             self.lastpos = e + 1 + mr.end(0)
             nspaces = len(mr.group(1))
-            (ans, exp) = self.spacecheck(nspaces)
+            ans, exp = self.spacecheck(nspaces)
             if ans is False:
                 ret[e + 1 + mr.start(2)] = f"{exp} expected, {nspaces} found"
         return ret
@@ -602,7 +602,7 @@ class md023(mddef):
 
         numws = 0
         for c in text:
-            if c not in ' \t':
+            if c not in " \t":
                 break
             numws += 1
 
