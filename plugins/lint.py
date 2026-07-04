@@ -42,7 +42,8 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
             else:
                 result = self.read_result(stdout)
                 outputtxt = result
-                sublime.status_message(f"MarkdownLint: {len(result.split("\n"))} error(s) found")
+                numerrs = len(result.split('\n'))
+                sublime.status_message(f"MarkdownLint: {numerrs} error(s) found")
 
             window = self.view.window() or sublime.active_window()
             if outputtxt:
