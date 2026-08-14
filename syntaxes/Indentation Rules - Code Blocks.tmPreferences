@@ -2,15 +2,13 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>text.html.markdown</string>
+	<string>text.html.markdown markup.raw</string>
 	<key>settings</key>
 	<dict>
 		<key>decreaseIndentPattern</key>
-		<string></string>
+		<string>^(.*\*/)?\s*\}[;\s]*$</string>
 		<key>increaseIndentPattern</key>
-		<string></string>
-		<key>bracketIndentNextLinePattern</key>
-		<string></string>
+		<string>^.*(\{[^}"']*|\([^)"']*)$</string>
 	</dict>
 </dict>
 </plist>

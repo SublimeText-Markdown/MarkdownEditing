@@ -518,13 +518,13 @@ contexts:
     - include: thematic-breaks
     - include: block-quotes
     - include: list-blocks
-    - include: tables
     - include: fenced-code-blocks
     - include: fenced-div-blocks
     - include: html-blocks
     - include: reference-definitions
     - include: admonitions
     - include: atx-headings
+    - include: tables
     - include: setext-headings-or-paragraphs
 
   indented-markdown:
