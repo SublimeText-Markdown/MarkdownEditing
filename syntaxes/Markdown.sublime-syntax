@@ -3589,7 +3589,7 @@ contexts:
 ###[ LEAF BLOCKS: TABLES ]####################################################
 
   tables:
-    - match: ^(?={{table_first_row}})
+    - match: ^(?=[^|]*\|)(?={{table_first_row}})
       push: table-header
 
   table-header:
