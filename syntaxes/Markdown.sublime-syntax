@@ -416,24 +416,52 @@ variables:
     | (`{1})[^`](?:[^`]|(?!`{1})`+[^`])*(`{1})(?!`)  # 1 backtick,  followed by at least one non backtick character, followed by (                          at least one non backtick character) at least once, followed by exactly 1 backtick
     )
 
-  # https://spec.commonmark.org/0.30/#left-flanking-delimiter-run
+  # https://spec.commonmark.org/0.31.2/#left-flanking-delimiter-run
   bold_italic_asterisk_begin: |-
     (?x:
          (\*\*)(\*) {{no_space_nor_punct}}
     | \B (\*\*)(\*) {{no_space_but_punct}}
     )
+  bold_italic_asterisk_end: (\*)(\*\*)
+
+  bold_italic_underscore_begin: \b(__)(_)(?![_\s])
+  bold_italic_underscore_end: (_)(__)(?=_*\b)
 
   bold_asterisk_begin: |-
     (?x:
          \*{2} {{no_space_nor_punct}}
     | \B \*{2} {{no_space_but_punct}}
     )
+  bold_asterisk_end: \*\*
+
+  bold_underscore_begin: \b__(?=\S)(?!_[_\s])
+  bold_underscore_end: __(?=_*\b)
 
   italic_asterisk_begin: |-
     (?x:
          \* {{no_space_nor_punct}}
     | \B \* {{no_space_but_punct}}
     )
+  italic_asterisk_end: \*(?!\*[^\s*])
+
+  italic_underscore_begin: \b_(?=\S)(?!_)
+  italic_underscore_end: _(?=_*\b)
+
+  highlight_begin: ==(?![=>\s])  # 2x = but no =>
+  highlight_end: ==(?!=)  # 2x =
+
+  strikethrough_begin: ~~(?![~}>\s])
+  strikethrough_end: ~~(?:(?!~)|(?=~~}|~>))
+
+  # EOF after a newline is indistinguishable from a multiline continuation.
+  emphasis_eof: (?<!\n)\z
+  emphasis_end: '{{setext_heading_escape}}|{{paragraph_end}}|{{emphasis_eof}}'
+  block_quote_emphasis_end: '{{blockquote_paragraph_end}}|{{emphasis_eof}}'
+  block_quote_nested_emphasis_end: '{{blockquote_nested_paragraph_end}}|{{emphasis_eof}}'
+  list_emphasis_end: '{{list_paragraph_end}}|{{list_setext_heading_escape}}|{{emphasis_eof}}'
+  footnote_emphasis_end: '{{footnote_paragraph_end}}|{{emphasis_eof}}'
+  block_quote_footnote_emphasis_end: '{{blockquote_footnote_paragraph_end}}|{{emphasis_eof}}'
+  line_emphasis_end: '$|{{emphasis_eof}}'
 
   # Links
   # =====
@@ -448,11 +476,21 @@ variables:
   escapes: \\[-+*/!"#$%&'(),.:;<=>?@\[\\\]^_`{|}~]
 
   no_escape_behind: (?<![^\\]\\)(?<![\\]{3})
-  # not followed by Unicode whitespace and not followed by a Unicode punctuation character
-  no_space_nor_punct: (?![\s*\p{P}])
-  # not followed by Unicode whitespace and followed by a Unicode punctuation character
-  no_space_but_punct: (?=[[^\s*]&&\p{P}])
-
+  # CommonMark treats Unicode punctuation and symbols alike as punctuation.
+  unicode_punctuation: '[\p{P}\p{S}]'
+  # not followed by Unicode whitespace or punctuation
+  no_space_nor_punct: (?![\s*\p{P}\p{S}])
+  # not followed by Unicode whitespace and followed by Unicode punctuation
+  no_space_but_punct: (?=[^\s*])(?={{unicode_punctuation}})
+  # asterisk at the start of a right-flanking delimiter run
+  asterisk_can_close: |-
+    (?x:
+      (?:(?<![\s*])|(?<=\\\*))
+      (?:
+        (?<!{{unicode_punctuation}})
+      | (?=\*+(?!\*)(?:[\s\p{P}\p{S}]|$))
+      )
+    )
   # BOL for ST specific newline treatment or unicode whitespace
   wspace: (?:^|\s+)
   # EOL, optionally preceded by whitespace
@@ -534,7 +572,7 @@ contexts:
     # The content may diverge from list block content in future.
     - include: list-block-content
 
-###[ MERGE CONFLICT MARKERS ]##################################################
+###[ MERGE CONFLICT MARKERS ]#################################################
 
   merge-conflict-markers:
     # see also: Diff.sublime-syntax#conflict-markers
@@ -780,7 +818,13 @@ contexts:
     - meta_scope: meta.paragraph.markdown
     - include: block-quote-footnote-paragraph-end
     - include: block-quote-punctuations
-    - include: footnote-paragraph-common
+    - include: block-quote-footnote-paragraph-common
+
+  block-quote-footnote-paragraph-common:
+    - include: block-quote-footnote-emphasis
+    - include: images
+    - include: literals
+    - include: links
 
   block-quote-footnote-paragraph-end:
     - match: $
@@ -941,7 +985,7 @@ contexts:
     - meta_scope: meta.paragraph.list.markdown
     - include: block-quote-nested-paragraph-end
     - include: block-quote-nested-punctuations
-    - include: inlines
+    - include: block-quote-nested-inlines
 
   block-quote-nested-paragraph-end:
     - match: '{{blockquote_nested_paragraph_end}}'
@@ -957,7 +1001,7 @@ contexts:
     - meta_scope: markup.paragraph.markdown
     - include: block-quote-paragraph-end
     - include: block-quote-punctuations
-    - include: inlines
+    - include: block-quote-inlines
 
   block-quote-paragraph-end:
     - match: '{{blockquote_paragraph_end}}'
@@ -1107,7 +1151,7 @@ contexts:
     - meta_scope: markup.paragraph.markdown
     - include: block-quote-nested-paragraph-end
     - include: list-block-quote-punctuations
-    - include: inlines
+    - include: block-quote-nested-inlines
 
   list-setext-headings-or-paragraphs:
     # A paragraph may start with a line of equal signs which must not be matched
@@ -1151,7 +1195,7 @@ contexts:
     - include: list-paragraph-fail
     - include: list-paragraph-end
     - include: list-math-blocks
-    - include: inlines
+    - include: list-inlines
 
   list-paragraph-end:
     - match: '{{list_paragraph_end}}'
@@ -1231,11 +1275,8 @@ contexts:
         1: punctuation.definition.heading.end.markdown
         2: meta.whitespace.newline.markdown
       pop: 1
-    - include: emphasis
-    - include: images
-    - include: literals
-    - include: links
-    - include: markups
+    - include: line-emphasis
+    - include: inline-common
 
 ###[ LEAF BLOCKS: SETEXT HEADINGS OR PARAGRAPH ]##############################
 
@@ -1278,10 +1319,7 @@ contexts:
   setext-heading-content:
     - include: setext-hard-line-breaks
     - include: emphasis
-    - include: images
-    - include: literals
-    - include: links
-    - include: markups
+    - include: inline-common
 
   setext-hard-line-breaks:
     # This context consumes what 'hard-line-breaks' does for normal
@@ -3272,7 +3310,7 @@ contexts:
     - include: footnote-paragraph-common
 
   footnote-paragraph-common:
-    - include: emphasis
+    - include: footnote-emphasis
     - include: images
     - include: literals
     - include: links
@@ -3501,10 +3539,7 @@ contexts:
   inlines:
     - include: hard-line-breaks
     - include: emphasis
-    - include: images
-    - include: literals
-    - include: links
-    - include: markups
+    - include: inline-common
 
   emphasis:
     - include: bold
@@ -3573,201 +3608,1963 @@ contexts:
 
 ###[ INLINE: EMPHASIS ]#######################################################
 
+  # Openers enter scoped -body contexts. Shared -end rules close delimiters,
+  # container-specific -fail rules roll back, and -content rules never pop.
+
   bold:
-    # https://spec.commonmark.org/0.30/#emphasis-and-strong-emphasis
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: bold-italic-asterisk
+      branch:
+        - bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: bold-asterisk
+      branch:
+        - bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: bold-italic-underscore
+      branch:
+        - bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: bold-underscore
+      branch:
+        - bold-underscore
+        - no-emphasis
+
+  bold-italic-asterisk:
+    - meta_include_prototype: false
     - match: '{{bold_italic_asterisk_begin}}'
       captures:
         1: punctuation.definition.bold.begin.markdown
         2: markup.italic.markdown punctuation.definition.italic.begin.markdown
         3: punctuation.definition.bold.begin.markdown
         4: markup.italic.markdown punctuation.definition.italic.begin.markdown
-      push: bold-italic-asterisk
-    - match: '{{bold_asterisk_begin}}'
-      scope: punctuation.definition.bold.begin.markdown
-      push: bold-asterisk
-    - match: \b(__)(_)(?![_\s])
+      set: bold-italic-asterisk-body
+
+  bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: bold-after-bold-italic-asterisk-body
+    - include: emphasis-content
+    - include: highlight
+    - include: strikethrough
+
+  bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: bold-content
+
+  italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: italic-content
+
+  bold-italic-asterisk-fail:
+    - match: '{{emphasis_end}}'
+      fail: bold-italic-asterisk
+
+  bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
       captures:
         1: punctuation.definition.bold.begin.markdown
         2: markup.italic.markdown punctuation.definition.italic.begin.markdown
-      push: bold-italic-underscore
-    - match: \b__(?=\S)(?!_[_\s])
-      scope: punctuation.definition.bold.begin.markdown
-      push: bold-underscore
+      set: bold-italic-underscore-body
 
-  bold-asterisk:
-    - meta_scope: markup.bold.markdown
-    - match: '{{wspace}}\*{2,}'
-    - match: \*\*
-      scope: punctuation.definition.bold.end.markdown
-      pop: 1
-    # Consume the underscore that has no corresponding underscore before the closing bold
-    # punctuation on the same line, as it won't be treated as italic by CommonMark
-    - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
-    - include: bold-common
-
-  bold-underscore:
-    - meta_scope: markup.bold.markdown
-    - match: '{{wspace}}_{2,}'
-    - match: __(?=_*\b)
-      scope: punctuation.definition.bold.end.markdown
-      pop: 1
-    # Consume the asterisk that has no corresponding asterisk before the closing bold
-    # punctuation on the same line, as it won't be treated as italic by CommonMark
-    - match: \*(?=[^\s*])(?=[^*_]*__\b)
-    - include: bold-common
-
-  bold-italic-asterisk:
+  bold-italic-underscore-body:
     - meta_scope: markup.bold.markdown
     - meta_content_scope: markup.italic.markdown
-    - match: '{{wspace}}\*+'
-    - match: (\*)(\*\*)
-      captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
-      pop: 1
-    - match: \*\*
-      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
-      set: italic-after-bold-italic-asterisk
-    - match: \*(?!\*[^\s*])
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      set: bold-after-bold-italic-asterisk
-    - include: emphasis-common
-    - include: highlight
-    - include: strikethrough
-
-  bold-after-bold-italic-asterisk:
-    - meta_content_scope: markup.bold.markdown
-    - match: '{{wspace}}\*{3,}'
-    - match: \*\*
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: 1
-    - include: bold-common
-
-  italic-after-bold-italic-asterisk:
-    - meta_content_scope: markup.italic.markdown
-    - match: '{{wspace}}\*{3,}'
-    - match: \*(?!\*[^\s*])
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: 1
-    - include: italic-common
-
-  bold-italic-underscore:
-    - meta_scope: markup.bold.markdown
-    - meta_content_scope: markup.italic.markdown
-    - match: '{{wspace}}_+'
-    - match: (_)(__)(?=_*\b)
-      captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
-      pop: 1
+    - include: bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
     - match: __\b
       scope: markup.italic.markdown punctuation.definition.bold.end.markdown
-      set: italic-after-bold-italic-underscore
+      set: italic-after-bold-italic-underscore-body
     - match: _\b
       scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      set: bold-after-bold-italic-underscore
-    - include: emphasis-common
+      set: bold-after-bold-italic-underscore-body
+    - include: emphasis-content
     - include: highlight
     - include: strikethrough
 
-  bold-after-bold-italic-underscore:
+  bold-after-bold-italic-underscore-body:
     - meta_content_scope: markup.bold.markdown
-    - match: '{{wspace}}_{3,}'
-    - match: __(?=_*\b)
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: 1
-    - include: bold-common
+    - include: bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: bold-content
 
-  italic-after-bold-italic-underscore:
+  italic-after-bold-italic-underscore-body:
     - meta_content_scope: markup.italic.markdown
-    - match: '{{wspace}}_{3,}'
-    - match: _(?=_*\b)
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: 1
-    - include: italic-common
+    - include: bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: italic-content
 
-  bold-common:
-    - include: emphasis-common
+  bold-italic-underscore-fail:
+    - match: '{{emphasis_end}}'
+      fail: bold-italic-underscore
+
+  bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: bold-asterisk-body
+
+  bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: bold-content
+
+  bold-asterisk-fail:
+    - match: '{{emphasis_end}}'
+      fail: bold-asterisk
+
+  bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: bold-underscore-body
+
+  bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: bold-underscore-fail
+    - include: bold-underscore-end
+    - include: bold-content
+
+  bold-underscore-fail:
+    - match: '{{emphasis_end}}'
+      fail: bold-underscore
+
+  bold-content:
+    - include: emphasis-content
     - include: italic
     - include: highlight
     - include: strikethrough
 
   italic:
-    - match: '{{italic_asterisk_begin}}'
-      scope: punctuation.definition.italic.begin.markdown
-      push: italic-asterisk
-    - match: \b_(?=\S)(?!_)
-      scope: punctuation.definition.italic.begin.markdown
-      push: italic-underscore
+    - include: italic-branches
     - match: '[*_]+'
 
+  italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: italic-asterisk
+      branch:
+        - italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: italic-underscore
+      branch:
+        - italic-underscore
+        - no-emphasis
+
   italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: italic-asterisk-body
+
+  italic-asterisk-body:
     - meta_scope: markup.italic.markdown
-    - match: '{{wspace}}\*(?!\*)'
-    - match: \*(?!\*[^\s*])
-      scope: punctuation.definition.italic.end.markdown
-      pop: 1
-    - include: italic-common
+    - include: italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: italic-content
+
+  italic-asterisk-fail:
+    - match: '{{emphasis_end}}'
+      fail: italic-asterisk
 
   italic-underscore:
-    - meta_scope: markup.italic.markdown
-    - match: '{{wspace}}_(?!_)'
-    - match: _(?=_*\b)
-      scope: punctuation.definition.italic.end.markdown
-      pop: 1
-    - include: italic-common
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: italic-underscore-body
 
-  italic-common:
-    - include: emphasis-common
+  italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: italic-underscore-fail
+    - include: italic-underscore-end
+    - include: italic-content
+
+  italic-underscore-fail:
+    - match: '{{emphasis_end}}'
+      fail: italic-underscore
+
+  italic-content:
+    - include: emphasis-content
     - include: bold
+    - include: italic-branches
     - include: highlight
     - include: strikethrough
 
   highlight:
-    - match: ==(?![=>\s])  # 2x = but no =>
-      scope: punctuation.definition.highlight.begin.markdown
-      push: highlight-content
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: highlight-equal
+      branch:
+        - highlight-equal
+        - no-highlight
     - match: =+(?![=>\s])  # any number of = not looking like =>
 
-  highlight-content:
+  highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: highlight-equal-body
+
+  highlight-equal-body:
     - meta_scope: markup.highlight.markdown
-    - match: ==(?!=)  # 2x =
-      scope: punctuation.definition.highlight.end.markdown
-      pop: 1
-    - match: '[ \t]*=+'
-    - include: emphasis-common
+    - include: highlight-equal-fail
+    - include: highlight-equal-end
+    - include: emphasis-content
     - include: bold
     - include: italic
+
+  highlight-equal-fail:
+    - match: '{{emphasis_end}}'
+      fail: highlight-equal
 
   strikethrough:
     # https://github.github.com/gfm/#strikethrough-extension-
-    - match: ~~(?![~}>\s])  # 2x ~ but no ~> or ~~}
-      scope: punctuation.definition.strikethrough.begin.markdown
-      push: strikethrough-content
+    - match: (?={{strikethrough_begin}})
+      branch_point: strikethrough-tilde
+      branch:
+        - strikethrough-tilde
+        - no-strikethrough
     - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
 
-  strikethrough-content:
+  strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: strikethrough-tilde-body
+
+  strikethrough-tilde-body:
     - meta_scope: markup.strikethrough.markdown-gfm
-    - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
-      scope: punctuation.definition.strikethrough.end.markdown
-      pop: 1
-    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
-    - include: emphasis-common
+    - include: strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: emphasis-content
     - include: bold
     - include: italic
 
-  emphasis-common:
-    - match: '{{setext_heading_escape}}'
-      pop: 1
-    - match: ^{{wspace_eol}}
-      scope: invalid.illegal.non-terminated.bold-italic.markdown
-      pop: 1
-    - include: paragraph-end
+  strikethrough-tilde-fail:
+    - match: '{{emphasis_end}}'
+      fail: strikethrough-tilde
+
+  emphasis-content:
+    - include: emphasis-inline-common
+
+###[ GENERATED: CONTAINER EMPHASIS ]##########################################
+
+# Generated by generate_inlines; do not edit.
+
+###[ GENERATED: BLOCK QUOTE EMPHASIS ]########################################
+
+  block-quote-inlines:
     - include: hard-line-breaks
+    - include: block-quote-emphasis
+    - include: inline-common
+
+  block-quote-emphasis:
+    - include: block-quote-bold
+    - include: block-quote-italic
+    - include: block-quote-highlight
+    - include: block-quote-strikethrough
+
+  block-quote-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: block-quote-bold-italic-asterisk
+      branch:
+        - block-quote-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: block-quote-bold-asterisk
+      branch:
+        - block-quote-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: block-quote-bold-italic-underscore
+      branch:
+        - block-quote-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: block-quote-bold-underscore
+      branch:
+        - block-quote-bold-underscore
+        - no-emphasis
+
+  block-quote-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-bold-italic-asterisk-body
+
+  block-quote-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-bold-after-bold-italic-asterisk-body
+    - include: block-quote-emphasis-content
+    - include: block-quote-highlight
+    - include: block-quote-strikethrough
+
+  block-quote-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: block-quote-bold-content
+
+  block-quote-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: block-quote-italic-content
+
+  block-quote-bold-italic-asterisk-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-bold-italic-asterisk
+
+  block-quote-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-bold-italic-underscore-body
+
+  block-quote-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-bold-after-bold-italic-underscore-body
+    - include: block-quote-emphasis-content
+    - include: block-quote-highlight
+    - include: block-quote-strikethrough
+
+  block-quote-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: block-quote-bold-content
+
+  block-quote-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: block-quote-italic-content
+
+  block-quote-bold-italic-underscore-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-bold-italic-underscore
+
+  block-quote-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-bold-asterisk-body
+
+  block-quote-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: block-quote-bold-content
+
+  block-quote-bold-asterisk-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-bold-asterisk
+
+  block-quote-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-bold-underscore-body
+
+  block-quote-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: block-quote-bold-content
+
+  block-quote-bold-underscore-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-bold-underscore
+
+  block-quote-bold-content:
+    - include: block-quote-emphasis-content
+    - include: block-quote-italic
+    - include: block-quote-highlight
+    - include: block-quote-strikethrough
+
+  block-quote-italic:
+    - include: block-quote-italic-branches
+    - match: '[*_]+'
+
+  block-quote-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: block-quote-italic-asterisk
+      branch:
+        - block-quote-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: block-quote-italic-underscore
+      branch:
+        - block-quote-italic-underscore
+        - no-emphasis
+
+  block-quote-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-italic-asterisk-body
+
+  block-quote-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: block-quote-italic-content
+
+  block-quote-italic-asterisk-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-italic-asterisk
+
+  block-quote-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-italic-underscore-body
+
+  block-quote-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: block-quote-italic-content
+
+  block-quote-italic-underscore-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-italic-underscore
+
+  block-quote-italic-content:
+    - include: block-quote-emphasis-content
+    - include: block-quote-bold
+    - include: block-quote-italic-branches
+    - include: block-quote-highlight
+    - include: block-quote-strikethrough
+
+  block-quote-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: block-quote-highlight-equal
+      branch:
+        - block-quote-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  block-quote-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: block-quote-highlight-equal-body
+
+  block-quote-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: block-quote-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: block-quote-emphasis-content
+    - include: block-quote-bold
+    - include: block-quote-italic
+
+  block-quote-highlight-equal-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-highlight-equal
+
+  block-quote-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: block-quote-strikethrough-tilde
+      branch:
+        - block-quote-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  block-quote-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: block-quote-strikethrough-tilde-body
+
+  block-quote-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: block-quote-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: block-quote-emphasis-content
+    - include: block-quote-bold
+    - include: block-quote-italic
+
+  block-quote-strikethrough-tilde-fail:
+    - match: '{{block_quote_emphasis_end}}'
+      fail: block-quote-strikethrough-tilde
+
+  block-quote-emphasis-content:
+    - include: block-quote-punctuation-content
+    - include: emphasis-inline-common
+
+###[ GENERATED: BLOCK QUOTE NESTED EMPHASIS ]#################################
+
+  block-quote-nested-inlines:
+    - include: hard-line-breaks
+    - include: block-quote-nested-emphasis
+    - include: inline-common
+
+  block-quote-nested-emphasis:
+    - include: block-quote-nested-bold
+    - include: block-quote-nested-italic
+    - include: block-quote-nested-highlight
+    - include: block-quote-nested-strikethrough
+
+  block-quote-nested-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: block-quote-nested-bold-italic-asterisk
+      branch:
+        - block-quote-nested-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: block-quote-nested-bold-asterisk
+      branch:
+        - block-quote-nested-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: block-quote-nested-bold-italic-underscore
+      branch:
+        - block-quote-nested-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: block-quote-nested-bold-underscore
+      branch:
+        - block-quote-nested-bold-underscore
+        - no-emphasis
+
+  block-quote-nested-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-nested-bold-italic-asterisk-body
+
+  block-quote-nested-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-nested-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-nested-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-nested-bold-after-bold-italic-asterisk-body
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-highlight
+    - include: block-quote-nested-strikethrough
+
+  block-quote-nested-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-nested-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: block-quote-nested-bold-content
+
+  block-quote-nested-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-nested-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: block-quote-nested-italic-content
+
+  block-quote-nested-bold-italic-asterisk-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-bold-italic-asterisk
+
+  block-quote-nested-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-nested-bold-italic-underscore-body
+
+  block-quote-nested-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-nested-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-nested-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-nested-bold-after-bold-italic-underscore-body
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-highlight
+    - include: block-quote-nested-strikethrough
+
+  block-quote-nested-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-nested-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: block-quote-nested-bold-content
+
+  block-quote-nested-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-nested-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: block-quote-nested-italic-content
+
+  block-quote-nested-bold-italic-underscore-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-bold-italic-underscore
+
+  block-quote-nested-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-nested-bold-asterisk-body
+
+  block-quote-nested-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-nested-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: block-quote-nested-bold-content
+
+  block-quote-nested-bold-asterisk-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-bold-asterisk
+
+  block-quote-nested-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-nested-bold-underscore-body
+
+  block-quote-nested-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-nested-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: block-quote-nested-bold-content
+
+  block-quote-nested-bold-underscore-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-bold-underscore
+
+  block-quote-nested-bold-content:
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-italic
+    - include: block-quote-nested-highlight
+    - include: block-quote-nested-strikethrough
+
+  block-quote-nested-italic:
+    - include: block-quote-nested-italic-branches
+    - match: '[*_]+'
+
+  block-quote-nested-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: block-quote-nested-italic-asterisk
+      branch:
+        - block-quote-nested-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: block-quote-nested-italic-underscore
+      branch:
+        - block-quote-nested-italic-underscore
+        - no-emphasis
+
+  block-quote-nested-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-nested-italic-asterisk-body
+
+  block-quote-nested-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-nested-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: block-quote-nested-italic-content
+
+  block-quote-nested-italic-asterisk-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-italic-asterisk
+
+  block-quote-nested-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-nested-italic-underscore-body
+
+  block-quote-nested-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-nested-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: block-quote-nested-italic-content
+
+  block-quote-nested-italic-underscore-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-italic-underscore
+
+  block-quote-nested-italic-content:
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-bold
+    - include: block-quote-nested-italic-branches
+    - include: block-quote-nested-highlight
+    - include: block-quote-nested-strikethrough
+
+  block-quote-nested-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: block-quote-nested-highlight-equal
+      branch:
+        - block-quote-nested-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  block-quote-nested-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: block-quote-nested-highlight-equal-body
+
+  block-quote-nested-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: block-quote-nested-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-bold
+    - include: block-quote-nested-italic
+
+  block-quote-nested-highlight-equal-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-highlight-equal
+
+  block-quote-nested-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: block-quote-nested-strikethrough-tilde
+      branch:
+        - block-quote-nested-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  block-quote-nested-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: block-quote-nested-strikethrough-tilde-body
+
+  block-quote-nested-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: block-quote-nested-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: block-quote-nested-emphasis-content
+    - include: block-quote-nested-bold
+    - include: block-quote-nested-italic
+
+  block-quote-nested-strikethrough-tilde-fail:
+    - match: '{{block_quote_nested_emphasis_end}}'
+      fail: block-quote-nested-strikethrough-tilde
+
+  block-quote-nested-emphasis-content:
+    - include: block-quote-nested-punctuation-content
+    - include: emphasis-inline-common
+
+###[ GENERATED: BLOCK QUOTE FOOTNOTE EMPHASIS ]###############################
+
+  block-quote-footnote-emphasis:
+    - include: block-quote-footnote-bold
+    - include: block-quote-footnote-italic
+    - include: block-quote-footnote-highlight
+    - include: block-quote-footnote-strikethrough
+
+  block-quote-footnote-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: block-quote-footnote-bold-italic-asterisk
+      branch:
+        - block-quote-footnote-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: block-quote-footnote-bold-asterisk
+      branch:
+        - block-quote-footnote-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: block-quote-footnote-bold-italic-underscore
+      branch:
+        - block-quote-footnote-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: block-quote-footnote-bold-underscore
+      branch:
+        - block-quote-footnote-bold-underscore
+        - no-emphasis
+
+  block-quote-footnote-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-footnote-bold-italic-asterisk-body
+
+  block-quote-footnote-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-footnote-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-footnote-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-footnote-bold-after-bold-italic-asterisk-body
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-highlight
+    - include: block-quote-footnote-strikethrough
+
+  block-quote-footnote-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-footnote-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: block-quote-footnote-bold-content
+
+  block-quote-footnote-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-footnote-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: block-quote-footnote-italic-content
+
+  block-quote-footnote-bold-italic-asterisk-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-bold-italic-asterisk
+
+  block-quote-footnote-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: block-quote-footnote-bold-italic-underscore-body
+
+  block-quote-footnote-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-footnote-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: block-quote-footnote-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: block-quote-footnote-bold-after-bold-italic-underscore-body
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-highlight
+    - include: block-quote-footnote-strikethrough
+
+  block-quote-footnote-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: block-quote-footnote-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: block-quote-footnote-bold-content
+
+  block-quote-footnote-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: block-quote-footnote-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: block-quote-footnote-italic-content
+
+  block-quote-footnote-bold-italic-underscore-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-bold-italic-underscore
+
+  block-quote-footnote-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-footnote-bold-asterisk-body
+
+  block-quote-footnote-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-footnote-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: block-quote-footnote-bold-content
+
+  block-quote-footnote-bold-asterisk-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-bold-asterisk
+
+  block-quote-footnote-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: block-quote-footnote-bold-underscore-body
+
+  block-quote-footnote-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: block-quote-footnote-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: block-quote-footnote-bold-content
+
+  block-quote-footnote-bold-underscore-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-bold-underscore
+
+  block-quote-footnote-bold-content:
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-italic
+    - include: block-quote-footnote-highlight
+    - include: block-quote-footnote-strikethrough
+
+  block-quote-footnote-italic:
+    - include: block-quote-footnote-italic-branches
+    - match: '[*_]+'
+
+  block-quote-footnote-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: block-quote-footnote-italic-asterisk
+      branch:
+        - block-quote-footnote-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: block-quote-footnote-italic-underscore
+      branch:
+        - block-quote-footnote-italic-underscore
+        - no-emphasis
+
+  block-quote-footnote-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-footnote-italic-asterisk-body
+
+  block-quote-footnote-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-footnote-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: block-quote-footnote-italic-content
+
+  block-quote-footnote-italic-asterisk-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-italic-asterisk
+
+  block-quote-footnote-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: block-quote-footnote-italic-underscore-body
+
+  block-quote-footnote-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: block-quote-footnote-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: block-quote-footnote-italic-content
+
+  block-quote-footnote-italic-underscore-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-italic-underscore
+
+  block-quote-footnote-italic-content:
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-bold
+    - include: block-quote-footnote-italic-branches
+    - include: block-quote-footnote-highlight
+    - include: block-quote-footnote-strikethrough
+
+  block-quote-footnote-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: block-quote-footnote-highlight-equal
+      branch:
+        - block-quote-footnote-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  block-quote-footnote-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: block-quote-footnote-highlight-equal-body
+
+  block-quote-footnote-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: block-quote-footnote-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-bold
+    - include: block-quote-footnote-italic
+
+  block-quote-footnote-highlight-equal-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-highlight-equal
+
+  block-quote-footnote-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: block-quote-footnote-strikethrough-tilde
+      branch:
+        - block-quote-footnote-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  block-quote-footnote-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: block-quote-footnote-strikethrough-tilde-body
+
+  block-quote-footnote-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: block-quote-footnote-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: block-quote-footnote-emphasis-content
+    - include: block-quote-footnote-bold
+    - include: block-quote-footnote-italic
+
+  block-quote-footnote-strikethrough-tilde-fail:
+    - match: '{{block_quote_footnote_emphasis_end}}'
+      fail: block-quote-footnote-strikethrough-tilde
+
+  block-quote-footnote-emphasis-content:
+    - include: block-quote-punctuation-content
+    - include: emphasis-inline-common
+
+###[ GENERATED: LIST EMPHASIS ]###############################################
+
+  list-inlines:
+    - include: hard-line-breaks
+    - include: list-emphasis
+    - include: inline-common
+
+  list-emphasis:
+    - include: list-bold
+    - include: list-italic
+    - include: list-highlight
+    - include: list-strikethrough
+
+  list-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: list-bold-italic-asterisk
+      branch:
+        - list-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: list-bold-asterisk
+      branch:
+        - list-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: list-bold-italic-underscore
+      branch:
+        - list-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: list-bold-underscore
+      branch:
+        - list-bold-underscore
+        - no-emphasis
+
+  list-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: list-bold-italic-asterisk-body
+
+  list-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: list-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: list-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: list-bold-after-bold-italic-asterisk-body
+    - include: list-emphasis-content
+    - include: list-highlight
+    - include: list-strikethrough
+
+  list-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: list-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: list-bold-content
+
+  list-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: list-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: list-italic-content
+
+  list-bold-italic-asterisk-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-bold-italic-asterisk
+
+  list-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: list-bold-italic-underscore-body
+
+  list-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: list-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: list-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: list-bold-after-bold-italic-underscore-body
+    - include: list-emphasis-content
+    - include: list-highlight
+    - include: list-strikethrough
+
+  list-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: list-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: list-bold-content
+
+  list-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: list-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: list-italic-content
+
+  list-bold-italic-underscore-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-bold-italic-underscore
+
+  list-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: list-bold-asterisk-body
+
+  list-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: list-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: list-bold-content
+
+  list-bold-asterisk-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-bold-asterisk
+
+  list-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: list-bold-underscore-body
+
+  list-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: list-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: list-bold-content
+
+  list-bold-underscore-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-bold-underscore
+
+  list-bold-content:
+    - include: list-emphasis-content
+    - include: list-italic
+    - include: list-highlight
+    - include: list-strikethrough
+
+  list-italic:
+    - include: list-italic-branches
+    - match: '[*_]+'
+
+  list-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: list-italic-asterisk
+      branch:
+        - list-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: list-italic-underscore
+      branch:
+        - list-italic-underscore
+        - no-emphasis
+
+  list-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: list-italic-asterisk-body
+
+  list-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: list-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: list-italic-content
+
+  list-italic-asterisk-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-italic-asterisk
+
+  list-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: list-italic-underscore-body
+
+  list-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: list-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: list-italic-content
+
+  list-italic-underscore-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-italic-underscore
+
+  list-italic-content:
+    - include: list-emphasis-content
+    - include: list-bold
+    - include: list-italic-branches
+    - include: list-highlight
+    - include: list-strikethrough
+
+  list-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: list-highlight-equal
+      branch:
+        - list-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  list-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: list-highlight-equal-body
+
+  list-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: list-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: list-emphasis-content
+    - include: list-bold
+    - include: list-italic
+
+  list-highlight-equal-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-highlight-equal
+
+  list-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: list-strikethrough-tilde
+      branch:
+        - list-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  list-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: list-strikethrough-tilde-body
+
+  list-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: list-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: list-emphasis-content
+    - include: list-bold
+    - include: list-italic
+
+  list-strikethrough-tilde-fail:
+    - match: '{{list_emphasis_end}}'
+      fail: list-strikethrough-tilde
+
+  list-emphasis-content:
+    - include: emphasis-inline-common
+
+###[ GENERATED: FOOTNOTE EMPHASIS ]###########################################
+
+  footnote-emphasis:
+    - include: footnote-bold
+    - include: footnote-italic
+    - include: footnote-highlight
+    - include: footnote-strikethrough
+
+  footnote-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: footnote-bold-italic-asterisk
+      branch:
+        - footnote-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: footnote-bold-asterisk
+      branch:
+        - footnote-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: footnote-bold-italic-underscore
+      branch:
+        - footnote-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: footnote-bold-underscore
+      branch:
+        - footnote-bold-underscore
+        - no-emphasis
+
+  footnote-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: footnote-bold-italic-asterisk-body
+
+  footnote-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: footnote-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: footnote-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: footnote-bold-after-bold-italic-asterisk-body
+    - include: footnote-emphasis-content
+    - include: footnote-highlight
+    - include: footnote-strikethrough
+
+  footnote-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: footnote-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: footnote-bold-content
+
+  footnote-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: footnote-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: footnote-italic-content
+
+  footnote-bold-italic-asterisk-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-bold-italic-asterisk
+
+  footnote-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: footnote-bold-italic-underscore-body
+
+  footnote-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: footnote-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: footnote-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: footnote-bold-after-bold-italic-underscore-body
+    - include: footnote-emphasis-content
+    - include: footnote-highlight
+    - include: footnote-strikethrough
+
+  footnote-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: footnote-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: footnote-bold-content
+
+  footnote-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: footnote-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: footnote-italic-content
+
+  footnote-bold-italic-underscore-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-bold-italic-underscore
+
+  footnote-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: footnote-bold-asterisk-body
+
+  footnote-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: footnote-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: footnote-bold-content
+
+  footnote-bold-asterisk-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-bold-asterisk
+
+  footnote-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: footnote-bold-underscore-body
+
+  footnote-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: footnote-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: footnote-bold-content
+
+  footnote-bold-underscore-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-bold-underscore
+
+  footnote-bold-content:
+    - include: footnote-emphasis-content
+    - include: footnote-italic
+    - include: footnote-highlight
+    - include: footnote-strikethrough
+
+  footnote-italic:
+    - include: footnote-italic-branches
+    - match: '[*_]+'
+
+  footnote-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: footnote-italic-asterisk
+      branch:
+        - footnote-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: footnote-italic-underscore
+      branch:
+        - footnote-italic-underscore
+        - no-emphasis
+
+  footnote-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: footnote-italic-asterisk-body
+
+  footnote-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: footnote-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: footnote-italic-content
+
+  footnote-italic-asterisk-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-italic-asterisk
+
+  footnote-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: footnote-italic-underscore-body
+
+  footnote-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: footnote-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: footnote-italic-content
+
+  footnote-italic-underscore-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-italic-underscore
+
+  footnote-italic-content:
+    - include: footnote-emphasis-content
+    - include: footnote-bold
+    - include: footnote-italic-branches
+    - include: footnote-highlight
+    - include: footnote-strikethrough
+
+  footnote-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: footnote-highlight-equal
+      branch:
+        - footnote-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  footnote-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: footnote-highlight-equal-body
+
+  footnote-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: footnote-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: footnote-emphasis-content
+    - include: footnote-bold
+    - include: footnote-italic
+
+  footnote-highlight-equal-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-highlight-equal
+
+  footnote-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: footnote-strikethrough-tilde
+      branch:
+        - footnote-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  footnote-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: footnote-strikethrough-tilde-body
+
+  footnote-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: footnote-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: footnote-emphasis-content
+    - include: footnote-bold
+    - include: footnote-italic
+
+  footnote-strikethrough-tilde-fail:
+    - match: '{{footnote_emphasis_end}}'
+      fail: footnote-strikethrough-tilde
+
+  footnote-emphasis-content:
+    - include: emphasis-inline-common
+
+###[ GENERATED: SINGLE LINE EMPHASIS ]########################################
+
+  line-inlines:
+    - include: hard-line-breaks
+    - include: line-emphasis
+    - include: inline-common
+
+  line-emphasis:
+    - include: line-bold
+    - include: line-italic
+    - include: line-highlight
+    - include: line-strikethrough
+
+  line-bold:
+    # https://spec.commonmark.org/0.31.2/#emphasis-and-strong-emphasis
+    - match: (?={{bold_italic_asterisk_begin}})
+      branch_point: line-bold-italic-asterisk
+      branch:
+        - line-bold-italic-asterisk
+        - no-emphasis
+    - match: (?={{bold_asterisk_begin}})
+      branch_point: line-bold-asterisk
+      branch:
+        - line-bold-asterisk
+        - no-emphasis
+    - match: (?={{bold_italic_underscore_begin}})
+      branch_point: line-bold-italic-underscore
+      branch:
+        - line-bold-italic-underscore
+        - no-emphasis
+    - match: (?={{bold_underscore_begin}})
+      branch_point: line-bold-underscore
+      branch:
+        - line-bold-underscore
+        - no-emphasis
+
+  line-bold-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_asterisk_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        3: punctuation.definition.bold.begin.markdown
+        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: line-bold-italic-asterisk-body
+
+  line-bold-italic-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: line-bold-italic-asterisk-fail
+    - include: bold-italic-asterisk-end
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: line-italic-after-bold-italic-asterisk-body
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: line-bold-after-bold-italic-asterisk-body
+    - include: line-emphasis-content
+    - include: line-highlight
+    - include: line-strikethrough
+
+  line-bold-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: line-bold-italic-asterisk-fail
+    - include: bold-after-bold-italic-asterisk-end
+    - include: line-bold-content
+
+  line-italic-after-bold-italic-asterisk-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: line-bold-italic-asterisk-fail
+    - include: italic-after-bold-italic-asterisk-end
+    - include: line-italic-content
+
+  line-bold-italic-asterisk-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-bold-italic-asterisk
+
+  line-bold-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_italic_underscore_begin}}'
+      captures:
+        1: punctuation.definition.bold.begin.markdown
+        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+      set: line-bold-italic-underscore-body
+
+  line-bold-italic-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - meta_content_scope: markup.italic.markdown
+    - include: line-bold-italic-underscore-fail
+    - include: bold-italic-underscore-end
+    - match: __\b
+      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      set: line-italic-after-bold-italic-underscore-body
+    - match: _\b
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      set: line-bold-after-bold-italic-underscore-body
+    - include: line-emphasis-content
+    - include: line-highlight
+    - include: line-strikethrough
+
+  line-bold-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.bold.markdown
+    - include: line-bold-italic-underscore-fail
+    - include: bold-after-bold-italic-underscore-end
+    - include: line-bold-content
+
+  line-italic-after-bold-italic-underscore-body:
+    - meta_content_scope: markup.italic.markdown
+    - include: line-bold-italic-underscore-fail
+    - include: italic-after-bold-italic-underscore-end
+    - include: line-italic-content
+
+  line-bold-italic-underscore-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-bold-italic-underscore
+
+  line-bold-asterisk:
+    - meta_include_prototype: false
+    - match: '{{bold_asterisk_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: line-bold-asterisk-body
+
+  line-bold-asterisk-body:
+    - meta_scope: markup.bold.markdown
+    - include: line-bold-asterisk-fail
+    - include: bold-asterisk-end
+    - include: line-bold-content
+
+  line-bold-asterisk-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-bold-asterisk
+
+  line-bold-underscore:
+    - meta_include_prototype: false
+    - match: '{{bold_underscore_begin}}'
+      scope: punctuation.definition.bold.begin.markdown
+      set: line-bold-underscore-body
+
+  line-bold-underscore-body:
+    - meta_scope: markup.bold.markdown
+    - include: line-bold-underscore-fail
+    - include: bold-underscore-end
+    - include: line-bold-content
+
+  line-bold-underscore-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-bold-underscore
+
+  line-bold-content:
+    - include: line-emphasis-content
+    - include: line-italic
+    - include: line-highlight
+    - include: line-strikethrough
+
+  line-italic:
+    - include: line-italic-branches
+    - match: '[*_]+'
+
+  line-italic-branches:
+    - match: (?={{italic_asterisk_begin}})
+      branch_point: line-italic-asterisk
+      branch:
+        - line-italic-asterisk
+        - no-emphasis
+    - match: (?={{italic_underscore_begin}})
+      branch_point: line-italic-underscore
+      branch:
+        - line-italic-underscore
+        - no-emphasis
+
+  line-italic-asterisk:
+    - meta_include_prototype: false
+    - match: '{{italic_asterisk_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: line-italic-asterisk-body
+
+  line-italic-asterisk-body:
+    - meta_scope: markup.italic.markdown
+    - include: line-italic-asterisk-fail
+    - include: italic-asterisk-end
+    - include: line-italic-content
+
+  line-italic-asterisk-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-italic-asterisk
+
+  line-italic-underscore:
+    - meta_include_prototype: false
+    - match: '{{italic_underscore_begin}}'
+      scope: punctuation.definition.italic.begin.markdown
+      set: line-italic-underscore-body
+
+  line-italic-underscore-body:
+    - meta_scope: markup.italic.markdown
+    - include: line-italic-underscore-fail
+    - include: italic-underscore-end
+    - include: line-italic-content
+
+  line-italic-underscore-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-italic-underscore
+
+  line-italic-content:
+    - include: line-emphasis-content
+    - include: line-bold
+    - include: line-italic-branches
+    - include: line-highlight
+    - include: line-strikethrough
+
+  line-highlight:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{highlight_begin}})
+      branch_point: line-highlight-equal
+      branch:
+        - line-highlight-equal
+        - no-highlight
+    - match: =+(?![=>\s])  # any number of = not looking like =>
+
+  line-highlight-equal:
+    - meta_include_prototype: false
+    - match: '{{highlight_begin}}'
+      scope: punctuation.definition.highlight.begin.markdown
+      set: line-highlight-equal-body
+
+  line-highlight-equal-body:
+    - meta_scope: markup.highlight.markdown
+    - include: line-highlight-equal-fail
+    - include: highlight-equal-end
+    - include: line-emphasis-content
+    - include: line-bold
+    - include: line-italic
+
+  line-highlight-equal-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-highlight-equal
+
+  line-strikethrough:
+    # https://github.github.com/gfm/#strikethrough-extension-
+    - match: (?={{strikethrough_begin}})
+      branch_point: line-strikethrough-tilde
+      branch:
+        - line-strikethrough-tilde
+        - no-strikethrough
+    - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
+
+  line-strikethrough-tilde:
+    - meta_include_prototype: false
+    - match: '{{strikethrough_begin}}'  # 2x ~ but no ~> or ~~}
+      scope: punctuation.definition.strikethrough.begin.markdown
+      set: line-strikethrough-tilde-body
+
+  line-strikethrough-tilde-body:
+    - meta_scope: markup.strikethrough.markdown-gfm
+    - include: line-strikethrough-tilde-fail
+    - include: strikethrough-tilde-end
+    - include: line-emphasis-content
+    - include: line-bold
+    - include: line-italic
+
+  line-strikethrough-tilde-fail:
+    - match: '{{line_emphasis_end}}'
+      fail: line-strikethrough-tilde
+
+  line-emphasis-content:
+    - include: emphasis-inline-common
+
+###[ END GENERATED: CONTAINER EMPHASIS ]######################################
+
+###[ INLINE: EMPHASIS HELPERS ]###############################################
+
+  inline-common:
     - include: images
     - include: literals
     - include: links
     - include: markups
+
+  emphasis-inline-common:
+    - include: hard-line-breaks
+    - include: inline-common
+
+  no-emphasis:
+    - meta_include_prototype: false
+    - match: '[*_]'
+      pop: 1
+
+  no-highlight:
+    - meta_include_prototype: false
+    - match: ==
+      pop: 1
+
+  no-strikethrough:
+    - meta_include_prototype: false
+    - match: ~~
+      pop: 1
+
+  bold-asterisk-end:
+    - match: '{{asterisk_can_close}}{{bold_asterisk_end}}'
+      scope: punctuation.definition.bold.end.markdown
+      pop: 1
+    # Consume the underscore that has no corresponding underscore before the closing bold
+    # punctuation on the same line, as it won't be treated as italic by CommonMark
+    - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
+
+  bold-underscore-end:
+    - match: '{{wspace}}_{2,}'
+    - match: '{{bold_underscore_end}}'
+      scope: punctuation.definition.bold.end.markdown
+      pop: 1
+    # Consume the asterisk that has no corresponding asterisk before the closing bold
+    # punctuation on the same line, as it won't be treated as italic by CommonMark
+    - match: \*(?=[^\s*])(?=[^*_]*__\b)
+
+  bold-italic-asterisk-end:
+    - match: '{{wspace}}\*+'
+    - match: '{{bold_italic_asterisk_end}}'
+      captures:
+        1: markup.italic.markdown punctuation.definition.italic.end.markdown
+        2: punctuation.definition.bold.end.markdown
+      pop: 1
+
+  bold-after-bold-italic-asterisk-end:
+    - match: '{{wspace}}\*{3,}'
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      pop: 1
+
+  italic-after-bold-italic-asterisk-end:
+    - match: '{{wspace}}\*{3,}'
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      pop: 1
+
+  bold-italic-underscore-end:
+    - match: '{{wspace}}_+'
+    - match: '{{bold_italic_underscore_end}}'
+      captures:
+        1: markup.italic.markdown punctuation.definition.italic.end.markdown
+        2: punctuation.definition.bold.end.markdown
+      pop: 1
+
+  bold-after-bold-italic-underscore-end:
+    - match: '{{wspace}}_{3,}'
+    - match: '{{bold_underscore_end}}'
+      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      pop: 1
+
+  italic-after-bold-italic-underscore-end:
+    - match: '{{wspace}}_{3,}'
+    - match: '{{italic_underscore_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      pop: 1
+
+  italic-asterisk-end:
+    - match: '{{asterisk_can_close}}{{italic_asterisk_end}}'
+      scope: punctuation.definition.italic.end.markdown
+      pop: 1
+
+  italic-underscore-end:
+    - match: '{{wspace}}_(?!_)'
+    - match: '{{italic_underscore_end}}'
+      scope: punctuation.definition.italic.end.markdown
+      pop: 1
+
+  highlight-equal-end:
+    - match: '{{highlight_end}}'
+      scope: punctuation.definition.highlight.end.markdown
+      pop: 1
+    - match: '[ \t]*=+'
+
+  strikethrough-tilde-end:
+    - match: '{{strikethrough_end}}'  # 2x ~ maybe followed by ~> or ~~}
+      scope: punctuation.definition.strikethrough.end.markdown
+      pop: 1
+    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
 
 ###[ INLINE: IMAGES ]#########################################################
 
@@ -4452,7 +6249,7 @@ contexts:
       pop: 1
     - match: $
       pop: 1
-    - include: inlines
+    - include: line-inlines
 
 ###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
@@ -4715,7 +6512,7 @@ contexts:
     - include: scope:text.tex.latex#macros
     - include: scope:text.tex.latex#math-content
 
-###[ EXTENSIONS: PANDOC FENCED DIVS ]##########################################
+###[ EXTENSIONS: PANDOC FENCED DIVS ]#########################################
 
   fenced-div-blocks:
     # https://pandoc.org/MANUAL.html#divs-and-spans

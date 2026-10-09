@@ -19,3 +19,6 @@ make.cmd 			export-ignore
 .editorconfig		export-ignore
 .flake8				export-ignore
 pyproject.toml		export-ignore
+
+# Syntax
+syntaxes/*.py       export-ignore
