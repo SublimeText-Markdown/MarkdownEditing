@@ -851,12 +851,12 @@
 	// Terminate lists (also in block quotes)
 	{ "keys": ["ctrl+enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*).*/\n$1\n$1/}"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true }
 		]
 	},
 	{ "keys": ["ctrl+keypad_enter"], "command": "insert_snippet", "args": {"contents": "${TM_CURRENT_LINE/^\\s*((?:>\\s*)*).*/\n$1\n$1/}"}, "context":
 		[
-			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true },
+			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.list", "match_all": true }
 		]
 	},
 	// Extend lists (also in block quotes)
