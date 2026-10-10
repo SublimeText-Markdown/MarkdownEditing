@@ -1,4 +1,5 @@
 import re
+
 import sublime
 
 from .view import MdeTextCommand

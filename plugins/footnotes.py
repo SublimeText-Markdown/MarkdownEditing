@@ -91,14 +91,14 @@ class MdeGatherMissingFootnotesCommand(MdeTextCommand):
         if len(missingnotes):
             self.view.insert(edit, self.view.size(), "\n")
             for note in missingnotes:
-                self.view.insert(edit, self.view.size(), "\n [^%s]: " % note)
+                self.view.insert(edit, self.view.size(), f"\n [^{note}]: ")
 
 
 class MdeInsertFootnoteCommand(MdeTextCommand):
     def run(self, edit):
         view = self.view
         markernum = get_next_footnote_marker(view)
-        markernum_str = "[^%s]" % markernum
+        markernum_str = f"[^{markernum}]"
         for sel in view.sel():
             startloc = sel.end()
             if bool(view.size()):
@@ -187,7 +187,7 @@ class MdeSortFootnotesCommand(MdeTextCommand):
         defs = get_footnote_definition_markers(self.view)
         notes = {}
         erase = []
-        keyorder = map(lambda x: self.view.substr(x)[2:-1], self.view.get_regions(REFERENCE_KEY))
+        keyorder = (self.view.substr(x)[2:-1] for x in self.view.get_regions(REFERENCE_KEY))
         keys = []
         for r in keyorder:
             if r not in keys:
