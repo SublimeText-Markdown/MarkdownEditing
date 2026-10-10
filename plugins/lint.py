@@ -1,6 +1,7 @@
 import re
-import sublime
 import subprocess
+
+import sublime
 
 from .view import MdeTextCommand
 
@@ -69,8 +70,6 @@ class MdeMarkdownLintMdlCommand(MdeTextCommand):
 
 
 class MdeMarkdownLintCommand(MdeTextCommand):
-
-    blockdef = []
     frontmatter = "meta.frontmatter"
     scope_block = "markup.raw.block.markdown"
 
@@ -85,9 +84,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
                 uselist.append(cl)
         result = []
         for mddef in uselist:
-            r = self.test(
-                mddef(st[mddef.__name__] if mddef.__name__ in st else None, self.view), text
-            )
+            r = self.test(mddef(st.get(mddef.__name__, None), self.view), text)
             result.extend(r)
         window = self.view.window() or sublime.active_window()
         if len(result) > 0:
@@ -95,7 +92,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
             result = sorted(result, key=lambda t: t[0])
             outputtxt = ""
             for t in result:
-                row, col = self.view.rowcol(t[0])
+                row, _col = self.view.rowcol(t[0])
                 outputtxt += f"line {row + 1}: {t[1]}, {t[2]}\n"
             output = window.create_output_panel("mde")
             output.run_command("append", {"characters": outputtxt})
@@ -115,8 +112,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
             if self.view.match_selector(mr.start(0), self.frontmatter):
                 continue
             if self.view.match_selector(mr.start(0), self.scope_block):
-                if tar.__class__ not in self.blockdef:
-                    continue
+                continue
             ans = tar.test(text, mr.start(tar.gid), mr.end(tar.gid))
             for p in ans:
                 ret.append((p, str(tar), ans[p]))
@@ -133,7 +129,7 @@ class MdeMarkdownLintCommand(MdeTextCommand):
         return ret
 
 
-class mddef(object):
+class mddef:
     flag = 0
     gid = 0
     desc = "default"
@@ -147,7 +143,7 @@ class mddef(object):
 
 
 class md001(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Header levels should only increment by one level at a time"
     locator = r"^#{1,6}(?=[ \t])"
 
@@ -158,15 +154,14 @@ class md001(mddef):
         if self.lastMatch:
             n1 = len(self.lastMatch)
             n2 = e - s
-            if n2 > n1:
-                if n2 != n1 + 1:
-                    ret[s] = f"expected {n1 + 1}, {n2} found"
+            if n2 > n1 and n2 != n1 + 1:
+                ret[s] = f"expected {n1 + 1}, {n2} found"
         self.lastMatch = text[s:e]
         return ret
 
 
 class md002(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "First header should be a h1 header"
     locator = r"^(?:#{1,6}(?=[ \t])|(?:\S[^\n]*\n)+?(?:-+|=+)$)"
 
@@ -183,7 +178,7 @@ class md002(mddef):
 
 
 class md003(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Header style"
     locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
@@ -217,7 +212,7 @@ class md003(mddef):
 
 
 class md004(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Unordered list style"
     locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
@@ -226,7 +221,7 @@ class md004(mddef):
     lastpos = -1
 
     def __init__(self, settings, view):
-        super(md004, self).__init__(settings, view)
+        super().__init__(settings, view)
         self.lvs = [None, None, None]
 
     def test(self, text, s, e):
@@ -247,10 +242,10 @@ class md004(mddef):
             ret[e] = f"{exp} expected, {sym} found"
 
         rest = text[e + 1 :]
-        mr = re.search(self.eol, rest, re.M)
+        mr = re.search(self.eol, rest, re.MULTILINE)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
-        mrs = re.finditer(r"^(\s*)([*\-+])\s+", block, re.M)
+        mrs = re.finditer(r"^(\s*)([*\-+])\s+", block, re.MULTILINE)
         for mr in mrs:
             self.lastpos = e + 1 + mr.end(0)
             sym = mr.group(2)
@@ -313,7 +308,7 @@ class md004(mddef):
 
 
 class md005(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Inconsistent indentation for list items at the same level"
     locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
@@ -321,7 +316,7 @@ class md005(mddef):
     lastpos = -1
 
     def __init__(self, settings, view):
-        super(md005, self).__init__(settings, view)
+        super().__init__(settings, view)
         self.lvs = {}
 
     def spacecheck(self, lv, nspaces):
@@ -348,13 +343,13 @@ class md005(mddef):
             ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
-        mr = re.search(self.eol, rest, re.M)
+        mr = re.search(self.eol, rest, re.MULTILINE)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r"^( *)([*\-+])\s+", block, re.M)
+        mrs = re.finditer(r"^( *)([*\-+])\s+", block, re.MULTILINE)
         for mr in mrs:
             # print('----')
             # print(mr.group(2))
@@ -381,7 +376,7 @@ class md005(mddef):
 
 
 class md006(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Consider starting bulleted lists at the beginning of the line"
     locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
@@ -402,13 +397,13 @@ class md006(mddef):
             ret[s] = f"{nspaces} found"
 
         rest = text[e + 1 :]
-        mr = re.search(self.eol, rest, re.M)
+        mr = re.search(self.eol, rest, re.MULTILINE)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r"^(\s*)([*\-+])\s+", block, re.M)
+        mrs = re.finditer(r"^(\s*)([*\-+])\s+", block, re.MULTILINE)
         for mr in mrs:
             # print('----')
             # print(mr.group(2))
@@ -418,7 +413,7 @@ class md006(mddef):
 
 
 class md007(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Unordered list indentation"
     locator = r"^([ ]{0,3})(?!(?:\-(?:[ \t]*\-){2,}|\*(?:[ \t]*\*){2,}|_(?:[ \t]*_){2,})[ \t]*$)[*+-](?=\s)"
     eol = r"^(?=\S)"
@@ -447,13 +442,13 @@ class md007(mddef):
             ret[s] = f"{exp} expected, {nspaces} found"
 
         rest = text[e + 1 :]
-        mr = re.search(self.eol, rest, re.M)
+        mr = re.search(self.eol, rest, re.MULTILINE)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
         # print('====')
         # print(block)
         # print('====')
-        mrs = re.finditer(r"^( *)([*\-+])\s+", block, re.M)
+        mrs = re.finditer(r"^( *)([*\-+])\s+", block, re.MULTILINE)
         for mr in mrs:
             # print('----')
             # print(mr.group(2))
@@ -467,7 +462,7 @@ class md007(mddef):
 
 
 class md009(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Trailing spaces"
     locator = r" +$"
 
@@ -476,7 +471,7 @@ class md009(mddef):
 
 
 class md010(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Hard tabs"
     locator = r"\t"
 
@@ -485,7 +480,7 @@ class md010(mddef):
 
 
 class md011(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Reversed link syntax"
     locator = r"\(.*?\)\[.*?\]"
 
@@ -502,7 +497,7 @@ class md012(mddef):
 
 
 class md013(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Line length"
     locator = r"^.+$"
 
@@ -514,14 +509,13 @@ class md013(mddef):
 
     def test(self, text, s, e):
         t = text[s:e]
-        if not re.match(r"^[ ]*[>\+\-\*].+$", t):
-            if e - s > self.settings:
-                return {s: f"{e - s} characters"}
+        if not re.match(r"^[ ]*[>\+\-\*].+$", t) and e - s > self.settings:
+            return {s: f"{e - s} characters"}
         return {}
 
 
 class md018(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "No space after hash on atx style header"
     locator = r"^#{1,6}(?![#\s]).*(?<!#)$"
 
@@ -530,7 +524,7 @@ class md018(mddef):
 
 
 class md019(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Multiple spaces after hash on atx style header"
     locator = r"^#{1,6}(?=\s{2,}).*(?<!#)$"
 
@@ -539,7 +533,7 @@ class md019(mddef):
 
 
 class md020(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "No space inside hashes on closed atx style header"
     locator = r"^(#{1,6}(?=[ \t]))(.*?)(#+)$"
     gid = 2
@@ -554,7 +548,7 @@ class md020(mddef):
 
 
 class md021(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Multiple spaces inside hashes on closed atx style header"
     locator = r"(#{1,6}(?=[ \t]))(.*?)(#+)"
     gid = 2
@@ -567,7 +561,7 @@ class md021(mddef):
 
 
 class md022(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Headers should be surrounded by blank lines"
     locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
@@ -581,7 +575,7 @@ class md022(mddef):
 
 
 class md023(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Headers must start at the beginning of the line"
     locator = r"^([ \t]+#{1,6}[ \t]+[^\n]*|(?:[ \t]+\S[^\n]*\n)+?[ \t]+(?:-+|=+))$"
 
@@ -610,7 +604,7 @@ class md023(mddef):
 
 
 class md024(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Multiple headers with the same content"
     locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
@@ -619,7 +613,7 @@ class md024(mddef):
     rsetext = r"^(\S[^\n]*\n)+?(-+|=+)$"
 
     def __init__(self, settings, view):
-        super(md024, self).__init__(settings, view)
+        super().__init__(settings, view)
         self.storage = []
 
     def test(self, text, s, e):
@@ -627,9 +621,7 @@ class md024(mddef):
         title = text[s:e]
         if mr := re.match(self.rsetext, title):
             title = mr.group(1)[:-1]
-        elif mr := re.match(self.ratxc, title):
-            title = mr.group(2)
-        elif mr := re.match(self.ratx, title):
+        elif (mr := re.match(self.ratxc, title)) or (mr := re.match(self.ratx, title)):
             title = mr.group(2)
         if title in self.storage:
             ret[s] = f"{title} duplicated"
@@ -639,7 +631,7 @@ class md024(mddef):
 
 
 class md025(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Multiple top level headers in the same document"
     locator = r"^(?:#[ \t].*|(?:\S[^\n]*\n)+?=+)$"
     count = 0
@@ -653,7 +645,7 @@ class md025(mddef):
 
 
 class md026(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Trailing punctuation in header"
     locator = r"^(?:#{1,6}[ \t]+[^\n]*|(?:\S[^\n]*\n)+?(?:-+|=+))$"
 
@@ -666,9 +658,7 @@ class md026(mddef):
         title = text[s:e]
         if mr := re.match(self.rsetext, title):
             title = mr.group(1)[:-1]
-        elif mr := re.match(self.ratxc, title):
-            title = mr.group(2)
-        elif mr := re.match(self.ratx, title):
+        elif (mr := re.match(self.ratxc, title)) or (mr := re.match(self.ratx, title)):
             title = mr.group(2)
         if len(title) > 0 and title[-1] in self.settings:
             ret[s] = f"{title[-1]} found"
@@ -676,7 +666,7 @@ class md026(mddef):
 
 
 class md027(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Multiple spaces after blockquote symbol"
     locator = r"^ {0,4}> {2,}"
     list_indent = 0
@@ -693,22 +683,21 @@ class md027(mddef):
 
 
 class md028(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Blank line inside blockquote"
     locator = r"^ {0,4}>.*$"
     lastQuoteEnd = None
 
     def test(self, text, s, e):
         ret = {}
-        if self.lastQuoteEnd:
-            if re.match(r"^(\n *){2,}$", text[self.lastQuoteEnd : s]):
-                ret[self.lastQuoteEnd] = "found one"
+        if self.lastQuoteEnd and re.match(r"^(\n *){2,}$", text[self.lastQuoteEnd : s]):
+            ret[self.lastQuoteEnd] = "found one"
         self.lastQuoteEnd = e
         return ret
 
 
 class md029(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Ordered list item prefix"
     locator = r"^ {0,3}([0-9]+)\.(?=\s)"
     gid = 1
@@ -732,10 +721,10 @@ class md029(mddef):
             style = "ordered"
 
         rest = text[e + 1 :]
-        mr = re.search(self.eol, rest, re.M)
+        mr = re.search(self.eol, rest, re.MULTILINE)
         end = mr.start(0) if mr else len(rest)
         block = rest[:end]
-        mrs = re.finditer(r"^ {0,3}([0-9]+)\.(?=\s)", block, re.M)
+        mrs = re.finditer(r"^ {0,3}([0-9]+)\.(?=\s)", block, re.MULTILINE)
         lastSym = sym
         ret = {}
         for mr in mrs:
@@ -758,7 +747,7 @@ class md029(mddef):
 
 
 class md030(mddef):
-    flag = re.M
+    flag = re.MULTILINE
     desc = "Ordered list item prefix"
     locator = r"^ {0,3}(([0-9]+\.)|[*+-])(?=\s)"
     gid = 1

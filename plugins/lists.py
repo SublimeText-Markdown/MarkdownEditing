@@ -1,4 +1,5 @@
 import re
+
 import sublime
 
 from .view import MdeTextCommand
@@ -28,7 +29,9 @@ class MdeBaseUnIndentListItemCommand(MdeTextCommand):
             tab_str = "\t"
 
         pattern = re.compile(
-            r"^(?:[\s>]*>\s)?(\s*)(?:([%s])\s)?" % "".join(re.escape(bullet) for bullet in bullets)
+            r"^(?:[\s>]*>\s)?(\s*)(?:([{}])\s)?".format(
+                "".join(re.escape(bullet) for bullet in bullets)
+            )
         )
 
         for sel in view.sel():
@@ -108,8 +111,9 @@ class MdeSwitchListBulletTypeCommand(MdeTextCommand):
         auto_increment = self.view.settings().get("mde.auto_increment_ordered_list_number", True)
         bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
         pattern = re.compile(
-            r"^\s*(?:>\s*)*(?:([%s])|(\d+[.)]))(\s+)"
-            % "".join(re.escape(bullet) for bullet in bullets)
+            r"^\s*(?:>\s*)*(?:([{}])|(\d+[.)]))(\s+)".format(
+                "".join(re.escape(bullet) for bullet in bullets)
+            )
         )
 
         for sel in self.view.sel():
@@ -186,7 +190,7 @@ class MdeInsertTaskListItemCommand(MdeTextCommand):
         align_text = self.view.settings().get("mde.list_align_text", True)
         bullets = self.view.settings().get("mde.list_indent_bullets", ["*", "-", "+"])
 
-        to_insert = "{} [ ]".format(bullets[0])
+        to_insert = f"{bullets[0]} [ ]"
         if align_text:
             to_insert += "\t"
         else:
@@ -274,7 +278,7 @@ class MdeToggleTaskListItemCommand(MdeTextCommand):
             (?: [ \t]+\[([ xX])\] ) # GFM task checkbox
             (?: [ \t]+ | $ )        # at least one space,tab or eol
             """,
-            re.X,
+            re.VERBOSE,
         )
 
         for sel in self.view.sel():
@@ -314,7 +318,7 @@ class MdeJoinLines(MdeTextCommand):
             )?
             (\S|$)                      # first char of content, if any
             """,
-            re.X,
+            re.VERBOSE,
         )
 
         for sel in view.sel():

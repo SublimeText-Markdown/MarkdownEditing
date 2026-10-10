@@ -1,14 +1,10 @@
 import shutil
-import sys
-
 from pathlib import Path
 from typing import cast
 
 import sublime
 
-from .color_schemes import clear_color_schemes
-from .color_schemes import clear_invalid_color_schemes
-from .color_schemes import select_color_scheme
+from .color_schemes import clear_color_schemes, clear_invalid_color_schemes, select_color_scheme
 
 BOOTSTRAP_VERSION = "3.0.3"
 
@@ -39,7 +35,7 @@ def augment_default_markdown():
         pass
 
     from textwrap import dedent
-    from zipfile import ZipFile, ZIP_DEFLATED
+    from zipfile import ZIP_DEFLATED, ZipFile
 
     def load_res(syntax):
         return (

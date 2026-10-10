@@ -1,5 +1,6 @@
 import itertools
 import re
+
 import sublime
 
 from ..view import MdeTextCommand
@@ -10,7 +11,7 @@ SETEXT_DASHES_RE = re.compile(
     \s*           # Optional trailing whitespace.
     $             # Must fill the while line. Don't match "- list items"
     """,
-    re.X,
+    re.VERBOSE,
 )
 
 SETEXT_HEADER_RE = re.compile(
@@ -20,7 +21,7 @@ SETEXT_HEADER_RE = re.compile(
     [ \t]*        # Optional trailing whitespace.
     $             # Must fill the while line. Don't match "- list items"
     """,
-    re.X | re.M,
+    re.VERBOSE | re.MULTILINE,
 )
 
 

@@ -2,6 +2,7 @@
 
 This module exports __all__ modules, which Sublime Text needs to know about.
 """
+
 __version__ = "3.5.0"
 
 import sys
@@ -21,10 +22,7 @@ del globals()["sys"]
 from .plugins.color_schemes import (
     MdeSelectColorSchemeCommand,
 )
-from .plugins.critic import (
-    MdeGotoNextCriticCommand,
-    MdeGotoPrevCriticCommand
-)
+from .plugins.critic import MdeGotoNextCriticCommand, MdeGotoPrevCriticCommand
 from .plugins.folding import (
     MdeAutoFoldListener,
     MdeFoldAllSectionsCommand,
@@ -40,9 +38,9 @@ from .plugins.footnotes import (
     MdeGotoFootnoteReferenceCommand,
     MdeInsertFootnoteCommand,
     MdeMagicFootnotesCommand,
+    MdeMarkFootnotesListener,
     MdeSortFootnotesCommand,
     MdeSwitchToFromFootnoteCommand,
-    MdeMarkFootnotesListener,
 )
 from .plugins.headings import (
     MdeChangeHeadingsLevelCommand,
@@ -55,28 +53,30 @@ from .plugins.headings import (
     MdeMatchHeadingHashesDetector,
     MdeUnsavedViewNameSetter,
 )
-from .plugins.lists import (
-    MdeIndentListItemCommand,
-    MdeUnindentListItemCommand,
-    MdeNumberListCommand,
-    MdeSwitchListBulletTypeCommand,
-    MdeInsertTaskListItemCommand,
-    MdeResetTaskListItemsCommand,
-    MdeToggleTaskListItemCommand,
-    MdeJoinLines,
-)
 from .plugins.lint import (
     MdeMarkdownLintCommand,
     MdeMarkdownLintMdlCommand,
+)
+from .plugins.lists import (
+    MdeIndentListItemCommand,
+    MdeInsertTaskListItemCommand,
+    MdeJoinLines,
+    MdeNumberListCommand,
+    MdeResetTaskListItemsCommand,
+    MdeSwitchListBulletTypeCommand,
+    MdeToggleTaskListItemCommand,
+    MdeUnindentListItemCommand,
 )
 from .plugins.quotes import (
     MdeIndentQuote,
     MdeUnindentQuote,
 )
 from .plugins.references import (
+    MdeAddNumberedReferenceDefinitionCommand,
     MdeConvertInlineLinksToReferencesCommand,
     MdeConvertInlineLinkToReferenceCommand,
     MdeGatherMissingLinkMarkersCommand,
+    MdeReferenceCompletionsProvider,
     MdeReferenceDeleteReferenceCommand,
     MdeReferenceJumpCommand,
     MdeReferenceJumpContextCommand,
@@ -86,13 +86,11 @@ from .plugins.references import (
     MdeReferenceNewInlineLinkCommand,
     MdeReferenceNewReferenceCommand,
     MdeReferenceOrganizeCommand,
-    MdeAddNumberedReferenceDefinitionCommand,
-    MdeReferenceCompletionsProvider,
 )
 from .plugins.view import (
+    MdeCenteredLineKeeper,
     MdeReplaceSelectedCommand,
     MdeToggleCenteredLineCommand,
-    MdeCenteredLineKeeper,
 )
 from .plugins.wiki_page import (
     MdeListBackLinksCommand,
@@ -108,15 +106,18 @@ def plugin_loaded():
     def worker():
         from .plugins.bootstrap import on_after_install
         from .plugins.logging import load_logger
+
         load_logger()
         on_after_install()
 
     from sublime import set_timeout
+
     set_timeout(worker, 100)
 
 
 def plugin_unloaded():
     from .plugins.bootstrap import on_before_uninstall
     from .plugins.logging import unload_logger
+
     unload_logger()
     on_before_uninstall()

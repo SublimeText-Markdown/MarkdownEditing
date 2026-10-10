@@ -1,4 +1,5 @@
 import logging
+
 import sublime
 
 logging.basicConfig(level=logging.ERROR, format="%(name)s [%(levelname)s]: %(message)s")

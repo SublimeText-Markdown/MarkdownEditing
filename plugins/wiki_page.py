@@ -2,10 +2,9 @@ import os
 import re
 import string
 import sys
+from datetime import datetime
 
 import sublime
-
-from datetime import datetime
 
 from .logging import logger
 from .view import MdeTextCommand
@@ -172,7 +171,7 @@ class WikiPage:
         return None
 
     def select_page(self, pagename):
-        logger.debug("Open page: %s" % (pagename))
+        logger.debug(f"Open page: {pagename}")
         if not pagename:
             return
 
@@ -202,8 +201,8 @@ class WikiPage:
         if not search_dirs:
             return []
 
-        sublime.status_message("Locating page '{}' in: {}".format(pagename, search_dirs))
-        logger.debug("Locating page '%s' in: %s" % (pagename, search_dirs))
+        sublime.status_message(f"Locating page '{pagename}' in: {search_dirs}")
+        logger.debug(f"Locating page '{pagename}' in: {search_dirs}")
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
@@ -211,9 +210,9 @@ class WikiPage:
 
         # Optionally strip extension...
         if pagename.endswith(markdown_extension):
-            search_pattern = "^%s$" % pagename
+            search_pattern = f"^{pagename}$"
         else:
-            search_pattern = "^%s%s$" % (pagename, markdown_extension)
+            search_pattern = f"^{pagename}{markdown_extension}$"
 
         # Scan project directory trees for files that match the pagename...
         results = []
@@ -232,7 +231,7 @@ class WikiPage:
             return []
         _, current_base = os.path.split(current_file)
         search_dirs = self.project_folders()
-        sublime.status_message("Showing backlinks from: {}".format(search_dirs))
+        sublime.status_message(f"Showing backlinks from: {search_dirs}")
         current_name, _ = os.path.splitext(current_base)
 
         markdown_extension = self.view.settings().get(
@@ -287,7 +286,7 @@ class WikiPage:
             # Fallback to first project folder
             current_dir = search_dirs[0]
 
-        sublime.status_message("New page location: {}".format(current_dir))
+        sublime.status_message(f"New page location: {current_dir}")
 
         markdown_extension = self.view.settings().get(
             "mde.wikilinks.markdown_extension", DEFAULT_MARKDOWN_EXTENSION
@@ -358,7 +357,7 @@ class WikiPage:
 
     def replace_selection_with_pagename(self, selected_index):
         if selected_index != -1:
-            page_name, file = self.file_list[selected_index]
+            page_name, _file = self.file_list[selected_index]
 
             logger.debug("Using selected page '%s'", page_name)
             self.view.run_command("mde_replace_selected", {"text": page_name})
@@ -367,7 +366,7 @@ class WikiPage:
         word = None if word_region.empty() else self.view.substr(word_region)
 
         search_dirs = self.project_folders()
-        sublime.status_message("Finding matching files for {} in {}".format(word, search_dirs))
+        sublime.status_message(f"Finding matching files for {word} in {search_dirs}")
         logger.debug("Finding matching files for %s in %s", word, search_dirs)
 
         markdown_extension = self.view.settings().get(
