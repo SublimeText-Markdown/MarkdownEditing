@@ -48,21 +48,21 @@ Every rule is a subclass of `mdddef`. Here is an example:
 
 ```python
 class md001(mddef):
-    flag = re.M # re.M is for multiline mode
-    desc = 'Header levels should only increment by one level at a time'
-    locator = r'^#{1,6}(?!#)' # This is for atx and atx_closed style headers
+    flag = re.M  # re.M is for multiline mode
+    desc = "Header levels should only increment by one level at a time"
+    locator = r"^#{1,6}(?!#)"  # This is for atx and atx_closed style headers
 
-    lastMatch = None # We are comparing two successive headers, so we
-                     # need to store the previous one
+    lastMatch = None  # We are comparing two successive headers, so we
+    # need to store the previous one
 
     def test(self, text, s, e):
         ret = {}
         if self.lastMatch:
-            n1 = len(self.lastMatch) # the length of the captured group
-            n2 = e - s               # is the level of the header
+            n1 = len(self.lastMatch)  # the length of the captured group
+            n2 = e - s  # is the level of the header
             if n2 > n1 and n2 != n1 + 1:
-                ret[s] = 'expected %d, %d found' % (n1 + 1, n2)
-        self.lastMatch = text[s: e]
+                ret[s] = f"expected {n1 + 1}, {n2} found"
+        self.lastMatch = text[s:e]
         return ret
 ```
 

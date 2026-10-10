@@ -1,4 +1,5 @@
 import re
+
 import sublime
 
 from ..logging import logger
@@ -77,8 +78,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
     def _set_level(self, edit, calc_level, select):
         view = self.view
         match_heading_hashes = view.settings().get("mde.match_heading_hashes")
-        pattern = re.compile(
-            r"""(?x)
+        pattern = re.compile(r"""(?x)
             ^([ \t>]*)                   # block quotes
             (?:
                 (\#+)                    # leading hashes
@@ -91,8 +91,7 @@ class MdeChangeHeadingsLevelCommand(MdeTextCommand):
                 ([^-+*].*?)? [ \t]*      # no heading nor list item
             )
             $
-            """
-        )
+            """)
 
         # One or more selections may span multiple lines each of them to change heading level for.
         # To correctly handle caret placements split all selections into single lines first.

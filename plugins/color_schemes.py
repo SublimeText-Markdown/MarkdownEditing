@@ -120,6 +120,6 @@ def clear_invalid_color_scheme(filename):
         return
     try:
         sublime.load_resource(color_scheme)
-    except (FileNotFoundError, IOError):
+    except OSError:
         settings.erase("color_scheme")
         sublime.save_settings(filename)
