@@ -3448,6 +3448,14 @@ A line without bolded |
 A line with bolded **|**
 |                    ^ - punctuation.separator.table-cell
 
+# Heading | with pipes
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
+
+# Heading | with pipes
+# ------- | ----------
+| <- markup.heading.1.markdown punctuation.definition.heading.begin.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.markdown
 
 # TEST: BLOCK QUOTES ##########################################################
 

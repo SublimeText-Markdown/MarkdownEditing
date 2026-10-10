@@ -14,7 +14,7 @@ HEADINGS_RE = re.compile(
     | ( [^-=#\s][^|\n]* ) \n \1 ( -{3,} | ={3,} ) # SETEXT headings
     ) [ \t]*$                                     # maybe trailing whitespace
     """,
-    re.X | re.M,
+    re.VERBOSE | re.MULTILINE,
 )
 
 
@@ -34,7 +34,6 @@ def all_headings(view, start=0, end=None):
         # ignore front matter and raw code blocks
         if view.match_selector(title_begin, "- markup.raw"):
             yield (title_begin, title_end, level)
-    return None
 
 
 def first_heading_text(view):
@@ -89,7 +88,7 @@ class MdeUnsavedViewNameSetter(MdeViewEventListener):
 
         # Filter non-printable characters. Without this the save dialog on
         # windows fails to open.
-        first_line = "".join(c for c in name if unicodedata.category(c)[0] != "C")
+        name = "".join(c for c in name if unicodedata.category(c)[0] != "C")
 
         self.view.set_name(name)
         view_settings.set("mde_auto_name", name)

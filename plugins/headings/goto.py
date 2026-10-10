@@ -1,7 +1,7 @@
 import sublime
 
-from .common import all_headings
 from ..view import MdeTextCommand
+from .common import all_headings
 
 
 class MdeGotoNextHeadingCommand(MdeTextCommand):
