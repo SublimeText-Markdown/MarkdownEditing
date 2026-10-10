@@ -1896,16 +1896,50 @@ foo
 |  ^^^^ meta.code-fence.definition.begin.markdown-gfm constant.other.language-name.markdown
 |      ^ meta.code-fence.definition.begin.markdown-gfm meta.fold.code-fence.begin
 # test
-| ^^^^^ source.shell comment.line.number-sign
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.bash comment.line.number-sign.shell punctuation.definition.comment.shell
+|^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash comment.line.number-sign.shell
 echo hello, \
 |           ^ punctuation.separator.continuation.line
 echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
 |                       ^^ constant.character.escape
+heredoc=<<EOF
+  # Heading ${title}
+| ^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.string.heredoc.shell string.unquoted.heredoc.shell
+|           ^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.string.heredoc.shell meta.interpolation.parameter.shell 
+EOF
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+|^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+$ cmd  # no interactive shell marker
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.function-call.identifier.shell variable.function.shell
+|^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.function-call.arguments.shell
 ```
-| <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
-|^^^ meta.code-fence.definition.end.markdown-gfm
-|^^ punctuation.definition.raw.code-fence.end.markdown
-|  ^ meta.fold.code-fence.end.markdown
+| <- meta.code-fence.definition.end punctuation.definition.raw.code-fence.end
+|^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   ```bash
+   #!/usr/bin/env bash
+|  ^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash comment.line.shebang.shell
+   heredoc=<<EOF
+      # Heading ${title}
+|     ^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.string.heredoc.shell string.unquoted.heredoc.shell
+|               ^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.string.heredoc.shell meta.interpolation.parameter.shell 
+   EOF
+|  ^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+
+   $ cmd  # no interactive shell marker
+|  ^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.function-call.identifier.shell variable.function.shell
+|   ^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash meta.function-call.arguments.shell
+   ```
+|  ^^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   ```bash
+   $ ls
+|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.bash
+|  ^ comment.other.shell
+|    ^^ meta.function-call.identifier.shell variable.function.shell
+   ```
+|  ^^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|     ^ meta.code-fence.definition.end.markdown-gfm meta.fold.code-fence.end - punctuation
 
 ```c++
 | <- meta.code-fence.definition.begin.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
@@ -1993,9 +2027,33 @@ echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
 |^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.markdown-gfm meta.fold.code-fence.end - punctuation
 
-```Graphviz
-|^^^^^^^^^^ meta.code-fence.definition.begin - meta.fold
-|          ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
+1. list item with diff fenced code block
+
+   ```diff
+   <<<<<<< A
+   \^^^^^^^^^ meta.block.conflict.begin.diff - meta.block meta.block - markup
+   \^^^^^^ punctuation.section.block.begin.diff
+   \      ^ - entity - punctuation
+   \       ^ entity.name.section.diff
+   \        ^ - entity
+   lines from A
+   \^^^^^^^^^^^^ meta.block.conflict.diff markup.deleted.diff - meta.block meta.block
+   =======
+   \^^^^^^^ meta.block.conflict.separator.diff - meta.block meta.block - markup
+   \^^^^^^ punctuation.section.block.diff
+   lines from B
+   \^^^^^^^^^^^ meta.block.conflict.diff markup.inserted.diff
+   >>>>>>> B
+   \^^^^^^^^^ meta.block.conflict.end.diff - meta.block meta.block - markup
+   \^^^^^^ punctuation.section.block.end.diff
+   \      ^ - entity
+   \       ^ entity.name.section.diff
+   \        ^ - entity
+   ```
+
+```dot
+|^^^^^ meta.code-fence.definition.begin - meta.fold
+|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin
 
 graph n {}
 | ^^^ storage.type.dot
@@ -2255,6 +2313,20 @@ FROM TableName
 |^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.markdown-gfm meta.fold.code-fence.end - punctuation
 
+```toml
+| <- meta.code-fence.definition.begin.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|^^^^^^^ meta.code-fence.definition.begin.markdown-gfm
+|^^ punctuation.definition.raw.code-fence.begin.markdown
+|  ^^^^ constant.other.language-name.markdown
+[section.name]
+|^^^^^^^^^^^^^ markup.raw.code-fence.toml.markdown-gfm source.toml meta.section.toml meta.brackets.toml
+|^^^^^^^^^^^^ entity.name.section.toml
+|       ^ punctuation.accessor.dot.toml
+|            ^ punctuation.section.brackets.end.toml
+```
+| <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
 ```ts
 declare type foo = 'bar'
 | <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.typescript.markdown-gfm source.ts
@@ -2292,7 +2364,7 @@ declare type foo = 'bar'
 |  ^^^ constant.other.language-name.markdown
 |     ^^^^^^^^^ comment.line.infostring.markdown
 
-| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.jsx.markdown-gfm
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.jsx.markdown-gfm source.jsx
 ```
 | <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
@@ -2340,6 +2412,58 @@ declare type foo = 'bar'
 | <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
 |  ^ meta.code-fence.definition.end.markdown-gfm meta.fold.code-fence.end - punctuation
+
+```zsh
+|^^ meta.code-fence.definition.begin.markdown-gfm punctuation.definition.raw.code-fence.begin.markdown
+|  ^^^ meta.code-fence.definition.begin.markdown-gfm constant.other.language-name.markdown
+|     ^ meta.code-fence.definition.begin meta.fold.code-fence.begin - markup
+# test
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.zsh comment.line.number-sign.shell punctuation.definition.comment.shell
+|^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh comment.line.number-sign.shell
+echo hello, \
+|           ^ punctuation.separator.continuation.line
+echo This is a smiley :-\) \(I have to escape the parentheses, though!\)
+|                       ^^ constant.character.escape
+heredoc=<<EOF
+  # Heading ${title}
+| ^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.string.heredoc.shell string.unquoted.heredoc.shell
+|           ^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.string.heredoc.shell meta.interpolation.parameter.shell 
+EOF
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+|^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+
+$ cmd  # no interactive shell marker
+| <- meta.code-fence.body.markdown-gfm markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.function-call.identifier.shell variable.function.shell
+|^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.function-call.arguments.shell
+
+```
+| <- meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   ```zsh
+   #!/usr/bin/env zsh
+|  ^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh comment.line.shebang.shell
+   heredoc=<<EOF
+      # Heading ${title}
+|     ^^^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.string.heredoc.shell string.unquoted.heredoc.shell
+|               ^^^^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.string.heredoc.shell meta.interpolation.parameter.shell 
+   EOF
+|  ^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.tag.heredoc.end.shell entity.name.tag.heredoc.shell
+
+   $ cmd  # no interactive shell marker
+|  ^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.function-call.identifier.shell variable.function.shell
+|   ^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh meta.function-call.arguments.shell
+   ```
+|  ^^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+
+   ```zsh
+   $ ls
+|  ^^^^^ markup.raw.code-fence.shell.markdown-gfm source.shell.zsh
+|  ^ comment.other.shell
+|    ^^ meta.function-call.identifier.shell variable.function.shell
+   ```
+|  ^^^ meta.code-fence.definition.end.markdown-gfm punctuation.definition.raw.code-fence.end.markdown
+|     ^ meta.code-fence.definition.end.markdown-gfm meta.fold.code-fence.end - punctuation
 
 
 # TEST: HTML BLOCKS ###########################################################
@@ -6326,7 +6450,7 @@ blah*
     |                                                       ^ punctuation.definition.string.begin.markdown
     |                                                                       ^ punctuation.definition.string.end.markdown
     |                                                                        ^ punctuation.definition.metadata.end.markdown
-    
+
     Complex ![image $\ce{H2O}$.](./img/image6.png){#fig:image6 height=12.09cm }
     |       ^^^^^^^^^^^^^^^^^^^^ meta.image.inline.description.markdown
     |       ^^ punctuation.definition.image.begin.markdown
@@ -9108,6 +9232,7 @@ not a hard line break`
 !!! bug "Bug Title"
 |^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^ entity.name.admonition.markdown
 |       ^^^^^^^^^^^ meta.title.markdown
 |       ^ punctuation.definition.title.begin.markdown
 |                 ^ punctuation.definition.title.end.markdown
@@ -9115,6 +9240,7 @@ not a hard line break`
 !!! danger "Be very careful"
 |^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^^^^ entity.name.admonition.markdown
 |          ^^^^^^^^^^^^^^^^^ meta.title.markdown
 |          ^ punctuation.definition.title.begin.markdown
 |                          ^ punctuation.definition.title.end.markdown
@@ -9122,14 +9248,17 @@ not a hard line break`
 !!! failure
 |^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^^^^^ entity.name.admonition.markdown
 
 !!! failure blinking
 |^^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^^^^^ entity.name.admonition.markdown
 
 !!! failure "Error Title"
 |^^^^^^^^^^^^^^^^^^^^^^^^^ meta.admonition.error.markdown markup.heading.admonition.error.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^^^^^ entity.name.admonition.markdown
 |           ^^^^^^^^^^^^^ meta.title.markdown
 |           ^ punctuation.definition.title.begin.markdown
 |                       ^ punctuation.definition.title.end.markdown
@@ -9137,6 +9266,7 @@ not a hard line break`
 !!! quote
 |^^^^^^^^^ meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
 |^^ punctuation.definition.admonition.markdown
+|   ^^^^^ entity.name.admonition.markdown
 
 !!! danger "Be very careful"
 
@@ -9204,12 +9334,14 @@ not a hard line break`
   !!! tip "Title"
 |^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
 | ^^^ punctuation.definition.admonition.markdown
+|     ^^^ entity.name.admonition.markdown
 
 - list item
   
   !!! warning "Title"
 |^^^^^^^^^^^^^^^^^^^^^ markup.list.unnumbered.markdown meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
 | ^^^ punctuation.definition.admonition.markdown
+|     ^^^^^^^ entity.name.admonition.markdown
 
   !!! success "Title"
 
