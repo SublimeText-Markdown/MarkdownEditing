@@ -13,12 +13,12 @@ Edit the handwritten template, not the generated contexts, then run:
 
 Use --check to verify that the generated region is up to date.
 """
+from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
 import re
 import sys
-
+from dataclasses import dataclass
+from pathlib import Path
 
 SYNTAX_PATH = Path(__file__).with_name("Markdown.sublime-syntax")
 GENERATED_START = "###[ GENERATED: CONTAINER EMPHASIS ]##########################################"
@@ -156,13 +156,10 @@ def transform_contexts(template: str, context_names: list[str], variant: Variant
     end_variable = variant.prefix.replace("-", "_") + "_emphasis_end"
     container_end = "{{" + end_variable + "}}"
     transformed = transformed.replace(generic_end, container_end)
-    common_includes = "".join(
-        f"    - include: {context}\n" for context in variant.common_includes
-    )
+    common_includes = "".join(f"    - include: {context}\n" for context in variant.common_includes)
     transformed = transformed.replace(
         f"  {variant.prefix}-emphasis-content:\n",
-        f"  {variant.prefix}-emphasis-content:\n"
-        f"{common_includes}",
+        f"  {variant.prefix}-emphasis-content:\n{common_includes}",
     )
     return transformed
 
