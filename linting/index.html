@@ -6,21 +6,21 @@
         return {the_offset: "additional information"}
     else:
         return {}</code></pre> <p>The linter will search for all occurrences of <code>locator</code> with regexp flag equals to <code>flag</code> in the document. Then it passes the document itself and the begin position and the end position of target captured group to <code>test</code> method. The <code>test</code> method will return a dictionary of "offset:information" key-value pairs. That offset will decide the displayed line number of the occurrence of the error.</p> <h3 id=editing-an-existing-rule>Editing an existing rule</h3> <p>First you need to know the name of that rule (e.g. MD001), and search for the class with the same name in <code>lint.py</code> (e.g. <code>md001</code>). You may want to change the <code>locator</code> to narrow down (or expand) the applied domain first before editing <code>test</code> method.</p> <h3 id=creating-new-rules>Creating new rules</h3> <p>Every rule is a subclass of <code>mdddef</code>. Here is an example:</p> <pre class=highlight><code class=language-python>class md001(mddef):
-    flag = re.M # re.M is for multiline mode
-    desc = 'Header levels should only increment by one level at a time'
-    locator = r'^#{1,6}(?!#)' # This is for atx and atx_closed style headers
+    flag = re.M  # re.M is for multiline mode
+    desc = "Header levels should only increment by one level at a time"
+    locator = r"^#{1,6}(?!#)"  # This is for atx and atx_closed style headers
 
-    lastMatch = None # We are comparing two successive headers, so we
-                     # need to store the previous one
+    lastMatch = None  # We are comparing two successive headers, so we
+    # need to store the previous one
 
     def test(self, text, s, e):
         ret = {}
         if self.lastMatch:
-            n1 = len(self.lastMatch) # the length of the captured group
-            n2 = e - s               # is the level of the header
+            n1 = len(self.lastMatch)  # the length of the captured group
+            n2 = e - s  # is the level of the header
             if n2 &gt; n1 and n2 != n1 + 1:
-                ret[s] = 'expected %d, %d found' % (n1 + 1, n2)
-        self.lastMatch = text[s: e]
+                ret[s] = f"expected {n1 + 1}, {n2} found"
+        self.lastMatch = text[s:e]
         return ret</code></pre> <p>You can create new settings as well. Just follow the examples of existing rules and the value of settings are stored as <code>self.settings</code>.</p> <h2 id=discussion>Discussion</h2> <p>You can share your opinions through <a href=https://github.com/SublimeText-Markdown/MarkdownEditing/issues>issues</a>.</p> <h2 id=rules>Rules</h2> <p>This document contains a description of all rules, what they are checking for, as well as an examples of documents that break the rule and corrected versions of the examples.</p> <p>The rules are mostly <a href=https://github.com/mivok/markdownlint/blob/master/docs/RULES.md>from markdownlint</a>.</p> <h3 id=md001-header-levels-should-only-increment-by-one-level-at-a-time>MD001 - Header levels should only increment by one level at a time</h3> <p>This rule is triggered when you skip header levels in a markdown document, for example:</p> <pre class=highlight><code># Header 1
 
 ### Header 3
