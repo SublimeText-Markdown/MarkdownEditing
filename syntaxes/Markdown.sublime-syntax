@@ -6112,137 +6112,137 @@ contexts:
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-caution-heading
+      embed: admonition-caution-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(bug|failure)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-error-heading
+      embed: admonition-error-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(important)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-important-heading
+      embed: admonition-important-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(abstract|info|note|question|success)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-note-heading
+      embed: admonition-note-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(quote)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-quote-heading
+      embed: admonition-quote-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(tip)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-tip-heading
+      embed: admonition-tip-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(warning)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-warning-heading
+      embed: admonition-warning-heading
       escape: '{{admonition_escape}}'
     - match: '^([ \t]*)(!!!)[ \t]+(\w+)\b'
       captures:
         2: punctuation.definition.admonition.markdown
         3: entity.name.admonition.markdown
-      embed: admonation-other-heading
+      embed: admonition-other-heading
       escape: '{{admonition_escape}}'
 
-  admonation-caution-heading:
+  admonition-caution-heading:
     - meta_scope: meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
     - match: ^
-      set: admonation-caution-body
-    - include: admonation-titles
+      set: admonition-caution-body
+    - include: admonition-titles
 
-  admonation-caution-body:
+  admonition-caution-body:
     - meta_scope: meta.admonition.caution.markdown
     - include: indented-markdown
 
-  admonation-error-heading:
+  admonition-error-heading:
     - meta_scope: meta.admonition.error.markdown markup.heading.admonition.error.markdown
     - match: ^
-      set: admonation-error-body
-    - include: admonation-titles
+      set: admonition-error-body
+    - include: admonition-titles
 
-  admonation-error-body:
+  admonition-error-body:
     - meta_scope: meta.admonition.error.markdown
     - include: indented-markdown
 
-  admonation-important-heading:
+  admonition-important-heading:
     - meta_scope: meta.admonition.important.markdown markup.heading.admonition.important.markdown
     - match: ^
-      set: admonation-important-body
-    - include: admonation-titles
+      set: admonition-important-body
+    - include: admonition-titles
 
-  admonation-important-body:
+  admonition-important-body:
     - meta_scope: meta.admonition.important.markdown
     - include: indented-markdown
 
-  admonation-note-heading:
+  admonition-note-heading:
     - meta_scope: meta.admonition.note.markdown markup.heading.admonition.note.markdown
     - match: ^
-      set: admonation-note-body
-    - include: admonation-titles
+      set: admonition-note-body
+    - include: admonition-titles
 
-  admonation-note-body:
+  admonition-note-body:
     - meta_scope: meta.admonition.note.markdown
     - include: indented-markdown
 
-  admonation-quote-heading:
+  admonition-quote-heading:
     - meta_scope: meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
     - match: ^
-      set: admonation-quote-body
-    - include: admonation-titles
+      set: admonition-quote-body
+    - include: admonition-titles
 
-  admonation-quote-body:
+  admonition-quote-body:
     - meta_scope: meta.admonition.quote.markdown
     - include: indented-markdown
 
-  admonation-tip-heading:
+  admonition-tip-heading:
     - meta_scope: meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
     - match: ^
-      set: admonation-tip-body
-    - include: admonation-titles
+      set: admonition-tip-body
+    - include: admonition-titles
 
-  admonation-tip-body:
+  admonition-tip-body:
     - meta_scope: meta.admonition.tip.markdown
     - include: indented-markdown
 
-  admonation-warning-heading:
+  admonition-warning-heading:
     - meta_scope: meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
     - match: ^
-      set: admonation-warning-body
-    - include: admonation-titles
+      set: admonition-warning-body
+    - include: admonition-titles
 
-  admonation-warning-body:
+  admonition-warning-body:
     - meta_scope: meta.admonition.warning.markdown
     - include: indented-markdown
 
-  admonation-other-heading:
+  admonition-other-heading:
     - meta_scope: meta.admonition.other.markdown markup.heading.admonition.other.markdown
     - match: ^
-      set: admonation-other-body
-    - include: admonation-titles
+      set: admonition-other-body
+    - include: admonition-titles
 
-  admonation-other-body:
+  admonition-other-body:
     - meta_scope: meta.admonition.other.markdown
     - include: indented-markdown
 
-  admonation-titles:
+  admonition-titles:
     - match: \"
       scope: punctuation.definition.title.begin.markdown
-      push: admonation-title-body
+      push: admonition-title-body
 
-  admonation-title-body:
+  admonition-title-body:
     - meta_scope: meta.title.markdown
     - match: \"
       scope: punctuation.definition.title.end.markdown
