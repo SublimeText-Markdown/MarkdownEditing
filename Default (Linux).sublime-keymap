@@ -1146,6 +1146,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[-+*#]\\s|\\d+[.)])", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -1153,6 +1154,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[-+*#]\\s|\\d+[.)])", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>", "match_all": true },
 			{ "key": "auto_complete_visible", "operator": "equal", "operand": false }
 		]
 	},
@@ -1160,6 +1162,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[-+*#]\\s|\\d+[.)])", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
@@ -1167,6 +1170,7 @@
 		[
 			{ "key": "selector", "operator": "equal", "operand": "text.html.markdown markup.quote", "match_all": true },
 			{ "key": "preceding_text", "operator": "not_regex_contains", "operand": "^\\s*(?:>\\s*)+(?:[-+*#]\\s|\\d+[.)])", "match_all": true },
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*>", "match_all": true },
 			{ "key": "setting.auto_complete_commit_on_tab" }
 		]
 	},
