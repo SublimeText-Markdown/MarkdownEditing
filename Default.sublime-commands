@@ -150,7 +150,7 @@
 		"command": "mde_fold_section"
 	},
 	{
-		"caption": "MarkdownEditing: Unold Current Section",
+		"caption": "MarkdownEditing: Unfold Current Section",
 		"command": "mde_unfold_section"
 	},
 	{
