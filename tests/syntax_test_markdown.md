@@ -4906,7 +4906,7 @@ second line
 |^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
 |          ^ - punctuation.definition
 |                ^ - punctuation.definition
- 
+
 > **foo > bar > baz**
 | <- markup.quote.markdown punctuation.definition.blockquote.markdown
 |^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
@@ -4924,7 +4924,80 @@ second line
 |^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
 |          ^ - punctuation.definition
 |                ^ - punctuation.definition
- 
+
+> _foo >
+> bar > baz_
+| <- markup.quote.markdown markup.paragraph.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown markup.italic.markdown
+|     ^ - punctuation.definition
+
+> - _foo >
+>   bar > baz_
+| <- markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.italic.markdown
+|       ^ - punctuation.definition
+
+> 1. _foo >
+>    bar > baz_
+| <- markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.italic.markdown
+|        ^ - punctuation.definition
+
+> *foo >
+> bar > baz*
+| <- markup.quote.markdown markup.paragraph.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown markup.italic.markdown
+|     ^ - punctuation.definition
+
+> - *foo >
+>   bar > baz*
+| <- markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.italic.markdown
+|       ^ - punctuation.definition
+
+> 1. *foo >
+>    bar > baz*
+| <- markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.italic.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.italic.markdown
+|        ^ - punctuation.definition
+
+> __foo >
+> bar > baz__
+| <- markup.quote.markdown markup.paragraph.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown markup.bold.markdown
+|     ^ - punctuation.definition
+
+> - __foo >
+>   bar > baz__
+| <- markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.bold.markdown
+|       ^ - punctuation.definition
+
+> 1. __foo >
+>    bar > baz__
+| <- markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.bold.markdown
+|        ^ - punctuation.definition
+
+> **foo >
+> bar > baz**
+| <- markup.quote.markdown markup.paragraph.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^ markup.quote.markdown markup.paragraph.markdown markup.bold.markdown
+|     ^ - punctuation.definition
+
+> - **foo >
+>   bar > baz**
+| <- markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^ markup.quote.markdown markup.list.unnumbered.markdown meta.paragraph.list.markdown markup.bold.markdown
+|       ^ - punctuation.definition
+
+> 1. **foo >
+>    bar > baz**
+| <- markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.bold.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^ markup.quote.markdown markup.list.numbered.markdown meta.paragraph.list.markdown markup.bold.markdown
+|        ^ - punctuation.definition
+
+
 # TEST: LIST BLOCKS ###########################################################
 
 ## https://spec.commonmark.org/0.30/#example-253

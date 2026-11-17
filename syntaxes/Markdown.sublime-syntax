@@ -4137,7 +4137,7 @@ contexts:
       fail: block-quote-strikethrough-tilde
 
   block-quote-emphasis-content:
-    - include: block-quote-punctuation-content
+    - include: block-quote-punctuations
     - include: emphasis-inline-common
 
 ###[ GENERATED: BLOCK QUOTE NESTED EMPHASIS ]#################################
@@ -4404,7 +4404,7 @@ contexts:
       fail: block-quote-nested-strikethrough-tilde
 
   block-quote-nested-emphasis-content:
-    - include: block-quote-nested-punctuation-content
+    - include: block-quote-nested-punctuations
     - include: emphasis-inline-common
 
 ###[ GENERATED: BLOCK QUOTE FOOTNOTE EMPHASIS ]###############################
@@ -4666,7 +4666,7 @@ contexts:
       fail: block-quote-footnote-strikethrough-tilde
 
   block-quote-footnote-emphasis-content:
-    - include: block-quote-punctuation-content
+    - include: block-quote-punctuations
     - include: emphasis-inline-common
 
 ###[ GENERATED: LIST EMPHASIS ]###############################################

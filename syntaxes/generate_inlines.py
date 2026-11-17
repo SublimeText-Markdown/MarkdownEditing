@@ -43,18 +43,18 @@ VARIANTS = (
         "block-quote",
         "BLOCK QUOTE",
         True,
-        ("block-quote-punctuation-content",),
+        ("block-quote-punctuations",),
     ),
     Variant(
         "block-quote-nested",
         "BLOCK QUOTE NESTED",
         True,
-        ("block-quote-nested-punctuation-content",),
+        ("block-quote-nested-punctuations",),
     ),
     Variant(
         "block-quote-footnote",
         "BLOCK QUOTE FOOTNOTE",
-        common_includes=("block-quote-punctuation-content",),
+        common_includes=("block-quote-punctuations",),
     ),
     Variant(
         "list",
