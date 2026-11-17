@@ -4853,7 +4853,78 @@ second line
 |                                          ^^ markup.bold.markdown punctuation.definition.bold.end.markdown
 |                                                 ^^^^^^^^^^^^^^^^^ markup.strikethrough.markdown-gfm
 
+> _foo > bar > baz_
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|      ^ - punctuation.definition
+|            ^ - punctuation.definition
 
+> - _foo > bar > baz_
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|        ^ - punctuation.definition
+|              ^ - punctuation.definition
+
+> 1. _foo > bar > baz_
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|         ^ - punctuation.definition
+|               ^ - punctuation.definition
+
+> *foo > bar > baz*
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|      ^ - punctuation.definition
+|            ^ - punctuation.definition
+
+> - *foo > bar > baz*
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|        ^ - punctuation.definition
+|              ^ - punctuation.definition
+
+> 1. *foo > bar > baz*
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|         ^ - punctuation.definition
+|               ^ - punctuation.definition
+
+> __foo > bar > baz__
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|       ^ - punctuation.definition
+|             ^ - punctuation.definition
+
+> - __foo > bar > baz__
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|         ^ - punctuation.definition
+|               ^ - punctuation.definition
+
+> 1. __foo > bar > baz__
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|          ^ - punctuation.definition
+|                ^ - punctuation.definition
+ 
+> **foo > bar > baz**
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|       ^ - punctuation.definition
+|             ^ - punctuation.definition
+
+> - **foo > bar > baz**
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|         ^ - punctuation.definition
+|               ^ - punctuation.definition
+
+> 1. **foo > bar > baz**
+| <- markup.quote.markdown punctuation.definition.blockquote.markdown
+|^^^^^^^^^^^^^^^^^^^^^^^^ markup.quote.markdown
+|          ^ - punctuation.definition
+|                ^ - punctuation.definition
+ 
 # TEST: LIST BLOCKS ###########################################################
 
 ## https://spec.commonmark.org/0.30/#example-253

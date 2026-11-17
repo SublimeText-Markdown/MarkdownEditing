@@ -191,7 +191,7 @@ def fold_urls(view):
 
 def unfold_urls(view):
     """
-    Unold all urls which are not part of a larger folded region (section).
+    Unfold all urls which are not part of a larger folded region (section).
 
     Make sure not to unfold sections, just because a contained link url is to be unfolded.
 

@@ -4,20 +4,16 @@
 
 Development is proceeding in development branches for compatible ST builds:
 
-| develop branch  | target branch | ST builds
-| ---             | ---           | ---
-| st3-develop     | ST3176        | 3176 - 4106
-| st4-develop     | master        | 4107...
+| develop branch  | production branch | ST builds
+| ---             | ---               | ---
+| st3-develop     | st3176            | 3176 - 4106 (deprecated, unmaintained)
+| st4107-develop  | st4107            | 4107 - 4199
+| st4-develop     | master            | 4200...
 
-> **Note**
->
-> Currently main difference between ST3 and ST4 branches
-> is syntax definition using `version: 2` in ST4.
-
-Common improvements for ST3 and ST4 should be based on and merged into `st3-develop`.
+PRs for common improvements should be based on and merged into `st4107-develop`.
 It is frequently merged into `st4-develop`, if required.
 
-Only changes, which require ST4, are based on and merged directly into `st4-develop`.
+Only changes, which require ST4200, are based on and merged directly into `st4-develop`.
 
 New releases will be created, if enough or critical fixes are available.
 
