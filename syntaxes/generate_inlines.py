@@ -21,10 +21,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 SYNTAX_PATH = Path(__file__).with_name("Markdown.sublime-syntax")
-GENERATED_START = "###[ GENERATED: CONTAINER EMPHASIS ]##########################################"
-GENERATED_END = "###[ END GENERATED: CONTAINER EMPHASIS ]######################################"
+GENERATED_START = "###[ GENERATED: CONTAINER INLINES ]###########################################"
+GENERATED_END = "###[ END GENERATED: CONTAINER INLINES ]#######################################"
 BASE_START = "###[ INLINE: EMPHASIS ]#######################################################"
-BASE_END = "###[ INLINE: IMAGES ]#########################################################"
+BASE_END = "###[ INLINE: EMPHASIS PROTOTYPES ]############################################"
 OLD_GENERATED_START = (
     "###[ INLINE: BLOCKQUOTE EMPHASIS ]############################################"
 )
@@ -156,10 +156,13 @@ def transform_contexts(template: str, context_names: list[str], variant: Variant
     end_variable = variant.prefix.replace("-", "_") + "_emphasis_end"
     container_end = "{{" + end_variable + "}}"
     transformed = transformed.replace(generic_end, container_end)
-    common_includes = "".join(f"    - include: {context}\n" for context in variant.common_includes)
+    common_includes = "".join(
+        f"    - include: {context}\n" for context in variant.common_includes
+    )
     transformed = transformed.replace(
         f"  {variant.prefix}-emphasis-content:\n",
-        f"  {variant.prefix}-emphasis-content:\n{common_includes}",
+        f"  {variant.prefix}-emphasis-content:\n"
+        f"{common_includes}",
     )
     return transformed
 

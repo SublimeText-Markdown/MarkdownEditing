@@ -3869,7 +3869,1120 @@ contexts:
   emphasis-content:
     - include: emphasis-inline-common
 
-###[ GENERATED: CONTAINER EMPHASIS ]##########################################
+###[ INLINE: EMPHASIS PROTOTYPES ]#############################################
+
+  inline-common:
+    - include: images
+    - include: literals
+    - include: links
+    - include: markups
+
+  emphasis-inline-common:
+    - include: hard-line-breaks
+    - include: inline-common
+
+  no-emphasis:
+    - meta_include_prototype: false
+    - match: '[*_]'
+      pop: 1
+
+  no-highlight:
+    - meta_include_prototype: false
+    - match: ==
+      pop: 1
+
+  no-strikethrough:
+    - meta_include_prototype: false
+    - match: ~~
+      pop: 1
+
+  bold-asterisk-end:
+    - match: '{{asterisk_can_close}}{{bold_asterisk_end}}'
+      scope: punctuation.definition.bold.end.markdown
+      pop: 1
+    # Consume the underscore that has no corresponding underscore before the closing bold
+    # punctuation on the same line, as it won't be treated as italic by CommonMark
+    - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
+
+  bold-underscore-end:
+    - match: '{{wspace}}_{2,}'
+    - match: '{{bold_underscore_end}}'
+      scope: punctuation.definition.bold.end.markdown
+      pop: 1
+    # Consume the asterisk that has no corresponding asterisk before the closing bold
+    # punctuation on the same line, as it won't be treated as italic by CommonMark
+    - match: \*(?=[^\s*])(?=[^*_]*__\b)
+
+  bold-italic-asterisk-end:
+    - match: '{{wspace}}\*+'
+    - match: '{{bold_italic_asterisk_end}}'
+      captures:
+        1: markup.italic.markdown punctuation.definition.italic.end.markdown
+        2: punctuation.definition.bold.end.markdown
+      pop: 1
+
+  bold-after-bold-italic-asterisk-end:
+    - match: '{{wspace}}\*{3,}'
+    - match: '{{bold_asterisk_end}}'
+      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      pop: 1
+
+  italic-after-bold-italic-asterisk-end:
+    - match: '{{wspace}}\*{3,}'
+    - match: '{{italic_asterisk_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      pop: 1
+
+  bold-italic-underscore-end:
+    - match: '{{wspace}}_+'
+    - match: '{{bold_italic_underscore_end}}'
+      captures:
+        1: markup.italic.markdown punctuation.definition.italic.end.markdown
+        2: punctuation.definition.bold.end.markdown
+      pop: 1
+
+  bold-after-bold-italic-underscore-end:
+    - match: '{{wspace}}_{3,}'
+    - match: '{{bold_underscore_end}}'
+      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      pop: 1
+
+  italic-after-bold-italic-underscore-end:
+    - match: '{{wspace}}_{3,}'
+    - match: '{{italic_underscore_end}}'
+      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      pop: 1
+
+  italic-asterisk-end:
+    - match: '{{asterisk_can_close}}{{italic_asterisk_end}}'
+      scope: punctuation.definition.italic.end.markdown
+      pop: 1
+
+  italic-underscore-end:
+    - match: '{{wspace}}_(?!_)'
+    - match: '{{italic_underscore_end}}'
+      scope: punctuation.definition.italic.end.markdown
+      pop: 1
+
+  highlight-equal-end:
+    - match: '{{highlight_end}}'
+      scope: punctuation.definition.highlight.end.markdown
+      pop: 1
+    - match: '[ \t]*=+'
+
+  strikethrough-tilde-end:
+    - match: '{{strikethrough_end}}'  # 2x ~ maybe followed by ~> or ~~}
+      scope: punctuation.definition.strikethrough.end.markdown
+      pop: 1
+    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
+
+###[ INLINE: IMAGES ]#########################################################
+
+  image-inline:
+    - match: \!\[(?={{balance_square_brackets}}?\]\()
+      scope: punctuation.definition.image.begin.markdown
+      push:
+        - image-inline-metadata
+        - image-inline-text
+
+  image-inline-text:
+    - meta_scope: meta.image.inline.description.markdown
+    - match: \]
+      scope: punctuation.definition.image.end.markdown
+      pop: 1
+    - include: link-text
+
+  image-inline-metadata:
+    - match: \(
+      scope: punctuation.definition.metadata.begin.markdown
+      set:
+        - image-inline-metadata-end
+        - link-title
+        - image-inline-url
+    - include: immediately-pop
+
+  image-inline-metadata-end:
+    - meta_scope: meta.image.inline.metadata.markdown
+    - match: \)
+      scope: punctuation.definition.metadata.end.markdown
+      set: image-inline-attr
+    - include: else-pop
+
+  image-inline-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: image-inline-url-angled
+    - match: (?=\S)
+      set: image-inline-url-unquoted
+
+  image-inline-url-angled:
+    - meta_content_scope: markup.underline.link.image.markdown
+    - include: link-url-angled
+
+  image-inline-url-unquoted:
+    - meta_scope: markup.underline.link.image.markdown
+    - include: link-url-unquoted
+
+  image-inline-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: image-inline-attr-body
+    - include: immediately-pop
+
+  image-inline-attr-body:
+    - meta_scope: meta.image.inline.attributes.markdown
+    - include: tag-attributes
+
+  image-ref:
+    - match: \!\[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
+      scope: punctuation.definition.image.begin.markdown
+      push:
+        - image-ref-attr
+        - image-ref-metadata
+        - image-ref-text
+
+  image-ref-text:
+    - meta_scope: meta.image.reference.description.markdown
+    - match: \]
+      scope: punctuation.definition.image.end.markdown
+      pop: 1
+    - include: link-text
+
+  image-ref-metadata:
+    - match: (\[)({{reference_name}})(\])
+      scope: meta.image.reference.metadata.markdown
+      captures:
+        1: punctuation.definition.metadata.begin.markdown
+        2: markup.underline.link.markdown
+        3: punctuation.definition.metadata.end.markdown
+      pop: 1
+    - include: immediately-pop
+
+  image-ref-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: image-ref-attr-body
+    - include: immediately-pop
+
+  image-ref-attr-body:
+    - meta_scope: meta.image.reference.markdown
+    - include: tag-attributes
+
+###[ INLINE: LINKS ]##########################################################
+
+  link-inline:
+    - match: \[(?={{balance_square_brackets}}?\]\()
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-inline-metadata
+        - link-inline-text
+
+  link-inline-text:
+    - meta_scope: meta.link.inline.description.markdown
+    - match: \]
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    - include: link-text-allow-image
+
+  link-inline-metadata:
+    - match: \(
+      scope: punctuation.definition.metadata.begin.markdown
+      set:
+        - link-inline-metadata-end
+        - link-title
+        - link-inline-url
+    - include: immediately-pop
+
+  link-inline-metadata-end:
+    - meta_scope: meta.link.inline.metadata.markdown
+    - match: \)
+      scope: punctuation.definition.metadata.end.markdown
+      set: link-inline-attr
+    - include: else-pop
+
+  link-inline-url:
+    - match: <
+      scope: punctuation.definition.link.begin.markdown
+      set: link-inline-url-angled
+    - match: (?=\S)
+      set: link-inline-url-unquoted
+
+  link-inline-url-angled:
+    - meta_content_scope: markup.underline.link.markdown
+    - include: link-url-angled
+
+  link-inline-url-unquoted:
+    - meta_scope: markup.underline.link.markdown
+    - include: link-url-unquoted
+
+  link-inline-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-inline-attr-body
+    - include: immediately-pop
+
+  link-inline-attr-body:
+    - meta_scope: meta.link.inline.attributes.markdown
+    - include: tag-attributes
+
+  link-ref:
+    - match: \[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-ref-attr
+        - link-ref-metadata
+        - link-ref-link-text
+    - match: \[(?={{balance_square_brackets}}?\])
+      scope: punctuation.definition.link.begin.markdown
+      push: link-ref-link-text
+
+  link-ref-link-text:
+    - meta_scope: meta.link.reference.description.markdown
+    - match: \]
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    - include: link-text-allow-image
+
+  link-ref-metadata:
+    - match: (\[)({{reference_name}})(\])
+      scope: meta.link.reference.metadata.markdown
+      captures:
+        1: punctuation.definition.metadata.begin.markdown
+        2: markup.underline.link.markdown
+        3: punctuation.definition.metadata.end.markdown
+      pop: 1
+    - include: immediately-pop
+
+  link-ref-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-ref-attr-body
+    - include: immediately-pop
+
+  link-ref-attr-body:
+    - meta_scope: meta.link.reference.attributes.markdown
+    - include: tag-attributes
+
+  link-ref-literal:
+    - match: \[(?={{balance_square_brackets}}?\]\[\])
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - link-ref-literal-attr
+        - link-ref-literal-metadata
+        - link-ref-literal-link-text
+
+  link-ref-literal-link-text:
+    - meta_scope: meta.link.reference.literal.description.markdown
+    - match: \]
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    - include: link-text-allow-image
+
+  link-ref-literal-metadata:
+    - match: (\[)(\])
+      scope: meta.link.reference.literal.metadata.markdown
+      captures:
+        1: punctuation.definition.metadata.begin.markdown
+        2: punctuation.definition.metadata.end.markdown
+      pop: 1
+    - include: immediately-pop
+
+  link-ref-literal-attr:
+    - match: \{(?=[^}]*\})
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-ref-literal-attr-body
+    - include: immediately-pop
+
+  link-ref-literal-attr-body:
+    - meta_scope: meta.link.reference.literal.attributes.markdown
+    - include: tag-attributes
+
+  link-ref-footnote:
+    - match: (\[)({{footnote_name}})(\])
+      captures:
+        0: meta.link.reference.footnote.markdown-extra
+        1: punctuation.definition.link.begin.markdown
+        2: meta.link.reference.literal.footnote-id.markdown
+        3: punctuation.definition.link.end.markdown
+
+  link-ref-wiki:
+    - match: \[\[(?={{balance_square_brackets}}?\]\])
+      scope: punctuation.definition.link.begin.markdown
+      push: link-ref-wiki-link-text
+
+  link-ref-wiki-link-text:
+    - meta_scope: meta.link.reference.wiki.description.markdown
+    - match: \]\]
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    - include: link-text-allow-image
+
+###[ INLINE: LINK/IMAGE PROTOTYPES ]##########################################
+
+  link-text:
+    - match: \[
+      push: link-text-nested
+    - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
+    - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
+    - include: emphasis
+    - include: literals
+    - include: markups
+
+  link-text-nested:
+    - include: link-text
+    - match: \]
+      pop: 1
+
+  link-text-allow-image:
+    - include: link-text
+    - include: images
+
+  link-title:
+    - include: link-title-begin
+    - include: eol-pop
+    - include: else-pop
+
+  link-title-begin:
+    - match: \'
+      scope: punctuation.definition.string.begin.markdown
+      set: link-title-single-quoted-content
+    - match: \"
+      scope: punctuation.definition.string.begin.markdown
+      set: link-title-double-quoted-content
+    - match: \(
+      scope: punctuation.definition.string.begin.markdown
+      set: link-title-other-quoted-content
+
+  link-title-double-quoted-content:
+    - meta_scope: meta.string.title.markdown string.quoted.double.markdown
+    - match: \"
+      scope: punctuation.definition.string.end.markdown
+      pop: 1
+    - include: link-title-common
+
+  link-title-single-quoted-content:
+    - meta_scope: meta.string.title.markdown string.quoted.single.markdown
+    - match: \'
+      scope: punctuation.definition.string.end.markdown
+      pop: 1
+    - include: link-title-common
+
+  link-title-other-quoted-content:
+    - meta_scope: meta.string.title.markdown string.quoted.other.markdown
+    - match: \)
+      scope: punctuation.definition.string.end.markdown
+      pop: 1
+    - include: link-title-common
+
+  link-title-common:
+    - match: $\n?
+      branch_point: link-title-continuation
+      branch:
+        - link-title-continuation
+        - link-title-termination
+    - include: escapes
+    - include: html-entities
+
+  link-title-continuation:
+    - meta_include_prototype: false
+    # if line is empty, rollback to previous line and pop its contexts.
+    - match: ^\s*$
+      fail: link-title-continuation
+    - match: ^
+      pop: 1
+
+  link-title-termination:
+    - meta_include_prototype: false
+    - meta_scope: invalid.illegal.non-terminated.link-title.markdown
+    - include: immediately-pop2
+
+  link-url-angled:
+    - match: \>
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    - include: link-url-common
+
+  link-url-unquoted:
+    - match: (?=[ \t)])
+      pop: 1
+    - match: \(
+      push: link-url-unquoted-parens
+    - include: link-url-common
+
+  link-url-unquoted-parens:
+    - match: \)
+      pop: 1
+    - include: link-url-unquoted
+
+  link-url-common:
+    - include: escapes
+    - include: html-entities
+    - include: link-url-path-separators
+    - include: link-url-scheme-separators
+    - include: link-url-escapes
+    - include: paragraph-end
+
+  link-url-escapes:
+    - match: (%)\h{2}
+      scope: constant.character.escape.url.markdown
+      captures:
+        1: punctuation.definition.escape.markdown
+
+  link-url-path-separators:
+    - match: '[/&?#]'
+      scope: punctuation.separator.path.markdown
+
+  link-url-scheme-separators:
+    - match: ':/{,2}'
+      scope: punctuation.separator.path.markdown
+
+  link-url-scheme-separator:
+    - match: ':/{,2}'
+      scope: punctuation.separator.path.markdown
+      pop: 1
+
+###[ INLINE: LINK/IMAGE/REFERENCE ATTRIBUTES ]################################
+
+  tag-attributes:
+    # https://kramdown.gettalong.org/syntax.html#span-ials
+    # https://michelf.ca/projects/php-markdown/extra/
+    # https://pandoc.org/MANUAL.html#extension-link_attributes
+    - match: \}
+      scope: punctuation.definition.attributes.end.markdown
+      pop: 1
+    - match: \,
+      scope: punctuation.separator.sequence.markdown
+    - match: '{{tag_attribute_name_start}}'
+      push: [tag-attr-meta, tag-attr-equals, tag-attr-name]
+
+  tag-attr-name:
+    - meta_scope: entity.other.attribute-name.markdown
+    - match: '{{tag_attribute_name_break}}'
+      pop: 1
+    - match: '["''`<]'
+      scope: invalid.illegal.attribute-name.markdown
+
+  tag-attr-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.attribute-with-value.markdown
+    - include: immediately-pop
+
+  tag-attr-equals:
+    - match: =
+      scope: punctuation.separator.key-value.markdown
+      set: tag-attr-value
+    - include: else-pop
+
+  tag-attr-value:
+    - match: \"
+      scope: punctuation.definition.string.begin.markdown
+      set: tag-attr-value-double-quoted
+    - match: \'
+      scope: punctuation.definition.string.begin.markdown
+      set: tag-attr-value-single-quoted
+    - match: '{{tag_unquoted_attribute_start}}'
+      set: tag-attr-value-unquoted
+    - include: else-pop
+
+  tag-attr-value-double-quoted:
+    - meta_scope: string.quoted.double.markdown
+    - match: \"
+      scope: punctuation.definition.string.end.markdown
+      pop: 1
+
+  tag-attr-value-single-quoted:
+    - meta_scope: string.quoted.single.markdown
+    - match: \'
+      scope: punctuation.definition.string.end.markdown
+      pop: 1
+
+  tag-attr-value-unquoted:
+    - meta_scope: string.unquoted.markdown
+    - match: '{{tag_unquoted_attribute_break}}'
+      pop: 1
+    - match: '["''`<]'
+      scope: invalid.illegal.attribute-value.markdown
+
+###[ INLINE: AUTOLINKS ]######################################################
+
+  autolink-email:
+    # CommonMark
+    # https://spec.commonmark.org/0.30/#email-autolink
+    - match: |-
+        (?x)
+        (<)
+        (
+          (?:mailto(:))?
+          {{email_user_commonmark}}
+          (@)
+          {{email_domain_commonmark}}(?:\.{{email_domain_commonmark}})*
+        )
+        (>)
+      captures:
+        0: meta.link.email.markdown
+        1: punctuation.definition.link.begin.markdown
+        2: markup.underline.link.markdown
+        3: punctuation.separator.path.markdown
+        4: punctuation.separator.path.markdown
+        5: punctuation.definition.link.end.markdown
+    # GitHub Flavoured Markdown
+    - match: '[\w.+-]+(@)[\w-]+(?:\.(?:(?![._-][\W])[\w_-])+)+(?![_-])'
+      captures:
+        0: meta.link.email.markdown markup.underline.link.markdown
+        1: punctuation.separator.path.markdown
+
+  autolink-inet:
+    # CommonMark
+    # https://spec.commonmark.org/0.30/#autolinks
+    - match: <(?=[[:alpha:]][[:alnum:].+-]+:)
+      scope: punctuation.definition.link.begin.markdown
+      push:
+        - autolink-inet-angled-content
+        - link-url-scheme-separator
+    # GitHub Flavoured Markdown
+    # After a valid domain, zero or more non-space non-< characters may follow
+    # https://github.github.com/gfm/#autolinks-extension-
+    - match: (https|http|ftp)(://)(www\.)?|(www\.)
+      captures:
+        1: markup.underline.link.protocol.markdown-gfm
+        2: markup.underline.link.protocol.markdown-gfm punctuation.separator.path.markdown
+        3: markup.underline.link.www.markdown-gfm
+        4: markup.underline.link.www.markdown-gfm
+      push: autolink-inet-unquoted-content
+
+  autolink-inet-angled-content:
+    - meta_scope: meta.link.inet.markdown
+    - meta_content_scope: markup.underline.link.markdown
+    - match: \>
+      scope: punctuation.definition.link.end.markdown
+      pop: 1
+    # Spaces are not allowed in autolinks
+    - match: (?=\s)
+      pop: 1
+    - include: autolink-inet-common
+
+  autolink-inet-unquoted-content:
+    - meta_scope: meta.link.inet.markdown
+    - meta_content_scope: markup.underline.link.markdown-gfm
+    # 1. When an autolink ends in ), we scan the entire autolink for the total
+    #    number of parentheses. If there is a greater number of closing parentheses
+    #    than opening ones, we don't consider the last character part of the
+    #    autolink, in order to facilitate including an autolink inside a parenthesis
+    # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
+    #    resemble an entity reference; if the preceding text is & followed by one
+    #    or more alphanumeric characters. If so, it is excluded from the autolink
+    # 3. Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not
+    #    be considered part of the autolink, though they may be included in the
+    #    interior # of the link
+    #    Note: contains some empirical (undocumented) punctuation such as ;, ', "
+    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:;*_~'"]*[\s<])
+      pop: 1
+    - include: autolink-inet-common
+
+  autolink-inet-group:
+    - match: \)
+      pop: 1
+    - match: (?=(?:{{html_entity}})*[?!.,:;*_~'"]*[\s<])
+      pop: 1
+    - include: autolink-inet-common
+
+  autolink-inet-common:
+    - match: \(
+      push: autolink-inet-group
+    - include: link-url-path-separators
+    - include: link-url-escapes
+
+###[ INLINE: OTHER ]##########################################################
+
+  anchors:
+    - match: (#)[[:alnum:]_/-]+\b
+      scope: markup.anchor.markdown
+      captures:
+        1: punctuation.definition.anchor.markdown
+
+  escapes:
+    # https://spec.commonmark.org/0.30/#backslash-escapes
+    - match: '{{escapes}}'
+      scope: constant.character.escape.markdown
+
+  hard-line-breaks:
+    # https://spec.commonmark.org/0.30/#hard-line-breaks
+    - match: '[ ]{2,}$'
+      scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
+    - match: (\\)\n
+      captures:
+        0: meta.hard-line-break.markdown
+        1: constant.character.escape.markdown
+
+###[ EXTENSIONS: ADMONITIONS ]################################################
+
+  admonitions:
+    # https://python-markdown.github.io/extensions/admonition/
+    - match: '^([ \t]*)(!!!)[ \t]+(caution|danger)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-caution-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(bug|failure)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-error-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(important)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-important-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(abstract|info|note|question|success)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-note-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(quote)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-quote-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(tip)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-tip-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(warning)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-warning-heading
+      escape: '{{admonition_escape}}'
+    - match: '^([ \t]*)(!!!)[ \t]+(\w+)\b'
+      captures:
+        2: punctuation.definition.admonition.markdown
+        3: entity.name.admonition.markdown
+      embed: admonition-other-heading
+      escape: '{{admonition_escape}}'
+
+  admonition-caution-heading:
+    - meta_scope: meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
+    - match: ^
+      set: admonition-caution-body
+    - include: admonition-titles
+
+  admonition-caution-body:
+    - meta_scope: meta.admonition.caution.markdown
+    - include: indented-markdown
+
+  admonition-error-heading:
+    - meta_scope: meta.admonition.error.markdown markup.heading.admonition.error.markdown
+    - match: ^
+      set: admonition-error-body
+    - include: admonition-titles
+
+  admonition-error-body:
+    - meta_scope: meta.admonition.error.markdown
+    - include: indented-markdown
+
+  admonition-important-heading:
+    - meta_scope: meta.admonition.important.markdown markup.heading.admonition.important.markdown
+    - match: ^
+      set: admonition-important-body
+    - include: admonition-titles
+
+  admonition-important-body:
+    - meta_scope: meta.admonition.important.markdown
+    - include: indented-markdown
+
+  admonition-note-heading:
+    - meta_scope: meta.admonition.note.markdown markup.heading.admonition.note.markdown
+    - match: ^
+      set: admonition-note-body
+    - include: admonition-titles
+
+  admonition-note-body:
+    - meta_scope: meta.admonition.note.markdown
+    - include: indented-markdown
+
+  admonition-quote-heading:
+    - meta_scope: meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
+    - match: ^
+      set: admonition-quote-body
+    - include: admonition-titles
+
+  admonition-quote-body:
+    - meta_scope: meta.admonition.quote.markdown
+    - include: indented-markdown
+
+  admonition-tip-heading:
+    - meta_scope: meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
+    - match: ^
+      set: admonition-tip-body
+    - include: admonition-titles
+
+  admonition-tip-body:
+    - meta_scope: meta.admonition.tip.markdown
+    - include: indented-markdown
+
+  admonition-warning-heading:
+    - meta_scope: meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
+    - match: ^
+      set: admonition-warning-body
+    - include: admonition-titles
+
+  admonition-warning-body:
+    - meta_scope: meta.admonition.warning.markdown
+    - include: indented-markdown
+
+  admonition-other-heading:
+    - meta_scope: meta.admonition.other.markdown markup.heading.admonition.other.markdown
+    - match: ^
+      set: admonition-other-body
+    - include: admonition-titles
+
+  admonition-other-body:
+    - meta_scope: meta.admonition.other.markdown
+    - include: indented-markdown
+
+  admonition-titles:
+    - match: \"
+      scope: punctuation.definition.title.begin.markdown
+      push: admonition-title-body
+
+  admonition-title-body:
+    - meta_scope: meta.title.markdown
+    - match: \"
+      scope: punctuation.definition.title.end.markdown
+      pop: 1
+    - match: $
+      pop: 1
+    - include: line-inlines
+
+###[ EXTENSIONS: CRITIC MARKUP ]##############################################
+
+  critics:
+    # inline critic markup
+    # http://criticmarkup.com/spec.php
+    - include: critics-additions
+    - include: critics-comments
+    - include: critics-deletions
+    - include: critics-highlights
+    - include: critics-substitutions
+
+  critics-additions:
+    - match: \{\+\+
+      scope: punctuation.definition.critic.begin.markdown
+      push: critics-addition-content
+
+  critics-addition-content:
+    - meta_scope: markup.critic.addition.markdown
+    - meta_content_scope: markup.inserted.critic.markdown
+    - match: \+\+\}
+      scope: punctuation.definition.critic.end.markdown
+      pop: 1
+    - include: critics-common
+
+  critics-comments:
+    - match: '{>>'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critics-comment-content
+
+  critics-comment-content:
+    - meta_scope: markup.critic.comment.markdown
+    - meta_content_scope: comment.critic.markdown
+    - match: '<<}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: 1
+    - include: critics-common
+
+  critics-deletions:
+    - match: '{--'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critics-deletion-content
+
+  critics-deletion-content:
+    - meta_scope: markup.critic.deletion.markdown
+    - meta_content_scope: markup.deleted.critic.markdown
+    - match: '--}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: 1
+    - include: critics-common
+
+  critics-highlights:
+    - match: '{=='
+      scope: punctuation.definition.critic.begin.markdown
+      push: critics-highlight-content
+
+  critics-highlight-content:
+    - meta_scope: markup.critic.highlight.markdown
+    - meta_content_scope: markup.info.critic.markdown
+    - match: '==}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: 1
+    - include: critics-common
+
+  critics-substitutions:
+    - match: '{~~'
+      scope: punctuation.definition.critic.begin.markdown
+      push: critics-substitution-deleted
+
+  critics-substitution-deleted:
+    - meta_scope: markup.critic.substitution.markdown
+    - meta_content_scope: markup.deleted.critic.markdown
+    - match: (?=~>)
+      set:
+        - meta_include_prototype: false
+        - match: '~>'
+          scope: punctuation.separator.critic.markdown
+          set: critics-substitution-inserted
+    - include: critics-substitution-inserted
+
+  critics-substitution-inserted:
+    - meta_scope: markup.critic.substitution.markdown
+    - meta_content_scope: markup.inserted.critic.markdown
+    - match: '~~}'
+      scope: punctuation.definition.critic.end.markdown
+      pop: 1
+    - include: critics-common
+
+  critics-common:
+    - match: ^(?=\s*$)
+      pop: 1
+    - include: emphasis
+    - include: images
+    - include: literals
+    - include: links
+
+###[ EXTENSIONS: MATHJAX ]####################################################
+
+  list-math-blocks:
+    - match: (?=(?:^[ \t]*)?\$\$)
+      branch_point: list-math-blocks
+      branch:
+        - list-math-block-begin
+        - list-math-inline-block-begin
+
+  list-math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ \t]*(\$\$)
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - list-math-block-end
+        - list-math-block-content
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$){{wspace_eol}}
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-inline-block-begin:
+    # Math blocks preceded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - list-math-inline-block-end
+        - list-math-block-content
+
+  list-math-inline-block-end:
+    - meta_include_prototype: false
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: list-math-blocks
+
+  list-math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{list_paragraph_end}}|{{list_setext_heading_escape}}
+      pop: 1 # embed math once
+
+  math-blocks:
+    - match: (?=(?:^[ ]{,3})?\$\$)
+      branch_point: math-blocks
+      branch:
+        - math-block-begin
+        - math-inline-block-begin
+
+  math-block-begin:
+    # Leading and trailing whitespace of standalone math blocks are scoped
+    # `markup.math` in case background color is assigned.
+    - meta_include_prototype: false
+    - match: ^[ ]{,3}(\$\$)
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.begin.latex
+      set:
+        - math-block-end
+        - math-block-content
+    - match: ''
+      fail: math-blocks
+
+  math-block-end:
+    - meta_include_prototype: false
+    - meta_scope: markup.math.block.markdown
+    - meta_content_scope:
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: (\$\$){{wspace_eol}}
+      captures:
+        1: text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-inline-block-begin:
+    # Math blocks preceded or followed by normal text are treated as inline raw
+    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
+    - meta_include_prototype: false
+    - match: \$\$
+      scope: punctuation.definition.math.begin.latex
+      set:
+        - math-inline-blocks-end
+        - math-block-content
+
+  math-inline-blocks-end:
+    - meta_include_prototype: false
+    - meta_scope:
+        markup.math.block.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+    - match: \$\$
+      scope: punctuation.definition.math.end.latex
+      pop: 1
+    - match: ''
+      fail: math-blocks
+
+  math-block-content:
+    - meta_include_prototype: false
+    - match: ''
+      embed: math-content
+      escape: (?=\$\$)|{{paragraph_end}}|{{setext_heading_escape}}
+      pop: 1 # embed math once
+
+  math-inline:
+    # Consume any remaining $$ to prevent deadlock
+    # (workaround for https://github.com/sublimehq/sublime_text/issues/5415)
+    - match: \$\$
+    - match: |-
+        (?x)
+        # dollar sign not followed by whitespace
+        (\$) (?=\S)
+        # arbitrary number of chars, maybe escaped dollar sign, but no html tags
+        # terminated by non-whitespace, followed by dollar and non-word character
+        (?= (?: \\\\ | \\\$ | (?!</?[A-Za-z]+[ \t]*/?>)[^\$] )*? \S\$\W )
+      scope:
+        markup.math.inline.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+        punctuation.definition.math.begin.latex
+      embed: math-content
+      embed_scope:
+        markup.math.inline.markdown
+        text.tex.latex.embedded.markdown
+        meta.environment.math.block.dollar.latex
+      escape: '{{no_escape_behind}}\$'
+      escape_captures:
+        0: markup.math.inline.markdown
+           text.tex.latex.embedded.markdown
+           meta.environment.math.block.dollar.latex
+           punctuation.definition.math.end.latex
+
+  math-content:
+    - include: scope:text.tex.latex#macros
+    - include: scope:text.tex.latex#math-content
+
+###[ EXTENSIONS: PANDOC FENCED DIVS ]#########################################
+
+  fenced-div-blocks:
+    # https://pandoc.org/MANUAL.html#divs-and-spans
+    - match: '[ \t]*({{fenced_div_block}})[ \t]*$\n?'
+      scope: meta.div.markdown
+      captures:
+        1: punctuation.section.div.end.markdown
+    - match: '[ \t]*({{fenced_div_block}})'
+      captures:
+        1: punctuation.section.div.begin.markdown
+      push:
+        - fenced-div-punctuation
+        - fenced-div-attr
+
+  fenced-div-attr:
+    - meta_include_prototype: false
+    - match: \{
+      scope: punctuation.definition.attributes.begin.markdown
+      set: link-def-attr-body
+    - match: '{{tag_attribute_name_start}}'
+      set:
+        - tag-attr-meta
+        - tag-attr-equals
+        - tag-attr-name
+    - match: else-pop
+
+  fenced-div-punctuation:
+    - meta_include_prototype: false
+    - meta_scope: meta.div.markdown
+    - match: ':+'
+      scope: punctuation.section.div.markdown
+      pop: 1
+    - include: else-pop
+
+###[ PROTOTYPES ]#############################################################
+
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
+  eol-pop:
+    - match: $
+      pop: 1
+
+  expect-eol:
+    - include: eol-pop
+    - match: \S.+
+      scope: invalid.illegal.expected-eol.markdown
+
+  immediately-pop:
+    - meta_include_prototype: false
+    - match: ''
+      pop: 1
+
+  immediately-pop2:
+    - meta_include_prototype: false
+    - match: ''
+      pop: 2
+
+###[ GENERATED: CONTAINER INLINES ]###########################################
 
 # Generated by generate_inlines; do not edit.
 
@@ -5462,1117 +6575,5 @@ contexts:
   line-emphasis-content:
     - include: emphasis-inline-common
 
-###[ END GENERATED: CONTAINER EMPHASIS ]######################################
+###[ END GENERATED: CONTAINER INLINES ]#######################################
 
-###[ INLINE: EMPHASIS HELPERS ]###############################################
-
-  inline-common:
-    - include: images
-    - include: literals
-    - include: links
-    - include: markups
-
-  emphasis-inline-common:
-    - include: hard-line-breaks
-    - include: inline-common
-
-  no-emphasis:
-    - meta_include_prototype: false
-    - match: '[*_]'
-      pop: 1
-
-  no-highlight:
-    - meta_include_prototype: false
-    - match: ==
-      pop: 1
-
-  no-strikethrough:
-    - meta_include_prototype: false
-    - match: ~~
-      pop: 1
-
-  bold-asterisk-end:
-    - match: '{{asterisk_can_close}}{{bold_asterisk_end}}'
-      scope: punctuation.definition.bold.end.markdown
-      pop: 1
-    # Consume the underscore that has no corresponding underscore before the closing bold
-    # punctuation on the same line, as it won't be treated as italic by CommonMark
-    - match: \b_(?=[^\s_])(?=[^*_]*\*\*)
-
-  bold-underscore-end:
-    - match: '{{wspace}}_{2,}'
-    - match: '{{bold_underscore_end}}'
-      scope: punctuation.definition.bold.end.markdown
-      pop: 1
-    # Consume the asterisk that has no corresponding asterisk before the closing bold
-    # punctuation on the same line, as it won't be treated as italic by CommonMark
-    - match: \*(?=[^\s*])(?=[^*_]*__\b)
-
-  bold-italic-asterisk-end:
-    - match: '{{wspace}}\*+'
-    - match: '{{bold_italic_asterisk_end}}'
-      captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
-      pop: 1
-
-  bold-after-bold-italic-asterisk-end:
-    - match: '{{wspace}}\*{3,}'
-    - match: '{{bold_asterisk_end}}'
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: 1
-
-  italic-after-bold-italic-asterisk-end:
-    - match: '{{wspace}}\*{3,}'
-    - match: '{{italic_asterisk_end}}'
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: 1
-
-  bold-italic-underscore-end:
-    - match: '{{wspace}}_+'
-    - match: '{{bold_italic_underscore_end}}'
-      captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
-      pop: 1
-
-  bold-after-bold-italic-underscore-end:
-    - match: '{{wspace}}_{3,}'
-    - match: '{{bold_underscore_end}}'
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
-      pop: 1
-
-  italic-after-bold-italic-underscore-end:
-    - match: '{{wspace}}_{3,}'
-    - match: '{{italic_underscore_end}}'
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
-      pop: 1
-
-  italic-asterisk-end:
-    - match: '{{asterisk_can_close}}{{italic_asterisk_end}}'
-      scope: punctuation.definition.italic.end.markdown
-      pop: 1
-
-  italic-underscore-end:
-    - match: '{{wspace}}_(?!_)'
-    - match: '{{italic_underscore_end}}'
-      scope: punctuation.definition.italic.end.markdown
-      pop: 1
-
-  highlight-equal-end:
-    - match: '{{highlight_end}}'
-      scope: punctuation.definition.highlight.end.markdown
-      pop: 1
-    - match: '[ \t]*=+'
-
-  strikethrough-tilde-end:
-    - match: '{{strikethrough_end}}'  # 2x ~ maybe followed by ~> or ~~}
-      scope: punctuation.definition.strikethrough.end.markdown
-      pop: 1
-    - match: '[ \t]*~+(?:(?!~)|(?=~~}|~>))'  # any number of ~ maybe followed by ~> or ~~}
-
-###[ INLINE: IMAGES ]#########################################################
-
-  image-inline:
-    - match: \!\[(?={{balance_square_brackets}}?\]\()
-      scope: punctuation.definition.image.begin.markdown
-      push:
-        - image-inline-metadata
-        - image-inline-text
-
-  image-inline-text:
-    - meta_scope: meta.image.inline.description.markdown
-    - match: \]
-      scope: punctuation.definition.image.end.markdown
-      pop: 1
-    - include: link-text
-
-  image-inline-metadata:
-    - match: \(
-      scope: punctuation.definition.metadata.begin.markdown
-      set:
-        - image-inline-metadata-end
-        - link-title
-        - image-inline-url
-    - include: immediately-pop
-
-  image-inline-metadata-end:
-    - meta_scope: meta.image.inline.metadata.markdown
-    - match: \)
-      scope: punctuation.definition.metadata.end.markdown
-      set: image-inline-attr
-    - include: else-pop
-
-  image-inline-url:
-    - match: <
-      scope: punctuation.definition.link.begin.markdown
-      set: image-inline-url-angled
-    - match: (?=\S)
-      set: image-inline-url-unquoted
-
-  image-inline-url-angled:
-    - meta_content_scope: markup.underline.link.image.markdown
-    - include: link-url-angled
-
-  image-inline-url-unquoted:
-    - meta_scope: markup.underline.link.image.markdown
-    - include: link-url-unquoted
-
-  image-inline-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: image-inline-attr-body
-    - include: immediately-pop
-
-  image-inline-attr-body:
-    - meta_scope: meta.image.inline.attributes.markdown
-    - include: tag-attributes
-
-  image-ref:
-    - match: \!\[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
-      scope: punctuation.definition.image.begin.markdown
-      push:
-        - image-ref-attr
-        - image-ref-metadata
-        - image-ref-text
-
-  image-ref-text:
-    - meta_scope: meta.image.reference.description.markdown
-    - match: \]
-      scope: punctuation.definition.image.end.markdown
-      pop: 1
-    - include: link-text
-
-  image-ref-metadata:
-    - match: (\[)({{reference_name}})(\])
-      scope: meta.image.reference.metadata.markdown
-      captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.definition.metadata.end.markdown
-      pop: 1
-    - include: immediately-pop
-
-  image-ref-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: image-ref-attr-body
-    - include: immediately-pop
-
-  image-ref-attr-body:
-    - meta_scope: meta.image.reference.markdown
-    - include: tag-attributes
-
-###[ INLINE: LINKS ]##########################################################
-
-  link-inline:
-    - match: \[(?={{balance_square_brackets}}?\]\()
-      scope: punctuation.definition.link.begin.markdown
-      push:
-        - link-inline-metadata
-        - link-inline-text
-
-  link-inline-text:
-    - meta_scope: meta.link.inline.description.markdown
-    - match: \]
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    - include: link-text-allow-image
-
-  link-inline-metadata:
-    - match: \(
-      scope: punctuation.definition.metadata.begin.markdown
-      set:
-        - link-inline-metadata-end
-        - link-title
-        - link-inline-url
-    - include: immediately-pop
-
-  link-inline-metadata-end:
-    - meta_scope: meta.link.inline.metadata.markdown
-    - match: \)
-      scope: punctuation.definition.metadata.end.markdown
-      set: link-inline-attr
-    - include: else-pop
-
-  link-inline-url:
-    - match: <
-      scope: punctuation.definition.link.begin.markdown
-      set: link-inline-url-angled
-    - match: (?=\S)
-      set: link-inline-url-unquoted
-
-  link-inline-url-angled:
-    - meta_content_scope: markup.underline.link.markdown
-    - include: link-url-angled
-
-  link-inline-url-unquoted:
-    - meta_scope: markup.underline.link.markdown
-    - include: link-url-unquoted
-
-  link-inline-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: link-inline-attr-body
-    - include: immediately-pop
-
-  link-inline-attr-body:
-    - meta_scope: meta.link.inline.attributes.markdown
-    - include: tag-attributes
-
-  link-ref:
-    - match: \[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
-      scope: punctuation.definition.link.begin.markdown
-      push:
-        - link-ref-attr
-        - link-ref-metadata
-        - link-ref-link-text
-    - match: \[(?={{balance_square_brackets}}?\])
-      scope: punctuation.definition.link.begin.markdown
-      push: link-ref-link-text
-
-  link-ref-link-text:
-    - meta_scope: meta.link.reference.description.markdown
-    - match: \]
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    - include: link-text-allow-image
-
-  link-ref-metadata:
-    - match: (\[)({{reference_name}})(\])
-      scope: meta.link.reference.metadata.markdown
-      captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.definition.metadata.end.markdown
-      pop: 1
-    - include: immediately-pop
-
-  link-ref-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: link-ref-attr-body
-    - include: immediately-pop
-
-  link-ref-attr-body:
-    - meta_scope: meta.link.reference.attributes.markdown
-    - include: tag-attributes
-
-  link-ref-literal:
-    - match: \[(?={{balance_square_brackets}}?\]\[\])
-      scope: punctuation.definition.link.begin.markdown
-      push:
-        - link-ref-literal-attr
-        - link-ref-literal-metadata
-        - link-ref-literal-link-text
-
-  link-ref-literal-link-text:
-    - meta_scope: meta.link.reference.literal.description.markdown
-    - match: \]
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    - include: link-text-allow-image
-
-  link-ref-literal-metadata:
-    - match: (\[)(\])
-      scope: meta.link.reference.literal.metadata.markdown
-      captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: punctuation.definition.metadata.end.markdown
-      pop: 1
-    - include: immediately-pop
-
-  link-ref-literal-attr:
-    - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
-      set: link-ref-literal-attr-body
-    - include: immediately-pop
-
-  link-ref-literal-attr-body:
-    - meta_scope: meta.link.reference.literal.attributes.markdown
-    - include: tag-attributes
-
-  link-ref-footnote:
-    - match: (\[)({{footnote_name}})(\])
-      captures:
-        0: meta.link.reference.footnote.markdown-extra
-        1: punctuation.definition.link.begin.markdown
-        2: meta.link.reference.literal.footnote-id.markdown
-        3: punctuation.definition.link.end.markdown
-
-  link-ref-wiki:
-    - match: \[\[(?={{balance_square_brackets}}?\]\])
-      scope: punctuation.definition.link.begin.markdown
-      push: link-ref-wiki-link-text
-
-  link-ref-wiki-link-text:
-    - meta_scope: meta.link.reference.wiki.description.markdown
-    - match: \]\]
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    - include: link-text-allow-image
-
-###[ INLINE: LINK/IMAGE PROTOTYPES ]##########################################
-
-  link-text:
-    - match: \[
-      push: link-text-nested
-    - match: \b__?(?=[^]_]+\]) # eat underscores where there is no pair before the end of the square brackets - it's not a formatting mark
-    - match: \b\*\*?(?=[^]*]+\]) # eat asterisks where there is no pair before the end of the square brackets - it's not a formatting mark
-    - include: emphasis
-    - include: literals
-    - include: markups
-
-  link-text-nested:
-    - include: link-text
-    - match: \]
-      pop: 1
-
-  link-text-allow-image:
-    - include: link-text
-    - include: images
-
-  link-title:
-    - include: link-title-begin
-    - include: eol-pop
-    - include: else-pop
-
-  link-title-begin:
-    - match: \'
-      scope: punctuation.definition.string.begin.markdown
-      set: link-title-single-quoted-content
-    - match: \"
-      scope: punctuation.definition.string.begin.markdown
-      set: link-title-double-quoted-content
-    - match: \(
-      scope: punctuation.definition.string.begin.markdown
-      set: link-title-other-quoted-content
-
-  link-title-double-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.double.markdown
-    - match: \"
-      scope: punctuation.definition.string.end.markdown
-      pop: 1
-    - include: link-title-common
-
-  link-title-single-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.single.markdown
-    - match: \'
-      scope: punctuation.definition.string.end.markdown
-      pop: 1
-    - include: link-title-common
-
-  link-title-other-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.other.markdown
-    - match: \)
-      scope: punctuation.definition.string.end.markdown
-      pop: 1
-    - include: link-title-common
-
-  link-title-common:
-    - match: $\n?
-      branch_point: link-title-continuation
-      branch:
-        - link-title-continuation
-        - link-title-termination
-    - include: escapes
-    - include: html-entities
-
-  link-title-continuation:
-    - meta_include_prototype: false
-    # if line is empty, rollback to previous line and pop its contexts.
-    - match: ^\s*$
-      fail: link-title-continuation
-    - match: ^
-      pop: 1
-
-  link-title-termination:
-    - meta_include_prototype: false
-    - meta_scope: invalid.illegal.non-terminated.link-title.markdown
-    - include: immediately-pop2
-
-  link-url-angled:
-    - match: \>
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    - include: link-url-common
-
-  link-url-unquoted:
-    - match: (?=[ \t)])
-      pop: 1
-    - match: \(
-      push: link-url-unquoted-parens
-    - include: link-url-common
-
-  link-url-unquoted-parens:
-    - match: \)
-      pop: 1
-    - include: link-url-unquoted
-
-  link-url-common:
-    - include: escapes
-    - include: html-entities
-    - include: link-url-path-separators
-    - include: link-url-scheme-separators
-    - include: link-url-escapes
-    - include: paragraph-end
-
-  link-url-escapes:
-    - match: (%)\h{2}
-      scope: constant.character.escape.url.markdown
-      captures:
-        1: punctuation.definition.escape.markdown
-
-  link-url-path-separators:
-    - match: '[/&?#]'
-      scope: punctuation.separator.path.markdown
-
-  link-url-scheme-separators:
-    - match: ':/{,2}'
-      scope: punctuation.separator.path.markdown
-
-  link-url-scheme-separator:
-    - match: ':/{,2}'
-      scope: punctuation.separator.path.markdown
-      pop: 1
-
-###[ INLINE: LINK/IMAGE/REFERENCE ATTRIBUTES ]################################
-
-  tag-attributes:
-    # https://kramdown.gettalong.org/syntax.html#span-ials
-    # https://michelf.ca/projects/php-markdown/extra/
-    # https://pandoc.org/MANUAL.html#extension-link_attributes
-    - match: \}
-      scope: punctuation.definition.attributes.end.markdown
-      pop: 1
-    - match: \,
-      scope: punctuation.separator.sequence.markdown
-    - match: '{{tag_attribute_name_start}}'
-      push: [tag-attr-meta, tag-attr-equals, tag-attr-name]
-
-  tag-attr-name:
-    - meta_scope: entity.other.attribute-name.markdown
-    - match: '{{tag_attribute_name_break}}'
-      pop: 1
-    - match: '["''`<]'
-      scope: invalid.illegal.attribute-name.markdown
-
-  tag-attr-meta:
-    - meta_include_prototype: false
-    - meta_scope: meta.attribute-with-value.markdown
-    - include: immediately-pop
-
-  tag-attr-equals:
-    - match: =
-      scope: punctuation.separator.key-value.markdown
-      set: tag-attr-value
-    - include: else-pop
-
-  tag-attr-value:
-    - match: \"
-      scope: punctuation.definition.string.begin.markdown
-      set: tag-attr-value-double-quoted
-    - match: \'
-      scope: punctuation.definition.string.begin.markdown
-      set: tag-attr-value-single-quoted
-    - match: '{{tag_unquoted_attribute_start}}'
-      set: tag-attr-value-unquoted
-    - include: else-pop
-
-  tag-attr-value-double-quoted:
-    - meta_scope: string.quoted.double.markdown
-    - match: \"
-      scope: punctuation.definition.string.end.markdown
-      pop: 1
-
-  tag-attr-value-single-quoted:
-    - meta_scope: string.quoted.single.markdown
-    - match: \'
-      scope: punctuation.definition.string.end.markdown
-      pop: 1
-
-  tag-attr-value-unquoted:
-    - meta_scope: string.unquoted.markdown
-    - match: '{{tag_unquoted_attribute_break}}'
-      pop: 1
-    - match: '["''`<]'
-      scope: invalid.illegal.attribute-value.markdown
-
-###[ INLINE: AUTOLINKS ]######################################################
-
-  autolink-email:
-    # CommonMark
-    # https://spec.commonmark.org/0.30/#email-autolink
-    - match: |-
-        (?x)
-        (<)
-        (
-          (?:mailto(:))?
-          {{email_user_commonmark}}
-          (@)
-          {{email_domain_commonmark}}(?:\.{{email_domain_commonmark}})*
-        )
-        (>)
-      captures:
-        0: meta.link.email.markdown
-        1: punctuation.definition.link.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.separator.path.markdown
-        4: punctuation.separator.path.markdown
-        5: punctuation.definition.link.end.markdown
-    # GitHub Flavoured Markdown
-    - match: '[\w.+-]+(@)[\w-]+(?:\.(?:(?![._-][\W])[\w_-])+)+(?![_-])'
-      captures:
-        0: meta.link.email.markdown markup.underline.link.markdown
-        1: punctuation.separator.path.markdown
-
-  autolink-inet:
-    # CommonMark
-    # https://spec.commonmark.org/0.30/#autolinks
-    - match: <(?=[[:alpha:]][[:alnum:].+-]+:)
-      scope: punctuation.definition.link.begin.markdown
-      push:
-        - autolink-inet-angled-content
-        - link-url-scheme-separator
-    # GitHub Flavoured Markdown
-    # After a valid domain, zero or more non-space non-< characters may follow
-    # https://github.github.com/gfm/#autolinks-extension-
-    - match: (https|http|ftp)(://)(www\.)?|(www\.)
-      captures:
-        1: markup.underline.link.protocol.markdown-gfm
-        2: markup.underline.link.protocol.markdown-gfm punctuation.separator.path.markdown
-        3: markup.underline.link.www.markdown-gfm
-        4: markup.underline.link.www.markdown-gfm
-      push: autolink-inet-unquoted-content
-
-  autolink-inet-angled-content:
-    - meta_scope: meta.link.inet.markdown
-    - meta_content_scope: markup.underline.link.markdown
-    - match: \>
-      scope: punctuation.definition.link.end.markdown
-      pop: 1
-    # Spaces are not allowed in autolinks
-    - match: (?=\s)
-      pop: 1
-    - include: autolink-inet-common
-
-  autolink-inet-unquoted-content:
-    - meta_scope: meta.link.inet.markdown
-    - meta_content_scope: markup.underline.link.markdown-gfm
-    # 1. When an autolink ends in ), we scan the entire autolink for the total
-    #    number of parentheses. If there is a greater number of closing parentheses
-    #    than opening ones, we don't consider the last character part of the
-    #    autolink, in order to facilitate including an autolink inside a parenthesis
-    # 2. If an autolink ends in a semicolon (;), we check to see if it appears to
-    #    resemble an entity reference; if the preceding text is & followed by one
-    #    or more alphanumeric characters. If so, it is excluded from the autolink
-    # 3. Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not
-    #    be considered part of the autolink, though they may be included in the
-    #    interior # of the link
-    #    Note: contains some empirical (undocumented) punctuation such as ;, ', "
-    - match: (?=(?:\)|(?:{{html_entity}})*)[?!.,:;*_~'"]*[\s<])
-      pop: 1
-    - include: autolink-inet-common
-
-  autolink-inet-group:
-    - match: \)
-      pop: 1
-    - match: (?=(?:{{html_entity}})*[?!.,:;*_~'"]*[\s<])
-      pop: 1
-    - include: autolink-inet-common
-
-  autolink-inet-common:
-    - match: \(
-      push: autolink-inet-group
-    - include: link-url-path-separators
-    - include: link-url-escapes
-
-###[ INLINE: OTHER ]##########################################################
-
-  anchors:
-    - match: (#)[[:alnum:]_/-]+\b
-      scope: markup.anchor.markdown
-      captures:
-        1: punctuation.definition.anchor.markdown
-
-  escapes:
-    # https://spec.commonmark.org/0.30/#backslash-escapes
-    - match: '{{escapes}}'
-      scope: constant.character.escape.markdown
-
-  hard-line-breaks:
-    # https://spec.commonmark.org/0.30/#hard-line-breaks
-    - match: '[ ]{2,}$'
-      scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
-    - match: (\\)\n
-      captures:
-        0: meta.hard-line-break.markdown
-        1: constant.character.escape.markdown
-
-###[ EXTENSIONS: ADMONITIONS ]################################################
-
-  admonitions:
-    # https://python-markdown.github.io/extensions/admonition/
-    - match: '^([ \t]*)(!!!)[ \t]+(caution|danger)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-caution-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(bug|failure)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-error-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(important)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-important-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(abstract|info|note|question|success)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-note-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(quote)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-quote-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(tip)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-tip-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(warning)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-warning-heading
-      escape: '{{admonition_escape}}'
-    - match: '^([ \t]*)(!!!)[ \t]+(\w+)\b'
-      captures:
-        2: punctuation.definition.admonition.markdown
-        3: entity.name.admonition.markdown
-      embed: admonition-other-heading
-      escape: '{{admonition_escape}}'
-
-  admonition-caution-heading:
-    - meta_scope: meta.admonition.caution.markdown markup.heading.admonition.caution.markdown
-    - match: ^
-      set: admonition-caution-body
-    - include: admonition-titles
-
-  admonition-caution-body:
-    - meta_scope: meta.admonition.caution.markdown
-    - include: indented-markdown
-
-  admonition-error-heading:
-    - meta_scope: meta.admonition.error.markdown markup.heading.admonition.error.markdown
-    - match: ^
-      set: admonition-error-body
-    - include: admonition-titles
-
-  admonition-error-body:
-    - meta_scope: meta.admonition.error.markdown
-    - include: indented-markdown
-
-  admonition-important-heading:
-    - meta_scope: meta.admonition.important.markdown markup.heading.admonition.important.markdown
-    - match: ^
-      set: admonition-important-body
-    - include: admonition-titles
-
-  admonition-important-body:
-    - meta_scope: meta.admonition.important.markdown
-    - include: indented-markdown
-
-  admonition-note-heading:
-    - meta_scope: meta.admonition.note.markdown markup.heading.admonition.note.markdown
-    - match: ^
-      set: admonition-note-body
-    - include: admonition-titles
-
-  admonition-note-body:
-    - meta_scope: meta.admonition.note.markdown
-    - include: indented-markdown
-
-  admonition-quote-heading:
-    - meta_scope: meta.admonition.quote.markdown markup.heading.admonition.quote.markdown
-    - match: ^
-      set: admonition-quote-body
-    - include: admonition-titles
-
-  admonition-quote-body:
-    - meta_scope: meta.admonition.quote.markdown
-    - include: indented-markdown
-
-  admonition-tip-heading:
-    - meta_scope: meta.admonition.tip.markdown markup.heading.admonition.tip.markdown
-    - match: ^
-      set: admonition-tip-body
-    - include: admonition-titles
-
-  admonition-tip-body:
-    - meta_scope: meta.admonition.tip.markdown
-    - include: indented-markdown
-
-  admonition-warning-heading:
-    - meta_scope: meta.admonition.warning.markdown markup.heading.admonition.warning.markdown
-    - match: ^
-      set: admonition-warning-body
-    - include: admonition-titles
-
-  admonition-warning-body:
-    - meta_scope: meta.admonition.warning.markdown
-    - include: indented-markdown
-
-  admonition-other-heading:
-    - meta_scope: meta.admonition.other.markdown markup.heading.admonition.other.markdown
-    - match: ^
-      set: admonition-other-body
-    - include: admonition-titles
-
-  admonition-other-body:
-    - meta_scope: meta.admonition.other.markdown
-    - include: indented-markdown
-
-  admonition-titles:
-    - match: \"
-      scope: punctuation.definition.title.begin.markdown
-      push: admonition-title-body
-
-  admonition-title-body:
-    - meta_scope: meta.title.markdown
-    - match: \"
-      scope: punctuation.definition.title.end.markdown
-      pop: 1
-    - match: $
-      pop: 1
-    - include: line-inlines
-
-###[ EXTENSIONS: CRITIC MARKUP ]##############################################
-
-  critics:
-    # inline critic markup
-    # http://criticmarkup.com/spec.php
-    - include: critics-additions
-    - include: critics-comments
-    - include: critics-deletions
-    - include: critics-highlights
-    - include: critics-substitutions
-
-  critics-additions:
-    - match: \{\+\+
-      scope: punctuation.definition.critic.begin.markdown
-      push: critics-addition-content
-
-  critics-addition-content:
-    - meta_scope: markup.critic.addition.markdown
-    - meta_content_scope: markup.inserted.critic.markdown
-    - match: \+\+\}
-      scope: punctuation.definition.critic.end.markdown
-      pop: 1
-    - include: critics-common
-
-  critics-comments:
-    - match: '{>>'
-      scope: punctuation.definition.critic.begin.markdown
-      push: critics-comment-content
-
-  critics-comment-content:
-    - meta_scope: markup.critic.comment.markdown
-    - meta_content_scope: comment.critic.markdown
-    - match: '<<}'
-      scope: punctuation.definition.critic.end.markdown
-      pop: 1
-    - include: critics-common
-
-  critics-deletions:
-    - match: '{--'
-      scope: punctuation.definition.critic.begin.markdown
-      push: critics-deletion-content
-
-  critics-deletion-content:
-    - meta_scope: markup.critic.deletion.markdown
-    - meta_content_scope: markup.deleted.critic.markdown
-    - match: '--}'
-      scope: punctuation.definition.critic.end.markdown
-      pop: 1
-    - include: critics-common
-
-  critics-highlights:
-    - match: '{=='
-      scope: punctuation.definition.critic.begin.markdown
-      push: critics-highlight-content
-
-  critics-highlight-content:
-    - meta_scope: markup.critic.highlight.markdown
-    - meta_content_scope: markup.info.critic.markdown
-    - match: '==}'
-      scope: punctuation.definition.critic.end.markdown
-      pop: 1
-    - include: critics-common
-
-  critics-substitutions:
-    - match: '{~~'
-      scope: punctuation.definition.critic.begin.markdown
-      push: critics-substitution-deleted
-
-  critics-substitution-deleted:
-    - meta_scope: markup.critic.substitution.markdown
-    - meta_content_scope: markup.deleted.critic.markdown
-    - match: (?=~>)
-      set:
-        - meta_include_prototype: false
-        - match: '~>'
-          scope: punctuation.separator.critic.markdown
-          set: critics-substitution-inserted
-    - include: critics-substitution-inserted
-
-  critics-substitution-inserted:
-    - meta_scope: markup.critic.substitution.markdown
-    - meta_content_scope: markup.inserted.critic.markdown
-    - match: '~~}'
-      scope: punctuation.definition.critic.end.markdown
-      pop: 1
-    - include: critics-common
-
-  critics-common:
-    - match: ^(?=\s*$)
-      pop: 1
-    - include: emphasis
-    - include: images
-    - include: literals
-    - include: links
-
-###[ EXTENSIONS: MATHJAX ]####################################################
-
-  list-math-blocks:
-    - match: (?=(?:^[ \t]*)?\$\$)
-      branch_point: list-math-blocks
-      branch:
-        - list-math-block-begin
-        - list-math-inline-block-begin
-
-  list-math-block-begin:
-    # Leading and trailing whitespace of standalone math blocks are scoped
-    # `markup.math` in case background color is assigned.
-    - meta_include_prototype: false
-    - match: ^[ \t]*(\$\$)
-      captures:
-        1: text.tex.latex.embedded.markdown
-           meta.environment.math.block.dollar.latex
-           punctuation.definition.math.begin.latex
-      set:
-        - list-math-block-end
-        - list-math-block-content
-    - match: ''
-      fail: list-math-blocks
-
-  list-math-block-end:
-    - meta_include_prototype: false
-    - meta_scope: markup.math.block.markdown
-    - meta_content_scope:
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-    - match: (\$\$){{wspace_eol}}
-      captures:
-        1: text.tex.latex.embedded.markdown
-           meta.environment.math.block.dollar.latex
-           punctuation.definition.math.end.latex
-      pop: 1
-    - match: ''
-      fail: list-math-blocks
-
-  list-math-inline-block-begin:
-    # Math blocks preceded or followed by normal text are treated as inline raw
-    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
-    - meta_include_prototype: false
-    - match: \$\$
-      scope: punctuation.definition.math.begin.latex
-      set:
-        - list-math-inline-block-end
-        - list-math-block-content
-
-  list-math-inline-block-end:
-    - meta_include_prototype: false
-    - meta_scope:
-        markup.math.block.markdown
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-    - match: \$\$
-      scope: punctuation.definition.math.end.latex
-      pop: 1
-    - match: ''
-      fail: list-math-blocks
-
-  list-math-block-content:
-    - meta_include_prototype: false
-    - match: ''
-      embed: math-content
-      escape: (?=\$\$)|{{list_paragraph_end}}|{{list_setext_heading_escape}}
-      pop: 1 # embed math once
-
-  math-blocks:
-    - match: (?=(?:^[ ]{,3})?\$\$)
-      branch_point: math-blocks
-      branch:
-        - math-block-begin
-        - math-inline-block-begin
-
-  math-block-begin:
-    # Leading and trailing whitespace of standalone math blocks are scoped
-    # `markup.math` in case background color is assigned.
-    - meta_include_prototype: false
-    - match: ^[ ]{,3}(\$\$)
-      captures:
-        1: text.tex.latex.embedded.markdown
-           meta.environment.math.block.dollar.latex
-           punctuation.definition.math.begin.latex
-      set:
-        - math-block-end
-        - math-block-content
-    - match: ''
-      fail: math-blocks
-
-  math-block-end:
-    - meta_include_prototype: false
-    - meta_scope: markup.math.block.markdown
-    - meta_content_scope:
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-    - match: (\$\$){{wspace_eol}}
-      captures:
-        1: text.tex.latex.embedded.markdown
-           meta.environment.math.block.dollar.latex
-           punctuation.definition.math.end.latex
-      pop: 1
-    - match: ''
-      fail: math-blocks
-
-  math-inline-block-begin:
-    # Math blocks preceded or followed by normal text are treated as inline raw
-    # code blocks, scoped `markup.math` excluding leading or trailing whitespace.
-    - meta_include_prototype: false
-    - match: \$\$
-      scope: punctuation.definition.math.begin.latex
-      set:
-        - math-inline-blocks-end
-        - math-block-content
-
-  math-inline-blocks-end:
-    - meta_include_prototype: false
-    - meta_scope:
-        markup.math.block.markdown
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-    - match: \$\$
-      scope: punctuation.definition.math.end.latex
-      pop: 1
-    - match: ''
-      fail: math-blocks
-
-  math-block-content:
-    - meta_include_prototype: false
-    - match: ''
-      embed: math-content
-      escape: (?=\$\$)|{{paragraph_end}}|{{setext_heading_escape}}
-      pop: 1 # embed math once
-
-  math-inline:
-    # Consume any remaining $$ to prevent deadlock
-    # (workaround for https://github.com/sublimehq/sublime_text/issues/5415)
-    - match: \$\$
-    - match: |-
-        (?x)
-        # dollar sign not followed by whitespace
-        (\$) (?=\S)
-        # arbitrary number of chars, maybe escaped dollar sign, but no html tags
-        # terminated by non-whitespace, followed by dollar and non-word character
-        (?= (?: \\\\ | \\\$ | (?!</?[A-Za-z]+[ \t]*/?>)[^\$] )*? \S\$\W )
-      scope:
-        markup.math.inline.markdown
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-        punctuation.definition.math.begin.latex
-      embed: math-content
-      embed_scope:
-        markup.math.inline.markdown
-        text.tex.latex.embedded.markdown
-        meta.environment.math.block.dollar.latex
-      escape: '{{no_escape_behind}}\$'
-      escape_captures:
-        0: markup.math.inline.markdown
-           text.tex.latex.embedded.markdown
-           meta.environment.math.block.dollar.latex
-           punctuation.definition.math.end.latex
-
-  math-content:
-    - include: scope:text.tex.latex#macros
-    - include: scope:text.tex.latex#math-content
-
-###[ EXTENSIONS: PANDOC FENCED DIVS ]#########################################
-
-  fenced-div-blocks:
-    # https://pandoc.org/MANUAL.html#divs-and-spans
-    - match: '[ \t]*({{fenced_div_block}})[ \t]*$\n?'
-      scope: meta.div.markdown
-      captures:
-        1: punctuation.section.div.end.markdown
-    - match: '[ \t]*({{fenced_div_block}})'
-      captures:
-        1: punctuation.section.div.begin.markdown
-      push:
-        - fenced-div-punctuation
-        - fenced-div-attr
-
-  fenced-div-attr:
-    - meta_include_prototype: false
-    - match: \{
-      scope: punctuation.definition.attributes.begin.markdown
-      set: link-def-attr-body
-    - match: '{{tag_attribute_name_start}}'
-      set:
-        - tag-attr-meta
-        - tag-attr-equals
-        - tag-attr-name
-    - match: else-pop
-
-  fenced-div-punctuation:
-    - meta_include_prototype: false
-    - meta_scope: meta.div.markdown
-    - match: ':+'
-      scope: punctuation.section.div.markdown
-      pop: 1
-    - include: else-pop
-
-###[ PROTOTYPES ]#############################################################
-
-  else-pop:
-    - match: (?=\S)
-      pop: 1
-
-  eol-pop:
-    - match: $
-      pop: 1
-
-  expect-eol:
-    - include: eol-pop
-    - match: \S.+
-      scope: invalid.illegal.expected-eol.markdown
-
-  immediately-pop:
-    - meta_include_prototype: false
-    - match: ''
-      pop: 1
-
-  immediately-pop2:
-    - meta_include_prototype: false
-    - match: ''
-      pop: 2
