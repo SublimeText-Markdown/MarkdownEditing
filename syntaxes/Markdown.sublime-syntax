@@ -3873,13 +3873,10 @@ contexts:
       fail: strikethrough-tilde
 
   emphasis-content:
-    - include: emphasis-inline-common
-
-###[ INLINE: EMPHASIS PROTOTYPES ]#############################################
-
-  emphasis-inline-common:
     - include: hard-line-breaks
     - include: inline-common
+
+###[ INLINE: EMPHASIS PROTOTYPES ]#############################################
 
   no-emphasis:
     - meta_include_prototype: false
@@ -4989,8 +4986,8 @@ contexts:
 ###[ GENERATED: BLOCK QUOTE EMPHASIS ]########################################
 
   block-quote-inlines:
-    - include: hard-line-breaks
     - include: block-quote-emphasis
+    - include: hard-line-breaks
     - include: inline-common
 
   block-quote-emphasis:
@@ -5251,13 +5248,14 @@ contexts:
 
   block-quote-emphasis-content:
     - include: block-quote-punctuations
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ GENERATED: BLOCK QUOTE NESTED EMPHASIS ]#################################
 
   block-quote-nested-inlines:
-    - include: hard-line-breaks
     - include: block-quote-nested-emphasis
+    - include: hard-line-breaks
     - include: inline-common
 
   block-quote-nested-emphasis:
@@ -5518,7 +5516,8 @@ contexts:
 
   block-quote-nested-emphasis-content:
     - include: block-quote-nested-punctuations
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ GENERATED: BLOCK QUOTE FOOTNOTE EMPHASIS ]###############################
 
@@ -5780,13 +5779,14 @@ contexts:
 
   block-quote-footnote-emphasis-content:
     - include: block-quote-punctuations
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ GENERATED: LIST EMPHASIS ]###############################################
 
   list-inlines:
-    - include: hard-line-breaks
     - include: list-emphasis
+    - include: hard-line-breaks
     - include: inline-common
 
   list-emphasis:
@@ -6046,7 +6046,8 @@ contexts:
       fail: list-strikethrough-tilde
 
   list-emphasis-content:
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ GENERATED: FOOTNOTE EMPHASIS ]###########################################
 
@@ -6307,13 +6308,14 @@ contexts:
       fail: footnote-strikethrough-tilde
 
   footnote-emphasis-content:
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ GENERATED: SINGLE LINE EMPHASIS ]########################################
 
   line-inlines:
-    - include: hard-line-breaks
     - include: line-emphasis
+    - include: hard-line-breaks
     - include: inline-common
 
   line-emphasis:
@@ -6573,7 +6575,8 @@ contexts:
       fail: line-strikethrough-tilde
 
   line-emphasis-content:
-    - include: emphasis-inline-common
+    - include: hard-line-breaks
+    - include: inline-common
 
 ###[ END GENERATED: CONTAINER INLINES ]#######################################
 

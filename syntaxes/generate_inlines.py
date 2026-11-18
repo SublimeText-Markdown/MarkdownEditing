@@ -111,8 +111,8 @@ def generate_prelude(variant: Variant) -> str:
         lines.extend(
             (
                 f"  {variant.prefix}-inlines:",
-                "    - include: hard-line-breaks",
                 f"    - include: {variant.prefix}-emphasis",
+                "    - include: hard-line-breaks",
                 "    - include: inline-common",
                 "",
             )
