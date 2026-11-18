@@ -3,7 +3,7 @@
 This module exports __all__ modules, which Sublime Text needs to know about.
 """
 
-__version__ = "3.6.4"
+__version__ = "3.6.6"
 
 import sys
 
