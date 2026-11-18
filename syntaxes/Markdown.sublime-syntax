@@ -819,13 +819,7 @@ contexts:
     - meta_scope: meta.paragraph.markdown
     - include: block-quote-footnote-paragraph-end
     - include: block-quote-punctuations
-    - include: block-quote-footnote-paragraph-common
-
-  block-quote-footnote-paragraph-common:
-    - include: block-quote-footnote-emphasis
-    - include: images
-    - include: literals
-    - include: links
+    - include: block-quote-footnote-inlines
 
   block-quote-footnote-paragraph-end:
     - match: $
@@ -3312,13 +3306,7 @@ contexts:
   footnote-paragraph-body:
     - meta_scope: meta.paragraph.markdown
     - include: footnote-paragraph-end
-    - include: footnote-paragraph-common
-
-  footnote-paragraph-common:
-    - include: footnote-emphasis
-    - include: images
-    - include: literals
-    - include: links
+    - include: footnote-inlines
 
   footnote-paragraph-end:
     - match: $
@@ -5521,6 +5509,11 @@ contexts:
 
 ###[ GENERATED: BLOCK QUOTE FOOTNOTE EMPHASIS ]###############################
 
+  block-quote-footnote-inlines:
+    - include: block-quote-footnote-emphasis
+    - include: hard-line-breaks
+    - include: inline-common
+
   block-quote-footnote-emphasis:
     - include: block-quote-footnote-bold
     - include: block-quote-footnote-italic
@@ -6050,6 +6043,11 @@ contexts:
     - include: inline-common
 
 ###[ GENERATED: FOOTNOTE EMPHASIS ]###########################################
+
+  footnote-inlines:
+    - include: footnote-emphasis
+    - include: hard-line-breaks
+    - include: inline-common
 
   footnote-emphasis:
     - include: footnote-bold

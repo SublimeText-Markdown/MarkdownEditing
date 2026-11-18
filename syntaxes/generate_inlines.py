@@ -34,7 +34,6 @@ OLD_GENERATED_START = (
 class Variant:
     prefix: str
     title: str
-    with_inlines: bool = False
     common_includes: tuple[str, ...] = ()
 
 
@@ -42,13 +41,11 @@ VARIANTS = (
     Variant(
         "block-quote",
         "BLOCK QUOTE",
-        True,
         ("block-quote-punctuations",),
     ),
     Variant(
         "block-quote-nested",
         "BLOCK QUOTE NESTED",
-        True,
         ("block-quote-nested-punctuations",),
     ),
     Variant(
@@ -56,13 +53,9 @@ VARIANTS = (
         "BLOCK QUOTE FOOTNOTE",
         common_includes=("block-quote-punctuations",),
     ),
-    Variant(
-        "list",
-        "LIST",
-        True,
-    ),
+    Variant("list", "LIST"),
     Variant("footnote", "FOOTNOTE"),
-    Variant("line", "SINGLE LINE", True),
+    Variant("line", "SINGLE LINE"),
 )
 
 
@@ -106,26 +99,18 @@ def generate_variant(template: str, variant: Variant) -> str:
 
 
 def generate_prelude(variant: Variant) -> str:
-    lines = []
-    if variant.with_inlines:
-        lines.extend(
-            (
-                f"  {variant.prefix}-inlines:",
-                f"    - include: {variant.prefix}-emphasis",
-                "    - include: hard-line-breaks",
-                "    - include: inline-common",
-                "",
-            )
-        )
-    lines.extend(
-        (
-            f"  {variant.prefix}-emphasis:",
-            f"    - include: {variant.prefix}-bold",
-            f"    - include: {variant.prefix}-italic",
-            f"    - include: {variant.prefix}-highlight",
-            f"    - include: {variant.prefix}-strikethrough",
-        )
-    )
+    lines = [
+        f"  {variant.prefix}-inlines:",
+        f"    - include: {variant.prefix}-emphasis",
+        "    - include: hard-line-breaks",
+        "    - include: inline-common",
+        "",
+        f"  {variant.prefix}-emphasis:",
+        f"    - include: {variant.prefix}-bold",
+        f"    - include: {variant.prefix}-italic",
+        f"    - include: {variant.prefix}-highlight",
+        f"    - include: {variant.prefix}-strikethrough",
+    ]
     return "\n".join(lines)
 
 
